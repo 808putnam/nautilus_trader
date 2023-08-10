@@ -454,6 +454,9 @@
 <a href="#454" id="454">454</a>
 <a href="#455" id="455">455</a>
 <a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -547,14 +550,17 @@
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>from_quote_tick(tick: <span class="kw-2">&amp;</span>QuoteTick, side: OrderSide) -&gt; <span class="self">Self </span>{
         <span class="kw">match </span>side {
-            OrderSide::Buy =&gt; {
-                <span class="self">Self</span>::new(OrderSide::Buy, tick.bid, tick.bid_size, tick.bid.raw <span class="kw">as </span>u64)
-            }
+            OrderSide::Buy =&gt; <span class="self">Self</span>::new(
+                OrderSide::Buy,
+                tick.bid_price,
+                tick.bid_size,
+                tick.bid_price.raw <span class="kw">as </span>u64,
+            ),
             OrderSide::Sell =&gt; <span class="self">Self</span>::new(
                 OrderSide::Sell,
-                tick.ask,
+                tick.ask_price,
                 tick.ask_size,
-                tick.ask.raw <span class="kw">as </span>u64,
+                tick.ask_price.raw <span class="kw">as </span>u64,
             ),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, BookIntegrityError::NoOrderSide),
         }
@@ -824,8 +830,8 @@
         <span class="macro">assert_eq!</span>(
             book_order.price,
             <span class="kw">match </span>side {
-                OrderSide::Buy =&gt; tick.bid,
-                OrderSide::Sell =&gt; tick.ask,
+                OrderSide::Buy =&gt; tick.bid_price,
+                OrderSide::Sell =&gt; tick.ask_price,
                 <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Invalid test&quot;</span>),
             }
         );
@@ -840,8 +846,8 @@
         <span class="macro">assert_eq!</span>(
             book_order.order_id,
             <span class="kw">match </span>side {
-                OrderSide::Buy =&gt; tick.bid.raw <span class="kw">as </span>u64,
-                OrderSide::Sell =&gt; tick.ask.raw <span class="kw">as </span>u64,
+                OrderSide::Buy =&gt; tick.bid_price.raw <span class="kw">as </span>u64,
+                OrderSide::Sell =&gt; tick.ask_price.raw <span class="kw">as </span>u64,
                 <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Invalid test&quot;</span>),
             }
         );

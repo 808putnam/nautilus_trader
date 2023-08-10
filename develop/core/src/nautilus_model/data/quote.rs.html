@@ -404,6 +404,11 @@
 <a href="#404" id="404">404</a>
 <a href="#405" id="405">405</a>
 <a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -445,9 +450,9 @@
     <span class="doccomment">/// The quotes instrument ID.
     </span><span class="kw">pub </span>instrument_id: InstrumentId,
     <span class="doccomment">/// The top of book bid price.
-    </span><span class="kw">pub </span>bid: Price,
+    </span><span class="kw">pub </span>bid_price: Price,
     <span class="doccomment">/// The top of book ask price.
-    </span><span class="kw">pub </span>ask: Price,
+    </span><span class="kw">pub </span>ask_price: Price,
     <span class="doccomment">/// The top of book bid size.
     </span><span class="kw">pub </span>bid_size: Quantity,
     <span class="doccomment">/// The top of book ask size.
@@ -462,18 +467,18 @@
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(
         instrument_id: InstrumentId,
-        bid: Price,
-        ask: Price,
+        bid_price: Price,
+        ask_price: Price,
         bid_size: Quantity,
         ask_size: Quantity,
         ts_event: UnixNanos,
         ts_init: UnixNanos,
     ) -&gt; <span class="self">Self </span>{
         correctness::u8_equal(
-            bid.precision,
-            ask.precision,
-            <span class="string">&quot;bid.precision&quot;</span>,
-            <span class="string">&quot;ask.precision&quot;</span>,
+            bid_price.precision,
+            ask_price.precision,
+            <span class="string">&quot;bid_price.precision&quot;</span>,
+            <span class="string">&quot;ask_price.precision&quot;</span>,
         );
         correctness::u8_equal(
             bid_size.precision,
@@ -483,8 +488,8 @@
         );
         <span class="self">Self </span>{
             instrument_id,
-            bid,
-            ask,
+            bid_price,
+            ask_price,
             bid_size,
             ask_size,
             ts_event,
@@ -507,11 +512,11 @@
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>extract_price(<span class="kw-2">&amp;</span><span class="self">self</span>, price_type: PriceType) -&gt; Price {
         <span class="kw">match </span>price_type {
-            PriceType::Bid =&gt; <span class="self">self</span>.bid,
-            PriceType::Ask =&gt; <span class="self">self</span>.ask,
+            PriceType::Bid =&gt; <span class="self">self</span>.bid_price,
+            PriceType::Ask =&gt; <span class="self">self</span>.ask_price,
             PriceType::Mid =&gt; Price::from_raw(
-                (<span class="self">self</span>.bid.raw + <span class="self">self</span>.ask.raw) / <span class="number">2</span>,
-                cmp::min(<span class="self">self</span>.bid.precision + <span class="number">1</span>, FIXED_PRECISION),
+                (<span class="self">self</span>.bid_price.raw + <span class="self">self</span>.ask_price.raw) / <span class="number">2</span>,
+                cmp::min(<span class="self">self</span>.bid_price.precision + <span class="number">1</span>, FIXED_PRECISION),
             ),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Cannot extract with price type {price_type}&quot;</span>),
         }
@@ -524,15 +529,15 @@
             .map_err(|e| PyValueError::new_err(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, e)))
             .unwrap();
 
-        <span class="kw">let </span>bid_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;bid&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>bid_raw: i64 = bid_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>bid_prec: u8 = bid_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>bid = Price::from_raw(bid_raw, bid_prec);
+        <span class="kw">let </span>bid_price_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;bid_price&quot;</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>bid_price_raw: i64 = bid_price_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>bid_price_prec: u8 = bid_price_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>bid_price = Price::from_raw(bid_price_raw, bid_price_prec);
 
-        <span class="kw">let </span>ask_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;ask&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>ask_raw: i64 = ask_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>ask_prec: u8 = ask_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>ask = Price::from_raw(ask_raw, ask_prec);
+        <span class="kw">let </span>ask_price_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;ask_price&quot;</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>ask_price_raw: i64 = ask_price_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>ask_price_prec: u8 = ask_price_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>ask_price = Price::from_raw(ask_price_raw, ask_price_prec);
 
         <span class="kw">let </span>bid_size_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;bid_size&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>bid_size_raw: u64 = bid_size_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
@@ -549,8 +554,8 @@
 
         <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new(
             instrument_id,
-            bid,
-            ask,
+            bid_price,
+            ask_price,
             bid_size,
             ask_size,
             ts_event,
@@ -566,7 +571,12 @@
         <span class="macro">write!</span>(
             f,
             <span class="string">&quot;{},{},{},{},{},{}&quot;</span>,
-            <span class="self">self</span>.instrument_id, <span class="self">self</span>.bid, <span class="self">self</span>.ask, <span class="self">self</span>.bid_size, <span class="self">self</span>.ask_size, <span class="self">self</span>.ts_event,
+            <span class="self">self</span>.instrument_id,
+            <span class="self">self</span>.bid_price,
+            <span class="self">self</span>.ask_price,
+            <span class="self">self</span>.bid_size,
+            <span class="self">self</span>.ask_size,
+            <span class="self">self</span>.ts_event,
         )
     }
 }
@@ -622,13 +632,13 @@
     }
 
     <span class="attr">#[getter]
-    </span><span class="kw">fn </span>bid(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Price {
-        <span class="self">self</span>.bid
+    </span><span class="kw">fn </span>bid_price(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Price {
+        <span class="self">self</span>.bid_price
     }
 
     <span class="attr">#[getter]
-    </span><span class="kw">fn </span>ask(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Price {
-        <span class="self">self</span>.ask
+    </span><span class="kw">fn </span>ask_price(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Price {
+        <span class="self">self</span>.ask_price
     }
 
     <span class="attr">#[getter]
@@ -726,8 +736,8 @@
     <span class="kw">fn </span>create_stub_quote_tick() -&gt; QuoteTick {
         QuoteTick {
             instrument_id: InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap(),
-            bid: Price::new(<span class="number">10000.0</span>, <span class="number">4</span>),
-            ask: Price::new(<span class="number">10001.0</span>, <span class="number">4</span>),
+            bid_price: Price::new(<span class="number">10000.0</span>, <span class="number">4</span>),
+            ask_price: Price::new(<span class="number">10001.0</span>, <span class="number">4</span>),
             bid_size: Quantity::new(<span class="number">1.0</span>, <span class="number">8</span>),
             ask_size: Quantity::new(<span class="number">1.0</span>, <span class="number">8</span>),
             ts_event: <span class="number">1</span>,
@@ -765,7 +775,7 @@
 
         Python::with_gil(|py| {
             <span class="kw">let </span>dict_string = tick.as_dict(py).unwrap().to_string();
-            <span class="kw">let </span>expected_string = <span class="string">r#&quot;{&#39;instrument_id&#39;: &#39;ETHUSDT-PERP.BINANCE&#39;, &#39;bid&#39;: &#39;10000.0000&#39;, &#39;ask&#39;: &#39;10001.0000&#39;, &#39;bid_size&#39;: &#39;1.00000000&#39;, &#39;ask_size&#39;: &#39;1.00000000&#39;, &#39;ts_event&#39;: 1, &#39;ts_init&#39;: 0}&quot;#</span>;
+            <span class="kw">let </span>expected_string = <span class="string">r#&quot;{&#39;instrument_id&#39;: &#39;ETHUSDT-PERP.BINANCE&#39;, &#39;bid_price&#39;: &#39;10000.0000&#39;, &#39;ask_price&#39;: &#39;10001.0000&#39;, &#39;bid_size&#39;: &#39;1.00000000&#39;, &#39;ask_size&#39;: &#39;1.00000000&#39;, &#39;ts_event&#39;: 1, &#39;ts_init&#39;: 0}&quot;#</span>;
             <span class="macro">assert_eq!</span>(dict_string, expected_string);
         });
     }

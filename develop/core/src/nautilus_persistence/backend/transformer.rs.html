@@ -445,7 +445,7 @@
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
-            first.bid.precision,
+            first.bid_price.precision,
             first.bid_size.precision,
         );
 

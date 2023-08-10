@@ -302,8 +302,8 @@
 <span class="kw">impl </span>ArrowSchemaProvider <span class="kw">for </span>QuoteTick {
     <span class="kw">fn </span>get_schema(metadata: std::collections::HashMap&lt;String, String&gt;) -&gt; SchemaRef {
         <span class="kw">let </span>fields = <span class="macro">vec!</span>[
-            Field::new(<span class="string">&quot;bid&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
-            Field::new(<span class="string">&quot;ask&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
+            Field::new(<span class="string">&quot;bid_price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
+            Field::new(<span class="string">&quot;ask_price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;bid_size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ask_size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ts_event&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
@@ -334,8 +334,8 @@
 <span class="kw">impl </span>EncodeToRecordBatch <span class="kw">for </span>QuoteTick {
     <span class="kw">fn </span>encode_batch(metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;, data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>]) -&gt; RecordBatch {
         <span class="comment">// Create array builders
-        </span><span class="kw">let </span><span class="kw-2">mut </span>bid_builder = Int64Array::builder(data.len());
-        <span class="kw">let </span><span class="kw-2">mut </span>ask_builder = Int64Array::builder(data.len());
+        </span><span class="kw">let </span><span class="kw-2">mut </span>bid_price_builder = Int64Array::builder(data.len());
+        <span class="kw">let </span><span class="kw-2">mut </span>ask_price_builder = Int64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>bid_size_builder = UInt64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ask_size_builder = UInt64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ts_event_builder = UInt64Array::builder(data.len());
@@ -343,8 +343,8 @@
 
         <span class="comment">// Iterate over data
         </span><span class="kw">for </span>tick <span class="kw">in </span>data {
-            bid_builder.append_value(tick.bid.raw);
-            ask_builder.append_value(tick.ask.raw);
+            bid_price_builder.append_value(tick.bid_price.raw);
+            ask_price_builder.append_value(tick.ask_price.raw);
             bid_size_builder.append_value(tick.bid_size.raw);
             ask_size_builder.append_value(tick.ask_size.raw);
             ts_event_builder.append_value(tick.ts_event);
@@ -352,8 +352,8 @@
         }
 
         <span class="comment">// Build arrays
-        </span><span class="kw">let </span>bid_array = bid_builder.finish();
-        <span class="kw">let </span>ask_array = ask_builder.finish();
+        </span><span class="kw">let </span>bid_price_array = bid_price_builder.finish();
+        <span class="kw">let </span>ask_price_array = ask_price_builder.finish();
         <span class="kw">let </span>bid_size_array = bid_size_builder.finish();
         <span class="kw">let </span>ask_size_array = ask_size_builder.finish();
         <span class="kw">let </span>ts_event_array = ts_event_builder.finish();
@@ -363,8 +363,8 @@
         </span>RecordBatch::try_new(
             <span class="self">Self</span>::get_schema(metadata.clone()),
             <span class="macro">vec!</span>[
-                Arc::new(bid_array),
-                Arc::new(ask_array),
+                Arc::new(bid_price_array),
+                Arc::new(ask_price_array),
                 Arc::new(bid_size_array),
                 Arc::new(ask_size_array),
                 Arc::new(ts_event_array),
@@ -382,26 +382,26 @@
 
         <span class="comment">// Extract field value arrays
         </span><span class="kw">let </span>cols = record_batch.columns();
-        <span class="kw">let </span>bid_values = cols[<span class="number">0</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
-        <span class="kw">let </span>ask_values = cols[<span class="number">1</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
+        <span class="kw">let </span>bid_price_values = cols[<span class="number">0</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
+        <span class="kw">let </span>ask_price_values = cols[<span class="number">1</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
         <span class="kw">let </span>ask_size_values = cols[<span class="number">2</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>bid_size_values = cols[<span class="number">3</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ts_event_values = cols[<span class="number">4</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ts_init_values = cols[<span class="number">5</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
 
         <span class="comment">// Construct iterator of values from arrays
-        </span><span class="kw">let </span>values = bid_values
+        </span><span class="kw">let </span>values = bid_price_values
             .into_iter()
-            .zip(ask_values.iter())
+            .zip(ask_price_values.iter())
             .zip(ask_size_values.iter())
             .zip(bid_size_values.iter())
             .zip(ts_event_values.iter())
             .zip(ts_init_values.iter())
             .map(
-                |(((((bid, ask), ask_size), bid_size), ts_event), ts_init)| <span class="self">Self </span>{
+                |(((((bid_price, ask_price), ask_size), bid_size), ts_event), ts_init)| <span class="self">Self </span>{
                     instrument_id,
-                    bid: Price::from_raw(bid.unwrap(), price_precision),
-                    ask: Price::from_raw(ask.unwrap(), price_precision),
+                    bid_price: Price::from_raw(bid_price.unwrap(), price_precision),
+                    ask_price: Price::from_raw(ask_price.unwrap(), price_precision),
                     bid_size: Quantity::from_raw(bid_size.unwrap(), size_precision),
                     ask_size: Quantity::from_raw(ask_size.unwrap(), size_precision),
                     ts_event: ts_event.unwrap(),
@@ -440,8 +440,8 @@
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
         <span class="kw">let </span>schema = QuoteTick::get_schema(metadata.clone());
         <span class="kw">let </span>expected_fields = <span class="macro">vec!</span>[
-            Field::new(<span class="string">&quot;bid&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
-            Field::new(<span class="string">&quot;ask&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
+            Field::new(<span class="string">&quot;bid_price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
+            Field::new(<span class="string">&quot;ask_price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;bid_size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ask_size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ts_event&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
@@ -456,9 +456,9 @@
         <span class="comment">// Create test data
         </span><span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
         <span class="kw">let </span>tick1 = QuoteTick {
-            instrument_id: instrument_id,
-            bid: Price::new(<span class="number">100.10</span>, <span class="number">2</span>),
-            ask: Price::new(<span class="number">101.50</span>, <span class="number">2</span>),
+            instrument_id,
+            bid_price: Price::new(<span class="number">100.10</span>, <span class="number">2</span>),
+            ask_price: Price::new(<span class="number">101.50</span>, <span class="number">2</span>),
             bid_size: Quantity::new(<span class="number">1000.0</span>, <span class="number">0</span>),
             ask_size: Quantity::new(<span class="number">500.0</span>, <span class="number">0</span>),
             ts_event: <span class="number">1</span>,
@@ -467,8 +467,8 @@
 
         <span class="kw">let </span>tick2 = QuoteTick {
             instrument_id,
-            bid: Price::new(<span class="number">100.75</span>, <span class="number">2</span>),
-            ask: Price::new(<span class="number">100.20</span>, <span class="number">2</span>),
+            bid_price: Price::new(<span class="number">100.75</span>, <span class="number">2</span>),
+            ask_price: Price::new(<span class="number">100.20</span>, <span class="number">2</span>),
             bid_size: Quantity::new(<span class="number">750.0</span>, <span class="number">0</span>),
             ask_size: Quantity::new(<span class="number">300.0</span>, <span class="number">0</span>),
             ts_event: <span class="number">2</span>,
@@ -481,20 +481,20 @@
 
         <span class="comment">// Verify the encoded data
         </span><span class="kw">let </span>columns = record_batch.columns();
-        <span class="kw">let </span>bid_values = columns[<span class="number">0</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
-        <span class="kw">let </span>ask_values = columns[<span class="number">1</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
+        <span class="kw">let </span>bid_price_values = columns[<span class="number">0</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
+        <span class="kw">let </span>ask_price_values = columns[<span class="number">1</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
         <span class="kw">let </span>bid_size_values = columns[<span class="number">2</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ask_size_values = columns[<span class="number">3</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ts_event_values = columns[<span class="number">4</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ts_init_values = columns[<span class="number">5</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
 
         <span class="macro">assert_eq!</span>(columns.len(), <span class="number">6</span>);
-        <span class="macro">assert_eq!</span>(bid_values.len(), <span class="number">2</span>);
-        <span class="macro">assert_eq!</span>(bid_values.value(<span class="number">0</span>), <span class="number">100_100_000_000</span>);
-        <span class="macro">assert_eq!</span>(bid_values.value(<span class="number">1</span>), <span class="number">100_750_000_000</span>);
-        <span class="macro">assert_eq!</span>(ask_values.len(), <span class="number">2</span>);
-        <span class="macro">assert_eq!</span>(ask_values.value(<span class="number">0</span>), <span class="number">101_500_000_000</span>);
-        <span class="macro">assert_eq!</span>(ask_values.value(<span class="number">1</span>), <span class="number">100_200_000_000</span>);
+        <span class="macro">assert_eq!</span>(bid_price_values.len(), <span class="number">2</span>);
+        <span class="macro">assert_eq!</span>(bid_price_values.value(<span class="number">0</span>), <span class="number">100_100_000_000</span>);
+        <span class="macro">assert_eq!</span>(bid_price_values.value(<span class="number">1</span>), <span class="number">100_750_000_000</span>);
+        <span class="macro">assert_eq!</span>(ask_price_values.len(), <span class="number">2</span>);
+        <span class="macro">assert_eq!</span>(ask_price_values.value(<span class="number">0</span>), <span class="number">101_500_000_000</span>);
+        <span class="macro">assert_eq!</span>(ask_price_values.value(<span class="number">1</span>), <span class="number">100_200_000_000</span>);
         <span class="macro">assert_eq!</span>(bid_size_values.len(), <span class="number">2</span>);
         <span class="macro">assert_eq!</span>(bid_size_values.value(<span class="number">0</span>), <span class="number">1_000_000_000_000</span>);
         <span class="macro">assert_eq!</span>(bid_size_values.value(<span class="number">1</span>), <span class="number">750_000_000_000</span>);
@@ -514,8 +514,8 @@
         <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
 
-        <span class="kw">let </span>bid = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10000</span>, <span class="number">9900</span>]);
-        <span class="kw">let </span>ask = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10100</span>, <span class="number">10000</span>]);
+        <span class="kw">let </span>bid_price = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10000</span>, <span class="number">9900</span>]);
+        <span class="kw">let </span>ask_price = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10100</span>, <span class="number">10000</span>]);
         <span class="kw">let </span>bid_size = UInt64Array::from(<span class="macro">vec!</span>[<span class="number">100</span>, <span class="number">90</span>]);
         <span class="kw">let </span>ask_size = UInt64Array::from(<span class="macro">vec!</span>[<span class="number">110</span>, <span class="number">100</span>]);
         <span class="kw">let </span>ts_event = UInt64Array::from(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>]);
@@ -524,8 +524,8 @@
         <span class="kw">let </span>record_batch = RecordBatch::try_new(
             QuoteTick::get_schema(metadata.clone()),
             <span class="macro">vec!</span>[
-                Arc::new(bid),
-                Arc::new(ask),
+                Arc::new(bid_price),
+                Arc::new(ask_price),
                 Arc::new(bid_size),
                 Arc::new(ask_size),
                 Arc::new(ts_event),

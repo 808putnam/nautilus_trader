@@ -1363,10 +1363,10 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.QuoteTick.ask">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.QuoteTick.ask_price">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  QuoteTick.ask
+                  QuoteTick.ask_price
                  </span>
                 </code>
                </a>
@@ -1381,10 +1381,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.QuoteTick.bid">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.QuoteTick.bid_price">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  QuoteTick.bid
+                  QuoteTick.bid_price
                  </span>
                 </code>
                </a>
@@ -7310,7 +7310,7 @@ internally aggregated.
              Price
             </span>
             <span class="pre">
-             bid
+             bid_price
             </span>
            </span>
           </em>
@@ -7321,7 +7321,7 @@ internally aggregated.
              Price
             </span>
             <span class="pre">
-             ask
+             ask_price
             </span>
            </span>
           </em>
@@ -7417,7 +7417,7 @@ internally aggregated.
              <li>
               <p>
                <strong>
-                bid
+                bid_price
                </strong>
                (
                <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
@@ -7431,7 +7431,7 @@ internally aggregated.
              <li>
               <p>
                <strong>
-                ask
+                ask_price
                </strong>
                (
                <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
@@ -7540,13 +7540,13 @@ internally aggregated.
            </dd>
           </dl>
           <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.ask">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.ask_price">
             <span class="sig-name descname">
              <span class="pre">
-              ask
+              ask_price
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.tick.QuoteTick.ask" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.model.data.tick.QuoteTick.ask_price" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -7579,7 +7579,7 @@ internally aggregated.
              </dt>
              <dd class="field-even">
               <p>
-               QuoteTick.ask
+               QuoteTick.ask_price
               </p>
              </dd>
             </dl>
@@ -7632,13 +7632,13 @@ internally aggregated.
            </dd>
           </dl>
           <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.bid">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.bid_price">
             <span class="sig-name descname">
              <span class="pre">
-              bid
+              bid_price
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.tick.QuoteTick.bid" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.model.data.tick.QuoteTick.bid_price" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -7671,7 +7671,7 @@ internally aggregated.
              </dt>
              <dd class="field-even">
               <p>
-               QuoteTick.bid
+               QuoteTick.bid_price
               </p>
              </dd>
             </dl>
@@ -8170,7 +8170,7 @@ internally aggregated.
                int64_t
               </span>
               <span class="pre">
-               raw_bid
+               bid_price_raw
               </span>
              </span>
             </em>
@@ -8181,7 +8181,7 @@ internally aggregated.
                int64_t
               </span>
               <span class="pre">
-               raw_ask
+               ask_price_raw
               </span>
              </span>
             </em>
@@ -8214,7 +8214,7 @@ internally aggregated.
                uint64_t
               </span>
               <span class="pre">
-               raw_bid_size
+               bid_size_raw
               </span>
              </span>
             </em>
@@ -8225,7 +8225,7 @@ internally aggregated.
                uint64_t
               </span>
               <span class="pre">
-               raw_ask_size
+               ask_size_raw
               </span>
              </span>
             </em>
@@ -8322,7 +8322,7 @@ internally aggregated.
                <li>
                 <p>
                  <strong>
-                  raw_bid
+                  bid_price_raw
                  </strong>
                  (
                  <em>
@@ -8334,7 +8334,7 @@ internally aggregated.
                <li>
                 <p>
                  <strong>
-                  raw_ask
+                  ask_price_raw
                  </strong>
                  (
                  <em>
@@ -8370,28 +8370,24 @@ internally aggregated.
                <li>
                 <p>
                  <strong>
-                  raw_bid_size
+                  bid_size_raw
                  </strong>
                  (
-                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
-                  <em>
-                   Quantity
-                  </em>
-                 </a>
+                 <em>
+                  uint64_t
+                 </em>
                  ) – The raw top of book bid size (as a scaled fixed precision integer).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  raw_ask_size
+                  ask_size_raw
                  </strong>
                  (
-                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
-                  <em>
-                   Quantity
-                  </em>
-                 </a>
+                 <em>
+                  uint64_t
+                 </em>
                  ) – The raw top of book ask size (as a scaled fixed precision integer).
                 </p>
                </li>
@@ -9390,7 +9386,7 @@ seller counterparties.
                int64_t
               </span>
               <span class="pre">
-               raw_price
+               price_raw
               </span>
              </span>
             </em>
@@ -9412,7 +9408,7 @@ seller counterparties.
                uint64_t
               </span>
               <span class="pre">
-               raw_size
+               size_raw
               </span>
              </span>
             </em>
@@ -9520,7 +9516,7 @@ seller counterparties.
                <li>
                 <p>
                  <strong>
-                  raw_price
+                  price_raw
                  </strong>
                  (
                  <em>
@@ -9544,7 +9540,7 @@ seller counterparties.
                <li>
                 <p>
                  <strong>
-                  raw_size
+                  size_raw
                  </strong>
                  (
                  <em>
