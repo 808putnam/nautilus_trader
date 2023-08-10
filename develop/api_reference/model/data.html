@@ -5579,10 +5579,10 @@ internally aggregated.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             uint64_t
+             uint8_t
             </span>
             <span class="pre">
-             sequence=0
+             flags=0
             </span>
            </span>
           </em>
@@ -5590,10 +5590,10 @@ internally aggregated.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             uint8_t
+             uint64_t
             </span>
             <span class="pre">
-             flags=0
+             sequence=0
             </span>
            </span>
           </em>
@@ -5716,28 +5716,6 @@ internally aggregated.
              <li>
               <p>
                <strong>
-                sequence
-               </strong>
-               (
-               <em>
-                uint64_t
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                default 0
-               </em>
-               ) – The unique sequence number for the update. If default 0 then will increment the
-               <cite>
-                sequence
-               </cite>
-               .
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
                 flags
                </strong>
                (
@@ -5760,6 +5738,28 @@ internally aggregated.
                 )
                </em>
                ) – A combination of packet end with matching engine status.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                sequence
+               </strong>
+               (
+               <em>
+                uint64_t
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default 0
+               </em>
+               ) – The unique sequence number for the update. If default 0 then will increment the
+               <cite>
+                sequence
+               </cite>
+               .
               </p>
              </li>
             </ul>
