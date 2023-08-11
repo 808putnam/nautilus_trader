@@ -349,7 +349,7 @@
 
 <span class="kw">use </span>datafusion::arrow::{
     array::{Array, Int64Array, UInt64Array, UInt8Array},
-    datatypes::{DataType, Field, Schema, SchemaRef},
+    datatypes::{DataType, Field, Schema},
     record_batch::RecordBatch,
 };
 <span class="kw">use </span>nautilus_model::{
@@ -363,7 +363,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::arrow::{ArrowSchemaProvider, Data, DecodeFromRecordBatch, EncodeToRecordBatch};
 
 <span class="kw">impl </span>ArrowSchemaProvider <span class="kw">for </span>OrderBookDelta {
-    <span class="kw">fn </span>get_schema(metadata: HashMap&lt;String, String&gt;) -&gt; SchemaRef {
+    <span class="kw">fn </span>get_schema(metadata: HashMap&lt;String, String&gt;) -&gt; Schema {
         <span class="kw">let </span>fields = <span class="macro">vec!</span>[
             Field::new(<span class="string">&quot;action&quot;</span>, DataType::UInt8, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;side&quot;</span>, DataType::UInt8, <span class="bool-val">false</span>),
@@ -376,7 +376,7 @@
             Field::new(<span class="string">&quot;ts_init&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
         ];
 
-        Schema::new_with_metadata(fields, metadata).into()
+        Schema::new_with_metadata(fields, metadata)
     }
 }
 
@@ -436,7 +436,7 @@
 
         <span class="comment">// Build record batch
         </span>RecordBatch::try_new(
-            <span class="self">Self</span>::get_schema(metadata.clone()),
+            <span class="self">Self</span>::get_schema(metadata.clone()).into(),
             <span class="macro">vec!</span>[
                 Arc::new(action_array),
                 Arc::new(side_array),
@@ -544,7 +544,7 @@
             Field::new(<span class="string">&quot;ts_event&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ts_init&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
         ];
-        <span class="kw">let </span>expected_schema = Schema::new_with_metadata(expected_fields, metadata).into();
+        <span class="kw">let </span>expected_schema = Schema::new_with_metadata(expected_fields, metadata);
         <span class="macro">assert_eq!</span>(schema, expected_schema);
     }
 
@@ -643,7 +643,7 @@
         <span class="kw">let </span>ts_init = UInt64Array::from(<span class="macro">vec!</span>[<span class="number">3</span>, <span class="number">4</span>]);
 
         <span class="kw">let </span>record_batch = RecordBatch::try_new(
-            OrderBookDelta::get_schema(metadata.clone()),
+            OrderBookDelta::get_schema(metadata.clone()).into(),
             <span class="macro">vec!</span>[
                 Arc::new(action),
                 Arc::new(side),

@@ -252,8 +252,6 @@
 <a href="#252" id="252">252</a>
 <a href="#253" id="253">253</a>
 <a href="#254" id="254">254</a>
-<a href="#255" id="255">255</a>
-<a href="#256" id="256">256</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -271,9 +269,7 @@
 
 </span><span class="kw">use </span>std::io::Cursor;
 
-<span class="kw">use </span>datafusion::arrow::{
-    datatypes::SchemaRef, ipc::writer::StreamWriter, record_batch::RecordBatch,
-};
+<span class="kw">use </span>datafusion::arrow::{datatypes::Schema, ipc::writer::StreamWriter, record_batch::RecordBatch};
 <span class="kw">use </span>nautilus_model::data::{bar::Bar, delta::OrderBookDelta, quote::QuoteTick, trade::TradeTick};
 <span class="kw">use </span>pyo3::{
     exceptions::{PyRuntimeError, PyValueError},
@@ -336,7 +332,7 @@
     </span><span class="kw">fn </span>record_batches_to_pybytes(
         py: Python&lt;<span class="lifetime">&#39;_</span>&gt;,
         batches: Vec&lt;RecordBatch&gt;,
-        schema: SchemaRef,
+        schema: Schema,
     ) -&gt; PyResult&lt;Py&lt;PyBytes&gt;&gt; {
         <span class="comment">// Create a cursor to write to a byte array in memory
         </span><span class="kw">let </span><span class="kw-2">mut </span>cursor = Cursor::new(Vec::new());
