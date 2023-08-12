@@ -15119,6 +15119,17 @@ and is open.
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               uint64_t
+              </span>
+              <span class="pre">
+               ts_snapshot
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -15155,18 +15166,34 @@ and is open.
               </span>
              </dt>
              <dd class="field-odd">
-              <p>
-               <strong>
-                position
-               </strong>
-               (
-               <a class="reference internal" href="model/position.html#nautilus_trader.model.position.Position" title="nautilus_trader.model.position.Position">
-                <em>
-                 Position
-                </em>
-               </a>
-               ) – The position to snapshot the state for.
-              </p>
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  position
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/position.html#nautilus_trader.model.position.Position" title="nautilus_trader.model.position.Position">
+                  <em>
+                   Position
+                  </em>
+                 </a>
+                 ) – The position to snapshot the state for.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  ts_snapshot
+                 </strong>
+                 (
+                 <em>
+                  uint64_t
+                 </em>
+                 ) – The UNIX timestamp (nanoseconds) when the snapshot was taken.
+                </p>
+               </li>
+              </ul>
              </dd>
             </dl>
            </dd>
@@ -18419,6 +18446,17 @@ and is open.
               </span>
               <span class="pre">
                position
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               uint64_t
+              </span>
+              <span class="pre">
+               ts_snapshot
               </span>
              </span>
             </em>
