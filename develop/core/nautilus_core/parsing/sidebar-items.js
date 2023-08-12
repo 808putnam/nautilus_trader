@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["bytes_to_string_vec","optional_bytes_to_json","precision_from_cstr","precision_from_str","string_vec_to_bytes","u8_to_bool"]};
+window.SIDEBAR_ITEMS = {"fn":["bytes_to_string_vec","optional_bytes_to_json","optional_bytes_to_str_map","optional_bytes_to_str_vec","precision_from_cstr","precision_from_str","string_vec_to_bytes","u8_to_bool"]};
