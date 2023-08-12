@@ -274,6 +274,22 @@
 <a href="#274" id="274">274</a>
 <a href="#275" id="275">275</a>
 <a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -307,7 +323,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::arrow::{ArrowSchemaProvider, Data, DecodeFromRecordBatch, EncodeToRecordBatch};
 
 <span class="kw">impl </span>ArrowSchemaProvider <span class="kw">for </span>TradeTick {
-    <span class="kw">fn </span>get_schema(metadata: std::collections::HashMap&lt;String, String&gt;) -&gt; Schema {
+    <span class="kw">fn </span>get_schema(metadata: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;) -&gt; Schema {
         <span class="kw">let </span>fields = <span class="macro">vec!</span>[
             Field::new(<span class="string">&quot;price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
@@ -317,7 +333,10 @@
             Field::new(<span class="string">&quot;ts_init&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
         ];
 
-        Schema::new_with_metadata(fields, metadata)
+        <span class="kw">match </span>metadata {
+            <span class="prelude-val">Some</span>(metadata) =&gt; Schema::new_with_metadata(fields, metadata),
+            <span class="prelude-val">None </span>=&gt; Schema::new(fields),
+        }
     }
 }
 
@@ -368,7 +387,7 @@
 
         <span class="comment">// Build record batch
         </span>RecordBatch::try_new(
-            <span class="self">Self</span>::get_schema(metadata.clone()).into(),
+            <span class="self">Self</span>::get_schema(<span class="prelude-val">Some</span>(metadata.clone())).into(),
             <span class="macro">vec!</span>[
                 Arc::new(price_array),
                 Arc::new(size_array),
@@ -449,7 +468,7 @@
     </span><span class="kw">fn </span>test_get_schema() {
         <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
         <span class="kw">let </span>metadata = TradeTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
-        <span class="kw">let </span>schema = TradeTick::get_schema(metadata.clone());
+        <span class="kw">let </span>schema = TradeTick::get_schema(<span class="prelude-val">Some</span>(metadata.clone()));
         <span class="kw">let </span>expected_fields = <span class="macro">vec!</span>[
             Field::new(<span class="string">&quot;price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
@@ -460,6 +479,19 @@
         ];
         <span class="kw">let </span>expected_schema = Schema::new_with_metadata(expected_fields, metadata);
         <span class="macro">assert_eq!</span>(schema, expected_schema);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_get_schema_map() {
+        <span class="kw">let </span>schema_map = TradeTick::get_schema_map();
+        <span class="kw">let </span><span class="kw-2">mut </span>expected_map = HashMap::new();
+        expected_map.insert(<span class="string">&quot;price&quot;</span>.to_string(), <span class="string">&quot;Int64&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;size&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;aggressor_side&quot;</span>.to_string(), <span class="string">&quot;UInt8&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;trade_id&quot;</span>.to_string(), <span class="string">&quot;Utf8&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;ts_event&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;ts_init&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
+        <span class="macro">assert_eq!</span>(schema_map, expected_map);
     }
 
     <span class="attr">#[test]
@@ -534,7 +566,7 @@
         <span class="kw">let </span>ts_init = UInt64Array::from(<span class="macro">vec!</span>[<span class="number">3</span>, <span class="number">4</span>]);
 
         <span class="kw">let </span>record_batch = RecordBatch::try_new(
-            TradeTick::get_schema(metadata.clone()).into(),
+            TradeTick::get_schema(<span class="prelude-val">Some</span>(metadata.clone())).into(),
             <span class="macro">vec!</span>[
                 Arc::new(price),
                 Arc::new(size),

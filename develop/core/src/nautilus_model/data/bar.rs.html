@@ -725,6 +725,8 @@
 <a href="#725" id="725">725</a>
 <a href="#726" id="726">726</a>
 <a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -765,7 +767,7 @@
 #[pyclass]
 </span><span class="kw">pub struct </span>BarSpecification {
     <span class="doccomment">/// The step for binning samples for bar aggregation.
-    </span><span class="kw">pub </span>step: u64,
+    </span><span class="kw">pub </span>step: usize,
     <span class="doccomment">/// The type of bar aggregation.
     </span><span class="kw">pub </span>aggregation: BarAggregation,
     <span class="doccomment">/// The price type to use for aggregation.
@@ -961,7 +963,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>get_metadata(
+    <span class="doccomment">/// Returns the metadata for the type, for use with serialization formats.
+    </span><span class="kw">pub fn </span>get_metadata(
         bar_type: <span class="kw-2">&amp;</span>BarType,
         price_precision: u8,
         size_precision: u8,
@@ -973,7 +976,8 @@
         metadata
     }
 
-    <span class="kw">pub fn </span>from_pyobject(obj: <span class="kw-2">&amp;</span>PyAny) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+    <span class="doccomment">/// Create a new [`Bar`] extracted from the given [`PyAny`].
+    </span><span class="kw">pub fn </span>from_pyobject(obj: <span class="kw-2">&amp;</span>PyAny) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>bar_type_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;bar_type&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>bar_type_str = bar_type_obj.call_method0(<span class="string">&quot;__str__&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>bar_type = BarType::from_str(bar_type_str)

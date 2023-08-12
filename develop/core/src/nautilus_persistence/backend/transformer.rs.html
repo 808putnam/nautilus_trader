@@ -252,6 +252,24 @@
 <a href="#252" id="252">252</a>
 <a href="#253" id="253">253</a>
 <a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -272,9 +290,9 @@
 <span class="kw">use </span>datafusion::arrow::{datatypes::Schema, ipc::writer::StreamWriter, record_batch::RecordBatch};
 <span class="kw">use </span>nautilus_model::data::{bar::Bar, delta::OrderBookDelta, quote::QuoteTick, trade::TradeTick};
 <span class="kw">use </span>pyo3::{
-    exceptions::{PyRuntimeError, PyValueError},
+    exceptions::{PyRuntimeError, PyTypeError, PyValueError},
     prelude::<span class="kw-2">*</span>,
-    types::PyBytes,
+    types::{IntoPyDict, PyBytes, PyDict, PyType},
 };
 
 <span class="kw">use </span><span class="kw">crate</span>::arrow::{ArrowSchemaProvider, EncodeToRecordBatch};
@@ -359,6 +377,24 @@
 
 <span class="attr">#[pymethods]
 </span><span class="kw">impl </span>DataTransformer {
+    <span class="attr">#[staticmethod]
+    </span><span class="kw">pub fn </span>get_schema_map(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, cls: <span class="kw-2">&amp;</span>PyType) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {
+        <span class="kw">let </span>cls_str: <span class="kw-2">&amp;</span>str = cls.getattr(<span class="string">&quot;__name__&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>result_map = <span class="kw">match </span>cls_str {
+            <span class="macro">stringify!</span>(OrderBookDelta) =&gt; OrderBookDelta::get_schema_map(),
+            <span class="macro">stringify!</span>(QuoteTick) =&gt; QuoteTick::get_schema_map(),
+            <span class="macro">stringify!</span>(TradeTick) =&gt; TradeTick::get_schema_map(),
+            <span class="macro">stringify!</span>(Bar) =&gt; Bar::get_schema_map(),
+            <span class="kw">_ </span>=&gt; {
+                <span class="kw">return </span><span class="prelude-val">Err</span>(PyTypeError::new_err(<span class="macro">format!</span>(
+                    <span class="string">&quot;Arrow schema for `{cls_str}` is not currently implemented in Rust.&quot;
+                </span>)));
+            }
+        };
+
+        <span class="prelude-val">Ok</span>(result_map.into_py_dict(py).into())
+    }
+
     <span class="doccomment">/// Return Python `bytes` from the given list of &#39;legacy&#39; data objects, which can be passed
     /// to `pa.ipc.open_stream` to create a `RecordBatchReader`.
     </span><span class="attr">#[staticmethod]
@@ -424,7 +460,7 @@
             .map(|delta| OrderBookDelta::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[delta]))
             .collect();
 
-        <span class="kw">let </span>schema = OrderBookDelta::get_schema(metadata);
+        <span class="kw">let </span>schema = OrderBookDelta::get_schema(<span class="prelude-val">Some</span>(metadata));
         <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
     }
 
@@ -451,7 +487,7 @@
             .map(|quote| QuoteTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[quote]))
             .collect();
 
-        <span class="kw">let </span>schema = QuoteTick::get_schema(metadata);
+        <span class="kw">let </span>schema = QuoteTick::get_schema(<span class="prelude-val">Some</span>(metadata));
         <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
     }
 
@@ -478,7 +514,7 @@
             .map(|trade| TradeTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[trade]))
             .collect();
 
-        <span class="kw">let </span>schema = TradeTick::get_schema(metadata);
+        <span class="kw">let </span>schema = TradeTick::get_schema(<span class="prelude-val">Some</span>(metadata));
         <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
     }
 
@@ -502,7 +538,7 @@
             .map(|bar| Bar::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[bar]))
             .collect();
 
-        <span class="kw">let </span>schema = TradeTick::get_schema(metadata);
+        <span class="kw">let </span>schema = TradeTick::get_schema(<span class="prelude-val">Some</span>(metadata));
         <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
     }
 }

@@ -89,6 +89,16 @@
 <a href="#89" id="89">89</a>
 <a href="#90" id="90">90</a>
 <a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -141,7 +151,17 @@
 }
 
 <span class="kw">pub trait </span>ArrowSchemaProvider {
-    <span class="kw">fn </span>get_schema(metadata: HashMap&lt;String, String&gt;) -&gt; Schema;
+    <span class="kw">fn </span>get_schema(metadata: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;) -&gt; Schema;
+    <span class="kw">fn </span>get_schema_map() -&gt; HashMap&lt;String, String&gt; {
+        <span class="kw">let </span>schema = <span class="self">Self</span>::get_schema(<span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
+        <span class="kw">for </span>field <span class="kw">in </span>schema.fields() {
+            <span class="kw">let </span>name = field.name().to_string();
+            <span class="kw">let </span>data_type = <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, field.data_type());
+            map.insert(name, data_type);
+        }
+        map
+    }
 }
 
 <span class="kw">pub trait </span>EncodeToRecordBatch

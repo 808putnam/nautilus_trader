@@ -428,6 +428,8 @@
 <a href="#428" id="428">428</a>
 <a href="#429" id="429">429</a>
 <a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -506,7 +508,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>get_metadata(
+    <span class="doccomment">/// Returns the metadata for the type, for use with serialization formats.
+    </span><span class="kw">pub fn </span>get_metadata(
         instrument_id: <span class="kw-2">&amp;</span>InstrumentId,
         price_precision: u8,
         size_precision: u8,
@@ -518,7 +521,8 @@
         metadata
     }
 
-    <span class="kw">pub fn </span>from_pyobject(obj: <span class="kw-2">&amp;</span>PyAny) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+    <span class="doccomment">/// Create a new [`OrderBookDelta`] extracted from the given [`PyAny`].
+    </span><span class="kw">pub fn </span>from_pyobject(obj: <span class="kw-2">&amp;</span>PyAny) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>instrument_id_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;instrument_id&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>instrument_id_str = instrument_id_obj.getattr(<span class="string">&quot;value&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>instrument_id = InstrumentId::from_str(instrument_id_str)

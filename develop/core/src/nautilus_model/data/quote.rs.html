@@ -410,6 +410,7 @@
 <a href="#410" id="410">410</a>
 <a href="#411" id="411">411</a>
 <a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -498,33 +499,21 @@
         }
     }
 
-    <span class="kw">pub fn </span>get_metadata(
+    <span class="doccomment">/// Returns the metadata for the type, for use with serialization formats.
+    </span><span class="kw">pub fn </span>get_metadata(
         instrument_id: <span class="kw-2">&amp;</span>InstrumentId,
         price_precision: u8,
         size_precision: u8,
     ) -&gt; HashMap&lt;String, String&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>metadata = HashMap::new();
-        metadata.insert(<span class="string">&quot;type&quot;</span>.to_string(), instrument_id.to_string());
         metadata.insert(<span class="string">&quot;instrument_id&quot;</span>.to_string(), instrument_id.to_string());
         metadata.insert(<span class="string">&quot;price_precision&quot;</span>.to_string(), price_precision.to_string());
         metadata.insert(<span class="string">&quot;size_precision&quot;</span>.to_string(), size_precision.to_string());
         metadata
     }
 
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>extract_price(<span class="kw-2">&amp;</span><span class="self">self</span>, price_type: PriceType) -&gt; Price {
-        <span class="kw">match </span>price_type {
-            PriceType::Bid =&gt; <span class="self">self</span>.bid_price,
-            PriceType::Ask =&gt; <span class="self">self</span>.ask_price,
-            PriceType::Mid =&gt; Price::from_raw(
-                (<span class="self">self</span>.bid_price.raw + <span class="self">self</span>.ask_price.raw) / <span class="number">2</span>,
-                cmp::min(<span class="self">self</span>.bid_price.precision + <span class="number">1</span>, FIXED_PRECISION),
-            ),
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Cannot extract with price type {price_type}&quot;</span>),
-        }
-    }
-
-    <span class="kw">pub fn </span>from_pyobject(obj: <span class="kw-2">&amp;</span>PyAny) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+    <span class="doccomment">/// Create a new [`Bar`] extracted from the given [`PyAny`].
+    </span><span class="kw">pub fn </span>from_pyobject(obj: <span class="kw-2">&amp;</span>PyAny) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>instrument_id_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;instrument_id&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>instrument_id_str = instrument_id_obj.getattr(<span class="string">&quot;value&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>instrument_id = InstrumentId::from_str(instrument_id_str)
@@ -563,6 +552,19 @@
             ts_event,
             ts_init,
         ))
+    }
+
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>extract_price(<span class="kw-2">&amp;</span><span class="self">self</span>, price_type: PriceType) -&gt; Price {
+        <span class="kw">match </span>price_type {
+            PriceType::Bid =&gt; <span class="self">self</span>.bid_price,
+            PriceType::Ask =&gt; <span class="self">self</span>.ask_price,
+            PriceType::Mid =&gt; Price::from_raw(
+                (<span class="self">self</span>.bid_price.raw + <span class="self">self</span>.ask_price.raw) / <span class="number">2</span>,
+                cmp::min(<span class="self">self</span>.bid_price.precision + <span class="number">1</span>, FIXED_PRECISION),
+            ),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Cannot extract with price type {price_type}&quot;</span>),
+        }
     }
 }
 
