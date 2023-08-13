@@ -13750,22 +13750,54 @@ contain any arbitrary delimiter if required.
             </span>
            </dt>
            <dd class="field-even">
-            <p>
-             <strong>
-              ValueError
-             </strong>
-             – If
-             <cite>
-              order_side
-             </cite>
-             is
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               NO_ORDER_SIDE
-              </span>
-             </code>
-             .
-            </p>
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                order_side
+               </cite>
+               is
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 NO_ORDER_SIDE
+                </span>
+               </code>
+               .
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                exec_algorithm_id
+               </cite>
+               is not
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+               , and
+               <cite>
+                exec_spawn_id
+               </cite>
+               is
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+               .
+              </p>
+             </li>
+            </ul>
            </dd>
           </dl>
           <dl class="py attribute">
