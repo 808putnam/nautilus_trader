@@ -365,6 +365,7 @@
 <a href="#365" id="365">365</a>
 <a href="#366" id="366">366</a>
 <a href="#367" id="367">367</a>
+<a href="#368" id="368">368</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -451,7 +452,8 @@
                 time_in_force,
                 reduce_only,
                 quote_quantity,
-                contingency_type,
+                <span class="prelude-val">None</span>, <span class="comment">// Emulation trigger
+                </span>contingency_type,
                 order_list_id,
                 linked_order_ids,
                 parent_order_id,

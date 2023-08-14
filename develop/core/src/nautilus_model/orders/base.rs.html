@@ -736,6 +736,36 @@
 <a href="#736" id="736">736</a>
 <a href="#737" id="737">737</a>
 <a href="#738" id="738">738</a>
+<a href="#739" id="739">739</a>
+<a href="#740" id="740">740</a>
+<a href="#741" id="741">741</a>
+<a href="#742" id="742">742</a>
+<a href="#743" id="743">743</a>
+<a href="#744" id="744">744</a>
+<a href="#745" id="745">745</a>
+<a href="#746" id="746">746</a>
+<a href="#747" id="747">747</a>
+<a href="#748" id="748">748</a>
+<a href="#749" id="749">749</a>
+<a href="#750" id="750">750</a>
+<a href="#751" id="751">751</a>
+<a href="#752" id="752">752</a>
+<a href="#753" id="753">753</a>
+<a href="#754" id="754">754</a>
+<a href="#755" id="755">755</a>
+<a href="#756" id="756">756</a>
+<a href="#757" id="757">757</a>
+<a href="#758" id="758">758</a>
+<a href="#759" id="759">759</a>
+<a href="#760" id="760">760</a>
+<a href="#761" id="761">761</a>
+<a href="#762" id="762">762</a>
+<a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
+<a href="#767" id="767">767</a>
+<a href="#768" id="768">768</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -765,9 +795,10 @@
         TimeInForce, TrailingOffsetType, TriggerType,
     },
     events::order::{
-        OrderAccepted, OrderCancelRejected, OrderCanceled, OrderDenied, OrderEvent, OrderExpired,
-        OrderFilled, OrderInitialized, OrderModifyRejected, OrderPendingCancel, OrderPendingUpdate,
-        OrderRejected, OrderSubmitted, OrderTriggered, OrderUpdated,
+        OrderAccepted, OrderCancelRejected, OrderCanceled, OrderDenied, OrderEmulated, OrderEvent,
+        OrderExpired, OrderFilled, OrderInitialized, OrderModifyRejected, OrderPendingCancel,
+        OrderPendingUpdate, OrderRejected, OrderReleased, OrderSubmitted, OrderTriggered,
+        OrderUpdated,
     },
     identifiers::{
         account_id::AccountId, client_order_id::ClientOrderId, exec_algorithm_id::ExecAlgorithmId,
@@ -1088,6 +1119,7 @@
     <span class="kw">pub </span>liquidity_side: <span class="prelude-ty">Option</span>&lt;LiquiditySide&gt;,
     <span class="kw">pub </span>is_reduce_only: bool,
     <span class="kw">pub </span>is_quote_quantity: bool,
+    <span class="kw">pub </span>emulation_trigger: <span class="prelude-ty">Option</span>&lt;TriggerType&gt;,
     <span class="kw">pub </span>contingency_type: <span class="prelude-ty">Option</span>&lt;ContingencyType&gt;,
     <span class="kw">pub </span>order_list_id: <span class="prelude-ty">Option</span>&lt;OrderListId&gt;,
     <span class="kw">pub </span>linked_order_ids: <span class="prelude-ty">Option</span>&lt;Vec&lt;ClientOrderId&gt;&gt;,
@@ -1119,6 +1151,7 @@
         time_in_force: TimeInForce,
         reduce_only: bool,
         quote_quantity: bool,
+        emulation_trigger: <span class="prelude-ty">Option</span>&lt;TriggerType&gt;,
         contingency_type: <span class="prelude-ty">Option</span>&lt;ContingencyType&gt;,
         order_list_id: <span class="prelude-ty">Option</span>&lt;OrderListId&gt;,
         linked_order_ids: <span class="prelude-ty">Option</span>&lt;Vec&lt;ClientOrderId&gt;&gt;,
@@ -1152,6 +1185,7 @@
             liquidity_side: <span class="prelude-val">None</span>,
             is_reduce_only: reduce_only,
             is_quote_quantity: quote_quantity,
+            emulation_trigger,
             contingency_type,
             order_list_id,
             linked_order_ids,
@@ -1177,6 +1211,8 @@
 
         <span class="kw">match </span><span class="kw-2">&amp;</span>event {
             OrderEvent::OrderDenied(event) =&gt; <span class="self">self</span>.denied(event),
+            OrderEvent::OrderEmulated(event) =&gt; <span class="self">self</span>.emulated(event),
+            OrderEvent::OrderReleased(event) =&gt; <span class="self">self</span>.released(event),
             OrderEvent::OrderSubmitted(event) =&gt; <span class="self">self</span>.submitted(event),
             OrderEvent::OrderRejected(event) =&gt; <span class="self">self</span>.rejected(event),
             OrderEvent::OrderAccepted(event) =&gt; <span class="self">self</span>.accepted(event),
@@ -1198,6 +1234,14 @@
     <span class="kw">fn </span>denied(<span class="kw-2">&amp;</span><span class="self">self</span>, _event: <span class="kw-2">&amp;</span>OrderDenied) {
         <span class="comment">// Do nothing else
     </span>}
+
+    <span class="kw">fn </span>emulated(<span class="kw-2">&amp;</span><span class="self">self</span>, _event: <span class="kw-2">&amp;</span>OrderEmulated) {
+        <span class="comment">// Do nothing else
+    </span>}
+
+    <span class="kw">fn </span>released(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _event: <span class="kw-2">&amp;</span>OrderReleased) {
+        <span class="self">self</span>.emulation_trigger = <span class="prelude-val">None</span>;
+    }
 
     <span class="kw">fn </span>submitted(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderSubmitted) {
         <span class="self">self</span>.account_id = <span class="prelude-val">Some</span>(event.account_id)
@@ -1366,6 +1410,7 @@
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>rstest::rstest;
+    <span class="kw">use </span>rust_decimal_macros::dec;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use crate</span>::{
@@ -1392,6 +1437,21 @@
         <span class="kw">let </span>order = MarketOrder::default();
         <span class="kw">let </span>result = order.closing_side(position_side);
         <span class="macro">assert_eq!</span>(result, expected_side)
+    }
+
+    <span class="attr">#[rstest]
+    #[case(OrderSide::Buy, <span class="macro">dec!</span>(<span class="number">10_000</span>))]
+    #[case(OrderSide::Sell, <span class="macro">dec!</span>(-<span class="number">10_000</span>))]
+    </span><span class="kw">fn </span>test_signed_decimal_qty(<span class="attr">#[case] </span>order_side: OrderSide, <span class="attr">#[case] </span>expected: Decimal) {
+        <span class="kw">let </span>order: MarketOrder = OrderInitializedBuilder::default()
+            .order_side(order_side)
+            .quantity(Quantity::new(<span class="number">10_000.0</span>, <span class="number">0</span>))
+            .build()
+            .unwrap()
+            .into();
+
+        <span class="kw">let </span>result = order.signed_decimal_qty();
+        <span class="macro">assert_eq!</span>(result, expected)
     }
 
     <span class="attr">#[rustfmt::skip]

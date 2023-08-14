@@ -387,7 +387,6 @@
 <a href="#387" id="387">387</a>
 <a href="#388" id="388">388</a>
 <a href="#389" id="389">389</a>
-<a href="#390" id="390">390</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -433,7 +432,6 @@
     <span class="kw">pub </span>trigger_type: TriggerType,
     <span class="kw">pub </span>expire_time: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
     <span class="kw">pub </span>display_qty: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
-    <span class="kw">pub </span>emulation_trigger: <span class="prelude-ty">Option</span>&lt;TriggerType&gt;,
     <span class="kw">pub </span>trigger_instrument_id: <span class="prelude-ty">Option</span>&lt;InstrumentId&gt;,
     <span class="kw">pub </span>is_triggered: bool,
     <span class="kw">pub </span>ts_triggered: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
@@ -481,6 +479,7 @@
                 time_in_force,
                 reduce_only,
                 quote_quantity,
+                emulation_trigger,
                 contingency_type,
                 order_list_id,
                 linked_order_ids,
@@ -496,7 +495,6 @@
             trigger_type,
             expire_time,
             display_qty,
-            emulation_trigger,
             trigger_instrument_id,
             is_triggered: <span class="bool-val">false</span>,
             ts_triggered: <span class="prelude-val">None</span>,
