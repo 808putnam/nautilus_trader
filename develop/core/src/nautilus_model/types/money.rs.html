@@ -340,6 +340,39 @@
 <a href="#340" id="340">340</a>
 <a href="#341" id="341">341</a>
 <a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
+<a href="#353" id="353">353</a>
+<a href="#354" id="354">354</a>
+<a href="#355" id="355">355</a>
+<a href="#356" id="356">356</a>
+<a href="#357" id="357">357</a>
+<a href="#358" id="358">358</a>
+<a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
+<a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
+<a href="#363" id="363">363</a>
+<a href="#364" id="364">364</a>
+<a href="#365" id="365">365</a>
+<a href="#366" id="366">366</a>
+<a href="#367" id="367">367</a>
+<a href="#368" id="368">368</a>
+<a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -365,8 +398,10 @@
 
 <span class="kw">use </span>nautilus_core::correctness;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize};
 
+<span class="kw">use </span><span class="kw">super</span>::fixed::FIXED_PRECISION;
 <span class="kw">use </span><span class="kw">crate</span>::types::{
     currency::Currency,
     fixed::{f64_to_fixed_i64, fixed_i64_to_f64},
@@ -403,9 +438,30 @@
     </span><span class="kw">pub fn </span>is_zero(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.raw == <span class="number">0
     </span>}
+
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>as_f64(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         fixed_i64_to_f64(<span class="self">self</span>.raw)
+    }
+
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>as_decimal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="comment">// Scale down the raw value to match the precision
+        </span><span class="kw">let </span>precision = <span class="self">self</span>.currency.precision;
+        <span class="kw">let </span>rescaled_raw = <span class="self">self</span>.raw / i64::pow(<span class="number">10</span>, (FIXED_PRECISION - precision) <span class="kw">as </span>u32);
+        Decimal::from_i128_with_scale(rescaled_raw <span class="kw">as </span>i128, precision <span class="kw">as </span>u32)
+    }
+}
+
+<span class="kw">impl </span>From&lt;Money&gt; <span class="kw">for </span>f64 {
+    <span class="kw">fn </span>from(money: Money) -&gt; <span class="self">Self </span>{
+        money.as_f64()
+    }
+}
+
+<span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>Money&gt; <span class="kw">for </span>f64 {
+    <span class="kw">fn </span>from(money: <span class="kw-2">&amp;</span>Money) -&gt; <span class="self">Self </span>{
+        money.as_f64()
     }
 }
 
@@ -589,20 +645,25 @@
 <span class="attr">#[pymethods]
 </span><span class="kw">impl </span>Money {
     <span class="attr">#[getter]
-    </span><span class="kw">pub fn </span>raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
+    </span><span class="kw">fn </span>raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
         <span class="self">self</span>.raw
     }
 
     <span class="attr">#[getter]
-    </span><span class="kw">pub fn </span>currency(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Currency {
+    </span><span class="kw">fn </span>currency(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Currency {
         <span class="self">self</span>.currency
     }
 
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>as_double(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    <span class="attr">#[pyo3(name = <span class="string">&quot;as_double&quot;</span>)]
+    </span><span class="kw">fn </span>py_as_double(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         fixed_i64_to_f64(<span class="self">self</span>.raw)
     }
-}
+
+    <span class="comment">// #[pyo3(name = &quot;as_decimal&quot;)]
+    // fn py_as_decimal(&amp;self) -&gt; Decimal {
+    //     self.as_decimal()
+    // }
+</span>}
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // C API
@@ -637,6 +698,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>float_cmp::approx_eq;
+    <span class="kw">use </span>rust_decimal_macros::dec;
+
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::currencies::{BTC, USD};
 
@@ -646,6 +710,8 @@
         <span class="macro">assert_eq!</span>(money.currency.code.as_str(), <span class="string">&quot;USD&quot;</span>);
         <span class="macro">assert_eq!</span>(money.currency.precision, <span class="number">2</span>);
         <span class="macro">assert_eq!</span>(money.to_string(), <span class="string">&quot;1000.00 USD&quot;</span>);
+        <span class="macro">assert_eq!</span>(money.as_decimal(), <span class="macro">dec!</span>(<span class="number">1000.00</span>));
+        <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(f64, money.as_f64(), <span class="number">1000.0</span>, epsilon = <span class="number">0.001</span>));
     }
 
     <span class="attr">#[test]

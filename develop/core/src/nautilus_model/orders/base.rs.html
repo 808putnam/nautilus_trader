@@ -695,6 +695,53 @@
 <a href="#695" id="695">695</a>
 <a href="#696" id="696">696</a>
 <a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
+<a href="#731" id="731">731</a>
+<a href="#732" id="732">732</a>
+<a href="#733" id="733">733</a>
+<a href="#734" id="734">734</a>
+<a href="#735" id="735">735</a>
+<a href="#736" id="736">736</a>
+<a href="#737" id="737">737</a>
+<a href="#738" id="738">738</a>
+<a href="#739" id="739">739</a>
+<a href="#740" id="740">740</a>
+<a href="#741" id="741">741</a>
+<a href="#742" id="742">742</a>
+<a href="#743" id="743">743</a>
+<a href="#744" id="744">744</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -713,6 +760,7 @@
 </span><span class="kw">use </span>std::collections::HashMap;
 
 <span class="kw">use </span>nautilus_core::{time::UnixNanos, uuid::UUID4};
+<span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>thiserror;
 <span class="kw">use </span>ustr::Ustr;
 
@@ -729,10 +777,10 @@
     identifiers::{
         account_id::AccountId, client_order_id::ClientOrderId, exec_algorithm_id::ExecAlgorithmId,
         instrument_id::InstrumentId, order_list_id::OrderListId, position_id::PositionId,
-        strategy_id::StrategyId, trade_id::TradeId, trader_id::TraderId,
-        venue_order_id::VenueOrderId,
+        strategy_id::StrategyId, symbol::Symbol, trade_id::TradeId, trader_id::TraderId,
+        venue::Venue, venue_order_id::VenueOrderId,
     },
-    types::{price::Price, quantity::Quantity},
+    types::{currency::Currency, money::Money, price::Price, quantity::Quantity},
 };
 
 <span class="attr">#[derive(thiserror::Error, Debug)]
@@ -742,6 +790,20 @@
     <span class="attr">#[error(<span class="string">&quot;Unrecognized event&quot;</span>)]
     </span>UnrecognizedEvent,
 }
+
+<span class="kw">const </span>VALID_STOP_ORDER_TYPES: <span class="kw-2">&amp;</span>[OrderType] = <span class="kw-2">&amp;</span>[
+    OrderType::StopMarket,
+    OrderType::StopLimit,
+    OrderType::MarketIfTouched,
+    OrderType::LimitIfTouched,
+];
+
+<span class="kw">const </span>VALID_LIMIT_ORDER_TYPES: <span class="kw-2">&amp;</span>[OrderType] = <span class="kw-2">&amp;</span>[
+    OrderType::Limit,
+    OrderType::StopLimit,
+    OrderType::LimitIfTouched,
+    OrderType::MarketIfTouched,
+];
 
 <span class="kw">impl </span>OrderStatus {
     <span class="attr">#[rustfmt::skip]
@@ -818,6 +880,8 @@
     <span class="kw">fn </span>trader_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; TraderId;
     <span class="kw">fn </span>strategy_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; StrategyId;
     <span class="kw">fn </span>instrument_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; InstrumentId;
+    <span class="kw">fn </span>symbol(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Symbol;
+    <span class="kw">fn </span>venue(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Venue;
     <span class="kw">fn </span>client_order_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ClientOrderId;
     <span class="kw">fn </span>venue_order_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;VenueOrderId&gt;;
     <span class="kw">fn </span>position_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;PositionId&gt;;
@@ -892,6 +956,18 @@
         <span class="self">self</span>.emulation_trigger().is_some()
     }
 
+    <span class="kw">fn </span>is_primary(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="comment">// TODO: Guarantee `exec_spawn_id` is some if `exec_algorithm_id` is some
+        </span><span class="self">self</span>.exec_algorithm_id().is_some()
+            &amp;&amp; <span class="self">self</span>.client_order_id() == <span class="self">self</span>.exec_spawn_id().unwrap()
+    }
+
+    <span class="kw">fn </span>is_secondary(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="comment">// TODO: Guarantee `exec_spawn_id` is some if `exec_algorithm_id` is some
+        </span><span class="self">self</span>.exec_algorithm_id().is_some()
+            &amp;&amp; <span class="self">self</span>.client_order_id() != <span class="self">self</span>.exec_spawn_id().unwrap()
+    }
+
     <span class="kw">fn </span>is_contingency(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.contingency_type().is_some()
     }
@@ -917,6 +993,10 @@
                     | OrderStatus::PendingUpdate
                     | OrderStatus::PartiallyFilled
             )
+    }
+
+    <span class="kw">fn </span>is_canceled(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.status() == OrderStatus::Canceled
     }
 
     <span class="kw">fn </span>is_closed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -965,9 +1045,9 @@
             trigger_type: order.trigger_type(),
             time_in_force: order.time_in_force(),
             expire_time: order.expire_time(),
-            post_only: order.is_post_only() <span class="kw">as </span>u8,
-            reduce_only: order.is_reduce_only() <span class="kw">as </span>u8,
-            quote_quantity: order.is_quote_quantity() <span class="kw">as </span>u8,
+            post_only: order.is_post_only(),
+            reduce_only: order.is_reduce_only(),
+            quote_quantity: order.is_quote_quantity(),
             display_qty: order.display_qty(),
             limit_offset: order.limit_offset(),
             trailing_offset: order.trailing_offset(),
@@ -985,18 +1065,18 @@
             event_id: order.init_id(),
             ts_event: order.ts_init(),
             ts_init: order.ts_init(),
-            reconciliation: <span class="bool-val">false </span><span class="kw">as </span>u8,
+            reconciliation: <span class="bool-val">false</span>,
         }
     }
 }
 
-<span class="kw">pub struct </span>OrderCore {
+<span class="attr">#[derive(Clone, Debug, Serialize, Deserialize)]
+</span><span class="kw">pub struct </span>OrderCore {
     <span class="kw">pub </span>events: Vec&lt;OrderEvent&gt;,
+    <span class="kw">pub </span>commissions: HashMap&lt;Currency, Money&gt;,
     <span class="kw">pub </span>venue_order_ids: Vec&lt;VenueOrderId&gt;,
     <span class="kw">pub </span>trade_ids: Vec&lt;TradeId&gt;,
     <span class="kw">pub </span>previous_status: <span class="prelude-ty">Option</span>&lt;OrderStatus&gt;,
-    <span class="kw">pub </span>has_price: bool,
-    <span class="kw">pub </span>has_trigger_price: bool,
     <span class="kw">pub </span>status: OrderStatus,
     <span class="kw">pub </span>trader_id: TraderId,
     <span class="kw">pub </span>strategy_id: StrategyId,
@@ -1057,12 +1137,11 @@
     ) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             events: Vec::new(),
+            commissions: HashMap::new(),
             venue_order_ids: Vec::new(),
             trade_ids: Vec::new(),
             previous_status: <span class="prelude-val">None</span>,
-            has_price: <span class="bool-val">true</span>,          <span class="comment">// TODO
-            </span>has_trigger_price: <span class="bool-val">false</span>, <span class="comment">// TODO
-            </span>status: OrderStatus::Initialized,
+            status: OrderStatus::Initialized,
             trader_id,
             strategy_id,
             instrument_id,
@@ -1267,6 +1346,21 @@
             (OrderSide::Sell, PositionSide::Long) =&gt; <span class="self">self</span>.leaves_qty &lt;= position_qty,
             <span class="kw">_ </span>=&gt; <span class="bool-val">true</span>,
         }
+    }
+
+    <span class="comment">// TODO: Add as_decimal
+    // fn signed_decimal_qty(&amp;self) -&gt; Decimal {
+    //     match self.side {
+    //         OrderSide::Buy =&gt; self.quantity
+    //     }
+    // }
+
+    </span><span class="kw">fn </span>commission(<span class="kw-2">&amp;</span><span class="self">self</span>, currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="prelude-ty">Option</span>&lt;Money&gt; {
+        <span class="self">self</span>.commissions.get(currency).copied()
+    }
+
+    <span class="kw">fn </span>commissions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;Currency, Money&gt; {
+        <span class="self">self</span>.commissions.clone()
     }
 }
 

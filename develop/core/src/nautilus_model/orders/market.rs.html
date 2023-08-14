@@ -340,6 +340,14 @@
 <a href="#340" id="340">340</a>
 <a href="#341" id="341">341</a>
 <a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -373,8 +381,8 @@
     identifiers::{
         account_id::AccountId, client_order_id::ClientOrderId, exec_algorithm_id::ExecAlgorithmId,
         instrument_id::InstrumentId, order_list_id::OrderListId, position_id::PositionId,
-        strategy_id::StrategyId, trade_id::TradeId, trader_id::TraderId,
-        venue_order_id::VenueOrderId,
+        strategy_id::StrategyId, symbol::Symbol, trade_id::TradeId, trader_id::TraderId,
+        venue::Venue, venue_order_id::VenueOrderId,
     },
     types::{price::Price, quantity::Quantity},
 };
@@ -490,6 +498,14 @@
 
     <span class="kw">fn </span>instrument_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; InstrumentId {
         <span class="self">self</span>.instrument_id
+    }
+
+    <span class="kw">fn </span>symbol(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Symbol {
+        <span class="self">self</span>.instrument_id.symbol
+    }
+
+    <span class="kw">fn </span>venue(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Venue {
+        <span class="self">self</span>.instrument_id.venue
     }
 
     <span class="kw">fn </span>client_order_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ClientOrderId {
@@ -667,9 +683,9 @@
             event.order_side,
             event.quantity,
             event.time_in_force,
-            event.reduce_only != <span class="number">0</span>,    <span class="comment">// Temporary hack
-            </span>event.quote_quantity != <span class="number">0</span>, <span class="comment">// Temporary hack
-            </span>event.contingency_type,
+            event.reduce_only,
+            event.quote_quantity,
+            event.contingency_type,
             event.order_list_id,
             event.linked_order_ids,
             event.parent_order_id,

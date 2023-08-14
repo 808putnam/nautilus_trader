@@ -515,6 +515,24 @@
 <a href="#515" id="515">515</a>
 <a href="#516" id="516">516</a>
 <a href="#517" id="517">517</a>
+<a href="#518" id="518">518</a>
+<a href="#519" id="519">519</a>
+<a href="#520" id="520">520</a>
+<a href="#521" id="521">521</a>
+<a href="#522" id="522">522</a>
+<a href="#523" id="523">523</a>
+<a href="#524" id="524">524</a>
+<a href="#525" id="525">525</a>
+<a href="#526" id="526">526</a>
+<a href="#527" id="527">527</a>
+<a href="#528" id="528">528</a>
+<a href="#529" id="529">529</a>
+<a href="#530" id="530">530</a>
+<a href="#531" id="531">531</a>
+<a href="#532" id="532">532</a>
+<a href="#533" id="533">533</a>
+<a href="#534" id="534">534</a>
+<a href="#535" id="535">535</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -540,9 +558,10 @@
 
 <span class="kw">use </span>nautilus_core::{correctness, parsing::precision_from_str};
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize};
 
-<span class="kw">use </span><span class="kw">super</span>::fixed::FIXED_SCALAR;
+<span class="kw">use </span><span class="kw">super</span>::fixed::{FIXED_PRECISION, FIXED_SCALAR};
 <span class="kw">use </span><span class="kw">crate</span>::types::fixed::{f64_to_fixed_i64, fixed_i64_to_f64};
 
 <span class="kw">pub const </span>PRICE_MAX: f64 = <span class="number">9_223_372_036.0</span>;
@@ -608,6 +627,13 @@
     </span><span class="kw">pub fn </span>as_f64(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         fixed_i64_to_f64(<span class="self">self</span>.raw)
     }
+
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>as_decimal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="comment">// Scale down the raw value to match the precision
+        </span><span class="kw">let </span>rescaled_raw = <span class="self">self</span>.raw / i64::pow(<span class="number">10</span>, (FIXED_PRECISION - <span class="self">self</span>.precision) <span class="kw">as </span>u32);
+        Decimal::from_i128_with_scale(rescaled_raw <span class="kw">as </span>i128, <span class="self">self</span>.precision <span class="kw">as </span>u32)
+    }
 }
 
 <span class="kw">impl </span>FromStr <span class="kw">for </span>Price {
@@ -629,14 +655,14 @@
 }
 
 <span class="kw">impl </span>From&lt;Price&gt; <span class="kw">for </span>f64 {
-    <span class="kw">fn </span>from(value: Price) -&gt; <span class="self">Self </span>{
-        value.as_f64()
+    <span class="kw">fn </span>from(price: Price) -&gt; <span class="self">Self </span>{
+        price.as_f64()
     }
 }
 
 <span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>Price&gt; <span class="kw">for </span>f64 {
-    <span class="kw">fn </span>from(value: <span class="kw-2">&amp;</span>Price) -&gt; <span class="self">Self </span>{
-        value.as_f64()
+    <span class="kw">fn </span>from(price: <span class="kw-2">&amp;</span>Price) -&gt; <span class="self">Self </span>{
+        price.as_f64()
     }
 }
 
@@ -802,20 +828,25 @@
 <span class="attr">#[pymethods]
 </span><span class="kw">impl </span>Price {
     <span class="attr">#[getter]
-    </span><span class="kw">pub fn </span>raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
+    </span><span class="kw">fn </span>raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
         <span class="self">self</span>.raw
     }
 
     <span class="attr">#[getter]
-    </span><span class="kw">pub fn </span>precision(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u8 {
+    </span><span class="kw">fn </span>precision(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u8 {
         <span class="self">self</span>.precision
     }
 
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>as_double(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    <span class="attr">#[pyo3(name = <span class="string">&quot;as_double&quot;</span>)]
+    </span><span class="kw">fn </span>py_as_double(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         fixed_i64_to_f64(<span class="self">self</span>.raw)
     }
-}
+
+    <span class="comment">// #[pyo3(name = &quot;as_decimal&quot;)]
+    // fn py_as_decimal(&amp;self) -&gt; Decimal {
+    //     self.as_decimal()
+    // }
+</span>}
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // C API
@@ -852,6 +883,9 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::str::FromStr;
 
+    <span class="kw">use </span>float_cmp::approx_eq;
+    <span class="kw">use </span>rust_decimal_macros::dec;
+
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="attr">#[test]
@@ -863,6 +897,8 @@
         <span class="macro">assert_eq!</span>(price.as_f64(), <span class="number">0.00812</span>);
         <span class="macro">assert_eq!</span>(price.to_string(), <span class="string">&quot;0.00812000&quot;</span>);
         <span class="macro">assert!</span>(!price.is_zero());
+        <span class="macro">assert_eq!</span>(price.as_decimal(), <span class="macro">dec!</span>(<span class="number">0.00812000</span>));
+        <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(f64, price.as_f64(), <span class="number">0.00812</span>, epsilon = <span class="number">0.000001</span>));
     }
 
     <span class="attr">#[test]

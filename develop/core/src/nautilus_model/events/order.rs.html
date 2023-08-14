@@ -429,7 +429,7 @@
     types::{currency::Currency, money::Money, price::Price, quantity::Quantity},
 };
 
-<span class="attr">#[derive(Clone, PartialEq, Eq, Debug)]
+<span class="attr">#[derive(Clone, PartialEq, Eq, Debug, Serialize, Deserialize)]
 </span><span class="kw">pub enum </span>OrderEvent {
     OrderInitialized(Box&lt;OrderInitialized&gt;),
     OrderDenied(OrderDenied),
@@ -470,9 +470,9 @@
     <span class="kw">pub </span>trailing_offset_type: <span class="prelude-ty">Option</span>&lt;TrailingOffsetType&gt;,
     <span class="kw">pub </span>time_in_force: TimeInForce,
     <span class="kw">pub </span>expire_time: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
-    <span class="kw">pub </span>post_only: u8,
-    <span class="kw">pub </span>reduce_only: u8,
-    <span class="kw">pub </span>quote_quantity: u8,
+    <span class="kw">pub </span>post_only: bool,
+    <span class="kw">pub </span>reduce_only: bool,
+    <span class="kw">pub </span>quote_quantity: bool,
     <span class="kw">pub </span>display_qty: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
     <span class="kw">pub </span>emulation_trigger: <span class="prelude-ty">Option</span>&lt;TriggerType&gt;,
     <span class="kw">pub </span>trigger_instrument_id: <span class="prelude-ty">Option</span>&lt;InstrumentId&gt;,
@@ -487,7 +487,7 @@
     <span class="kw">pub </span>event_id: UUID4,
     <span class="kw">pub </span>ts_event: UnixNanos,
     <span class="kw">pub </span>ts_init: UnixNanos,
-    <span class="kw">pub </span>reconciliation: u8,
+    <span class="kw">pub </span>reconciliation: bool,
 }
 
 <span class="kw">impl </span>Default <span class="kw">for </span>OrderInitialized {

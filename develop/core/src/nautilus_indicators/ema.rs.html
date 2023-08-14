@@ -178,6 +178,11 @@
 <a href="#178" id="178">178</a>
 <a href="#179" id="179">179</a>
 <a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -210,8 +215,8 @@
     <span class="kw">pub </span>alpha: f64,
     <span class="kw">pub </span>value: f64,
     <span class="kw">pub </span>count: usize,
-    _has_inputs: bool,
-    _is_initialized: bool,
+    has_inputs: bool,
+    is_initialized: bool,
 }
 
 <span class="kw">impl </span>Indicator <span class="kw">for </span>ExponentialMovingAverage {
@@ -220,89 +225,37 @@
     }
 
     <span class="kw">fn </span>has_inputs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>._has_inputs
+        <span class="self">self</span>.has_inputs
     }
 
     <span class="kw">fn </span>is_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>._is_initialized
+        <span class="self">self</span>.is_initialized
     }
 
     <span class="kw">fn </span>handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
+        <span class="self">self</span>.py_update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
     }
 
     <span class="kw">fn </span>handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into())
+        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>tick.price).into())
     }
 
     <span class="kw">fn </span>handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into())
+        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>bar.close).into())
     }
 
     <span class="kw">fn </span>reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="self">self</span>.value = <span class="number">0.0</span>;
         <span class="self">self</span>.count = <span class="number">0</span>;
-        <span class="self">self</span>._has_inputs = <span class="bool-val">false</span>;
-        <span class="self">self</span>._is_initialized = <span class="bool-val">false</span>;
+        <span class="self">self</span>.has_inputs = <span class="bool-val">false</span>;
+        <span class="self">self</span>.is_initialized = <span class="bool-val">false</span>;
     }
 }
 
-<span class="attr">#[pymethods]
-</span><span class="kw">impl </span>ExponentialMovingAverage {
-    <span class="attr">#[must_use]
-    #[new]
-    </span><span class="kw">pub fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            period,
-            price_type: price_type.unwrap_or(PriceType::Last),
-            alpha: <span class="number">2.0 </span>/ (period <span class="kw">as </span>f64 + <span class="number">1.0</span>),
-            value: <span class="number">0.0</span>,
-            count: <span class="number">0</span>,
-            _has_inputs: <span class="bool-val">false</span>,
-            _is_initialized: <span class="bool-val">false</span>,
-        }
-    }
-
-    <span class="attr">#[getter]
-    #[pyo3(name = <span class="string">&quot;name&quot;</span>)]
-    #[must_use]
-    </span><span class="kw">pub fn </span>name_py(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="self">self</span>.name()
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;has_inputs&quot;</span>)]
-    </span><span class="kw">fn </span>has_inputs_py(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.has_inputs()
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;is_initialized&quot;</span>)]
-    </span><span class="kw">fn </span>is_initialized_py(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>._is_initialized
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_quote_tick&quot;</span>)]
-    </span><span class="kw">fn </span>handle_quote_tick_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_trade_tick&quot;</span>)]
-    </span><span class="kw">fn </span>handle_trade_tick_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into())
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_bar&quot;</span>)]
-    </span><span class="kw">fn </span>handle_bar_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into())
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;reset&quot;</span>)]
-    </span><span class="kw">fn </span>reset_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="self">self</span>.reset()
-    }
-
-    <span class="kw">pub fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
-        <span class="kw">if </span>!<span class="self">self</span>._has_inputs {
-            <span class="self">self</span>._has_inputs = <span class="bool-val">true</span>;
+<span class="kw">impl </span>ExponentialMovingAverage {
+    <span class="kw">fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
+        <span class="kw">if </span>!<span class="self">self</span>.has_inputs {
+            <span class="self">self</span>.has_inputs = <span class="bool-val">true</span>;
             <span class="self">self</span>.value = value;
         }
 
@@ -310,9 +263,66 @@
         <span class="self">self</span>.count += <span class="number">1</span>;
 
         <span class="comment">// Initialization logic
-        </span><span class="kw">if </span>!<span class="self">self</span>._is_initialized &amp;&amp; <span class="self">self</span>.count &gt;= <span class="self">self</span>.period {
-            <span class="self">self</span>._is_initialized = <span class="bool-val">true</span>;
+        </span><span class="kw">if </span>!<span class="self">self</span>.is_initialized &amp;&amp; <span class="self">self</span>.count &gt;= <span class="self">self</span>.period {
+            <span class="self">self</span>.is_initialized = <span class="bool-val">true</span>;
         }
+    }
+}
+
+<span class="attr">#[pymethods]
+</span><span class="kw">impl </span>ExponentialMovingAverage {
+    <span class="attr">#[new]
+    </span><span class="kw">fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            period,
+            price_type: price_type.unwrap_or(PriceType::Last),
+            alpha: <span class="number">2.0 </span>/ (period <span class="kw">as </span>f64 + <span class="number">1.0</span>),
+            value: <span class="number">0.0</span>,
+            count: <span class="number">0</span>,
+            has_inputs: <span class="bool-val">false</span>,
+            is_initialized: <span class="bool-val">false</span>,
+        }
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">&quot;name&quot;</span>)]
+    </span><span class="kw">fn </span>py_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="self">self</span>.name()
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;has_inputs&quot;</span>)]
+    </span><span class="kw">fn </span>py_has_inputs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.has_inputs()
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;is_initialized&quot;</span>)]
+    </span><span class="kw">fn </span>py_is_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.is_initialized
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_quote_tick&quot;</span>)]
+    </span><span class="kw">fn </span>py_handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
+        <span class="self">self</span>.py_update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_trade_tick&quot;</span>)]
+    </span><span class="kw">fn </span>py_handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into())
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_bar&quot;</span>)]
+    </span><span class="kw">fn </span>py_handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into())
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;reset&quot;</span>)]
+    </span><span class="kw">fn </span>py_reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="self">self</span>.reset()
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;update_raw&quot;</span>)]
+    </span><span class="kw">fn </span>py_update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
+        <span class="self">self</span>.update_raw(value)
     }
 }
 
@@ -327,15 +337,15 @@
     </span><span class="kw">fn </span>test_ema_initialized() {
         <span class="kw">let </span>ema = ExponentialMovingAverage::new(<span class="number">20</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
         <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">&quot;{ema:?}&quot;</span>);
-        <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;ExponentialMovingAverage { period: 20, price_type: Mid, alpha: 0.09523809523809523, value: 0.0, count: 0, _has_inputs: false, _is_initialized: false }&quot;</span>);
+        <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;ExponentialMovingAverage { period: 20, price_type: Mid, alpha: 0.09523809523809523, value: 0.0, count: 0, has_inputs: false, is_initialized: false }&quot;</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_ema_update_raw() {
         <span class="kw">let </span><span class="kw-2">mut </span>ema = ExponentialMovingAverage::new(<span class="number">3</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
-        ema.update_raw(<span class="number">1.0</span>);
-        ema.update_raw(<span class="number">2.0</span>);
-        ema.update_raw(<span class="number">3.0</span>);
+        ema.py_update_raw(<span class="number">1.0</span>);
+        ema.py_update_raw(<span class="number">2.0</span>);
+        ema.py_update_raw(<span class="number">3.0</span>);
 
         <span class="macro">assert!</span>(ema.has_inputs());
         <span class="macro">assert!</span>(ema.is_initialized());
@@ -346,9 +356,9 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_ema_reset() {
         <span class="kw">let </span><span class="kw-2">mut </span>ema = ExponentialMovingAverage::new(<span class="number">3</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
-        ema.update_raw(<span class="number">1.0</span>);
-        ema.update_raw(<span class="number">2.0</span>);
-        ema.update_raw(<span class="number">3.0</span>);
+        ema.py_update_raw(<span class="number">1.0</span>);
+        ema.py_update_raw(<span class="number">2.0</span>);
+        ema.py_update_raw(<span class="number">3.0</span>);
 
         ema.reset();
 

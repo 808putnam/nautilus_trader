@@ -407,6 +407,14 @@
 <a href="#407" id="407">407</a>
 <a href="#408" id="408">408</a>
 <a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -440,8 +448,8 @@
     identifiers::{
         account_id::AccountId, client_order_id::ClientOrderId, exec_algorithm_id::ExecAlgorithmId,
         instrument_id::InstrumentId, order_list_id::OrderListId, position_id::PositionId,
-        strategy_id::StrategyId, trade_id::TradeId, trader_id::TraderId,
-        venue_order_id::VenueOrderId,
+        strategy_id::StrategyId, symbol::Symbol, trade_id::TradeId, trader_id::TraderId,
+        venue::Venue, venue_order_id::VenueOrderId,
     },
     types::{price::Price, quantity::Quantity},
 };
@@ -605,6 +613,14 @@
 
     <span class="kw">fn </span>instrument_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; InstrumentId {
         <span class="self">self</span>.instrument_id
+    }
+
+    <span class="kw">fn </span>symbol(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Symbol {
+        <span class="self">self</span>.instrument_id.symbol
+    }
+
+    <span class="kw">fn </span>venue(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Venue {
+        <span class="self">self</span>.instrument_id.venue
     }
 
     <span class="kw">fn </span>client_order_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ClientOrderId {
@@ -797,10 +813,10 @@
             </span>event.trailing_offset_type.unwrap(),  <span class="comment">// TODO
             </span>event.time_in_force,
             event.expire_time,
-            event.post_only != <span class="number">0</span>,      <span class="comment">// Temporary hack
-            </span>event.reduce_only != <span class="number">0</span>,    <span class="comment">// Temporary hack
-            </span>event.quote_quantity != <span class="number">0</span>, <span class="comment">// Temporary hack
-            </span>event.display_qty,
+            event.post_only,
+            event.reduce_only,
+            event.quote_quantity,
+            event.display_qty,
             event.emulation_trigger,
             event.trigger_instrument_id,
             event.contingency_type,
