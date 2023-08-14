@@ -387,6 +387,10 @@
 <a href="#387" id="387">387</a>
 <a href="#388" id="388">388</a>
 <a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -416,7 +420,7 @@
         ContingencyType, LiquiditySide, OrderSide, OrderStatus, OrderType, TimeInForce,
         TrailingOffsetType, TriggerType,
     },
-    events::order::{OrderEvent, OrderInitialized},
+    events::order::{OrderEvent, OrderInitialized, OrderUpdated},
     identifiers::{
         account_id::AccountId, client_order_id::ClientOrderId, exec_algorithm_id::ExecAlgorithmId,
         instrument_id::InstrumentId, order_list_id::OrderListId, position_id::PositionId,
@@ -736,6 +740,10 @@
 
     <span class="kw">fn </span>trade_ids(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>TradeId&gt; {
         <span class="self">self</span>.trade_ids.iter().collect()
+    }
+
+    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderUpdated) {
+        <span class="self">self</span>.quantity = event.quantity;
     }
 }
 

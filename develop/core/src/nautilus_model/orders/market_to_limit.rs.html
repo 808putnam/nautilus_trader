@@ -366,6 +366,19 @@
 <a href="#366" id="366">366</a>
 <a href="#367" id="367">367</a>
 <a href="#368" id="368">368</a>
+<a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -395,13 +408,14 @@
         ContingencyType, LiquiditySide, OrderSide, OrderStatus, OrderType, TimeInForce,
         TrailingOffsetType, TriggerType,
     },
-    events::order::{OrderEvent, OrderInitialized},
+    events::order::{OrderEvent, OrderInitialized, OrderUpdated},
     identifiers::{
         account_id::AccountId, client_order_id::ClientOrderId, exec_algorithm_id::ExecAlgorithmId,
         instrument_id::InstrumentId, order_list_id::OrderListId, position_id::PositionId,
         strategy_id::StrategyId, symbol::Symbol, trade_id::TradeId, trader_id::TraderId,
         venue::Venue, venue_order_id::VenueOrderId,
     },
+    orders::base::OrderError,
     types::{price::Price, quantity::Quantity},
 };
 
@@ -703,6 +717,18 @@
 
     <span class="kw">fn </span>trade_ids(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>TradeId&gt; {
         <span class="self">self</span>.trade_ids.iter().collect()
+    }
+
+    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderUpdated) {
+        <span class="kw">if </span>event.trigger_price.is_some() {
+            <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, OrderError::InvalidOrderEvent);
+        }
+
+        <span class="self">self</span>.quantity = event.quantity;
+
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(price) = event.price {
+            <span class="self">self</span>.price = <span class="prelude-val">Some</span>(price);
+        }
     }
 }
 

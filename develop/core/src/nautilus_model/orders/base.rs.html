@@ -766,6 +766,8 @@
 <a href="#766" id="766">766</a>
 <a href="#767" id="767">767</a>
 <a href="#768" id="768">768</a>
+<a href="#769" id="769">769</a>
+<a href="#770" id="770">770</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -813,8 +815,12 @@
 </span><span class="kw">pub enum </span>OrderError {
     <span class="attr">#[error(<span class="string">&quot;Invalid state transition&quot;</span>)]
     </span>InvalidStateTransition,
+    <span class="attr">#[error(<span class="string">&quot;Invalid event for order type&quot;</span>)]
+    </span>InvalidOrderEvent,
     <span class="attr">#[error(<span class="string">&quot;Unrecognized event&quot;</span>)]
     </span>UnrecognizedEvent,
+    <span class="attr">#[error(<span class="string">&quot;No previous state&quot;</span>)]
+    </span>NoPreviousState,
 }
 
 <span class="kw">const </span>VALID_STOP_ORDER_TYPES: <span class="kw-2">&amp;</span>[OrderType] = <span class="kw-2">&amp;</span>[
@@ -948,6 +954,7 @@
     <span class="kw">fn </span>ts_last(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos;
 
     <span class="kw">fn </span>events(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>OrderEvent&gt;;
+    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderUpdated);
 
     <span class="kw">fn </span>last_event(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>OrderEvent {
         <span class="comment">// Safety: `Order` specification guarantees at least one event (`OrderInitialized`)
@@ -1205,6 +1212,9 @@
     }
 
     <span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderEvent) -&gt; <span class="prelude-ty">Result</span>&lt;(), OrderError&gt; {
+        <span class="macro">assert_eq!</span>(<span class="self">self</span>.client_order_id, event.client_order_id());
+        <span class="macro">assert_eq!</span>(<span class="self">self</span>.strategy_id, event.strategy_id());
+
         <span class="kw">let </span>new_status = <span class="self">self</span>.status.transition(<span class="kw-2">&amp;</span>event)<span class="question-mark">?</span>;
         <span class="self">self</span>.previous_status = <span class="prelude-val">Some</span>(<span class="self">self</span>.status);
         <span class="self">self</span>.status = new_status;
@@ -1227,6 +1237,7 @@
             <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OrderError::UnrecognizedEvent),
         }
 
+        <span class="self">self</span>.ts_last = event.ts_event();
         <span class="self">self</span>.events.push(event);
         <span class="prelude-val">Ok</span>(())
     }
@@ -1264,11 +1275,15 @@
     </span>}
 
     <span class="kw">fn </span>modify_rejected(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _event: <span class="kw-2">&amp;</span>OrderModifyRejected) {
-        <span class="self">self</span>.status = <span class="self">self</span>.previous_status.unwrap();
+        <span class="self">self</span>.status = <span class="self">self
+            </span>.previous_status
+            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, OrderError::NoPreviousState));
     }
 
     <span class="kw">fn </span>cancel_rejected(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _event: <span class="kw-2">&amp;</span>OrderCancelRejected) {
-        <span class="self">self</span>.status = <span class="self">self</span>.previous_status.unwrap();
+        <span class="self">self</span>.status = <span class="self">self
+            </span>.previous_status
+            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, OrderError::NoPreviousState));
     }
 
     <span class="kw">fn </span>triggered(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _event: <span class="kw-2">&amp;</span>OrderTriggered) {}
@@ -1278,37 +1293,17 @@
     <span class="kw">fn </span>expired(<span class="kw-2">&amp;mut </span><span class="self">self</span>, _event: <span class="kw-2">&amp;</span>OrderExpired) {}
 
     <span class="kw">fn </span>updated(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderUpdated) {
-        <span class="kw">match </span><span class="kw-2">&amp;</span>event.venue_order_id {
-            <span class="prelude-val">Some</span>(venue_order_id) =&gt; {
-                <span class="kw">if </span><span class="self">self</span>.venue_order_id.is_some()
-                    &amp;&amp; venue_order_id != <span class="self">self</span>.venue_order_id.as_ref().unwrap()
-                {
-                    <span class="self">self</span>.venue_order_id = <span class="prelude-val">Some</span>(<span class="kw-2">*</span>venue_order_id);
-                    <span class="self">self</span>.venue_order_ids.push(<span class="kw-2">*</span>venue_order_id);
-                }
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(venue_order_id) = <span class="kw-2">&amp;</span>event.venue_order_id {
+            <span class="kw">if </span><span class="self">self</span>.venue_order_id.is_none()
+                || venue_order_id != <span class="self">self</span>.venue_order_id.as_ref().unwrap()
+            {
+                <span class="self">self</span>.venue_order_id = <span class="prelude-val">Some</span>(<span class="kw-2">*</span>venue_order_id);
+                <span class="self">self</span>.venue_order_ids.push(<span class="kw-2">*</span>venue_order_id);
             }
-            <span class="prelude-val">None </span>=&gt; {}
         }
 
-        <span class="comment">// TODO
-        // if let Some(price) = &amp;event.price {
-        //     if self.price.is_some() {
-        //         self.price.replace(*price);
-        //     } else {
-        //         panic!(&quot;invalid update of `price` when None&quot;)
-        //     }
-        // }
-        //
-        // if let Some(trigger_price) = &amp;event.trigger_price {
-        //     if self.trigger_price.is_some() {
-        //         self.trigger_price.replace(*trigger_price);
-        //     } else {
-        //         panic!(&quot;invalid update of `trigger_price` when None&quot;)
-        //     }
-        // }
-
-        </span><span class="self">self</span>.quantity = event.quantity;
-        <span class="self">self</span>.leaves_qty = <span class="self">self</span>.quantity - <span class="self">self</span>.filled_qty;
+        <span class="comment">// self.update_order(event);  // TODO
+        </span><span class="self">self</span>.leaves_qty = <span class="self">self</span>.quantity - <span class="self">self</span>.filled_qty;
     }
 
     <span class="kw">fn </span>filled(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderFilled) {
@@ -1418,6 +1413,15 @@
         events::order::{OrderDeniedBuilder, OrderEvent, OrderInitializedBuilder},
         orders::market::MarketOrder,
     };
+
+    <span class="kw">fn </span>test_initialize_market_order() {
+        <span class="kw">let </span>order = MarketOrder::default();
+        <span class="macro">assert_eq!</span>(order.events().len(), <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(
+            <span class="macro">stringify!</span>(order.events().get(<span class="number">0</span>)),
+            <span class="macro">stringify!</span>(OrderInitialized)
+        );
+    }
 
     <span class="attr">#[rstest]
     #[case(OrderSide::Buy, OrderSide::Sell)]
