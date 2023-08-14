@@ -173,15 +173,6 @@
 <a href="#173" id="173">173</a>
 <a href="#174" id="174">174</a>
 <a href="#175" id="175">175</a>
-<a href="#176" id="176">176</a>
-<a href="#177" id="177">177</a>
-<a href="#178" id="178">178</a>
-<a href="#179" id="179">179</a>
-<a href="#180" id="180">180</a>
-<a href="#181" id="181">181</a>
-<a href="#182" id="182">182</a>
-<a href="#183" id="183">183</a>
-<a href="#184" id="184">184</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -237,96 +228,87 @@
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[rstest(precision, value,
-        case(<span class="number">0</span>, <span class="number">0.0</span>),
-        case(<span class="number">1</span>, <span class="number">1.0</span>),
-        case(<span class="number">1</span>, <span class="number">1.1</span>),
-        case(<span class="number">9</span>, <span class="number">0.000_000_001</span>),
-        case(<span class="number">0</span>, -<span class="number">0.0</span>),
-        case(<span class="number">1</span>, -<span class="number">1.0</span>),
-        case(<span class="number">1</span>, -<span class="number">1.1</span>),
-        case(<span class="number">9</span>, -<span class="number">0.000_000_001</span>),
-    )]
-    </span><span class="kw">fn </span>test_f64_to_fixed_i64_to_fixed(precision: u8, value: f64) {
+    <span class="attr">#[rstest]
+    #[case(<span class="number">0</span>, <span class="number">0.0</span>)]
+    #[case(<span class="number">1</span>, <span class="number">1.0</span>)]
+    #[case(<span class="number">1</span>, <span class="number">1.1</span>)]
+    #[case(<span class="number">9</span>, <span class="number">0.000_000_001</span>)]
+    #[case(<span class="number">0</span>, -<span class="number">0.0</span>)]
+    #[case(<span class="number">1</span>, -<span class="number">1.0</span>)]
+    #[case(<span class="number">1</span>, -<span class="number">1.1</span>)]
+    #[case(<span class="number">9</span>, -<span class="number">0.000_000_001</span>)]
+    </span><span class="kw">fn </span>test_f64_to_fixed_i64_to_fixed(<span class="attr">#[case] </span>precision: u8, <span class="attr">#[case] </span>value: f64) {
         <span class="kw">let </span>fixed = f64_to_fixed_i64(value, precision);
         <span class="kw">let </span>result = fixed_i64_to_f64(fixed);
         <span class="macro">assert_eq!</span>(result, value);
     }
 
-    <span class="attr">#[rstest(
-        precision,
-        value,
-        case(<span class="number">0</span>, <span class="number">0.0</span>),
-        case(<span class="number">1</span>, <span class="number">1.0</span>),
-        case(<span class="number">1</span>, <span class="number">1.1</span>),
-        case(<span class="number">9</span>, <span class="number">0.000_000_001</span>)
-    )]
-    </span><span class="kw">fn </span>test_f64_to_fixed_u64_to_fixed(precision: u8, value: f64) {
+    <span class="attr">#[rstest]
+    #[case(<span class="number">0</span>, <span class="number">0.0</span>)]
+    #[case(<span class="number">1</span>, <span class="number">1.0</span>)]
+    #[case(<span class="number">1</span>, <span class="number">1.1</span>)]
+    #[case(<span class="number">9</span>, <span class="number">0.000_000_001</span>)]
+    </span><span class="kw">fn </span>test_f64_to_fixed_u64_to_fixed(<span class="attr">#[case] </span>precision: u8, <span class="attr">#[case] </span>value: f64) {
         <span class="kw">let </span>fixed = f64_to_fixed_u64(value, precision);
         <span class="kw">let </span>result = fixed_u64_to_f64(fixed);
         <span class="macro">assert_eq!</span>(result, value);
     }
 
-    <span class="attr">#[rstest(
-        precision,
-        value,
-        expected,
-        case(<span class="number">0</span>, <span class="number">123_456.0</span>, <span class="number">123_456_000_000_000</span>),
-        case(<span class="number">0</span>, <span class="number">123_456.7</span>, <span class="number">123_457_000_000_000</span>),
-        case(<span class="number">0</span>, <span class="number">123_456.4</span>, <span class="number">123_456_000_000_000</span>),
-        case(<span class="number">1</span>, <span class="number">123_456.0</span>, <span class="number">123_456_000_000_000</span>),
-        case(<span class="number">1</span>, <span class="number">123_456.7</span>, <span class="number">123_456_700_000_000</span>),
-        case(<span class="number">1</span>, <span class="number">123_456.4</span>, <span class="number">123_456_400_000_000</span>),
-        case(<span class="number">2</span>, <span class="number">123_456.0</span>, <span class="number">123_456_000_000_000</span>),
-        case(<span class="number">2</span>, <span class="number">123_456.7</span>, <span class="number">123_456_700_000_000</span>),
-        case(<span class="number">2</span>, <span class="number">123_456.4</span>, <span class="number">123_456_400_000_000</span>)
-    )]
-    </span><span class="kw">fn </span>test_f64_to_fixed_i64_with_precision(precision: u8, value: f64, expected: i64) {
+    <span class="attr">#[rstest]
+    #[case(<span class="number">0</span>, <span class="number">123_456.0</span>, <span class="number">123_456_000_000_000</span>)]
+    #[case(<span class="number">0</span>, <span class="number">123_456.7</span>, <span class="number">123_457_000_000_000</span>)]
+    #[case(<span class="number">0</span>, <span class="number">123_456.4</span>, <span class="number">123_456_000_000_000</span>)]
+    #[case(<span class="number">1</span>, <span class="number">123_456.0</span>, <span class="number">123_456_000_000_000</span>)]
+    #[case(<span class="number">1</span>, <span class="number">123_456.7</span>, <span class="number">123_456_700_000_000</span>)]
+    #[case(<span class="number">1</span>, <span class="number">123_456.4</span>, <span class="number">123_456_400_000_000</span>)]
+    #[case(<span class="number">2</span>, <span class="number">123_456.0</span>, <span class="number">123_456_000_000_000</span>)]
+    #[case(<span class="number">2</span>, <span class="number">123_456.7</span>, <span class="number">123_456_700_000_000</span>)]
+    #[case(<span class="number">2</span>, <span class="number">123_456.4</span>, <span class="number">123_456_400_000_000</span>)]
+    </span><span class="kw">fn </span>test_f64_to_fixed_i64_with_precision(
+        <span class="attr">#[case] </span>precision: u8,
+        <span class="attr">#[case] </span>value: f64,
+        <span class="attr">#[case] </span>expected: i64,
+    ) {
         <span class="macro">assert_eq!</span>(f64_to_fixed_i64(value, precision), expected);
     }
 
-    <span class="attr">#[rstest(precision, value, expected,
-        case(<span class="number">0</span>, <span class="number">5.5</span>, <span class="number">6_000_000_000</span>),
-        case(<span class="number">1</span>, <span class="number">5.55</span>, <span class="number">5_600_000_000</span>),
-        case(<span class="number">2</span>, <span class="number">5.555</span>, <span class="number">5_560_000_000</span>),
-        case(<span class="number">3</span>, <span class="number">5.5555</span>, <span class="number">5_556_000_000</span>),
-        case(<span class="number">4</span>, <span class="number">5.55555</span>, <span class="number">5_555_600_000</span>),
-        case(<span class="number">5</span>, <span class="number">5.555_555</span>, <span class="number">5_555_560_000</span>),
-        case(<span class="number">6</span>, <span class="number">5.555_555_5</span>, <span class="number">5_555_556_000</span>),
-        case(<span class="number">7</span>, <span class="number">5.555_555_55</span>, <span class="number">5_555_555_600</span>),
-        case(<span class="number">8</span>, <span class="number">5.555_555_555</span>, <span class="number">5_555_555_560</span>),
-        case(<span class="number">9</span>, <span class="number">5.555_555_555_5</span>, <span class="number">5_555_555_556</span>),
-        case(<span class="number">0</span>, -<span class="number">5.5</span>, -<span class="number">6_000_000_000</span>),
-        case(<span class="number">1</span>, -<span class="number">5.55</span>, -<span class="number">5_600_000_000</span>),
-        case(<span class="number">2</span>, -<span class="number">5.555</span>, -<span class="number">5_560_000_000</span>),
-        case(<span class="number">3</span>, -<span class="number">5.5555</span>, -<span class="number">5_556_000_000</span>),
-        case(<span class="number">4</span>, -<span class="number">5.55555</span>, -<span class="number">5_555_600_000</span>),
-        case(<span class="number">5</span>, -<span class="number">5.555_555</span>, -<span class="number">5_555_560_000</span>),
-        case(<span class="number">6</span>, -<span class="number">5.555_555_5</span>, -<span class="number">5_555_556_000</span>),
-        case(<span class="number">7</span>, -<span class="number">5.555_555_55</span>, -<span class="number">5_555_555_600</span>),
-        case(<span class="number">8</span>, -<span class="number">5.555_555_555</span>, -<span class="number">5_555_555_560</span>),
-        case(<span class="number">9</span>, -<span class="number">5.555_555_555_5</span>, -<span class="number">5_555_555_556</span>),
-    )]
-    </span><span class="kw">fn </span>test_f64_to_fixed_i64(precision: u8, value: f64, expected: i64) {
+    <span class="attr">#[rstest]
+    #[case(<span class="number">0</span>, <span class="number">5.5</span>, <span class="number">6_000_000_000</span>)]
+    #[case(<span class="number">1</span>, <span class="number">5.55</span>, <span class="number">5_600_000_000</span>)]
+    #[case(<span class="number">2</span>, <span class="number">5.555</span>, <span class="number">5_560_000_000</span>)]
+    #[case(<span class="number">3</span>, <span class="number">5.5555</span>, <span class="number">5_556_000_000</span>)]
+    #[case(<span class="number">4</span>, <span class="number">5.55555</span>, <span class="number">5_555_600_000</span>)]
+    #[case(<span class="number">5</span>, <span class="number">5.555_555</span>, <span class="number">5_555_560_000</span>)]
+    #[case(<span class="number">6</span>, <span class="number">5.555_555_5</span>, <span class="number">5_555_556_000</span>)]
+    #[case(<span class="number">7</span>, <span class="number">5.555_555_55</span>, <span class="number">5_555_555_600</span>)]
+    #[case(<span class="number">8</span>, <span class="number">5.555_555_555</span>, <span class="number">5_555_555_560</span>)]
+    #[case(<span class="number">9</span>, <span class="number">5.555_555_555_5</span>, <span class="number">5_555_555_556</span>)]
+    #[case(<span class="number">0</span>, -<span class="number">5.5</span>, -<span class="number">6_000_000_000</span>)]
+    #[case(<span class="number">1</span>, -<span class="number">5.55</span>, -<span class="number">5_600_000_000</span>)]
+    #[case(<span class="number">2</span>, -<span class="number">5.555</span>, -<span class="number">5_560_000_000</span>)]
+    #[case(<span class="number">3</span>, -<span class="number">5.5555</span>, -<span class="number">5_556_000_000</span>)]
+    #[case(<span class="number">4</span>, -<span class="number">5.55555</span>, -<span class="number">5_555_600_000</span>)]
+    #[case(<span class="number">5</span>, -<span class="number">5.555_555</span>, -<span class="number">5_555_560_000</span>)]
+    #[case(<span class="number">6</span>, -<span class="number">5.555_555_5</span>, -<span class="number">5_555_556_000</span>)]
+    #[case(<span class="number">7</span>, -<span class="number">5.555_555_55</span>, -<span class="number">5_555_555_600</span>)]
+    #[case(<span class="number">8</span>, -<span class="number">5.555_555_555</span>, -<span class="number">5_555_555_560</span>)]
+    #[case(<span class="number">9</span>, -<span class="number">5.555_555_555_5</span>, -<span class="number">5_555_555_556</span>)]
+    </span><span class="kw">fn </span>test_f64_to_fixed_i64(<span class="attr">#[case] </span>precision: u8, <span class="attr">#[case] </span>value: f64, <span class="attr">#[case] </span>expected: i64) {
         <span class="macro">assert_eq!</span>(f64_to_fixed_i64(value, precision), expected);
     }
 
-    <span class="attr">#[rstest(
-        precision,
-        value,
-        expected,
-        case(<span class="number">0</span>, <span class="number">5.5</span>, <span class="number">6_000_000_000</span>),
-        case(<span class="number">1</span>, <span class="number">5.55</span>, <span class="number">5_600_000_000</span>),
-        case(<span class="number">2</span>, <span class="number">5.555</span>, <span class="number">5_560_000_000</span>),
-        case(<span class="number">3</span>, <span class="number">5.5555</span>, <span class="number">5_556_000_000</span>),
-        case(<span class="number">4</span>, <span class="number">5.55555</span>, <span class="number">5_555_600_000</span>),
-        case(<span class="number">5</span>, <span class="number">5.555_555</span>, <span class="number">5_555_560_000</span>),
-        case(<span class="number">6</span>, <span class="number">5.555_555_5</span>, <span class="number">5_555_556_000</span>),
-        case(<span class="number">7</span>, <span class="number">5.555_555_55</span>, <span class="number">5_555_555_600</span>),
-        case(<span class="number">8</span>, <span class="number">5.555_555_555</span>, <span class="number">5_555_555_560</span>),
-        case(<span class="number">9</span>, <span class="number">5.555_555_555_5</span>, <span class="number">5_555_555_556</span>)
-    )]
-    </span><span class="kw">fn </span>test_f64_to_fixed_u64(precision: u8, value: f64, expected: u64) {
+    <span class="attr">#[rstest]
+    #[case(<span class="number">0</span>, <span class="number">5.5</span>, <span class="number">6_000_000_000</span>)]
+    #[case(<span class="number">1</span>, <span class="number">5.55</span>, <span class="number">5_600_000_000</span>)]
+    #[case(<span class="number">2</span>, <span class="number">5.555</span>, <span class="number">5_560_000_000</span>)]
+    #[case(<span class="number">3</span>, <span class="number">5.5555</span>, <span class="number">5_556_000_000</span>)]
+    #[case(<span class="number">4</span>, <span class="number">5.55555</span>, <span class="number">5_555_600_000</span>)]
+    #[case(<span class="number">5</span>, <span class="number">5.555_555</span>, <span class="number">5_555_560_000</span>)]
+    #[case(<span class="number">6</span>, <span class="number">5.555_555_5</span>, <span class="number">5_555_556_000</span>)]
+    #[case(<span class="number">7</span>, <span class="number">5.555_555_55</span>, <span class="number">5_555_555_600</span>)]
+    #[case(<span class="number">8</span>, <span class="number">5.555_555_555</span>, <span class="number">5_555_555_560</span>)]
+    #[case(<span class="number">9</span>, <span class="number">5.555_555_555_5</span>, <span class="number">5_555_555_556</span>)]
+    </span><span class="kw">fn </span>test_f64_to_fixed_u64(<span class="attr">#[case] </span>precision: u8, <span class="attr">#[case] </span>value: f64, <span class="attr">#[case] </span>expected: u64) {
         <span class="macro">assert_eq!</span>(f64_to_fixed_u64(value, precision), expected);
     }
 

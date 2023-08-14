@@ -408,9 +408,6 @@
 <a href="#408" id="408">408</a>
 <a href="#409" id="409">409</a>
 <a href="#410" id="410">410</a>
-<a href="#411" id="411">411</a>
-<a href="#412" id="412">412</a>
-<a href="#413" id="413">413</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -758,14 +755,11 @@
         </span>);
     }
 
-    <span class="attr">#[rstest(
-        input,
-        expected,
-        case(PriceType::Bid, <span class="number">10_000_000_000_000</span>),
-        case(PriceType::Ask, <span class="number">10_001_000_000_000</span>),
-        case(PriceType::Mid, <span class="number">10_000_500_000_000</span>)
-    )]
-    </span><span class="kw">fn </span>test_extract_price(input: PriceType, expected: i64) {
+    <span class="attr">#[rstest]
+    #[case(PriceType::Bid, <span class="number">10_000_000_000_000</span>)]
+    #[case(PriceType::Ask, <span class="number">10_001_000_000_000</span>)]
+    #[case(PriceType::Mid, <span class="number">10_000_500_000_000</span>)]
+    </span><span class="kw">fn </span>test_extract_price(<span class="attr">#[case] </span>input: PriceType, <span class="attr">#[case] </span>expected: i64) {
         <span class="kw">let </span>tick = create_stub_quote_tick();
         <span class="kw">let </span>result = tick.extract_price(input).raw;
         <span class="macro">assert_eq!</span>(result, expected);

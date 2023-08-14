@@ -289,12 +289,6 @@
 <a href="#289" id="289">289</a>
 <a href="#290" id="290">290</a>
 <a href="#291" id="291">291</a>
-<a href="#292" id="292">292</a>
-<a href="#293" id="293">293</a>
-<a href="#294" id="294">294</a>
-<a href="#295" id="295">295</a>
-<a href="#296" id="296">296</a>
-<a href="#297" id="297">297</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -557,37 +551,31 @@
         <span class="macro">assert_eq!</span>(result, <span class="prelude-val">None</span>);
     }
 
-    <span class="attr">#[rstest(
-        s,
-        expected,
-        case(<span class="string">&quot;&quot;</span>, <span class="number">0</span>),
-        case(<span class="string">&quot;0&quot;</span>, <span class="number">0</span>),
-        case(<span class="string">&quot;1.0&quot;</span>, <span class="number">1</span>),
-        case(<span class="string">&quot;1.00&quot;</span>, <span class="number">2</span>),
-        case(<span class="string">&quot;1.23456789&quot;</span>, <span class="number">8</span>),
-        case(<span class="string">&quot;123456.789101112&quot;</span>, <span class="number">9</span>),
-        case(<span class="string">&quot;0.000000001&quot;</span>, <span class="number">9</span>),
-        case(<span class="string">&quot;1e-1&quot;</span>, <span class="number">1</span>),
-        case(<span class="string">&quot;1e-2&quot;</span>, <span class="number">2</span>),
-        case(<span class="string">&quot;1e-3&quot;</span>, <span class="number">3</span>),
-        case(<span class="string">&quot;1e8&quot;</span>, <span class="number">0</span>)
-    )]
-    </span><span class="kw">fn </span>test_precision_from_str(s: <span class="kw-2">&amp;</span>str, expected: u8) {
+    <span class="attr">#[rstest]
+    #[case(<span class="string">&quot;&quot;</span>, <span class="number">0</span>)]
+    #[case(<span class="string">&quot;0&quot;</span>, <span class="number">0</span>)]
+    #[case(<span class="string">&quot;1.0&quot;</span>, <span class="number">1</span>)]
+    #[case(<span class="string">&quot;1.00&quot;</span>, <span class="number">2</span>)]
+    #[case(<span class="string">&quot;1.23456789&quot;</span>, <span class="number">8</span>)]
+    #[case(<span class="string">&quot;123456.789101112&quot;</span>, <span class="number">9</span>)]
+    #[case(<span class="string">&quot;0.000000001&quot;</span>, <span class="number">9</span>)]
+    #[case(<span class="string">&quot;1e-1&quot;</span>, <span class="number">1</span>)]
+    #[case(<span class="string">&quot;1e-2&quot;</span>, <span class="number">2</span>)]
+    #[case(<span class="string">&quot;1e-3&quot;</span>, <span class="number">3</span>)]
+    #[case(<span class="string">&quot;1e8&quot;</span>, <span class="number">0</span>)]
+    </span><span class="kw">fn </span>test_precision_from_str(<span class="attr">#[case] </span>s: <span class="kw-2">&amp;</span>str, <span class="attr">#[case] </span>expected: u8) {
         <span class="kw">let </span>result = precision_from_str(s);
         <span class="macro">assert_eq!</span>(result, expected);
     }
 
-    <span class="attr">#[rstest(
-        input,
-        expected,
-        case(<span class="string">&quot;1e8&quot;</span>, <span class="number">0</span>),
-        case(<span class="string">&quot;123&quot;</span>, <span class="number">0</span>),
-        case(<span class="string">&quot;123.45&quot;</span>, <span class="number">2</span>),
-        case(<span class="string">&quot;123.456789&quot;</span>, <span class="number">6</span>),
-        case(<span class="string">&quot;1.23456789e-2&quot;</span>, <span class="number">2</span>),
-        case(<span class="string">&quot;1.23456789e-12&quot;</span>, <span class="number">12</span>)
-    )]
-    </span><span class="kw">fn </span>test_precision_from_cstr(input: <span class="kw-2">&amp;</span>str, expected: u8) {
+    <span class="attr">#[rstest]
+    #[case(<span class="string">&quot;1e8&quot;</span>, <span class="number">0</span>)]
+    #[case(<span class="string">&quot;123&quot;</span>, <span class="number">0</span>)]
+    #[case(<span class="string">&quot;123.45&quot;</span>, <span class="number">2</span>)]
+    #[case(<span class="string">&quot;123.456789&quot;</span>, <span class="number">6</span>)]
+    #[case(<span class="string">&quot;1.23456789e-2&quot;</span>, <span class="number">2</span>)]
+    #[case(<span class="string">&quot;1.23456789e-12&quot;</span>, <span class="number">12</span>)]
+    </span><span class="kw">fn </span>test_precision_from_cstr(<span class="attr">#[case] </span>input: <span class="kw-2">&amp;</span>str, <span class="attr">#[case] </span>expected: u8) {
         <span class="kw">let </span>c_str = CString::new(input).unwrap();
         <span class="macro">assert_eq!</span>(<span class="kw">unsafe </span>{ precision_from_cstr(c_str.as_ptr()) }, expected);
     }

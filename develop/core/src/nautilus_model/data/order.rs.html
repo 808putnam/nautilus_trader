@@ -457,6 +457,10 @@
 <a href="#457" id="457">457</a>
 <a href="#458" id="458">458</a>
 <a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -812,8 +816,10 @@
         <span class="macro">assert_eq!</span>(display, expected);
     }
 
-    <span class="attr">#[rstest(side, case(OrderSide::Buy), case(OrderSide::Sell))]
-    </span><span class="kw">fn </span>test_from_quote_tick(side: OrderSide) {
+    <span class="attr">#[rstest]
+    #[case(OrderSide::Buy)]
+    #[case(OrderSide::Sell)]
+    </span><span class="kw">fn </span>test_from_quote_tick(<span class="attr">#[case] </span>side: OrderSide) {
         <span class="kw">let </span>tick = QuoteTick::new(
             InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap(),
             Price::new(<span class="number">5000.0</span>, <span class="number">2</span>),
@@ -853,8 +859,10 @@
         );
     }
 
-    <span class="attr">#[rstest(side, case(OrderSide::Buy), case(OrderSide::Sell))]
-    </span><span class="kw">fn </span>test_from_trade_tick(side: OrderSide) {
+    <span class="attr">#[rstest]
+    #[case(OrderSide::Buy)]
+    #[case(OrderSide::Sell)]
+    </span><span class="kw">fn </span>test_from_trade_tick(<span class="attr">#[case] </span>side: OrderSide) {
         <span class="kw">let </span>tick = TradeTick::new(
             InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap(),
             Price::new(<span class="number">5000.0</span>, <span class="number">2</span>),

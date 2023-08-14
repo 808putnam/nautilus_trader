@@ -736,12 +736,6 @@
 <a href="#736" id="736">736</a>
 <a href="#737" id="737">737</a>
 <a href="#738" id="738">738</a>
-<a href="#739" id="739">739</a>
-<a href="#740" id="740">740</a>
-<a href="#741" id="741">741</a>
-<a href="#742" id="742">742</a>
-<a href="#743" id="743">743</a>
-<a href="#744" id="744">744</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -760,6 +754,7 @@
 </span><span class="kw">use </span>std::collections::HashMap;
 
 <span class="kw">use </span>nautilus_core::{time::UnixNanos, uuid::UUID4};
+<span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>thiserror;
 <span class="kw">use </span>ustr::Ustr;
@@ -1334,6 +1329,14 @@
         }
     }
 
+    <span class="kw">fn </span>signed_decimal_qty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="kw">match </span><span class="self">self</span>.side {
+            OrderSide::Buy =&gt; <span class="self">self</span>.quantity.as_decimal(),
+            OrderSide::Sell =&gt; -<span class="self">self</span>.quantity.as_decimal(),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;invalid order side&quot;</span>),
+        }
+    }
+
     <span class="kw">fn </span>would_reduce_only(<span class="kw-2">&amp;</span><span class="self">self</span>, side: PositionSide, position_qty: Quantity) -&gt; bool {
         <span class="kw">if </span>side == PositionSide::Flat {
             <span class="kw">return </span><span class="bool-val">false</span>;
@@ -1348,14 +1351,7 @@
         }
     }
 
-    <span class="comment">// TODO: Add as_decimal
-    // fn signed_decimal_qty(&amp;self) -&gt; Decimal {
-    //     match self.side {
-    //         OrderSide::Buy =&gt; self.quantity
-    //     }
-    // }
-
-    </span><span class="kw">fn </span>commission(<span class="kw-2">&amp;</span><span class="self">self</span>, currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="prelude-ty">Option</span>&lt;Money&gt; {
+    <span class="kw">fn </span>commission(<span class="kw-2">&amp;</span><span class="self">self</span>, currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="prelude-ty">Option</span>&lt;Money&gt; {
         <span class="self">self</span>.commissions.get(currency).copied()
     }
 
@@ -1378,50 +1374,42 @@
         orders::market::MarketOrder,
     };
 
-    <span class="attr">#[rstest(
-        order_side,
-        expected_side,
-        case(OrderSide::Buy, OrderSide::Sell),
-        case(OrderSide::Sell, OrderSide::Buy),
-        case(OrderSide::NoOrderSide, OrderSide::NoOrderSide)
-    )]
-    </span><span class="kw">fn </span>test_order_opposite_side(order_side: OrderSide, expected_side: OrderSide) {
+    <span class="attr">#[rstest]
+    #[case(OrderSide::Buy, OrderSide::Sell)]
+    #[case(OrderSide::Sell, OrderSide::Buy)]
+    #[case(OrderSide::NoOrderSide, OrderSide::NoOrderSide)]
+    </span><span class="kw">fn </span>test_order_opposite_side(<span class="attr">#[case] </span>order_side: OrderSide, <span class="attr">#[case] </span>expected_side: OrderSide) {
         <span class="kw">let </span>order = MarketOrder::default();
         <span class="kw">let </span>result = order.opposite_side(order_side);
         <span class="macro">assert_eq!</span>(result, expected_side)
     }
 
-    <span class="attr">#[rstest(
-        position_side,
-        expected_side,
-        case(PositionSide::Long, OrderSide::Sell),
-        case(PositionSide::Short, OrderSide::Buy),
-        case(PositionSide::NoPositionSide, OrderSide::NoOrderSide)
-    )]
-    </span><span class="kw">fn </span>test_closing_side(position_side: PositionSide, expected_side: OrderSide) {
+    <span class="attr">#[rstest]
+    #[case(PositionSide::Long, OrderSide::Sell)]
+    #[case(PositionSide::Short, OrderSide::Buy)]
+    #[case(PositionSide::NoPositionSide, OrderSide::NoOrderSide)]
+    </span><span class="kw">fn </span>test_closing_side(<span class="attr">#[case] </span>position_side: PositionSide, <span class="attr">#[case] </span>expected_side: OrderSide) {
         <span class="kw">let </span>order = MarketOrder::default();
         <span class="kw">let </span>result = order.closing_side(position_side);
         <span class="macro">assert_eq!</span>(result, expected_side)
     }
 
     <span class="attr">#[rustfmt::skip]
-    #[rstest(
-        order_side, order_qty, position_side, position_qty, expected,
-        case(OrderSide::Buy, Quantity::from(<span class="number">100</span>), PositionSide::Long, Quantity::from(<span class="number">50</span>), <span class="bool-val">false</span>),
-        case(OrderSide::Buy, Quantity::from(<span class="number">50</span>), PositionSide::Short, Quantity::from(<span class="number">50</span>), <span class="bool-val">true</span>),
-        case(OrderSide::Buy, Quantity::from(<span class="number">50</span>), PositionSide::Short, Quantity::from(<span class="number">100</span>), <span class="bool-val">true</span>),
-        case(OrderSide::Buy, Quantity::from(<span class="number">50</span>), PositionSide::Flat, Quantity::from(<span class="number">0</span>), <span class="bool-val">false</span>),
-        case(OrderSide::Sell, Quantity::from(<span class="number">50</span>), PositionSide::Flat, Quantity::from(<span class="number">0</span>), <span class="bool-val">false</span>),
-        case(OrderSide::Sell, Quantity::from(<span class="number">50</span>), PositionSide::Long, Quantity::from(<span class="number">50</span>), <span class="bool-val">true</span>),
-        case(OrderSide::Sell, Quantity::from(<span class="number">50</span>), PositionSide::Long, Quantity::from(<span class="number">100</span>), <span class="bool-val">true</span>),
-        case(OrderSide::Sell, Quantity::from(<span class="number">100</span>), PositionSide::Short, Quantity::from(<span class="number">50</span>), <span class="bool-val">false</span>),
-    )]
+    #[rstest]
+    #[case(OrderSide::Buy, Quantity::from(<span class="number">100</span>), PositionSide::Long, Quantity::from(<span class="number">50</span>), <span class="bool-val">false</span>)]
+    #[case(OrderSide::Buy, Quantity::from(<span class="number">50</span>), PositionSide::Short, Quantity::from(<span class="number">50</span>), <span class="bool-val">true</span>)]
+    #[case(OrderSide::Buy, Quantity::from(<span class="number">50</span>), PositionSide::Short, Quantity::from(<span class="number">100</span>), <span class="bool-val">true</span>)]
+    #[case(OrderSide::Buy, Quantity::from(<span class="number">50</span>), PositionSide::Flat, Quantity::from(<span class="number">0</span>), <span class="bool-val">false</span>)]
+    #[case(OrderSide::Sell, Quantity::from(<span class="number">50</span>), PositionSide::Flat, Quantity::from(<span class="number">0</span>), <span class="bool-val">false</span>)]
+    #[case(OrderSide::Sell, Quantity::from(<span class="number">50</span>), PositionSide::Long, Quantity::from(<span class="number">50</span>), <span class="bool-val">true</span>)]
+    #[case(OrderSide::Sell, Quantity::from(<span class="number">50</span>), PositionSide::Long, Quantity::from(<span class="number">100</span>), <span class="bool-val">true</span>)]
+    #[case(OrderSide::Sell, Quantity::from(<span class="number">100</span>), PositionSide::Short, Quantity::from(<span class="number">50</span>), <span class="bool-val">false</span>)]
     </span><span class="kw">fn </span>test_would_reduce_only(
-        order_side: OrderSide,
-        order_qty: Quantity,
-        position_side: PositionSide,
-        position_qty: Quantity,
-        expected: bool,
+        <span class="attr">#[case] </span>order_side: OrderSide,
+        <span class="attr">#[case] </span>order_qty: Quantity,
+        <span class="attr">#[case] </span>position_side: PositionSide,
+        <span class="attr">#[case] </span>position_qty: Quantity,
+        <span class="attr">#[case] </span>expected: bool,
     ) {
         <span class="kw">let </span>order: MarketOrder = OrderInitializedBuilder::default()
             .order_side(order_side)

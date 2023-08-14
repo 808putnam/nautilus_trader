@@ -270,6 +270,10 @@
 <a href="#270" id="270">270</a>
 <a href="#271" id="271">271</a>
 <a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -397,19 +401,23 @@
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[rstest(s, case(<span class="string">&quot; a&quot;</span>), case(<span class="string">&quot;a &quot;</span>), case(<span class="string">&quot;a a&quot;</span>), case(<span class="string">&quot; a &quot;</span>), case(<span class="string">&quot;abc&quot;</span>))]
-    </span><span class="kw">fn </span>test_valid_string_with_valid_value(s: <span class="kw-2">&amp;</span>str) {
+    <span class="attr">#[rstest]
+    #[case(<span class="string">&quot; a&quot;</span>)]
+    #[case(<span class="string">&quot;a &quot;</span>)]
+    #[case(<span class="string">&quot;a a&quot;</span>)]
+    #[case(<span class="string">&quot; a &quot;</span>)]
+    #[case(<span class="string">&quot;abc&quot;</span>)]
+    </span><span class="kw">fn </span>test_valid_string_with_valid_value(<span class="attr">#[case] </span>s: <span class="kw-2">&amp;</span>str) {
         valid_string(s, <span class="string">&quot;value&quot;</span>);
     }
 
-    <span class="attr">#[rstest(s,
-        case(<span class="string">&quot;&quot;</span>),  <span class="comment">// &lt;-- empty string
-        </span>case(<span class="string">&quot; &quot;</span>), <span class="comment">// &lt;-- whitespace-only
-        </span>case(<span class="string">&quot;  &quot;</span>), <span class="comment">// &lt;-- whitespace-only string
-        </span>case(<span class="string">&quot;🦀&quot;</span>), <span class="comment">// &lt;-- contains Non-ASCII char
-    </span>)]
-    #[should_panic]
-    </span><span class="kw">fn </span>test_valid_string_with_invalid_values(s: <span class="kw-2">&amp;</span>str) {
+    <span class="attr">#[rstest]
+    #[case(<span class="string">&quot;&quot;</span>)] </span><span class="comment">// &lt;-- empty string
+    </span><span class="attr">#[case(<span class="string">&quot; &quot;</span>)] </span><span class="comment">// &lt;-- whitespace-only
+    </span><span class="attr">#[case(<span class="string">&quot;  &quot;</span>)] </span><span class="comment">// &lt;-- whitespace-only string
+    </span><span class="attr">#[case(<span class="string">&quot;🦀&quot;</span>)] </span><span class="comment">// &lt;-- contains Non-ASCII char
+    </span><span class="attr">#[should_panic]
+    </span><span class="kw">fn </span>test_valid_string_with_invalid_values(<span class="attr">#[case] </span>s: <span class="kw-2">&amp;</span>str) {
         valid_string(s, <span class="string">&quot;value&quot;</span>);
     }
 
