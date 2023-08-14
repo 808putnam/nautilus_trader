@@ -765,9 +765,6 @@
 <a href="#765" id="765">765</a>
 <a href="#766" id="766">766</a>
 <a href="#767" id="767">767</a>
-<a href="#768" id="768">768</a>
-<a href="#769" id="769">769</a>
-<a href="#770" id="770">770</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -953,9 +950,10 @@
     <span class="kw">fn </span>ts_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos;
     <span class="kw">fn </span>ts_last(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos;
 
-    <span class="kw">fn </span>events(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>OrderEvent&gt;;
-    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderUpdated);
+    <span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderEvent) -&gt; <span class="prelude-ty">Result</span>&lt;(), OrderError&gt;;
+    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderUpdated);
 
+    <span class="kw">fn </span>events(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>OrderEvent&gt;;
     <span class="kw">fn </span>last_event(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>OrderEvent {
         <span class="comment">// Safety: `Order` specification guarantees at least one event (`OrderInitialized`)
         </span><span class="self">self</span>.events().last().unwrap()
@@ -1211,7 +1209,7 @@
         }
     }
 
-    <span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderEvent) -&gt; <span class="prelude-ty">Result</span>&lt;(), OrderError&gt; {
+    <span class="kw">pub fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderEvent) -&gt; <span class="prelude-ty">Result</span>&lt;(), OrderError&gt; {
         <span class="macro">assert_eq!</span>(<span class="self">self</span>.client_order_id, event.client_order_id());
         <span class="macro">assert_eq!</span>(<span class="self">self</span>.strategy_id, event.strategy_id());
 
@@ -1301,9 +1299,6 @@
                 <span class="self">self</span>.venue_order_ids.push(<span class="kw-2">*</span>venue_order_id);
             }
         }
-
-        <span class="comment">// self.update_order(event);  // TODO
-        </span><span class="self">self</span>.leaves_qty = <span class="self">self</span>.quantity - <span class="self">self</span>.filled_qty;
     }
 
     <span class="kw">fn </span>filled(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderFilled) {
@@ -1490,9 +1485,8 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_order_state_transition_denied() {
-        <span class="kw">let </span>init = OrderInitializedBuilder::default().build().unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>order: MarketOrder = OrderInitializedBuilder::default().build().unwrap().into();
         <span class="kw">let </span>denied = OrderDeniedBuilder::default().build().unwrap();
-        <span class="kw">let </span><span class="kw-2">mut </span>order: MarketOrder = init.into();
         <span class="kw">let </span>event = OrderEvent::OrderDenied(denied);
 
         <span class="kw">let _ </span>= order.apply(event.clone());

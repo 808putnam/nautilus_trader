@@ -379,6 +379,15 @@
 <a href="#379" id="379">379</a>
 <a href="#380" id="380">380</a>
 <a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -719,16 +728,25 @@
         <span class="self">self</span>.trade_ids.iter().collect()
     }
 
-    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderUpdated) {
+    <span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderEvent) -&gt; <span class="prelude-ty">Result</span>&lt;(), OrderError&gt; {
+        <span class="kw">if let </span>OrderEvent::OrderUpdated(<span class="kw-2">ref </span>event) = event {
+            <span class="self">self</span>.update(event)
+        };
+        <span class="self">self</span>.core.apply(event)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderUpdated) {
         <span class="kw">if </span>event.trigger_price.is_some() {
             <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, OrderError::InvalidOrderEvent);
         }
 
-        <span class="self">self</span>.quantity = event.quantity;
-
         <span class="kw">if let </span><span class="prelude-val">Some</span>(price) = event.price {
             <span class="self">self</span>.price = <span class="prelude-val">Some</span>(price);
         }
+
+        <span class="self">self</span>.quantity = event.quantity;
+        <span class="self">self</span>.leaves_qty = <span class="self">self</span>.quantity - <span class="self">self</span>.filled_qty;
     }
 }
 
