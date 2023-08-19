@@ -23331,6 +23331,108 @@ then the component state will not change, and an error will be logged.
            <p>
             Provides order emulation for specified trigger types.
            </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 trader_id
+                </strong>
+                (
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.TraderId" title="nautilus_trader.model.identifiers.TraderId">
+                 <em>
+                  TraderId
+                 </em>
+                </a>
+                ) – The trader ID for the order emulator.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 msgbus
+                </strong>
+                (
+                <a class="reference internal" href="msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+                 <em>
+                  MessageBus
+                 </em>
+                </a>
+                ) – The message bus for the order emulator.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 cache
+                </strong>
+                (
+                <a class="reference internal" href="cache.html#nautilus_trader.cache.cache.Cache" title="nautilus_trader.cache.cache.Cache">
+                 <em>
+                  Cache
+                 </em>
+                </a>
+                ) – The cache for the order emulator.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 clock
+                </strong>
+                (
+                <a class="reference internal" href="common.html#nautilus_trader.common.clock.Clock" title="nautilus_trader.common.clock.Clock">
+                 <em>
+                  Clock
+                 </em>
+                </a>
+                ) – The clock for the order emulator.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 logger
+                </strong>
+                (
+                <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
+                 <em>
+                  Logger
+                 </em>
+                </a>
+                ) – The logger for the order emulator.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 config
+                </strong>
+                (
+                <a class="reference internal" href="config.html#nautilus_trader.config.common.OrderEmulatorConfig" title="nautilus_trader.config.common.OrderEmulatorConfig">
+                 <em>
+                  OrderEmulatorConfig
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The configuration for the order emulator.
+               </p>
+              </li>
+             </ul>
+            </dd>
+           </dl>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.active_task_ids">
              <span class="sig-name descname">
