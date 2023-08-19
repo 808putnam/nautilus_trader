@@ -1133,6 +1133,33 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.exec_spawn_total_filled_qty">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.exec_spawn_total_filled_qty()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.exec_spawn_total_leaves_qty">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.exec_spawn_total_leaves_qty()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.exec_spawn_total_quantity">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.exec_spawn_total_quantity()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.flush_db">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -2445,6 +2472,33 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   CacheFacade.exec_algorithm_ids()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.base.CacheFacade.exec_spawn_total_filled_qty">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheFacade.exec_spawn_total_filled_qty()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.base.CacheFacade.exec_spawn_total_leaves_qty">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheFacade.exec_spawn_total_leaves_qty()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.base.CacheFacade.exec_spawn_total_quantity">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheFacade.exec_spawn_total_quantity()
                  </span>
                 </code>
                </a>
@@ -7369,6 +7423,435 @@ error is found then a log error message will also be produced.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.exec_spawn_total_filled_qty">
+            <span class="sig-name descname">
+             <span class="pre">
+              exec_spawn_total_filled_qty
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               exec_spawn_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               active_only=False
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.exec_spawn_total_filled_qty" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the total filled quantity for the given execution spawn ID (if found).
+            </p>
+            <p>
+             If no execution spawn ID matches then returns
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               None
+              </span>
+             </code>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  exec_spawn_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
+                  <em>
+                   ClientOrderId
+                  </em>
+                 </a>
+                 ) – The execution algorithm spawning primary (original) client order ID.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  active_only
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – The flag to filter for active execution spawn orders only.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Quantity or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+            <p class="rubric">
+             Notes
+            </p>
+            <p>
+             An “active” order is defined as one which is
+             <em>
+              not closed
+             </em>
+             .
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.exec_spawn_total_leaves_qty">
+            <span class="sig-name descname">
+             <span class="pre">
+              exec_spawn_total_leaves_qty
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               exec_spawn_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               active_only=False
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.exec_spawn_total_leaves_qty" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the total leaves quantity for the given execution spawn ID (if found).
+            </p>
+            <p>
+             If no execution spawn ID matches then returns
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               None
+              </span>
+             </code>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  exec_spawn_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
+                  <em>
+                   ClientOrderId
+                  </em>
+                 </a>
+                 ) – The execution algorithm spawning primary (original) client order ID.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  active_only
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – The flag to filter for active execution spawn orders only.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Quantity or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+            <p class="rubric">
+             Notes
+            </p>
+            <p>
+             An “active” order is defined as one which is
+             <em>
+              not closed
+             </em>
+             .
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.exec_spawn_total_quantity">
+            <span class="sig-name descname">
+             <span class="pre">
+              exec_spawn_total_quantity
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               exec_spawn_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               active_only=False
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.exec_spawn_total_quantity" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the total quantity for the given execution spawn ID (if found).
+            </p>
+            <p>
+             If no execution spawn ID matches then returns
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               None
+              </span>
+             </code>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  exec_spawn_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
+                  <em>
+                   ClientOrderId
+                  </em>
+                 </a>
+                 ) – The execution algorithm spawning primary (original) client order ID.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  active_only
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – The flag to filter for active execution spawn orders only.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Quantity or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+            <p class="rubric">
+             Notes
+            </p>
+            <p>
+             An “active” order is defined as one which is
+             <em>
+              not closed
+             </em>
+             .
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.flush_db">
             <span class="sig-name descname">
              <span class="pre">
@@ -11366,7 +11849,7 @@ and is open.
                ClientOrderId
               </span>
               <span class="pre">
-               client_order_id
+               exec_spawn_id
               </span>
              </span>
             </em>
@@ -11404,7 +11887,7 @@ and is open.
              <dd class="field-odd">
               <p>
                <strong>
-                client_order_id
+                exec_spawn_id
                </strong>
                (
                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
@@ -19813,6 +20296,198 @@ and is open.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.exec_spawn_total_filled_qty">
+            <span class="sig-name descname">
+             <span class="pre">
+              exec_spawn_total_filled_qty
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               exec_spawn_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               active_only=False
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.exec_spawn_total_filled_qty" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.exec_spawn_total_leaves_qty">
+            <span class="sig-name descname">
+             <span class="pre">
+              exec_spawn_total_leaves_qty
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               exec_spawn_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               active_only=False
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.exec_spawn_total_leaves_qty" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.exec_spawn_total_quantity">
+            <span class="sig-name descname">
+             <span class="pre">
+              exec_spawn_total_quantity
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               exec_spawn_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               active_only=False
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.exec_spawn_total_quantity" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.get">
             <span class="sig-name descname">
              <span class="pre">
@@ -21609,7 +22284,7 @@ and is open.
                ClientOrderId
               </span>
               <span class="pre">
-               client_order_id
+               exec_spawn_id
               </span>
              </span>
             </em>
