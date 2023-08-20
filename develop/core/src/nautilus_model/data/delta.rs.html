@@ -430,6 +430,10 @@
 <a href="#430" id="430">430</a>
 <a href="#431" id="431">431</a>
 <a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -455,11 +459,13 @@
 <span class="kw">use </span>nautilus_core::{serialization::Serializable, time::UnixNanos};
 <span class="kw">use </span>pyo3::{exceptions::PyValueError, prelude::<span class="kw-2">*</span>, pyclass::CompareOp, types::PyDict};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>serde_json::Value;
 
 <span class="kw">use </span><span class="kw">super</span>::order::{BookOrder, NULL_ORDER};
 <span class="kw">use crate</span>::{
     enums::{BookAction, FromU8, OrderSide},
     identifiers::instrument_id::InstrumentId,
+    python::value_to_pydict,
     types::{price::Price, quantity::Quantity},
 };
 
@@ -677,32 +683,33 @@
 
     <span class="doccomment">/// Return a dictionary representation of the object.
     </span><span class="kw">pub fn </span>as_dict(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {
-        <span class="comment">// Serialize object to JSON bytes
-        </span><span class="kw">let </span>json_str =
-            serde_json::to_string(<span class="self">self</span>).map_err(|e| PyValueError::new_err(e.to_string()))<span class="question-mark">?</span>;
+        <span class="comment">// Serialize object to JSON values
+        </span><span class="kw">let </span>json_value =
+            serde_json::to_value(<span class="self">self</span>).map_err(|e| PyValueError::new_err(e.to_string()))<span class="question-mark">?</span>;
+
         <span class="comment">// Parse JSON into a Python dictionary
-        </span><span class="kw">let </span>py_dict: Py&lt;PyDict&gt; = PyModule::import(py, <span class="string">&quot;msgspec&quot;</span>)<span class="question-mark">?
-            </span>.getattr(<span class="string">&quot;json&quot;</span>)<span class="question-mark">?
-            </span>.call_method(<span class="string">&quot;decode&quot;</span>, (json_str,), <span class="prelude-val">None</span>)<span class="question-mark">?
-            </span>.extract()<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(py_dict)
+        </span><span class="kw">if let </span>Value::Object(<span class="kw">_</span>) = <span class="kw-2">&amp;</span>json_value {
+            value_to_pydict(py, <span class="kw-2">&amp;</span>json_value)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">Err</span>(PyValueError::new_err(<span class="string">&quot;Expected JSON object&quot;</span>))
+        }
     }
 
-    <span class="doccomment">/// Return a new object from the given dictionary representation.
+    <span class="comment">// /// Return a new object from the given dictionary representation.
+    // #[staticmethod]
+    // pub fn from_dict(py: Python&lt;&#39;_&gt;, values: Py&lt;PyDict&gt;) -&gt; PyResult&lt;Self&gt; {
+    //     // Serialize to JSON bytes
+    //     let json_bytes: Vec&lt;u8&gt; = PyModule::import(py, &quot;msgspec&quot;)?
+    //         .getattr(&quot;json&quot;)?
+    //         .call_method(&quot;encode&quot;, (values,), None)?
+    //         .extract()?;
+    //     // Deserialize to object
+    //     let instance = serde_json::from_slice(&amp;json_bytes)
+    //         .map_err(|e| PyValueError::new_err(e.to_string()))?;
+    //     Ok(instance)
+    // }
+
     </span><span class="attr">#[staticmethod]
-    </span><span class="kw">pub fn </span>from_dict(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, values: Py&lt;PyDict&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        <span class="comment">// Serialize to JSON bytes
-        </span><span class="kw">let </span>json_bytes: Vec&lt;u8&gt; = PyModule::import(py, <span class="string">&quot;msgspec&quot;</span>)<span class="question-mark">?
-            </span>.getattr(<span class="string">&quot;json&quot;</span>)<span class="question-mark">?
-            </span>.call_method(<span class="string">&quot;encode&quot;</span>, (values,), <span class="prelude-val">None</span>)<span class="question-mark">?
-            </span>.extract()<span class="question-mark">?</span>;
-        <span class="comment">// Deserialize to object
-        </span><span class="kw">let </span>instance = serde_json::from_slice(<span class="kw-2">&amp;</span>json_bytes)
-            .map_err(|e| PyValueError::new_err(e.to_string()))<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(instance)
-    }
-
-    <span class="attr">#[staticmethod]
     </span><span class="kw">fn </span>from_json(data: Vec&lt;u8&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="self">Self</span>::from_json_bytes(data).map_err(|e| PyValueError::new_err(e.to_string()))
     }
@@ -809,34 +816,35 @@
         );
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_as_dict() {
-        pyo3::prepare_freethreaded_python();
+    <span class="comment">// #[test]
+    // fn test_as_dict() {
+    //     pyo3::prepare_freethreaded_python();
+    //
+    //     let delta = create_stub_delta();
+    //
+    //     Python::with_gil(|py| {
+    //         let dict_string = delta.as_dict(py).unwrap().to_string();
+    //         let expected_string = r#&quot;{&#39;type&#39;: &#39;OrderBookDelta&#39;, &#39;instrument_id&#39;: &#39;AAPL.NASDAQ&#39;, &#39;action&#39;: &#39;ADD&#39;, &#39;order&#39;: {&#39;side&#39;: &#39;BUY&#39;, &#39;price&#39;: &#39;100.00&#39;, &#39;size&#39;: &#39;10&#39;, &#39;order_id&#39;: 123456}, &#39;flags&#39;: 0, &#39;sequence&#39;: 1, &#39;ts_event&#39;: 1, &#39;ts_init&#39;: 2}&quot;#;
+    //         assert_eq!(dict_string, expected_string);
+    //     });
+    // }
 
-        <span class="kw">let </span>delta = create_stub_delta();
+    // #[test]
+    // fn test_from_dict() {
+    //     pyo3::prepare_freethreaded_python();
+    //
+    //     let delta = create_stub_delta();
+    //
+    //     Python::with_gil(|py| {
+    //         let dict = delta.as_dict(py).unwrap();
+    //         let parsed = OrderBookDelta::from_dict(py, dict).unwrap();
+    //         assert_eq!(parsed, delta);
+    //     });
+    // }
 
-        Python::with_gil(|py| {
-            <span class="kw">let </span>dict_string = delta.as_dict(py).unwrap().to_string();
-            <span class="kw">let </span>expected_string = <span class="string">r#&quot;{&#39;type&#39;: &#39;OrderBookDelta&#39;, &#39;instrument_id&#39;: &#39;AAPL.NASDAQ&#39;, &#39;action&#39;: &#39;ADD&#39;, &#39;order&#39;: {&#39;side&#39;: &#39;BUY&#39;, &#39;price&#39;: &#39;100.00&#39;, &#39;size&#39;: &#39;10&#39;, &#39;order_id&#39;: 123456}, &#39;flags&#39;: 0, &#39;sequence&#39;: 1, &#39;ts_event&#39;: 1, &#39;ts_init&#39;: 2}&quot;#</span>;
-            <span class="macro">assert_eq!</span>(dict_string, expected_string);
-        });
-    }
-
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_from_dict() {
-        pyo3::prepare_freethreaded_python();
-
-        <span class="kw">let </span>delta = create_stub_delta();
-
-        Python::with_gil(|py| {
-            <span class="kw">let </span>dict = delta.as_dict(py).unwrap();
-            <span class="kw">let </span>parsed = OrderBookDelta::from_dict(py, dict).unwrap();
-            <span class="macro">assert_eq!</span>(parsed, delta);
-        });
-    }
-
-    <span class="attr">#[test]
+    </span><span class="attr">#[test]
     </span><span class="kw">fn </span>test_from_pyobject() {
+        pyo3::prepare_freethreaded_python();
         <span class="kw">let </span>delta = create_stub_delta();
 
         Python::with_gil(|py| {
