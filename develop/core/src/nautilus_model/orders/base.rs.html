@@ -758,13 +758,6 @@
 <a href="#758" id="758">758</a>
 <a href="#759" id="759">759</a>
 <a href="#760" id="760">760</a>
-<a href="#761" id="761">761</a>
-<a href="#762" id="762">762</a>
-<a href="#763" id="763">763</a>
-<a href="#764" id="764">764</a>
-<a href="#765" id="765">765</a>
-<a href="#766" id="766">766</a>
-<a href="#767" id="767">767</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -839,19 +832,20 @@
     </span><span class="kw">pub fn </span>transition(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderEvent) -&gt; <span class="prelude-ty">Result</span>&lt;OrderStatus, OrderError&gt; {
         <span class="kw">let </span>new_state = <span class="kw">match </span>(<span class="self">self</span>, event) {
             (OrderStatus::Initialized, OrderEvent::OrderDenied(<span class="kw">_</span>)) =&gt; OrderStatus::Denied,
-            (OrderStatus::Initialized, OrderEvent::OrderSubmitted(<span class="kw">_</span>)) =&gt; OrderStatus::Submitted,
+            (OrderStatus::Initialized, OrderEvent::OrderEmulated(<span class="kw">_</span>)) =&gt; OrderStatus::Emulated,  <span class="comment">// Emulated orders
+            </span>(OrderStatus::Initialized, OrderEvent::OrderReleased(<span class="kw">_</span>)) =&gt; OrderStatus::Released,  <span class="comment">// Emulated orders
+            </span>(OrderStatus::Initialized, OrderEvent::OrderSubmitted(<span class="kw">_</span>)) =&gt; OrderStatus::Submitted,
             (OrderStatus::Initialized, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; OrderStatus::Rejected,  <span class="comment">// External orders
             </span>(OrderStatus::Initialized, OrderEvent::OrderAccepted(<span class="kw">_</span>)) =&gt; OrderStatus::Accepted,  <span class="comment">// External orders
             </span>(OrderStatus::Initialized, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,  <span class="comment">// External orders
             </span>(OrderStatus::Initialized, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; OrderStatus::Expired,  <span class="comment">// External orders
             </span>(OrderStatus::Initialized, OrderEvent::OrderTriggered(<span class="kw">_</span>)) =&gt; OrderStatus::Triggered, <span class="comment">// External orders
-            </span>(OrderStatus::Initialized, OrderEvent::OrderEmulated(<span class="kw">_</span>)) =&gt; OrderStatus::Emulated,  <span class="comment">// Emulated orders
-            </span>(OrderStatus::Initialized, OrderEvent::OrderReleased(<span class="kw">_</span>)) =&gt; OrderStatus::Released,  <span class="comment">// Emulated orders
             </span>(OrderStatus::Emulated, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,  <span class="comment">// Emulated orders
             </span>(OrderStatus::Emulated, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; OrderStatus::Expired,  <span class="comment">// Emulated orders
             </span>(OrderStatus::Emulated, OrderEvent::OrderReleased(<span class="kw">_</span>)) =&gt; OrderStatus::Released,  <span class="comment">// Emulated orders
             </span>(OrderStatus::Released, OrderEvent::OrderSubmitted(<span class="kw">_</span>)) =&gt; OrderStatus::Submitted,  <span class="comment">// Emulated orders
             </span>(OrderStatus::Released, OrderEvent::OrderDenied(<span class="kw">_</span>)) =&gt; OrderStatus::Denied,  <span class="comment">// Emulated orders
+            </span>(OrderStatus::Released, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,  <span class="comment">// Execution algo
             </span>(OrderStatus::Submitted, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; OrderStatus::PendingUpdate,
             (OrderStatus::Submitted, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; OrderStatus::PendingCancel,
             (OrderStatus::Submitted, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; OrderStatus::Rejected,
@@ -984,7 +978,14 @@
     }
 
     <span class="kw">fn </span>is_emulated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.emulation_trigger().is_some()
+        <span class="self">self</span>.status() == OrderStatus::Emulated
+    }
+
+    <span class="kw">fn </span>is_active_local(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="macro">matches!</span>(
+            <span class="self">self</span>.status(),
+            OrderStatus::Initialized | OrderStatus::Emulated | OrderStatus::Released
+        )
     }
 
     <span class="kw">fn </span>is_primary(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -1232,6 +1233,7 @@
             OrderEvent::OrderTriggered(event) =&gt; <span class="self">self</span>.triggered(event),
             OrderEvent::OrderCanceled(event) =&gt; <span class="self">self</span>.canceled(event),
             OrderEvent::OrderExpired(event) =&gt; <span class="self">self</span>.expired(event),
+            OrderEvent::OrderFilled(event) =&gt; <span class="self">self</span>.filled(event),
             <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OrderError::UnrecognizedEvent),
         }
 
@@ -1307,14 +1309,13 @@
         <span class="self">self</span>.trade_ids.push(event.trade_id);
         <span class="self">self</span>.last_trade_id = <span class="prelude-val">Some</span>(event.trade_id);
         <span class="self">self</span>.liquidity_side = <span class="prelude-val">Some</span>(event.liquidity_side);
-        <span class="self">self</span>.filled_qty += <span class="kw-2">&amp;</span>event.last_qty;
-        <span class="self">self</span>.leaves_qty -= <span class="kw-2">&amp;</span>event.last_qty;
+        <span class="self">self</span>.filled_qty += event.last_qty;
+        <span class="self">self</span>.leaves_qty -= event.last_qty;
         <span class="self">self</span>.ts_last = event.ts_event;
-        <span class="self">self</span>.set_avg_px(<span class="kw-2">&amp;</span>event.last_qty, <span class="kw-2">&amp;</span>event.last_px);
-        <span class="comment">// self.set_slippage(); // TODO
-    </span>}
+        <span class="self">self</span>.set_avg_px(event.last_qty, event.last_px);
+    }
 
-    <span class="kw">fn </span>set_avg_px(<span class="kw-2">&amp;mut </span><span class="self">self</span>, last_qty: <span class="kw-2">&amp;</span>Quantity, last_px: <span class="kw-2">&amp;</span>Price) {
+    <span class="kw">fn </span>set_avg_px(<span class="kw-2">&amp;mut </span><span class="self">self</span>, last_qty: Quantity, last_px: Price) {
         <span class="kw">if </span><span class="self">self</span>.avg_px.is_none() {
             <span class="self">self</span>.avg_px = <span class="prelude-val">Some</span>(last_px.as_f64());
         }
@@ -1330,23 +1331,18 @@
         <span class="self">self</span>.avg_px = <span class="prelude-val">Some</span>(avg_px);
     }
 
-    <span class="comment">// TODO
-    // fn set_slippage(&amp;mut self) {
-    //     if self.has_price {
-    //         self.slippage = self.avg_px.and_then(|avg_px| {
-    //             self.price
-    //                 .as_ref()
-    //                 .map(|price| fixed_i64_to_f64(price.raw))
-    //                 .and_then(|price| match self.side() {
-    //                     OrderSide::Buy if avg_px &gt; price =&gt; Some(avg_px - price),
-    //                     OrderSide::Sell if avg_px &lt; price =&gt; Some(price - avg_px),
-    //                     _ =&gt; None,
-    //                 })
-    //         })
-    //     }
-    // }
+    <span class="kw">pub fn </span>set_slippage(<span class="kw-2">&amp;mut </span><span class="self">self</span>, price: Price) {
+        <span class="self">self</span>.slippage = <span class="self">self</span>.avg_px.and_then(|avg_px| {
+            <span class="kw">let </span>current_price = price.as_f64();
+            <span class="kw">match </span><span class="self">self</span>.side {
+                OrderSide::Buy <span class="kw">if </span>avg_px &gt; current_price =&gt; <span class="prelude-val">Some</span>(avg_px - current_price),
+                OrderSide::Sell <span class="kw">if </span>avg_px &lt; current_price =&gt; <span class="prelude-val">Some</span>(current_price - avg_px),
+                <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+            }
+        })
+    }
 
-    </span><span class="kw">fn </span>opposite_side(<span class="kw-2">&amp;</span><span class="self">self</span>, side: OrderSide) -&gt; OrderSide {
+    <span class="kw">fn </span>opposite_side(<span class="kw-2">&amp;</span><span class="self">self</span>, side: OrderSide) -&gt; OrderSide {
         <span class="kw">match </span>side {
             OrderSide::Buy =&gt; OrderSide::Sell,
             OrderSide::Sell =&gt; OrderSide::Buy,
@@ -1405,7 +1401,10 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use crate</span>::{
         enums::{OrderSide, OrderStatus, PositionSide},
-        events::order::{OrderDeniedBuilder, OrderEvent, OrderInitializedBuilder},
+        events::order::{
+            OrderAcceptedBuilder, OrderDeniedBuilder, OrderEvent, OrderFilledBuilder,
+            OrderInitializedBuilder, OrderSubmittedBuilder,
+        },
         orders::market::MarketOrder,
     };
 
@@ -1489,7 +1488,7 @@
         <span class="kw">let </span>denied = OrderDeniedBuilder::default().build().unwrap();
         <span class="kw">let </span>event = OrderEvent::OrderDenied(denied);
 
-        <span class="kw">let _ </span>= order.apply(event.clone());
+        order.apply(event.clone()).unwrap();
 
         <span class="macro">assert_eq!</span>(order.status, OrderStatus::Denied);
         <span class="macro">assert!</span>(order.is_closed());
@@ -1498,38 +1497,25 @@
         <span class="macro">assert_eq!</span>(order.last_event(), <span class="kw-2">&amp;</span>event);
     }
 
-    <span class="comment">// #[test]
-    // fn test_buy_order_life_cycle_to_filled() {
-    //     let init = OrderInitializedBuilder::default().build().unwrap();
-    //     let submitted = OrderSubmittedBuilder::default().build().unwrap();
-    //     let accepted = OrderAcceptedBuilder::default().build().unwrap();
-    //
-    //     // TODO: We should derive defaults for the below
-    //     let filled = OrderFilledBuilder::default()
-    //         .trader_id(TraderId::default())
-    //         .strategy_id(StrategyId::default())
-    //         .instrument_id(InstrumentId::default())
-    //         .account_id(AccountId::default())
-    //         .client_order_id(ClientOrderId::default())
-    //         .venue_order_id(VenueOrderId::default())
-    //         .position_id(None)
-    //         .order_side(OrderSide::Buy)
-    //         .order_type(OrderType::Market)
-    //         .trade_id(TradeId::new(&quot;001&quot;))
-    //         .event_id(UUID4::default())
-    //         .ts_event(UnixNanos::default())
-    //         .ts_init(UnixNanos::default())
-    //         .reconciliation(false)
-    //         .build()
-    //         .unwrap();
-    //
-    //     let client_order_id = init.client_order_id;
-    //     let mut order: MarketOrder = init.into();
-    //     let _ = order.apply(OrderEvent::OrderSubmitted(submitted));
-    //     let _ = order.apply(OrderEvent::OrderAccepted(accepted));
-    //     let _ = order.apply(OrderEvent::OrderFilled(filled));
-    //
-    //     assert_eq!(order.client_order_id, client_order_id);
-    // }
-</span>}
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_order_life_cycle_to_filled() {
+        <span class="kw">let </span>init = OrderInitializedBuilder::default().build().unwrap();
+        <span class="kw">let </span>submitted = OrderSubmittedBuilder::default().build().unwrap();
+        <span class="kw">let </span>accepted = OrderAcceptedBuilder::default().build().unwrap();
+        <span class="kw">let </span>filled = OrderFilledBuilder::default().build().unwrap();
+
+        <span class="kw">let </span><span class="kw-2">mut </span>order: MarketOrder = init.clone().into();
+        order.apply(OrderEvent::OrderSubmitted(submitted)).unwrap();
+        order.apply(OrderEvent::OrderAccepted(accepted)).unwrap();
+        order.apply(OrderEvent::OrderFilled(filled)).unwrap();
+
+        <span class="macro">assert_eq!</span>(order.client_order_id, init.client_order_id);
+        <span class="macro">assert_eq!</span>(order.status(), OrderStatus::Filled);
+        <span class="macro">assert_eq!</span>(order.filled_qty(), Quantity::from(<span class="string">&quot;100000&quot;</span>));
+        <span class="macro">assert_eq!</span>(order.leaves_qty(), Quantity::from(<span class="string">&quot;0&quot;</span>));
+        <span class="macro">assert_eq!</span>(order.avg_px(), <span class="prelude-val">None</span>);
+        <span class="macro">assert!</span>(!order.is_open());
+        <span class="macro">assert!</span>(order.is_closed());
+    }
+}
 </code></pre></div></section></main></body></html>

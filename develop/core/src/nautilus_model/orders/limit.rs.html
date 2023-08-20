@@ -401,6 +401,13 @@
 <a href="#401" id="401">401</a>
 <a href="#402" id="402">402</a>
 <a href="#403" id="403">403</a>
+<a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -751,9 +758,16 @@
 
     <span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: OrderEvent) -&gt; <span class="prelude-ty">Result</span>&lt;(), OrderError&gt; {
         <span class="kw">if let </span>OrderEvent::OrderUpdated(<span class="kw-2">ref </span>event) = event {
-            <span class="self">self</span>.update(event)
+            <span class="self">self</span>.update(event);
         };
+        <span class="kw">let </span>is_order_filled = <span class="macro">matches!</span>(event, OrderEvent::OrderFilled(<span class="kw">_</span>));
+
         <span class="self">self</span>.core.apply(event)<span class="question-mark">?</span>;
+
+        <span class="kw">if </span>is_order_filled {
+            <span class="self">self</span>.core.set_slippage(<span class="self">self</span>.price)
+        };
+
         <span class="prelude-val">Ok</span>(())
     }
 
