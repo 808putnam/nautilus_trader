@@ -3135,6 +3135,11 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.cache_submit_order_command">
+             cache_submit_order_command() (OrderManager method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.cache_synthetics">
              cache_synthetics() (Cache method)
             </a>
@@ -3828,6 +3833,11 @@
              <li>
               <a href="api_reference/live.html#nautilus_trader.live.execution_client.LiveExecutionClient.cancel_order">
                (LiveExecutionClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.cancel_order">
+               (OrderManager method)
               </a>
              </li>
              <li>
@@ -5182,6 +5192,11 @@
            <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.create_matching_core">
              create_matching_core() (OrderEmulator method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.create_new_submit_order">
+             create_new_submit_order() (OrderManager method)
             </a>
            </li>
            <li>
@@ -9838,6 +9853,13 @@
             <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.get_submit_order_commands">
              get_submit_order_commands() (OrderEmulator method)
             </a>
+            <ul>
+             <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.get_submit_order_commands">
+               (OrderManager method)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/model/identifiers.html#nautilus_trader.model.identifiers.StrategyId.get_tag">
@@ -10067,6 +10089,16 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.handle_contingencies">
+             handle_contingencies() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.handle_contingencies_update">
+             handle_contingencies_update() (OrderManager method)
+            </a>
            </li>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.handle_data">
@@ -10357,8 +10389,38 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.handle_order_canceled">
+             handle_order_canceled() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.handle_order_expired">
+             handle_order_expired() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.handle_order_filled">
+             handle_order_filled() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.handle_order_rejected">
+             handle_order_rejected() (OrderManager method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.handle_order_stream_update">
              handle_order_stream_update() (BetfairExecutionClient method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.handle_order_updated">
+             handle_order_updated() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.handle_position_event">
+             handle_position_event() (OrderManager method)
             </a>
            </li>
            <li>
@@ -12774,6 +12836,58 @@
             <a href="api_reference/core.html#nautilus_trader.core.fsm.InvalidStateTrigger">
              InvalidStateTrigger
             </a>
+           </li>
+           <li>
+            <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.is_active_local">
+             is_active_local (LimitIfTouchedOrder attribute)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit.LimitOrder.is_active_local">
+               (LimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_if_touched.MarketIfTouchedOrder.is_active_local">
+               (MarketIfTouchedOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market.MarketOrder.is_active_local">
+               (MarketOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.market_to_limit.MarketToLimitOrder.is_active_local">
+               (MarketToLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.base.Order.is_active_local">
+               (Order attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_limit.StopLimitOrder.is_active_local">
+               (StopLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_market.StopMarketOrder.is_active_local">
+               (StopMarketOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_limit.TrailingStopLimitOrder.is_active_local">
+               (TrailingStopLimitOrder attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_market.TrailingStopMarketOrder.is_active_local">
+               (TrailingStopMarketOrder attribute)
+              </a>
+             </li>
+            </ul>
            </li>
            <li>
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.is_add">
@@ -18323,6 +18437,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#module-nautilus_trader.execution.manager">
+               nautilus_trader.execution.manager
+              </a>
+             </li>
+             <li>
               <a href="api_reference/execution.html#module-nautilus_trader.execution.matching_core">
                nautilus_trader.execution.matching_core
               </a>
@@ -20346,6 +20465,16 @@
             </ul>
            </li>
            <li>
+            nautilus_trader.execution.manager
+            <ul>
+             <li>
+              <a href="api_reference/execution.html#module-nautilus_trader.execution.manager">
+               module
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             nautilus_trader.execution.matching_core
             <ul>
              <li>
@@ -20355,6 +20484,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             nautilus_trader.execution.messages
             <ul>
@@ -20365,10 +20498,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             nautilus_trader.execution.reports
             <ul>
@@ -22975,6 +23104,11 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager">
+             OrderManager (class in nautilus_trader.execution.manager)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderModifyRejected">
              OrderModifyRejected (class in nautilus_trader.model.events.order)
             </a>
@@ -23697,6 +23831,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.pop_submit_order_command">
+             pop_submit_order_command() (OrderManager method)
+            </a>
            </li>
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.engine.BacktestEngine.portfolio">
@@ -26341,6 +26480,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.reset">
+               (OrderManager method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/portfolio.html#nautilus_trader.portfolio.portfolio.Portfolio.reset">
                (Portfolio method)
               </a>
@@ -26908,6 +27052,36 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.send_algo_command">
+             send_algo_command() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.send_emulator_command">
+             send_emulator_command() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.send_exec_command">
+             send_exec_command() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.send_exec_event">
+             send_exec_event() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.send_risk_command">
+             send_risk_command() (OrderManager method)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.send_risk_event">
+             send_risk_event() (OrderManager method)
+            </a>
            </li>
            <li>
             <a href="api_reference/msgbus.html#nautilus_trader.msgbus.bus.MessageBus.sent_count">
@@ -34148,6 +34322,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.manager.OrderManager.update_order_quantity">
+             update_order_quantity() (OrderManager method)
+            </a>
            </li>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.update_position">
