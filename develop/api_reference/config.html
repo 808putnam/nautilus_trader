@@ -7191,6 +7191,45 @@ The value should be a valid decimal format.
              OrderEmulatorConfig
             </span>
            </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              debug
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
            <a class="headerlink" href="#nautilus_trader.config.common.OrderEmulatorConfig" title="Permalink to this definition">
             ¶
            </a>
@@ -7215,6 +7254,32 @@ The value should be a valid decimal format.
             </code>
             instances.
            </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <p>
+              <strong>
+               debug
+              </strong>
+              (
+              <em>
+               bool
+              </em>
+              <em>
+               ,
+              </em>
+              <em>
+               default False
+              </em>
+              ) – If debug mode is active (will provide extra debug logging).
+             </p>
+            </dd>
+           </dl>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.config.common.OrderEmulatorConfig.dict">
              <span class="sig-name descname">
@@ -13571,6 +13636,23 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              emulator:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.OrderEmulatorConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               streaming:
              </span>
              <span class="pre">
@@ -13977,6 +14059,26 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                  optional
                 </em>
                 ) – The live execution engine configuration.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 emulator
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.config.common.OrderEmulatorConfig" title="nautilus_trader.config.common.OrderEmulatorConfig">
+                 <em>
+                  OrderEmulatorConfig
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The order emulator configuration.
                </p>
               </li>
               <li>
@@ -17627,6 +17729,23 @@ client).
             <span class="n">
              <span class="pre">
               debug=False)
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              emulator:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.OrderEmulatorConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>
@@ -23272,6 +23391,23 @@ are colocated with the venue (to avoid the potential for race conditions).
             <span class="n">
              <span class="pre">
               qsize=100000)
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              emulator:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.OrderEmulatorConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>

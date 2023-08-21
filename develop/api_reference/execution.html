@@ -2333,6 +2333,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.debug">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderEmulator.debug
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.degrade">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -24191,6 +24200,38 @@ then the component state will not change, and an error will be logged.
              </dl>
             </dd>
            </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.debug">
+             <span class="sig-name descname">
+              <span class="pre">
+               debug
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.debug" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              If debug mode is active (will provide extra debug logging).
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 bool
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.degrade">
              <span class="sig-name descname">
@@ -38154,7 +38195,13 @@ then the component state will not change, and an error will be logged.
              =
             </span>
             <span class="pre">
-             None
+             None,
+            </span>
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             debug=False
             </span>
            </em>
            <span class="sig-paren">
@@ -38333,6 +38380,24 @@ then the component state will not change, and an error will be logged.
                  optional
                 </em>
                 ) – The handler to call when canceling orders.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 debug
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If debug mode is active (will provide extra debug logging).
                </p>
               </li>
              </ul>
