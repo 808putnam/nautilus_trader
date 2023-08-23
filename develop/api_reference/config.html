@@ -1720,6 +1720,66 @@
                </ul>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.config.common.TracingConfig">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  TracingConfig
+                 </span>
+                </code>
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.TracingConfig.dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TracingConfig.dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.TracingConfig.fully_qualified_name">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TracingConfig.fully_qualified_name()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.TracingConfig.json">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TracingConfig.json()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.TracingConfig.parse">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TracingConfig.parse()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.TracingConfig.validate">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TracingConfig.validate()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.config.common.LoggingConfig">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -12602,6 +12662,698 @@ If not
           </dd>
          </dl>
          <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.config.common.TracingConfig">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             TracingConfig
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              stdout_level
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              stderr_level
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              file_level
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              tuple
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ,
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ,
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <a class="headerlink" href="#nautilus_trader.config.common.TracingConfig" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <a class="reference internal" href="#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+             <code class="xref py py-class docutils literal notranslate">
+              <span class="pre">
+               NautilusConfig
+              </span>
+             </code>
+            </a>
+           </p>
+           <p>
+            Configuration for standard output and file logging for rust tracing statements for a
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              NautilusKernel
+             </span>
+            </code>
+            instance.
+           </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 stdout_level
+                </strong>
+                (
+                <em>
+                 Optional
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ]
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default None
+                </em>
+                ) – The minimum log level to write to stdout. Possible options are “debug”,
+“info”, “warn”, “error”. Setting it None means no logs are written to
+stdout.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 stderr_level
+                </strong>
+                (
+                <em>
+                 Optional
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ]
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default None
+                </em>
+                ) – The minimum log level to write to stderr. Possible options are “debug”,
+“info”, “warn”, “error”. Setting it None means no logs are written to
+stderr.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 file_config
+                </strong>
+                (
+                <em>
+                 Optional
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 Tuple
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ]
+                </em>
+                <em>
+                 ]
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default None
+                </em>
+                ) –
+               </p>
+               <p>
+                The minimum log level to write to log file. Possible options are “debug”,
+“info”, “warn”, “error”. Setting it None means no logs are written to
+log file.
+               </p>
+               <p>
+                The second str is the prefix name of the log file and the third str is
+the name of the directory.
+               </p>
+              </li>
+             </ul>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.TracingConfig.dict">
+             <span class="sig-name descname">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                dict
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                str
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ,
+                </span>
+               </span>
+               <span class="w">
+               </span>
+               <span class="pre">
+                Any
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.TracingConfig.dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a dictionary representation of the configuration.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, Any]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.TracingConfig.fully_qualified_name">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               fully_qualified_name
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                str
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.TracingConfig.fully_qualified_name" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the fully qualified name for the
+              <cite>
+               NautilusConfig
+              </cite>
+              class.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 str
+                </em>
+               </p>
+              </dd>
+             </dl>
+             <p class="rubric">
+              References
+             </p>
+             <p>
+              <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
+               https://www.python.org/dev/peps/pep-3155/
+              </a>
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.TracingConfig.json">
+             <span class="sig-name descname">
+              <span class="pre">
+               json
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.TracingConfig.json" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return serialized JSON encoded bytes.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bytes
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.TracingConfig.parse">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               parse
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                raw
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                Any
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.TracingConfig.parse" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a decoded object of the given
+              <cite>
+               cls
+              </cite>
+              .
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   cls
+                  </strong>
+                  (
+                  <em>
+                   type
+                  </em>
+                  ) – The type to decode to.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   raw
+                  </strong>
+                  (
+                  <em>
+                   bytes
+                  </em>
+                  ) – The raw bytes to decode.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 Any
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.TracingConfig.validate">
+             <span class="sig-name descname">
+              <span class="pre">
+               validate
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.TracingConfig.validate" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return whether the configuration can be represented as valid JSON.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bool
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+          </dd>
+         </dl>
+         <dl class="py class">
           <dt class="sig sig-object py" id="nautilus_trader.config.common.LoggingConfig">
            <em class="property">
             <span class="pre">
@@ -13793,6 +14545,23 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
              </span>
              <span class="pre">
               ~typing.Optional[~nautilus_trader.config.common.LoggingConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              tracing:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.TracingConfig]
              </span>
              <span class="pre">
               =
@@ -17893,6 +18662,23 @@ client).
              </span>
              <span class="pre">
               ~typing.Optional[~nautilus_trader.config.common.LoggingConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              tracing:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.TracingConfig]
              </span>
              <span class="pre">
               =
@@ -23555,6 +24341,23 @@ are colocated with the venue (to avoid the potential for race conditions).
              </span>
              <span class="pre">
               ~typing.Optional[~nautilus_trader.config.common.LoggingConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              tracing:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.TracingConfig]
              </span>
              <span class="pre">
               =
