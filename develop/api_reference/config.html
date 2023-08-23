@@ -12870,7 +12870,7 @@ If not
             </a>
            </p>
            <p>
-            Configuration for standard output and file logging for rust tracing statements for a
+            Configuration for standard output and file logging for Rust tracing statements for a
             <code class="docutils literal notranslate">
              <span class="pre">
               NautilusKernel
@@ -12894,22 +12894,13 @@ If not
                 </strong>
                 (
                 <em>
-                 Optional
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
                  str
-                </em>
-                <em>
-                 ]
                 </em>
                 <em>
                  ,
                 </em>
                 <em>
-                 default None
+                 optional
                 </em>
                 ) – The minimum log level to write to stdout. Possible options are “debug”,
 “info”, “warn”, “error”. Setting it None means no logs are written to
@@ -12923,22 +12914,13 @@ stdout.
                 </strong>
                 (
                 <em>
-                 Optional
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
                  str
-                </em>
-                <em>
-                 ]
                 </em>
                 <em>
                  ,
                 </em>
                 <em>
-                 default None
+                 optional
                 </em>
                 ) – The minimum log level to write to stderr. Possible options are “debug”,
 “info”, “warn”, “error”. Setting it None means no logs are written to
@@ -12952,13 +12934,7 @@ stderr.
                 </strong>
                 (
                 <em>
-                 Optional
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
-                 Tuple
+                 tuple
                 </em>
                 <em>
                  [
@@ -12982,23 +12958,15 @@ stderr.
                  ]
                 </em>
                 <em>
-                 ]
-                </em>
-                <em>
                  ,
                 </em>
                 <em>
-                 default None
+                 optional
                 </em>
-                ) –
-               </p>
-               <p>
-                The minimum log level to write to log file. Possible options are “debug”,
+                ) – The minimum log level to write to log file. Possible options are “debug”,
 “info”, “warn”, “error”. Setting it None means no logs are written to
-log file.
-               </p>
-               <p>
-                The second str is the prefix name of the log file and the third str is
+the log file.
+The second str is the prefix name of the log file and the third str is
 the name of the directory.
                </p>
               </li>
