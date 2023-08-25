@@ -1658,7 +1658,7 @@ an execution algorithm:
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">cpdef</span> <span class="nb">list</span> <span class="n">orders_for_exec_spawn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ClientOrderId</span> <span class="n">client_order_id</span><span class="p">):</span>
+            <pre><span></span><span class="n">cpdef</span> <span class="nb">list</span> <span class="n">orders_for_exec_spawn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ClientOrderId</span> <span class="n">exec_spawn_id</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Return all orders for the given execution spawn ID (if found).</span>
 
@@ -1666,7 +1666,7 @@ an execution algorithm:
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    client_order_id : ClientOrderId</span>
+<span class="sd">    exec_spawn_id : ClientOrderId</span>
 <span class="sd">        The execution algorithm spawning primary (original) client order ID.</span>
 
 <span class="sd">    Returns</span>

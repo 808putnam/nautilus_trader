@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/arrow/quote.rs`."><title>quote.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (32303b219 2023-07-29)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../nautilus_persistence/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/arrow/quote.rs`."><title>quote.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (58eefc33a 2023-08-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../nautilus_persistence/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -268,6 +268,22 @@
 <a href="#268" id="268">268</a>
 <a href="#269" id="269">269</a>
 <a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -287,7 +303,7 @@
 
 <span class="kw">use </span>datafusion::arrow::{
     array::{Array, Int64Array, UInt64Array},
-    datatypes::{DataType, Field, Schema, SchemaRef},
+    datatypes::{DataType, Field, Schema},
     record_batch::RecordBatch,
 };
 <span class="kw">use </span>nautilus_model::{
@@ -300,17 +316,20 @@
 <span class="kw">use </span><span class="kw">crate</span>::arrow::{ArrowSchemaProvider, Data, DecodeFromRecordBatch, EncodeToRecordBatch};
 
 <span class="kw">impl </span>ArrowSchemaProvider <span class="kw">for </span>QuoteTick {
-    <span class="kw">fn </span>get_schema(metadata: std::collections::HashMap&lt;String, String&gt;) -&gt; SchemaRef {
+    <span class="kw">fn </span>get_schema(metadata: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;) -&gt; Schema {
         <span class="kw">let </span>fields = <span class="macro">vec!</span>[
-            Field::new(<span class="string">&quot;bid&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
-            Field::new(<span class="string">&quot;ask&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
+            Field::new(<span class="string">&quot;bid_price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
+            Field::new(<span class="string">&quot;ask_price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;bid_size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ask_size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ts_event&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ts_init&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
         ];
 
-        Schema::new_with_metadata(fields, metadata).into()
+        <span class="kw">match </span>metadata {
+            <span class="prelude-val">Some</span>(metadata) =&gt; Schema::new_with_metadata(fields, metadata),
+            <span class="prelude-val">None </span>=&gt; Schema::new(fields),
+        }
     }
 }
 
@@ -334,8 +353,8 @@
 <span class="kw">impl </span>EncodeToRecordBatch <span class="kw">for </span>QuoteTick {
     <span class="kw">fn </span>encode_batch(metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;, data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>]) -&gt; RecordBatch {
         <span class="comment">// Create array builders
-        </span><span class="kw">let </span><span class="kw-2">mut </span>bid_builder = Int64Array::builder(data.len());
-        <span class="kw">let </span><span class="kw-2">mut </span>ask_builder = Int64Array::builder(data.len());
+        </span><span class="kw">let </span><span class="kw-2">mut </span>bid_price_builder = Int64Array::builder(data.len());
+        <span class="kw">let </span><span class="kw-2">mut </span>ask_price_builder = Int64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>bid_size_builder = UInt64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ask_size_builder = UInt64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ts_event_builder = UInt64Array::builder(data.len());
@@ -343,8 +362,8 @@
 
         <span class="comment">// Iterate over data
         </span><span class="kw">for </span>tick <span class="kw">in </span>data {
-            bid_builder.append_value(tick.bid.raw);
-            ask_builder.append_value(tick.ask.raw);
+            bid_price_builder.append_value(tick.bid_price.raw);
+            ask_price_builder.append_value(tick.ask_price.raw);
             bid_size_builder.append_value(tick.bid_size.raw);
             ask_size_builder.append_value(tick.ask_size.raw);
             ts_event_builder.append_value(tick.ts_event);
@@ -352,8 +371,8 @@
         }
 
         <span class="comment">// Build arrays
-        </span><span class="kw">let </span>bid_array = bid_builder.finish();
-        <span class="kw">let </span>ask_array = ask_builder.finish();
+        </span><span class="kw">let </span>bid_price_array = bid_price_builder.finish();
+        <span class="kw">let </span>ask_price_array = ask_price_builder.finish();
         <span class="kw">let </span>bid_size_array = bid_size_builder.finish();
         <span class="kw">let </span>ask_size_array = ask_size_builder.finish();
         <span class="kw">let </span>ts_event_array = ts_event_builder.finish();
@@ -361,10 +380,10 @@
 
         <span class="comment">// Build record batch
         </span>RecordBatch::try_new(
-            <span class="self">Self</span>::get_schema(metadata.clone()),
+            <span class="self">Self</span>::get_schema(<span class="prelude-val">Some</span>(metadata.clone())).into(),
             <span class="macro">vec!</span>[
-                Arc::new(bid_array),
-                Arc::new(ask_array),
+                Arc::new(bid_price_array),
+                Arc::new(ask_price_array),
                 Arc::new(bid_size_array),
                 Arc::new(ask_size_array),
                 Arc::new(ts_event_array),
@@ -382,26 +401,26 @@
 
         <span class="comment">// Extract field value arrays
         </span><span class="kw">let </span>cols = record_batch.columns();
-        <span class="kw">let </span>bid_values = cols[<span class="number">0</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
-        <span class="kw">let </span>ask_values = cols[<span class="number">1</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
+        <span class="kw">let </span>bid_price_values = cols[<span class="number">0</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
+        <span class="kw">let </span>ask_price_values = cols[<span class="number">1</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
         <span class="kw">let </span>ask_size_values = cols[<span class="number">2</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>bid_size_values = cols[<span class="number">3</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ts_event_values = cols[<span class="number">4</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ts_init_values = cols[<span class="number">5</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
 
         <span class="comment">// Construct iterator of values from arrays
-        </span><span class="kw">let </span>values = bid_values
+        </span><span class="kw">let </span>values = bid_price_values
             .into_iter()
-            .zip(ask_values.iter())
+            .zip(ask_price_values.iter())
             .zip(ask_size_values.iter())
             .zip(bid_size_values.iter())
             .zip(ts_event_values.iter())
             .zip(ts_init_values.iter())
             .map(
-                |(((((bid, ask), ask_size), bid_size), ts_event), ts_init)| <span class="self">Self </span>{
+                |(((((bid_price, ask_price), ask_size), bid_size), ts_event), ts_init)| <span class="self">Self </span>{
                     instrument_id,
-                    bid: Price::from_raw(bid.unwrap(), price_precision),
-                    ask: Price::from_raw(ask.unwrap(), price_precision),
+                    bid_price: Price::from_raw(bid_price.unwrap(), price_precision),
+                    ask_price: Price::from_raw(ask_price.unwrap(), price_precision),
                     bid_size: Quantity::from_raw(bid_size.unwrap(), size_precision),
                     ask_size: Quantity::from_raw(ask_size.unwrap(), size_precision),
                     ts_event: ts_event.unwrap(),
@@ -438,17 +457,30 @@
     </span><span class="kw">fn </span>test_get_schema() {
         <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
-        <span class="kw">let </span>schema = QuoteTick::get_schema(metadata.clone());
+        <span class="kw">let </span>schema = QuoteTick::get_schema(<span class="prelude-val">Some</span>(metadata.clone()));
         <span class="kw">let </span>expected_fields = <span class="macro">vec!</span>[
-            Field::new(<span class="string">&quot;bid&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
-            Field::new(<span class="string">&quot;ask&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
+            Field::new(<span class="string">&quot;bid_price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
+            Field::new(<span class="string">&quot;ask_price&quot;</span>, DataType::Int64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;bid_size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ask_size&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ts_event&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
             Field::new(<span class="string">&quot;ts_init&quot;</span>, DataType::UInt64, <span class="bool-val">false</span>),
         ];
-        <span class="kw">let </span>expected_schema = Schema::new_with_metadata(expected_fields, metadata).into();
+        <span class="kw">let </span>expected_schema = Schema::new_with_metadata(expected_fields, metadata);
         <span class="macro">assert_eq!</span>(schema, expected_schema);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_get_schema_map() {
+        <span class="kw">let </span>arrow_schema = QuoteTick::get_schema_map();
+        <span class="kw">let </span><span class="kw-2">mut </span>expected_map = HashMap::new();
+        expected_map.insert(<span class="string">&quot;bid_price&quot;</span>.to_string(), <span class="string">&quot;Int64&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;ask_price&quot;</span>.to_string(), <span class="string">&quot;Int64&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;bid_size&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;ask_size&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;ts_event&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
+        expected_map.insert(<span class="string">&quot;ts_init&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
+        <span class="macro">assert_eq!</span>(arrow_schema, expected_map);
     }
 
     <span class="attr">#[test]
@@ -456,9 +488,9 @@
         <span class="comment">// Create test data
         </span><span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
         <span class="kw">let </span>tick1 = QuoteTick {
-            instrument_id: instrument_id,
-            bid: Price::new(<span class="number">100.10</span>, <span class="number">2</span>),
-            ask: Price::new(<span class="number">101.50</span>, <span class="number">2</span>),
+            instrument_id,
+            bid_price: Price::new(<span class="number">100.10</span>, <span class="number">2</span>),
+            ask_price: Price::new(<span class="number">101.50</span>, <span class="number">2</span>),
             bid_size: Quantity::new(<span class="number">1000.0</span>, <span class="number">0</span>),
             ask_size: Quantity::new(<span class="number">500.0</span>, <span class="number">0</span>),
             ts_event: <span class="number">1</span>,
@@ -467,8 +499,8 @@
 
         <span class="kw">let </span>tick2 = QuoteTick {
             instrument_id,
-            bid: Price::new(<span class="number">100.75</span>, <span class="number">2</span>),
-            ask: Price::new(<span class="number">100.20</span>, <span class="number">2</span>),
+            bid_price: Price::new(<span class="number">100.75</span>, <span class="number">2</span>),
+            ask_price: Price::new(<span class="number">100.20</span>, <span class="number">2</span>),
             bid_size: Quantity::new(<span class="number">750.0</span>, <span class="number">0</span>),
             ask_size: Quantity::new(<span class="number">300.0</span>, <span class="number">0</span>),
             ts_event: <span class="number">2</span>,
@@ -481,20 +513,20 @@
 
         <span class="comment">// Verify the encoded data
         </span><span class="kw">let </span>columns = record_batch.columns();
-        <span class="kw">let </span>bid_values = columns[<span class="number">0</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
-        <span class="kw">let </span>ask_values = columns[<span class="number">1</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
+        <span class="kw">let </span>bid_price_values = columns[<span class="number">0</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
+        <span class="kw">let </span>ask_price_values = columns[<span class="number">1</span>].as_any().downcast_ref::&lt;Int64Array&gt;().unwrap();
         <span class="kw">let </span>bid_size_values = columns[<span class="number">2</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ask_size_values = columns[<span class="number">3</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ts_event_values = columns[<span class="number">4</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
         <span class="kw">let </span>ts_init_values = columns[<span class="number">5</span>].as_any().downcast_ref::&lt;UInt64Array&gt;().unwrap();
 
         <span class="macro">assert_eq!</span>(columns.len(), <span class="number">6</span>);
-        <span class="macro">assert_eq!</span>(bid_values.len(), <span class="number">2</span>);
-        <span class="macro">assert_eq!</span>(bid_values.value(<span class="number">0</span>), <span class="number">100_100_000_000</span>);
-        <span class="macro">assert_eq!</span>(bid_values.value(<span class="number">1</span>), <span class="number">100_750_000_000</span>);
-        <span class="macro">assert_eq!</span>(ask_values.len(), <span class="number">2</span>);
-        <span class="macro">assert_eq!</span>(ask_values.value(<span class="number">0</span>), <span class="number">101_500_000_000</span>);
-        <span class="macro">assert_eq!</span>(ask_values.value(<span class="number">1</span>), <span class="number">100_200_000_000</span>);
+        <span class="macro">assert_eq!</span>(bid_price_values.len(), <span class="number">2</span>);
+        <span class="macro">assert_eq!</span>(bid_price_values.value(<span class="number">0</span>), <span class="number">100_100_000_000</span>);
+        <span class="macro">assert_eq!</span>(bid_price_values.value(<span class="number">1</span>), <span class="number">100_750_000_000</span>);
+        <span class="macro">assert_eq!</span>(ask_price_values.len(), <span class="number">2</span>);
+        <span class="macro">assert_eq!</span>(ask_price_values.value(<span class="number">0</span>), <span class="number">101_500_000_000</span>);
+        <span class="macro">assert_eq!</span>(ask_price_values.value(<span class="number">1</span>), <span class="number">100_200_000_000</span>);
         <span class="macro">assert_eq!</span>(bid_size_values.len(), <span class="number">2</span>);
         <span class="macro">assert_eq!</span>(bid_size_values.value(<span class="number">0</span>), <span class="number">1_000_000_000_000</span>);
         <span class="macro">assert_eq!</span>(bid_size_values.value(<span class="number">1</span>), <span class="number">750_000_000_000</span>);
@@ -514,18 +546,18 @@
         <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
 
-        <span class="kw">let </span>bid = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10000</span>, <span class="number">9900</span>]);
-        <span class="kw">let </span>ask = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10100</span>, <span class="number">10000</span>]);
+        <span class="kw">let </span>bid_price = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10000</span>, <span class="number">9900</span>]);
+        <span class="kw">let </span>ask_price = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10100</span>, <span class="number">10000</span>]);
         <span class="kw">let </span>bid_size = UInt64Array::from(<span class="macro">vec!</span>[<span class="number">100</span>, <span class="number">90</span>]);
         <span class="kw">let </span>ask_size = UInt64Array::from(<span class="macro">vec!</span>[<span class="number">110</span>, <span class="number">100</span>]);
         <span class="kw">let </span>ts_event = UInt64Array::from(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>]);
         <span class="kw">let </span>ts_init = UInt64Array::from(<span class="macro">vec!</span>[<span class="number">3</span>, <span class="number">4</span>]);
 
         <span class="kw">let </span>record_batch = RecordBatch::try_new(
-            QuoteTick::get_schema(metadata.clone()),
+            QuoteTick::get_schema(<span class="prelude-val">Some</span>(metadata.clone())).into(),
             <span class="macro">vec!</span>[
-                Arc::new(bid),
-                Arc::new(ask),
+                Arc::new(bid_price),
+                Arc::new(ask_price),
                 Arc::new(bid_size),
                 Arc::new(ask_size),
                 Arc::new(ts_event),

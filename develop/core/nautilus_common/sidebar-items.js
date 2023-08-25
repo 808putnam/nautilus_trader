@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["clock","clock_api","enums","logging","logging_api","msgbus","testing","timer","timer_api"]};

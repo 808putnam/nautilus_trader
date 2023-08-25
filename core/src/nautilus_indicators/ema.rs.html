@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `indicators/src/ema.rs`."><title>ema.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_indicators" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (32303b219 2023-07-29)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../nautilus_indicators/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `indicators/src/ema.rs`."><title>ema.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_indicators" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (58eefc33a 2023-08-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../nautilus_indicators/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -178,6 +178,11 @@
 <a href="#178" id="178">178</a>
 <a href="#179" id="179">179</a>
 <a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -210,8 +215,8 @@
     <span class="kw">pub </span>alpha: f64,
     <span class="kw">pub </span>value: f64,
     <span class="kw">pub </span>count: usize,
-    _has_inputs: bool,
-    _is_initialized: bool,
+    has_inputs: bool,
+    is_initialized: bool,
 }
 
 <span class="kw">impl </span>Indicator <span class="kw">for </span>ExponentialMovingAverage {
@@ -220,89 +225,37 @@
     }
 
     <span class="kw">fn </span>has_inputs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>._has_inputs
+        <span class="self">self</span>.has_inputs
     }
 
     <span class="kw">fn </span>is_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>._is_initialized
+        <span class="self">self</span>.is_initialized
     }
 
     <span class="kw">fn </span>handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
+        <span class="self">self</span>.py_update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
     }
 
     <span class="kw">fn </span>handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into())
+        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>tick.price).into())
     }
 
     <span class="kw">fn </span>handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into())
+        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>bar.close).into())
     }
 
     <span class="kw">fn </span>reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="self">self</span>.value = <span class="number">0.0</span>;
         <span class="self">self</span>.count = <span class="number">0</span>;
-        <span class="self">self</span>._has_inputs = <span class="bool-val">false</span>;
-        <span class="self">self</span>._is_initialized = <span class="bool-val">false</span>;
+        <span class="self">self</span>.has_inputs = <span class="bool-val">false</span>;
+        <span class="self">self</span>.is_initialized = <span class="bool-val">false</span>;
     }
 }
 
-<span class="attr">#[pymethods]
-</span><span class="kw">impl </span>ExponentialMovingAverage {
-    <span class="attr">#[must_use]
-    #[new]
-    </span><span class="kw">pub fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            period,
-            price_type: price_type.unwrap_or(PriceType::Last),
-            alpha: <span class="number">2.0 </span>/ (period <span class="kw">as </span>f64 + <span class="number">1.0</span>),
-            value: <span class="number">0.0</span>,
-            count: <span class="number">0</span>,
-            _has_inputs: <span class="bool-val">false</span>,
-            _is_initialized: <span class="bool-val">false</span>,
-        }
-    }
-
-    <span class="attr">#[getter]
-    #[pyo3(name = <span class="string">&quot;name&quot;</span>)]
-    #[must_use]
-    </span><span class="kw">pub fn </span>name_py(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="self">self</span>.name()
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;has_inputs&quot;</span>)]
-    </span><span class="kw">fn </span>has_inputs_py(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.has_inputs()
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;is_initialized&quot;</span>)]
-    </span><span class="kw">fn </span>is_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>._is_initialized
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_quote_tick&quot;</span>)]
-    </span><span class="kw">fn </span>handle_quote_tick_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_trade_tick&quot;</span>)]
-    </span><span class="kw">fn </span>handle_trade_tick_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into())
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_bar&quot;</span>)]
-    </span><span class="kw">fn </span>handle_bar_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into())
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">&quot;reset&quot;</span>)]
-    </span><span class="kw">fn </span>reset_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="self">self</span>.reset()
-    }
-
-    <span class="kw">pub fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
-        <span class="kw">if </span>!<span class="self">self</span>._has_inputs {
-            <span class="self">self</span>._has_inputs = <span class="bool-val">true</span>;
+<span class="kw">impl </span>ExponentialMovingAverage {
+    <span class="kw">fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
+        <span class="kw">if </span>!<span class="self">self</span>.has_inputs {
+            <span class="self">self</span>.has_inputs = <span class="bool-val">true</span>;
             <span class="self">self</span>.value = value;
         }
 
@@ -310,9 +263,66 @@
         <span class="self">self</span>.count += <span class="number">1</span>;
 
         <span class="comment">// Initialization logic
-        </span><span class="kw">if </span>!<span class="self">self</span>._is_initialized &amp;&amp; <span class="self">self</span>.count &gt;= <span class="self">self</span>.period {
-            <span class="self">self</span>._is_initialized = <span class="bool-val">true</span>;
+        </span><span class="kw">if </span>!<span class="self">self</span>.is_initialized &amp;&amp; <span class="self">self</span>.count &gt;= <span class="self">self</span>.period {
+            <span class="self">self</span>.is_initialized = <span class="bool-val">true</span>;
         }
+    }
+}
+
+<span class="attr">#[pymethods]
+</span><span class="kw">impl </span>ExponentialMovingAverage {
+    <span class="attr">#[new]
+    </span><span class="kw">fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            period,
+            price_type: price_type.unwrap_or(PriceType::Last),
+            alpha: <span class="number">2.0 </span>/ (period <span class="kw">as </span>f64 + <span class="number">1.0</span>),
+            value: <span class="number">0.0</span>,
+            count: <span class="number">0</span>,
+            has_inputs: <span class="bool-val">false</span>,
+            is_initialized: <span class="bool-val">false</span>,
+        }
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">&quot;name&quot;</span>)]
+    </span><span class="kw">fn </span>py_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="self">self</span>.name()
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;has_inputs&quot;</span>)]
+    </span><span class="kw">fn </span>py_has_inputs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.has_inputs()
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;is_initialized&quot;</span>)]
+    </span><span class="kw">fn </span>py_is_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.is_initialized
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_quote_tick&quot;</span>)]
+    </span><span class="kw">fn </span>py_handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
+        <span class="self">self</span>.py_update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_trade_tick&quot;</span>)]
+    </span><span class="kw">fn </span>py_handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into())
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;handle_bar&quot;</span>)]
+    </span><span class="kw">fn </span>py_handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into())
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;reset&quot;</span>)]
+    </span><span class="kw">fn </span>py_reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="self">self</span>.reset()
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;update_raw&quot;</span>)]
+    </span><span class="kw">fn </span>py_update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
+        <span class="self">self</span>.update_raw(value)
     }
 }
 
@@ -327,15 +337,15 @@
     </span><span class="kw">fn </span>test_ema_initialized() {
         <span class="kw">let </span>ema = ExponentialMovingAverage::new(<span class="number">20</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
         <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">&quot;{ema:?}&quot;</span>);
-        <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;ExponentialMovingAverage { period: 20, price_type: Mid, alpha: 0.09523809523809523, value: 0.0, count: 0, _has_inputs: false, _is_initialized: false }&quot;</span>);
+        <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;ExponentialMovingAverage { period: 20, price_type: Mid, alpha: 0.09523809523809523, value: 0.0, count: 0, has_inputs: false, is_initialized: false }&quot;</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_ema_update_raw() {
         <span class="kw">let </span><span class="kw-2">mut </span>ema = ExponentialMovingAverage::new(<span class="number">3</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
-        ema.update_raw(<span class="number">1.0</span>);
-        ema.update_raw(<span class="number">2.0</span>);
-        ema.update_raw(<span class="number">3.0</span>);
+        ema.py_update_raw(<span class="number">1.0</span>);
+        ema.py_update_raw(<span class="number">2.0</span>);
+        ema.py_update_raw(<span class="number">3.0</span>);
 
         <span class="macro">assert!</span>(ema.has_inputs());
         <span class="macro">assert!</span>(ema.is_initialized());
@@ -346,9 +356,9 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_ema_reset() {
         <span class="kw">let </span><span class="kw-2">mut </span>ema = ExponentialMovingAverage::new(<span class="number">3</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
-        ema.update_raw(<span class="number">1.0</span>);
-        ema.update_raw(<span class="number">2.0</span>);
-        ema.update_raw(<span class="number">3.0</span>);
+        ema.py_update_raw(<span class="number">1.0</span>);
+        ema.py_update_raw(<span class="number">2.0</span>);
+        ema.py_update_raw(<span class="number">3.0</span>);
 
         ema.reset();
 

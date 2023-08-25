@@ -724,6 +724,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.bar.Bar.from_pyo3">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Bar.from_pyo3()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.data.bar.Bar.fully_qualified_name">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1144,6 +1153,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookDelta.from_pyo3">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBookDelta.from_pyo3()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.data.book.OrderBookDelta.fully_qualified_name">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1345,10 +1363,10 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.QuoteTick.ask">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.QuoteTick.ask_price">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  QuoteTick.ask
+                  QuoteTick.ask_price
                  </span>
                 </code>
                </a>
@@ -1363,10 +1381,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.QuoteTick.bid">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.QuoteTick.bid_price">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  QuoteTick.bid
+                  QuoteTick.bid_price
                  </span>
                 </code>
                </a>
@@ -1412,6 +1430,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   QuoteTick.from_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.QuoteTick.from_pyo3">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  QuoteTick.from_pyo3()
                  </span>
                 </code>
                </a>
@@ -1517,6 +1544,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   TradeTick.from_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.tick.TradeTick.from_pyo3">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  TradeTick.from_pyo3()
                  </span>
                 </code>
                </a>
@@ -2612,6 +2648,113 @@
               <p>
                <em>
                 Bar
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.bar.Bar.from_pyo3">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_pyo3
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               list
+              </span>
+              <span class="pre">
+               pyo3_bars
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <a class="reference internal" href="#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
+               <span class="pre">
+                Bar
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.data.bar.Bar.from_pyo3" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return bars converted from the given pyo3 provided objects.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                pyo3_bars
+               </strong>
+               (
+               <em>
+                list
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                RustBar
+               </em>
+               <em>
+                ]
+               </em>
+               ) – The Rust pyo3 bars to convert from.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                list[Bar]
                </em>
               </p>
              </dd>
@@ -5436,10 +5579,10 @@ internally aggregated.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             uint64_t
+             uint8_t
             </span>
             <span class="pre">
-             sequence=0
+             flags=0
             </span>
            </span>
           </em>
@@ -5447,10 +5590,10 @@ internally aggregated.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             uint8_t
+             uint64_t
             </span>
             <span class="pre">
-             flags=0
+             sequence=0
             </span>
            </span>
           </em>
@@ -5573,28 +5716,6 @@ internally aggregated.
              <li>
               <p>
                <strong>
-                sequence
-               </strong>
-               (
-               <em>
-                uint64_t
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                default 0
-               </em>
-               ) – The unique sequence number for the update. If default 0 then will increment the
-               <cite>
-                sequence
-               </cite>
-               .
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
                 flags
                </strong>
                (
@@ -5617,6 +5738,28 @@ internally aggregated.
                 )
                </em>
                ) – A combination of packet end with matching engine status.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                sequence
+               </strong>
+               (
+               <em>
+                uint64_t
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default 0
+               </em>
+               ) – The unique sequence number for the update. If default 0 then will increment the
+               <cite>
+                sequence
+               </cite>
+               .
               </p>
              </li>
             </ul>
@@ -5926,6 +6069,113 @@ internally aggregated.
               <p>
                <em>
                 OrderBookDelta
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.book.OrderBookDelta.from_pyo3">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_pyo3
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               list
+              </span>
+              <span class="pre">
+               pyo3_deltas
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <a class="reference internal" href="#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
+               <span class="pre">
+                OrderBookDelta
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.data.book.OrderBookDelta.from_pyo3" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return order book deltas converted from the given pyo3 provided objects.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                pyo3_deltas
+               </strong>
+               (
+               <em>
+                list
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                RustOrderBookDelta
+               </em>
+               <em>
+                ]
+               </em>
+               ) – The Rust pyo3 order book deltas to convert from.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                list[OrderBookDelta]
                </em>
               </p>
              </dd>
@@ -7060,7 +7310,7 @@ internally aggregated.
              Price
             </span>
             <span class="pre">
-             bid
+             bid_price
             </span>
            </span>
           </em>
@@ -7071,7 +7321,7 @@ internally aggregated.
              Price
             </span>
             <span class="pre">
-             ask
+             ask_price
             </span>
            </span>
           </em>
@@ -7167,7 +7417,7 @@ internally aggregated.
              <li>
               <p>
                <strong>
-                bid
+                bid_price
                </strong>
                (
                <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
@@ -7181,7 +7431,7 @@ internally aggregated.
              <li>
               <p>
                <strong>
-                ask
+                ask_price
                </strong>
                (
                <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
@@ -7290,13 +7540,13 @@ internally aggregated.
            </dd>
           </dl>
           <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.ask">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.ask_price">
             <span class="sig-name descname">
              <span class="pre">
-              ask
+              ask_price
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.tick.QuoteTick.ask" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.model.data.tick.QuoteTick.ask_price" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -7329,7 +7579,7 @@ internally aggregated.
              </dt>
              <dd class="field-even">
               <p>
-               QuoteTick.ask
+               QuoteTick.ask_price
               </p>
              </dd>
             </dl>
@@ -7382,13 +7632,13 @@ internally aggregated.
            </dd>
           </dl>
           <dl class="py attribute">
-           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.bid">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.bid_price">
             <span class="sig-name descname">
              <span class="pre">
-              bid
+              bid_price
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.model.data.tick.QuoteTick.bid" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.model.data.tick.QuoteTick.bid_price" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -7421,7 +7671,7 @@ internally aggregated.
              </dt>
              <dd class="field-even">
               <p>
-               QuoteTick.bid
+               QuoteTick.bid_price
               </p>
              </dd>
             </dl>
@@ -7780,6 +8030,113 @@ internally aggregated.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.from_pyo3">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_pyo3
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               list
+              </span>
+              <span class="pre">
+               pyo3_ticks
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <a class="reference internal" href="#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
+               <span class="pre">
+                QuoteTick
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.data.tick.QuoteTick.from_pyo3" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return quote ticks converted from the given pyo3 provided objects.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                pyo3_ticks
+               </strong>
+               (
+               <em>
+                list
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                RustQuoteTick
+               </em>
+               <em>
+                ]
+               </em>
+               ) – The Rust pyo3 quote ticks to convert from.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                list[QuoteTick]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.QuoteTick.from_raw">
             <em class="property">
              <span class="pre">
@@ -7813,7 +8170,7 @@ internally aggregated.
                int64_t
               </span>
               <span class="pre">
-               raw_bid
+               bid_price_raw
               </span>
              </span>
             </em>
@@ -7824,7 +8181,7 @@ internally aggregated.
                int64_t
               </span>
               <span class="pre">
-               raw_ask
+               ask_price_raw
               </span>
              </span>
             </em>
@@ -7857,7 +8214,7 @@ internally aggregated.
                uint64_t
               </span>
               <span class="pre">
-               raw_bid_size
+               bid_size_raw
               </span>
              </span>
             </em>
@@ -7868,7 +8225,7 @@ internally aggregated.
                uint64_t
               </span>
               <span class="pre">
-               raw_ask_size
+               ask_size_raw
               </span>
              </span>
             </em>
@@ -7965,7 +8322,7 @@ internally aggregated.
                <li>
                 <p>
                  <strong>
-                  raw_bid
+                  bid_price_raw
                  </strong>
                  (
                  <em>
@@ -7977,7 +8334,7 @@ internally aggregated.
                <li>
                 <p>
                  <strong>
-                  raw_ask
+                  ask_price_raw
                  </strong>
                  (
                  <em>
@@ -8013,28 +8370,24 @@ internally aggregated.
                <li>
                 <p>
                  <strong>
-                  raw_bid_size
+                  bid_size_raw
                  </strong>
                  (
-                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
-                  <em>
-                   Quantity
-                  </em>
-                 </a>
+                 <em>
+                  uint64_t
+                 </em>
                  ) – The raw top of book bid size (as a scaled fixed precision integer).
                 </p>
                </li>
                <li>
                 <p>
                  <strong>
-                  raw_ask_size
+                  ask_size_raw
                  </strong>
                  (
-                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
-                  <em>
-                   Quantity
-                  </em>
-                 </a>
+                 <em>
+                  uint64_t
+                 </em>
                  ) – The raw top of book ask size (as a scaled fixed precision integer).
                 </p>
                </li>
@@ -8893,6 +9246,113 @@ seller counterparties.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.TradeTick.from_pyo3">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_pyo3
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               list
+              </span>
+              <span class="pre">
+               pyo3_ticks
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               list
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <a class="reference internal" href="#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
+               <span class="pre">
+                TradeTick
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.data.tick.TradeTick.from_pyo3" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return trade ticks converted from the given pyo3 provided objects.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                pyo3_ticks
+               </strong>
+               (
+               <em>
+                list
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                RustTradeTick
+               </em>
+               <em>
+                ]
+               </em>
+               ) – The Rust pyo3 trade ticks to convert from.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                list[TradeTick]
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.model.data.tick.TradeTick.from_raw">
             <em class="property">
              <span class="pre">
@@ -8926,7 +9386,7 @@ seller counterparties.
                int64_t
               </span>
               <span class="pre">
-               raw_price
+               price_raw
               </span>
              </span>
             </em>
@@ -8948,7 +9408,7 @@ seller counterparties.
                uint64_t
               </span>
               <span class="pre">
-               raw_size
+               size_raw
               </span>
              </span>
             </em>
@@ -9056,7 +9516,7 @@ seller counterparties.
                <li>
                 <p>
                  <strong>
-                  raw_price
+                  price_raw
                  </strong>
                  (
                  <em>
@@ -9080,7 +9540,7 @@ seller counterparties.
                <li>
                 <p>
                  <strong>
-                  raw_size
+                  size_raw
                  </strong>
                  (
                  <em>

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["correctness","cvec","datetime","parsing","serialization","string","time","uuid"]};
