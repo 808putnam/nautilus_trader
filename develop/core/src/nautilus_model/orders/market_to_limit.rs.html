@@ -367,34 +367,6 @@
 <a href="#367" id="367">367</a>
 <a href="#368" id="368">368</a>
 <a href="#369" id="369">369</a>
-<a href="#370" id="370">370</a>
-<a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a>
-<a href="#373" id="373">373</a>
-<a href="#374" id="374">374</a>
-<a href="#375" id="375">375</a>
-<a href="#376" id="376">376</a>
-<a href="#377" id="377">377</a>
-<a href="#378" id="378">378</a>
-<a href="#379" id="379">379</a>
-<a href="#380" id="380">380</a>
-<a href="#381" id="381">381</a>
-<a href="#382" id="382">382</a>
-<a href="#383" id="383">383</a>
-<a href="#384" id="384">384</a>
-<a href="#385" id="385">385</a>
-<a href="#386" id="386">386</a>
-<a href="#387" id="387">387</a>
-<a href="#388" id="388">388</a>
-<a href="#389" id="389">389</a>
-<a href="#390" id="390">390</a>
-<a href="#391" id="391">391</a>
-<a href="#392" id="392">392</a>
-<a href="#393" id="393">393</a>
-<a href="#394" id="394">394</a>
-<a href="#395" id="395">395</a>
-<a href="#396" id="396">396</a>
-<a href="#397" id="397">397</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -416,6 +388,7 @@
 };
 
 <span class="kw">use </span>nautilus_core::{time::UnixNanos, uuid::UUID4};
+<span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use </span><span class="kw">super</span>::base::{Order, OrderCore};
@@ -435,7 +408,8 @@
     types::{price::Price, quantity::Quantity},
 };
 
-<span class="kw">pub struct </span>MarketToLimitOrder {
+<span class="attr">#[pyclass]
+</span><span class="kw">pub struct </span>MarketToLimitOrder {
     core: OrderCore,
     <span class="kw">pub </span>price: <span class="prelude-ty">Option</span>&lt;Price&gt;,
     <span class="kw">pub </span>expire_time: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
@@ -499,36 +473,6 @@
             is_post_only: post_only,
             display_qty,
         }
-    }
-}
-
-<span class="doccomment">/// Provides a default [`MarketToLimitOrder`] used for testing.
-</span><span class="kw">impl </span>Default <span class="kw">for </span>MarketToLimitOrder {
-    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        MarketToLimitOrder::new(
-            TraderId::default(),
-            StrategyId::default(),
-            InstrumentId::default(),
-            ClientOrderId::default(),
-            OrderSide::Buy,
-            Quantity::new(<span class="number">100_000.0</span>, <span class="number">0</span>),
-            TimeInForce::Gtc,
-            <span class="prelude-val">None</span>,
-            <span class="bool-val">false</span>,
-            <span class="bool-val">false</span>,
-            <span class="bool-val">false</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            UUID4::default(),
-            <span class="number">0</span>,
-        )
     }
 }
 

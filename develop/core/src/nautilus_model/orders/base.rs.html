@@ -761,6 +761,18 @@
 <a href="#761" id="761">761</a>
 <a href="#762" id="762">762</a>
 <a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
+<a href="#767" id="767">767</a>
+<a href="#768" id="768">768</a>
+<a href="#769" id="769">769</a>
+<a href="#770" id="770">770</a>
+<a href="#771" id="771">771</a>
+<a href="#772" id="772">772</a>
+<a href="#773" id="773">773</a>
+<a href="#774" id="774">774</a>
+<a href="#775" id="775">775</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -829,6 +841,18 @@
     OrderType::LimitIfTouched,
     OrderType::MarketIfTouched,
 ];
+
+<span class="kw">pub fn </span>ustr_hashmap_to_str(h: HashMap&lt;Ustr, Ustr&gt;) -&gt; HashMap&lt;String, String&gt; {
+    h.into_iter()
+        .map(|(k, v)| (k.to_string(), v.to_string()))
+        .collect()
+}
+
+<span class="kw">pub fn </span>str_hashmap_to_ustr(h: HashMap&lt;String, String&gt;) -&gt; HashMap&lt;Ustr, Ustr&gt; {
+    h.into_iter()
+        .map(|(k, v)| (Ustr::from(<span class="kw-2">&amp;</span>k), Ustr::from(<span class="kw-2">&amp;</span>v)))
+        .collect()
+}
 
 <span class="kw">impl </span>OrderStatus {
     <span class="attr">#[rustfmt::skip]
