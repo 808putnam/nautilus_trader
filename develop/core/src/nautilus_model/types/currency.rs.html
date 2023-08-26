@@ -264,6 +264,11 @@
 <a href="#264" id="264">264</a>
 <a href="#265" id="265">265</a>
 <a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -285,6 +290,7 @@
     str::FromStr,
 };
 
+<span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::{
     correctness,
     string::{cstr_to_string, str_to_cstr},
@@ -307,25 +313,24 @@
 }
 
 <span class="kw">impl </span>Currency {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(
+    <span class="kw">pub fn </span>new(
         code: <span class="kw-2">&amp;</span>str,
         precision: u8,
         iso4217: u16,
         name: <span class="kw-2">&amp;</span>str,
         currency_type: CurrencyType,
-    ) -&gt; <span class="self">Self </span>{
-        correctness::valid_string(code, <span class="string">&quot;`Currency` code&quot;</span>);
-        correctness::valid_string(name, <span class="string">&quot;`Currency` name&quot;</span>);
-        correctness::u8_in_range_inclusive(precision, <span class="number">0</span>, <span class="number">9</span>, <span class="string">&quot;`Currency` precision&quot;</span>);
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        correctness::valid_string(code, <span class="string">&quot;`Currency` code&quot;</span>)<span class="question-mark">?</span>;
+        correctness::valid_string(name, <span class="string">&quot;`Currency` name&quot;</span>)<span class="question-mark">?</span>;
+        correctness::u8_in_range_inclusive(precision, <span class="number">0</span>, <span class="number">9</span>, <span class="string">&quot;`Currency` precision&quot;</span>)<span class="question-mark">?</span>;
 
-        <span class="self">Self </span>{
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             code: Ustr::from(code),
             precision,
             iso4217,
             name: Ustr::from(name),
             currency_type,
-        }
+        })
     }
 }
 
@@ -410,6 +415,7 @@
             .expect(<span class="string">&quot;CStr::from_ptr failed for `name_ptr`&quot;</span>),
         currency_type,
     )
+    .unwrap()
 }
 
 <span class="attr">#[no_mangle]
@@ -474,19 +480,20 @@
     <span class="attr">#[test]
     #[should_panic(expected = <span class="string">&quot;`Currency` code&quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_currency_code() {
-        <span class="kw">let _ </span>= Currency::new(<span class="string">&quot;&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat);
+        <span class="kw">let _ </span>= Currency::new(<span class="string">&quot;&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
     }
 
     <span class="attr">#[test]
     #[should_panic(expected = <span class="string">&quot;`Currency` precision&quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_currency_precision() {
         <span class="comment">// Precision out of range for fixed
-        </span><span class="kw">let _ </span>= Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">10</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat);
+        </span><span class="kw">let _ </span>= Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">10</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_currency_new_for_fiat() {
-        <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;AUD&quot;</span>, <span class="number">2</span>, <span class="number">36</span>, <span class="string">&quot;Australian dollar&quot;</span>, CurrencyType::Fiat);
+        <span class="kw">let </span>currency =
+            Currency::new(<span class="string">&quot;AUD&quot;</span>, <span class="number">2</span>, <span class="number">36</span>, <span class="string">&quot;Australian dollar&quot;</span>, CurrencyType::Fiat).unwrap();
         <span class="macro">assert_eq!</span>(currency, currency);
         <span class="macro">assert_eq!</span>(currency.code.as_str(), <span class="string">&quot;AUD&quot;</span>);
         <span class="macro">assert_eq!</span>(currency.precision, <span class="number">2</span>);
@@ -497,7 +504,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_currency_new_for_crypto() {
-        <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;ETH&quot;</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="string">&quot;Ether&quot;</span>, CurrencyType::Crypto);
+        <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;ETH&quot;</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="string">&quot;Ether&quot;</span>, CurrencyType::Crypto).unwrap();
         <span class="macro">assert_eq!</span>(currency, currency);
         <span class="macro">assert_eq!</span>(currency.code.as_str(), <span class="string">&quot;ETH&quot;</span>);
         <span class="macro">assert_eq!</span>(currency.precision, <span class="number">8</span>);
@@ -508,14 +515,17 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_currency_equality() {
-        <span class="kw">let </span>currency1 = Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat);
-        <span class="kw">let </span>currency2 = Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat);
+        <span class="kw">let </span>currency1 =
+            Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
+        <span class="kw">let </span>currency2 =
+            Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
         <span class="macro">assert_eq!</span>(currency1, currency2);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_currency_serialization_deserialization() {
-        <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat);
+        <span class="kw">let </span>currency =
+            Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
         <span class="kw">let </span>serialized = serde_json::to_string(<span class="kw-2">&amp;</span>currency).unwrap();
         <span class="kw">let </span>deserialized: Currency = serde_json::from_str(<span class="kw-2">&amp;</span>serialized).unwrap();
         <span class="macro">assert_eq!</span>(currency, deserialized);
@@ -523,7 +533,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_currency_registration() {
-        <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;MYC&quot;</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="string">&quot;My Currency&quot;</span>, CurrencyType::Crypto);
+        <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;MYC&quot;</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="string">&quot;My Currency&quot;</span>, CurrencyType::Crypto).unwrap();
         currency_register(currency);
         <span class="kw">unsafe </span>{
             <span class="macro">assert_eq!</span>(currency_exists(str_to_cstr(<span class="string">&quot;MYC&quot;</span>)), <span class="number">1</span>);

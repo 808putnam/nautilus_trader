@@ -231,6 +231,9 @@
 <a href="#231" id="231">231</a>
 <a href="#232" id="232">232</a>
 <a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -254,6 +257,7 @@
     str::FromStr,
 };
 
+<span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::string::{cstr_to_string, str_to_cstr};
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize};
@@ -276,8 +280,7 @@
 }
 
 <span class="kw">impl </span>InstrumentId {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(symbol: Symbol, venue: Venue) -&gt; <span class="self">Self </span>{
+    <span class="kw">pub fn </span>new(symbol: Symbol, venue: Venue) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ symbol, venue }
     }
 
@@ -292,9 +295,9 @@
     <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
         <span class="kw">match </span>s.rsplit_once(<span class="string">&#39;.&#39;</span>) {
             <span class="prelude-val">Some</span>((symbol_part, venue_part)) =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
-                symbol: Symbol::new(symbol_part),
-                venue: Venue::new(venue_part),
-            }),
+                symbol: Symbol::new(symbol_part).unwrap(), <span class="comment">// Implement error handling
+                </span>venue: Venue::new(venue_part).unwrap(),    <span class="comment">// Implement error handling
+            </span>}),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(InstrumentIdParseError {
                 input: s.to_string(),
             }),
@@ -457,7 +460,10 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_from_symbol_and_back() {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>id = InstrumentId::new(Symbol::new(<span class="string">&quot;ETH/USDT&quot;</span>), Venue::new(<span class="string">&quot;BINANCE&quot;</span>));
+            <span class="kw">let </span>id = InstrumentId::new(
+                Symbol::new(<span class="string">&quot;ETH/USDT&quot;</span>).unwrap(),
+                Venue::new(<span class="string">&quot;BINANCE&quot;</span>).unwrap(),
+            );
             <span class="kw">let </span>result = instrument_id_to_cstr(<span class="kw-2">&amp;</span>id);
             <span class="kw">let </span>id2 = instrument_id_new_from_cstr(result);
             <span class="macro">assert_eq!</span>(id, id2);

@@ -1146,7 +1146,7 @@
 
     <span class="kw">fn </span>create_logger() -&gt; Logger {
         Logger::new(
-            TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>),
+            TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>).unwrap(),
             String::from(<span class="string">&quot;user-01&quot;</span>),
             UUID4::new(),
             LogLevel::Info,
@@ -1182,7 +1182,7 @@
     </span><span class="kw">fn </span>test_new_logger() {
         <span class="kw">let </span>logger = create_logger();
 
-        <span class="macro">assert_eq!</span>(logger.trader_id, TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>));
+        <span class="macro">assert_eq!</span>(logger.trader_id, TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>).unwrap());
         <span class="macro">assert_eq!</span>(logger.level_stdout, LogLevel::Info);
         <span class="macro">assert_eq!</span>(logger.level_file, <span class="prelude-val">None</span>);
         <span class="macro">assert!</span>(!logger.is_bypassed);
@@ -1241,7 +1241,7 @@
         <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">&quot;Failed to create temporary directory&quot;</span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>logger = Logger::new(
-            TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>),
+            TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>).unwrap(),
             String::from(<span class="string">&quot;user-01&quot;</span>),
             UUID4::new(),
             LogLevel::Info,
@@ -1303,7 +1303,7 @@
         <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">&quot;Failed to create temporary directory&quot;</span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>logger = Logger::new(
-            TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>),
+            TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>).unwrap(),
             String::from(<span class="string">&quot;user-01&quot;</span>),
             UUID4::new(),
             LogLevel::Info,
@@ -1360,7 +1360,7 @@
         <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">&quot;Failed to create temporary directory&quot;</span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>logger = Logger::new(
-            TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>),
+            TraderId::new(<span class="string">&quot;TRADER-001&quot;</span>).unwrap(),
             String::from(<span class="string">&quot;user-01&quot;</span>),
             UUID4::new(),
             LogLevel::Info,

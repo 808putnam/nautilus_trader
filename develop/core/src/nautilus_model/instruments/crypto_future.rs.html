@@ -202,6 +202,7 @@
 <a href="#202" id="202">202</a>
 <a href="#203" id="203">203</a>
 <a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -367,7 +368,8 @@
     }
 
     <span class="kw">fn </span>multiplier(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Quantity {
-        Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)
+        <span class="comment">// SAFETY: Known value
+        </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>).unwrap()
     }
 
     <span class="kw">fn </span>lot_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Quantity&gt; {

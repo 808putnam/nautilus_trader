@@ -392,6 +392,7 @@
     str::FromStr,
 };
 
+<span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::correctness;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>rust_decimal::Decimal;
@@ -415,14 +416,13 @@
 }
 
 <span class="kw">impl </span>Money {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(amount: f64, currency: Currency) -&gt; <span class="self">Self </span>{
-        correctness::f64_in_range_inclusive(amount, MONEY_MIN, MONEY_MAX, <span class="string">&quot;`Money` amount&quot;</span>);
+    <span class="kw">pub fn </span>new(amount: f64, currency: Currency) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        correctness::f64_in_range_inclusive(amount, MONEY_MIN, MONEY_MAX, <span class="string">&quot;`Money` amount&quot;</span>)<span class="question-mark">?</span>;
 
-        <span class="self">Self </span>{
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             raw: f64_to_fixed_i64(amount, currency.precision),
             currency,
-        }
+        })
     }
 
     <span class="attr">#[must_use]
@@ -617,8 +617,8 @@
         <span class="kw">let </span>currency = Currency::from_str(currency_str)
             .map_err(|<span class="kw">_</span>| serde::de::Error::custom(<span class="string">&quot;Invalid currency&quot;</span>))<span class="question-mark">?</span>;
 
-        <span class="prelude-val">Ok</span>(Money::new(amount, currency))
-    }
+        <span class="prelude-val">Ok</span>(Money::new(amount, currency).unwrap()) <span class="comment">// TODO: Properly handle the error
+    </span>}
 }
 
 <span class="attr">#[pymethods]
@@ -649,7 +649,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>money_new(amount: f64, currency: Currency) -&gt; Money {
-    Money::new(amount, currency)
+    Money::new(amount, currency).unwrap()
 }
 
 <span class="attr">#[no_mangle]
@@ -686,29 +686,29 @@
     <span class="attr">#[test]
     #[should_panic]
     </span><span class="kw">fn </span>test_money_different_currency_addition() {
-        <span class="kw">let </span>usd = Money::new(<span class="number">1000.0</span>, USD.clone());
-        <span class="kw">let </span>btc = Money::new(<span class="number">1.0</span>, BTC.clone());
+        <span class="kw">let </span>usd = Money::new(<span class="number">1000.0</span>, <span class="kw-2">*</span>USD).unwrap();
+        <span class="kw">let </span>btc = Money::new(<span class="number">1.0</span>, <span class="kw-2">*</span>BTC).unwrap();
         <span class="kw">let </span>_result = usd + btc; <span class="comment">// This should panic since currencies are different
     </span>}
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_money_min_max_values() {
-        <span class="kw">let </span>min_money = Money::new(MONEY_MIN, USD.clone());
-        <span class="kw">let </span>max_money = Money::new(MONEY_MAX, USD.clone());
+        <span class="kw">let </span>min_money = Money::new(MONEY_MIN, <span class="kw-2">*</span>USD).unwrap();
+        <span class="kw">let </span>max_money = Money::new(MONEY_MAX, <span class="kw-2">*</span>USD).unwrap();
         <span class="macro">assert_eq!</span>(min_money.raw, f64_to_fixed_i64(MONEY_MIN, USD.precision));
         <span class="macro">assert_eq!</span>(max_money.raw, f64_to_fixed_i64(MONEY_MAX, USD.precision));
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_money_addition_f64() {
-        <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, USD.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>result = money + <span class="number">500.0</span>;
         <span class="macro">assert_eq!</span>(result, <span class="number">1500.0</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_money_negation() {
-        <span class="kw">let </span>money = Money::new(<span class="number">100.0</span>, USD.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">100.0</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>result = -money;
         <span class="macro">assert_eq!</span>(result.as_f64(), -<span class="number">100.0</span>);
         <span class="macro">assert_eq!</span>(result.currency, USD.clone());
@@ -716,7 +716,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_money_new_usd() {
-        <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, USD.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="macro">assert_eq!</span>(money.currency.code.as_str(), <span class="string">&quot;USD&quot;</span>);
         <span class="macro">assert_eq!</span>(money.currency.precision, <span class="number">2</span>);
         <span class="macro">assert_eq!</span>(money.to_string(), <span class="string">&quot;1000.00 USD&quot;</span>);
@@ -726,7 +726,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_money_new_btc() {
-        <span class="kw">let </span>money = Money::new(<span class="number">10.3</span>, BTC.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">10.3</span>, <span class="kw-2">*</span>BTC).unwrap();
         <span class="macro">assert_eq!</span>(money.currency.code.as_str(), <span class="string">&quot;BTC&quot;</span>);
         <span class="macro">assert_eq!</span>(money.currency.precision, <span class="number">8</span>);
         <span class="macro">assert_eq!</span>(money.to_string(), <span class="string">&quot;10.30000000 BTC&quot;</span>);
@@ -734,7 +734,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_money_serialization_deserialization() {
-        <span class="kw">let </span>money = Money::new(<span class="number">123.45</span>, USD.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">123.45</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>serialized = serde_json::to_string(<span class="kw-2">&amp;</span>money).unwrap();
         <span class="kw">let </span>deserialized: Money = serde_json::from_str(<span class="kw-2">&amp;</span>serialized).unwrap();
         <span class="macro">assert_eq!</span>(money, deserialized);

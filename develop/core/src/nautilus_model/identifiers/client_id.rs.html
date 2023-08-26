@@ -124,6 +124,7 @@
     hash::Hash,
 };
 
+<span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::correctness;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>ustr::Ustr;
@@ -136,13 +137,12 @@
 }
 
 <span class="kw">impl </span>ClientId {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        correctness::valid_string(s, <span class="string">&quot;`ClientId` value&quot;</span>);
+    <span class="kw">pub fn </span>new(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        correctness::valid_string(s, <span class="string">&quot;`ClientId` value&quot;</span>)<span class="question-mark">?</span>;
 
-        <span class="self">Self </span>{
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             value: Ustr::from(s),
-        }
+        })
     }
 }
 
@@ -169,7 +169,7 @@
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>client_id_new(ptr: <span class="kw-2">*const </span>c_char) -&gt; ClientId {
     <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">&quot;`ptr` was NULL&quot;</span>);
-    ClientId::new(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>))
+    ClientId::new(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>)).unwrap()
 }
 
 <span class="attr">#[no_mangle]
@@ -186,14 +186,14 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_string_reprs() {
-        <span class="kw">let </span>id = ClientId::new(<span class="string">&quot;BINANCE&quot;</span>);
+        <span class="kw">let </span>id = ClientId::new(<span class="string">&quot;BINANCE&quot;</span>).unwrap();
         <span class="macro">assert_eq!</span>(id.to_string(), <span class="string">&quot;BINANCE&quot;</span>);
         <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{id}&quot;</span>), <span class="string">&quot;BINANCE&quot;</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_client_id_to_cstr_c() {
-        <span class="kw">let </span>id = ClientId::new(<span class="string">&quot;BINANCE&quot;</span>);
+        <span class="kw">let </span>id = ClientId::new(<span class="string">&quot;BINANCE&quot;</span>).unwrap();
         <span class="kw">let </span>c_string = id.value.as_char_ptr();
         <span class="kw">let </span>rust_string = <span class="kw">unsafe </span>{ CStr::from_ptr(c_string) }.to_str().unwrap();
         <span class="macro">assert_eq!</span>(rust_string, <span class="string">&quot;BINANCE&quot;</span>);
@@ -201,9 +201,9 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_client_id_hash_c() {
-        <span class="kw">let </span>id1 = ClientId::new(<span class="string">&quot;BINANCE&quot;</span>);
-        <span class="kw">let </span>id2 = ClientId::new(<span class="string">&quot;BINANCE&quot;</span>);
-        <span class="kw">let </span>id3 = ClientId::new(<span class="string">&quot;DYDX&quot;</span>);
+        <span class="kw">let </span>id1 = ClientId::new(<span class="string">&quot;BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>id2 = ClientId::new(<span class="string">&quot;BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>id3 = ClientId::new(<span class="string">&quot;DYDX&quot;</span>).unwrap();
         <span class="macro">assert_eq!</span>(client_id_hash(<span class="kw-2">&amp;</span>id1), client_id_hash(<span class="kw-2">&amp;</span>id2));
         <span class="macro">assert_ne!</span>(client_id_hash(<span class="kw-2">&amp;</span>id1), client_id_hash(<span class="kw-2">&amp;</span>id3));
     }

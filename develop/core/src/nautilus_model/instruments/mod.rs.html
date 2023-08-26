@@ -110,6 +110,7 @@
 <a href="#110" id="110">110</a>
 <a href="#111" id="111">111</a>
 <a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -134,6 +135,7 @@
 <span class="kw">mod </span>synthetic;
 <span class="kw">mod </span>synthetic_api;
 
+<span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>rust_decimal::Decimal;
 
 <span class="kw">use crate</span>::{
@@ -178,7 +180,7 @@
     }
 
     <span class="doccomment">/// Creates a new quantity from the given `value` with the correct size precision for the instrument.
-    </span><span class="kw">fn </span>make_qty(<span class="kw-2">&amp;</span><span class="self">self</span>, value: f64) -&gt; Quantity {
+    </span><span class="kw">fn </span>make_qty(<span class="kw-2">&amp;</span><span class="self">self</span>, value: f64) -&gt; <span class="prelude-ty">Result</span>&lt;Quantity&gt; {
         Quantity::new(value, <span class="self">self</span>.size_precision())
     }
 
@@ -213,13 +215,13 @@
             (amount, currency)
         };
 
-        Money::new(amount, currency)
-    }
+        Money::new(amount, currency).unwrap() <span class="comment">// TODO: Handle error properly
+    </span>}
 
     <span class="doccomment">/// Returns the equivalent quantity of the base asset.
     </span><span class="kw">fn </span>calculate_base_quantity(<span class="kw-2">&amp;</span><span class="self">self</span>, quantity: Quantity, last_px: Price) -&gt; Quantity {
         <span class="kw">let </span>value = quantity.as_f64() * (<span class="number">1.0 </span>/ last_px.as_f64());
-        Quantity::new(value, <span class="self">self</span>.size_precision())
-    }
+        Quantity::new(value, <span class="self">self</span>.size_precision()).unwrap() <span class="comment">// TODO: Handle error properly
+    </span>}
 }
 </code></pre></div></section></main></body></html>

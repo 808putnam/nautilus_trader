@@ -408,6 +408,8 @@
 <a href="#408" id="408">408</a>
 <a href="#409" id="409">409</a>
 <a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -431,6 +433,7 @@
     str::FromStr,
 };
 
+<span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::{
     correctness, python::to_pyvalue_err, serialization::Serializable, time::UnixNanos,
 };
@@ -465,8 +468,7 @@
 }
 
 <span class="kw">impl </span>QuoteTick {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(
+    <span class="kw">pub fn </span>new(
         instrument_id: InstrumentId,
         bid_price: Price,
         ask_price: Price,
@@ -474,20 +476,20 @@
         ask_size: Quantity,
         ts_event: UnixNanos,
         ts_init: UnixNanos,
-    ) -&gt; <span class="self">Self </span>{
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         correctness::u8_equal(
             bid_price.precision,
             ask_price.precision,
             <span class="string">&quot;bid_price.precision&quot;</span>,
             <span class="string">&quot;ask_price.precision&quot;</span>,
-        );
+        )<span class="question-mark">?</span>;
         correctness::u8_equal(
             bid_size.precision,
             ask_size.precision,
             <span class="string">&quot;bid_size.precision&quot;</span>,
             <span class="string">&quot;ask_size.precision&quot;</span>,
-        );
-        <span class="self">Self </span>{
+        )<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             instrument_id,
             bid_price,
             ask_price,
@@ -495,7 +497,7 @@
             ask_size,
             ts_event,
             ts_init,
-        }
+        })
     }
 
     <span class="doccomment">/// Returns the metadata for the type, for use with serialization formats.
@@ -542,7 +544,7 @@
         <span class="kw">let </span>ts_event: UnixNanos = obj.getattr(<span class="string">&quot;ts_event&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>ts_init: UnixNanos = obj.getattr(<span class="string">&quot;ts_init&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
 
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new(
+        <span class="self">Self</span>::new(
             instrument_id,
             bid_price,
             ask_price,
@@ -550,7 +552,8 @@
             ask_size,
             ts_event,
             ts_init,
-        ))
+        )
+        .map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[must_use]
@@ -595,7 +598,7 @@
         ask_size: Quantity,
         ts_event: UnixNanos,
         ts_init: UnixNanos,
-    ) -&gt; <span class="self">Self </span>{
+    ) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="self">Self</span>::new(
             instrument_id,
             bid_price,
@@ -605,6 +608,7 @@
             ts_event,
             ts_init,
         )
+        .map_err(to_pyvalue_err)
     }
 
     <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
@@ -738,8 +742,8 @@
             instrument_id: InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap(),
             bid_price: Price::new(<span class="number">10000.0</span>, <span class="number">4</span>),
             ask_price: Price::new(<span class="number">10001.0</span>, <span class="number">4</span>),
-            bid_size: Quantity::new(<span class="number">1.0</span>, <span class="number">8</span>),
-            ask_size: Quantity::new(<span class="number">1.0</span>, <span class="number">8</span>),
+            bid_size: Quantity::new(<span class="number">1.0</span>, <span class="number">8</span>).unwrap(),
+            ask_size: Quantity::new(<span class="number">1.0</span>, <span class="number">8</span>).unwrap(),
             ts_event: <span class="number">1</span>,
             ts_init: <span class="number">0</span>,
         }

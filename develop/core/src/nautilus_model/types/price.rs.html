@@ -499,6 +499,7 @@
 <a href="#499" id="499">499</a>
 <a href="#500" id="500">500</a>
 <a href="#501" id="501">501</a>
+<a href="#502" id="502">502</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -550,7 +551,8 @@
 <span class="kw">impl </span>Price {
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(value: f64, precision: u8) -&gt; <span class="self">Self </span>{
-        correctness::f64_in_range_inclusive(value, PRICE_MIN, PRICE_MAX, <span class="string">&quot;`Price` value&quot;</span>);
+        <span class="comment">// TODO: Continue error propagation
+        </span>correctness::f64_in_range_inclusive(value, PRICE_MIN, PRICE_MAX, <span class="string">&quot;`Price` value&quot;</span>).unwrap();
 
         <span class="self">Self </span>{
             raw: f64_to_fixed_i64(value, precision),

@@ -107,6 +107,7 @@
     hash::Hash,
 };
 
+<span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::correctness;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>ustr::Ustr;
@@ -119,13 +120,12 @@
 }
 
 <span class="kw">impl </span>OrderListId {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        correctness::valid_string(s, <span class="string">&quot;`OrderListId` value&quot;</span>);
+    <span class="kw">pub fn </span>new(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        correctness::valid_string(s, <span class="string">&quot;`OrderListId` value&quot;</span>)<span class="question-mark">?</span>;
 
-        <span class="self">Self </span>{
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             value: Ustr::from(s),
-        }
+        })
     }
 }
 
@@ -152,7 +152,7 @@
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_list_id_new(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderListId {
     <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">&quot;`ptr` was NULL&quot;</span>);
-    OrderListId::new(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>))
+    OrderListId::new(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>)).unwrap()
 }
 
 <span class="attr">#[no_mangle]
@@ -169,7 +169,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_string_reprs() {
-        <span class="kw">let </span>id = OrderListId::new(<span class="string">&quot;001&quot;</span>);
+        <span class="kw">let </span>id = OrderListId::new(<span class="string">&quot;001&quot;</span>).unwrap();
         <span class="macro">assert_eq!</span>(id.to_string(), <span class="string">&quot;001&quot;</span>);
         <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{id}&quot;</span>), <span class="string">&quot;001&quot;</span>);
     }

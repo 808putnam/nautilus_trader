@@ -1164,8 +1164,8 @@
 
     <span class="kw">fn </span>create_stub_bar() -&gt; Bar {
         <span class="kw">let </span>instrument_id = InstrumentId {
-            symbol: Symbol::new(<span class="string">&quot;AUDUSD&quot;</span>),
-            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>),
+            symbol: Symbol::new(<span class="string">&quot;AUDUSD&quot;</span>).unwrap(),
+            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>).unwrap(),
         };
         <span class="kw">let </span>bar_spec = BarSpecification {
             step: <span class="number">1</span>,
@@ -1287,12 +1287,12 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_bar_type_equality() {
         <span class="kw">let </span>instrument_id1 = InstrumentId {
-            symbol: Symbol::new(<span class="string">&quot;AUD/USD&quot;</span>),
-            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>),
+            symbol: Symbol::new(<span class="string">&quot;AUD/USD&quot;</span>).unwrap(),
+            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>).unwrap(),
         };
         <span class="kw">let </span>instrument_id2 = InstrumentId {
-            symbol: Symbol::new(<span class="string">&quot;GBP/USD&quot;</span>),
-            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>),
+            symbol: Symbol::new(<span class="string">&quot;GBP/USD&quot;</span>).unwrap(),
+            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>).unwrap(),
         };
         <span class="kw">let </span>bar_spec = BarSpecification {
             step: <span class="number">1</span>,
@@ -1322,13 +1322,13 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_bar_type_comparison() {
         <span class="kw">let </span>instrument_id1 = InstrumentId {
-            symbol: Symbol::new(<span class="string">&quot;AUD/USD&quot;</span>),
-            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>),
+            symbol: Symbol::new(<span class="string">&quot;AUD/USD&quot;</span>).unwrap(),
+            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>).unwrap(),
         };
 
         <span class="kw">let </span>instrument_id2 = InstrumentId {
-            symbol: Symbol::new(<span class="string">&quot;GBP/USD&quot;</span>),
-            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>),
+            symbol: Symbol::new(<span class="string">&quot;GBP/USD&quot;</span>).unwrap(),
+            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>).unwrap(),
         };
         <span class="kw">let </span>bar_spec = BarSpecification {
             step: <span class="number">1</span>,
@@ -1360,8 +1360,8 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_bar_equality() {
         <span class="kw">let </span>instrument_id = InstrumentId {
-            symbol: Symbol::new(<span class="string">&quot;AUDUSD&quot;</span>),
-            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>),
+            symbol: Symbol::new(<span class="string">&quot;AUDUSD&quot;</span>).unwrap(),
+            venue: Venue::new(<span class="string">&quot;SIM&quot;</span>).unwrap(),
         };
         <span class="kw">let </span>bar_spec = BarSpecification {
             step: <span class="number">1</span>,

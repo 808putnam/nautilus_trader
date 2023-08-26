@@ -393,7 +393,7 @@
         <span class="kw">let </span>ltc_binance = InstrumentId::from_str(<span class="string">&quot;LTC.BINANCE&quot;</span>).unwrap();
         <span class="kw">let </span>formula = <span class="string">&quot;(BTC.BINANCE + LTC.BINANCE) / 2&quot;</span>.to_string();
         <span class="kw">let </span><span class="kw-2">mut </span>synth = SyntheticInstrument::new(
-            Symbol::new(<span class="string">&quot;BTC-LTC&quot;</span>),
+            Symbol::new(<span class="string">&quot;BTC-LTC&quot;</span>).unwrap(),
             <span class="number">2</span>,
             <span class="macro">vec!</span>[btc_binance.clone(), ltc_binance],
             formula.clone(),
@@ -418,7 +418,7 @@
         <span class="kw">let </span>ltc_binance = InstrumentId::from_str(<span class="string">&quot;LTC.BINANCE&quot;</span>).unwrap();
         <span class="kw">let </span>formula = <span class="string">&quot;(BTC.BINANCE + LTC.BINANCE) / 2.0&quot;</span>.to_string();
         <span class="kw">let </span><span class="kw-2">mut </span>synth = SyntheticInstrument::new(
-            Symbol::new(<span class="string">&quot;BTC-LTC&quot;</span>),
+            Symbol::new(<span class="string">&quot;BTC-LTC&quot;</span>).unwrap(),
             <span class="number">2</span>,
             <span class="macro">vec!</span>[btc_binance.clone(), ltc_binance],
             formula.clone(),
@@ -440,7 +440,7 @@
         <span class="kw">let </span>ltc_binance = InstrumentId::from_str(<span class="string">&quot;LTC.BINANCE&quot;</span>).unwrap();
         <span class="kw">let </span>formula = <span class="string">&quot;(BTC.BINANCE + LTC.BINANCE) / 2&quot;</span>.to_string();
         <span class="kw">let </span><span class="kw-2">mut </span>synth = SyntheticInstrument::new(
-            Symbol::new(<span class="string">&quot;BTC-LTC&quot;</span>),
+            Symbol::new(<span class="string">&quot;BTC-LTC&quot;</span>).unwrap(),
             <span class="number">2</span>,
             <span class="macro">vec!</span>[btc_binance, ltc_binance],
             formula.clone(),

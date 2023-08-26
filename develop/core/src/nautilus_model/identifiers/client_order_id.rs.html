@@ -169,6 +169,7 @@
     hash::Hash,
 };
 
+<span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::correctness;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>ustr::Ustr;
@@ -181,13 +182,12 @@
 }
 
 <span class="kw">impl </span>ClientOrderId {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        correctness::valid_string(s, <span class="string">&quot;`ClientOrderId` value&quot;</span>);
+    <span class="kw">pub fn </span>new(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        correctness::valid_string(s, <span class="string">&quot;`ClientOrderId` value&quot;</span>)<span class="question-mark">?</span>;
 
-        <span class="self">Self </span>{
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             value: Ustr::from(s),
-        }
+        })
     }
 }
 
@@ -216,8 +216,8 @@
         <span class="kw">let </span>s_str = ustr.to_string();
         s_str
             .split(<span class="string">&#39;,&#39;</span>)
-            .map(ClientOrderId::new)
-            .collect::&lt;Vec&lt;ClientOrderId&gt;&gt;()
+            .map(|s| ClientOrderId::new(s).unwrap()) <span class="comment">// TODO: Propagate error
+            </span>.collect::&lt;Vec&lt;ClientOrderId&gt;&gt;()
     })
 }
 
@@ -243,7 +243,7 @@
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>client_order_id_new(ptr: <span class="kw-2">*const </span>c_char) -&gt; ClientOrderId {
     <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">&quot;`ptr` was NULL&quot;</span>);
-    ClientOrderId::new(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>))
+    ClientOrderId::new(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>)).unwrap()
 }
 
 <span class="attr">#[no_mangle]
@@ -265,7 +265,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_string_reprs() {
-        <span class="kw">let </span>id = ClientOrderId::new(<span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>);
+        <span class="kw">let </span>id = ClientOrderId::new(<span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>).unwrap();
         <span class="macro">assert_eq!</span>(id.to_string(), <span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>);
         <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{id}&quot;</span>), <span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>);
     }
@@ -290,9 +290,9 @@
 
         <span class="comment">// Test with Some
         </span><span class="kw">let </span>client_order_ids = <span class="macro">vec!</span>[
-            ClientOrderId::new(<span class="string">&quot;id1&quot;</span>),
-            ClientOrderId::new(<span class="string">&quot;id2&quot;</span>),
-            ClientOrderId::new(<span class="string">&quot;id3&quot;</span>),
+            ClientOrderId::new(<span class="string">&quot;id1&quot;</span>).unwrap(),
+            ClientOrderId::new(<span class="string">&quot;id2&quot;</span>).unwrap(),
+            ClientOrderId::new(<span class="string">&quot;id3&quot;</span>).unwrap(),
         ];
         <span class="kw">let </span>ustr = optional_vec_client_order_ids_to_ustr(<span class="prelude-val">Some</span>(client_order_ids.into())).unwrap();
         <span class="macro">assert_eq!</span>(ustr.to_string(), <span class="string">&quot;id1,id2,id3&quot;</span>);

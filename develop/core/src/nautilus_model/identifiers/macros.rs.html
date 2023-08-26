@@ -89,6 +89,8 @@
 <a href="#89" id="89">89</a>
 <a href="#90" id="90">90</a>
 <a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -136,7 +138,7 @@
             <span class="kw">type </span><span class="prelude-val">Err </span>= String;
 
             <span class="kw">fn </span>from_str(input: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
-                <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new(input))
+                <span class="self">Self</span>::new(input).map_err(|e| e.to_string())
             }
         }
     };
@@ -148,8 +150,10 @@
         </span><span class="kw">impl </span><span class="macro-nonterminal">$ty </span>{
             <span class="attr">#[new]
             </span><span class="kw">fn </span>py_new(value: <span class="kw-2">&amp;</span>str) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-                <span class="comment">// TODO: Implement proper error handling
-                </span><span class="prelude-val">Ok</span>(&lt;<span class="macro-nonterminal">$ty</span>&gt;::new(value))
+                <span class="kw">match </span>&lt;<span class="macro-nonterminal">$ty</span>&gt;::new(value) {
+                    <span class="prelude-val">Ok</span>(instance) =&gt; <span class="prelude-val">Ok</span>(instance),
+                    <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(to_pyvalue_err(e)),
+                }
             }
 
             <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {

@@ -430,7 +430,7 @@
                     size: Quantity::from_raw(size.unwrap(), size_precision),
                     aggressor_side: AggressorSide::from_repr(aggressor_side.unwrap() <span class="kw">as </span>usize)
                         .expect(<span class="string">&quot;cannot parse enum value&quot;</span>),
-                    trade_id: TradeId::new(trade_id.unwrap()),
+                    trade_id: TradeId::new(trade_id.unwrap()).unwrap(),
                     ts_event: ts_event.unwrap(),
                     ts_init: ts_init.unwrap(),
                 },
@@ -503,9 +503,9 @@
         <span class="kw">let </span>tick1 = TradeTick {
             instrument_id,
             price: Price::new(<span class="number">100.10</span>, <span class="number">2</span>),
-            size: Quantity::new(<span class="number">1000.0</span>, <span class="number">0</span>),
+            size: Quantity::from(<span class="number">1000</span>),
             aggressor_side: AggressorSide::Buyer,
-            trade_id: TradeId::new(<span class="string">&quot;1&quot;</span>),
+            trade_id: TradeId::new(<span class="string">&quot;1&quot;</span>).unwrap(),
             ts_event: <span class="number">1</span>,
             ts_init: <span class="number">3</span>,
         };
@@ -513,9 +513,9 @@
         <span class="kw">let </span>tick2 = TradeTick {
             instrument_id,
             price: Price::new(<span class="number">100.50</span>, <span class="number">2</span>),
-            size: Quantity::new(<span class="number">500.0</span>, <span class="number">0</span>),
+            size: Quantity::from(<span class="number">500</span>),
             aggressor_side: AggressorSide::Seller,
-            trade_id: TradeId::new(<span class="string">&quot;2&quot;</span>),
+            trade_id: TradeId::new(<span class="string">&quot;2&quot;</span>).unwrap(),
             ts_event: <span class="number">2</span>,
             ts_init: <span class="number">4</span>,
         };

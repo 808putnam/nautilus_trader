@@ -287,8 +287,8 @@
             client_order_ids: Vec::&lt;ClientOrderId&gt;::new(),
             venue_order_ids: Vec::&lt;VenueOrderId&gt;::new(),
             trade_ids: Vec::&lt;TradeId&gt;::new(),
-            buy_qty: Quantity::zero(instrument.size_precision()),
-            sell_qty: Quantity::zero(instrument.size_precision()),
+            buy_qty: Quantity::zero(instrument.size_precision()).unwrap(),
+            sell_qty: Quantity::zero(instrument.size_precision()).unwrap(),
             commissions: HashMap::&lt;Currency, Money&gt;::new(),
             trader_id: fill.trader_id,
             strategy_id: fill.strategy_id,
@@ -331,12 +331,12 @@
             <span class="comment">// Reset position
             </span><span class="self">self</span>.events.clear();
             <span class="self">self</span>.trade_ids.clear();
-            <span class="self">self</span>.buy_qty = Quantity::zero(<span class="self">self</span>.size_precision);
-            <span class="self">self</span>.sell_qty = Quantity::zero(<span class="self">self</span>.size_precision);
+            <span class="self">self</span>.buy_qty = Quantity::zero(<span class="self">self</span>.size_precision).unwrap();
+            <span class="self">self</span>.sell_qty = Quantity::zero(<span class="self">self</span>.size_precision).unwrap();
             <span class="self">self</span>.commissions.clear();
             <span class="self">self</span>.opening_order_id = fill.client_order_id;
             <span class="self">self</span>.closing_order_id = <span class="prelude-val">None</span>;
-            <span class="self">self</span>.peak_qty = Quantity::zero(<span class="self">self</span>.size_precision);
+            <span class="self">self</span>.peak_qty = Quantity::zero(<span class="self">self</span>.size_precision).unwrap();
             <span class="self">self</span>.ts_init = fill.ts_init;
             <span class="self">self</span>.ts_opened = fill.ts_event;
             <span class="self">self</span>.duration_ns = <span class="prelude-val">None</span>;
@@ -368,7 +368,7 @@
         }
 
         <span class="comment">// Set quantities
-        </span><span class="self">self</span>.quantity = Quantity::new(<span class="self">self</span>.signed_qty.abs(), <span class="self">self</span>.size_precision);
+        </span><span class="self">self</span>.quantity = Quantity::new(<span class="self">self</span>.signed_qty.abs(), <span class="self">self</span>.size_precision).unwrap();
         <span class="kw">if </span><span class="self">self</span>.quantity &gt; <span class="self">self</span>.peak_qty {
             <span class="self">self</span>.peak_qty.raw = <span class="self">self</span>.quantity.raw;
         }
