@@ -138,6 +138,14 @@
 <a href="#138" id="138">138</a>
 <a href="#139" id="139">139</a>
 <a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -240,6 +248,14 @@
 </span><span class="kw">fn </span>nautilus_pyo3(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, m: <span class="kw-2">&amp;</span>PyModule) -&gt; PyResult&lt;()&gt; {
     <span class="kw">let </span>sys = PyModule::import(py, <span class="string">&quot;sys&quot;</span>)<span class="question-mark">?</span>;
     <span class="kw">let </span>sys_modules: <span class="kw-2">&amp;</span>PyDict = sys.getattr(<span class="string">&quot;modules&quot;</span>)<span class="question-mark">?</span>.downcast()<span class="question-mark">?</span>;
+
+    <span class="comment">// Core
+    </span><span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_core::core);
+    m.add_wrapped(submodule)<span class="question-mark">?</span>;
+    sys_modules.set_item(
+        <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.core&quot;</span>,
+        m.getattr(<span class="string">&quot;core&quot;</span>)<span class="question-mark">?</span>,
+    )<span class="question-mark">?</span>;
 
     <span class="comment">// Indicators
     </span><span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_indicators::indicators);

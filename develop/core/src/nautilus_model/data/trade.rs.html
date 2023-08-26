@@ -384,8 +384,6 @@
 <a href="#384" id="384">384</a>
 <a href="#385" id="385">385</a>
 <a href="#386" id="386">386</a>
-<a href="#387" id="387">387</a>
-<a href="#388" id="388">388</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -408,8 +406,8 @@
     str::FromStr,
 };
 
-<span class="kw">use </span>nautilus_core::{serialization::Serializable, time::UnixNanos};
-<span class="kw">use </span>pyo3::{exceptions::PyValueError, prelude::<span class="kw-2">*</span>, pyclass::CompareOp, types::PyDict};
+<span class="kw">use </span>nautilus_core::{python::to_pyvalue_err, serialization::Serializable, time::UnixNanos};
+<span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, pyclass::CompareOp, types::PyDict};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 
 <span class="kw">use crate</span>::{
@@ -480,7 +478,7 @@
         <span class="kw">let </span>instrument_id_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;instrument_id&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>instrument_id_str = instrument_id_obj.getattr(<span class="string">&quot;value&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>instrument_id = InstrumentId::from_str(instrument_id_str)
-            .map_err(|e| PyValueError::new_err(<span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, e)))
+            .map_err(to_pyvalue_err)
             .unwrap();
 
         <span class="kw">let </span>price_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;price&quot;</span>)<span class="question-mark">?</span>;
@@ -500,7 +498,7 @@
         <span class="kw">let </span>trade_id_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;trade_id&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>trade_id_str = trade_id_obj.getattr(<span class="string">&quot;value&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>trade_id = TradeId::from_str(trade_id_str)
-            .map_err(|e| PyValueError::new_err(e.to_string()))
+            .map_err(to_pyvalue_err)
             .unwrap();
 
         <span class="kw">let </span>ts_event: UnixNanos = obj.getattr(<span class="string">&quot;ts_event&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
@@ -618,8 +616,7 @@
     <span class="doccomment">/// Return a dictionary representation of the object.
     </span><span class="kw">pub fn </span>as_dict(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {
         <span class="comment">// Serialize object to JSON bytes
-        </span><span class="kw">let </span>json_str =
-            serde_json::to_string(<span class="self">self</span>).map_err(|e| PyValueError::new_err(e.to_string()))<span class="question-mark">?</span>;
+        </span><span class="kw">let </span>json_str = serde_json::to_string(<span class="self">self</span>).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
         <span class="comment">// Parse JSON into a Python dictionary
         </span><span class="kw">let </span>py_dict: Py&lt;PyDict&gt; = PyModule::import(py, <span class="string">&quot;json&quot;</span>)<span class="question-mark">?
             </span>.call_method(<span class="string">&quot;loads&quot;</span>, (json_str,), <span class="prelude-val">None</span>)<span class="question-mark">?
@@ -636,19 +633,18 @@
             </span>.extract()<span class="question-mark">?</span>;
 
         <span class="comment">// Deserialize to object
-        </span><span class="kw">let </span>instance = serde_json::from_slice(<span class="kw-2">&amp;</span>json_str.into_bytes())
-            .map_err(|e| PyValueError::new_err(e.to_string()))<span class="question-mark">?</span>;
+        </span><span class="kw">let </span>instance = serde_json::from_slice(<span class="kw-2">&amp;</span>json_str.into_bytes()).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(instance)
     }
 
     <span class="attr">#[staticmethod]
     </span><span class="kw">fn </span>from_json(data: Vec&lt;u8&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        <span class="self">Self</span>::from_json_bytes(data).map_err(|e| PyValueError::new_err(e.to_string()))
+        <span class="self">Self</span>::from_json_bytes(data).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[staticmethod]
     </span><span class="kw">fn </span>from_msgpack(data: Vec&lt;u8&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        <span class="self">Self</span>::from_msgpack_bytes(data).map_err(|e| PyValueError::new_err(e.to_string()))
+        <span class="self">Self</span>::from_msgpack_bytes(data).map_err(to_pyvalue_err)
     }
 
     <span class="doccomment">/// Return JSON encoded bytes representation of the object.
