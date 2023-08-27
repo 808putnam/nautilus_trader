@@ -774,8 +774,6 @@
 <a href="#774" id="774">774</a>
 <a href="#775" id="775">775</a>
 <a href="#776" id="776">776</a>
-<a href="#777" id="777">777</a>
-<a href="#778" id="778">778</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1244,8 +1242,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>std::str::FromStr;
-
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use crate</span>::{
         data::order::BookOrder,
@@ -1255,13 +1251,13 @@
     };
 
     <span class="kw">fn </span>create_stub_book(book_type: BookType) -&gt; OrderBook {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         OrderBook::new(instrument_id, book_type)
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_orderbook_creation() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span>book = OrderBook::new(instrument_id.clone(), BookType::L2_MBP);
 
         <span class="macro">assert_eq!</span>(book.instrument_id, instrument_id);
@@ -1363,7 +1359,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_midpoint_with_bids_asks() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>book = OrderBook::new(instrument_id, BookType::L2_MBP);
 
         <span class="kw">let </span>bid1 = BookOrder::new(
@@ -1395,7 +1391,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_get_price_for_quantity() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>book = OrderBook::new(instrument_id, BookType::L2_MBP);
 
         <span class="kw">let </span>ask2 = BookOrder::new(
@@ -1441,12 +1437,12 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_quote_tick_l1() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>book = OrderBook::new(instrument_id.clone(), BookType::L1_TBBO);
         <span class="kw">let </span>tick = QuoteTick::new(
-            InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap(),
-            Price::new(<span class="number">5000.0</span>, <span class="number">3</span>),
-            Price::new(<span class="number">5100.0</span>, <span class="number">3</span>),
+            InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>),
+            Price::from(<span class="string">&quot;5000.000&quot;</span>),
+            Price::from(<span class="string">&quot;5100.000&quot;</span>),
             Quantity::from(<span class="string">&quot;100.00000000&quot;</span>),
             Quantity::from(<span class="string">&quot;99.00000000&quot;</span>),
             <span class="number">0</span>,
@@ -1467,7 +1463,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_trade_tick_l1() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>book = OrderBook::new(instrument_id.clone(), BookType::L1_TBBO);
 
         <span class="kw">let </span>price = Price::from(<span class="string">&quot;15000.000&quot;</span>);

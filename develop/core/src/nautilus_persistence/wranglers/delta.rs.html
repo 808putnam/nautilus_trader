@@ -89,7 +89,6 @@
 <a href="#89" id="89">89</a>
 <a href="#90" id="90">90</a>
 <a href="#91" id="91">91</a>
-<a href="#92" id="92">92</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -127,7 +126,6 @@
     <span class="attr">#[new]
     </span><span class="kw">fn </span>py_new(instrument_id: <span class="kw-2">&amp;</span>str, price_precision: u8, size_precision: u8) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>instrument_id = InstrumentId::from_str(instrument_id).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
-
         <span class="kw">let </span>metadata =
             OrderBookDelta::get_metadata(<span class="kw-2">&amp;</span>instrument_id, price_precision, size_precision);
 

@@ -626,16 +626,16 @@
     <span class="kw">fn </span>from_str(input: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
         <span class="kw">let </span>float_from_input = input
             .parse::&lt;f64&gt;()
-            .map_err(|err| <span class="macro">format!</span>(<span class="string">&quot;Cannot parse `input` string &#39;{}&#39; as f64: {}&quot;</span>, input, err))<span class="question-mark">?</span>;
+            .map_err(|e| <span class="macro">format!</span>(<span class="string">&quot;Cannot parse `input` string &#39;{input}&#39; as f64: {e}&quot;</span>))<span class="question-mark">?</span>;
 
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new(float_from_input, precision_from_str(input)).unwrap()) <span class="comment">// TODO: Properly
-                                                                            // handle error
-    </span>}
+        <span class="self">Self</span>::new(float_from_input, precision_from_str(input))
+            .map_err(|e: anyhow::Error| e.to_string())
+    }
 }
 
 <span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>str&gt; <span class="kw">for </span>Quantity {
     <span class="kw">fn </span>from(input: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        input.parse().unwrap_or_else(|err| <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, err))
+        <span class="self">Self</span>::from_str(input).unwrap()
     }
 }
 

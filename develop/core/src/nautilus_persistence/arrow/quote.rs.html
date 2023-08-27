@@ -284,6 +284,7 @@
 <a href="#284" id="284">284</a>
 <a href="#285" id="285">285</a>
 <a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -334,7 +335,8 @@
 }
 
 <span class="kw">fn </span>parse_metadata(metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;) -&gt; (InstrumentId, u8, u8) {
-    <span class="kw">let </span>instrument_id =
+    <span class="comment">// TODO: Properly handle errors
+    </span><span class="kw">let </span>instrument_id =
         InstrumentId::from_str(metadata.get(<span class="string">&quot;instrument_id&quot;</span>).unwrap().as_str()).unwrap();
     <span class="kw">let </span>price_precision = metadata
         .get(<span class="string">&quot;price_precision&quot;</span>)
@@ -455,7 +457,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_get_schema() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;AAPL.NASDAQ&quot;</span>);
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
         <span class="kw">let </span>schema = QuoteTick::get_schema(<span class="prelude-val">Some</span>(metadata.clone()));
         <span class="kw">let </span>expected_fields = <span class="macro">vec!</span>[
@@ -486,11 +488,11 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_encode_quote_tick() {
         <span class="comment">// Create test data
-        </span><span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
+        </span><span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;AAPL.NASDAQ&quot;</span>);
         <span class="kw">let </span>tick1 = QuoteTick {
             instrument_id,
-            bid_price: Price::new(<span class="number">100.10</span>, <span class="number">2</span>),
-            ask_price: Price::new(<span class="number">101.50</span>, <span class="number">2</span>),
+            bid_price: Price::from(<span class="string">&quot;100.10&quot;</span>),
+            ask_price: Price::from(<span class="string">&quot;101.50&quot;</span>),
             bid_size: Quantity::from(<span class="number">1000</span>),
             ask_size: Quantity::from(<span class="number">500</span>),
             ts_event: <span class="number">1</span>,
@@ -499,8 +501,8 @@
 
         <span class="kw">let </span>tick2 = QuoteTick {
             instrument_id,
-            bid_price: Price::new(<span class="number">100.75</span>, <span class="number">2</span>),
-            ask_price: Price::new(<span class="number">100.20</span>, <span class="number">2</span>),
+            bid_price: Price::from(<span class="string">&quot;100.75&quot;</span>),
+            ask_price: Price::from(<span class="string">&quot;100.20&quot;</span>),
             bid_size: Quantity::from(<span class="number">750</span>),
             ask_size: Quantity::from(<span class="number">300</span>),
             ts_event: <span class="number">2</span>,
@@ -543,7 +545,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_decode_batch() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;AAPL.NASDAQ&quot;</span>);
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
 
         <span class="kw">let </span>bid_price = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10000</span>, <span class="number">9900</span>]);

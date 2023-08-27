@@ -567,24 +567,24 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_comparisons_bid_side() {
-        <span class="kw">let </span>level0 = Level::new(BookPrice::new(Price::new(<span class="number">1.00</span>, <span class="number">2</span>), OrderSide::Buy));
-        <span class="kw">let </span>level1 = Level::new(BookPrice::new(Price::new(<span class="number">1.01</span>, <span class="number">2</span>), OrderSide::Buy));
+        <span class="kw">let </span>level0 = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
+        <span class="kw">let </span>level1 = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.01&quot;</span>), OrderSide::Buy));
         <span class="macro">assert_eq!</span>(level0, level0);
         <span class="macro">assert!</span>(level0 &gt; level1);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_comparisons_ask_side() {
-        <span class="kw">let </span>level0 = Level::new(BookPrice::new(Price::new(<span class="number">1.00</span>, <span class="number">2</span>), OrderSide::Sell));
-        <span class="kw">let </span>level1 = Level::new(BookPrice::new(Price::new(<span class="number">1.01</span>, <span class="number">2</span>), OrderSide::Sell));
+        <span class="kw">let </span>level0 = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Sell));
+        <span class="kw">let </span>level1 = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.01&quot;</span>), OrderSide::Sell));
         <span class="macro">assert_eq!</span>(level0, level0);
         <span class="macro">assert!</span>(level0 &lt; level1);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_add_one_order() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">1.00</span>, <span class="number">2</span>), OrderSide::Buy));
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">1.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;1.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
 
         level.add(order);
         <span class="macro">assert!</span>(!level.is_empty());
@@ -594,9 +594,9 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_add_multiple_orders() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">2.00</span>, <span class="number">2</span>), OrderSide::Buy));
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">2.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">2.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;2.00&quot;</span>), OrderSide::Buy));
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;2.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;2.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         level.add(order1);
         level.add(order2);
@@ -607,9 +607,9 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_order() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">1.00</span>, <span class="number">2</span>), OrderSide::Buy));
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">1.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">1.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;1.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;1.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
 
         level.add(order1);
         level.update(order2);
@@ -620,11 +620,11 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_order_with_zero_size() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">1.00</span>, <span class="number">2</span>), OrderSide::Buy));
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">1.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;1.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
         <span class="kw">let </span>order2 = BookOrder::new(
             OrderSide::Buy,
-            Price::new(<span class="number">1.00</span>, <span class="number">2</span>),
+            Price::from(<span class="string">&quot;1.00&quot;</span>),
             Quantity::zero(<span class="number">0</span>).unwrap(),
             <span class="number">0</span>,
         );
@@ -638,18 +638,18 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_delete_order() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">1.00</span>, <span class="number">2</span>), OrderSide::Buy));
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
         <span class="kw">let </span>order1_id = <span class="number">0</span>;
         <span class="kw">let </span>order1 = BookOrder::new(
             OrderSide::Buy,
-            Price::new(<span class="number">1.00</span>, <span class="number">2</span>),
+            Price::from(<span class="string">&quot;1.00&quot;</span>),
             Quantity::from(<span class="number">10</span>),
             order1_id,
         );
         <span class="kw">let </span>order2_id = <span class="number">0</span>;
         <span class="kw">let </span>order2 = BookOrder::new(
             OrderSide::Buy,
-            Price::new(<span class="number">1.00</span>, <span class="number">2</span>),
+            Price::from(<span class="string">&quot;1.00&quot;</span>),
             Quantity::from(<span class="number">20</span>),
             order2_id,
         );
@@ -665,18 +665,18 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_remove_order() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">1.00</span>, <span class="number">2</span>), OrderSide::Buy));
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
         <span class="kw">let </span>order1_id = <span class="number">0</span>;
         <span class="kw">let </span>order1 = BookOrder::new(
             OrderSide::Buy,
-            Price::new(<span class="number">1.00</span>, <span class="number">2</span>),
+            Price::from(<span class="string">&quot;1.00&quot;</span>),
             Quantity::from(<span class="number">10</span>),
             order1_id,
         );
         <span class="kw">let </span>order2_id = <span class="number">1</span>;
         <span class="kw">let </span>order2 = BookOrder::new(
             OrderSide::Buy,
-            Price::new(<span class="number">1.00</span>, <span class="number">2</span>),
+            Price::from(<span class="string">&quot;1.00&quot;</span>),
             Quantity::from(<span class="number">20</span>),
             order2_id,
         );
@@ -692,18 +692,18 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_add_bulk_orders() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">2.00</span>, <span class="number">2</span>), OrderSide::Buy));
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;2.00&quot;</span>), OrderSide::Buy));
         <span class="kw">let </span>order1_id = <span class="number">0</span>;
         <span class="kw">let </span>order1 = BookOrder::new(
             OrderSide::Buy,
-            Price::new(<span class="number">2.00</span>, <span class="number">2</span>),
+            Price::from(<span class="string">&quot;2.00&quot;</span>),
             Quantity::from(<span class="number">10</span>),
             order1_id,
         );
         <span class="kw">let </span>order2_id = <span class="number">1</span>;
         <span class="kw">let </span>order2 = BookOrder::new(
             OrderSide::Buy,
-            Price::new(<span class="number">2.00</span>, <span class="number">2</span>),
+            Price::from(<span class="string">&quot;2.00&quot;</span>),
             Quantity::from(<span class="number">20</span>),
             order2_id,
         );
@@ -718,15 +718,15 @@
     <span class="attr">#[test]
     #[should_panic(expected = <span class="string">&quot;Invalid book operation: order ID 1 not found&quot;</span>)]
     </span><span class="kw">fn </span>test_remove_nonexistent_order() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">1.00</span>, <span class="number">2</span>), OrderSide::Buy));
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
         level.remove(<span class="number">1</span>);
     }
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_volume() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">1.00</span>, <span class="number">2</span>), OrderSide::Buy));
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">1.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">1.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">15</span>), <span class="number">1</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;1.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;1.00&quot;</span>), Quantity::from(<span class="number">15</span>), <span class="number">1</span>);
 
         level.add(order1);
         level.add(order2);
@@ -735,9 +735,9 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_volume_raw() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">2.00</span>, <span class="number">2</span>), OrderSide::Buy));
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">2.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">2.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;2.00&quot;</span>), OrderSide::Buy));
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;2.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;2.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         level.add(order1);
         level.add(order2);
@@ -746,9 +746,9 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_exposure() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">2.00</span>, <span class="number">2</span>), OrderSide::Buy));
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">2.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">2.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;2.00&quot;</span>), OrderSide::Buy));
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;2.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;2.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         level.add(order1);
         level.add(order2);
@@ -757,9 +757,9 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_exposure_raw() {
-        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::new(<span class="number">2.00</span>, <span class="number">2</span>), OrderSide::Buy));
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">2.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">2.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;2.00&quot;</span>), OrderSide::Buy));
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;2.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;2.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         level.add(order1);
         level.add(order2);

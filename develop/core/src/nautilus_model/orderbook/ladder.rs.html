@@ -849,10 +849,10 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_book_price_bid_sorting() {
         <span class="kw">let </span><span class="kw-2">mut </span>bid_prices = <span class="macro">vec!</span>[
-            BookPrice::new(Price::new(<span class="number">2.0</span>, <span class="number">0</span>), OrderSide::Buy),
-            BookPrice::new(Price::new(<span class="number">4.0</span>, <span class="number">0</span>), OrderSide::Buy),
-            BookPrice::new(Price::new(<span class="number">1.0</span>, <span class="number">0</span>), OrderSide::Buy),
-            BookPrice::new(Price::new(<span class="number">3.0</span>, <span class="number">0</span>), OrderSide::Buy),
+            BookPrice::new(Price::from(<span class="string">&quot;2.0&quot;</span>), OrderSide::Buy),
+            BookPrice::new(Price::from(<span class="string">&quot;4.0&quot;</span>), OrderSide::Buy),
+            BookPrice::new(Price::from(<span class="string">&quot;1.0&quot;</span>), OrderSide::Buy),
+            BookPrice::new(Price::from(<span class="string">&quot;3.0&quot;</span>), OrderSide::Buy),
         ];
         bid_prices.sort();
         <span class="macro">assert_eq!</span>(bid_prices[<span class="number">0</span>].value.as_f64(), <span class="number">4.0</span>);
@@ -861,10 +861,10 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_book_price_ask_sorting() {
         <span class="kw">let </span><span class="kw-2">mut </span>ask_prices = <span class="macro">vec!</span>[
-            BookPrice::new(Price::new(<span class="number">2.0</span>, <span class="number">0</span>), OrderSide::Sell),
-            BookPrice::new(Price::new(<span class="number">4.0</span>, <span class="number">0</span>), OrderSide::Sell),
-            BookPrice::new(Price::new(<span class="number">1.0</span>, <span class="number">0</span>), OrderSide::Sell),
-            BookPrice::new(Price::new(<span class="number">3.0</span>, <span class="number">0</span>), OrderSide::Sell),
+            BookPrice::new(Price::from(<span class="string">&quot;2.0&quot;</span>), OrderSide::Sell),
+            BookPrice::new(Price::from(<span class="string">&quot;4.0&quot;</span>), OrderSide::Sell),
+            BookPrice::new(Price::from(<span class="string">&quot;1.0&quot;</span>), OrderSide::Sell),
+            BookPrice::new(Price::from(<span class="string">&quot;3.0&quot;</span>), OrderSide::Sell),
         ];
 
         ask_prices.sort();
@@ -874,7 +874,7 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_add_single_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">10.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
 
         ladder.add(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -886,10 +886,10 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_add_multiple_buy_orders() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">10.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">9.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">30</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">9.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">50</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order4 = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">8.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">200</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">50</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order4 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;8.00&quot;</span>), Quantity::from(<span class="number">200</span>), <span class="number">0</span>);
 
         ladder.add_bulk(<span class="macro">vec!</span>[order1, order2, order3, order4]);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">3</span>);
@@ -901,12 +901,12 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_add_multiple_sell_orders() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Sell, Price::new(<span class="number">11.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Sell, Price::new(<span class="number">12.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">30</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Sell, Price::new(<span class="number">12.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">50</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;12.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;12.00&quot;</span>), Quantity::from(<span class="number">50</span>), <span class="number">0</span>);
         <span class="kw">let </span>order4 = BookOrder::new(
             OrderSide::Sell,
-            Price::new(<span class="number">13.00</span>, <span class="number">2</span>),
+            Price::from(<span class="string">&quot;13.00&quot;</span>),
             Quantity::from(<span class="number">200</span>),
             <span class="number">0</span>,
         );
@@ -921,11 +921,11 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_buy_order_price() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">11.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">11.10</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.10&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -940,11 +940,11 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_sell_order_price() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::new(<span class="number">11.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::new(<span class="number">11.10</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.10&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -959,11 +959,11 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_buy_order_size() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">11.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">11.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -975,11 +975,11 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_update_sell_order_size() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::new(<span class="number">11.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::new(<span class="number">11.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -991,11 +991,11 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_delete_buy_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">11.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::new(<span class="number">11.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.delete(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">0</span>);
@@ -1007,11 +1007,11 @@
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_delete_sell_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::new(<span class="number">10.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::new(<span class="number">10.00</span>, <span class="number">2</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.delete(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">0</span>);
@@ -1042,8 +1042,8 @@
     }
 
     <span class="attr">#[rstest]
-    #[case(OrderSide::Buy, OrderSide::Sell, Price::new(<span class="number">60.0</span>, <span class="number">2</span>))]
-    #[case(OrderSide::Sell, OrderSide::Buy, Price::new(<span class="number">40.0</span>, <span class="number">2</span>))]
+    #[case(OrderSide::Buy, OrderSide::Sell, Price::from(<span class="string">&quot;60.0&quot;</span>))]
+    #[case(OrderSide::Sell, OrderSide::Buy, Price::from(<span class="string">&quot;40.0&quot;</span>))]
     </span><span class="kw">fn </span>test_simulate_order_fills_buy_when_far_from_market(
         <span class="attr">#[case] </span>order_side: OrderSide,
         <span class="attr">#[case] </span>ladder_side: OrderSide,
@@ -1059,7 +1059,7 @@
         });
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::new(<span class="number">50.00</span>, <span class="number">2</span>),
+            price: Price::from(<span class="string">&quot;50.00&quot;</span>),
             size: Quantity::from(<span class="number">500</span>),
             side: order_side,
             order_id: <span class="number">2</span>,
@@ -1075,14 +1075,14 @@
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
 
         ladder.add(BookOrder {
-            price: Price::new(<span class="number">100.00</span>, <span class="number">2</span>),
+            price: Price::from(<span class="string">&quot;100.00&quot;</span>),
             size: Quantity::from(<span class="number">100</span>),
             side: OrderSide::Buy,
             order_id: <span class="number">1</span>,
         });
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::new(<span class="number">150.00</span>, <span class="number">2</span>), <span class="comment">// &lt;-- Simulate a MARKET order
+            price: Price::from(<span class="string">&quot;150.00&quot;</span>), <span class="comment">// &lt;-- Simulate a MARKET order
             </span>size: Quantity::from(<span class="number">500</span>),
             side: OrderSide::Buy,
             order_id: <span class="number">2</span>,
@@ -1099,19 +1099,19 @@
 
         ladder.add_bulk(<span class="macro">vec!</span>[
             BookOrder {
-                price: Price::new(<span class="number">100.00</span>, <span class="number">2</span>),
+                price: Price::from(<span class="string">&quot;100.00&quot;</span>),
                 size: Quantity::from(<span class="number">100</span>),
                 side: OrderSide::Sell,
                 order_id: <span class="number">1</span>,
             },
             BookOrder {
-                price: Price::new(<span class="number">101.00</span>, <span class="number">2</span>),
+                price: Price::from(<span class="string">&quot;101.00&quot;</span>),
                 size: Quantity::from(<span class="number">200</span>),
                 side: OrderSide::Sell,
                 order_id: <span class="number">2</span>,
             },
             BookOrder {
-                price: Price::new(<span class="number">102.00</span>, <span class="number">2</span>),
+                price: Price::from(<span class="string">&quot;102.00&quot;</span>),
                 size: Quantity::from(<span class="number">400</span>),
                 side: OrderSide::Sell,
                 order_id: <span class="number">3</span>,
@@ -1119,7 +1119,7 @@
         ]);
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::new(PRICE_MAX, <span class="number">2</span>), <span class="comment">// &lt;-- Simulate a MARKET order
+            price: Price::new(PRICE_MAX, <span class="number">2</span>).unwrap(), <span class="comment">// &lt;-- Simulate a MARKET order
             </span>size: Quantity::from(<span class="number">500</span>),
             side: OrderSide::Buy,
             order_id: <span class="number">4</span>,
@@ -1130,15 +1130,15 @@
         <span class="macro">assert_eq!</span>(fills.len(), <span class="number">3</span>);
 
         <span class="kw">let </span>(price1, size1) = <span class="kw-2">&amp;</span>fills[<span class="number">0</span>];
-        <span class="macro">assert_eq!</span>(price1, <span class="kw-2">&amp;</span>Price::new(<span class="number">100.00</span>, <span class="number">2</span>));
+        <span class="macro">assert_eq!</span>(price1, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;100.00&quot;</span>));
         <span class="macro">assert_eq!</span>(size1, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">100</span>));
 
         <span class="kw">let </span>(price2, size2) = <span class="kw-2">&amp;</span>fills[<span class="number">1</span>];
-        <span class="macro">assert_eq!</span>(price2, <span class="kw-2">&amp;</span>Price::new(<span class="number">101.00</span>, <span class="number">2</span>));
+        <span class="macro">assert_eq!</span>(price2, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;101.00&quot;</span>));
         <span class="macro">assert_eq!</span>(size2, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">200</span>));
 
         <span class="kw">let </span>(price3, size3) = <span class="kw-2">&amp;</span>fills[<span class="number">2</span>];
-        <span class="macro">assert_eq!</span>(price3, <span class="kw-2">&amp;</span>Price::new(<span class="number">102.00</span>, <span class="number">2</span>));
+        <span class="macro">assert_eq!</span>(price3, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;102.00&quot;</span>));
         <span class="macro">assert_eq!</span>(size3, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">200</span>));
     }
 
@@ -1148,19 +1148,19 @@
 
         ladder.add_bulk(<span class="macro">vec!</span>[
             BookOrder {
-                price: Price::new(<span class="number">102.00</span>, <span class="number">2</span>),
+                price: Price::from(<span class="string">&quot;102.00&quot;</span>),
                 size: Quantity::from(<span class="number">100</span>),
                 side: OrderSide::Buy,
                 order_id: <span class="number">1</span>,
             },
             BookOrder {
-                price: Price::new(<span class="number">101.00</span>, <span class="number">2</span>),
+                price: Price::from(<span class="string">&quot;101.00&quot;</span>),
                 size: Quantity::from(<span class="number">200</span>),
                 side: OrderSide::Buy,
                 order_id: <span class="number">2</span>,
             },
             BookOrder {
-                price: Price::new(<span class="number">100.00</span>, <span class="number">2</span>),
+                price: Price::from(<span class="string">&quot;100.00&quot;</span>),
                 size: Quantity::from(<span class="number">400</span>),
                 side: OrderSide::Buy,
                 order_id: <span class="number">3</span>,
@@ -1168,7 +1168,7 @@
         ]);
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::new(PRICE_MIN, <span class="number">2</span>), <span class="comment">// &lt;-- Simulate a MARKET order
+            price: Price::new(PRICE_MIN, <span class="number">2</span>).unwrap(), <span class="comment">// &lt;-- Simulate a MARKET order
             </span>size: Quantity::from(<span class="number">500</span>),
             side: OrderSide::Sell,
             order_id: <span class="number">4</span>,
@@ -1179,15 +1179,15 @@
         <span class="macro">assert_eq!</span>(fills.len(), <span class="number">3</span>);
 
         <span class="kw">let </span>(price1, size1) = <span class="kw-2">&amp;</span>fills[<span class="number">0</span>];
-        <span class="macro">assert_eq!</span>(price1, <span class="kw-2">&amp;</span>Price::new(<span class="number">102.00</span>, <span class="number">2</span>));
+        <span class="macro">assert_eq!</span>(price1, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;102.00&quot;</span>));
         <span class="macro">assert_eq!</span>(size1, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">100</span>));
 
         <span class="kw">let </span>(price2, size2) = <span class="kw-2">&amp;</span>fills[<span class="number">1</span>];
-        <span class="macro">assert_eq!</span>(price2, <span class="kw-2">&amp;</span>Price::new(<span class="number">101.00</span>, <span class="number">2</span>));
+        <span class="macro">assert_eq!</span>(price2, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;101.00&quot;</span>));
         <span class="macro">assert_eq!</span>(size2, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">200</span>));
 
         <span class="kw">let </span>(price3, size3) = <span class="kw-2">&amp;</span>fills[<span class="number">2</span>];
-        <span class="macro">assert_eq!</span>(price3, <span class="kw-2">&amp;</span>Price::new(<span class="number">100.00</span>, <span class="number">2</span>));
+        <span class="macro">assert_eq!</span>(price3, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;100.00&quot;</span>));
         <span class="macro">assert_eq!</span>(size3, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">200</span>));
     }
 
@@ -1217,7 +1217,7 @@
         ]);
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::new(PRICE_MIN, <span class="number">2</span>),       <span class="comment">// &lt;-- Simulate a MARKET order
+            price: Price::new(PRICE_MIN, <span class="number">2</span>).unwrap(), <span class="comment">// &lt;-- Simulate a MARKET order
             </span>size: Quantity::from(<span class="string">&quot;699.999999999&quot;</span>), <span class="comment">// &lt;-- Size slightly less than total size in ladder
             </span>side: OrderSide::Sell,
             order_id: <span class="number">4</span>,

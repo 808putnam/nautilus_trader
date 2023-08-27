@@ -175,7 +175,7 @@
     <span class="kw">fn </span>taker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal;
 
     <span class="doccomment">/// Creates a new price from the given `value` with the correct price precision for the instrument.
-    </span><span class="kw">fn </span>make_price(<span class="kw-2">&amp;</span><span class="self">self</span>, value: f64) -&gt; Price {
+    </span><span class="kw">fn </span>make_price(<span class="kw-2">&amp;</span><span class="self">self</span>, value: f64) -&gt; <span class="prelude-ty">Result</span>&lt;Price&gt; {
         Price::new(value, <span class="self">self</span>.price_precision())
     }
 

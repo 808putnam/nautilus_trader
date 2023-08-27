@@ -225,11 +225,6 @@
 <a href="#225" id="225">225</a>
 <a href="#226" id="226">226</a>
 <a href="#227" id="227">227</a>
-<a href="#228" id="228">228</a>
-<a href="#229" id="229">229</a>
-<a href="#230" id="230">230</a>
-<a href="#231" id="231">231</a>
-<a href="#232" id="232">232</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -250,7 +245,7 @@
     hash::{Hash, Hasher},
 };
 
-<span class="kw">use </span>anyhow;
+<span class="kw">use </span>anyhow::{anyhow, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>evalexpr::{ContextWithMutableVariables, HashMapContext, Node, Value};
 <span class="kw">use </span>nautilus_core::time::UnixNanos;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
@@ -286,7 +281,7 @@
         ts_event: UnixNanos,
         ts_init: UnixNanos,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, anyhow::Error&gt; {
-        <span class="kw">let </span>price_increment = Price::new(<span class="number">10f64</span>.powi(-i32::from(price_precision)), price_precision);
+        <span class="kw">let </span>price_increment = Price::new(<span class="number">10f64</span>.powi(-i32::from(price_precision)), price_precision)<span class="question-mark">?</span>;
 
         <span class="comment">// Extract variables from the component instruments
         </span><span class="kw">let </span>variables: Vec&lt;String&gt; = components
@@ -324,10 +319,7 @@
     <span class="doccomment">/// Calculates the price of the synthetic instrument based on the given component input prices
     /// provided as a map.
     </span><span class="attr">#[allow(dead_code)]
-    </span><span class="kw">pub fn </span>calculate_from_map(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        inputs: <span class="kw-2">&amp;</span>HashMap&lt;String, f64&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;Price, anyhow::Error&gt; {
+    </span><span class="kw">pub fn </span>calculate_from_map(<span class="kw-2">&amp;mut </span><span class="self">self</span>, inputs: <span class="kw-2">&amp;</span>HashMap&lt;String, f64&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Price&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>input_values = Vec::new();
 
         <span class="kw">for </span>variable <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.variables {
@@ -345,9 +337,9 @@
 
     <span class="doccomment">/// Calculates the price of the synthetic instrument based on the given component input prices
     /// provided as an array of `f64` values.
-    </span><span class="kw">pub fn </span>calculate(<span class="kw-2">&amp;mut </span><span class="self">self</span>, inputs: <span class="kw-2">&amp;</span>[f64]) -&gt; <span class="prelude-ty">Result</span>&lt;Price, anyhow::Error&gt; {
+    </span><span class="kw">pub fn </span>calculate(<span class="kw-2">&amp;mut </span><span class="self">self</span>, inputs: <span class="kw-2">&amp;</span>[f64]) -&gt; <span class="prelude-ty">Result</span>&lt;Price&gt; {
         <span class="kw">if </span>inputs.len() != <span class="self">self</span>.variables.len() {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;Invalid number of input values&quot;</span>));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;Invalid number of input values&quot;</span>));
         }
 
         <span class="kw">for </span>(variable, input) <span class="kw">in </span><span class="self">self</span>.variables.iter().zip(inputs) {
@@ -358,8 +350,8 @@
         <span class="kw">let </span>result: Value = <span class="self">self</span>.operator_tree.eval_with_context(<span class="kw-2">&amp;</span><span class="self">self</span>.context)<span class="question-mark">?</span>;
 
         <span class="kw">match </span>result {
-            Value::Float(price) =&gt; <span class="prelude-val">Ok</span>(Price::new(price, <span class="self">self</span>.price_precision)),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow::anyhow!</span>(
+            Value::Float(price) =&gt; Price::new(price, <span class="self">self</span>.price_precision),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(
                 <span class="string">&quot;Failed to evaluate formula to a floating point number&quot;
             </span>)),
         }
@@ -382,15 +374,13 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>std::str::FromStr;
-
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::identifiers::{instrument_id::InstrumentId, symbol::Symbol};
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_calculate_from_map() {
-        <span class="kw">let </span>btc_binance = InstrumentId::from_str(<span class="string">&quot;BTC.BINANCE&quot;</span>).unwrap();
-        <span class="kw">let </span>ltc_binance = InstrumentId::from_str(<span class="string">&quot;LTC.BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>btc_binance = InstrumentId::from(<span class="string">&quot;BTC.BINANCE&quot;</span>);
+        <span class="kw">let </span>ltc_binance = InstrumentId::from(<span class="string">&quot;LTC.BINANCE&quot;</span>);
         <span class="kw">let </span>formula = <span class="string">&quot;(BTC.BINANCE + LTC.BINANCE) / 2&quot;</span>.to_string();
         <span class="kw">let </span><span class="kw-2">mut </span>synth = SyntheticInstrument::new(
             Symbol::new(<span class="string">&quot;BTC-LTC&quot;</span>).unwrap(),
@@ -414,8 +404,8 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_calculate() {
-        <span class="kw">let </span>btc_binance = InstrumentId::from_str(<span class="string">&quot;BTC.BINANCE&quot;</span>).unwrap();
-        <span class="kw">let </span>ltc_binance = InstrumentId::from_str(<span class="string">&quot;LTC.BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>btc_binance = InstrumentId::from(<span class="string">&quot;BTC.BINANCE&quot;</span>);
+        <span class="kw">let </span>ltc_binance = InstrumentId::from(<span class="string">&quot;LTC.BINANCE&quot;</span>);
         <span class="kw">let </span>formula = <span class="string">&quot;(BTC.BINANCE + LTC.BINANCE) / 2.0&quot;</span>.to_string();
         <span class="kw">let </span><span class="kw-2">mut </span>synth = SyntheticInstrument::new(
             Symbol::new(<span class="string">&quot;BTC-LTC&quot;</span>).unwrap(),
@@ -436,8 +426,8 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_change_formula() {
-        <span class="kw">let </span>btc_binance = InstrumentId::from_str(<span class="string">&quot;BTC.BINANCE&quot;</span>).unwrap();
-        <span class="kw">let </span>ltc_binance = InstrumentId::from_str(<span class="string">&quot;LTC.BINANCE&quot;</span>).unwrap();
+        <span class="kw">let </span>btc_binance = InstrumentId::from(<span class="string">&quot;BTC.BINANCE&quot;</span>);
+        <span class="kw">let </span>ltc_binance = InstrumentId::from(<span class="string">&quot;LTC.BINANCE&quot;</span>);
         <span class="kw">let </span>formula = <span class="string">&quot;(BTC.BINANCE + LTC.BINANCE) / 2&quot;</span>.to_string();
         <span class="kw">let </span><span class="kw-2">mut </span>synth = SyntheticInstrument::new(
             Symbol::new(<span class="string">&quot;BTC-LTC&quot;</span>).unwrap(),

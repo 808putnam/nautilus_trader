@@ -349,6 +349,7 @@
 <a href="#349" id="349">349</a>
 <a href="#350" id="350">350</a>
 <a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -403,7 +404,8 @@
 }
 
 <span class="kw">fn </span>parse_metadata(metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;) -&gt; (InstrumentId, u8, u8) {
-    <span class="kw">let </span>instrument_id =
+    <span class="comment">// TODO: Properly handle errors
+    </span><span class="kw">let </span>instrument_id =
         InstrumentId::from_str(metadata.get(<span class="string">&quot;instrument_id&quot;</span>).unwrap().as_str()).unwrap();
     <span class="kw">let </span>price_precision = metadata
         .get(<span class="string">&quot;price_precision&quot;</span>)
@@ -552,7 +554,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_get_schema() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;AAPL.NASDAQ&quot;</span>);
         <span class="kw">let </span>metadata = OrderBookDelta::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
         <span class="kw">let </span>schema = OrderBookDelta::get_schema(<span class="prelude-val">Some</span>(metadata.clone()));
         <span class="kw">let </span>expected_fields = <span class="macro">vec!</span>[
@@ -588,7 +590,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_encode_batch() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;AAPL.NASDAQ&quot;</span>);
         <span class="kw">let </span>metadata = OrderBookDelta::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
 
         <span class="kw">let </span>delta1 = OrderBookDelta {
@@ -596,7 +598,7 @@
             action: BookAction::Add,
             order: BookOrder {
                 side: OrderSide::Buy,
-                price: Price::new(<span class="number">100.10</span>, <span class="number">2</span>),
+                price: Price::from(<span class="string">&quot;100.10&quot;</span>),
                 size: Quantity::from(<span class="number">100</span>),
                 order_id: <span class="number">1</span>,
             },
@@ -611,7 +613,7 @@
             action: BookAction::Update,
             order: BookOrder {
                 side: OrderSide::Sell,
-                price: Price::new(<span class="number">101.20</span>, <span class="number">2</span>),
+                price: Price::from(<span class="string">&quot;101.20&quot;</span>),
                 size: Quantity::from(<span class="number">200</span>),
                 order_id: <span class="number">2</span>,
             },
@@ -667,7 +669,7 @@
 
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_decode_batch() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(<span class="string">&quot;AAPL.NASDAQ&quot;</span>).unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;AAPL.NASDAQ&quot;</span>);
         <span class="kw">let </span>metadata = OrderBookDelta::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
 
         <span class="kw">let </span>action = UInt8Array::from(<span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>]);
