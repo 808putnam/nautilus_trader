@@ -565,7 +565,7 @@
 };
 
 <span class="kw">use </span>anyhow::Result;
-<span class="kw">use </span>nautilus_core::{correctness, parsing::precision_from_str};
+<span class="kw">use </span>nautilus_core::{correctness::check_f64_in_range_inclusive, parsing::precision_from_str};
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize};
@@ -592,7 +592,7 @@
 
 <span class="kw">impl </span>Price {
     <span class="kw">pub fn </span>new(value: f64, precision: u8) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        correctness::f64_in_range_inclusive(value, PRICE_MIN, PRICE_MAX, <span class="string">&quot;`Price` value&quot;</span>)<span class="question-mark">?</span>;
+        check_f64_in_range_inclusive(value, PRICE_MIN, PRICE_MAX, <span class="string">&quot;`Price` value&quot;</span>)<span class="question-mark">?</span>;
         check_fixed_precision(precision)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{

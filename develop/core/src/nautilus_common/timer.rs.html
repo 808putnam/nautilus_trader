@@ -286,7 +286,7 @@
 };
 
 <span class="kw">use </span>nautilus_core::{
-    correctness,
+    correctness::check_valid_string,
     time::{TimedeltaNanos, UnixNanos},
     uuid::UUID4,
 };
@@ -311,7 +311,7 @@
 <span class="kw">impl </span>TimeEvent {
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(name: String, event_id: UUID4, ts_event: UnixNanos, ts_init: UnixNanos) -&gt; <span class="self">Self </span>{
-        correctness::valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`TimeEvent` name&quot;</span>).unwrap(); <span class="comment">// TODO!
+        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`TimeEvent` name&quot;</span>).unwrap(); <span class="comment">// TODO!
 
         </span>TimeEvent {
             name: Ustr::from(<span class="kw-2">&amp;</span>name),
@@ -403,7 +403,7 @@
         start_time_ns: UnixNanos,
         stop_time_ns: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
     ) -&gt; <span class="self">Self </span>{
-        correctness::valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`TestTimer` name&quot;</span>).unwrap();
+        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`TestTimer` name&quot;</span>).unwrap();
 
         TestTimer {
             name,

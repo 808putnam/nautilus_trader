@@ -629,7 +629,7 @@
 </span><span class="kw">use </span>std::{collections::HashMap, time::Duration};
 
 <span class="kw">use </span>nautilus_core::{
-    correctness,
+    correctness::check_valid_string,
     datetime::{nanos_to_micros, nanos_to_millis, nanos_to_secs},
     time::{duration_since_unix_epoch, UnixNanos},
 };
@@ -874,7 +874,7 @@
         alert_time_ns: UnixNanos,
         callback_py: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
     ) {
-        correctness::valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`Timer` name&quot;</span>).unwrap(); <span class="comment">// TODO!
+        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`Timer` name&quot;</span>).unwrap(); <span class="comment">// TODO!
         </span><span class="macro">assert!</span>(
             callback_py.is_some() | <span class="self">self</span>.default_callback_py.is_some(),
             <span class="string">&quot;All Python callbacks were `None`&quot;
@@ -902,7 +902,7 @@
         stop_time_ns: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
         callback_py: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
     ) {
-        correctness::valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`Timer` name&quot;</span>).unwrap(); <span class="comment">// TODO!
+        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`Timer` name&quot;</span>).unwrap(); <span class="comment">// TODO!
         </span><span class="macro">assert!</span>(
             callback_py.is_some() | <span class="self">self</span>.default_callback_py.is_some(),
             <span class="string">&quot;All Python callbacks were `None`&quot;
@@ -1007,7 +1007,7 @@
         <span class="kw-2">mut </span>alert_time_ns: UnixNanos,
         callback_py: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
     ) {
-        correctness::valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`Timer` name&quot;</span>).unwrap(); <span class="comment">// TODO!
+        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`Timer` name&quot;</span>).unwrap(); <span class="comment">// TODO!
         </span><span class="macro">assert!</span>(
             callback_py.is_some() | <span class="self">self</span>.default_callback_py.is_some(),
             <span class="string">&quot;All Python callbacks were `None`&quot;
@@ -1037,7 +1037,7 @@
         stop_time_ns: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
         callback_py: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
     ) {
-        correctness::valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`Timer` name&quot;</span>).unwrap(); <span class="comment">// TODO!
+        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`Timer` name&quot;</span>).unwrap(); <span class="comment">// TODO!
         </span><span class="macro">assert!</span>(
             callback_py.is_some() | <span class="self">self</span>.default_callback_py.is_some(),
             <span class="string">&quot;All Python callbacks were `None`&quot;

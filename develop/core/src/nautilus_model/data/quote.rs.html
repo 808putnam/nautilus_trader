@@ -408,6 +408,7 @@
 <a href="#408" id="408">408</a>
 <a href="#409" id="409">409</a>
 <a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -433,7 +434,8 @@
 
 <span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::{
-    correctness, python::to_pyvalue_err, serialization::Serializable, time::UnixNanos,
+    correctness::check_u8_equal, python::to_pyvalue_err, serialization::Serializable,
+    time::UnixNanos,
 };
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, pyclass::CompareOp, types::PyDict};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
@@ -475,13 +477,13 @@
         ts_event: UnixNanos,
         ts_init: UnixNanos,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        correctness::u8_equal(
+        check_u8_equal(
             bid_price.precision,
             ask_price.precision,
             <span class="string">&quot;bid_price.precision&quot;</span>,
             <span class="string">&quot;ask_price.precision&quot;</span>,
         )<span class="question-mark">?</span>;
-        correctness::u8_equal(
+        check_u8_equal(
             bid_size.precision,
             ask_size.precision,
             <span class="string">&quot;bid_size.precision&quot;</span>,

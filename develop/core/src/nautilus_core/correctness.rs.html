@@ -270,7 +270,7 @@
 /// - If `s` is an empty string.
 /// - If `s` consists solely of whitespace characters.
 /// - If `s` contains one or more non-ASCII characters.
-</span><span class="kw">pub fn </span>valid_string(s: <span class="kw-2">&amp;</span>str, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+</span><span class="kw">pub fn </span>check_valid_string(s: <span class="kw-2">&amp;</span>str, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>s.is_empty() {
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid string for {desc}, was empty&quot;</span>)
     } <span class="kw">else if </span>s.chars().all(char::is_whitespace) {
@@ -283,7 +283,7 @@
 }
 
 <span class="doccomment">/// Validates that the string `s` contains the pattern `pat`.
-</span><span class="kw">pub fn </span>string_contains(s: <span class="kw-2">&amp;</span>str, pat: <span class="kw-2">&amp;</span>str, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+</span><span class="kw">pub fn </span>check_string_contains(s: <span class="kw-2">&amp;</span>str, pat: <span class="kw-2">&amp;</span>str, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>!s.contains(pat) {
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid string for {desc} did not contain &#39;{pat}&#39;, was &#39;{s}&#39;&quot;</span>)
     }
@@ -291,7 +291,7 @@
 }
 
 <span class="doccomment">/// Validates that `u8` values are equal.
-</span><span class="kw">pub fn </span>u8_equal(lhs: u8, rhs: u8, lhs_param: <span class="kw-2">&amp;</span>str, rhs_param: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+</span><span class="kw">pub fn </span>check_u8_equal(lhs: u8, rhs: u8, lhs_param: <span class="kw-2">&amp;</span>str, rhs_param: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>lhs != rhs {
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} &#39;{lhs_param}&#39; u8 of {lhs} was not equal to &#39;{rhs_param}&#39; u8 of {rhs}&quot;</span>)
     }
@@ -299,7 +299,7 @@
 }
 
 <span class="doccomment">/// Validates that the `u8` value is in the inclusive range [`l`, `r`].
-</span><span class="kw">pub fn </span>u8_in_range_inclusive(value: u8, l: u8, r: u8, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+</span><span class="kw">pub fn </span>check_u8_in_range_inclusive(value: u8, l: u8, r: u8, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>value &lt; l || value &gt; r {
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid u8 for {desc} not in range [{l}, {r}], was {value}&quot;</span>)
     }
@@ -307,7 +307,7 @@
 }
 
 <span class="doccomment">/// Validates that the `u64` value is in the inclusive range [`l`, `r`].
-</span><span class="kw">pub fn </span>u64_in_range_inclusive(value: u64, l: u64, r: u64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+</span><span class="kw">pub fn </span>check_u64_in_range_inclusive(value: u64, l: u64, r: u64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>value &lt; l || value &gt; r {
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid u64 for {desc} not in range [{l}, {r}], was {value}&quot;</span>)
     }
@@ -315,7 +315,7 @@
 }
 
 <span class="doccomment">/// Validates that the `i64` value is in the inclusive range [`l`, `r`].
-</span><span class="kw">pub fn </span>i64_in_range_inclusive(value: i64, l: i64, r: i64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+</span><span class="kw">pub fn </span>check_i64_in_range_inclusive(value: i64, l: i64, r: i64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>value &lt; l || value &gt; r {
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid i64 for {desc} not in range [{l}, {r}], was {value}&quot;</span>)
     }
@@ -323,7 +323,7 @@
 }
 
 <span class="doccomment">/// Validates that the `f64` value is in the inclusive range [`l`, `r`].
-</span><span class="kw">pub fn </span>f64_in_range_inclusive(value: f64, l: f64, r: f64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+</span><span class="kw">pub fn </span>check_f64_in_range_inclusive(value: f64, l: f64, r: f64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>value &lt; l || value &gt; r {
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid f64 for {desc} not in range [{l}, {r}], was {value}&quot;</span>)
     }
@@ -332,7 +332,7 @@
 }
 
 <span class="doccomment">/// Validates that the `f64` value is non-negative.
-</span><span class="kw">pub fn </span>f64_non_negative(value: f64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+</span><span class="kw">pub fn </span>check_f64_non_negative(value: f64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>value &lt; <span class="number">0.0 </span>{
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid f64 for {desc} negative, was {value}&quot;</span>)
     }
@@ -355,7 +355,7 @@
     #[case(<span class="string">&quot; a &quot;</span>)]
     #[case(<span class="string">&quot;abc&quot;</span>)]
     </span><span class="kw">fn </span>test_valid_string_with_valid_value(<span class="attr">#[case] </span>s: <span class="kw-2">&amp;</span>str) {
-        <span class="macro">assert!</span>(valid_string(s, <span class="string">&quot;value&quot;</span>).is_ok());
+        <span class="macro">assert!</span>(check_valid_string(s, <span class="string">&quot;value&quot;</span>).is_ok());
     }
 
     <span class="attr">#[rstest]
@@ -364,19 +364,19 @@
     </span><span class="attr">#[case(<span class="string">&quot;  &quot;</span>)] </span><span class="comment">// &lt;-- whitespace-only string
     </span><span class="attr">#[case(<span class="string">&quot;🦀&quot;</span>)] </span><span class="comment">// &lt;-- contains non-ASCII char
     </span><span class="kw">fn </span>test_valid_string_with_invalid_values(<span class="attr">#[case] </span>s: <span class="kw-2">&amp;</span>str) {
-        <span class="macro">assert!</span>(valid_string(s, <span class="string">&quot;value&quot;</span>).is_err());
+        <span class="macro">assert!</span>(check_valid_string(s, <span class="string">&quot;value&quot;</span>).is_err());
     }
 
     <span class="attr">#[rstest]
     #[case(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;a&quot;</span>)]
     </span><span class="kw">fn </span>test_string_contains_when_it_does_contain(<span class="attr">#[case] </span>s: <span class="kw-2">&amp;</span>str, <span class="attr">#[case] </span>pat: <span class="kw-2">&amp;</span>str) {
-        <span class="macro">assert!</span>(string_contains(s, pat, <span class="string">&quot;value&quot;</span>).is_ok());
+        <span class="macro">assert!</span>(check_string_contains(s, pat, <span class="string">&quot;value&quot;</span>).is_ok());
     }
 
     <span class="attr">#[rstest]
     #[case(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>)]
     </span><span class="kw">fn </span>test_string_contains_with_invalid_values(<span class="attr">#[case] </span>s: <span class="kw-2">&amp;</span>str, <span class="attr">#[case] </span>pat: <span class="kw-2">&amp;</span>str) {
-        <span class="macro">assert!</span>(string_contains(s, pat, <span class="string">&quot;value&quot;</span>).is_err());
+        <span class="macro">assert!</span>(check_string_contains(s, pat, <span class="string">&quot;value&quot;</span>).is_err());
     }
 
     <span class="attr">#[rstest]
@@ -389,7 +389,7 @@
         <span class="attr">#[case] </span>r: u8,
         <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str,
     ) {
-        <span class="macro">assert!</span>(u8_in_range_inclusive(value, l, r, desc).is_ok());
+        <span class="macro">assert!</span>(check_u8_in_range_inclusive(value, l, r, desc).is_ok());
     }
 
     <span class="attr">#[rstest]
@@ -401,7 +401,7 @@
         <span class="attr">#[case] </span>lhs_param: <span class="kw-2">&amp;</span>str,
         <span class="attr">#[case] </span>rhs_param: <span class="kw-2">&amp;</span>str,
     ) {
-        <span class="macro">assert!</span>(u8_equal(lhs, rhs, lhs_param, rhs_param).is_err());
+        <span class="macro">assert!</span>(check_u8_equal(lhs, rhs, lhs_param, rhs_param).is_err());
     }
 
     <span class="attr">#[rstest]
@@ -412,7 +412,7 @@
         <span class="attr">#[case] </span>lhs_param: <span class="kw-2">&amp;</span>str,
         <span class="attr">#[case] </span>rhs_param: <span class="kw-2">&amp;</span>str,
     ) {
-        <span class="macro">assert!</span>(u8_equal(lhs, rhs, lhs_param, rhs_param).is_ok());
+        <span class="macro">assert!</span>(check_u8_equal(lhs, rhs, lhs_param, rhs_param).is_ok());
     }
 
     <span class="attr">#[rstest]
@@ -424,7 +424,7 @@
         <span class="attr">#[case] </span>r: u8,
         <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str,
     ) {
-        <span class="macro">assert!</span>(u8_in_range_inclusive(value, l, r, desc).is_err());
+        <span class="macro">assert!</span>(check_u8_in_range_inclusive(value, l, r, desc).is_err());
     }
 
     <span class="attr">#[rstest]
@@ -437,7 +437,7 @@
         <span class="attr">#[case] </span>r: u64,
         <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str,
     ) {
-        <span class="macro">assert!</span>(u64_in_range_inclusive(value, l, r, desc).is_ok());
+        <span class="macro">assert!</span>(check_u64_in_range_inclusive(value, l, r, desc).is_ok());
     }
 
     <span class="attr">#[rstest]
@@ -449,7 +449,7 @@
         <span class="attr">#[case] </span>r: u64,
         <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str,
     ) {
-        <span class="macro">assert!</span>(u64_in_range_inclusive(value, l, r, desc).is_err())
+        <span class="macro">assert!</span>(check_u64_in_range_inclusive(value, l, r, desc).is_err())
     }
 
     <span class="attr">#[rstest]
@@ -462,7 +462,7 @@
         <span class="attr">#[case] </span>r: i64,
         <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str,
     ) {
-        <span class="macro">assert!</span>(i64_in_range_inclusive(value, l, r, desc).is_ok());
+        <span class="macro">assert!</span>(check_i64_in_range_inclusive(value, l, r, desc).is_ok());
     }
 
     <span class="attr">#[rstest]
@@ -474,20 +474,20 @@
         <span class="attr">#[case] </span>r: i64,
         <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str,
     ) {
-        <span class="macro">assert!</span>(i64_in_range_inclusive(value, l, r, desc).is_err());
+        <span class="macro">assert!</span>(check_i64_in_range_inclusive(value, l, r, desc).is_err());
     }
 
     <span class="attr">#[rstest]
     #[case(<span class="number">0.0</span>, <span class="string">&quot;value&quot;</span>)]
     #[case(<span class="number">1.0</span>, <span class="string">&quot;value&quot;</span>)]
     </span><span class="kw">fn </span>test_f64_non_negative_when_valid_values(<span class="attr">#[case] </span>value: f64, <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str) {
-        <span class="macro">assert!</span>(f64_non_negative(value, desc).is_ok());
+        <span class="macro">assert!</span>(check_f64_non_negative(value, desc).is_ok());
     }
 
     <span class="attr">#[rstest]
     #[case(-<span class="number">0.1</span>, <span class="string">&quot;value&quot;</span>)]
     </span><span class="kw">fn </span>test_f64_non_negative_when_invalid_values(<span class="attr">#[case] </span>value: f64, <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str) {
-        <span class="macro">assert!</span>(f64_non_negative(value, desc).is_err());
+        <span class="macro">assert!</span>(check_f64_non_negative(value, desc).is_err());
     }
 }
 </code></pre></div></section></main></body></html>
