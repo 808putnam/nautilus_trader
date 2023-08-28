@@ -272,6 +272,11 @@
 <a href="#272" id="272">272</a>
 <a href="#273" id="273">273</a>
 <a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -406,7 +411,8 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // C API
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>uuid4_new() -&gt; UUID4 {
     UUID4::new()
 }
@@ -420,7 +426,8 @@
 /// # Panics
 ///
 /// - If `ptr` cannot be cast to a valid C string.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>uuid4_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; UUID4 {
     <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">&quot;`ptr` was NULL&quot;</span>);
     UUID4::from(
@@ -430,17 +437,20 @@
     )
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>uuid4_to_cstr(uuid: <span class="kw-2">&amp;</span>UUID4) -&gt; <span class="kw-2">*const </span>c_char {
     uuid.to_cstr().as_ptr()
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>uuid4_eq(lhs: <span class="kw-2">&amp;</span>UUID4, rhs: <span class="kw-2">&amp;</span>UUID4) -&gt; u8 {
     u8::from(lhs == rhs)
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>uuid4_hash(uuid: <span class="kw-2">&amp;</span>UUID4) -&gt; u64 {
     <span class="kw">let </span><span class="kw-2">mut </span>h = DefaultHasher::new();
     uuid.hash(<span class="kw-2">&amp;mut </span>h);

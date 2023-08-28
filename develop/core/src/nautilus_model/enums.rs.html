@@ -1479,6 +1479,54 @@
 <a href="#1479" id="1479">1479</a>
 <a href="#1480" id="1480">1480</a>
 <a href="#1481" id="1481">1481</a>
+<a href="#1482" id="1482">1482</a>
+<a href="#1483" id="1483">1483</a>
+<a href="#1484" id="1484">1484</a>
+<a href="#1485" id="1485">1485</a>
+<a href="#1486" id="1486">1486</a>
+<a href="#1487" id="1487">1487</a>
+<a href="#1488" id="1488">1488</a>
+<a href="#1489" id="1489">1489</a>
+<a href="#1490" id="1490">1490</a>
+<a href="#1491" id="1491">1491</a>
+<a href="#1492" id="1492">1492</a>
+<a href="#1493" id="1493">1493</a>
+<a href="#1494" id="1494">1494</a>
+<a href="#1495" id="1495">1495</a>
+<a href="#1496" id="1496">1496</a>
+<a href="#1497" id="1497">1497</a>
+<a href="#1498" id="1498">1498</a>
+<a href="#1499" id="1499">1499</a>
+<a href="#1500" id="1500">1500</a>
+<a href="#1501" id="1501">1501</a>
+<a href="#1502" id="1502">1502</a>
+<a href="#1503" id="1503">1503</a>
+<a href="#1504" id="1504">1504</a>
+<a href="#1505" id="1505">1505</a>
+<a href="#1506" id="1506">1506</a>
+<a href="#1507" id="1507">1507</a>
+<a href="#1508" id="1508">1508</a>
+<a href="#1509" id="1509">1509</a>
+<a href="#1510" id="1510">1510</a>
+<a href="#1511" id="1511">1511</a>
+<a href="#1512" id="1512">1512</a>
+<a href="#1513" id="1513">1513</a>
+<a href="#1514" id="1514">1514</a>
+<a href="#1515" id="1515">1515</a>
+<a href="#1516" id="1516">1516</a>
+<a href="#1517" id="1517">1517</a>
+<a href="#1518" id="1518">1518</a>
+<a href="#1519" id="1519">1519</a>
+<a href="#1520" id="1520">1520</a>
+<a href="#1521" id="1521">1521</a>
+<a href="#1522" id="1522">1522</a>
+<a href="#1523" id="1523">1523</a>
+<a href="#1524" id="1524">1524</a>
+<a href="#1525" id="1525">1525</a>
+<a href="#1526" id="1526">1526</a>
+<a href="#1527" id="1527">1527</a>
+<a href="#1528" id="1528">1528</a>
+<a href="#1529" id="1529">1529</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -2555,7 +2603,8 @@
 <span class="macro">enum_for_python!</span>(TrailingOffsetType);
 <span class="macro">enum_for_python!</span>(TriggerType);
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>account_type_to_cstr(value: AccountType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2564,14 +2613,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>account_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AccountType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     AccountType::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AccountType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>aggregation_source_to_cstr(value: AggregationSource) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2580,14 +2631,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>aggregation_source_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AggregationSource {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     AggregationSource::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AggregationSource` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>aggressor_side_to_cstr(value: AggressorSide) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2596,14 +2649,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>aggressor_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AggressorSide {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     AggressorSide::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AggressorSide` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>asset_class_to_cstr(value: AssetClass) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2612,14 +2667,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>asset_class_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AssetClass {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     AssetClass::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AssetClass` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>asset_type_to_cstr(value: AssetType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2628,14 +2685,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>asset_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AssetType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     AssetType::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AssetType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>bar_aggregation_to_cstr(value: BarAggregation) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2644,14 +2703,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>bar_aggregation_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; BarAggregation {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     BarAggregation::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `BarAggregation` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>book_action_to_cstr(value: BookAction) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2660,14 +2721,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>book_action_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; BookAction {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     BookAction::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `BookAction` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>book_type_to_cstr(value: BookType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2676,14 +2739,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>book_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; BookType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     BookType::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `BookType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>contingency_type_to_cstr(value: ContingencyType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2692,14 +2757,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>contingency_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; ContingencyType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     ContingencyType::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `ContingencyType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_type_to_cstr(value: CurrencyType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2708,7 +2775,8 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; CurrencyType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     CurrencyType::from_str(<span class="kw-2">&amp;</span>value)
@@ -2719,7 +2787,8 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>instrument_close_type_from_cstr(
     ptr: <span class="kw-2">*const </span>c_char,
 ) -&gt; InstrumentCloseType {
@@ -2729,12 +2798,14 @@
     })
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>instrument_close_type_to_cstr(value: InstrumentCloseType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>liquidity_side_to_cstr(value: LiquiditySide) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2743,14 +2814,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>liquidity_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; LiquiditySide {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     LiquiditySide::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `LiquiditySide` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>market_status_to_cstr(value: MarketStatus) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2759,14 +2832,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>market_status_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; MarketStatus {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     MarketStatus::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `MarketStatus` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>oms_type_to_cstr(value: OmsType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2775,14 +2850,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>oms_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OmsType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     OmsType::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OmsType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>option_kind_to_cstr(value: OptionKind) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2791,14 +2868,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>option_kind_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OptionKind {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     OptionKind::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OptionKind` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_side_to_cstr(value: OrderSide) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2807,14 +2886,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderSide {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     OrderSide::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OrderSide` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_status_to_cstr(value: OrderStatus) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2823,14 +2904,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_status_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderStatus {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     OrderStatus::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OrderStatus` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_type_to_cstr(value: OrderType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2839,14 +2922,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     OrderType::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OrderType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>position_side_to_cstr(value: PositionSide) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2855,14 +2940,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>position_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; PositionSide {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     PositionSide::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `PositionSide` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>price_type_to_cstr(value: PriceType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2871,14 +2958,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>price_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; PriceType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     PriceType::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `PriceType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>time_in_force_to_cstr(value: TimeInForce) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2887,14 +2976,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>time_in_force_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TimeInForce {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     TimeInForce::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `TimeInForce` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trading_state_to_cstr(value: TradingState) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2903,14 +2994,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trading_state_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TradingState {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     TradingState::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `TradingState` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trailing_offset_type_to_cstr(value: TrailingOffsetType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2919,14 +3012,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trailing_offset_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TrailingOffsetType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     TrailingOffsetType::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `TrailingOffsetType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trigger_type_to_cstr(value: TriggerType) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(value.as_ref())
 }
@@ -2935,7 +3030,8 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trigger_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TriggerType {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     TriggerType::from_str(<span class="kw-2">&amp;</span>value)

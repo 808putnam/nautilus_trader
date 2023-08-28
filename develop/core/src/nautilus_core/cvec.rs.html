@@ -174,6 +174,8 @@
 <a href="#174" id="174">174</a>
 <a href="#175" id="175">175</a>
 <a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -266,14 +268,16 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // C API
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cvec_drop(cvec: CVec) {
     <span class="kw">let </span>CVec { ptr, len, cap } = cvec;
     <span class="kw">let </span>data: Vec&lt;u8&gt; = <span class="kw">unsafe </span>{ Vec::from_raw_parts(ptr.cast::&lt;u8&gt;(), len, cap) };
     drop(data); <span class="comment">// Memory freed here
 </span>}
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cvec_new() -&gt; CVec {
     CVec::empty()
 }

@@ -581,6 +581,13 @@
 <a href="#581" id="581">581</a>
 <a href="#582" id="582">582</a>
 <a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
+<a href="#585" id="585">585</a>
+<a href="#586" id="586">586</a>
+<a href="#587" id="587">587</a>
+<a href="#588" id="588">588</a>
+<a href="#589" id="589">589</a>
+<a href="#590" id="590">590</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -925,38 +932,45 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // C API
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>quantity_new(value: f64, precision: u8) -&gt; Quantity {
     <span class="comment">// SAFETY: Assumes `value` and `precision` were properly validated
     </span>Quantity::new(value, precision).unwrap()
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>quantity_from_raw(raw: u64, precision: u8) -&gt; Quantity {
     Quantity::from_raw(raw, precision)
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>quantity_as_f64(qty: <span class="kw-2">&amp;</span>Quantity) -&gt; f64 {
     qty.as_f64()
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>quantity_add_assign(<span class="kw-2">mut </span>a: Quantity, b: Quantity) {
     a.add_assign(b);
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>quantity_add_assign_u64(<span class="kw-2">mut </span>a: Quantity, b: u64) {
     a.add_assign(b);
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>quantity_sub_assign(<span class="kw-2">mut </span>a: Quantity, b: Quantity) {
     a.sub_assign(b);
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>quantity_sub_assign_u64(<span class="kw-2">mut </span>a: Quantity, b: u64) {
     a.sub_assign(b);
 }

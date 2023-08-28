@@ -317,6 +317,14 @@
 <a href="#317" id="317">317</a>
 <a href="#318" id="318">318</a>
 <a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -573,7 +581,8 @@
     </span>Underline,
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>component_state_to_cstr(value: ComponentState) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(<span class="kw-2">&amp;</span>value.to_string())
 }
@@ -582,14 +591,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>component_state_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; ComponentState {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     ComponentState::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `ComponentState` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>component_trigger_to_cstr(value: ComponentTrigger) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(<span class="kw-2">&amp;</span>value.to_string())
 }
@@ -598,14 +609,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>component_trigger_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; ComponentTrigger {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     ComponentTrigger::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `ComponentTrigger` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>log_level_to_cstr(value: LogLevel) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(<span class="kw-2">&amp;</span>value.to_string())
 }
@@ -614,14 +627,16 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>log_level_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; LogLevel {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     LogLevel::from_str(<span class="kw-2">&amp;</span>value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `LogLevel` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>log_color_to_cstr(value: LogColor) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(<span class="kw-2">&amp;</span>value.to_string())
 }
@@ -630,7 +645,8 @@
 ///
 /// # Safety
 /// - Assumes `ptr` is a valid C string pointer.
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>log_color_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; LogColor {
     <span class="kw">let </span>value = cstr_to_string(ptr);
     LogColor::from_str(<span class="kw-2">&amp;</span>value)

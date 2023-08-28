@@ -219,8 +219,8 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // C API
 ////////////////////////////////////////////////////////////////////////////////
-
-</span><span class="attr">#[repr(C)]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[repr(C)]
 </span><span class="kw">pub struct </span>TimeEventAccumulatorAPI(Box&lt;TimeEventAccumulator&gt;);
 
 <span class="kw">impl </span>Deref <span class="kw">for </span>TimeEventAccumulatorAPI {

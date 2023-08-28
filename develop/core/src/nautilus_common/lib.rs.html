@@ -22,6 +22,9 @@
 <a href="#22" id="22">22</a>
 <a href="#23" id="23">23</a>
 <a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -38,12 +41,15 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">pub mod </span>clock;
-<span class="kw">pub mod </span>clock_api;
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+</span><span class="kw">pub mod </span>clock_api;
 <span class="kw">pub mod </span>enums;
 <span class="kw">pub mod </span>logging;
-<span class="kw">pub mod </span>logging_api;
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+</span><span class="kw">pub mod </span>logging_api;
 <span class="kw">pub mod </span>msgbus;
 <span class="kw">pub mod </span>testing;
 <span class="kw">pub mod </span>timer;
-<span class="kw">pub mod </span>timer_api;
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+</span><span class="kw">pub mod </span>timer_api;
 </code></pre></div></section></main></body></html>

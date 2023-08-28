@@ -545,6 +545,11 @@
 <a href="#545" id="545">545</a>
 <a href="#546" id="546">546</a>
 <a href="#547" id="547">547</a>
+<a href="#548" id="548">548</a>
+<a href="#549" id="549">549</a>
+<a href="#550" id="550">550</a>
+<a href="#551" id="551">551</a>
+<a href="#552" id="552">552</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -848,37 +853,42 @@
         fixed_i64_to_f64(<span class="self">self</span>.raw)
     }
 
-    <span class="comment">// #[pyo3(name = &quot;as_decimal&quot;)]
-    // fn py_as_decimal(&amp;self) -&gt; Decimal {
-    //     self.as_decimal()
-    // }
-</span>}
+    <span class="attr">#[pyo3(name = <span class="string">&quot;as_decimal&quot;</span>)]
+    </span><span class="kw">fn </span>py_as_decimal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="self">self</span>.as_decimal()
+    }
+}
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // C API
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>price_new(value: f64, precision: u8) -&gt; Price {
     <span class="comment">// TODO: Document panic
     </span>Price::new(value, precision).unwrap()
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>price_from_raw(raw: i64, precision: u8) -&gt; Price {
     Price::from_raw(raw, precision)
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>price_as_f64(price: <span class="kw-2">&amp;</span>Price) -&gt; f64 {
     price.as_f64()
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>price_add_assign(<span class="kw-2">mut </span>a: Price, b: Price) {
     a.add_assign(b);
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>price_sub_assign(<span class="kw-2">mut </span>a: Price, b: Price) {
     a.sub_assign(b);
 }
