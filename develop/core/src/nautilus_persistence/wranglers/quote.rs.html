@@ -84,6 +84,7 @@
 <a href="#84" id="84">84</a>
 <a href="#85" id="85">85</a>
 <a href="#86" id="86">86</a>
+<a href="#87" id="87">87</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -116,7 +117,8 @@
     metadata: HashMap&lt;String, String&gt;,
 }
 
-<span class="attr">#[pymethods]
+<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+#[pymethods]
 </span><span class="kw">impl </span>QuoteTickDataWrangler {
     <span class="attr">#[new]
     </span><span class="kw">fn </span>py_new(instrument_id: <span class="kw-2">&amp;</span>str, price_precision: u8, size_precision: u8) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {

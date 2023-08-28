@@ -266,6 +266,7 @@
 <a href="#266" id="266">266</a>
 <a href="#267" id="267">267</a>
 <a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -367,7 +368,8 @@
     }
 }
 
-<span class="attr">#[pymethods]
+<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+#[pymethods]
 </span><span class="kw">impl </span>DataTransformer {
     <span class="attr">#[staticmethod]
     </span><span class="kw">pub fn </span>get_schema_map(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, cls: <span class="kw-2">&amp;</span>PyType) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {

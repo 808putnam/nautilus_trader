@@ -152,6 +152,7 @@
 <a href="#152" id="152">152</a>
 <a href="#153" id="153">153</a>
 <a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -216,7 +217,8 @@
     }
 }
 
-<span class="attr">#[pymethods]
+<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+#[pymethods]
 </span><span class="kw">impl </span>Ticker {
     <span class="attr">#[new]
     </span><span class="kw">fn </span>py_new(instrument_id: InstrumentId, ts_event: UnixNanos, ts_init: UnixNanos) -&gt; <span class="self">Self </span>{

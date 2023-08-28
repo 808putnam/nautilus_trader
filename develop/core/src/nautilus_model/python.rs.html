@@ -87,6 +87,11 @@
 <a href="#87" id="87">87</a>
 <a href="#88" id="88">88</a>
 <a href="#89" id="89">89</a>
+<a href="#90" id="90">90</a>
+<a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>pyo3::{
     exceptions::PyValueError,
     prelude::<span class="kw-2">*</span>,
@@ -96,13 +101,15 @@
 <span class="kw">use </span>strum::IntoEnumIterator;
 
 <span class="doccomment">/// Python iterator over the variants of an enum.
-</span><span class="attr">#[pyclass]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+#[pyclass]
 </span><span class="kw">pub struct </span>EnumIterator {
     <span class="comment">// Type erasure for code reuse. Generic types can&#39;t be exposed to Python.
     </span>iter: Box&lt;<span class="kw">dyn </span>Iterator&lt;Item = PyObject&gt; + Send&gt;,
 }
 
-<span class="attr">#[pymethods]
+<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+#[pymethods]
 </span><span class="kw">impl </span>EnumIterator {
     <span class="kw">fn </span>__iter__(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt; {
         slf
@@ -113,7 +120,8 @@
     }
 }
 
-<span class="kw">impl </span>EnumIterator {
+<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+</span><span class="kw">impl </span>EnumIterator {
     <span class="kw">pub fn </span>new&lt;E&gt;(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>E: strum::IntoEnumIterator + IntoPy&lt;Py&lt;PyAny&gt;&gt;,
@@ -131,7 +139,8 @@
     }
 }
 
-<span class="kw">pub fn </span>value_to_pydict(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, val: <span class="kw-2">&amp;</span>Value) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {
+<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+</span><span class="kw">pub fn </span>value_to_pydict(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, val: <span class="kw-2">&amp;</span>Value) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {
     <span class="kw">let </span>dict = PyDict::new(py);
 
     <span class="kw">match </span>val {
@@ -148,7 +157,8 @@
     <span class="prelude-val">Ok</span>(dict.into_py(py))
 }
 
-<span class="kw">pub fn </span>value_to_pyobject(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, val: <span class="kw-2">&amp;</span>Value) -&gt; PyResult&lt;PyObject&gt; {
+<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+</span><span class="kw">pub fn </span>value_to_pyobject(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, val: <span class="kw-2">&amp;</span>Value) -&gt; PyResult&lt;PyObject&gt; {
     <span class="kw">match </span>val {
         Value::Null =&gt; <span class="prelude-val">Ok</span>(py.<span class="prelude-val">None</span>()),
         Value::Bool(b) =&gt; <span class="prelude-val">Ok</span>(b.into_py(py)),

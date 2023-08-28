@@ -351,6 +351,7 @@
 <a href="#351" id="351">351</a>
 <a href="#352" id="352">352</a>
 <a href="#353" id="353">353</a>
+<a href="#354" id="354">354</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -544,8 +545,8 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Python API
 ////////////////////////////////////////////////////////////////////////////////
-
-</span><span class="attr">#[pymethods]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+#[pymethods]
 </span><span class="kw">impl </span>DataBackendSession {
     <span class="attr">#[new]
     #[pyo3(signature=(chunk_size=<span class="number">5000</span>))]
@@ -654,7 +655,8 @@
     chunk: <span class="prelude-ty">Option</span>&lt;CVec&gt;,
 }
 
-<span class="attr">#[pymethods]
+<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+#[pymethods]
 </span><span class="kw">impl </span>DataQueryResult {
     <span class="doccomment">/// The reader implements an iterator.
     </span><span class="kw">fn </span>__iter__(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt; {

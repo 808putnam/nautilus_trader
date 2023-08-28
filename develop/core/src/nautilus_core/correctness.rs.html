@@ -244,6 +244,14 @@
 <a href="#244" id="244">244</a>
 <a href="#245" id="245">245</a>
 <a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -324,15 +332,20 @@
 
 <span class="doccomment">/// Validates that the `f64` value is in the inclusive range [`l`, `r`].
 </span><span class="kw">pub fn </span>check_f64_in_range_inclusive(value: f64, l: f64, r: f64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="kw">if </span>value.is_nan() || value.is_infinite() {
+        <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid f64 for {desc}, was {value}&quot;</span>)
+    }
     <span class="kw">if </span>value &lt; l || value &gt; r {
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid f64 for {desc} not in range [{l}, {r}], was {value}&quot;</span>)
     }
-
     <span class="prelude-val">Ok</span>(())
 }
 
 <span class="doccomment">/// Validates that the `f64` value is non-negative.
 </span><span class="kw">pub fn </span>check_f64_non_negative(value: f64, desc: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="kw">if </span>value.is_nan() || value.is_infinite() {
+        <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid f64 for {desc}, was {value}&quot;</span>)
+    }
     <span class="kw">if </span>value &lt; <span class="number">0.0 </span>{
         <span class="macro">bail!</span>(<span class="string">&quot;{FAILED} invalid f64 for {desc} negative, was {value}&quot;</span>)
     }
@@ -485,6 +498,9 @@
     }
 
     <span class="attr">#[rstest]
+    #[case(f64::NAN, <span class="string">&quot;value&quot;</span>)]
+    #[case(f64::INFINITY, <span class="string">&quot;value&quot;</span>)]
+    #[case(f64::NEG_INFINITY, <span class="string">&quot;value&quot;</span>)]
     #[case(-<span class="number">0.1</span>, <span class="string">&quot;value&quot;</span>)]
     </span><span class="kw">fn </span>test_f64_non_negative_when_invalid_values(<span class="attr">#[case] </span>value: f64, <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str) {
         <span class="macro">assert!</span>(check_f64_non_negative(value, desc).is_err());
