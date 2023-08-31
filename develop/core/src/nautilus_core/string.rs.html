@@ -204,6 +204,7 @@
 <a href="#204" id="204">204</a>
 <a href="#205" id="205">205</a>
 <a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -335,10 +336,11 @@
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>pyo3::AsPyPointer;
+    <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_pystr_to_string() {
         pyo3::prepare_freethreaded_python();
         <span class="comment">// Create a valid Python object pointer
@@ -347,7 +349,7 @@
         <span class="macro">assert_eq!</span>(result, <span class="string">&quot;test string1&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic]
     </span><span class="kw">fn </span>test_pystr_to_string_with_null_ptr() {
         <span class="comment">// Create a null Python object pointer
@@ -357,7 +359,7 @@
         };
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_cstr_to_string() {
         <span class="comment">// Create a valid C string pointer
         </span><span class="kw">let </span>c_string = CString::new(<span class="string">&quot;test string2&quot;</span>).expect(<span class="string">&quot;CString::new failed&quot;</span>);
@@ -366,7 +368,7 @@
         <span class="macro">assert_eq!</span>(result, <span class="string">&quot;test string2&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic]
     </span><span class="kw">fn </span>test_cstr_to_string_with_null_ptr() {
         <span class="comment">// Create a null C string pointer
@@ -376,7 +378,7 @@
         };
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_optional_cstr_to_string_with_null_ptr() {
         <span class="comment">// Call optional_cstr_to_string with null pointer
         </span><span class="kw">let </span>ptr = std::ptr::null();
@@ -384,7 +386,7 @@
         <span class="macro">assert!</span>(result.is_none());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_optional_cstr_to_string_with_valid_ptr() {
         <span class="comment">// Create a valid C string
         </span><span class="kw">let </span>input_str = <span class="string">&quot;hello world&quot;</span>;
@@ -394,7 +396,7 @@
         <span class="macro">assert_eq!</span>(result.unwrap(), input_str);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_string_to_cstr() {
         <span class="kw">let </span>s = <span class="string">&quot;test string&quot;</span>;
         <span class="kw">let </span>c_str_ptr = str_to_cstr(s);
@@ -403,7 +405,7 @@
         <span class="macro">assert_eq!</span>(result, s);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_cstr_drop() {
         <span class="kw">let </span>c_string = CString::new(<span class="string">&quot;test string3&quot;</span>).expect(<span class="string">&quot;CString::new failed&quot;</span>);
         <span class="kw">let </span>ptr = c_string.into_raw(); <span class="comment">// &lt;-- pointer _must_ be obtained this way

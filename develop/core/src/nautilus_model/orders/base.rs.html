@@ -1510,7 +1510,7 @@
         );
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_order_state_transition_denied() {
         <span class="kw">let </span><span class="kw-2">mut </span>order: MarketOrder = OrderInitializedBuilder::default().build().unwrap().into();
         <span class="kw">let </span>denied = OrderDeniedBuilder::default().build().unwrap();
@@ -1525,7 +1525,7 @@
         <span class="macro">assert_eq!</span>(order.last_event(), <span class="kw-2">&amp;</span>event);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_order_life_cycle_to_filled() {
         <span class="kw">let </span>init = OrderInitializedBuilder::default().build().unwrap();
         <span class="kw">let </span>submitted = OrderSubmittedBuilder::default().build().unwrap();

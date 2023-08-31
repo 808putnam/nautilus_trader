@@ -184,6 +184,8 @@
 <a href="#184" id="184">184</a>
 <a href="#185" id="185">185</a>
 <a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -333,16 +335,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>rstest::rstest;
+
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_ema_initialized() {
         <span class="kw">let </span>ema = ExponentialMovingAverage::new(<span class="number">20</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
         <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">&quot;{ema:?}&quot;</span>);
         <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;ExponentialMovingAverage { period: 20, price_type: Mid, alpha: 0.09523809523809523, value: 0.0, count: 0, has_inputs: false, is_initialized: false }&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_ema_update_raw() {
         <span class="kw">let </span><span class="kw-2">mut </span>ema = ExponentialMovingAverage::new(<span class="number">3</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
         ema.py_update_raw(<span class="number">1.0</span>);
@@ -355,7 +359,7 @@
         <span class="macro">assert_eq!</span>(ema.value, <span class="number">2.25</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_ema_reset() {
         <span class="kw">let </span><span class="kw-2">mut </span>ema = ExponentialMovingAverage::new(<span class="number">3</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
         ema.py_update_raw(<span class="number">1.0</span>);

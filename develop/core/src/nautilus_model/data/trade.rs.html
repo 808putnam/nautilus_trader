@@ -383,6 +383,7 @@
 <a href="#383" id="383">383</a>
 <a href="#384" id="384">384</a>
 <a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -667,6 +668,7 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>nautilus_core::serialization::Serializable;
     <span class="kw">use </span>pyo3::{IntoPy, Python};
+    <span class="kw">use </span>rstest::rstest;
 
     <span class="kw">use crate</span>::{
         data::trade::TradeTick,
@@ -687,7 +689,7 @@
         }
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_to_string() {
         <span class="kw">let </span>tick = create_stub_trade_tick();
         <span class="macro">assert_eq!</span>(
@@ -696,7 +698,7 @@
         </span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_deserialize_raw_string() {
         <span class="kw">let </span>raw_string = <span class="string">r#&quot;{
             &quot;type&quot;: &quot;TradeTick&quot;,
@@ -714,7 +716,7 @@
         <span class="macro">assert_eq!</span>(tick.aggressor_side, AggressorSide::Buyer);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_as_dict() {
         pyo3::prepare_freethreaded_python();
 
@@ -727,7 +729,7 @@
         });
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_from_dict() {
         pyo3::prepare_freethreaded_python();
 
@@ -740,7 +742,7 @@
         });
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_from_pyobject() {
         pyo3::prepare_freethreaded_python();
         <span class="kw">let </span>tick = create_stub_trade_tick();
@@ -752,7 +754,7 @@
         });
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_json_serialization() {
         <span class="kw">let </span>tick = create_stub_trade_tick();
         <span class="kw">let </span>serialized = tick.as_json_bytes().unwrap();
@@ -760,7 +762,7 @@
         <span class="macro">assert_eq!</span>(deserialized, tick);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_msgpack_serialization() {
         <span class="kw">let </span>tick = create_stub_trade_tick();
         <span class="kw">let </span>serialized = tick.as_msgpack_bytes().unwrap();

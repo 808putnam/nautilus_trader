@@ -727,6 +727,8 @@
 <a href="#727" id="727">727</a>
 <a href="#728" id="728">728</a>
 <a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
+<a href="#731" id="731">731</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1160,6 +1162,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>rstest::rstest;
+
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use crate</span>::{
         enums::BarAggregation,
@@ -1193,7 +1197,7 @@
         }
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_spec_string_reprs() {
         <span class="kw">let </span>bar_spec = BarSpecification {
             step: <span class="number">1</span>,
@@ -1204,7 +1208,7 @@
         <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{bar_spec}&quot;</span>), <span class="string">&quot;1-MINUTE-BID&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_type_parse_valid() {
         <span class="kw">let </span>input = <span class="string">&quot;BTCUSDT-PERP.BINANCE-1-MINUTE-LAST-EXTERNAL&quot;</span>;
         <span class="kw">let </span>bar_type = BarType::from_str(input).unwrap();
@@ -1224,7 +1228,7 @@
         <span class="macro">assert_eq!</span>(bar_type.aggregation_source, AggregationSource::External);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_type_parse_invalid_token_pos_0() {
         <span class="kw">let </span>input = <span class="string">&quot;BTCUSDT-PERP-1-MINUTE-LAST-INTERNAL&quot;</span>;
         <span class="kw">let </span>result = BarType::from_str(input);
@@ -1235,7 +1239,7 @@
         );
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_type_parse_invalid_token_pos_1() {
         <span class="kw">let </span>input = <span class="string">&quot;BTCUSDT-PERP.BINANCE-INVALID-MINUTE-LAST-INTERNAL&quot;</span>;
         <span class="kw">let </span>result = BarType::from_str(input);
@@ -1248,7 +1252,7 @@
         );
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_type_parse_invalid_token_pos_2() {
         <span class="kw">let </span>input = <span class="string">&quot;BTCUSDT-PERP.BINANCE-1-INVALID-LAST-INTERNAL&quot;</span>;
         <span class="kw">let </span>result = BarType::from_str(input);
@@ -1261,7 +1265,7 @@
         );
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_type_parse_invalid_token_pos_3() {
         <span class="kw">let </span>input = <span class="string">&quot;BTCUSDT-PERP.BINANCE-1-MINUTE-INVALID-INTERNAL&quot;</span>;
         <span class="kw">let </span>result = BarType::from_str(input);
@@ -1274,7 +1278,7 @@
         );
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_type_parse_invalid_token_pos_4() {
         <span class="kw">let </span>input = <span class="string">&quot;BTCUSDT-PERP.BINANCE-1-MINUTE-BID-INVALID&quot;</span>;
         <span class="kw">let </span>result = BarType::from_str(input);
@@ -1288,7 +1292,7 @@
         );
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_type_equality() {
         <span class="kw">let </span>instrument_id1 = InstrumentId {
             symbol: Symbol::new(<span class="string">&quot;AUD/USD&quot;</span>).unwrap(),
@@ -1323,7 +1327,7 @@
         <span class="macro">assert_ne!</span>(bar_type1, bar_type3);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_type_comparison() {
         <span class="kw">let </span>instrument_id1 = InstrumentId {
             symbol: Symbol::new(<span class="string">&quot;AUD/USD&quot;</span>).unwrap(),
@@ -1361,7 +1365,7 @@
         <span class="macro">assert!</span>(bar_type3 &gt;= bar_type1);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_equality() {
         <span class="kw">let </span>instrument_id = InstrumentId {
             symbol: Symbol::new(<span class="string">&quot;AUDUSD&quot;</span>).unwrap(),
@@ -1402,7 +1406,7 @@
         <span class="macro">assert_ne!</span>(bar1, bar2);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_as_dict() {
         pyo3::prepare_freethreaded_python();
 
@@ -1415,7 +1419,7 @@
         });
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_as_from_dict() {
         pyo3::prepare_freethreaded_python();
 
@@ -1428,7 +1432,7 @@
         });
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_from_pyobject() {
         pyo3::prepare_freethreaded_python();
         <span class="kw">let </span>bar = create_stub_bar();
@@ -1440,7 +1444,7 @@
         });
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_json_serialization() {
         <span class="kw">let </span>bar = create_stub_bar();
         <span class="kw">let </span>serialized = bar.as_json_bytes().unwrap();
@@ -1448,7 +1452,7 @@
         <span class="macro">assert_eq!</span>(deserialized, bar);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_msgpack_serialization() {
         <span class="kw">let </span>bar = create_stub_bar();
         <span class="kw">let </span>serialized = bar.as_msgpack_bytes().unwrap();

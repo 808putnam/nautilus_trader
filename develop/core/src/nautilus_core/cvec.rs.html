@@ -176,6 +176,8 @@
 <a href="#176" id="176">176</a>
 <a href="#177" id="177">177</a>
 <a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -286,10 +288,12 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::ptr::null;
 
+    <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
+
     <span class="kw">use </span><span class="kw">super</span>::CVec;
 
     <span class="doccomment">/// Access values from a vector converted into a [`CVec`].
-    </span><span class="attr">#[test]
+    </span><span class="attr">#[rstest]
     #[allow(unused_assignments)]
     </span><span class="kw">fn </span>access_values_test() {
         <span class="kw">let </span>test_data = <span class="macro">vec!</span>[<span class="number">1_u64</span>, <span class="number">2</span>, <span class="number">3</span>];
@@ -322,7 +326,7 @@
     <span class="doccomment">/// After deallocating the vector the block of memory may not
     /// contain the same values.
     /// NOTE: This test maybe flaky depending on the platform
-    </span><span class="attr">#[test]
+    </span><span class="attr">#[rstest]
     #[ignore] </span><span class="comment">// TODO(cs): Flaky one some platforms
     </span><span class="kw">fn </span>drop_test() {
         <span class="kw">let </span>test_data = <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];
@@ -347,7 +351,7 @@
     }
 
     <span class="doccomment">/// An empty vector gets converted to a null pointer wrapped in a [`CVec`].
-    </span><span class="attr">#[test]
+    </span><span class="attr">#[rstest]
     </span><span class="kw">fn </span>empty_vec_should_give_null_ptr() {
         <span class="kw">let </span>data: Vec&lt;u64&gt; = <span class="macro">vec!</span>[];
         <span class="kw">let </span>cvec: CVec = data.into();

@@ -173,6 +173,27 @@
 <a href="#173" id="173">173</a>
 <a href="#174" id="174">174</a>
 <a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -265,29 +286,51 @@
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Stubs
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(test)]
+</span><span class="kw">pub mod </span>stubs {
+    <span class="kw">use </span>rstest::fixture;
+
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+
+    <span class="attr">#[fixture]
+    </span><span class="kw">pub fn </span>account_id() -&gt; AccountId {
+        AccountId::from(<span class="string">&quot;SIM-001&quot;</span>)
+    }
+
+    <span class="attr">#[fixture]
+    </span><span class="kw">pub fn </span>account_ib() -&gt; AccountId {
+        AccountId::from(<span class="string">&quot;IB-1234567890&quot;</span>)
+    }
+}
+
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Tests
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::ffi::CString;
 
-    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use </span>rstest::rstest;
 
-    <span class="attr">#[test]
+    <span class="kw">use super</span>::{stubs::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
+
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_account_id_new_invalid_string() {
         <span class="kw">let </span>s = <span class="string">&quot;&quot;</span>;
         <span class="kw">let </span>result = AccountId::new(s);
         <span class="macro">assert!</span>(result.is_err());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_account_id_new_missing_hyphen() {
         <span class="kw">let </span>s = <span class="string">&quot;123456789&quot;</span>;
         <span class="kw">let </span>result = AccountId::new(s);
         <span class="macro">assert!</span>(result.is_err());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_account_id_fmt() {
         <span class="kw">let </span>s = <span class="string">&quot;IB-U123456789&quot;</span>;
         <span class="kw">let </span>account_id = AccountId::new(s).unwrap();
@@ -295,13 +338,12 @@
         <span class="macro">assert_eq!</span>(formatted, s);
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_string_reprs() {
-        <span class="kw">let </span>id = AccountId::from(<span class="string">&quot;IB-1234567890&quot;</span>);
-        <span class="macro">assert_eq!</span>(id.to_string(), <span class="string">&quot;IB-1234567890&quot;</span>);
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_string_reprs(account_ib: AccountId) {
+        <span class="macro">assert_eq!</span>(account_ib.to_string(), <span class="string">&quot;IB-1234567890&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_account_id_round_trip() {
         <span class="kw">let </span>s = <span class="string">&quot;IB-U123456789&quot;</span>;
         <span class="kw">let </span>c_string = CString::new(s).unwrap();
@@ -312,7 +354,7 @@
         <span class="macro">assert_eq!</span>(account_id, account_id_2);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_account_id_to_cstr_and_back() {
         <span class="kw">let </span>s = <span class="string">&quot;IB-U123456789&quot;</span>;
         <span class="kw">let </span>c_string = CString::new(s).unwrap();
@@ -323,7 +365,7 @@
         <span class="macro">assert_eq!</span>(c_str.to_str().unwrap(), s);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_account_id_hash_c() {
         <span class="kw">let </span>s1 = <span class="string">&quot;IB-U123456789&quot;</span>;
         <span class="kw">let </span>c_string1 = CString::new(s1).unwrap();

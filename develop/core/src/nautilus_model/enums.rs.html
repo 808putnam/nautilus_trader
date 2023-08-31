@@ -1527,6 +1527,8 @@
 <a href="#1527" id="1527">1527</a>
 <a href="#1528" id="1528">1528</a>
 <a href="#1529" id="1529">1529</a>
+<a href="#1530" id="1530">1530</a>
+<a href="#1531" id="1531">1531</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -3040,16 +3042,18 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>rstest::rstest;
+
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_name() {
         <span class="macro">assert_eq!</span>(OrderSide::NoOrderSide.name(), <span class="string">&quot;NO_ORDER_SIDE&quot;</span>);
         <span class="macro">assert_eq!</span>(OrderSide::Buy.name(), <span class="string">&quot;BUY&quot;</span>);
         <span class="macro">assert_eq!</span>(OrderSide::Sell.name(), <span class="string">&quot;SELL&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_value() {
         <span class="macro">assert_eq!</span>(OrderSide::NoOrderSide.value(), <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(OrderSide::Buy.value(), <span class="number">1</span>);

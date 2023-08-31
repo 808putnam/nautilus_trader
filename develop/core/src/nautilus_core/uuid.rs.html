@@ -277,6 +277,7 @@
 <a href="#277" id="277">277</a>
 <a href="#278" id="278">278</a>
 <a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -464,11 +465,12 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::ffi::CString;
 
+    <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
     <span class="kw">use </span>uuid;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_uuid4_new() {
         <span class="kw">let </span>uuid = UUID4::new();
         <span class="kw">let </span>uuid_string = uuid.to_string();
@@ -477,7 +479,7 @@
         <span class="macro">assert_eq!</span>(uuid_parsed.to_string().len(), <span class="number">36</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_uuid4_default() {
         <span class="kw">let </span>uuid: UUID4 = UUID4::default();
         <span class="kw">let </span>uuid_string = uuid.to_string();
@@ -485,7 +487,7 @@
         <span class="macro">assert_eq!</span>(uuid_parsed.get_version().unwrap(), uuid::Version::Random);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_uuid4_from_str() {
         <span class="kw">let </span>uuid_string = <span class="string">&quot;6ba7b810-9dad-11d1-80b4-00c04fd430c8&quot;</span>;
         <span class="kw">let </span>uuid = UUID4::from(uuid_string);
@@ -495,7 +497,7 @@
         <span class="macro">assert_eq!</span>(result_parsed, expected_parsed);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_equality() {
         <span class="kw">let </span>uuid1 = UUID4::from(<span class="string">&quot;2d89666b-1a1e-4a75-b193-4eb3b454c757&quot;</span>);
         <span class="kw">let </span>uuid2 = UUID4::from(<span class="string">&quot;46922ecb-4324-4e40-a56c-841e0d774cef&quot;</span>);
@@ -503,7 +505,7 @@
         <span class="macro">assert_ne!</span>(uuid1, uuid2);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_uuid4_display() {
         <span class="kw">let </span>uuid_string = <span class="string">&quot;6ba7b810-9dad-11d1-80b4-00c04fd430c8&quot;</span>;
         <span class="kw">let </span>uuid = UUID4::from(uuid_string);
@@ -511,7 +513,7 @@
         <span class="macro">assert_eq!</span>(result_string, uuid_string);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_c_api_uuid4_new() {
         <span class="kw">let </span>uuid = uuid4_new();
         <span class="kw">let </span>uuid_string = uuid.to_string();
@@ -519,7 +521,7 @@
         <span class="macro">assert_eq!</span>(uuid_parsed.get_version().unwrap(), uuid::Version::Random);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_c_api_uuid4_from_cstr() {
         <span class="kw">let </span>uuid_string = <span class="string">&quot;6ba7b810-9dad-11d1-80b4-00c04fd430c8&quot;</span>;
         <span class="kw">let </span>uuid_cstring = CString::new(uuid_string).expect(<span class="string">&quot;CString::new failed&quot;</span>);
@@ -528,7 +530,7 @@
         <span class="macro">assert_eq!</span>(uuid_string, uuid.to_string());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_c_api_uuid4_to_cstr() {
         <span class="kw">let </span>uuid_string = <span class="string">&quot;6ba7b810-9dad-11d1-80b4-00c04fd430c8&quot;</span>;
         <span class="kw">let </span>uuid = UUID4::from(uuid_string);
@@ -538,7 +540,7 @@
         <span class="macro">assert_eq!</span>(uuid_string, uuid_result_string);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_c_api_uuid4_eq() {
         <span class="kw">let </span>uuid1 = UUID4::from(<span class="string">&quot;6ba7b810-9dad-11d1-80b4-00c04fd430c8&quot;</span>);
         <span class="kw">let </span>uuid2 = UUID4::from(<span class="string">&quot;6ba7b810-9dad-11d1-80b4-00c04fd430c8&quot;</span>);
@@ -547,7 +549,7 @@
         <span class="macro">assert_eq!</span>(uuid4_eq(<span class="kw-2">&amp;</span>uuid1, <span class="kw-2">&amp;</span>uuid3), <span class="number">0</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_c_api_uuid4_hash() {
         <span class="kw">let </span>uuid1 = UUID4::from(<span class="string">&quot;6ba7b810-9dad-11d1-80b4-00c04fd430c8&quot;</span>);
         <span class="kw">let </span>uuid2 = UUID4::from(<span class="string">&quot;6ba7b810-9dad-11d1-80b4-00c04fd430c8&quot;</span>);

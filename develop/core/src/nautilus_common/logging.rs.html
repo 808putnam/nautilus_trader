@@ -702,6 +702,10 @@
 <a href="#702" id="702">702</a>
 <a href="#703" id="703">703</a>
 <a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1131,20 +1135,18 @@
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
-// Tests
+// Stubs
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
-</span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>std::time::Duration;
-
+</span><span class="kw">pub mod </span>stubs {
     <span class="kw">use </span>nautilus_core::uuid::UUID4;
     <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
-    <span class="kw">use </span>tempfile::tempdir;
+    <span class="kw">use </span>rstest::fixture;
 
-    <span class="kw">use super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use </span><span class="kw">crate</span>::testing::wait_until;
+    <span class="kw">use crate</span>::{enums::LogLevel, logging::Logger};
 
-    <span class="kw">fn </span>create_logger() -&gt; Logger {
+    <span class="attr">#[fixture]
+    </span><span class="kw">pub fn </span>logger() -&gt; Logger {
         Logger::new(
             TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>),
             String::from(<span class="string">&quot;user-01&quot;</span>),
@@ -1158,8 +1160,24 @@
             <span class="bool-val">false</span>,
         )
     }
+}
 
-    <span class="attr">#[test]
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Tests
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>std::time::Duration;
+
+    <span class="kw">use </span>nautilus_core::uuid::UUID4;
+    <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
+    <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
+    <span class="kw">use </span>tempfile::tempdir;
+
+    <span class="kw">use super</span>::{stubs::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
+    <span class="kw">use </span><span class="kw">crate</span>::testing::wait_until;
+
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>log_message_serialization() {
         <span class="kw">let </span>log_message = LogEvent {
             timestamp: <span class="number">1_000_000_000</span>,
@@ -1178,20 +1196,16 @@
         <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">&quot;message&quot;</span>], <span class="string">&quot;This is a log message&quot;</span>);
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_new_logger() {
-        <span class="kw">let </span>logger = create_logger();
-
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_new_logger(logger: Logger) {
         <span class="macro">assert_eq!</span>(logger.trader_id, TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>));
         <span class="macro">assert_eq!</span>(logger.level_stdout, LogLevel::Info);
         <span class="macro">assert_eq!</span>(logger.level_file, <span class="prelude-val">None</span>);
         <span class="macro">assert!</span>(!logger.is_bypassed);
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_logger_debug() {
-        <span class="kw">let </span><span class="kw-2">mut </span>logger = create_logger();
-
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_logger_debug(<span class="kw-2">mut </span>logger: Logger) {
         logger.debug(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
@@ -1200,10 +1214,8 @@
         );
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_logger_info() {
-        <span class="kw">let </span><span class="kw-2">mut </span>logger = create_logger();
-
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_logger_info(<span class="kw-2">mut </span>logger: Logger) {
         logger.info(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
@@ -1212,10 +1224,8 @@
         );
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_logger_error() {
-        <span class="kw">let </span><span class="kw-2">mut </span>logger = create_logger();
-
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_logger_error(<span class="kw-2">mut </span>logger: Logger) {
         logger.error(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
@@ -1224,10 +1234,8 @@
         );
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_logger_critical() {
-        <span class="kw">let </span><span class="kw-2">mut </span>logger = create_logger();
-
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_logger_critical(<span class="kw-2">mut </span>logger: Logger) {
         logger.critical(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
@@ -1236,7 +1244,7 @@
         );
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_logging_to_file() {
         <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">&quot;Failed to create temporary directory&quot;</span>);
 
@@ -1298,7 +1306,7 @@
         </span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_log_component_level_filtering() {
         <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">&quot;Failed to create temporary directory&quot;</span>);
 
@@ -1355,7 +1363,7 @@
         </span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_logging_to_file_in_json_format() {
         <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">&quot;Failed to create temporary directory&quot;</span>);
 

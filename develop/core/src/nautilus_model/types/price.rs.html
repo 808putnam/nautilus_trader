@@ -550,6 +550,7 @@
 <a href="#550" id="550">550</a>
 <a href="#551" id="551">551</a>
 <a href="#552" id="552">552</a>
+<a href="#553" id="553">553</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -901,46 +902,47 @@
     <span class="kw">use </span>std::str::FromStr;
 
     <span class="kw">use </span>float_cmp::approx_eq;
+    <span class="kw">use </span>rstest::rstest;
     <span class="kw">use </span>rust_decimal_macros::dec;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_precision_new() {
         <span class="comment">// Precision out of range for fixed
         </span><span class="kw">let _ </span>= Price::new(<span class="number">1.0</span>, <span class="number">10</span>).unwrap();
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_precision_from_raw() {
         <span class="comment">// Precision out of range for fixed
         </span><span class="kw">let _ </span>= Price::from_raw(<span class="number">1</span>, <span class="number">10</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_precision_max() {
         <span class="comment">// Precision out of range for fixed
         </span><span class="kw">let _ </span>= Price::max(<span class="number">10</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_precision_min() {
         <span class="comment">// Precision out of range for fixed
         </span><span class="kw">let _ </span>= Price::min(<span class="number">10</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_precision_zero() {
         <span class="comment">// Precision out of range for fixed
         </span><span class="kw">let _ </span>= Price::zero(<span class="number">10</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new() {
         <span class="kw">let </span>price = Price::new(<span class="number">0.00812</span>, <span class="number">8</span>).unwrap();
         <span class="macro">assert_eq!</span>(price, price);
@@ -953,42 +955,42 @@
         <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(f64, price.as_f64(), <span class="number">0.00812</span>, epsilon = <span class="number">0.000001</span>));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_with_maximum_value() {
         <span class="kw">let </span>price = Price::new(PRICE_MAX, <span class="number">9</span>).unwrap();
         <span class="macro">assert_eq!</span>(price.raw, <span class="number">9_223_372_036_000_000_000</span>);
         <span class="macro">assert_eq!</span>(price.to_string(), <span class="string">&quot;9223372036.000000000&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_with_minimum_positive_value() {
         <span class="kw">let </span>price = Price::new(<span class="number">0.000_000_001</span>, <span class="number">9</span>).unwrap();
         <span class="macro">assert_eq!</span>(price.raw, <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(price.to_string(), <span class="string">&quot;0.000000001&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_with_minimum_value() {
         <span class="kw">let </span>price = Price::new(PRICE_MIN, <span class="number">9</span>).unwrap();
         <span class="macro">assert_eq!</span>(price.raw, -<span class="number">9_223_372_036_000_000_000</span>);
         <span class="macro">assert_eq!</span>(price.to_string(), <span class="string">&quot;-9223372036.000000000&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_max() {
         <span class="kw">let </span>price = Price::max(<span class="number">9</span>);
         <span class="macro">assert_eq!</span>(price.raw, <span class="number">9_223_372_036_000_000_000</span>);
         <span class="macro">assert_eq!</span>(price.to_string(), <span class="string">&quot;9223372036.000000000&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_min() {
         <span class="kw">let </span>price = Price::min(<span class="number">9</span>);
         <span class="macro">assert_eq!</span>(price.raw, -<span class="number">9_223_372_036_000_000_000</span>);
         <span class="macro">assert_eq!</span>(price.to_string(), <span class="string">&quot;-9223372036.000000000&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_zero() {
         <span class="kw">let </span>price = Price::zero(<span class="number">0</span>);
         <span class="macro">assert_eq!</span>(price.raw, <span class="number">0</span>);
@@ -996,7 +998,7 @@
         <span class="macro">assert!</span>(price.is_zero());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_is_zero() {
         <span class="kw">let </span>price = Price::new(<span class="number">0.0</span>, <span class="number">8</span>).unwrap();
         <span class="macro">assert_eq!</span>(price, price);
@@ -1007,14 +1009,14 @@
         <span class="macro">assert!</span>(price.is_zero());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_precision() {
         <span class="kw">let </span>price = Price::new(<span class="number">1.001</span>, <span class="number">2</span>).unwrap();
         <span class="macro">assert_eq!</span>(price.raw, <span class="number">1_000_000_000</span>);
         <span class="macro">assert_eq!</span>(price.to_string(), <span class="string">&quot;1.00&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new_from_str() {
         <span class="kw">let </span>price = Price::from_str(<span class="string">&quot;0.00812000&quot;</span>).unwrap();
         <span class="macro">assert_eq!</span>(price, price);
@@ -1024,7 +1026,7 @@
         <span class="macro">assert_eq!</span>(price.to_string(), <span class="string">&quot;0.00812000&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_from_str_valid_input() {
         <span class="kw">let </span>input = <span class="string">&quot;10.5&quot;</span>;
         <span class="kw">let </span>expected_price = Price::new(<span class="number">10.5</span>, precision_from_str(input)).unwrap();
@@ -1032,14 +1034,14 @@
         <span class="macro">assert_eq!</span>(result, expected_price);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_from_str_invalid_input() {
         <span class="kw">let </span>input = <span class="string">&quot;invalid&quot;</span>;
         <span class="kw">let </span>result = Price::from_str(input);
         <span class="macro">assert!</span>(result.is_err());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_equality() {
         <span class="macro">assert_eq!</span>(Price::from(<span class="string">&quot;1.0&quot;</span>), Price::from(<span class="string">&quot;1.0&quot;</span>));
         <span class="macro">assert_eq!</span>(Price::from(<span class="string">&quot;1.0&quot;</span>), Price::from(<span class="string">&quot;1.0&quot;</span>));
@@ -1054,7 +1056,7 @@
         <span class="macro">assert!</span>(Price::from(<span class="string">&quot;0.9&quot;</span>) &lt;= Price::from(<span class="string">&quot;1.0&quot;</span>));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_add() {
         <span class="kw">let </span>price1 = Price::new(<span class="number">1.000</span>, <span class="number">3</span>).unwrap();
         <span class="kw">let </span>price2 = Price::new(<span class="number">1.011</span>, <span class="number">3</span>).unwrap();
@@ -1062,7 +1064,7 @@
         <span class="macro">assert_eq!</span>(price3.raw, <span class="number">2_011_000_000</span>)
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_sub() {
         <span class="kw">let </span>price1 = Price::new(<span class="number">1.011</span>, <span class="number">3</span>).unwrap();
         <span class="kw">let </span>price2 = Price::new(<span class="number">1.000</span>, <span class="number">3</span>).unwrap();
@@ -1070,21 +1072,21 @@
         <span class="macro">assert_eq!</span>(price3.raw, <span class="number">11_000_000</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_add_assign() {
         <span class="kw">let </span><span class="kw-2">mut </span>price = Price::new(<span class="number">1.000</span>, <span class="number">3</span>).unwrap();
         price += Price::new(<span class="number">1.011</span>, <span class="number">3</span>).unwrap();
         <span class="macro">assert_eq!</span>(price.raw, <span class="number">2_011_000_000</span>)
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_sub_assign() {
         <span class="kw">let </span><span class="kw-2">mut </span>price = Price::new(<span class="number">1.000</span>, <span class="number">3</span>).unwrap();
         price -= Price::new(<span class="number">0.011</span>, <span class="number">3</span>).unwrap();
         <span class="macro">assert_eq!</span>(price.raw, <span class="number">989_000_000</span>)
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_mul() {
         <span class="kw">let </span>price1 = Price::new(<span class="number">1.000</span>, <span class="number">3</span>).unwrap();
         <span class="kw">let </span>price2 = Price::new(<span class="number">1.011</span>, <span class="number">3</span>).unwrap();
@@ -1092,7 +1094,7 @@
         <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(f64, result, <span class="number">1.011</span>, epsilon = <span class="number">0.000001</span>));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_display() {
         <span class="kw">use </span>std::fmt::Write <span class="kw">as </span>FmtWrite;
         <span class="kw">let </span>input_string = <span class="string">&quot;44.12&quot;</span>;

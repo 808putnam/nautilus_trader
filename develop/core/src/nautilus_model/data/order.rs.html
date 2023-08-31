@@ -738,7 +738,7 @@
         BookOrder::new(side, price, size, order_id)
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new() {
         <span class="kw">let </span>price = Price::from(<span class="string">&quot;100.00&quot;</span>);
         <span class="kw">let </span>size = Quantity::from(<span class="string">&quot;10&quot;</span>);
@@ -753,7 +753,7 @@
         <span class="macro">assert_eq!</span>(order.order_id, order_id);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_to_book_price() {
         <span class="kw">let </span>price = Price::from(<span class="string">&quot;100.00&quot;</span>);
         <span class="kw">let </span>size = Quantity::from(<span class="string">&quot;10&quot;</span>);
@@ -767,7 +767,7 @@
         <span class="macro">assert_eq!</span>(book_price.side, side);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_exposure() {
         <span class="kw">let </span>price = Price::from(<span class="string">&quot;100.00&quot;</span>);
         <span class="kw">let </span>size = Quantity::from(<span class="string">&quot;10&quot;</span>);
@@ -780,7 +780,7 @@
         <span class="macro">assert_eq!</span>(exposure, price.as_f64() * size.as_f64());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_signed_size() {
         <span class="kw">let </span>price = Price::from(<span class="string">&quot;100.00&quot;</span>);
         <span class="kw">let </span>size = Quantity::from(<span class="string">&quot;10&quot;</span>);
@@ -795,7 +795,7 @@
         <span class="macro">assert_eq!</span>(signed_size_sell, -(size.as_f64()));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_display() {
         <span class="kw">let </span>price = Price::from(<span class="string">&quot;100.00&quot;</span>);
         <span class="kw">let </span>size = Quantity::from(<span class="number">10</span>);
@@ -875,7 +875,7 @@
         <span class="macro">assert_eq!</span>(book_order.order_id, tick.price.raw <span class="kw">as </span>u64);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_as_dict() {
         pyo3::prepare_freethreaded_python();
 
@@ -889,7 +889,7 @@
         });
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_from_dict() {
         pyo3::prepare_freethreaded_python();
 
@@ -902,7 +902,7 @@
         });
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_json_serialization() {
         <span class="kw">let </span>order = create_stub_book_order();
         <span class="kw">let </span>serialized = order.as_json_bytes().unwrap();
@@ -910,7 +910,7 @@
         <span class="macro">assert_eq!</span>(deserialized, order);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_msgpack_serialization() {
         <span class="kw">let </span>order = create_stub_book_order();
         <span class="kw">let </span>serialized = order.as_msgpack_bytes().unwrap();

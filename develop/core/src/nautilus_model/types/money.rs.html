@@ -378,6 +378,7 @@
 <a href="#378" id="378">378</a>
 <a href="#379" id="379">379</a>
 <a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -696,12 +697,13 @@
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>float_cmp::approx_eq;
+    <span class="kw">use </span>rstest::rstest;
     <span class="kw">use </span>rust_decimal_macros::dec;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::currencies::{BTC, USD};
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic]
     </span><span class="kw">fn </span>test_money_different_currency_addition() {
         <span class="kw">let </span>usd = Money::new(<span class="number">1000.0</span>, <span class="kw-2">*</span>USD).unwrap();
@@ -709,7 +711,7 @@
         <span class="kw">let </span>_result = usd + btc; <span class="comment">// This should panic since currencies are different
     </span>}
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_min_max_values() {
         <span class="kw">let </span>min_money = Money::new(MONEY_MIN, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>max_money = Money::new(MONEY_MAX, <span class="kw-2">*</span>USD).unwrap();
@@ -717,14 +719,14 @@
         <span class="macro">assert_eq!</span>(max_money.raw, f64_to_fixed_i64(MONEY_MAX, USD.precision));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_addition_f64() {
         <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>result = money + <span class="number">500.0</span>;
         <span class="macro">assert_eq!</span>(result, <span class="number">1500.0</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_negation() {
         <span class="kw">let </span>money = Money::new(<span class="number">100.0</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>result = -money;
@@ -732,7 +734,7 @@
         <span class="macro">assert_eq!</span>(result.currency, USD.clone());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_new_usd() {
         <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="macro">assert_eq!</span>(money.currency.code.as_str(), <span class="string">&quot;USD&quot;</span>);
@@ -742,7 +744,7 @@
         <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(f64, money.as_f64(), <span class="number">1000.0</span>, epsilon = <span class="number">0.001</span>));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_new_btc() {
         <span class="kw">let </span>money = Money::new(<span class="number">10.3</span>, <span class="kw-2">*</span>BTC).unwrap();
         <span class="macro">assert_eq!</span>(money.currency.code.as_str(), <span class="string">&quot;BTC&quot;</span>);
@@ -750,7 +752,7 @@
         <span class="macro">assert_eq!</span>(money.to_string(), <span class="string">&quot;10.30000000 BTC&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_serialization_deserialization() {
         <span class="kw">let </span>money = Money::new(<span class="number">123.45</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>serialized = serde_json::to_string(<span class="kw-2">&amp;</span>money).unwrap();

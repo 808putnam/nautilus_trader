@@ -464,14 +464,14 @@
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_optional_bytes_to_json_null() {
         <span class="kw">let </span>ptr = std::ptr::null();
         <span class="kw">let </span>result = <span class="kw">unsafe </span>{ optional_bytes_to_json(ptr) };
         <span class="macro">assert_eq!</span>(result, <span class="prelude-val">None</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_optional_bytes_to_json_empty() {
         <span class="kw">let </span>json_str = CString::new(<span class="string">&quot;{}&quot;</span>).unwrap();
         <span class="kw">let </span>ptr = json_str.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char;
@@ -479,7 +479,7 @@
         <span class="macro">assert_eq!</span>(result, <span class="prelude-val">Some</span>(HashMap::new()));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_string_vec_to_bytes_valid() {
         <span class="kw">let </span>strings = <span class="macro">vec!</span>[<span class="string">&quot;value1&quot;</span>, <span class="string">&quot;value2&quot;</span>, <span class="string">&quot;value3&quot;</span>]
             .into_iter()
@@ -492,7 +492,7 @@
         <span class="macro">assert_eq!</span>(result, strings);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_string_vec_to_bytes_empty() {
         <span class="kw">let </span>strings = Vec::new();
         <span class="kw">let </span>ptr = string_vec_to_bytes(strings.clone());
@@ -501,7 +501,7 @@
         <span class="macro">assert_eq!</span>(result, strings);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bytes_to_string_vec_valid() {
         <span class="kw">let </span>json_str = CString::new(<span class="string">r#&quot;[&quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;]&quot;#</span>).unwrap();
         <span class="kw">let </span>ptr = json_str.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char;
@@ -515,7 +515,7 @@
         <span class="macro">assert_eq!</span>(result, expected_vec);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bytes_to_string_vec_invalid() {
         <span class="kw">let </span>json_str = CString::new(<span class="string">r#&quot;[&quot;value1&quot;, 42, &quot;value3&quot;]&quot;#</span>).unwrap();
         <span class="kw">let </span>ptr = json_str.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char;
@@ -529,7 +529,7 @@
         <span class="macro">assert_eq!</span>(result, expected_vec);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_optional_bytes_to_json_valid() {
         <span class="kw">let </span>json_str = CString::new(<span class="string">r#&quot;{&quot;key1&quot;: &quot;value1&quot;, &quot;key2&quot;: 2}&quot;#</span>).unwrap();
         <span class="kw">let </span>ptr = json_str.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char;
@@ -543,7 +543,7 @@
         <span class="macro">assert_eq!</span>(result, <span class="prelude-val">Some</span>(expected_map));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_optional_bytes_to_json_invalid() {
         <span class="kw">let </span>json_str = CString::new(<span class="string">r#&quot;{&quot;key1&quot;: &quot;value1&quot;, &quot;key2&quot;: }&quot;#</span>).unwrap();
         <span class="kw">let </span>ptr = json_str.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char;

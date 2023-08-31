@@ -150,6 +150,8 @@
 <a href="#150" id="150">150</a>
 <a href="#151" id="151">151</a>
 <a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -218,9 +220,11 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::time::UNIX_EPOCH;
 
+    <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
+
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_duration_since_unix_epoch() {
         <span class="kw">let </span>duration = duration_since_unix_epoch();
         <span class="kw">let </span>now = SystemTime::now();
@@ -236,7 +240,7 @@
         </span><span class="macro">assert!</span>(duration &gt; Duration::from_secs(<span class="number">1_650_000_000</span>));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_unix_timestamp_is_monotonic_increasing() {
         <span class="kw">let </span>result1 = unix_timestamp();
         <span class="kw">let </span>result2 = unix_timestamp();
@@ -251,7 +255,7 @@
         <span class="macro">assert!</span>(result1 &gt; <span class="number">1_650_000_000.0</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_unix_timestamp_ms_is_monotonic_increasing() {
         <span class="kw">let </span>result1 = unix_timestamp_ms();
         <span class="kw">let </span>result2 = unix_timestamp_ms();
@@ -266,7 +270,7 @@
         <span class="macro">assert!</span>(result1 &gt;= <span class="number">1_650_000_000_000</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_unix_timestamp_us_is_monotonic_increasing() {
         <span class="kw">let </span>result1 = unix_timestamp_us();
         <span class="kw">let </span>result2 = unix_timestamp_us();
@@ -281,7 +285,7 @@
         <span class="macro">assert!</span>(result1 &gt; <span class="number">1_650_000_000_000_000</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_unix_timestamp_ns_is_monotonic_increasing() {
         <span class="kw">let </span>result1 = unix_timestamp_ns();
         <span class="kw">let </span>result2 = unix_timestamp_ns();

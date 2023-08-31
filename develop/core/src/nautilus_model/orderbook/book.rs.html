@@ -774,6 +774,8 @@
 <a href="#774" id="774">774</a>
 <a href="#775" id="775">775</a>
 <a href="#776" id="776">776</a>
+<a href="#777" id="777">777</a>
+<a href="#778" id="778">778</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1242,6 +1244,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>rstest::rstest;
+
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use crate</span>::{
         data::order::BookOrder,
@@ -1255,7 +1259,7 @@
         OrderBook::new(instrument_id, book_type)
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_orderbook_creation() {
         <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span>book = OrderBook::new(instrument_id.clone(), BookType::L2_MBP);
@@ -1267,7 +1271,7 @@
         <span class="macro">assert_eq!</span>(book.count, <span class="number">0</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_orderbook_reset() {
         <span class="kw">let </span><span class="kw-2">mut </span>book = create_stub_book(BookType::L2_MBP);
         book.sequence = <span class="number">10</span>;
@@ -1281,7 +1285,7 @@
         <span class="macro">assert_eq!</span>(book.count, <span class="number">0</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_best_bid_and_ask_when_nothing_in_book() {
         <span class="kw">let </span>book = create_stub_book(BookType::L2_MBP);
 
@@ -1293,7 +1297,7 @@
         <span class="macro">assert_eq!</span>(book.has_ask(), <span class="bool-val">false</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bid_side_with_one_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>book = create_stub_book(BookType::L3_MBO);
         <span class="kw">let </span>order1 = BookOrder::new(
@@ -1309,7 +1313,7 @@
         <span class="macro">assert_eq!</span>(book.has_bid(), <span class="bool-val">true</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_ask_side_with_one_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>book = create_stub_book(BookType::L3_MBO);
         <span class="kw">let </span>order = BookOrder::new(
@@ -1324,13 +1328,13 @@
         <span class="macro">assert_eq!</span>(book.best_ask_size(), <span class="prelude-val">Some</span>(Quantity::from(<span class="string">&quot;2.0&quot;</span>)));
         <span class="macro">assert_eq!</span>(book.has_ask(), <span class="bool-val">true</span>);
     }
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_spread_with_no_bids_or_asks() {
         <span class="kw">let </span>book = create_stub_book(BookType::L3_MBO);
         <span class="macro">assert_eq!</span>(book.spread(), <span class="prelude-val">None</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_spread_with_bids_and_asks() {
         <span class="kw">let </span><span class="kw-2">mut </span>book = create_stub_book(BookType::L2_MBP);
         <span class="kw">let </span>bid1 = BookOrder::new(
@@ -1351,13 +1355,13 @@
         <span class="macro">assert_eq!</span>(book.spread(), <span class="prelude-val">Some</span>(<span class="number">1.0</span>));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_midpoint_with_no_bids_or_asks() {
         <span class="kw">let </span>book = create_stub_book(BookType::L2_MBP);
         <span class="macro">assert_eq!</span>(book.midpoint(), <span class="prelude-val">None</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_midpoint_with_bids_asks() {
         <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>book = OrderBook::new(instrument_id, BookType::L2_MBP);
@@ -1380,7 +1384,7 @@
         <span class="macro">assert_eq!</span>(book.midpoint(), <span class="prelude-val">Some</span>(<span class="number">1.5</span>));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_price_for_quantity_no_market() {
         <span class="kw">let </span>book = create_stub_book(BookType::L2_MBP);
         <span class="kw">let </span>qty = Quantity::from(<span class="number">1</span>);
@@ -1389,7 +1393,7 @@
         <span class="macro">assert_eq!</span>(book.get_avg_px_for_quantity(qty, OrderSide::Sell), <span class="number">0.0</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_price_for_quantity() {
         <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>book = OrderBook::new(instrument_id, BookType::L2_MBP);
@@ -1435,7 +1439,7 @@
         </span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_update_quote_tick_l1() {
         <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>book = OrderBook::new(instrument_id.clone(), BookType::L1_TBBO);
@@ -1461,7 +1465,7 @@
         <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>top_ask_order, expected_ask_order);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_update_trade_tick_l1() {
         <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>book = OrderBook::new(instrument_id.clone(), BookType::L1_TBBO);
@@ -1486,7 +1490,7 @@
         <span class="macro">assert_eq!</span>(book.best_ask_size().unwrap(), size);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_pprint() {
         <span class="kw">let </span><span class="kw-2">mut </span>book = create_stub_book(BookType::L3_MBO);
         <span class="kw">let </span>order1 = BookOrder::new(

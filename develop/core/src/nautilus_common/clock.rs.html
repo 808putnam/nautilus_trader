@@ -611,6 +611,18 @@
 <a href="#611" id="611">611</a>
 <a href="#612" id="612">612</a>
 <a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1077,150 +1089,162 @@
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Stubs
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(test)]
+</span><span class="kw">pub mod </span>stubs {
+    <span class="kw">use </span>rstest::fixture;
+
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+
+    <span class="attr">#[fixture]
+    </span><span class="kw">pub fn </span>monotonic_clock() -&gt; MonotonicClock {
+        MonotonicClock::new()
+    }
+
+    <span class="attr">#[fixture]
+    </span><span class="kw">pub fn </span>test_clock() -&gt; TestClock {
+        TestClock::new()
+    }
+}
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Tests
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>pyo3::types::PyList;
+    <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
+    <span class="kw">use </span>stubs::<span class="kw-2">*</span>;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_monotonic_clock_increasing() {
-        <span class="kw">let </span><span class="kw-2">mut </span>clock = MonotonicClock::new();
-        <span class="kw">let </span>secs1 = clock.unix_timestamp_secs();
-        <span class="kw">let </span>secs2 = clock.unix_timestamp_secs();
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_monotonic_clock_increasing(<span class="kw-2">mut </span>monotonic_clock: MonotonicClock) {
+        <span class="kw">let </span>secs1 = monotonic_clock.unix_timestamp_secs();
+        <span class="kw">let </span>secs2 = monotonic_clock.unix_timestamp_secs();
         <span class="macro">assert!</span>(secs2 &gt;= secs1);
 
-        <span class="kw">let </span>millis1 = clock.unix_timestamp_millis();
-        <span class="kw">let </span>millis2 = clock.unix_timestamp_millis();
+        <span class="kw">let </span>millis1 = monotonic_clock.unix_timestamp_millis();
+        <span class="kw">let </span>millis2 = monotonic_clock.unix_timestamp_millis();
         <span class="macro">assert!</span>(millis2 &gt;= millis1);
 
-        <span class="kw">let </span>micros1 = clock.unix_timestamp_micros();
-        <span class="kw">let </span>micros2 = clock.unix_timestamp_micros();
+        <span class="kw">let </span>micros1 = monotonic_clock.unix_timestamp_micros();
+        <span class="kw">let </span>micros2 = monotonic_clock.unix_timestamp_micros();
         <span class="macro">assert!</span>(micros2 &gt;= micros1);
 
-        <span class="kw">let </span>nanos1 = clock.unix_timestamp_nanos();
-        <span class="kw">let </span>nanos2 = clock.unix_timestamp_nanos();
+        <span class="kw">let </span>nanos1 = monotonic_clock.unix_timestamp_nanos();
+        <span class="kw">let </span>nanos2 = monotonic_clock.unix_timestamp_nanos();
         <span class="macro">assert!</span>(nanos2 &gt;= nanos1);
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_monotonic_clock_beyond_unix_epoch() {
-        <span class="kw">let </span><span class="kw-2">mut </span>clock = MonotonicClock::new();
-
-        <span class="macro">assert!</span>(clock.unix_timestamp_secs() &gt; <span class="number">1_650_000_000.0</span>);
-        <span class="macro">assert!</span>(clock.unix_timestamp_millis() &gt; <span class="number">1_650_000_000_000</span>);
-        <span class="macro">assert!</span>(clock.unix_timestamp_micros() &gt; <span class="number">1_650_000_000_000_000</span>);
-        <span class="macro">assert!</span>(clock.unix_timestamp_nanos() &gt; <span class="number">1_650_000_000_000_000_000</span>);
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_monotonic_clock_beyond_unix_epoch(<span class="kw-2">mut </span>monotonic_clock: MonotonicClock) {
+        <span class="macro">assert!</span>(monotonic_clock.unix_timestamp_secs() &gt; <span class="number">1_650_000_000.0</span>);
+        <span class="macro">assert!</span>(monotonic_clock.unix_timestamp_millis() &gt; <span class="number">1_650_000_000_000</span>);
+        <span class="macro">assert!</span>(monotonic_clock.unix_timestamp_micros() &gt; <span class="number">1_650_000_000_000_000</span>);
+        <span class="macro">assert!</span>(monotonic_clock.unix_timestamp_nanos() &gt; <span class="number">1_650_000_000_000_000_000</span>);
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_set_timer_ns_py() {
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_set_timer_ns_py(<span class="kw-2">mut </span>test_clock: TestClock) {
         pyo3::prepare_freethreaded_python();
 
         Python::with_gil(|py| {
-            <span class="kw">let </span><span class="kw-2">mut </span>clock = TestClock::new();
             <span class="kw">let </span>py_list = PyList::empty(py);
             <span class="kw">let </span>py_append = Py::from(py_list.getattr(<span class="string">&quot;append&quot;</span>).unwrap());
-            clock.register_default_handler_py(py_append);
+            test_clock.register_default_handler_py(py_append);
 
-            clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
+            test_clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
 
-            <span class="macro">assert_eq!</span>(clock.timer_names(), [<span class="string">&quot;TEST_TIME1&quot;</span>]);
-            <span class="macro">assert_eq!</span>(clock.timer_count(), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(test_clock.timer_names(), [<span class="string">&quot;TEST_TIME1&quot;</span>]);
+            <span class="macro">assert_eq!</span>(test_clock.timer_count(), <span class="number">1</span>);
         });
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_cancel_timer() {
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_cancel_timer(<span class="kw-2">mut </span>test_clock: TestClock) {
         pyo3::prepare_freethreaded_python();
 
         Python::with_gil(|py| {
-            <span class="kw">let </span><span class="kw-2">mut </span>clock = TestClock::new();
             <span class="kw">let </span>py_list = PyList::empty(py);
             <span class="kw">let </span>py_append = Py::from(py_list.getattr(<span class="string">&quot;append&quot;</span>).unwrap());
-            clock.register_default_handler_py(py_append);
+            test_clock.register_default_handler_py(py_append);
 
-            clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
-            clock.cancel_timer(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>).as_str());
+            test_clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
+            test_clock.cancel_timer(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>).as_str());
 
-            <span class="macro">assert!</span>(clock.timer_names().is_empty());
-            <span class="macro">assert_eq!</span>(clock.timer_count(), <span class="number">0</span>);
+            <span class="macro">assert!</span>(test_clock.timer_names().is_empty());
+            <span class="macro">assert_eq!</span>(test_clock.timer_count(), <span class="number">0</span>);
         });
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_cancel_timers() {
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_cancel_timers(<span class="kw-2">mut </span>test_clock: TestClock) {
         pyo3::prepare_freethreaded_python();
 
         Python::with_gil(|py| {
-            <span class="kw">let </span><span class="kw-2">mut </span>clock = TestClock::new();
             <span class="kw">let </span>py_list = PyList::empty(py);
             <span class="kw">let </span>py_append = Py::from(py_list.getattr(<span class="string">&quot;append&quot;</span>).unwrap());
-            clock.register_default_handler_py(py_append);
+            test_clock.register_default_handler_py(py_append);
 
-            clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
-            clock.cancel_timers();
+            test_clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
+            test_clock.cancel_timers();
 
-            <span class="macro">assert!</span>(clock.timer_names().is_empty());
-            <span class="macro">assert_eq!</span>(clock.timer_count(), <span class="number">0</span>);
+            <span class="macro">assert!</span>(test_clock.timer_names().is_empty());
+            <span class="macro">assert_eq!</span>(test_clock.timer_count(), <span class="number">0</span>);
         });
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_advance_within_stop_time_py() {
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_advance_within_stop_time_py(<span class="kw-2">mut </span>test_clock: TestClock) {
         pyo3::prepare_freethreaded_python();
 
         Python::with_gil(|py| {
-            <span class="kw">let </span><span class="kw-2">mut </span>clock = TestClock::new();
             <span class="kw">let </span>py_list = PyList::empty(py);
             <span class="kw">let </span>py_append = Py::from(py_list.getattr(<span class="string">&quot;append&quot;</span>).unwrap());
-            clock.register_default_handler_py(py_append);
+            test_clock.register_default_handler_py(py_append);
 
-            clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">1</span>, <span class="number">1</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
-            clock.advance_time(<span class="number">2</span>, <span class="bool-val">true</span>);
+            test_clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">1</span>, <span class="number">1</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
+            test_clock.advance_time(<span class="number">2</span>, <span class="bool-val">true</span>);
 
-            <span class="macro">assert_eq!</span>(clock.timer_names(), [<span class="string">&quot;TEST_TIME1&quot;</span>]);
-            <span class="macro">assert_eq!</span>(clock.timer_count(), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(test_clock.timer_names(), [<span class="string">&quot;TEST_TIME1&quot;</span>]);
+            <span class="macro">assert_eq!</span>(test_clock.timer_count(), <span class="number">1</span>);
         });
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_advance_time_to_stop_time_with_set_time_true() {
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_advance_time_to_stop_time_with_set_time_true(<span class="kw-2">mut </span>test_clock: TestClock) {
         pyo3::prepare_freethreaded_python();
 
         Python::with_gil(|py| {
-            <span class="kw">let </span><span class="kw-2">mut </span>clock = TestClock::new();
             <span class="kw">let </span>py_list = PyList::empty(py);
             <span class="kw">let </span>py_append = Py::from(py_list.getattr(<span class="string">&quot;append&quot;</span>).unwrap());
-            clock.register_default_handler_py(py_append);
+            test_clock.register_default_handler_py(py_append);
 
-            clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">2</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
-            clock.advance_time(<span class="number">3</span>, <span class="bool-val">true</span>);
+            test_clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">2</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
+            test_clock.advance_time(<span class="number">3</span>, <span class="bool-val">true</span>);
 
-            <span class="macro">assert_eq!</span>(clock.timer_names().len(), <span class="number">1</span>);
-            <span class="macro">assert_eq!</span>(clock.timer_count(), <span class="number">1</span>);
-            <span class="macro">assert_eq!</span>(clock.time_ns, <span class="number">3</span>);
+            <span class="macro">assert_eq!</span>(test_clock.timer_names().len(), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(test_clock.timer_count(), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(test_clock.time_ns, <span class="number">3</span>);
         });
     }
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_advance_time_to_stop_time_with_set_time_false() {
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_advance_time_to_stop_time_with_set_time_false(<span class="kw-2">mut </span>test_clock: TestClock) {
         pyo3::prepare_freethreaded_python();
 
         Python::with_gil(|py| {
-            <span class="kw">let </span><span class="kw-2">mut </span>clock = TestClock::new();
             <span class="kw">let </span>py_list = PyList::empty(py);
             <span class="kw">let </span>py_append = Py::from(py_list.getattr(<span class="string">&quot;append&quot;</span>).unwrap());
-            clock.register_default_handler_py(py_append);
+            test_clock.register_default_handler_py(py_append);
 
-            clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">2</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
-            clock.advance_time(<span class="number">3</span>, <span class="bool-val">false</span>);
+            test_clock.set_timer_ns_py(String::from(<span class="string">&quot;TEST_TIME1&quot;</span>), <span class="number">2</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
+            test_clock.advance_time(<span class="number">3</span>, <span class="bool-val">false</span>);
 
-            <span class="macro">assert_eq!</span>(clock.timer_names().len(), <span class="number">1</span>);
-            <span class="macro">assert_eq!</span>(clock.timer_count(), <span class="number">1</span>);
-            <span class="macro">assert_eq!</span>(clock.time_ns, <span class="number">0</span>);
+            <span class="macro">assert_eq!</span>(test_clock.timer_names().len(), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(test_clock.timer_count(), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(test_clock.time_ns, <span class="number">0</span>);
         });
     }
 }

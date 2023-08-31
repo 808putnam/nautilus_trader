@@ -156,6 +156,21 @@
 <a href="#156" id="156">156</a>
 <a href="#157" id="157">157</a>
 <a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -268,25 +283,40 @@
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Stubs
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(test)]
+</span><span class="kw">pub mod </span>stubs {
+    <span class="kw">use </span>rstest::fixture;
+
+    <span class="kw">use </span><span class="kw">crate</span>::identifiers::client_order_id::ClientOrderId;
+
+    <span class="attr">#[fixture]
+    </span><span class="kw">pub fn </span>client_order_id() -&gt; ClientOrderId {
+        ClientOrderId::from(<span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>)
+    }
+}
+
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Tests
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>rstest::rstest;
     <span class="kw">use </span>ustr::Ustr;
 
-    <span class="kw">use </span><span class="kw">super</span>::ClientOrderId;
+    <span class="kw">use super</span>::{stubs::<span class="kw-2">*</span>, ClientOrderId};
     <span class="kw">use </span><span class="kw">crate</span>::identifiers::client_order_id::{
         optional_ustr_to_vec_client_order_ids, optional_vec_client_order_ids_to_ustr,
     };
 
-    <span class="attr">#[test]
-    </span><span class="kw">fn </span>test_string_reprs() {
-        <span class="kw">let </span>id = ClientOrderId::from(<span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>);
-        <span class="macro">assert_eq!</span>(id.to_string(), <span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{id}&quot;</span>), <span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>);
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_string_reprs(client_order_id: ClientOrderId) {
+        <span class="macro">assert_eq!</span>(client_order_id.to_string(), <span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{client_order_id}&quot;</span>), <span class="string">&quot;O-20200814-102234-001-001-1&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_optional_ustr_to_vec_client_order_ids() {
         <span class="comment">// Test with None
         </span><span class="macro">assert_eq!</span>(optional_ustr_to_vec_client_order_ids(<span class="prelude-val">None</span>), <span class="prelude-val">None</span>);
@@ -299,7 +329,7 @@
         <span class="macro">assert_eq!</span>(client_order_ids[<span class="number">2</span>].value.to_string(), <span class="string">&quot;id3&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_optional_vec_client_order_ids_to_ustr() {
         <span class="comment">// Test with None
         </span><span class="macro">assert_eq!</span>(optional_vec_client_order_ids_to_ustr(<span class="prelude-val">None</span>), <span class="prelude-val">None</span>);

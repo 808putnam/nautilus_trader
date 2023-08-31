@@ -291,6 +291,7 @@
 <a href="#291" id="291">291</a>
 <a href="#292" id="292">292</a>
 <a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -463,10 +464,11 @@
         array::{Int64Array, StringArray, UInt64Array, UInt8Array},
         record_batch::RecordBatch,
     };
+    <span class="kw">use </span>rstest::rstest;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_schema() {
         <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;AAPL.NASDAQ&quot;</span>);
         <span class="kw">let </span>metadata = TradeTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
@@ -483,7 +485,7 @@
         <span class="macro">assert_eq!</span>(schema, expected_schema);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_schema_map() {
         <span class="kw">let </span>schema_map = TradeTick::get_schema_map();
         <span class="kw">let </span><span class="kw-2">mut </span>expected_map = HashMap::new();
@@ -496,7 +498,7 @@
         <span class="macro">assert_eq!</span>(schema_map, expected_map);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_encode_trade_tick() {
         <span class="comment">// Create test data
         </span><span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;AAPL.NASDAQ&quot;</span>);
@@ -555,7 +557,7 @@
         <span class="macro">assert_eq!</span>(ts_init_values.value(<span class="number">1</span>), <span class="number">4</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_decode_batch() {
         <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;AAPL.NASDAQ&quot;</span>);
         <span class="kw">let </span>metadata = TradeTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);

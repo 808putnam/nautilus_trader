@@ -271,6 +271,7 @@
 <a href="#271" id="271">271</a>
 <a href="#272" id="272">272</a>
 <a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -474,6 +475,7 @@
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>nautilus_core::string::str_to_cstr;
+    <span class="kw">use </span>rstest::rstest;
 
     <span class="kw">use </span><span class="kw">super</span>::currency_register;
     <span class="kw">use crate</span>::{
@@ -481,20 +483,20 @@
         types::currency::{currency_exists, Currency},
     };
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic(expected = <span class="string">&quot;`Currency` code&quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_currency_code() {
         <span class="kw">let _ </span>= Currency::new(<span class="string">&quot;&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_precision() {
         <span class="comment">// Precision out of range for fixed
         </span><span class="kw">let _ </span>= Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">10</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new_for_fiat() {
         <span class="kw">let </span>currency =
             Currency::new(<span class="string">&quot;AUD&quot;</span>, <span class="number">2</span>, <span class="number">36</span>, <span class="string">&quot;Australian dollar&quot;</span>, CurrencyType::Fiat).unwrap();
@@ -506,7 +508,7 @@
         <span class="macro">assert_eq!</span>(currency.currency_type, CurrencyType::Fiat);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new_for_crypto() {
         <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;ETH&quot;</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="string">&quot;Ether&quot;</span>, CurrencyType::Crypto).unwrap();
         <span class="macro">assert_eq!</span>(currency, currency);
@@ -517,7 +519,7 @@
         <span class="macro">assert_eq!</span>(currency.currency_type, CurrencyType::Crypto);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_equality() {
         <span class="kw">let </span>currency1 =
             Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
@@ -526,7 +528,7 @@
         <span class="macro">assert_eq!</span>(currency1, currency2);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_serialization_deserialization() {
         <span class="kw">let </span>currency =
             Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
@@ -535,7 +537,7 @@
         <span class="macro">assert_eq!</span>(currency, deserialized);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_registration() {
         <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;MYC&quot;</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="string">&quot;My Currency&quot;</span>, CurrencyType::Crypto).unwrap();
         currency_register(currency);
