@@ -729,6 +729,8 @@
 <a href="#729" id="729">729</a>
 <a href="#730" id="730">730</a>
 <a href="#731" id="731">731</a>
+<a href="#732" id="732">732</a>
+<a href="#733" id="733">733</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -973,7 +975,9 @@
         size_precision: u8,
     ) -&gt; HashMap&lt;String, String&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>metadata = HashMap::new();
+        <span class="kw">let </span>instrument_id = bar_type.instrument_id;
         metadata.insert(<span class="string">&quot;bar_type&quot;</span>.to_string(), bar_type.to_string());
+        metadata.insert(<span class="string">&quot;instrument_id&quot;</span>.to_string(), instrument_id.to_string());
         metadata.insert(<span class="string">&quot;price_precision&quot;</span>.to_string(), price_precision.to_string());
         metadata.insert(<span class="string">&quot;size_precision&quot;</span>.to_string(), size_precision.to_string());
         metadata
