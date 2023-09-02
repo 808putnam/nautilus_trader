@@ -730,10 +730,19 @@
              </ul>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.ParquetSerializer">
+             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.register_arrow">
               <code class="docutils literal notranslate">
                <span class="pre">
-                ParquetSerializer
+                register_arrow()
+               </span>
+              </code>
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer">
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                ArrowSerializer
                </span>
               </code>
              </a>
@@ -743,69 +752,24 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.ParquetSerializer.deserialize">
+               <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.serialize_batch">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  ParquetSerializer.deserialize()
+                  ArrowSerializer.serialize_batch()
                  </span>
                 </code>
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.ParquetSerializer.serialize">
+               <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.deserialize">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  ParquetSerializer.serialize()
+                  ArrowSerializer.deserialize()
                  </span>
                 </code>
                </a>
               </li>
              </ul>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.get_cls_table">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                get_cls_table()
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.get_partition_keys">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                get_partition_keys()
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.get_schema">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                get_schema()
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.list_schemas">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                list_schemas()
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.register_parquet">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                register_parquet()
-               </span>
-              </code>
-             </a>
             </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#nautilus_trader.serialization.base.Serializer">
@@ -1285,258 +1249,11 @@ and back to
         </dl>
         <span class="target" id="module-nautilus_trader.serialization.arrow.serializer">
         </span>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.ParquetSerializer">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            ParquetSerializer
-           </span>
-          </span>
-          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.ParquetSerializer" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <code class="xref py py-class docutils literal notranslate">
-            <span class="pre">
-             object
-            </span>
-           </code>
-          </p>
-          <p>
-           Provides an object serializer for the
-           <cite>
-            Parquet
-           </cite>
-           specification.
-          </p>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.ParquetSerializer.deserialize">
-            <em class="property">
-             <span class="pre">
-              static
-             </span>
-             <span class="w">
-             </span>
-            </em>
-            <span class="sig-name descname">
-             <span class="pre">
-              deserialize
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               type
-              </span>
-              <span class="pre">
-               cls
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               chunk
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.ParquetSerializer.deserialize" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Deserialize the given
-             <cite>
-              Parquet
-             </cite>
-             specification bytes to an object.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Parameters
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <ul class="simple">
-               <li>
-                <p>
-                 <strong>
-                  cls
-                 </strong>
-                 (
-                 <em>
-                  type
-                 </em>
-                 ) – The type to deserialize to.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  chunk
-                 </strong>
-                 (
-                 <em>
-                  bytes
-                 </em>
-                 ) – The chunk to deserialize.
-                </p>
-               </li>
-              </ul>
-             </dd>
-             <dt class="field-even">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <em>
-                object
-               </em>
-              </p>
-             </dd>
-             <dt class="field-odd">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <strong>
-                TypeError
-               </strong>
-               – If
-               <cite>
-                chunk
-               </cite>
-               cannot be deserialized.
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.ParquetSerializer.serialize">
-            <em class="property">
-             <span class="pre">
-              static
-             </span>
-             <span class="w">
-             </span>
-            </em>
-            <span class="sig-name descname">
-             <span class="pre">
-              serialize
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               obj
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.ParquetSerializer.serialize" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Serialize the given instrument to
-             <cite>
-              Parquet
-             </cite>
-             specification bytes.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Parameters
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <strong>
-                obj
-               </strong>
-               (
-               <em>
-                object
-               </em>
-               ) – The object to serialize.
-              </p>
-             </dd>
-             <dt class="field-even">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-even">
-              <p>
-               <em>
-                bytes
-               </em>
-              </p>
-             </dd>
-             <dt class="field-odd">
-              Raises
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <strong>
-                TypeError
-               </strong>
-               – If
-               <cite>
-                obj
-               </cite>
-               cannot be serialized.
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-         </dd>
-        </dl>
         <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.get_cls_table">
+         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.register_arrow">
           <span class="sig-name descname">
            <span class="pre">
-            get_cls_table
+            register_arrow
            </span>
           </span>
           <span class="sig-paren">
@@ -1544,203 +1261,53 @@ and back to
           </span>
           <em class="sig-param">
            <span class="n">
-            <span class="pre">
-             type
-            </span>
-            <span class="pre">
-             cls:
-            </span>
-            <span class="pre">
-             type
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.get_cls_table" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-         </dd>
-        </dl>
-        <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.get_partition_keys">
-          <span class="sig-name descname">
-           <span class="pre">
-            get_partition_keys
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             type
-            </span>
-            <span class="pre">
-             cls:
-            </span>
-            <span class="pre">
-             type
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.get_partition_keys" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-         </dd>
-        </dl>
-        <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.get_schema">
-          <span class="sig-name descname">
-           <span class="pre">
-            get_schema
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             type
-            </span>
-            <span class="pre">
-             cls:
-            </span>
-            <span class="pre">
-             type
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.get_schema" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-         </dd>
-        </dl>
-        <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.list_schemas">
-          <span class="sig-name descname">
-           <span class="pre">
-            list_schemas
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.list_schemas" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-         </dd>
-        </dl>
-        <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.register_parquet">
-          <span class="sig-name descname">
-           <span class="pre">
-            register_parquet
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             type
-            </span>
             <span class="pre">
              cls
             </span>
            </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
+           <span class="p">
             <span class="pre">
-             serializer:
-            </span>
-            <span class="pre">
-             Optional[Callable]
-            </span>
-            <span class="pre">
-             =
-            </span>
-            <span class="pre">
-             None
+             :
             </span>
            </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             deserializer:
-            </span>
-            <span class="pre">
-             Optional[Callable]
-            </span>
-            <span class="pre">
-             =
-            </span>
-            <span class="pre">
-             None
-            </span>
+           <span class="w">
            </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             schema:
-            </span>
-            <span class="pre">
-             Optional[pa.Schema]
-            </span>
-            <span class="pre">
-             =
-            </span>
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             bool
-            </span>
-            <span class="pre">
-             chunk=False
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
            <span class="n">
             <span class="pre">
              type
             </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
             <span class="pre">
-             table=None
+             schema
+            </span>
+           </span>
+           <span class="p">
+            <span class="pre">
+             :
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="n">
+            <span class="pre">
+             Optional
+            </span>
+            <span class="p">
+             <span class="pre">
+              [
+             </span>
+            </span>
+            <span class="pre">
+             Schema
+            </span>
+            <span class="p">
+             <span class="pre">
+              ]
+             </span>
             </span>
            </span>
           </em>
@@ -1748,14 +1315,100 @@ and back to
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             **kwargs
+             serializer
+            </span>
+           </span>
+           <span class="p">
+            <span class="pre">
+             :
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="n">
+            <span class="pre">
+             Optional
+            </span>
+            <span class="p">
+             <span class="pre">
+              [
+             </span>
+            </span>
+            <span class="pre">
+             Callable
+            </span>
+            <span class="p">
+             <span class="pre">
+              ]
+             </span>
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="o">
+            <span class="pre">
+             =
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="default_value">
+            <span class="pre">
+             None
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             deserializer
+            </span>
+           </span>
+           <span class="p">
+            <span class="pre">
+             :
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="n">
+            <span class="pre">
+             Optional
+            </span>
+            <span class="p">
+             <span class="pre">
+              [
+             </span>
+            </span>
+            <span class="pre">
+             Callable
+            </span>
+            <span class="p">
+             <span class="pre">
+              ]
+             </span>
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="o">
+            <span class="pre">
+             =
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="default_value">
+            <span class="pre">
+             None
             </span>
            </span>
           </em>
           <span class="sig-paren">
            )
           </span>
-          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.register_parquet" title="Permalink to this definition">
+          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.register_arrow" title="Permalink to this definition">
            ¶
           </a>
          </dt>
@@ -1851,34 +1504,6 @@ parquet can write.
              <li>
               <p>
                <strong>
-                chunk
-               </strong>
-               (
-               <em>
-                bool
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – Whether to group objects by timestamp and operate together (Used for
-complex objects where we write each object as multiple rows in parquet,
-i.e.
-               <cite>
-                OrderBook
-               </cite>
-               or
-               <cite>
-                AccountState
-               </cite>
-               ).
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
                 table
                </strong>
                (
@@ -1905,6 +1530,436 @@ its own.
               </p>
              </li>
             </ul>
+           </dd>
+          </dl>
+         </dd>
+        </dl>
+        <dl class="py class">
+         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.ArrowSerializer">
+          <em class="property">
+           <span class="pre">
+            class
+           </span>
+           <span class="w">
+           </span>
+          </em>
+          <span class="sig-name descname">
+           <span class="pre">
+            ArrowSerializer
+           </span>
+          </span>
+          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer" title="Permalink to this definition">
+           ¶
+          </a>
+         </dt>
+         <dd>
+          <p>
+           Bases:
+           <code class="xref py py-class docutils literal notranslate">
+            <span class="pre">
+             object
+            </span>
+           </code>
+          </p>
+          <p>
+           Serialize nautilus objects to arrow RecordBatches.
+          </p>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.ArrowSerializer.serialize_batch">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              serialize_batch
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               data
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               list
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <span class="pre">
+               Union
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <span class="pre">
+               nautilus_trader.core.data.Data
+              </span>
+              <span class="p">
+               <span class="pre">
+                ,
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <a class="reference internal" href="core.html#nautilus_trader.core.message.Event" title="nautilus_trader.core.message.Event">
+               <span class="pre">
+                nautilus_trader.core.message.Event
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               cls
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               type
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <span class="pre">
+               Union
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <span class="pre">
+               nautilus_trader.core.data.Data
+              </span>
+              <span class="p">
+               <span class="pre">
+                ,
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <a class="reference internal" href="core.html#nautilus_trader.core.message.Event" title="nautilus_trader.core.message.Event">
+               <span class="pre">
+                nautilus_trader.core.message.Event
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               Table
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.serialize_batch" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Serialize the given instrument to
+             <cite>
+              Parquet
+             </cite>
+             specification bytes.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  data
+                 </strong>
+                 (
+                 <em>
+                  list
+                 </em>
+                 <em>
+                  [
+                 </em>
+                 <em>
+                  Any
+                 </em>
+                 <em>
+                  ]
+                 </em>
+                 ) – The object to serialize.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  cls
+                 </strong>
+                 (
+                 <em>
+                  type
+                 </em>
+                 ) – The class of the data
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                bytes
+               </em>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                TypeError
+               </strong>
+               – If
+               <cite>
+                obj
+               </cite>
+               cannot be serialized.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.ArrowSerializer.deserialize">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              deserialize
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               cls
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               type
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               batch
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               Union
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <span class="pre">
+               RecordBatch
+              </span>
+              <span class="p">
+               <span class="pre">
+                ,
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="pre">
+               Table
+              </span>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.deserialize" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Deserialize the given
+             <cite>
+              Parquet
+             </cite>
+             specification bytes to an object.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  cls
+                 </strong>
+                 (
+                 <em>
+                  type
+                 </em>
+                 ) – The type to deserialize to.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  batch
+                 </strong>
+                 (
+                 <em>
+                  pyarrow.RecordBatch
+                 </em>
+                 ) – The RecordBatch to deserialize.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                object
+               </em>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                TypeError
+               </strong>
+               – If
+               <cite>
+                chunk
+               </cite>
+               cannot be deserialized.
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
          </dd>
