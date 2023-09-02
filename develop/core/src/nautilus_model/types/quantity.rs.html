@@ -664,6 +664,70 @@
 <a href="#664" id="664">664</a>
 <a href="#665" id="665">665</a>
 <a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
+<a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
+<a href="#678" id="678">678</a>
+<a href="#679" id="679">679</a>
+<a href="#680" id="680">680</a>
+<a href="#681" id="681">681</a>
+<a href="#682" id="682">682</a>
+<a href="#683" id="683">683</a>
+<a href="#684" id="684">684</a>
+<a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -690,7 +754,9 @@
 
 <span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::{
-    correctness::check_f64_in_range_inclusive, parsing::precision_from_str, python::to_pyvalue_err,
+    correctness::check_f64_in_range_inclusive,
+    parsing::precision_from_str,
+    python::{to_pytype_err, to_pyvalue_err},
 };
 <span class="kw">use </span>pyo3::{
     prelude::<span class="kw-2">*</span>,
@@ -987,6 +1053,34 @@
         <span class="prelude-val">Ok</span>(Quantity::zero(<span class="number">0</span>)) <span class="comment">// Safe default
     </span>}
 
+    <span class="kw">fn </span>__add__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: PyObject, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; PyResult&lt;PyObject&gt; {
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(other_quantity) = other.extract::&lt;Quantity&gt;(py) {
+            <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() + other_quantity.as_decimal()).into_py(py))
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
+            <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() + other_dec).into_py(py))
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_float) = other.extract::&lt;f64&gt;(py) {
+            <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_f64() + other_float).into_py(py))
+        } <span class="kw">else </span>{
+            <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
+                <span class="string">&quot;Unsupported type for addition, was {other}&quot;
+            </span>)))
+        }
+    }
+
+    <span class="kw">fn </span>__radd__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: PyObject, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; PyResult&lt;PyObject&gt; {
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(other_quantity) = other.extract::&lt;Quantity&gt;(py) {
+            <span class="prelude-val">Ok</span>((other_quantity.as_decimal() + <span class="self">self</span>.as_decimal()).into_py(py))
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
+            <span class="prelude-val">Ok</span>((other_dec + <span class="self">self</span>.as_decimal()).into_py(py))
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_float) = other.extract::&lt;f64&gt;(py) {
+            <span class="prelude-val">Ok</span>((other_float + <span class="self">self</span>.as_f64()).into_py(py))
+        } <span class="kw">else </span>{
+            <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
+                <span class="string">&quot;Unsupported type for reversed addition, was {other}&quot;
+            </span>)))
+        }
+    }
+
     <span class="kw">fn </span>__neg__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
         <span class="self">self</span>.as_decimal().neg()
     }
@@ -1001,6 +1095,10 @@
         <span class="self">self</span>.as_decimal().abs()
     }
 
+    <span class="kw">fn </span>__int__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
+        <span class="self">self</span>.as_f64() <span class="kw">as </span>u64
+    }
+
     <span class="kw">fn </span>__float__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.as_f64()
     }
@@ -1010,14 +1108,27 @@
             .round_dp_with_strategy(ndigits.unwrap_or(<span class="number">0</span>), RoundingStrategy::MidpointNearestEven)
     }
 
-    <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
-        <span class="kw">match </span>op {
-            CompareOp::Eq =&gt; <span class="self">self</span>.eq(other).into_py(py),
-            CompareOp::Ne =&gt; <span class="self">self</span>.ne(other).into_py(py),
-            CompareOp::Ge =&gt; <span class="self">self</span>.ge(other).into_py(py),
-            CompareOp::Gt =&gt; <span class="self">self</span>.gt(other).into_py(py),
-            CompareOp::Le =&gt; <span class="self">self</span>.le(other).into_py(py),
-            CompareOp::Lt =&gt; <span class="self">self</span>.lt(other).into_py(py),
+    <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: PyObject, op: CompareOp, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+            <span class="kw">match </span>op {
+                CompareOp::Eq =&gt; <span class="self">self</span>.eq(<span class="kw-2">&amp;</span>other_qty).into_py(py),
+                CompareOp::Ne =&gt; <span class="self">self</span>.ne(<span class="kw-2">&amp;</span>other_qty).into_py(py),
+                CompareOp::Ge =&gt; <span class="self">self</span>.ge(<span class="kw-2">&amp;</span>other_qty).into_py(py),
+                CompareOp::Gt =&gt; <span class="self">self</span>.gt(<span class="kw-2">&amp;</span>other_qty).into_py(py),
+                CompareOp::Le =&gt; <span class="self">self</span>.le(<span class="kw-2">&amp;</span>other_qty).into_py(py),
+                CompareOp::Lt =&gt; <span class="self">self</span>.lt(<span class="kw-2">&amp;</span>other_qty).into_py(py),
+            }
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
+            <span class="kw">match </span>op {
+                CompareOp::Eq =&gt; (<span class="self">self</span>.as_decimal() == other_dec).into_py(py),
+                CompareOp::Ne =&gt; (<span class="self">self</span>.as_decimal() != other_dec).into_py(py),
+                CompareOp::Ge =&gt; (<span class="self">self</span>.as_decimal() &gt;= other_dec).into_py(py),
+                CompareOp::Gt =&gt; (<span class="self">self</span>.as_decimal() &gt; other_dec).into_py(py),
+                CompareOp::Le =&gt; (<span class="self">self</span>.as_decimal() &lt;= other_dec).into_py(py),
+                CompareOp::Lt =&gt; (<span class="self">self</span>.as_decimal() &lt; other_dec).into_py(py),
+            }
+        } <span class="kw">else </span>{
+            py.NotImplemented()
         }
     }
 
@@ -1035,13 +1146,6 @@
         <span class="macro">format!</span>(<span class="string">&quot;{self:?}&quot;</span>)
     }
 
-    <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;zero&quot;</span>)]
-    #[pyo3(signature = (precision = <span class="number">0</span>))]
-    </span><span class="kw">fn </span>py_zero(precision: u8) -&gt; PyResult&lt;Quantity&gt; {
-        Quantity::new(<span class="number">0.0</span>, precision).map_err(to_pyvalue_err)
-    }
-
     <span class="attr">#[getter]
     </span><span class="kw">fn </span>raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
         <span class="self">self</span>.raw
@@ -1050,6 +1154,20 @@
     <span class="attr">#[getter]
     </span><span class="kw">fn </span>precision(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u8 {
         <span class="self">self</span>.precision
+    }
+
+    <span class="attr">#[staticmethod]
+    #[pyo3(name = <span class="string">&quot;from_raw&quot;</span>)]
+    </span><span class="kw">fn </span>py_from_raw(raw: u64, precision: u8) -&gt; PyResult&lt;Quantity&gt; {
+        check_fixed_precision(precision).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(Quantity::from_raw(raw, precision))
+    }
+
+    <span class="attr">#[staticmethod]
+    #[pyo3(name = <span class="string">&quot;zero&quot;</span>)]
+    #[pyo3(signature = (precision = <span class="number">0</span>))]
+    </span><span class="kw">fn </span>py_zero(precision: u8) -&gt; PyResult&lt;Quantity&gt; {
+        Quantity::new(<span class="number">0.0</span>, precision).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[staticmethod]
@@ -1062,6 +1180,16 @@
     #[pyo3(name = <span class="string">&quot;from_str&quot;</span>)]
     </span><span class="kw">fn </span>py_from_str(value: <span class="kw-2">&amp;</span>str) -&gt; PyResult&lt;Quantity&gt; {
         Quantity::from_str(value).map_err(to_pyvalue_err)
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;is_zero&quot;</span>)]
+    </span><span class="kw">fn </span>py_is_zero(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.is_zero()
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;is_positive&quot;</span>)]
+    </span><span class="kw">fn </span>py_is_positive(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.is_positive()
     }
 
     <span class="attr">#[pyo3(name = <span class="string">&quot;to_str&quot;</span>)]

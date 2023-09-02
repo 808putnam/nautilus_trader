@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["to_pyvalue_err"]};
+window.SIDEBAR_ITEMS = {"fn":["to_pytype_err","to_pyvalue_err"]};

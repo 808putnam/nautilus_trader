@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"nautilus_model":[["impl PyClass__add__SlotFragment&lt;<a class=\"struct\" href=\"nautilus_model/types/quantity/struct.Quantity.html\" title=\"struct nautilus_model::types::quantity::Quantity\">Quantity</a>&gt; for PyClassImplCollector&lt;<a class=\"struct\" href=\"nautilus_model/types/quantity/struct.Quantity.html\" title=\"struct nautilus_model::types::quantity::Quantity\">Quantity</a>&gt;"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
