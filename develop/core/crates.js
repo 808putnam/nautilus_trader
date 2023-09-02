@@ -1,1 +1,0 @@
-window.ALL_CRATES = ["nautilus_backtest","nautilus_common","nautilus_core","nautilus_indicators","nautilus_model","nautilus_network","nautilus_persistence","nautilus_pyo3","tokio_tungstenite"];

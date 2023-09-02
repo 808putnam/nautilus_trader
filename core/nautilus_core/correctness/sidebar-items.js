@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["f64_in_range_inclusive","f64_non_negative","i64_in_range_inclusive","string_contains","u64_in_range_inclusive","u8_equal","u8_in_range_inclusive","valid_string"]};
+window.SIDEBAR_ITEMS = {"fn":["check_f64_in_range_inclusive","check_f64_non_negative","check_i64_in_range_inclusive","check_string_contains","check_u64_in_range_inclusive","check_u8_equal","check_u8_in_range_inclusive","check_valid_string"]};

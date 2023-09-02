@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/types/money.rs`."><title>money.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (58eefc33a 2023-08-24)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../nautilus_model/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/types/money.rs`."><title>money.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (35e416303 2023-09-01)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../nautilus_model/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -369,6 +369,16 @@
 <a href="#369" id="369">369</a>
 <a href="#370" id="370">370</a>
 <a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -392,7 +402,8 @@
     str::FromStr,
 };
 
-<span class="kw">use </span>nautilus_core::correctness;
+<span class="kw">use </span>anyhow::Result;
+<span class="kw">use </span>nautilus_core::correctness::check_f64_in_range_inclusive;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize};
@@ -415,14 +426,13 @@
 }
 
 <span class="kw">impl </span>Money {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(amount: f64, currency: Currency) -&gt; <span class="self">Self </span>{
-        correctness::f64_in_range_inclusive(amount, MONEY_MIN, MONEY_MAX, <span class="string">&quot;`Money` amount&quot;</span>);
+    <span class="kw">pub fn </span>new(amount: f64, currency: Currency) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        check_f64_in_range_inclusive(amount, MONEY_MIN, MONEY_MAX, <span class="string">&quot;`Money` amount&quot;</span>)<span class="question-mark">?</span>;
 
-        <span class="self">Self </span>{
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             raw: f64_to_fixed_i64(amount, currency.precision),
             currency,
-        }
+        })
     }
 
     <span class="attr">#[must_use]
@@ -617,11 +627,15 @@
         <span class="kw">let </span>currency = Currency::from_str(currency_str)
             .map_err(|<span class="kw">_</span>| serde::de::Error::custom(<span class="string">&quot;Invalid currency&quot;</span>))<span class="question-mark">?</span>;
 
-        <span class="prelude-val">Ok</span>(Money::new(amount, currency))
-    }
+        <span class="prelude-val">Ok</span>(Money::new(amount, currency).unwrap()) <span class="comment">// TODO: Properly handle the error
+    </span>}
 }
 
-<span class="attr">#[pymethods]
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Python API
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+#[pymethods]
 </span><span class="kw">impl </span>Money {
     <span class="attr">#[getter]
     </span><span class="kw">fn </span>raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
@@ -638,36 +652,41 @@
         fixed_i64_to_f64(<span class="self">self</span>.raw)
     }
 
-    <span class="comment">// #[pyo3(name = &quot;as_decimal&quot;)]
-    // fn py_as_decimal(&amp;self) -&gt; Decimal {
-    //     self.as_decimal()
-    // }
-</span>}
+    <span class="attr">#[pyo3(name = <span class="string">&quot;as_decimal&quot;</span>)]
+    </span><span class="kw">fn </span>py_as_decimal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="self">self</span>.as_decimal()
+    }
+}
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // C API
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[no_mangle]
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>money_new(amount: f64, currency: Currency) -&gt; Money {
-    Money::new(amount, currency)
+    Money::new(amount, currency).unwrap()
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>money_from_raw(raw: i64, currency: Currency) -&gt; Money {
     Money::from_raw(raw, currency)
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>money_as_f64(money: <span class="kw-2">&amp;</span>Money) -&gt; f64 {
     money.as_f64()
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>money_add_assign(<span class="kw-2">mut </span>a: Money, b: Money) {
     a.add_assign(b);
 }
 
-<span class="attr">#[no_mangle]
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>money_sub_assign(<span class="kw-2">mut </span>a: Money, b: Money) {
     a.sub_assign(b);
 }
@@ -678,45 +697,46 @@
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>float_cmp::approx_eq;
+    <span class="kw">use </span>rstest::rstest;
     <span class="kw">use </span>rust_decimal_macros::dec;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::currencies::{BTC, USD};
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     #[should_panic]
     </span><span class="kw">fn </span>test_money_different_currency_addition() {
-        <span class="kw">let </span>usd = Money::new(<span class="number">1000.0</span>, USD.clone());
-        <span class="kw">let </span>btc = Money::new(<span class="number">1.0</span>, BTC.clone());
+        <span class="kw">let </span>usd = Money::new(<span class="number">1000.0</span>, <span class="kw-2">*</span>USD).unwrap();
+        <span class="kw">let </span>btc = Money::new(<span class="number">1.0</span>, <span class="kw-2">*</span>BTC).unwrap();
         <span class="kw">let </span>_result = usd + btc; <span class="comment">// This should panic since currencies are different
     </span>}
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_min_max_values() {
-        <span class="kw">let </span>min_money = Money::new(MONEY_MIN, USD.clone());
-        <span class="kw">let </span>max_money = Money::new(MONEY_MAX, USD.clone());
+        <span class="kw">let </span>min_money = Money::new(MONEY_MIN, <span class="kw-2">*</span>USD).unwrap();
+        <span class="kw">let </span>max_money = Money::new(MONEY_MAX, <span class="kw-2">*</span>USD).unwrap();
         <span class="macro">assert_eq!</span>(min_money.raw, f64_to_fixed_i64(MONEY_MIN, USD.precision));
         <span class="macro">assert_eq!</span>(max_money.raw, f64_to_fixed_i64(MONEY_MAX, USD.precision));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_addition_f64() {
-        <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, USD.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>result = money + <span class="number">500.0</span>;
         <span class="macro">assert_eq!</span>(result, <span class="number">1500.0</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_negation() {
-        <span class="kw">let </span>money = Money::new(<span class="number">100.0</span>, USD.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">100.0</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>result = -money;
         <span class="macro">assert_eq!</span>(result.as_f64(), -<span class="number">100.0</span>);
         <span class="macro">assert_eq!</span>(result.currency, USD.clone());
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_new_usd() {
-        <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, USD.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">1000.0</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="macro">assert_eq!</span>(money.currency.code.as_str(), <span class="string">&quot;USD&quot;</span>);
         <span class="macro">assert_eq!</span>(money.currency.precision, <span class="number">2</span>);
         <span class="macro">assert_eq!</span>(money.to_string(), <span class="string">&quot;1000.00 USD&quot;</span>);
@@ -724,17 +744,17 @@
         <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(f64, money.as_f64(), <span class="number">1000.0</span>, epsilon = <span class="number">0.001</span>));
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_new_btc() {
-        <span class="kw">let </span>money = Money::new(<span class="number">10.3</span>, BTC.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">10.3</span>, <span class="kw-2">*</span>BTC).unwrap();
         <span class="macro">assert_eq!</span>(money.currency.code.as_str(), <span class="string">&quot;BTC&quot;</span>);
         <span class="macro">assert_eq!</span>(money.currency.precision, <span class="number">8</span>);
         <span class="macro">assert_eq!</span>(money.to_string(), <span class="string">&quot;10.30000000 BTC&quot;</span>);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_money_serialization_deserialization() {
-        <span class="kw">let </span>money = Money::new(<span class="number">123.45</span>, USD.clone());
+        <span class="kw">let </span>money = Money::new(<span class="number">123.45</span>, <span class="kw-2">*</span>USD).unwrap();
         <span class="kw">let </span>serialized = serde_json::to_string(<span class="kw-2">&amp;</span>money).unwrap();
         <span class="kw">let </span>deserialized: Money = serde_json::from_str(<span class="kw-2">&amp;</span>serialized).unwrap();
         <span class="macro">assert_eq!</span>(money, deserialized);

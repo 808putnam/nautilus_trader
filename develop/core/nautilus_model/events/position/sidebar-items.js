@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["PositionEvent"],"struct":["PositionChanged","PositionClosed","PositionOpened","PositionState"]};
