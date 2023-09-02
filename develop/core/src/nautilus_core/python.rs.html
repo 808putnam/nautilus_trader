@@ -31,6 +31,9 @@
 <a href="#31" id="31">31</a>
 <a href="#32" id="32">32</a>
 <a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -53,14 +56,17 @@
     prelude::<span class="kw-2">*</span>,
 };
 
-<span class="doccomment">/// A helper function for converting any type that implements `Debug` to a Python
-/// `ValueError`.
+<span class="doccomment">/// Gets the type name for the given Python `obj`.
+</span><span class="kw">pub fn </span>get_pytype_name&lt;<span class="lifetime">&#39;p</span>&gt;(obj: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>PyObject, py: Python&lt;<span class="lifetime">&#39;p</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str&gt; {
+    obj.as_ref(py).get_type().name()
+}
+
+<span class="doccomment">/// Converts any type that implements `Debug` to a Python `ValueError`.
 </span><span class="kw">pub fn </span>to_pyvalue_err(e: <span class="kw">impl </span>fmt::Debug) -&gt; PyErr {
     PyValueError::new_err(<span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>))
 }
 
-<span class="doccomment">/// A helper function for converting any type that implements `Debug` to a Python
-/// `ValueError`.
+<span class="doccomment">/// Converts any type that implements `Debug` to a Python `TypeError`.
 </span><span class="kw">pub fn </span>to_pytype_err(e: <span class="kw">impl </span>fmt::Debug) -&gt; PyErr {
     PyTypeError::new_err(<span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>))
 }
