@@ -393,7 +393,7 @@
 </span><span class="kw">impl </span>UUID4 {
     <span class="attr">#[new]
     </span><span class="kw">fn </span>py_new() -&gt; <span class="self">Self </span>{
-        UUID4::new()
+        <span class="self">Self</span>::new()
     }
 
     <span class="attr">#[getter]
@@ -404,8 +404,8 @@
 
     <span class="attr">#[staticmethod]
     #[pyo3(name = <span class="string">&quot;from_str&quot;</span>)]
-    </span><span class="kw">fn </span>py_from_str(value: <span class="kw-2">&amp;</span>str) -&gt; PyResult&lt;UUID4&gt; {
-        UUID4::from_str(value).map_err(to_pyvalue_err)
+    </span><span class="kw">fn </span>py_from_str(value: <span class="kw-2">&amp;</span>str) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+        <span class="self">Self</span>::from_str(value).map_err(to_pyvalue_err)
     }
 }
 

@@ -340,7 +340,7 @@
             ClientOrderId::from(<span class="string">&quot;id2&quot;</span>),
             ClientOrderId::from(<span class="string">&quot;id3&quot;</span>),
         ];
-        <span class="kw">let </span>ustr = optional_vec_client_order_ids_to_ustr(<span class="prelude-val">Some</span>(client_order_ids.into())).unwrap();
+        <span class="kw">let </span>ustr = optional_vec_client_order_ids_to_ustr(<span class="prelude-val">Some</span>(client_order_ids)).unwrap();
         <span class="macro">assert_eq!</span>(ustr.to_string(), <span class="string">&quot;id1,id2,id3&quot;</span>);
     }
 }

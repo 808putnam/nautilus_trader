@@ -848,7 +848,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_book_price_bid_sorting() {
-        <span class="kw">let </span><span class="kw-2">mut </span>bid_prices = <span class="macro">vec!</span>[
+        <span class="kw">let </span><span class="kw-2">mut </span>bid_prices = [
             BookPrice::new(Price::from(<span class="string">&quot;2.0&quot;</span>), OrderSide::Buy),
             BookPrice::new(Price::from(<span class="string">&quot;4.0&quot;</span>), OrderSide::Buy),
             BookPrice::new(Price::from(<span class="string">&quot;1.0&quot;</span>), OrderSide::Buy),
@@ -860,7 +860,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_book_price_ask_sorting() {
-        <span class="kw">let </span><span class="kw-2">mut </span>ask_prices = <span class="macro">vec!</span>[
+        <span class="kw">let </span><span class="kw-2">mut </span>ask_prices = [
             BookPrice::new(Price::from(<span class="string">&quot;2.0&quot;</span>), OrderSide::Sell),
             BookPrice::new(Price::from(<span class="string">&quot;4.0&quot;</span>), OrderSide::Sell),
             BookPrice::new(Price::from(<span class="string">&quot;1.0&quot;</span>), OrderSide::Sell),

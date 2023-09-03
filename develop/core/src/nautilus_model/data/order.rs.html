@@ -745,7 +745,7 @@
         <span class="kw">let </span>side = OrderSide::Buy;
         <span class="kw">let </span>order_id = <span class="number">123456</span>;
 
-        <span class="kw">let </span>order = BookOrder::new(side, price.clone(), size.clone(), order_id);
+        <span class="kw">let </span>order = BookOrder::new(side, price, size, order_id);
 
         <span class="macro">assert_eq!</span>(order.price, price);
         <span class="macro">assert_eq!</span>(order.size, size);
@@ -760,7 +760,7 @@
         <span class="kw">let </span>side = OrderSide::Buy;
         <span class="kw">let </span>order_id = <span class="number">123456</span>;
 
-        <span class="kw">let </span>order = BookOrder::new(side, price.clone(), size.clone(), order_id);
+        <span class="kw">let </span>order = BookOrder::new(side, price, size, order_id);
         <span class="kw">let </span>book_price = order.to_book_price();
 
         <span class="macro">assert_eq!</span>(book_price.value, price);
@@ -774,7 +774,7 @@
         <span class="kw">let </span>side = OrderSide::Buy;
         <span class="kw">let </span>order_id = <span class="number">123456</span>;
 
-        <span class="kw">let </span>order = BookOrder::new(side, price.clone(), size.clone(), order_id);
+        <span class="kw">let </span>order = BookOrder::new(side, price, size, order_id);
         <span class="kw">let </span>exposure = order.exposure();
 
         <span class="macro">assert_eq!</span>(exposure, price.as_f64() * size.as_f64());
@@ -786,11 +786,11 @@
         <span class="kw">let </span>size = Quantity::from(<span class="string">&quot;10&quot;</span>);
         <span class="kw">let </span>order_id = <span class="number">123456</span>;
 
-        <span class="kw">let </span>order_buy = BookOrder::new(OrderSide::Buy, price.clone(), size.clone(), order_id);
+        <span class="kw">let </span>order_buy = BookOrder::new(OrderSide::Buy, price, size, order_id);
         <span class="kw">let </span>signed_size_buy = order_buy.signed_size();
         <span class="macro">assert_eq!</span>(signed_size_buy, size.as_f64());
 
-        <span class="kw">let </span>order_sell = BookOrder::new(OrderSide::Sell, price.clone(), size.clone(), order_id);
+        <span class="kw">let </span>order_sell = BookOrder::new(OrderSide::Sell, price, size, order_id);
         <span class="kw">let </span>signed_size_sell = order_sell.signed_size();
         <span class="macro">assert_eq!</span>(signed_size_sell, -(size.as_f64()));
     }
@@ -802,7 +802,7 @@
         <span class="kw">let </span>side = OrderSide::Buy;
         <span class="kw">let </span>order_id = <span class="number">123456</span>;
 
-        <span class="kw">let </span>order = BookOrder::new(side, price.clone(), size.clone(), order_id);
+        <span class="kw">let </span>order = BookOrder::new(side, price, size, order_id);
         <span class="kw">let </span>display = <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, order);
 
         <span class="kw">let </span>expected = <span class="macro">format!</span>(<span class="string">&quot;{},{},{},{}&quot;</span>, price, size, side, order_id);
@@ -824,7 +824,7 @@
         )
         .unwrap();
 
-        <span class="kw">let </span>book_order = BookOrder::from_quote_tick(<span class="kw-2">&amp;</span>tick, side.clone());
+        <span class="kw">let </span>book_order = BookOrder::from_quote_tick(<span class="kw-2">&amp;</span>tick, side);
 
         <span class="macro">assert_eq!</span>(book_order.side, side);
         <span class="macro">assert_eq!</span>(

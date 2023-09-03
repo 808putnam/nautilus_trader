@@ -70,6 +70,7 @@
 <a href="#70" id="70">70</a>
 <a href="#71" id="71">71</a>
 <a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -135,9 +136,10 @@
             <span class="kw">break</span>;
         }
 
-        <span class="kw">if </span>start_time.elapsed() &gt; timeout {
-            <span class="macro">panic!</span>(<span class="string">&quot;Timeout waiting for condition&quot;</span>);
-        }
+        <span class="macro">assert!</span>(
+            start_time.elapsed() &lt;= timeout,
+            <span class="string">&quot;Timeout waiting for condition&quot;
+        </span>);
 
         thread::sleep(Duration::from_millis(<span class="number">100</span>));
     }

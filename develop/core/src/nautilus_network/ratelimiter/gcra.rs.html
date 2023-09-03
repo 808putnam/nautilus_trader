@@ -248,7 +248,7 @@
 }
 
 <span class="attr">#[derive(Debug, PartialEq, Eq)]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>Gcra {
+</span><span class="kw">pub struct </span>Gcra {
     <span class="doccomment">/// The &quot;weight&quot; of a single packet in units of time.
     </span>t: Nanos,
 
@@ -260,7 +260,7 @@
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>new(quota: Quota) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>tau: Nanos = (quota.replenish_1_per * quota.max_burst.get()).into();
         <span class="kw">let </span>t: Nanos = quota.replenish_1_per.into();
-        Gcra { t, tau }
+        <span class="self">Self </span>{ t, tau }
     }
 
     <span class="doccomment">/// Computes and returns a new ratelimiter state if none exists yet.

@@ -573,25 +573,25 @@
             NautilusDataType::OrderBookDelta =&gt; {
                 <span class="kw">match </span>block_on(slf.add_file_default_query::&lt;OrderBookDelta&gt;(table_name, file_path))
                 {
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                    <span class="prelude-val">Ok</span>(()) =&gt; (),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Failed new_query with error {err}&quot;</span>),
                 }
             }
             NautilusDataType::QuoteTick =&gt; {
                 <span class="kw">match </span>block_on(slf.add_file_default_query::&lt;QuoteTick&gt;(table_name, file_path)) {
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                    <span class="prelude-val">Ok</span>(()) =&gt; (),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Failed new_query with error {err}&quot;</span>),
                 }
             }
             NautilusDataType::TradeTick =&gt; {
                 <span class="kw">match </span>block_on(slf.add_file_default_query::&lt;TradeTick&gt;(table_name, file_path)) {
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                    <span class="prelude-val">Ok</span>(()) =&gt; (),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Failed new_query with error {err}&quot;</span>),
                 }
             }
             NautilusDataType::Bar =&gt; {
                 <span class="kw">match </span>block_on(slf.add_file_default_query::&lt;Bar&gt;(table_name, file_path)) {
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                    <span class="prelude-val">Ok</span>(()) =&gt; (),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Failed new_query with error {err}&quot;</span>),
                 }
             }
@@ -615,7 +615,7 @@
                         table_name, file_path, sql_query,
                     ),
                 ) {
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                    <span class="prelude-val">Ok</span>(()) =&gt; (),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Failed new_query with error {err}&quot;</span>),
                 }
             }
@@ -623,7 +623,7 @@
                 <span class="kw">match </span>block_on(
                     slf.add_file_with_custom_query::&lt;QuoteTick&gt;(table_name, file_path, sql_query),
                 ) {
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                    <span class="prelude-val">Ok</span>(()) =&gt; (),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Failed new_query with error {err}&quot;</span>),
                 }
             }
@@ -631,7 +631,7 @@
                 <span class="kw">match </span>block_on(
                     slf.add_file_with_custom_query::&lt;TradeTick&gt;(table_name, file_path, sql_query),
                 ) {
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                    <span class="prelude-val">Ok</span>(()) =&gt; (),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Failed new_query with error {err}&quot;</span>),
                 }
             }
@@ -639,7 +639,7 @@
                 <span class="kw">match </span>block_on(
                     slf.add_file_with_custom_query::&lt;Bar&gt;(table_name, file_path, sql_query),
                 ) {
-                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; (),
+                    <span class="prelude-val">Ok</span>(()) =&gt; (),
                     <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Failed new_query with error {err}&quot;</span>),
                 }
             }

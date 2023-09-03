@@ -271,7 +271,7 @@
     <span class="attr">#[staticmethod]
     </span><span class="kw">pub fn </span>rate_per_second(max_burst: u32) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">match </span>NonZeroU32::new(max_burst) {
-            <span class="prelude-val">Some</span>(max_burst) =&gt; <span class="prelude-val">Ok</span>(Quota::per_second(max_burst)),
+            <span class="prelude-val">Some</span>(max_burst) =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::per_second(max_burst)),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(PyErr::new::&lt;PyException, <span class="kw">_</span>&gt;(
                 <span class="string">&quot;Max burst capacity should be a non-zero integer&quot;</span>,
             )),
@@ -281,7 +281,7 @@
     <span class="attr">#[staticmethod]
     </span><span class="kw">pub fn </span>rate_per_minute(max_burst: u32) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">match </span>NonZeroU32::new(max_burst) {
-            <span class="prelude-val">Some</span>(max_burst) =&gt; <span class="prelude-val">Ok</span>(Quota::per_minute(max_burst)),
+            <span class="prelude-val">Some</span>(max_burst) =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::per_minute(max_burst)),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(PyErr::new::&lt;PyException, <span class="kw">_</span>&gt;(
                 <span class="string">&quot;Max burst capacity should be a non-zero integer&quot;</span>,
             )),
@@ -291,7 +291,7 @@
     <span class="attr">#[staticmethod]
     </span><span class="kw">pub fn </span>rate_per_hour(max_burst: u32) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">match </span>NonZeroU32::new(max_burst) {
-            <span class="prelude-val">Some</span>(max_burst) =&gt; <span class="prelude-val">Ok</span>(Quota::per_hour(max_burst)),
+            <span class="prelude-val">Some</span>(max_burst) =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self</span>::per_hour(max_burst)),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(PyErr::new::&lt;PyException, <span class="kw">_</span>&gt;(
                 <span class="string">&quot;Max burst capacity should be a non-zero integer&quot;</span>,
             )),
@@ -303,9 +303,9 @@
 </span><span class="kw">impl </span>Quota {
     <span class="doccomment">/// Construct a quota for a number of cells per second. The given number of cells is also
     /// assumed to be the maximum burst size.
-    </span><span class="kw">pub const fn </span>per_second(max_burst: NonZeroU32) -&gt; Quota {
+    </span><span class="kw">pub const fn </span>per_second(max_burst: NonZeroU32) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>replenish_interval_ns = Duration::from_secs(<span class="number">1</span>).as_nanos() / (max_burst.get() <span class="kw">as </span>u128);
-        Quota {
+        <span class="self">Self </span>{
             max_burst,
             replenish_1_per: Duration::from_nanos(replenish_interval_ns <span class="kw">as </span>u64),
         }
@@ -313,9 +313,9 @@
 
     <span class="doccomment">/// Construct a quota for a number of cells per 60-second period. The given number of cells is
     /// also assumed to be the maximum burst size.
-    </span><span class="kw">pub const fn </span>per_minute(max_burst: NonZeroU32) -&gt; Quota {
+    </span><span class="kw">pub const fn </span>per_minute(max_burst: NonZeroU32) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>replenish_interval_ns = Duration::from_secs(<span class="number">60</span>).as_nanos() / (max_burst.get() <span class="kw">as </span>u128);
-        Quota {
+        <span class="self">Self </span>{
             max_burst,
             replenish_1_per: Duration::from_nanos(replenish_interval_ns <span class="kw">as </span>u64),
         }
@@ -323,10 +323,10 @@
 
     <span class="doccomment">/// Construct a quota for a number of cells per 60-minute (3600-second) period. The given number
     /// of cells is also assumed to be the maximum burst size.
-    </span><span class="kw">pub const fn </span>per_hour(max_burst: NonZeroU32) -&gt; Quota {
+    </span><span class="kw">pub const fn </span>per_hour(max_burst: NonZeroU32) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>replenish_interval_ns =
             Duration::from_secs(<span class="number">60 </span>* <span class="number">60</span>).as_nanos() / (max_burst.get() <span class="kw">as </span>u128);
-        Quota {
+        <span class="self">Self </span>{
             max_burst,
             replenish_1_per: Duration::from_nanos(replenish_interval_ns <span class="kw">as </span>u64),
         }
@@ -340,11 +340,11 @@
     /// necessary.
     ///
     /// If the time interval is zero, returns `None`.
-    </span><span class="kw">pub fn </span>with_period(replenish_1_per: Duration) -&gt; <span class="prelude-ty">Option</span>&lt;Quota&gt; {
+    </span><span class="kw">pub fn </span>with_period(replenish_1_per: Duration) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">if </span>replenish_1_per.as_nanos() == <span class="number">0 </span>{
             <span class="prelude-val">None
         </span>} <span class="kw">else </span>{
-            <span class="prelude-val">Some</span>(Quota {
+            <span class="prelude-val">Some</span>(<span class="self">Self </span>{
                 max_burst: <span class="macro">nonzero!</span>(<span class="number">1u32</span>),
                 replenish_1_per,
             })
@@ -353,8 +353,8 @@
 
     <span class="doccomment">/// Adjusts the maximum burst size for a quota to construct a rate limiter with a capacity
     /// for at most the given number of cells.
-    </span><span class="kw">pub const fn </span>allow_burst(<span class="self">self</span>, max_burst: NonZeroU32) -&gt; Quota {
-        Quota { max_burst, ..<span class="self">self </span>}
+    </span><span class="kw">pub const fn </span>allow_burst(<span class="self">self</span>, max_burst: NonZeroU32) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ max_burst, ..<span class="self">self </span>}
     }
 
     <span class="doccomment">/// Construct a quota for a given burst size, replenishing the entire burst size in that
@@ -375,11 +375,11 @@
         note = <span class="string">&quot;This constructor is often confusing and non-intuitive. \
     Use the `per_(interval)` / `with_period` and `max_burst` constructors instead.&quot;
     </span>)]
-    </span><span class="kw">pub fn </span>new(max_burst: NonZeroU32, replenish_all_per: Duration) -&gt; <span class="prelude-ty">Option</span>&lt;Quota&gt; {
+    </span><span class="kw">pub fn </span>new(max_burst: NonZeroU32, replenish_all_per: Duration) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">if </span>replenish_all_per.as_nanos() == <span class="number">0 </span>{
             <span class="prelude-val">None
         </span>} <span class="kw">else </span>{
-            <span class="prelude-val">Some</span>(Quota {
+            <span class="prelude-val">Some</span>(<span class="self">Self </span>{
                 max_burst,
                 replenish_1_per: replenish_all_per / max_burst.get(),
             })
@@ -413,7 +413,7 @@
     /// This is useful mainly for [`crate::middleware::RateLimitingMiddleware`]
     /// where custom code may want to construct information based on
     /// the amount of burst balance remaining.
-    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_gcra_parameters(t: Nanos, tau: Nanos) -&gt; Quota {
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>from_gcra_parameters(t: Nanos, tau: Nanos) -&gt; <span class="self">Self </span>{
         <span class="comment">// Safety assurance: As we&#39;re calling this from this crate
         // only, and we do not allow creating a Gcra from 0
         // parameters, this is, in fact, safe.
@@ -423,7 +423,7 @@
         // exactly like that.
         </span><span class="kw">let </span>max_burst = <span class="kw">unsafe </span>{ NonZeroU32::new_unchecked((tau.as_u64() / t.as_u64()) <span class="kw">as </span>u32) };
         <span class="kw">let </span>replenish_1_per = t.into();
-        Quota {
+        <span class="self">Self </span>{
             max_burst,
             replenish_1_per,
         }

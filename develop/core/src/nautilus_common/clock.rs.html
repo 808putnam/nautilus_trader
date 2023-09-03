@@ -623,6 +623,8 @@
 <a href="#623" id="623">623</a>
 <a href="#624" id="624">624</a>
 <a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
+<a href="#627" id="627">627</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -676,7 +678,7 @@
     <span class="doccomment">/// Initializes a new `MonotonicClock` instance.
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
-        MonotonicClock {
+        <span class="self">Self </span>{
             last: duration_since_unix_epoch(),
         }
     }
@@ -704,7 +706,7 @@
 
 <span class="kw">impl </span>Default <span class="kw">for </span>MonotonicClock {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        MonotonicClock::new()
+        <span class="self">Self</span>::new()
     }
 }
 
@@ -776,12 +778,13 @@
 }
 
 <span class="kw">impl </span>TestClock {
-    <span class="kw">pub fn </span>get_timers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;String, TestTimer&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>get_timers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;String, TestTimer&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.timers
     }
 
     <span class="kw">pub fn </span>set_time(<span class="kw-2">&amp;mut </span><span class="self">self</span>, to_time_ns: UnixNanos) {
-        <span class="self">self</span>.time_ns = to_time_ns
+        <span class="self">self</span>.time_ns = to_time_ns;
     }
 
     <span class="kw">pub fn </span>advance_time(<span class="kw-2">&amp;mut </span><span class="self">self</span>, to_time_ns: UnixNanos, set_time: bool) -&gt; Vec&lt;TimeEvent&gt; {
@@ -807,6 +810,7 @@
     }
 
     <span class="doccomment">/// Assumes time events are sorted by their `ts_event`.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>match_handlers_py(<span class="kw-2">&amp;</span><span class="self">self</span>, events: Vec&lt;TimeEvent&gt;) -&gt; Vec&lt;TimeEventHandler&gt; {
         events
             .into_iter()
@@ -830,8 +834,8 @@
 }
 
 <span class="kw">impl </span>Clock <span class="kw">for </span>TestClock {
-    <span class="kw">fn </span>new() -&gt; TestClock {
-        TestClock {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
             time_ns: <span class="number">0</span>,
             timers: HashMap::new(),
             default_callback: <span class="prelude-val">None</span>,
@@ -877,7 +881,7 @@
     }
 
     <span class="kw">fn </span>register_default_handler_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, callback_py: PyObject) {
-        <span class="self">self</span>.default_callback_py = <span class="prelude-val">Some</span>(callback_py)
+        <span class="self">self</span>.default_callback_py = <span class="prelude-val">Some</span>(callback_py);
     }
 
     <span class="kw">fn </span>set_time_alert_ns_py(
@@ -946,8 +950,8 @@
     }
 
     <span class="kw">fn </span>cancel_timers(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">for </span>(<span class="kw">_</span>, timer) <span class="kw">in </span><span class="self">self</span>.timers.iter_mut() {
-            timer.cancel()
+        <span class="kw">for </span>timer <span class="kw">in </span><span class="kw-2">&amp;mut </span><span class="self">self</span>.timers.values_mut() {
+            timer.cancel();
         }
         <span class="self">self</span>.timers = HashMap::new();
     }
@@ -963,8 +967,8 @@
 }
 
 <span class="kw">impl </span>Clock <span class="kw">for </span>LiveClock {
-    <span class="kw">fn </span>new() -&gt; LiveClock {
-        LiveClock {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
             internal: MonotonicClock::default(),
             timers: HashMap::new(),
             default_callback: <span class="prelude-val">None</span>,
@@ -1010,7 +1014,7 @@
     }
 
     <span class="kw">fn </span>register_default_handler_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, callback_py: PyObject) {
-        <span class="self">self</span>.default_callback_py = <span class="prelude-val">Some</span>(callback_py)
+        <span class="self">self</span>.default_callback_py = <span class="prelude-val">Some</span>(callback_py);
     }
 
     <span class="kw">fn </span>set_time_alert_ns_py(
@@ -1081,8 +1085,8 @@
     }
 
     <span class="kw">fn </span>cancel_timers(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">for </span>(<span class="kw">_</span>, timer) <span class="kw">in </span><span class="self">self</span>.timers.iter_mut() {
-            timer.cancel()
+        <span class="kw">for </span>timer <span class="kw">in </span><span class="kw-2">&amp;mut </span><span class="self">self</span>.timers.values_mut() {
+            timer.cancel();
         }
         <span class="self">self</span>.timers = HashMap::new();
     }

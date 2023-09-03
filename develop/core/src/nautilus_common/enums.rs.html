@@ -499,11 +499,11 @@
 </span><span class="kw">impl </span>std::fmt::Display <span class="kw">for </span>LogLevel {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
         <span class="kw">let </span>display = <span class="kw">match </span><span class="self">self </span>{
-            LogLevel::Debug =&gt; <span class="string">&quot;DBG&quot;</span>,
-            LogLevel::Info =&gt; <span class="string">&quot;INF&quot;</span>,
-            LogLevel::Warning =&gt; <span class="string">&quot;WRN&quot;</span>,
-            LogLevel::Error =&gt; <span class="string">&quot;ERR&quot;</span>,
-            LogLevel::Critical =&gt; <span class="string">&quot;CRT&quot;</span>,
+            <span class="self">Self</span>::Debug =&gt; <span class="string">&quot;DBG&quot;</span>,
+            <span class="self">Self</span>::Info =&gt; <span class="string">&quot;INF&quot;</span>,
+            <span class="self">Self</span>::Warning =&gt; <span class="string">&quot;WRN&quot;</span>,
+            <span class="self">Self</span>::Error =&gt; <span class="string">&quot;ERR&quot;</span>,
+            <span class="self">Self</span>::Critical =&gt; <span class="string">&quot;CRT&quot;</span>,
         };
         <span class="macro">write!</span>(f, <span class="string">&quot;{display}&quot;</span>)
     }

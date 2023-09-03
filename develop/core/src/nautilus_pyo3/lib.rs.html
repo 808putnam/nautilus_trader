@@ -144,8 +144,6 @@
 <a href="#144" id="144">144</a>
 <a href="#145" id="145">145</a>
 <a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -196,6 +194,7 @@
 /// Should only be called once during an applications run, ideally at the
 /// beginning of the run.
 </span><span class="attr">#[pyfunction]
+#[must_use]
 </span><span class="kw">pub fn </span>set_global_log_collector(
     stdout_level: <span class="prelude-ty">Option</span>&lt;String&gt;,
     stderr_level: <span class="prelude-ty">Option</span>&lt;String&gt;,
@@ -231,10 +230,7 @@
         .with(EnvFilter::from_default_env())
         .try_init()
     {
-        <span class="macro">println!</span>(
-            <span class="string">&quot;Failed to set global default dispatcher because of error: {}&quot;</span>,
-            err
-        );
+        <span class="macro">println!</span>(<span class="string">&quot;Failed to set global default dispatcher because of error: {err}&quot;</span>);
     };
 
     LogGuard { guards }

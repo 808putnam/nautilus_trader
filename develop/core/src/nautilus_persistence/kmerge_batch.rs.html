@@ -292,7 +292,7 @@
     <span class="attr">#[cfg(test)]
     </span><span class="kw">async fn </span>push_stream(<span class="kw-2">&amp;mut </span><span class="self">self</span>, s: S) {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(heap_elem) = PeekElementBatchStream::new_from_stream(s).<span class="kw">await </span>{
-            <span class="self">self</span>.heap.push(heap_elem)
+            <span class="self">self</span>.heap.push(heap_elem);
         }
     }
 
@@ -343,7 +343,7 @@
                     item: next_item,
                     batch,
                     stream,
-                })
+                });
             }
             <span class="comment">// Batch is empty create new heap element from stream
             </span><span class="kw">else if let </span><span class="prelude-val">Some</span>(heap_elem) =
@@ -392,7 +392,7 @@
         kmerge.push_stream(stream_b).<span class="kw">await</span>;
 
         <span class="kw">let </span>values: Vec&lt;i32&gt; = kmerge.collect().<span class="kw">await</span>;
-        <span class="macro">assert_eq!</span>(values, <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])
+        <span class="macro">assert_eq!</span>(values, <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]);
     }
 
     <span class="attr">#[tokio::test]
@@ -404,7 +404,7 @@
         kmerge.push_stream(stream_b).<span class="kw">await</span>;
 
         <span class="kw">let </span>values: Vec&lt;i32&gt; = kmerge.collect().<span class="kw">await</span>;
-        <span class="macro">assert_eq!</span>(values, <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])
+        <span class="macro">assert_eq!</span>(values, <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]);
     }
 
     <span class="attr">#[tokio::test]
@@ -427,7 +427,7 @@
         <span class="macro">assert_eq!</span>(
             values,
             <span class="macro">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">12</span>, <span class="number">12</span>, <span class="number">24</span>, <span class="number">35</span>, <span class="number">56</span>, <span class="number">90</span>]
-        )
+        );
     }
 }
 </code></pre></div></section></main></body></html>

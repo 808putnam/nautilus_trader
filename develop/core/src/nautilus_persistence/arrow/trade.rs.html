@@ -314,87 +314,6 @@
 <a href="#314" id="314">314</a>
 <a href="#315" id="315">315</a>
 <a href="#316" id="316">316</a>
-<a href="#317" id="317">317</a>
-<a href="#318" id="318">318</a>
-<a href="#319" id="319">319</a>
-<a href="#320" id="320">320</a>
-<a href="#321" id="321">321</a>
-<a href="#322" id="322">322</a>
-<a href="#323" id="323">323</a>
-<a href="#324" id="324">324</a>
-<a href="#325" id="325">325</a>
-<a href="#326" id="326">326</a>
-<a href="#327" id="327">327</a>
-<a href="#328" id="328">328</a>
-<a href="#329" id="329">329</a>
-<a href="#330" id="330">330</a>
-<a href="#331" id="331">331</a>
-<a href="#332" id="332">332</a>
-<a href="#333" id="333">333</a>
-<a href="#334" id="334">334</a>
-<a href="#335" id="335">335</a>
-<a href="#336" id="336">336</a>
-<a href="#337" id="337">337</a>
-<a href="#338" id="338">338</a>
-<a href="#339" id="339">339</a>
-<a href="#340" id="340">340</a>
-<a href="#341" id="341">341</a>
-<a href="#342" id="342">342</a>
-<a href="#343" id="343">343</a>
-<a href="#344" id="344">344</a>
-<a href="#345" id="345">345</a>
-<a href="#346" id="346">346</a>
-<a href="#347" id="347">347</a>
-<a href="#348" id="348">348</a>
-<a href="#349" id="349">349</a>
-<a href="#350" id="350">350</a>
-<a href="#351" id="351">351</a>
-<a href="#352" id="352">352</a>
-<a href="#353" id="353">353</a>
-<a href="#354" id="354">354</a>
-<a href="#355" id="355">355</a>
-<a href="#356" id="356">356</a>
-<a href="#357" id="357">357</a>
-<a href="#358" id="358">358</a>
-<a href="#359" id="359">359</a>
-<a href="#360" id="360">360</a>
-<a href="#361" id="361">361</a>
-<a href="#362" id="362">362</a>
-<a href="#363" id="363">363</a>
-<a href="#364" id="364">364</a>
-<a href="#365" id="365">365</a>
-<a href="#366" id="366">366</a>
-<a href="#367" id="367">367</a>
-<a href="#368" id="368">368</a>
-<a href="#369" id="369">369</a>
-<a href="#370" id="370">370</a>
-<a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a>
-<a href="#373" id="373">373</a>
-<a href="#374" id="374">374</a>
-<a href="#375" id="375">375</a>
-<a href="#376" id="376">376</a>
-<a href="#377" id="377">377</a>
-<a href="#378" id="378">378</a>
-<a href="#379" id="379">379</a>
-<a href="#380" id="380">380</a>
-<a href="#381" id="381">381</a>
-<a href="#382" id="382">382</a>
-<a href="#383" id="383">383</a>
-<a href="#384" id="384">384</a>
-<a href="#385" id="385">385</a>
-<a href="#386" id="386">386</a>
-<a href="#387" id="387">387</a>
-<a href="#388" id="388">388</a>
-<a href="#389" id="389">389</a>
-<a href="#390" id="390">390</a>
-<a href="#391" id="391">391</a>
-<a href="#392" id="392">392</a>
-<a href="#393" id="393">393</a>
-<a href="#394" id="394">394</a>
-<a href="#395" id="395">395</a>
-<a href="#396" id="396">396</a>
-<a href="#397" id="397">397</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -413,7 +332,7 @@
 </span><span class="kw">use </span>std::{collections::HashMap, str::FromStr, sync::Arc};
 
 <span class="kw">use </span>datafusion::arrow::{
-    array::{Array, Int64Array, StringArray, StringBuilder, UInt64Array, UInt8Array},
+    array::{Int64Array, StringArray, StringBuilder, UInt64Array, UInt8Array},
     datatypes::{DataType, Field, Schema},
     record_batch::RecordBatch,
 };
@@ -425,8 +344,8 @@
 };
 
 <span class="kw">use super</span>::{
-    DecodeDataFromRecordBatch, EncodingError, KEY_INSTRUMENT_ID, KEY_PRICE_PRECISION,
-    KEY_SIZE_PRECISION,
+    extract_column, DecodeDataFromRecordBatch, EncodingError, KEY_INSTRUMENT_ID,
+    KEY_PRICE_PRECISION, KEY_SIZE_PRECISION,
 };
 <span class="kw">use </span><span class="kw">crate</span>::arrow::{ArrowSchemaProvider, Data, DecodeFromRecordBatch, EncodeToRecordBatch};
 
@@ -527,125 +446,44 @@
         <span class="comment">// Extract field value arrays
         </span><span class="kw">let </span>cols = record_batch.columns();
 
-        <span class="kw">let </span>price_key = <span class="string">&quot;price&quot;</span>;
-        <span class="kw">let </span>price_index = <span class="number">0</span>;
-        <span class="kw">let </span>price_type = DataType::Int64;
-        <span class="kw">let </span>price_values = cols
-            .get(price_index)
-            .ok_or(EncodingError::MissingColumn(price_key, price_index))<span class="question-mark">?</span>;
-        <span class="kw">let </span>price_values = price_values.as_any().downcast_ref::&lt;Int64Array&gt;().ok_or(
-            EncodingError::InvalidColumnType(
-                price_key,
-                price_index,
-                price_type,
-                price_values.data_type().clone(),
-            ),
-        )<span class="question-mark">?</span>;
-
-        <span class="kw">let </span>size_key = <span class="string">&quot;size&quot;</span>;
-        <span class="kw">let </span>size_index = <span class="number">1</span>;
-        <span class="kw">let </span>size_type = DataType::UInt64;
-        <span class="kw">let </span>size_values = cols
-            .get(size_index)
-            .ok_or(EncodingError::MissingColumn(size_key, size_index))<span class="question-mark">?</span>;
-        <span class="kw">let </span>size_values = size_values.as_any().downcast_ref::&lt;UInt64Array&gt;().ok_or(
-            EncodingError::InvalidColumnType(
-                size_key,
-                size_index,
-                size_type,
-                size_values.data_type().clone(),
-            ),
-        )<span class="question-mark">?</span>;
-
-        <span class="kw">let </span>aggressor_side_key = <span class="string">&quot;aggressor_side&quot;</span>;
-        <span class="kw">let </span>aggressor_side_index = <span class="number">2</span>;
-        <span class="kw">let </span>aggressor_side_type = DataType::UInt8;
+        <span class="kw">let </span>price_values = extract_column::&lt;Int64Array&gt;(cols, <span class="string">&quot;price&quot;</span>, <span class="number">0</span>, DataType::Int64)<span class="question-mark">?</span>;
+        <span class="kw">let </span>size_values = extract_column::&lt;UInt64Array&gt;(cols, <span class="string">&quot;size&quot;</span>, <span class="number">1</span>, DataType::UInt64)<span class="question-mark">?</span>;
         <span class="kw">let </span>aggressor_side_values =
-            cols.get(aggressor_side_index)
-                .ok_or(EncodingError::MissingColumn(
-                    aggressor_side_key,
-                    aggressor_side_index,
-                ))<span class="question-mark">?</span>;
-        <span class="kw">let </span>aggressor_side_values = aggressor_side_values
-            .as_any()
-            .downcast_ref::&lt;UInt8Array&gt;()
-            .ok_or(EncodingError::InvalidColumnType(
-                aggressor_side_key,
-                aggressor_side_index,
-                aggressor_side_type,
-                aggressor_side_values.data_type().clone(),
-            ))<span class="question-mark">?</span>;
+            extract_column::&lt;UInt8Array&gt;(cols, <span class="string">&quot;aggressor_side&quot;</span>, <span class="number">2</span>, DataType::UInt8)<span class="question-mark">?</span>;
+        <span class="kw">let </span>trade_id_values = extract_column::&lt;StringArray&gt;(cols, <span class="string">&quot;trade_id&quot;</span>, <span class="number">3</span>, DataType::Utf8)<span class="question-mark">?</span>;
+        <span class="kw">let </span>ts_event_values = extract_column::&lt;UInt64Array&gt;(cols, <span class="string">&quot;ts_event&quot;</span>, <span class="number">4</span>, DataType::UInt64)<span class="question-mark">?</span>;
+        <span class="kw">let </span>ts_init_values = extract_column::&lt;UInt64Array&gt;(cols, <span class="string">&quot;ts_init&quot;</span>, <span class="number">5</span>, DataType::UInt64)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>trade_id = <span class="string">&quot;trade_id&quot;</span>;
-        <span class="kw">let </span>trade_id_index = <span class="number">3</span>;
-        <span class="kw">let </span>trade_id_type = DataType::Utf8;
-        <span class="kw">let </span>trade_id_values = cols
-            .get(trade_id_index)
-            .ok_or(EncodingError::MissingColumn(trade_id, trade_id_index))<span class="question-mark">?</span>;
-        <span class="kw">let </span>trade_id_values = trade_id_values
-            .as_any()
-            .downcast_ref::&lt;StringArray&gt;()
-            .ok_or(EncodingError::InvalidColumnType(
-                trade_id,
-                trade_id_index,
-                trade_id_type,
-                trade_id_values.data_type().clone(),
-            ))<span class="question-mark">?</span>;
+        <span class="comment">// Map record batch rows to vector of objects
+        </span><span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="self">Self</span>&gt;, EncodingError&gt; = (<span class="number">0</span>..record_batch.num_rows())
+            .map(|i| {
+                <span class="kw">let </span>price = Price::from_raw(price_values.value(i), price_precision);
+                <span class="kw">let </span>size = Quantity::from_raw(size_values.value(i), size_precision);
+                <span class="kw">let </span>aggressor_side_value = aggressor_side_values.value(i);
+                <span class="kw">let </span>aggressor_side = AggressorSide::from_repr(aggressor_side_value <span class="kw">as </span>usize)
+                    .ok_or_else(|| {
+                        EncodingError::ParseError(
+                            <span class="macro">stringify!</span>(AggressorSide),
+                            <span class="macro">format!</span>(<span class="string">&quot;Invalid enum value, was {aggressor_side_value}&quot;</span>),
+                        )
+                    })<span class="question-mark">?</span>;
+                <span class="kw">let </span>trade_id = TradeId::from(trade_id_values.value(i));
+                <span class="kw">let </span>ts_event = ts_event_values.value(i);
+                <span class="kw">let </span>ts_init = ts_init_values.value(i);
 
-        <span class="kw">let </span>ts_event = <span class="string">&quot;ts_event&quot;</span>;
-        <span class="kw">let </span>ts_event_index = <span class="number">4</span>;
-        <span class="kw">let </span>ts_event_type = DataType::UInt64;
-        <span class="kw">let </span>ts_event_values = cols
-            .get(ts_event_index)
-            .ok_or(EncodingError::MissingColumn(ts_event, ts_event_index))<span class="question-mark">?</span>;
-        <span class="kw">let </span>ts_event_values = ts_event_values
-            .as_any()
-            .downcast_ref::&lt;UInt64Array&gt;()
-            .ok_or(EncodingError::InvalidColumnType(
-                ts_event,
-                ts_event_index,
-                ts_event_type,
-                ts_event_values.data_type().clone(),
-            ))<span class="question-mark">?</span>;
-
-        <span class="kw">let </span>ts_init = <span class="string">&quot;ts_init&quot;</span>;
-        <span class="kw">let </span>ts_init_index = <span class="number">5</span>;
-        <span class="kw">let </span>ts_inir_type = DataType::UInt64;
-        <span class="kw">let </span>ts_init_values = cols
-            .get(ts_init_index)
-            .ok_or(EncodingError::MissingColumn(ts_init, ts_init_index))<span class="question-mark">?</span>;
-        <span class="kw">let </span>ts_init_values = ts_init_values
-            .as_any()
-            .downcast_ref::&lt;UInt64Array&gt;()
-            .ok_or(EncodingError::InvalidColumnType(
-                ts_init,
-                ts_init_index,
-                ts_inir_type,
-                ts_init_values.data_type().clone(),
-            ))<span class="question-mark">?</span>;
-
-        <span class="comment">// Construct iterator of values from arrays
-        </span><span class="kw">let </span>values = price_values
-            .into_iter()
-            .zip(size_values)
-            .zip(aggressor_side_values)
-            .zip(trade_id_values)
-            .zip(ts_event_values)
-            .zip(ts_init_values)
-            .map(
-                |(((((price, size), aggressor_side), trade_id), ts_event), ts_init)| <span class="self">Self </span>{
+                <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
                     instrument_id,
-                    price: Price::from_raw(price.unwrap(), price_precision),
-                    size: Quantity::from_raw(size.unwrap(), size_precision),
-                    aggressor_side: AggressorSide::from_repr(aggressor_side.unwrap() <span class="kw">as </span>usize)
-                        .expect(<span class="string">&quot;cannot parse enum value&quot;</span>),
-                    trade_id: TradeId::new(trade_id.unwrap()).unwrap(),
-                    ts_event: ts_event.unwrap(),
-                    ts_init: ts_init.unwrap(),
-                },
-            );
+                    price,
+                    size,
+                    aggressor_side,
+                    trade_id,
+                    ts_event,
+                    ts_init,
+                })
+            })
+            .collect();
 
-        <span class="prelude-val">Ok</span>(values.collect())
+        result
     }
 }
 
@@ -667,7 +505,7 @@
     <span class="kw">use </span>std::sync::Arc;
 
     <span class="kw">use </span>datafusion::arrow::{
-        array::{Int64Array, StringArray, UInt64Array, UInt8Array},
+        array::{Array, Int64Array, StringArray, UInt64Array, UInt8Array},
         record_batch::RecordBatch,
     };
     <span class="kw">use </span>rstest::rstest;

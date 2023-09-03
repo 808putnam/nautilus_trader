@@ -236,15 +236,15 @@
     }
 
     <span class="kw">fn </span>handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.py_update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
+        <span class="self">self</span>.py_update_raw(tick.extract_price(<span class="self">self</span>.price_type).into());
     }
 
     <span class="kw">fn </span>handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>tick.price).into())
+        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>tick.price).into());
     }
 
     <span class="kw">fn </span>handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
-        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>bar.close).into())
+        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>bar.close).into());
     }
 
     <span class="kw">fn </span>reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
@@ -306,27 +306,27 @@
 
     <span class="attr">#[pyo3(name = <span class="string">&quot;handle_quote_tick&quot;</span>)]
     </span><span class="kw">fn </span>py_handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.py_update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
+        <span class="self">self</span>.py_update_raw(tick.extract_price(<span class="self">self</span>.price_type).into());
     }
 
     <span class="attr">#[pyo3(name = <span class="string">&quot;handle_trade_tick&quot;</span>)]
     </span><span class="kw">fn </span>py_handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into())
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into());
     }
 
     <span class="attr">#[pyo3(name = <span class="string">&quot;handle_bar&quot;</span>)]
     </span><span class="kw">fn </span>py_handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into())
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into());
     }
 
     <span class="attr">#[pyo3(name = <span class="string">&quot;reset&quot;</span>)]
     </span><span class="kw">fn </span>py_reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="self">self</span>.reset()
+        <span class="self">self</span>.reset();
     }
 
     <span class="attr">#[pyo3(name = <span class="string">&quot;update_raw&quot;</span>)]
     </span><span class="kw">fn </span>py_update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
-        <span class="self">self</span>.update_raw(value)
+        <span class="self">self</span>.update_raw(value);
     }
 }
 

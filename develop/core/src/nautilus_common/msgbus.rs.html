@@ -338,7 +338,7 @@
 
     <span class="kw">fn </span>send(<span class="kw-2">&amp;</span><span class="self">self</span>, endpoint: <span class="kw-2">&amp;</span>String, msg: <span class="kw-2">&amp;</span>Message) {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(handler) = <span class="self">self</span>.endpoints.get(endpoint) {
-            handler(msg)
+            handler(msg);
         }
     }
 
@@ -351,7 +351,7 @@
                 } <span class="kw">else </span>{
                     <span class="self">self</span>.correlation_index.insert(<span class="kw-2">*</span>id, callback);
                     <span class="kw">if let </span><span class="prelude-val">Some</span>(handler) = <span class="self">self</span>.endpoints.get(endpoint) {
-                        handler(request)
+                        handler(request);
                     } <span class="kw">else </span>{
                         <span class="comment">// TODO: log error
                     </span>}
@@ -372,7 +372,7 @@
                 correlation_id,
             } =&gt; {
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(callback) = <span class="self">self</span>.correlation_index.get(correlation_id) {
-                    callback(response)
+                    callback(response);
                 } <span class="kw">else </span>{
                     <span class="comment">// TODO: log error
                 </span>}
@@ -420,7 +420,7 @@
         </span><span class="kw">let </span>handlers = entry.or_insert_with(matching_handlers);
 
         <span class="comment">// call matched handlers
-        </span>handlers.iter().for_each(|handler| handler(msg))
+        </span>handlers.iter().for_each(|handler| handler(msg));
     }
 }
 
@@ -449,7 +449,7 @@
             } <span class="kw">else if </span>pc == <span class="string">&#39;?&#39; </span>|| tc == pc {
                 table[i + <span class="number">1</span>][j + <span class="number">1</span>] = table[i][j];
             }
-        })
+        });
     });
 
     table[n][m]

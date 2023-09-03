@@ -230,8 +230,6 @@
 <a href="#230" id="230">230</a>
 <a href="#231" id="231">231</a>
 <a href="#232" id="232">232</a>
-<a href="#233" id="233">233</a>
-<a href="#234" id="234">234</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! A rate limiter implementation heavily inspired by [governor](https://github.com/antifuchs/governor)
 //!
 //! The governor does not support different quota for different key. It is an open [issue](https://github.com/antifuchs/governor/issues/193)
@@ -378,7 +376,7 @@
     </span>K: Hash + Eq + Clone,
 {
     <span class="kw">pub fn </span>advance_clock(<span class="kw-2">&amp;</span><span class="self">self</span>, by: Duration) {
-        <span class="self">self</span>.clock.advance(by)
+        <span class="self">self</span>.clock.advance(by);
     }
 }
 
@@ -394,11 +392,9 @@
     <span class="kw">pub fn </span>check_key(<span class="kw-2">&amp;</span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>K) -&gt; <span class="prelude-ty">Result</span>&lt;(), NotUntil&lt;C::Instant&gt;&gt; {
         <span class="kw">match </span><span class="self">self</span>.gcra.get(key) {
             <span class="prelude-val">Some</span>(quota) =&gt; quota.test_and_update(<span class="self">self</span>.start, key, <span class="kw-2">&amp;</span><span class="self">self</span>.state, <span class="self">self</span>.clock.now()),
-            <span class="prelude-val">None </span>=&gt; <span class="self">self
-                </span>.default_gcra
-                .as_ref()
-                .map(|gcra| gcra.test_and_update(<span class="self">self</span>.start, key, <span class="kw-2">&amp;</span><span class="self">self</span>.state, <span class="self">self</span>.clock.now()))
-                .unwrap_or(<span class="prelude-val">Ok</span>(())),
+            <span class="prelude-val">None </span>=&gt; <span class="self">self</span>.default_gcra.as_ref().map_or(<span class="prelude-val">Ok</span>(()), |gcra| {
+                gcra.test_and_update(<span class="self">self</span>.start, key, <span class="kw-2">&amp;</span><span class="self">self</span>.state, <span class="self">self</span>.clock.now())
+            }),
         }
     }
 

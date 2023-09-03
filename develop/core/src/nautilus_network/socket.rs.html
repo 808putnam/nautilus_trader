@@ -565,7 +565,7 @@
                     <span class="macro">debug!</span>(<span class="string">&quot;Sending heartbeat&quot;</span>);
                     <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
                     <span class="kw">match </span>guard.write_all(<span class="kw-2">&amp;</span>message).<span class="kw">await </span>{
-                        <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Sent heartbeat&quot;</span>),
+                        <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Sent heartbeat&quot;</span>),
                         <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Failed to send heartbeat: {}&quot;</span>, err),
                     }
                 }

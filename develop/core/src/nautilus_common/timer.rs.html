@@ -268,6 +268,7 @@
 <a href="#268" id="268">268</a>
 <a href="#269" id="269">269</a>
 <a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -316,7 +317,7 @@
     </span><span class="kw">pub fn </span>new(name: String, event_id: UUID4, ts_event: UnixNanos, ts_init: UnixNanos) -&gt; <span class="self">Self </span>{
         check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`TimeEvent` name&quot;</span>).unwrap();
 
-        TimeEvent {
+        <span class="self">Self </span>{
             name: Ustr::from(<span class="kw-2">&amp;</span>name),
             event_id,
             ts_event,
@@ -409,7 +410,7 @@
     ) -&gt; <span class="self">Self </span>{
         check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">&quot;`TestTimer` name&quot;</span>).unwrap();
 
-        TestTimer {
+        <span class="self">Self </span>{
             name,
             interval_ns,
             start_time_ns,
@@ -419,7 +420,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>pop_event(<span class="kw-2">&amp;</span><span class="self">self</span>, event_id: UUID4, ts_init: UnixNanos) -&gt; TimeEvent {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>pop_event(<span class="kw-2">&amp;</span><span class="self">self</span>, event_id: UUID4, ts_init: UnixNanos) -&gt; TimeEvent {
         TimeEvent {
             name: Ustr::from(<span class="kw-2">&amp;</span><span class="self">self</span>.name),
             event_id,
@@ -429,7 +431,7 @@
     }
 
     <span class="doccomment">/// Advance the test timer forward to the given time, generating a sequence
-    /// of events. A [TimeEvent] is appended for each time a next event is
+    /// of events. A [`TimeEvent`] is appended for each time a next event is
     /// &lt;= the given `to_time_ns`.
     </span><span class="kw">pub fn </span>advance(<span class="kw-2">&amp;mut </span><span class="self">self</span>, to_time_ns: UnixNanos) -&gt; <span class="kw">impl </span>Iterator&lt;Item = TimeEvent&gt; + <span class="lifetime">&#39;_ </span>{
         <span class="kw">let </span>advances =
@@ -503,7 +505,7 @@
         <span class="kw">let _</span>: Vec&lt;TimeEvent&gt; = timer.advance(<span class="number">3</span>).collect();
         <span class="macro">assert_eq!</span>(timer.advance(<span class="number">4</span>).count(), <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(timer.next_time_ns, <span class="number">5</span>);
-        <span class="macro">assert!</span>(!timer.is_expired)
+        <span class="macro">assert!</span>(!timer.is_expired);
     }
 
     <span class="attr">#[rstest]

@@ -748,9 +748,9 @@
         <span class="kw">let </span>ts_event = <span class="number">1</span>;
         <span class="kw">let </span>ts_init = <span class="number">2</span>;
 
-        <span class="kw">let </span>order = BookOrder::new(side, price.clone(), size.clone(), order_id);
+        <span class="kw">let </span>order = BookOrder::new(side, price, size, order_id);
         OrderBookDelta::new(
-            instrument_id.clone(),
+            instrument_id,
             action,
             order,
             flags,
@@ -773,12 +773,12 @@
         <span class="kw">let </span>ts_event = <span class="number">1</span>;
         <span class="kw">let </span>ts_init = <span class="number">2</span>;
 
-        <span class="kw">let </span>order = BookOrder::new(side, price.clone(), size.clone(), order_id);
+        <span class="kw">let </span>order = BookOrder::new(side, price, size, order_id);
 
         <span class="kw">let </span>delta = OrderBookDelta::new(
-            instrument_id.clone(),
+            instrument_id,
             action,
-            order.clone(),
+            order,
             flags,
             sequence,
             ts_event,
