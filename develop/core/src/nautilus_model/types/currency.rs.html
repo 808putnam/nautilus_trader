@@ -447,6 +447,7 @@
 <a href="#447" id="447">447</a>
 <a href="#448" id="448">448</a>
 <a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -468,7 +469,7 @@
     str::FromStr,
 };
 
-<span class="kw">use </span>anyhow::Result;
+<span class="kw">use </span>anyhow::{anyhow, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>nautilus_core::{
     correctness::check_valid_string,
     python::to_pyvalue_err,
@@ -534,21 +535,22 @@
 }
 
 <span class="kw">impl </span>FromStr <span class="kw">for </span>Currency {
-    <span class="kw">type </span><span class="prelude-val">Err </span>= String;
+    <span class="kw">type </span><span class="prelude-val">Err </span>= anyhow::Error;
 
-    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
-        CURRENCY_MAP
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>map_guard = CURRENCY_MAP
             .lock()
-            .unwrap()
+            .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to acquire lock on `CURRENCY_MAP`: {e}&quot;</span>))<span class="question-mark">?</span>;
+        map_guard
             .get(s)
             .copied()
-            .ok_or_else(|| <span class="macro">format!</span>(<span class="string">&quot;Unknown currency: {}&quot;</span>, s))
+            .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Unknown currency: {s}&quot;</span>))
     }
 }
 
 <span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>str&gt; <span class="kw">for </span>Currency {
     <span class="kw">fn </span>from(input: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        input.parse().unwrap_or_else(|err| <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, err))
+        input.parse().unwrap()
     }
 }
 
