@@ -524,10 +524,10 @@
 </span><span class="kw">impl </span>HttpClient {
     <span class="doccomment">/// Create a new HttpClient
     ///
-    /// * `header_keys` - key value pairs for the given `header_keys` are retained from the responses.
-    /// * `keyed_quota` - list of string quota pairs that gives quota for specific key values
-    /// * `default_quota` - the default rate limiting quota for any request.
-    ///   Default quota is optional and no quota is passthrough.
+    /// * `header_keys` - The key value pairs for the given `header_keys` are retained from the responses.
+    /// * `keyed_quota` - A list of string quota pairs that gives quota for specific key values.
+    /// * `default_quota` - The default rate limiting quota for any request.
+    /// Default quota is optional and no quota is passthrough.
     </span><span class="attr">#[new]
     #[pyo3(signature = (header_keys = Vec::new(), keyed_quotas = Vec::new(), default_quota = <span class="prelude-val">None</span>))]
     #[must_use]
@@ -551,13 +551,13 @@
         }
     }
 
-    <span class="doccomment">/// Send an HTTP request
+    <span class="doccomment">/// Send an HTTP request.
     ///
-    /// * `method` - the HTTP method to call
-    /// * `url` - the request is sent to this url
-    /// * `headers` - the header key value pairs in the request
-    /// * `body` - the bytes sent in the body of request
-    /// * `keys` - the keys used for rate limiting the request
+    /// * `method` - The HTTP method to call.
+    /// * `url` - The request is sent to this url.
+    /// * `headers` - The header key value pairs in the request.
+    /// * `body` - The bytes sent in the body of request.
+    /// * `keys` - The keys used for rate limiting the request.
     </span><span class="kw">pub fn </span>request&lt;<span class="lifetime">&#39;py</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         method: HttpMethod,
