@@ -373,6 +373,9 @@
 <a href="#373" id="373">373</a>
 <a href="#374" id="374">374</a>
 <a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -393,6 +396,7 @@
 <span class="kw">use </span>datafusion::arrow::{
     array::{Int64Array, UInt64Array, UInt8Array},
     datatypes::{DataType, Field, Schema},
+    error::ArrowError,
     record_batch::RecordBatch,
 };
 <span class="kw">use </span>nautilus_model::{
@@ -454,7 +458,10 @@
 }
 
 <span class="kw">impl </span>EncodeToRecordBatch <span class="kw">for </span>OrderBookDelta {
-    <span class="kw">fn </span>encode_batch(metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;, data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>]) -&gt; RecordBatch {
+    <span class="kw">fn </span>encode_batch(
+        metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;,
+        data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;RecordBatch, ArrowError&gt; {
         <span class="comment">// Create array builders
         </span><span class="kw">let </span><span class="kw-2">mut </span>action_builder = UInt8Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>side_builder = UInt8Array::builder(data.len());
@@ -505,7 +512,6 @@
                 Arc::new(ts_init_array),
             ],
         )
-        .unwrap()
     }
 }
 
@@ -670,7 +676,7 @@
         };
 
         <span class="kw">let </span>data = <span class="macro">vec!</span>[delta1, delta2];
-        <span class="kw">let </span>record_batch = OrderBookDelta::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>data);
+        <span class="kw">let </span>record_batch = OrderBookDelta::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>data).unwrap();
 
         <span class="kw">let </span>columns = record_batch.columns();
         <span class="kw">let </span>action_values = columns[<span class="number">0</span>].as_any().downcast_ref::&lt;UInt8Array&gt;().unwrap();

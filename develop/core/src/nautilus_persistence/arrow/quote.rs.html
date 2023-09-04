@@ -301,6 +301,9 @@
 <a href="#301" id="301">301</a>
 <a href="#302" id="302">302</a>
 <a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -321,6 +324,7 @@
 <span class="kw">use </span>datafusion::arrow::{
     array::{Int64Array, UInt64Array},
     datatypes::{DataType, Field, Schema},
+    error::ArrowError,
     record_batch::RecordBatch,
 };
 <span class="kw">use </span>nautilus_model::{
@@ -378,7 +382,10 @@
 }
 
 <span class="kw">impl </span>EncodeToRecordBatch <span class="kw">for </span>QuoteTick {
-    <span class="kw">fn </span>encode_batch(metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;, data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>]) -&gt; RecordBatch {
+    <span class="kw">fn </span>encode_batch(
+        metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;,
+        data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;RecordBatch, ArrowError&gt; {
         <span class="comment">// Create array builders
         </span><span class="kw">let </span><span class="kw-2">mut </span>bid_price_builder = Int64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ask_price_builder = Int64Array::builder(data.len());
@@ -417,7 +424,6 @@
                 Arc::new(ts_init_array),
             ],
         )
-        .unwrap()
     }
 }
 
@@ -543,7 +549,7 @@
 
         <span class="kw">let </span>data = <span class="macro">vec!</span>[tick1, tick2];
         <span class="kw">let </span>metadata: HashMap&lt;String, String&gt; = HashMap::new();
-        <span class="kw">let </span>record_batch = QuoteTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>data);
+        <span class="kw">let </span>record_batch = QuoteTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>data).unwrap();
 
         <span class="comment">// Verify the encoded data
         </span><span class="kw">let </span>columns = record_batch.columns();

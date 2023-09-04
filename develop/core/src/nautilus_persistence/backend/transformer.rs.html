@@ -267,6 +267,33 @@
 <a href="#267" id="267">267</a>
 <a href="#268" id="268">268</a>
 <a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -284,7 +311,10 @@
 
 </span><span class="kw">use </span>std::io::Cursor;
 
-<span class="kw">use </span>datafusion::arrow::{datatypes::Schema, ipc::writer::StreamWriter, record_batch::RecordBatch};
+<span class="kw">use </span>datafusion::arrow::{
+    datatypes::Schema, error::ArrowError, ipc::writer::StreamWriter, record_batch::RecordBatch,
+};
+<span class="kw">use </span>nautilus_core::python::to_pyvalue_err;
 <span class="kw">use </span>nautilus_model::data::{bar::Bar, delta::OrderBookDelta, quote::QuoteTick, trade::TradeTick};
 <span class="kw">use </span>pyo3::{
     exceptions::{PyRuntimeError, PyTypeError, PyValueError},
@@ -397,12 +427,12 @@
         data: Vec&lt;PyObject&gt;,
     ) -&gt; PyResult&lt;Py&lt;PyBytes&gt;&gt; {
         <span class="kw">if </span>data.is_empty() {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(PyValueError::new_err(ERROR_EMPTY_DATA));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(to_pyvalue_err(ERROR_EMPTY_DATA));
         }
 
         <span class="kw">let </span>data_type: String = data
             .first()
-            .unwrap() <span class="comment">// Safety: already checked that `data` not empty above
+            .unwrap() <span class="comment">// SAFETY: already checked that `data` not empty above
             </span>.as_ref(py)
             .getattr(<span class="string">&quot;__class__&quot;</span>)<span class="question-mark">?
             </span>.getattr(<span class="string">&quot;__name__&quot;</span>)<span class="question-mark">?
@@ -441,6 +471,7 @@
         }
 
         <span class="comment">// Take first element and extract metadata
+        // SAFETY: already checked that `data` not empty above
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = OrderBookDelta::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
@@ -449,13 +480,18 @@
         );
 
         <span class="comment">// Encode data to record batches
-        </span><span class="kw">let </span>batches: Vec&lt;RecordBatch&gt; = data
+        </span><span class="kw">let </span>batches: <span class="prelude-ty">Result</span>&lt;Vec&lt;RecordBatch&gt;, ArrowError&gt; = data
             .into_iter()
-            .map(|delta| OrderBookDelta::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[delta]))
+            .map(|d| OrderBookDelta::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[d]))
             .collect();
 
-        <span class="kw">let </span>schema = OrderBookDelta::get_schema(<span class="prelude-val">Some</span>(metadata));
-        <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
+        <span class="kw">match </span>batches {
+            <span class="prelude-val">Ok</span>(batches) =&gt; {
+                <span class="kw">let </span>schema = OrderBookDelta::get_schema(<span class="prelude-val">Some</span>(metadata));
+                <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
+            }
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(to_pyvalue_err(e)),
+        }
     }
 
     <span class="attr">#[staticmethod]
@@ -464,10 +500,11 @@
         data: Vec&lt;QuoteTick&gt;,
     ) -&gt; PyResult&lt;Py&lt;PyBytes&gt;&gt; {
         <span class="kw">if </span>data.is_empty() {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(PyValueError::new_err(ERROR_EMPTY_DATA));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(to_pyvalue_err(ERROR_EMPTY_DATA));
         }
 
         <span class="comment">// Take first element and extract metadata
+        // SAFETY: already checked that `data` not empty above
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
@@ -476,13 +513,18 @@
         );
 
         <span class="comment">// Encode data to record batches
-        </span><span class="kw">let </span>batches: Vec&lt;RecordBatch&gt; = data
+        </span><span class="kw">let </span>batches: <span class="prelude-ty">Result</span>&lt;Vec&lt;RecordBatch&gt;, ArrowError&gt; = data
             .into_iter()
-            .map(|quote| QuoteTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[quote]))
+            .map(|q| QuoteTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[q]))
             .collect();
 
-        <span class="kw">let </span>schema = QuoteTick::get_schema(<span class="prelude-val">Some</span>(metadata));
-        <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
+        <span class="kw">match </span>batches {
+            <span class="prelude-val">Ok</span>(batches) =&gt; {
+                <span class="kw">let </span>schema = QuoteTick::get_schema(<span class="prelude-val">Some</span>(metadata));
+                <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
+            }
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(to_pyvalue_err(e)),
+        }
     }
 
     <span class="attr">#[staticmethod]
@@ -491,10 +533,11 @@
         data: Vec&lt;TradeTick&gt;,
     ) -&gt; PyResult&lt;Py&lt;PyBytes&gt;&gt; {
         <span class="kw">if </span>data.is_empty() {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(PyValueError::new_err(ERROR_EMPTY_DATA));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(to_pyvalue_err(ERROR_EMPTY_DATA));
         }
 
         <span class="comment">// Take first element and extract metadata
+        // SAFETY: already checked that `data` not empty above
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = TradeTick::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
@@ -503,22 +546,28 @@
         );
 
         <span class="comment">// Encode data to record batches
-        </span><span class="kw">let </span>batches: Vec&lt;RecordBatch&gt; = data
+        </span><span class="kw">let </span>batches: <span class="prelude-ty">Result</span>&lt;Vec&lt;RecordBatch&gt;, ArrowError&gt; = data
             .into_iter()
-            .map(|trade| TradeTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[trade]))
+            .map(|t| TradeTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[t]))
             .collect();
 
-        <span class="kw">let </span>schema = TradeTick::get_schema(<span class="prelude-val">Some</span>(metadata));
-        <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
+        <span class="kw">match </span>batches {
+            <span class="prelude-val">Ok</span>(batches) =&gt; {
+                <span class="kw">let </span>schema = TradeTick::get_schema(<span class="prelude-val">Some</span>(metadata));
+                <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
+            }
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(to_pyvalue_err(e)),
+        }
     }
 
     <span class="attr">#[staticmethod]
     </span><span class="kw">pub fn </span>pyo3_bars_to_batches_bytes(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, data: Vec&lt;Bar&gt;) -&gt; PyResult&lt;Py&lt;PyBytes&gt;&gt; {
         <span class="kw">if </span>data.is_empty() {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(PyValueError::new_err(ERROR_EMPTY_DATA));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(to_pyvalue_err(ERROR_EMPTY_DATA));
         }
 
         <span class="comment">// Take first element and extract metadata
+        // SAFETY: already checked that `data` not empty above
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = Bar::get_metadata(
             <span class="kw-2">&amp;</span>first.bar_type,
@@ -527,13 +576,18 @@
         );
 
         <span class="comment">// Encode data to record batches
-        </span><span class="kw">let </span>batches: Vec&lt;RecordBatch&gt; = data
+        </span><span class="kw">let </span>batches: <span class="prelude-ty">Result</span>&lt;Vec&lt;RecordBatch&gt;, ArrowError&gt; = data
             .into_iter()
-            .map(|bar| Bar::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[bar]))
+            .map(|b| Bar::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>[b]))
             .collect();
 
-        <span class="kw">let </span>schema = Bar::get_schema(<span class="prelude-val">Some</span>(metadata));
-        <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
+        <span class="kw">match </span>batches {
+            <span class="prelude-val">Ok</span>(batches) =&gt; {
+                <span class="kw">let </span>schema = Bar::get_schema(<span class="prelude-val">Some</span>(metadata));
+                <span class="self">Self</span>::record_batches_to_pybytes(py, batches, schema)
+            }
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(to_pyvalue_err(e)),
+        }
     }
 }
 </code></pre></div></section></main></body></html>

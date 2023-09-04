@@ -314,6 +314,9 @@
 <a href="#314" id="314">314</a>
 <a href="#315" id="315">315</a>
 <a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -334,6 +337,7 @@
 <span class="kw">use </span>datafusion::arrow::{
     array::{Int64Array, StringArray, StringBuilder, UInt64Array, UInt8Array},
     datatypes::{DataType, Field, Schema},
+    error::ArrowError,
     record_batch::RecordBatch,
 };
 <span class="kw">use </span>nautilus_model::{
@@ -392,7 +396,10 @@
 }
 
 <span class="kw">impl </span>EncodeToRecordBatch <span class="kw">for </span>TradeTick {
-    <span class="kw">fn </span>encode_batch(metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;, data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>]) -&gt; RecordBatch {
+    <span class="kw">fn </span>encode_batch(
+        metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;,
+        data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;RecordBatch, ArrowError&gt; {
         <span class="comment">// Create array builders
         </span><span class="kw">let </span><span class="kw-2">mut </span>price_builder = Int64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>size_builder = UInt64Array::builder(data.len());
@@ -431,7 +438,6 @@
                 Arc::new(ts_init_array),
             ],
         )
-        .unwrap()
     }
 }
 
@@ -569,7 +575,7 @@
         };
 
         <span class="kw">let </span>data = <span class="macro">vec!</span>[tick1, tick2];
-        <span class="kw">let </span>record_batch = TradeTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>data);
+        <span class="kw">let </span>record_batch = TradeTick::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>data).unwrap();
 
         <span class="comment">// Verify the encoded data
         </span><span class="kw">let </span>columns = record_batch.columns();

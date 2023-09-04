@@ -151,6 +151,10 @@
 <a href="#151" id="151">151</a>
 <a href="#152" id="152">152</a>
 <a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -179,6 +183,7 @@
 <span class="kw">use </span>datafusion::arrow::{
     array::{Array, ArrayRef},
     datatypes::{DataType, Schema},
+    error::ArrowError,
     ipc::writer::StreamWriter,
     record_batch::RecordBatch,
 };
@@ -247,7 +252,10 @@
 <span class="kw">where
     </span><span class="self">Self</span>: Sized + ArrowSchemaProvider,
 {
-    <span class="kw">fn </span>encode_batch(metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;, data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>]) -&gt; RecordBatch;
+    <span class="kw">fn </span>encode_batch(
+        metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;,
+        data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>],
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;RecordBatch, ArrowError&gt;;
 }
 
 <span class="kw">pub trait </span>DecodeFromRecordBatch
