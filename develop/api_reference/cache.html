@@ -1304,6 +1304,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.is_order_pending_cancel_local">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.is_order_pending_cancel_local()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.is_position_closed">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1920,6 +1929,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   Cache.update_order()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.update_order_pending_cancel_local">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.update_order_pending_cancel_local()
                  </span>
                 </code>
                </a>
@@ -2625,6 +2643,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   CacheFacade.is_order_open()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.base.CacheFacade.is_order_pending_cancel_local">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  CacheFacade.is_order_pending_cancel_local()
                  </span>
                 </code>
                </a>
@@ -9268,6 +9295,92 @@ given instrument ID.
            <dd>
             <p>
              Return a value indicating whether an order with the given ID is open.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                client_order_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientOrderId" title="nautilus_trader.model.identifiers.ClientOrderId">
+                <em>
+                 ClientOrderId
+                </em>
+               </a>
+               ) – The client order ID to check.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                bool
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.is_order_pending_cancel_local">
+            <span class="sig-name descname">
+             <span class="pre">
+              is_order_pending_cancel_local
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               client_order_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               bool
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.is_order_pending_cancel_local" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return a value indicating whether an order with the given ID is pending cancel locally.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -17055,6 +17168,83 @@ and is open.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.update_order_pending_cancel_local">
+            <span class="sig-name descname">
+             <span class="pre">
+              update_order_pending_cancel_local
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Order
+              </span>
+              <span class="pre">
+               order
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.update_order_pending_cancel_local" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Update the given
+             <cite>
+              order
+             </cite>
+             as pending cancel locally.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                order
+               </strong>
+               (
+               <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.base.Order" title="nautilus_trader.model.orders.base.Order">
+                <em>
+                 Order
+                </em>
+               </a>
+               ) – The order to update.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.update_position">
             <span class="sig-name descname">
              <span class="pre">
@@ -21227,6 +21417,57 @@ and is open.
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.is_order_open" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.base.CacheFacade.is_order_pending_cancel_local">
+            <span class="sig-name descname">
+             <span class="pre">
+              is_order_pending_cancel_local
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               client_order_id
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               bool
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.is_order_pending_cancel_local" title="Permalink to this definition">
              ¶
             </a>
            </dt>
