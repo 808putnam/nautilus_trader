@@ -153,6 +153,9 @@
 <a href="#153" id="153">153</a>
 <a href="#154" id="154">154</a>
 <a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -217,7 +220,10 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Python API
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
 #[pymethods]
 </span><span class="kw">impl </span>Ticker {
     <span class="attr">#[new]

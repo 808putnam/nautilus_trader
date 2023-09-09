@@ -615,7 +615,6 @@
 <a href="#615" id="615">615</a>
 <a href="#616" id="616">616</a>
 <a href="#617" id="617">617</a>
-<a href="#618" id="618">618</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -639,7 +638,7 @@
 
 <span class="kw">use </span><span class="kw">super</span>::book::BookIntegrityError;
 <span class="kw">use crate</span>::{
-    data::order::BookOrder,
+    data::order::{BookOrder, OrderId},
     enums::OrderSide,
     orderbook::level::Level,
     types::{price::Price, quantity::Quantity},
@@ -740,30 +739,29 @@
 
     <span class="kw">pub fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order: BookOrder) {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(price) = <span class="self">self</span>.cache.get(<span class="kw-2">&amp;</span>order.order_id) {
-            <span class="kw">let </span>level = <span class="self">self</span>.levels.get_mut(price).unwrap();
-            <span class="kw">if </span>order.price == level.price.value {
-                <span class="comment">// Size update for this level
-                </span>level.update(order);
-            } <span class="kw">else </span>{
-                <span class="comment">// Price update, delete and insert at new level
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(level) = <span class="self">self</span>.levels.get_mut(price) {
+                <span class="kw">if </span>order.price == level.price.value {
+                    <span class="comment">// Update at current price level
+                    </span>level.update(order);
+                    <span class="kw">return</span>;
+                }
+
+                <span class="comment">// Price update: delete and insert at new level
                 </span>level.delete(<span class="kw-2">&amp;</span>order);
                 <span class="kw">if </span>level.is_empty() {
                     <span class="self">self</span>.levels.remove(price);
                 }
-                <span class="self">self</span>.add(order);
             }
-        } <span class="kw">else </span>{
-            <span class="comment">// TODO(cs): Reinstate this with strict mode
-            // None =&gt; panic!(&quot;No order with ID {}&quot;, &amp;order.order_id),
-            </span><span class="self">self</span>.add(order);
         }
+
+        <span class="self">self</span>.add(order);
     }
 
     <span class="kw">pub fn </span>delete(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order: BookOrder) {
         <span class="self">self</span>.remove(order.order_id);
     }
 
-    <span class="kw">pub fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order_id: u64) {
+    <span class="kw">pub fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order_id: OrderId) {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(price) = <span class="self">self</span>.cache.remove(<span class="kw-2">&amp;</span>order_id) {
             <span class="kw">let </span>level = <span class="self">self</span>.levels.get_mut(<span class="kw-2">&amp;</span>price).unwrap();
             level.remove(order_id);

@@ -458,6 +458,7 @@
 <a href="#458" id="458">458</a>
 <a href="#459" id="459">459</a>
 <a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -490,6 +491,8 @@
     types::{price::Price, quantity::Quantity},
 };
 
+<span class="kw">pub type </span>OrderId = u64;
+
 <span class="kw">pub const </span>NULL_ORDER: BookOrder = BookOrder {
     side: OrderSide::NoOrderSide,
     price: Price {
@@ -515,7 +518,7 @@
     <span class="doccomment">/// The order size.
     </span><span class="kw">pub </span>size: Quantity,
     <span class="doccomment">/// The order ID.
-    </span><span class="kw">pub </span>order_id: u64,
+    </span><span class="kw">pub </span>order_id: OrderId,
 }
 
 <span class="kw">impl </span>BookOrder {
@@ -612,7 +615,7 @@
 #[pymethods]
 </span><span class="kw">impl </span>BookOrder {
     <span class="attr">#[new]
-    </span><span class="kw">fn </span>py_new(side: OrderSide, price: Price, size: Quantity, order_id: u64) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">fn </span>py_new(side: OrderSide, price: Price, size: Quantity, order_id: OrderId) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>::new(side, price, size, order_id)
     }
 
@@ -718,7 +721,6 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Tests
 ////////////////////////////////////////////////////////////////////////////////
-
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>rstest::rstest;

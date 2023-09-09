@@ -429,6 +429,8 @@
 <a href="#429" id="429">429</a>
 <a href="#430" id="430">430</a>
 <a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -455,7 +457,7 @@
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, pyclass::CompareOp, types::PyDict};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 
-<span class="kw">use </span><span class="kw">super</span>::order::{BookOrder, NULL_ORDER};
+<span class="kw">use </span><span class="kw">super</span>::order::{BookOrder, OrderId, NULL_ORDER};
 <span class="kw">use crate</span>::{
     enums::{BookAction, FromU8, OrderSide},
     identifiers::instrument_id::InstrumentId,
@@ -555,7 +557,7 @@
             <span class="kw">let </span>size_prec: u8 = size_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
             <span class="kw">let </span>size = Quantity::from_raw(size_raw, size_prec);
 
-            <span class="kw">let </span>order_id: u64 = order_pyobject.getattr(<span class="string">&quot;order_id&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+            <span class="kw">let </span>order_id: OrderId = order_pyobject.getattr(<span class="string">&quot;order_id&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
             BookOrder {
                 side,
                 price,
@@ -594,7 +596,10 @@
     }
 }
 
-<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Python API
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
 #[pymethods]
 </span><span class="kw">impl </span>OrderBookDelta {
     <span class="attr">#[new]
@@ -725,7 +730,6 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Tests
 ////////////////////////////////////////////////////////////////////////////////
-
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>rstest::rstest;

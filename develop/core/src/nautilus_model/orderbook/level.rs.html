@@ -397,7 +397,7 @@
 </span><span class="kw">use </span>std::cmp::Ordering;
 
 <span class="kw">use crate</span>::{
-    data::order::BookOrder,
+    data::order::{BookOrder, OrderId},
     orderbook::{book::BookIntegrityError, ladder::BookPrice},
     types::fixed::FIXED_SCALAR,
 };
@@ -470,7 +470,7 @@
         <span class="self">self</span>.remove(order.order_id);
     }
 
-    <span class="kw">pub fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order_id: u64) {
+    <span class="kw">pub fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order_id: OrderId) {
         <span class="kw">let </span>index = <span class="self">self
             </span>.orders
             .iter()
