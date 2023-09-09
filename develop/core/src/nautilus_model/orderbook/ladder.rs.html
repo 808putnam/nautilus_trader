@@ -616,9 +616,6 @@
 <a href="#616" id="616">616</a>
 <a href="#617" id="617">617</a>
 <a href="#618" id="618">618</a>
-<a href="#619" id="619">619</a>
-<a href="#620" id="620">620</a>
-<a href="#621" id="621">621</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -840,10 +837,7 @@
         data::order::BookOrder,
         enums::OrderSide,
         orderbook::ladder::{BookPrice, Ladder},
-        types::{
-            price::{Price, PRICE_MAX, PRICE_MIN},
-            quantity::Quantity,
-        },
+        types::{price::Price, quantity::Quantity},
     };
 
     <span class="attr">#[rstest]
@@ -1119,7 +1113,7 @@
         ]);
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::new(PRICE_MAX, <span class="number">2</span>).unwrap(), <span class="comment">// &lt;-- Simulate a MARKET order
+            price: Price::max(<span class="number">2</span>), <span class="comment">// &lt;-- Simulate a MARKET order
             </span>size: Quantity::from(<span class="number">500</span>),
             side: OrderSide::Buy,
             order_id: <span class="number">4</span>,
@@ -1129,17 +1123,17 @@
 
         <span class="macro">assert_eq!</span>(fills.len(), <span class="number">3</span>);
 
-        <span class="kw">let </span>(price1, size1) = <span class="kw-2">&amp;</span>fills[<span class="number">0</span>];
-        <span class="macro">assert_eq!</span>(price1, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;100.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size1, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">100</span>));
+        <span class="kw">let </span>(price1, size1) = fills[<span class="number">0</span>];
+        <span class="macro">assert_eq!</span>(price1, Price::from(<span class="string">&quot;100.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(size1, Quantity::from(<span class="number">100</span>));
 
-        <span class="kw">let </span>(price2, size2) = <span class="kw-2">&amp;</span>fills[<span class="number">1</span>];
-        <span class="macro">assert_eq!</span>(price2, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;101.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size2, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">200</span>));
+        <span class="kw">let </span>(price2, size2) = fills[<span class="number">1</span>];
+        <span class="macro">assert_eq!</span>(price2, Price::from(<span class="string">&quot;101.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(size2, Quantity::from(<span class="number">200</span>));
 
-        <span class="kw">let </span>(price3, size3) = <span class="kw-2">&amp;</span>fills[<span class="number">2</span>];
-        <span class="macro">assert_eq!</span>(price3, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;102.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size3, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">200</span>));
+        <span class="kw">let </span>(price3, size3) = fills[<span class="number">2</span>];
+        <span class="macro">assert_eq!</span>(price3, Price::from(<span class="string">&quot;102.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(size3, Quantity::from(<span class="number">200</span>));
     }
 
     <span class="attr">#[rstest]
@@ -1168,7 +1162,7 @@
         ]);
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::new(PRICE_MIN, <span class="number">2</span>).unwrap(), <span class="comment">// &lt;-- Simulate a MARKET order
+            price: Price::min(<span class="number">2</span>), <span class="comment">// &lt;-- Simulate a MARKET order
             </span>size: Quantity::from(<span class="number">500</span>),
             side: OrderSide::Sell,
             order_id: <span class="number">4</span>,
@@ -1178,17 +1172,17 @@
 
         <span class="macro">assert_eq!</span>(fills.len(), <span class="number">3</span>);
 
-        <span class="kw">let </span>(price1, size1) = <span class="kw-2">&amp;</span>fills[<span class="number">0</span>];
-        <span class="macro">assert_eq!</span>(price1, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;102.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size1, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">100</span>));
+        <span class="kw">let </span>(price1, size1) = fills[<span class="number">0</span>];
+        <span class="macro">assert_eq!</span>(price1, Price::from(<span class="string">&quot;102.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(size1, Quantity::from(<span class="number">100</span>));
 
-        <span class="kw">let </span>(price2, size2) = <span class="kw-2">&amp;</span>fills[<span class="number">1</span>];
-        <span class="macro">assert_eq!</span>(price2, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;101.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size2, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">200</span>));
+        <span class="kw">let </span>(price2, size2) = fills[<span class="number">1</span>];
+        <span class="macro">assert_eq!</span>(price2, Price::from(<span class="string">&quot;101.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(size2, Quantity::from(<span class="number">200</span>));
 
-        <span class="kw">let </span>(price3, size3) = <span class="kw-2">&amp;</span>fills[<span class="number">2</span>];
-        <span class="macro">assert_eq!</span>(price3, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;100.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size3, <span class="kw-2">&amp;</span>Quantity::from(<span class="number">200</span>));
+        <span class="kw">let </span>(price3, size3) = fills[<span class="number">2</span>];
+        <span class="macro">assert_eq!</span>(price3, Price::from(<span class="string">&quot;100.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(size3, Quantity::from(<span class="number">200</span>));
     }
 
     <span class="attr">#[rstest]
@@ -1217,7 +1211,7 @@
         ]);
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::new(PRICE_MIN, <span class="number">2</span>).unwrap(), <span class="comment">// &lt;-- Simulate a MARKET order
+            price: Price::min(<span class="number">2</span>),                  <span class="comment">// &lt;-- Simulate a MARKET order
             </span>size: Quantity::from(<span class="string">&quot;699.999999999&quot;</span>), <span class="comment">// &lt;-- Size slightly less than total size in ladder
             </span>side: OrderSide::Sell,
             order_id: <span class="number">4</span>,
@@ -1227,17 +1221,17 @@
 
         <span class="macro">assert_eq!</span>(fills.len(), <span class="number">3</span>);
 
-        <span class="kw">let </span>(price1, size1) = <span class="kw-2">&amp;</span>fills[<span class="number">0</span>];
-        <span class="macro">assert_eq!</span>(price1, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;102.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size1, <span class="kw-2">&amp;</span>Quantity::from(<span class="string">&quot;100.000000000&quot;</span>));
+        <span class="kw">let </span>(price1, size1) = fills[<span class="number">0</span>];
+        <span class="macro">assert_eq!</span>(price1, Price::from(<span class="string">&quot;102.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(size1, Quantity::from(<span class="string">&quot;100.000000000&quot;</span>));
 
-        <span class="kw">let </span>(price2, size2) = <span class="kw-2">&amp;</span>fills[<span class="number">1</span>];
-        <span class="macro">assert_eq!</span>(price2, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;101.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size2, <span class="kw-2">&amp;</span>Quantity::from(<span class="string">&quot;200.000000000&quot;</span>));
+        <span class="kw">let </span>(price2, size2) = fills[<span class="number">1</span>];
+        <span class="macro">assert_eq!</span>(price2, Price::from(<span class="string">&quot;101.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(size2, Quantity::from(<span class="string">&quot;200.000000000&quot;</span>));
 
-        <span class="kw">let </span>(price3, size3) = <span class="kw-2">&amp;</span>fills[<span class="number">2</span>];
-        <span class="macro">assert_eq!</span>(price3, <span class="kw-2">&amp;</span>Price::from(<span class="string">&quot;100.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size3, <span class="kw-2">&amp;</span>Quantity::from(<span class="string">&quot;399.999999999&quot;</span>));
+        <span class="kw">let </span>(price3, size3) = fills[<span class="number">2</span>];
+        <span class="macro">assert_eq!</span>(price3, Price::from(<span class="string">&quot;100.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(size3, Quantity::from(<span class="string">&quot;399.999999999&quot;</span>));
     }
 }
 </code></pre></div></section></main></body></html>
