@@ -482,8 +482,8 @@
     <span class="comment">// Query a file for all it&#39;s records with a custom query. The caller must
     // specify `T` to indicate what kind of data is expected from this query.
     //
-    // #Safety
-    // They query should ensure the records are ordered by the `ts_init` field
+    // # Safety
+    // The query should ensure the records are ordered by the `ts_init` field
     // in ascending order.
     </span><span class="kw">pub async fn </span>add_file_with_custom_query&lt;T&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
@@ -553,7 +553,7 @@
 #[pymethods]
 </span><span class="kw">impl </span>DataBackendSession {
     <span class="attr">#[new]
-    #[pyo3(signature=(chunk_size=<span class="number">5000</span>))]
+    #[pyo3(signature=(chunk_size=<span class="number">5_000</span>))]
     </span><span class="kw">fn </span>new_session(chunk_size: usize) -&gt; <span class="self">Self </span>{
         <span class="comment">// Initialize runtime here
         </span>get_runtime();

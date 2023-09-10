@@ -330,7 +330,7 @@
 </span><span class="kw">pub struct </span>DataTransformer {}
 
 <span class="kw">impl </span>DataTransformer {
-    <span class="doccomment">/// Transforms the given Python objects `data` into a vector of [`OrderBookDelta`] objects.
+    <span class="doccomment">/// Transforms the given `data` Python objects into a vector of [`OrderBookDelta`] objects.
     </span><span class="kw">fn </span>pyobjects_to_order_book_deltas(
         py: Python&lt;<span class="lifetime">&#39;_</span>&gt;,
         data: Vec&lt;PyObject&gt;,
@@ -342,7 +342,7 @@
         <span class="prelude-val">Ok</span>(deltas)
     }
 
-    <span class="doccomment">/// Transforms the given Python objects `data` into a vector of [`QuoteTick`] objects.
+    <span class="doccomment">/// Transforms the given `data` Python objects into a vector of [`QuoteTick`] objects.
     </span><span class="kw">fn </span>pyobjects_to_quote_ticks(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, data: Vec&lt;PyObject&gt;) -&gt; PyResult&lt;Vec&lt;QuoteTick&gt;&gt; {
         <span class="kw">let </span>ticks: Vec&lt;QuoteTick&gt; = data
             .into_iter()
@@ -351,7 +351,7 @@
         <span class="prelude-val">Ok</span>(ticks)
     }
 
-    <span class="doccomment">/// Transforms the given Python objects `data` into a vector of [`TradeTick`] objects.
+    <span class="doccomment">/// Transforms the given `data` Python objects into a vector of [`TradeTick`] objects.
     </span><span class="kw">fn </span>pyobjects_to_trade_ticks(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, data: Vec&lt;PyObject&gt;) -&gt; PyResult&lt;Vec&lt;TradeTick&gt;&gt; {
         <span class="kw">let </span>ticks: Vec&lt;TradeTick&gt; = data
             .into_iter()
@@ -360,7 +360,7 @@
         <span class="prelude-val">Ok</span>(ticks)
     }
 
-    <span class="doccomment">/// Transforms the given Python objects `data` into a vector of [`Bar`] objects.
+    <span class="doccomment">/// Transforms the given `data` Python objects into a vector of [`Bar`] objects.
     </span><span class="kw">fn </span>pyobjects_to_bars(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, data: Vec&lt;PyObject&gt;) -&gt; PyResult&lt;Vec&lt;Bar&gt;&gt; {
         <span class="kw">let </span>bars: Vec&lt;Bar&gt; = data
             .into_iter()
@@ -432,7 +432,7 @@
 
         <span class="kw">let </span>data_type: String = data
             .first()
-            .unwrap() <span class="comment">// SAFETY: already checked that `data` not empty above
+            .unwrap() <span class="comment">// SAFETY: already checked that `data` not empty
             </span>.as_ref(py)
             .getattr(<span class="string">&quot;__class__&quot;</span>)<span class="question-mark">?
             </span>.getattr(<span class="string">&quot;__name__&quot;</span>)<span class="question-mark">?
@@ -471,7 +471,7 @@
         }
 
         <span class="comment">// Take first element and extract metadata
-        // SAFETY: already checked that `data` not empty above
+        // SAFETY: already checked that `data` not empty
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = OrderBookDelta::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
@@ -504,7 +504,7 @@
         }
 
         <span class="comment">// Take first element and extract metadata
-        // SAFETY: already checked that `data` not empty above
+        // SAFETY: already checked that `data` not empty
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
@@ -537,7 +537,7 @@
         }
 
         <span class="comment">// Take first element and extract metadata
-        // SAFETY: already checked that `data` not empty above
+        // SAFETY: already checked that `data` not empty
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = TradeTick::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
@@ -567,7 +567,7 @@
         }
 
         <span class="comment">// Take first element and extract metadata
-        // SAFETY: already checked that `data` not empty above
+        // SAFETY: already checked that `data` not empty
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = Bar::get_metadata(
             <span class="kw-2">&amp;</span>first.bar_type,
