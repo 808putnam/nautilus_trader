@@ -5480,17 +5480,6 @@ If
               </span>
              </span>
             </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               bool
-              </span>
-              <span class="pre">
-               batch_more=False
-              </span>
-             </span>
-            </em>
             <span class="sig-paren">
              )
             </span>
@@ -5588,63 +5577,9 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
-               <li>
-                <p>
-                 <strong>
-                  batch_more
-                 </strong>
-                 (
-                 <em>
-                  bool
-                 </em>
-                 <em>
-                  ,
-                 </em>
-                 <em>
-                  default False
-                 </em>
-                 ) – Indicates if this command should be batched (grouped) with subsequent cancel order
-commands for the venue. When set to
-                 <cite>
-                  True
-                 </cite>
-                 , we expect more calls to
-                 <cite>
-                  cancel_order
-                 </cite>
-                 which will add to the current batch. Final processing of the batch occurs on a call
-with
-                 <cite>
-                  batch_more=False
-                 </cite>
-                 . For proper behavior, maintain the correct call sequence.
-                </p>
-               </li>
               </ul>
              </dd>
             </dl>
-            <div class="admonition warning">
-             <p class="admonition-title">
-              Warning
-             </p>
-             <p>
-              The
-              <cite>
-               batch_more
-              </cite>
-              flag is an advanced feature which may have unintended consequences if not
-called in the correct sequence. If a series of
-              <cite>
-               batch_more=True
-              </cite>
-              calls are not followed by
-a
-              <cite>
-               batch_more=False
-              </cite>
-              , then no command will be sent from the strategy.
-             </p>
-            </div>
            </dd>
           </dl>
           <dl class="py method">
