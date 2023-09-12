@@ -15726,6 +15726,17 @@ and is open.
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               open_only=True
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -15787,6 +15798,25 @@ and is open.
                   uint64_t
                  </em>
                  ) – The UNIX timestamp (nanoseconds) when the snapshot was taken.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  open_only
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If only open positions should be snapshot, this flag helps to avoid race conditions
+where a position is snapshot when no longer open.
                 </p>
                </li>
               </ul>
