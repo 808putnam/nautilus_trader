@@ -4254,6 +4254,93 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  BatchCancelOrders
+                 </span>
+                </code>
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.client_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.client_id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.from_dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.from_dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.instrument_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.instrument_id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.strategy_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.strategy_id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.to_dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.to_dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.trader_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.trader_id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.ts_init">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.ts_init
+                   </span>
+                  </code>
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.execution.messages.CancelAllOrders">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -41158,6 +41245,636 @@ cache (if found).
            ¶
           </a>
          </h2>
+         <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             BatchCancelOrders
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              TraderId
+             </span>
+             <span class="pre">
+              trader_id
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              StrategyId
+             </span>
+             <span class="pre">
+              strategy_id
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              InstrumentId
+             </span>
+             <span class="pre">
+              instrument_id
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              list
+             </span>
+             <span class="pre">
+              cancels
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              UUID4
+             </span>
+             <span class="pre">
+              command_id
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              uint64_t
+             </span>
+             <span class="pre">
+              ts_init
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              client_id=None
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <a class="reference internal" href="#nautilus_trader.execution.messages.TradingCommand" title="nautilus_trader.execution.messages.TradingCommand">
+             <code class="xref py py-class docutils literal notranslate">
+              <span class="pre">
+               TradingCommand
+              </span>
+             </code>
+            </a>
+           </p>
+           <p>
+            Represents a command to cancel a batch orders for an instrument.
+           </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 trader_id
+                </strong>
+                (
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.TraderId" title="nautilus_trader.model.identifiers.TraderId">
+                 <em>
+                  TraderId
+                 </em>
+                </a>
+                ) – The trader ID for the command.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 strategy_id
+                </strong>
+                (
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
+                 <em>
+                  StrategyId
+                 </em>
+                </a>
+                ) – The strategy ID for the command.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 instrument_id
+                </strong>
+                (
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                 <em>
+                  InstrumentId
+                 </em>
+                </a>
+                ) – The instrument ID for the command.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 cancels
+                </strong>
+                (
+                <em>
+                 list
+                </em>
+                <em>
+                 [
+                </em>
+                <a class="reference internal" href="#nautilus_trader.execution.messages.CancelOrder" title="nautilus_trader.execution.messages.CancelOrder">
+                 <em>
+                  CancelOrder
+                 </em>
+                </a>
+                <em>
+                 ]
+                </em>
+                ) – The inner list of cancel order commands.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 command_id
+                </strong>
+                (
+                <a class="reference internal" href="core.html#nautilus_trader.core.uuid.UUID4" title="nautilus_trader.core.uuid.UUID4">
+                 <em>
+                  UUID4
+                 </em>
+                </a>
+                ) – The command ID.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 ts_init
+                </strong>
+                (
+                <em>
+                 uint64_t
+                </em>
+                ) – The UNIX timestamp (nanoseconds) when the object was initialized.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 client_id
+                </strong>
+                (
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientId" title="nautilus_trader.model.identifiers.ClientId">
+                 <em>
+                  ClientId
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The execution client ID for the command.
+               </p>
+              </li>
+             </ul>
+            </dd>
+            <dt class="field-even">
+             Raises
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-even">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 ValueError
+                </strong>
+                – If
+                <cite>
+                 cancels
+                </cite>
+                is empty.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 ValueError
+                </strong>
+                – If
+                <cite>
+                 cancels
+                </cite>
+                contains a type other than
+                <cite>
+                 CancelOrder
+                </cite>
+                .
+               </p>
+              </li>
+             </ul>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.client_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               client_id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.client_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The execution client ID for the command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 ClientId
+                </cite>
+                or
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.from_dict">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               from_dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                values
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <a class="reference internal" href="#nautilus_trader.execution.messages.BatchCancelOrders" title="nautilus_trader.execution.messages.BatchCancelOrders">
+                <span class="pre">
+                 BatchCancelOrders
+                </span>
+               </a>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.from_dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a batch cancel order command from the given dict values.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 values
+                </strong>
+                (
+                <em>
+                 dict
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 object
+                </em>
+                <em>
+                 ]
+                </em>
+                ) – The values for initialization.
+               </p>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 BatchCancelOrders
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.id">
+             <span class="sig-name descname">
+              <span class="pre">
+               id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The command message ID.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 UUID4
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.instrument_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.instrument_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The instrument ID associated with the command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 InstrumentId
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.strategy_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               strategy_id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.strategy_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The strategy ID associated with the command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 StrategyId
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.to_dict">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               to_dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                BatchCancelOrders
+               </span>
+               <span class="pre">
+                obj
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.to_dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a dictionary representation of this object.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, object]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.trader_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               trader_id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.trader_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The trader ID associated with the command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 TraderId
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.ts_init">
+             <span class="sig-name descname">
+              <span class="pre">
+               ts_init
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.ts_init" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The UNIX timestamp (nanoseconds) when the object was initialized.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 uint64_t
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+          </dd>
+         </dl>
          <dl class="py class">
           <dt class="sig sig-object py" id="nautilus_trader.execution.messages.CancelAllOrders">
            <em class="property">
