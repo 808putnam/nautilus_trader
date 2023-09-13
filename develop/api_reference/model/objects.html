@@ -975,15 +975,6 @@
                 </code>
                </a>
               </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.objects.Price.raw_to_f64">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  Price.raw_to_f64()
-                 </span>
-                </code>
-               </a>
-              </li>
              </ul>
             </li>
             <li class="md-nav__item">
@@ -2323,14 +2314,30 @@
             <p>
              Currency
             </p>
+            <p>
+             Return the currency for the money.
+            </p>
             <dl class="field-list simple">
              <dt class="field-odd">
-              Type
+              Returns
               <span class="colon">
                :
               </span>
              </dt>
              <dd class="field-odd">
+              <p>
+               <em>
+                Currency
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
               <p>
                Money.currency
               </p>
@@ -2358,7 +2365,7 @@
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               uint64_t
+               int64_t
               </span>
               <span class="pre">
                raw
@@ -2379,11 +2386,97 @@
             <span class="sig-paren">
              )
             </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+               <span class="pre">
+                Money
+               </span>
+              </a>
+             </span>
+            </span>
             <a class="headerlink" href="#nautilus_trader.model.objects.Money.from_raw" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
+            <p>
+             Return money from the given
+             <cite>
+              raw
+             </cite>
+             fixed precision integer and
+             <cite>
+              currency
+             </cite>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  raw
+                 </strong>
+                 (
+                 <em>
+                  int64_t
+                 </em>
+                 ) – The raw fixed precision money amount.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  currency
+                 </strong>
+                 (
+                 <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                  <em>
+                   Currency
+                  </em>
+                 </a>
+                 ) – The currency of the money.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Money
+               </em>
+              </p>
+             </dd>
+            </dl>
+            <div class="admonition warning">
+             <p class="admonition-title">
+              Warning
+             </p>
+             <p>
+              Small
+              <cite>
+               raw
+              </cite>
+              values can produce a zero money amount depending on the precision of the currency.
+             </p>
+            </div>
            </dd>
           </dl>
           <dl class="py method">
@@ -3052,11 +3145,137 @@ negative under certain conditions.
             <span class="sig-paren">
              )
             </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+               <span class="pre">
+                Price
+               </span>
+              </a>
+             </span>
+            </span>
             <a class="headerlink" href="#nautilus_trader.model.objects.Price.from_raw" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
+            <p>
+             Return a price from the given
+             <cite>
+              raw
+             </cite>
+             fixed precision integer and
+             <cite>
+              precision
+             </cite>
+             .
+            </p>
+            <p>
+             Handles up to 9 decimals of precision.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  raw
+                 </strong>
+                 (
+                 <em>
+                  int64_t
+                 </em>
+                 ) – The raw fixed precision price value.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  precision
+                 </strong>
+                 (
+                 <em>
+                  uint8_t
+                 </em>
+                 ) – The precision for the price. Use a precision of 0 for whole numbers
+(no fractional units).
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Price
+               </em>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  ValueError
+                 </strong>
+                 – If
+                 <cite>
+                  precision
+                 </cite>
+                 is greater than 9.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  OverflowError
+                 </strong>
+                 – If
+                 <cite>
+                  precision
+                 </cite>
+                 is negative (&lt; 0).
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+            <div class="admonition warning">
+             <p class="admonition-title">
+              Warning
+             </p>
+             <p>
+              Small
+              <cite>
+               raw
+              </cite>
+              values can produce a zero price depending on the
+              <cite>
+               precision
+              </cite>
+              .
+             </p>
+            </div>
            </dd>
           </dl>
           <dl class="py method">
@@ -3274,50 +3493,6 @@ following the ‘.’ point (if no point then precision zero).
               </p>
              </dd>
             </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.objects.Price.raw_to_f64">
-            <em class="property">
-             <span class="pre">
-              static
-             </span>
-             <span class="w">
-             </span>
-            </em>
-            <span class="sig-name descname">
-             <span class="pre">
-              raw_to_f64
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               raw
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               float
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.model.objects.Price.raw_to_f64" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
            </dd>
           </dl>
          </dd>
@@ -3746,7 +3921,7 @@ containing decimal places for instruments denominated in fractional units.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               uint64_t
+               int64_t
               </span>
               <span class="pre">
                raw
@@ -3767,11 +3942,137 @@ containing decimal places for instruments denominated in fractional units.
             <span class="sig-paren">
              )
             </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+               <span class="pre">
+                Quantity
+               </span>
+              </a>
+             </span>
+            </span>
             <a class="headerlink" href="#nautilus_trader.model.objects.Quantity.from_raw" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
+            <p>
+             Return a quantity from the given
+             <cite>
+              raw
+             </cite>
+             fixed precision integer and
+             <cite>
+              precision
+             </cite>
+             .
+            </p>
+            <p>
+             Handles up to 9 decimals of precision.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  raw
+                 </strong>
+                 (
+                 <em>
+                  int64_t
+                 </em>
+                 ) – The raw fixed precision quantity value.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  precision
+                 </strong>
+                 (
+                 <em>
+                  uint8_t
+                 </em>
+                 ) – The precision for the quantity. Use a precision of 0 for whole numbers
+(no fractional units).
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Quantity
+               </em>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  ValueError
+                 </strong>
+                 – If
+                 <cite>
+                  precision
+                 </cite>
+                 is greater than 9.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  OverflowError
+                 </strong>
+                 – If
+                 <cite>
+                  precision
+                 </cite>
+                 is negative (&lt; 0).
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+            <div class="admonition warning">
+             <p class="admonition-title">
+              Warning
+             </p>
+             <p>
+              Small
+              <cite>
+               raw
+              </cite>
+              values can produce a zero quantity depending on the
+              <cite>
+               precision
+              </cite>
+              .
+             </p>
+            </div>
            </dd>
           </dl>
           <dl class="py method">
