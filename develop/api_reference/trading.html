@@ -5525,7 +5525,7 @@ If
              </cite>
              or the
              <cite>
-              RiskEngine
+              ExecutionEngine
              </cite>
              (depending on whether the order is emulated).
             </p>
@@ -5642,7 +5642,7 @@ If
            </dt>
            <dd>
             <p>
-             Cancel the given list of orders with optional routing instructions.
+             Batch cancel the given list of orders with optional routing instructions.
             </p>
             <p>
              For each order in the list, a
@@ -5653,27 +5653,18 @@ If
              <cite>
               BatchCancelOrders
              </cite>
-             command. This command is then sent to
-             <strong>
-              either
-             </strong>
-             the
+             command. This command is then sent to the
              <cite>
-              OrderEmulator
+              ExecutionEngine
              </cite>
-             or the
-             <cite>
-              RiskEngine
-             </cite>
-             (depending on whether the orders are emulated).
+             .
             </p>
             <p>
              Logs an error if the
              <cite>
               orders
              </cite>
-             list contains a combination of emulated and non-emulated
-orders.
+             list contains local/emulated orders.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
