@@ -5584,6 +5584,40 @@ TradeId of ticks will be the Aggregate tradeId returned by Binance.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              use_gtd
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              True
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               use_reduce_only
              </span>
             </span>
@@ -5968,6 +6002,26 @@ If
                  default False
                 </em>
                 ) – If the client is connecting to a Binance testnet.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 use_gtd
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default True
+                </em>
+                ) – If GTD orders will use the Binance GTD TIF option.
+If False then GTD time in force will be remapped to GTC (this is useful if manageing GTD
+orders locally).
                </p>
               </li>
               <li>
