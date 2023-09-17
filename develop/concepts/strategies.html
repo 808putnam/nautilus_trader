@@ -973,39 +973,37 @@ This may be desirable if the exchange/broker does not support this time in force
 reason you prefer the strategy to manage this.
           </p>
           <p>
-           Simply set the
+           To use this option, pass
            <code class="docutils literal notranslate">
             <span class="pre">
-             manage_gtd_expiry
+             manage_gtd_expiry=True
             </span>
            </code>
-           boolean flag on the
+           to your
            <code class="docutils literal notranslate">
             <span class="pre">
-             submit_order()
+             StrategyConfig
             </span>
            </code>
-           or
-           <code class="docutils literal notranslate">
-            <span class="pre">
-             submit_order_list()
-            </span>
-           </code>
-           methods
-to
-           <code class="docutils literal notranslate">
-            <span class="pre">
-             True
-            </span>
-           </code>
-           . This will then start a timer, when the timer expires the order will be canceled (if not already closed).
+           . When an order is submitted with
+a time in force of GTD, the strategy will automatically start an internal time alert.
+Once the internal GTD time alert is reached, the order will be canceled (if not already closed).
           </p>
-          <div class="highlight-python notranslate">
-           <div class="highlight">
-            <pre><span></span><span class="n">strategy</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">manage_gtd_expiry</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre>
-           </div>
-          </div>
+          <p>
+           Some venues (such as Binance Futures) support the GTD time in force, so to avoid conflicts when using
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             managed_gtd_expiry
+            </span>
+           </code>
+           you should set
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             use_gtd=False
+            </span>
+           </code>
+           for your execution client config.
+          </p>
          </section>
         </section>
        </section>

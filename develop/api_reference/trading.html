@@ -1340,6 +1340,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.trading.strategy.Strategy.manage_gtd_expiry">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Strategy.manage_gtd_expiry
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.trading.strategy.Strategy.modify_order">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -9051,6 +9060,38 @@ then the component state will not change, and an error will be logged.
             </dl>
            </dd>
           </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.trading.strategy.Strategy.manage_gtd_expiry">
+            <span class="sig-name descname">
+             <span class="pre">
+              manage_gtd_expiry
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.trading.strategy.Strategy.manage_gtd_expiry" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             If all order GTD time in force expirations should be managed by the strategy.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <cite>
+                bool
+               </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
           <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.trading.strategy.Strategy.modify_order">
             <span class="sig-name descname">
@@ -14772,17 +14813,6 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               bool
-              </span>
-              <span class="pre">
-               manage_gtd_expiry=False
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
                ClientId
               </span>
               <span class="pre">
@@ -14885,24 +14915,6 @@ the order is emulated and/or has an
                  </em>
                  ) – The position ID to submit the order against. If a position does not
 yet exist, then any position opened will have this identifier assigned.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  manage_gtd_expiry
-                 </strong>
-                 (
-                 <em>
-                  bool
-                 </em>
-                 <em>
-                  ,
-                 </em>
-                 <em>
-                  default False
-                 </em>
-                 ) – If any GTD time in force order expiry should be managed by the strategy.
                 </p>
                </li>
                <li>
@@ -15018,17 +15030,6 @@ not be what you intended.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               bool
-              </span>
-              <span class="pre">
-               manage_gtd_expiry=False
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
                ClientId
               </span>
               <span class="pre">
@@ -15123,24 +15124,6 @@ then all orders will be denied.
                  </em>
                  ) – The position ID to submit the order against. If a position does not
 yet exist, then any position opened will have this identifier assigned.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  manage_gtd_expiry
-                 </strong>
-                 (
-                 <em>
-                  bool
-                 </em>
-                 <em>
-                  ,
-                 </em>
-                 <em>
-                  default False
-                 </em>
-                 ) – If any GTD time in force order expiry should be managed by the strategy.
                 </p>
                </li>
                <li>
