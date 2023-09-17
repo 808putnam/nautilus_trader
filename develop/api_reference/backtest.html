@@ -3170,6 +3170,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.indicators_initialized">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.indicators_initialized()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.is_degraded">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -3539,6 +3548,33 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_bars">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.register_indicator_for_bars()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_quote_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.register_indicator_for_quote_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_trade_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.register_indicator_for_trade_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_venue">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -3552,6 +3588,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   FXRolloverInterestModule.register_warning_event()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.registered_indicators">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.registered_indicators
                  </span>
                 </code>
                </a>
@@ -4238,6 +4283,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.indicators_initialized">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.indicators_initialized()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.is_degraded">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -4607,6 +4661,33 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_bars">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.register_indicator_for_bars()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_quote_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.register_indicator_for_quote_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_trade_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.register_indicator_for_trade_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.register_venue">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -4620,6 +4701,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   SimulationModule.register_warning_event()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.registered_indicators">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.registered_indicators
                  </span>
                 </code>
                </a>
@@ -24721,7 +24811,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             Handle the given tick data by handling each tick individually.
+             Handle the given historical trade tick data by handling each tick individually.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -25106,6 +25196,62 @@ then the component state will not change, and an error will be logged.
                <cite>
                 ComponentId
                </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.indicators_initialized">
+            <span class="sig-name descname">
+             <span class="pre">
+              indicators_initialized
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               bool
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.indicators_initialized" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return a value indicating whether all indicators are initialized.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
+               </em>
+               – True if all initialized, else False
               </p>
              </dd>
             </dl>
@@ -28195,6 +28341,313 @@ and so the results of
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_bars">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_bars
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               BarType
+              </span>
+              <span class="pre">
+               bar_type
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_bars" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive bar data for the
+given bar type.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  bar_type
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
+                  <em>
+                   BarType
+                  </em>
+                 </a>
+                 ) – The bar type for bar updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_quote_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_quote_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_quote_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive quote tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_trade_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_trade_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_trade_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive trade tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <em>
+                  indicator
+                 </em>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.register_venue">
             <span class="sig-name descname">
              <span class="pre">
@@ -28333,6 +28786,38 @@ and so the results of
                 type
                </em>
                ) – The event class to register.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.registered_indicators">
+            <span class="sig-name descname">
+             <span class="pre">
+              registered_indicators
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.registered_indicators" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the registered indicators for the strategy.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                list[Indicator]
+               </em>
               </p>
              </dd>
             </dl>
@@ -35831,7 +36316,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             Handle the given tick data by handling each tick individually.
+             Handle the given historical trade tick data by handling each tick individually.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -36216,6 +36701,62 @@ then the component state will not change, and an error will be logged.
                <cite>
                 ComponentId
                </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.indicators_initialized">
+            <span class="sig-name descname">
+             <span class="pre">
+              indicators_initialized
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               bool
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.indicators_initialized" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return a value indicating whether all indicators are initialized.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
+               </em>
+               – True if all initialized, else False
               </p>
              </dd>
             </dl>
@@ -39259,6 +39800,313 @@ and so the results of
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_bars">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_bars
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               BarType
+              </span>
+              <span class="pre">
+               bar_type
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_bars" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive bar data for the
+given bar type.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  bar_type
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
+                  <em>
+                   BarType
+                  </em>
+                 </a>
+                 ) – The bar type for bar updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_quote_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_quote_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_quote_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive quote tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_trade_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_trade_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_trade_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive trade tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <em>
+                  indicator
+                 </em>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.register_venue">
             <span class="sig-name descname">
              <span class="pre">
@@ -39397,6 +40245,38 @@ and so the results of
                 type
                </em>
                ) – The event class to register.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.registered_indicators">
+            <span class="sig-name descname">
+             <span class="pre">
+              registered_indicators
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.registered_indicators" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the registered indicators for the strategy.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                list[Indicator]
+               </em>
               </p>
              </dd>
             </dl>
