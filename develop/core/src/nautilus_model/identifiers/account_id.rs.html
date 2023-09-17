@@ -194,6 +194,8 @@
 <a href="#194" id="194">194</a>
 <a href="#195" id="195">195</a>
 <a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -217,12 +219,14 @@
 
 <span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::correctness::{check_string_contains, check_valid_string};
-<span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>ustr::Ustr;
 
 <span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>AccountId {
     <span class="kw">pub </span>value: Ustr,
 }

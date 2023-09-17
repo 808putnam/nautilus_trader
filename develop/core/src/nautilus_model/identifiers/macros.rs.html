@@ -92,6 +92,35 @@
 <a href="#92" id="92">92</a>
 <a href="#93" id="93">93</a>
 <a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -158,11 +187,36 @@
                 }
             }
 
+            <span class="kw">fn </span>__setstate__(<span class="kw-2">&amp;mut </span><span class="self">self</span>, py: Python, state: PyObject) -&gt; PyResult&lt;()&gt; {
+                <span class="kw">let </span>value: (<span class="kw-2">&amp;</span>PyString,) = state.extract(py)<span class="question-mark">?</span>;
+                <span class="kw">let </span>value_str: String = value.<span class="number">0</span>.extract()<span class="question-mark">?</span>;
+                <span class="self">self</span>.value = Ustr::from_str(<span class="kw-2">&amp;</span>value_str).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(())
+            }
+
+            <span class="kw">fn </span>__getstate__(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python) -&gt; PyResult&lt;PyObject&gt; {
+                <span class="prelude-val">Ok</span>((<span class="self">self</span>.value.to_string(),).to_object(py))
+            }
+
+            <span class="kw">fn </span>__reduce__(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python) -&gt; PyResult&lt;PyObject&gt; {
+                <span class="kw">let </span>safe_constructor = py.get_type::&lt;<span class="self">Self</span>&gt;().getattr(<span class="string">&quot;_safe_constructor&quot;</span>)<span class="question-mark">?</span>;
+                <span class="kw">let </span>state = <span class="self">self</span>.__getstate__(py)<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>((safe_constructor, PyTuple::empty(py), state).to_object(py))
+            }
+
+            <span class="attr">#[staticmethod]
+            </span><span class="kw">fn </span>_safe_constructor() -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+                <span class="prelude-val">Ok</span>(&lt;<span class="macro-nonterminal">$ty</span>&gt;::from_str(<span class="string">&quot;NULL&quot;</span>).unwrap()) <span class="comment">// Safe default
+            </span>}
+
             <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
                 <span class="kw">match </span>op {
                     CompareOp::Eq =&gt; <span class="self">self</span>.eq(other).into_py(py),
                     CompareOp::Ne =&gt; <span class="self">self</span>.ne(other).into_py(py),
-                    <span class="kw">_ </span>=&gt; py.NotImplemented(),
+                    CompareOp::Ge =&gt; <span class="self">self</span>.ge(other).into_py(py),
+                    CompareOp::Gt =&gt; <span class="self">self</span>.gt(other).into_py(py),
+                    CompareOp::Le =&gt; <span class="self">self</span>.le(other).into_py(py),
+                    CompareOp::Lt =&gt; <span class="self">self</span>.lt(other).into_py(py),
                 }
             }
 
@@ -175,7 +229,11 @@
             }
 
             <span class="kw">fn </span>__repr__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-                <span class="macro">format!</span>(<span class="string">&quot;{}(&#39;{}&#39;)&quot;</span>, <span class="macro">stringify!</span>(<span class="macro-nonterminal">$ty</span>), <span class="self">self</span>.value)
+                <span class="macro">format!</span>(
+                    <span class="string">&quot;{}(&#39;{}&#39;)&quot;</span>,
+                    <span class="macro">stringify!</span>(<span class="macro-nonterminal">$ty</span>).split(<span class="string">&quot;::&quot;</span>).last().unwrap_or(<span class="string">&quot;&quot;</span>),
+                    <span class="self">self</span>.value
+                )
             }
 
             <span class="attr">#[getter]
