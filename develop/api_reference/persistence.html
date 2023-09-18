@@ -787,25 +787,7 @@
              </a>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.engine.StreamingEngine">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                StreamingEngine
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.engine.extract_generic_data_client_ids">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                extract_generic_data_client_ids()
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter">
+             <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter">
               <code class="docutils literal notranslate">
                <span class="pre">
                 StreamingFeatherWriter
@@ -818,7 +800,7 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.write">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.write">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   StreamingFeatherWriter.write()
@@ -827,7 +809,7 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.check_flush">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.check_flush">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   StreamingFeatherWriter.check_flush()
@@ -836,7 +818,7 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.flush">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.flush">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   StreamingFeatherWriter.flush()
@@ -845,7 +827,7 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.close">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.close">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   StreamingFeatherWriter.close()
@@ -856,7 +838,7 @@
              </ul>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.generate_signal_class">
+             <a class="md-nav__link" href="#nautilus_trader.persistence.writer.generate_signal_class">
               <code class="docutils literal notranslate">
                <span class="pre">
                 generate_signal_class()
@@ -1056,7 +1038,15 @@ backtesting.
                <em>
                 default 'file'
                </em>
-               ) – The fsspec filesystem protocol to use.
+               ) – The filesystem protocol used by
+               <cite>
+                fsspec
+               </cite>
+               to handle file operations.
+This determines how the data catalog interacts with storage, be it local filesystem,
+cloud storage, or others. Common protocols include ‘file’ for local storage,
+‘s3’ for Amazon S3, and ‘gcs’ for Google Cloud Storage. If not provided, it defaults to ‘file’,
+meaning the catalog operates on the local filesystem.
               </p>
              </li>
              <li>
@@ -2135,202 +2125,10 @@ the data source and the Nautilus system.
          <dd>
          </dd>
         </dl>
-        <span class="target" id="module-nautilus_trader.persistence.streaming.batching">
-        </span>
-        <span class="target" id="module-nautilus_trader.persistence.streaming.engine">
+        <span class="target" id="module-nautilus_trader.persistence.writer">
         </span>
         <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.engine.StreamingEngine">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            StreamingEngine
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             data_configs
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             list
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="config.html#nautilus_trader.config.backtest.BacktestDataConfig" title="nautilus_trader.config.backtest.BacktestDataConfig">
-             <span class="pre">
-              nautilus_trader.config.backtest.BacktestDataConfig
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             target_batch_size_bytes
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             int
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             512000000
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.streaming.engine.StreamingEngine" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <code class="xref py py-class docutils literal notranslate">
-            <span class="pre">
-             _BufferIterator
-            </span>
-           </code>
-          </p>
-          <p>
-           Streams merged batches of Nautilus objects from
-           <cite>
-            BacktestDataConfig
-           </cite>
-           objects.
-          </p>
-         </dd>
-        </dl>
-        <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.engine.extract_generic_data_client_ids">
-          <span class="sig-name descname">
-           <span class="pre">
-            extract_generic_data_client_ids
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             data_configs
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             list
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="config.html#nautilus_trader.config.backtest.BacktestDataConfig" title="nautilus_trader.config.backtest.BacktestDataConfig">
-             <span class="pre">
-              nautilus_trader.config.backtest.BacktestDataConfig
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <span class="sig-return">
-           <span class="sig-return-icon">
-            →
-           </span>
-           <span class="sig-return-typehint">
-            <span class="pre">
-             dict
-            </span>
-           </span>
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.streaming.engine.extract_generic_data_client_ids" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Extract a mapping of data_type : client_id from the list of
-           <cite>
-            data_configs
-           </cite>
-           .
-In the process of merging the streaming data, we lose the
-           <cite>
-            client_id
-           </cite>
-           for
-generic data, we need to inject this back in so the backtest engine can be
-correctly loaded.
-          </p>
-         </dd>
-        </dl>
-        <span class="target" id="module-nautilus_trader.persistence.streaming.writer">
-        </span>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter">
+         <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter">
           <em class="property">
            <span class="pre">
             class
@@ -2575,7 +2373,7 @@ correctly loaded.
           <span class="sig-paren">
            )
           </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter" title="Permalink to this definition">
+          <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter" title="Permalink to this definition">
            ¶
           </a>
          </dt>
@@ -2692,7 +2490,7 @@ correctly loaded.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.write">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.write">
             <span class="sig-name descname">
              <span class="pre">
               write
@@ -2733,7 +2531,7 @@ correctly loaded.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.write" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.write" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -2788,7 +2586,7 @@ correctly loaded.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.check_flush">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.check_flush">
             <span class="sig-name descname">
              <span class="pre">
               check_flush
@@ -2810,7 +2608,7 @@ correctly loaded.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.check_flush" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.check_flush" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -2821,7 +2619,7 @@ correctly loaded.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.flush">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.flush">
             <span class="sig-name descname">
              <span class="pre">
               flush
@@ -2843,7 +2641,7 @@ correctly loaded.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.flush" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.flush" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -2854,7 +2652,7 @@ correctly loaded.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.close">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.close">
             <span class="sig-name descname">
              <span class="pre">
               close
@@ -2876,7 +2674,7 @@ correctly loaded.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.close" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.close" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -2889,7 +2687,7 @@ correctly loaded.
          </dd>
         </dl>
         <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.generate_signal_class">
+         <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.generate_signal_class">
           <span class="sig-name descname">
            <span class="pre">
             generate_signal_class
@@ -2950,7 +2748,7 @@ correctly loaded.
             </span>
            </span>
           </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.generate_signal_class" title="Permalink to this definition">
+          <a class="headerlink" href="#nautilus_trader.persistence.writer.generate_signal_class" title="Permalink to this definition">
            ¶
           </a>
          </dt>

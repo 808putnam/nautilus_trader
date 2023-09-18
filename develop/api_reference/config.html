@@ -19504,6 +19504,76 @@ client).
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              venues
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestVenueConfig" title="nautilus_trader.config.backtest.BacktestVenueConfig">
+              <span class="pre">
+               nautilus_trader.config.backtest.BacktestVenueConfig
+              </span>
+             </a>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              data
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestDataConfig" title="nautilus_trader.config.backtest.BacktestDataConfig">
+              <span class="pre">
+               nautilus_trader.config.backtest.BacktestDataConfig
+              </span>
+             </a>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               engine
              </span>
             </span>
@@ -19528,130 +19598,6 @@ client).
                BacktestEngineConfig
               </span>
              </a>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              venues
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <span class="pre">
-              list
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestVenueConfig" title="nautilus_trader.config.backtest.BacktestVenueConfig">
-              <span class="pre">
-               nautilus_trader.config.backtest.BacktestVenueConfig
-              </span>
-             </a>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              data
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <span class="pre">
-              list
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestDataConfig" title="nautilus_trader.config.backtest.BacktestDataConfig">
-              <span class="pre">
-               nautilus_trader.config.backtest.BacktestDataConfig
-              </span>
-             </a>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
              <span class="p">
               <span class="pre">
                ]
@@ -19757,26 +19703,6 @@ external inputs of venues and data.
               <li>
                <p>
                 <strong>
-                 engine
-                </strong>
-                (
-                <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestEngineConfig" title="nautilus_trader.config.backtest.BacktestEngineConfig">
-                 <em>
-                  BacktestEngineConfig
-                 </em>
-                </a>
-                <em>
-                 ,
-                </em>
-                <em>
-                 optional
-                </em>
-                ) – The backtest engine configuration (represents the core system kernel).
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
                  venues
                 </strong>
                 (
@@ -19795,6 +19721,7 @@ external inputs of venues and data.
                  ]
                 </em>
                 ) – The venue configurations for the backtest run.
+A valid configuration must include at least one venue config.
                </p>
               </li>
               <li>
@@ -19818,6 +19745,21 @@ external inputs of venues and data.
                  ]
                 </em>
                 ) – The data configurations for the backtest run.
+A valid configuration must include at least one data config.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 engine
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestEngineConfig" title="nautilus_trader.config.backtest.BacktestEngineConfig">
+                 <em>
+                  BacktestEngineConfig
+                 </em>
+                </a>
+                ) – The backtest engine configuration (the core system kernel).
                </p>
               </li>
               <li>
