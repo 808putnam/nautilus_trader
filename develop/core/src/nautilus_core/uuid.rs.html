@@ -339,6 +339,8 @@
 <a href="#339" id="339">339</a>
 <a href="#340" id="340">340</a>
 <a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -474,7 +476,9 @@
         <span class="kw">let </span>slice = bytes.as_bytes();
 
         <span class="kw">if </span>slice.len() != <span class="number">37 </span>{
-            <span class="macro">panic!</span>(<span class="string">&quot;Invalid state for deserialzing, incorrect bytes length&quot;</span>)
+            <span class="kw">return </span><span class="prelude-val">Err</span>(to_pyvalue_err(
+                <span class="string">&quot;Invalid state for deserialzing, incorrect bytes length&quot;</span>,
+            ));
         }
 
         <span class="self">self</span>.value.copy_from_slice(slice);
@@ -490,6 +494,11 @@
         <span class="kw">let </span>state = <span class="self">self</span>.__getstate__(py)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>((safe_constructor, PyTuple::empty(py), state).to_object(py))
     }
+
+    <span class="attr">#[staticmethod]
+    </span><span class="kw">fn </span>_safe_constructor() -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new()) <span class="comment">// Safe default
+    </span>}
 
     <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
         <span class="kw">match </span>op {
@@ -510,13 +519,8 @@
     }
 
     <span class="kw">fn </span>__repr__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="macro">format!</span>(<span class="string">&quot;UUID4(&#39;{self}&#39;)&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">&quot;{}(&#39;{}&#39;)&quot;</span>, <span class="macro">stringify!</span>(UUID4), <span class="self">self</span>)
     }
-
-    <span class="attr">#[staticmethod]
-    </span><span class="kw">fn </span>_safe_constructor() -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new()) <span class="comment">// Safe default
-    </span>}
 
     <span class="attr">#[getter]
     #[pyo3(name = <span class="string">&quot;value&quot;</span>)]

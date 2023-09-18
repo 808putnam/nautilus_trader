@@ -285,9 +285,9 @@
 
             <span class="kw">let </span><span class="kw-2">mut </span>accumulator = TimeEventAccumulator::new();
 
-            <span class="kw">let </span>time_event1 = TimeEvent::new(String::from(<span class="string">&quot;TEST_EVENT_1&quot;</span>), UUID4::new(), <span class="number">100</span>, <span class="number">100</span>);
-            <span class="kw">let </span>time_event2 = TimeEvent::new(String::from(<span class="string">&quot;TEST_EVENT_2&quot;</span>), UUID4::new(), <span class="number">300</span>, <span class="number">300</span>);
-            <span class="kw">let </span>time_event3 = TimeEvent::new(String::from(<span class="string">&quot;TEST_EVENT_3&quot;</span>), UUID4::new(), <span class="number">200</span>, <span class="number">200</span>);
+            <span class="kw">let </span>time_event1 = TimeEvent::new(<span class="string">&quot;TEST_EVENT_1&quot;</span>, UUID4::new(), <span class="number">100</span>, <span class="number">100</span>).unwrap();
+            <span class="kw">let </span>time_event2 = TimeEvent::new(<span class="string">&quot;TEST_EVENT_2&quot;</span>, UUID4::new(), <span class="number">300</span>, <span class="number">300</span>).unwrap();
+            <span class="kw">let </span>time_event3 = TimeEvent::new(<span class="string">&quot;TEST_EVENT_3&quot;</span>, UUID4::new(), <span class="number">200</span>, <span class="number">200</span>).unwrap();
 
             <span class="comment">// Note: as_ptr returns a borrowed pointer. It is valid as long
             // as the object is in scope. In this case `callback_ptr` is valid
