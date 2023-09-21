@@ -360,6 +360,18 @@
 <a href="#360" id="360">360</a>
 <a href="#361" id="361">361</a>
 <a href="#362" id="362">362</a>
+<a href="#363" id="363">363</a>
+<a href="#364" id="364">364</a>
+<a href="#365" id="365">365</a>
+<a href="#366" id="366">366</a>
+<a href="#367" id="367">367</a>
+<a href="#368" id="368">368</a>
+<a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -383,7 +395,7 @@
     str::FromStr,
 };
 
-<span class="kw">use </span>anyhow::Result;
+<span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>nautilus_core::{
     python::to_pyvalue_err,
     string::{cstr_to_string, str_to_cstr},
@@ -394,7 +406,6 @@
     types::{PyString, PyTuple},
 };
 <span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize};
-<span class="kw">use </span>thiserror;
 
 <span class="kw">use </span><span class="kw">crate</span>::identifiers::{symbol::Symbol, venue::Venue};
 
@@ -409,12 +420,6 @@
     <span class="kw">pub </span>venue: Venue,
 }
 
-<span class="attr">#[derive(thiserror::Error, Debug)]
-#[error(<span class="string">&quot;Error parsing `InstrumentId` from &#39;{input}&#39;&quot;</span>)]
-</span><span class="kw">pub struct </span>InstrumentIdParseError {
-    input: String,
-}
-
 <span class="kw">impl </span>InstrumentId {
     <span class="kw">pub fn </span>new(symbol: Symbol, venue: Venue) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{ symbol, venue }
@@ -426,17 +431,22 @@
 }
 
 <span class="kw">impl </span>FromStr <span class="kw">for </span>InstrumentId {
-    <span class="kw">type </span><span class="prelude-val">Err </span>= InstrumentIdParseError;
+    <span class="kw">type </span><span class="prelude-val">Err </span>= anyhow::Error;
 
-    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">match </span>s.rsplit_once(<span class="string">&#39;.&#39;</span>) {
             <span class="prelude-val">Some</span>((symbol_part, venue_part)) =&gt; <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
-                symbol: Symbol::new(symbol_part).unwrap(), <span class="comment">// Implement error handling
-                </span>venue: Venue::new(venue_part).unwrap(),    <span class="comment">// Implement error handling
-            </span>}),
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(InstrumentIdParseError {
-                input: s.to_string(),
+                symbol: Symbol::new(symbol_part)
+                    .map_err(|e| <span class="macro">anyhow!</span>(err_message(s, e.to_string())))<span class="question-mark">?</span>,
+                venue: Venue::new(venue_part)
+                    .map_err(|e| <span class="macro">anyhow!</span>(err_message(s, e.to_string())))<span class="question-mark">?</span>,
             }),
+            <span class="prelude-val">None </span>=&gt; {
+                <span class="macro">bail!</span>(err_message(
+                    s,
+                    <span class="string">&quot;Missing &#39;.&#39; separator between symbol and venue components&quot;</span>.to_string()
+                ))
+            }
         }
     }
 }
@@ -477,6 +487,10 @@
         InstrumentId::from_str(<span class="kw-2">&amp;</span>instrument_id_str)
             .map_err(|err| serde::de::Error::custom(err.to_string()))
     }
+}
+
+<span class="kw">fn </span>err_message(s: <span class="kw-2">&amp;</span>str, e: String) -&gt; String {
+    <span class="macro">format!</span>(<span class="string">&quot;Error parsing `InstrumentId` from &#39;{s}&#39;: {e}&quot;</span>)
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
@@ -576,6 +590,20 @@
     InstrumentId::new(symbol, venue)
 }
 
+<span class="doccomment">/// Returns any parsing error string from the provided `InstrumentId` value.
+///
+/// # Safety
+///
+/// - Assumes `ptr` is a valid C string pointer.
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
+</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>instrument_id_is_valid(ptr: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*const </span>c_char {
+    <span class="kw">match </span>InstrumentId::from_str(cstr_to_string(ptr).as_str()) {
+        <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; str_to_cstr(<span class="string">&quot;&quot;</span>),
+        <span class="prelude-val">Err</span>(e) =&gt; str_to_cstr(<span class="kw-2">&amp;</span>e.to_string()),
+    }
+}
+
 <span class="doccomment">/// Returns a Nautilus identifier from a C string pointer.
 ///
 /// # Safety
@@ -626,10 +654,10 @@
     }
 
     <span class="attr">#[fixture]
-    </span><span class="kw">pub fn </span>audusd_sim(aud_usd: Symbol, simulation: Venue) -&gt; InstrumentId {
+    </span><span class="kw">pub fn </span>audusd_sim(aud_usd: Symbol, sim: Venue) -&gt; InstrumentId {
         InstrumentId {
             symbol: aud_usd,
-            venue: simulation,
+            venue: sim,
         }
     }
 }
@@ -645,9 +673,7 @@
 
     <span class="kw">use </span><span class="kw">super</span>::InstrumentId;
     <span class="kw">use </span><span class="kw">crate</span>::identifiers::{
-        instrument_id::{
-            instrument_id_new_from_cstr, instrument_id_to_cstr, InstrumentIdParseError,
-        },
+        instrument_id::{instrument_id_new_from_cstr, instrument_id_to_cstr},
         symbol::Symbol,
         venue::Venue,
     };
@@ -665,10 +691,9 @@
         <span class="macro">assert!</span>(result.is_err());
 
         <span class="kw">let </span>error = result.unwrap_err();
-        <span class="macro">assert!</span>(<span class="macro">matches!</span>(error, InstrumentIdParseError { .. }));
         <span class="macro">assert_eq!</span>(
             error.to_string(),
-            <span class="string">&quot;Error parsing `InstrumentId` from &#39;ETHUSDT-BINANCE&#39;&quot;
+            <span class="string">&quot;Error parsing `InstrumentId` from &#39;ETHUSDT-BINANCE&#39;: Missing &#39;.&#39; separator between symbol and venue components&quot;
         </span>);
     }
 
@@ -679,7 +704,6 @@
         <span class="macro">assert!</span>(result.is_err());
 
         <span class="kw">let </span>error = result.unwrap_err();
-        <span class="macro">assert!</span>(<span class="macro">matches!</span>(error, InstrumentIdParseError { .. }));
         <span class="macro">assert_eq!</span>(
             error.to_string(),
             <span class="string">&quot;Error parsing `InstrumentId` from &#39;ETH.USDT.BINANCE&#39;&quot;
