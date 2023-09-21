@@ -66,18 +66,18 @@
     obj.as_ref(py).get_type().name()
 }
 
-<span class="doccomment">/// Converts any type that implements `Debug` to a Python `ValueError`.
-</span><span class="kw">pub fn </span>to_pyvalue_err(e: <span class="kw">impl </span>fmt::Debug) -&gt; PyErr {
-    PyValueError::new_err(<span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>))
+<span class="doccomment">/// Converts any type that implements `Display` to a Python `ValueError`.
+</span><span class="kw">pub fn </span>to_pyvalue_err(e: <span class="kw">impl </span>fmt::Display) -&gt; PyErr {
+    PyValueError::new_err(e.to_string())
 }
 
-<span class="doccomment">/// Converts any type that implements `Debug` to a Python `TypeError`.
-</span><span class="kw">pub fn </span>to_pytype_err(e: <span class="kw">impl </span>fmt::Debug) -&gt; PyErr {
-    PyTypeError::new_err(<span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>))
+<span class="doccomment">/// Converts any type that implements `Display` to a Python `TypeError`.
+</span><span class="kw">pub fn </span>to_pytype_err(e: <span class="kw">impl </span>fmt::Display) -&gt; PyErr {
+    PyTypeError::new_err(e.to_string())
 }
 
-<span class="doccomment">/// Converts any type that implements `Debug` to a Python `RuntimeError`.
-</span><span class="kw">pub fn </span>to_pyruntime_err(e: <span class="kw">impl </span>fmt::Debug) -&gt; PyErr {
-    PyRuntimeError::new_err(<span class="macro">format!</span>(<span class="string">&quot;{e:?}&quot;</span>))
+<span class="doccomment">/// Converts any type that implements `Display` to a Python `RuntimeError`.
+</span><span class="kw">pub fn </span>to_pyruntime_err(e: <span class="kw">impl </span>fmt::Display) -&gt; PyErr {
+    PyRuntimeError::new_err(e.to_string())
 }
 </code></pre></div></section></main></body></html>
