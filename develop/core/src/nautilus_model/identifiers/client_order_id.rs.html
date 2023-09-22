@@ -173,6 +173,7 @@
 <a href="#173" id="173">173</a>
 <a href="#174" id="174">174</a>
 <a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -189,23 +190,25 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">use </span>std::{
-    ffi::{c_char, CStr},
+    ffi::c_char,
     fmt::{Debug, Display, Formatter},
     hash::Hash,
 };
 
 <span class="kw">use </span>anyhow::Result;
-<span class="kw">use </span>nautilus_core::correctness::check_valid_string;
+<span class="kw">use </span>nautilus_core::{correctness::check_valid_string, string::cstr_to_str};
 <span class="kw">use </span>ustr::Ustr;
 
-<span class="attr">#[repr(C)]
+<span class="doccomment">/// Represents a valid client order ID (assigned by the Nautilus system).
+</span><span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(
     feature = <span class="string">&quot;python&quot;</span>,
     pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
 )]
 </span><span class="kw">pub struct </span>ClientOrderId {
-    <span class="kw">pub </span>value: Ustr,
+    <span class="doccomment">/// The client order ID value.
+    </span><span class="kw">pub </span>value: Ustr,
 }
 
 <span class="kw">impl </span>ClientOrderId {
@@ -276,8 +279,7 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>client_order_id_new(ptr: <span class="kw-2">*const </span>c_char) -&gt; ClientOrderId {
-    <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">&quot;`ptr` was NULL&quot;</span>);
-    ClientOrderId::from(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>))
+    ClientOrderId::from(cstr_to_str(ptr))
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]

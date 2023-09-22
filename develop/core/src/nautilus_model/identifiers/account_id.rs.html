@@ -196,6 +196,16 @@
 <a href="#196" id="196">196</a>
 <a href="#197" id="197">197</a>
 <a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
+<a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
+<a href="#208" id="208">208</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -212,23 +222,34 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">use </span>std::{
-    ffi::{c_char, CStr},
+    ffi::c_char,
     fmt::{Debug, Display, Formatter},
     hash::Hash,
 };
 
 <span class="kw">use </span>anyhow::Result;
-<span class="kw">use </span>nautilus_core::correctness::{check_string_contains, check_valid_string};
+<span class="kw">use </span>nautilus_core::{
+    correctness::{check_string_contains, check_valid_string},
+    string::cstr_to_str,
+};
 <span class="kw">use </span>ustr::Ustr;
 
-<span class="attr">#[repr(C)]
+<span class="doccomment">/// Represents a valid account ID.
+///
+/// Must be correctly formatted with two valid strings either side of a hyphen &#39;-&#39;.
+/// It is expected an account ID is the name of the issuer with an account number
+/// separated by a hyphen.
+///
+/// Example: &quot;IB-D02851908&quot;.
+</span><span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(
     feature = <span class="string">&quot;python&quot;</span>,
     pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
 )]
 </span><span class="kw">pub struct </span>AccountId {
-    <span class="kw">pub </span>value: Ustr,
+    <span class="doccomment">/// The account ID value.
+    </span><span class="kw">pub </span>value: Ustr,
 }
 
 <span class="kw">impl </span>AccountId {
@@ -279,8 +300,7 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>account_id_new(ptr: <span class="kw-2">*const </span>c_char) -&gt; AccountId {
-    <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">&quot;`ptr` was NULL&quot;</span>);
-    AccountId::from(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>))
+    AccountId::from(cstr_to_str(ptr))
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
@@ -314,7 +334,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>std::ffi::CString;
+    <span class="kw">use </span>std::ffi::{CStr, CString};
 
     <span class="kw">use </span>rstest::rstest;
 

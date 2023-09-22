@@ -359,6 +359,11 @@
 <a href="#359" id="359">359</a>
 <a href="#360" id="360">360</a>
 <a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
+<a href="#363" id="363">363</a>
+<a href="#364" id="364">364</a>
+<a href="#365" id="365">365</a>
+<a href="#366" id="366">366</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -385,7 +390,7 @@
 <span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>nautilus_core::{
     python::to_pyvalue_err,
-    string::{cstr_to_string, str_to_cstr},
+    string::{cstr_to_str, cstr_to_string, str_to_cstr},
 };
 <span class="kw">use </span>pyo3::{
     prelude::<span class="kw-2">*</span>,
@@ -396,15 +401,20 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::identifiers::{symbol::Symbol, venue::Venue};
 
-<span class="attr">#[repr(C)]
+<span class="doccomment">/// Represents a valid instrument ID.
+///
+/// The symbol and venue combination should uniquely identify the instrument.
+</span><span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord, Default)]
 #[cfg_attr(
     feature = <span class="string">&quot;python&quot;</span>,
     pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
 )]
 </span><span class="kw">pub struct </span>InstrumentId {
-    <span class="kw">pub </span>symbol: Symbol,
-    <span class="kw">pub </span>venue: Venue,
+    <span class="doccomment">/// The instruments ticker symbol.
+    </span><span class="kw">pub </span>symbol: Symbol,
+    <span class="doccomment">/// The instruments trading venue.
+    </span><span class="kw">pub </span>venue: Venue,
 }
 
 <span class="kw">impl </span>InstrumentId {
@@ -584,8 +594,8 @@
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
-</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>instrument_id_is_valid(ptr: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*const </span>c_char {
-    <span class="kw">match </span>InstrumentId::from_str(cstr_to_string(ptr).as_str()) {
+</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>instrument_id_check_parsing(ptr: <span class="kw-2">*const </span>c_char) -&gt; <span class="kw-2">*const </span>c_char {
+    <span class="kw">match </span>InstrumentId::from_str(cstr_to_str(ptr)) {
         <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; str_to_cstr(<span class="string">&quot;&quot;</span>),
         <span class="prelude-val">Err</span>(e) =&gt; str_to_cstr(<span class="kw-2">&amp;</span>e.to_string()),
     }

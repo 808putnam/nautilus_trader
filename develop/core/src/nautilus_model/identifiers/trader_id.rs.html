@@ -120,6 +120,19 @@
 <a href="#120" id="120">120</a>
 <a href="#121" id="121">121</a>
 <a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -136,22 +149,36 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">use </span>std::{
-    ffi::{c_char, CStr},
+    ffi::c_char,
     fmt::{Debug, Display, Formatter},
 };
 
 <span class="kw">use </span>anyhow::Result;
-<span class="kw">use </span>nautilus_core::correctness::{check_string_contains, check_valid_string};
+<span class="kw">use </span>nautilus_core::{
+    correctness::{check_string_contains, check_valid_string},
+    string::cstr_to_str,
+};
 <span class="kw">use </span>ustr::Ustr;
 
-<span class="attr">#[repr(C)]
+<span class="doccomment">/// Represents a valid trader ID.
+///
+/// Must be correctly formatted with two valid strings either side of a hyphen.
+/// It is expected a trader ID is the abbreviated name of the trader
+/// with an order ID tag number separated by a hyphen.
+///
+/// Example: &quot;TESTER-001&quot;.
+
+/// The reason for the numerical component of the ID is so that order and position IDs
+/// do not collide with those from another node instance.
+</span><span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(
     feature = <span class="string">&quot;python&quot;</span>,
     pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
 )]
 </span><span class="kw">pub struct </span>TraderId {
-    <span class="kw">pub </span>value: Ustr,
+    <span class="doccomment">/// The trader ID value.
+    </span><span class="kw">pub </span>value: Ustr,
 }
 
 <span class="kw">impl </span>TraderId {
@@ -202,8 +229,7 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trader_id_new(ptr: <span class="kw-2">*const </span>c_char) -&gt; TraderId {
-    <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">&quot;`ptr` was NULL&quot;</span>);
-    TraderId::from(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>))
+    TraderId::from(cstr_to_str(ptr))
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
