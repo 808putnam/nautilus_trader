@@ -297,6 +297,14 @@
 <a href="#297" id="297">297</a>
 <a href="#298" id="298">298</a>
 <a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -314,6 +322,8 @@
 
 </span><span class="kw">use </span>std::fmt::Display;
 
+<span class="kw">use </span>anyhow::Result;
+<span class="kw">use </span>nautilus_core::python::to_pyvalue_err;
 <span class="kw">use </span>nautilus_model::{
     data::{bar::Bar, quote::QuoteTick, trade::TradeTick},
     enums::PriceType,
@@ -324,7 +334,7 @@
 
 <span class="attr">#[repr(C)]
 #[derive(Debug)]
-#[pyclass]
+#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.indicators&quot;</span>)]
 </span><span class="kw">pub struct </span>ExponentialMovingAverage {
     <span class="kw">pub </span>period: usize,
     <span class="kw">pub </span>price_type: PriceType,
@@ -375,7 +385,21 @@
 }
 
 <span class="kw">impl </span>ExponentialMovingAverage {
-    <span class="kw">fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
+    <span class="kw">pub fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="comment">// Inputs don&#39;t require validation, however we return a `Result`
+        // to standardize with other indicators which do need validation.
+        </span><span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+            period,
+            price_type: price_type.unwrap_or(PriceType::Last),
+            alpha: <span class="number">2.0 </span>/ (period <span class="kw">as </span>f64 + <span class="number">1.0</span>),
+            value: <span class="number">0.0</span>,
+            count: <span class="number">0</span>,
+            has_inputs: <span class="bool-val">false</span>,
+            is_initialized: <span class="bool-val">false</span>,
+        })
+    }
+
+    <span class="kw">pub fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
         <span class="kw">if </span>!<span class="self">self</span>.has_inputs {
             <span class="self">self</span>.has_inputs = <span class="bool-val">true</span>;
             <span class="self">self</span>.value = value;
@@ -395,16 +419,8 @@
 #[pymethods]
 </span><span class="kw">impl </span>ExponentialMovingAverage {
     <span class="attr">#[new]
-    </span><span class="kw">pub fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            period,
-            price_type: price_type.unwrap_or(PriceType::Last),
-            alpha: <span class="number">2.0 </span>/ (period <span class="kw">as </span>f64 + <span class="number">1.0</span>),
-            value: <span class="number">0.0</span>,
-            count: <span class="number">0</span>,
-            has_inputs: <span class="bool-val">false</span>,
-            is_initialized: <span class="bool-val">false</span>,
-        }
+    </span><span class="kw">fn </span>py_new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+        <span class="self">Self</span>::new(period, price_type).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[getter]
@@ -427,13 +443,13 @@
 
     <span class="attr">#[getter]
     #[pyo3(name = <span class="string">&quot;count&quot;</span>)]
-    </span><span class="kw">pub fn </span>py_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+    </span><span class="kw">fn </span>py_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.count
     }
 
     <span class="attr">#[getter]
     #[pyo3(name = <span class="string">&quot;value&quot;</span>)]
-    </span><span class="kw">pub fn </span>py_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="kw">fn </span>py_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.value
     }
 
@@ -491,7 +507,7 @@
 
     <span class="attr">#[fixture]
     </span><span class="kw">pub fn </span>indicator_ema_10() -&gt; ExponentialMovingAverage {
-        ExponentialMovingAverage::new(<span class="number">10</span>, <span class="prelude-val">Some</span>(PriceType::Mid))
+        ExponentialMovingAverage::new(<span class="number">10</span>, <span class="prelude-val">Some</span>(PriceType::Mid)).unwrap()
     }
 }
 
@@ -587,7 +603,7 @@
             price: Price::from(<span class="string">&quot;1500.0000&quot;</span>),
             size: Quantity::from(<span class="string">&quot;1.00000000&quot;</span>),
             aggressor_side: AggressorSide::Buyer,
-            trade_id: TradeId::new(<span class="string">&quot;123456789&quot;</span>).unwrap(),
+            trade_id: TradeId::from(<span class="string">&quot;123456789&quot;</span>),
             ts_event: <span class="number">1</span>,
             ts_init: <span class="number">0</span>,
         };

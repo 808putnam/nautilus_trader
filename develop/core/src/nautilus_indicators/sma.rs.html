@@ -258,6 +258,14 @@
 <a href="#258" id="258">258</a>
 <a href="#259" id="259">259</a>
 <a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -275,6 +283,8 @@
 
 </span><span class="kw">use </span>std::fmt::Display;
 
+<span class="kw">use </span>anyhow::Result;
+<span class="kw">use </span>nautilus_core::python::to_pyvalue_err;
 <span class="kw">use </span>nautilus_model::{
     data::{bar::Bar, quote::QuoteTick, trade::TradeTick},
     enums::PriceType,
@@ -285,7 +295,7 @@
 
 <span class="attr">#[repr(C)]
 #[derive(Debug)]
-#[pyclass]
+#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.indicators&quot;</span>)]
 </span><span class="kw">pub struct </span>SimpleMovingAverage {
     <span class="kw">pub </span>period: usize,
     <span class="kw">pub </span>price_type: PriceType,
@@ -335,6 +345,19 @@
 }
 
 <span class="kw">impl </span>SimpleMovingAverage {
+    <span class="kw">pub fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="comment">// Inputs don&#39;t require validation, however we return a `Result`
+        // to standardize with other indicators which do need validation.
+        </span><span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+            period,
+            price_type: price_type.unwrap_or(PriceType::Last),
+            value: <span class="number">0.0</span>,
+            count: <span class="number">0</span>,
+            inputs: Vec::new(),
+            is_initialized: <span class="bool-val">false</span>,
+        })
+    }
+
     <span class="kw">pub fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
         <span class="kw">if </span><span class="self">self</span>.inputs.len() == <span class="self">self</span>.period {
             <span class="self">self</span>.inputs.remove(<span class="number">0</span>);
@@ -355,49 +378,42 @@
 #[pymethods]
 </span><span class="kw">impl </span>SimpleMovingAverage {
     <span class="attr">#[new]
-    </span><span class="kw">pub fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            period,
-            price_type: price_type.unwrap_or(PriceType::Last),
-            value: <span class="number">0.0</span>,
-            count: <span class="number">0</span>,
-            inputs: Vec::new(),
-            is_initialized: <span class="bool-val">false</span>,
-        }
+    </span><span class="kw">fn </span>py_new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+        <span class="self">Self</span>::new(period, price_type).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[getter]
     #[pyo3(name = <span class="string">&quot;name&quot;</span>)]
-    </span><span class="kw">pub fn </span>py_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+    </span><span class="kw">fn </span>py_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="self">self</span>.name()
     }
 
     <span class="attr">#[getter]
     #[pyo3(name = <span class="string">&quot;period&quot;</span>)]
-    </span><span class="kw">pub fn </span>py_period(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+    </span><span class="kw">fn </span>py_period(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.period
     }
 
     <span class="attr">#[getter]
     #[pyo3(name = <span class="string">&quot;count&quot;</span>)]
-    </span><span class="kw">pub fn </span>py_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+    </span><span class="kw">fn </span>py_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
         <span class="self">self</span>.count
     }
 
     <span class="attr">#[getter]
     #[pyo3(name = <span class="string">&quot;value&quot;</span>)]
-    </span><span class="kw">pub fn </span>py_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="kw">fn </span>py_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.value
     }
 
     <span class="attr">#[getter]
     #[pyo3(name = <span class="string">&quot;initialized&quot;</span>)]
-    </span><span class="kw">pub fn </span>py_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    </span><span class="kw">fn </span>py_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.is_initialized
     }
 
     <span class="attr">#[pyo3(name = <span class="string">&quot;has_inputs&quot;</span>)]
-    </span><span class="kw">fn </span>has_inputs_py(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    </span><span class="kw">fn </span>py_has_inputs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.has_inputs()
     }
 
@@ -423,7 +439,7 @@
 
     <span class="attr">#[fixture]
     </span><span class="kw">pub fn </span>indicator_sma_10() -&gt; SimpleMovingAverage {
-        SimpleMovingAverage::new(<span class="number">10</span>, <span class="prelude-val">Some</span>(PriceType::Mid))
+        SimpleMovingAverage::new(<span class="number">10</span>, <span class="prelude-val">Some</span>(PriceType::Mid)).unwrap()
     }
 }
 
