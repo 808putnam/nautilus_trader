@@ -784,6 +784,22 @@
 <a href="#784" id="784">784</a>
 <a href="#785" id="785">785</a>
 <a href="#786" id="786">786</a>
+<a href="#787" id="787">787</a>
+<a href="#788" id="788">788</a>
+<a href="#789" id="789">789</a>
+<a href="#790" id="790">790</a>
+<a href="#791" id="791">791</a>
+<a href="#792" id="792">792</a>
+<a href="#793" id="793">793</a>
+<a href="#794" id="794">794</a>
+<a href="#795" id="795">795</a>
+<a href="#796" id="796">796</a>
+<a href="#797" id="797">797</a>
+<a href="#798" id="798">798</a>
+<a href="#799" id="799">799</a>
+<a href="#800" id="800">800</a>
+<a href="#801" id="801">801</a>
+<a href="#802" id="802">802</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1267,19 +1283,21 @@
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
-// Tests
+// Stubs
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
-</span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>rstest::rstest;
+</span><span class="kw">pub mod </span>stubs {
+    <span class="kw">use </span>rstest::fixture;
 
-    <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use crate</span>::{
-        enums::BarAggregation,
-        identifiers::{symbol::Symbol, venue::Venue},
+        data::bar::{Bar, BarSpecification, BarType},
+        enums::{AggregationSource, BarAggregation, PriceType},
+        identifiers::{instrument_id::InstrumentId, symbol::Symbol, venue::Venue},
+        types::{price::Price, quantity::Quantity},
     };
 
-    <span class="kw">fn </span>create_stub_bar() -&gt; Bar {
+    <span class="attr">#[fixture]
+    </span><span class="kw">pub fn </span>bar_audusd_sim_minute_bid() -&gt; Bar {
         <span class="kw">let </span>instrument_id = InstrumentId {
             symbol: Symbol::new(<span class="string">&quot;AUDUSD&quot;</span>).unwrap(),
             venue: Venue::new(<span class="string">&quot;SIM&quot;</span>).unwrap(),
@@ -1305,6 +1323,20 @@
             ts_init: <span class="number">1</span>,
         }
     }
+}
+
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Tests
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>rstest::rstest;
+
+    <span class="kw">use super</span>::{stubs::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
+    <span class="kw">use crate</span>::{
+        enums::BarAggregation,
+        identifiers::{symbol::Symbol, venue::Venue},
+    };
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_bar_spec_string_reprs() {
@@ -1517,10 +1549,10 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_as_dict() {
+    </span><span class="kw">fn </span>test_as_dict(bar_audusd_sim_minute_bid: Bar) {
         pyo3::prepare_freethreaded_python();
 
-        <span class="kw">let </span>bar = create_stub_bar();
+        <span class="kw">let </span>bar = bar_audusd_sim_minute_bid;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>dict_string = bar.as_dict(py).unwrap().to_string();
@@ -1530,10 +1562,10 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_as_from_dict() {
+    </span><span class="kw">fn </span>test_as_from_dict(bar_audusd_sim_minute_bid: Bar) {
         pyo3::prepare_freethreaded_python();
 
-        <span class="kw">let </span>bar = create_stub_bar();
+        <span class="kw">let </span>bar = bar_audusd_sim_minute_bid;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>dict = bar.as_dict(py).unwrap();
@@ -1543,9 +1575,9 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_from_pyobject() {
+    </span><span class="kw">fn </span>test_from_pyobject(bar_audusd_sim_minute_bid: Bar) {
         pyo3::prepare_freethreaded_python();
-        <span class="kw">let </span>bar = create_stub_bar();
+        <span class="kw">let </span>bar = bar_audusd_sim_minute_bid;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>bar_pyobject = bar.into_py(py);
@@ -1555,16 +1587,16 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_json_serialization() {
-        <span class="kw">let </span>bar = create_stub_bar();
+    </span><span class="kw">fn </span>test_json_serialization(bar_audusd_sim_minute_bid: Bar) {
+        <span class="kw">let </span>bar = bar_audusd_sim_minute_bid;
         <span class="kw">let </span>serialized = bar.as_json_bytes().unwrap();
         <span class="kw">let </span>deserialized = Bar::from_json_bytes(serialized).unwrap();
         <span class="macro">assert_eq!</span>(deserialized, bar);
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_msgpack_serialization() {
-        <span class="kw">let </span>bar = create_stub_bar();
+    </span><span class="kw">fn </span>test_msgpack_serialization(bar_audusd_sim_minute_bid: Bar) {
+        <span class="kw">let </span>bar = bar_audusd_sim_minute_bid;
         <span class="kw">let </span>serialized = bar.as_msgpack_bytes().unwrap();
         <span class="kw">let </span>deserialized = Bar::from_msgpack_bytes(serialized).unwrap();
         <span class="macro">assert_eq!</span>(deserialized, bar);

@@ -425,6 +425,18 @@
 <a href="#425" id="425">425</a>
 <a href="#426" id="426">426</a>
 <a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -744,13 +756,11 @@
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
-// Tests
+// Stubs
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
-</span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>nautilus_core::serialization::Serializable;
-    <span class="kw">use </span>pyo3::{IntoPy, Python};
-    <span class="kw">use </span>rstest::rstest;
+</span><span class="kw">pub mod </span>stubs {
+    <span class="kw">use </span>rstest::fixture;
 
     <span class="kw">use crate</span>::{
         data::trade::TradeTick,
@@ -759,7 +769,8 @@
         types::{price::Price, quantity::Quantity},
     };
 
-    <span class="kw">fn </span>create_stub_trade_tick() -&gt; TradeTick {
+    <span class="attr">#[fixture]
+    </span><span class="kw">pub fn </span>trade_tick_ethusdt_buyer() -&gt; TradeTick {
         TradeTick {
             instrument_id: InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>),
             price: Price::from(<span class="string">&quot;10000.0000&quot;</span>),
@@ -770,10 +781,23 @@
             ts_init: <span class="number">0</span>,
         }
     }
+}
+
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Tests
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>nautilus_core::serialization::Serializable;
+    <span class="kw">use </span>pyo3::{IntoPy, Python};
+    <span class="kw">use </span>rstest::rstest;
+
+    <span class="kw">use </span><span class="kw">super</span>::stubs::<span class="kw-2">*</span>;
+    <span class="kw">use crate</span>::{data::trade::TradeTick, enums::AggressorSide};
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_to_string() {
-        <span class="kw">let </span>tick = create_stub_trade_tick();
+    </span><span class="kw">fn </span>test_to_string(trade_tick_ethusdt_buyer: TradeTick) {
+        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
         <span class="macro">assert_eq!</span>(
             tick.to_string(),
             <span class="string">&quot;ETHUSDT-PERP.BINANCE,10000.0000,1.00000000,BUYER,123456789,1&quot;
@@ -799,10 +823,10 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_as_dict() {
+    </span><span class="kw">fn </span>test_as_dict(trade_tick_ethusdt_buyer: TradeTick) {
         pyo3::prepare_freethreaded_python();
 
-        <span class="kw">let </span>tick = create_stub_trade_tick();
+        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>dict_string = tick.as_dict(py).unwrap().to_string();
@@ -812,10 +836,10 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_from_dict() {
+    </span><span class="kw">fn </span>test_from_dict(trade_tick_ethusdt_buyer: TradeTick) {
         pyo3::prepare_freethreaded_python();
 
-        <span class="kw">let </span>tick = create_stub_trade_tick();
+        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>dict = tick.as_dict(py).unwrap();
@@ -825,9 +849,9 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_from_pyobject() {
+    </span><span class="kw">fn </span>test_from_pyobject(trade_tick_ethusdt_buyer: TradeTick) {
         pyo3::prepare_freethreaded_python();
-        <span class="kw">let </span>tick = create_stub_trade_tick();
+        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>tick_pyobject = tick.into_py(py);
@@ -837,16 +861,16 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_json_serialization() {
-        <span class="kw">let </span>tick = create_stub_trade_tick();
+    </span><span class="kw">fn </span>test_json_serialization(trade_tick_ethusdt_buyer: TradeTick) {
+        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
         <span class="kw">let </span>serialized = tick.as_json_bytes().unwrap();
         <span class="kw">let </span>deserialized = TradeTick::from_json_bytes(serialized).unwrap();
         <span class="macro">assert_eq!</span>(deserialized, tick);
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_msgpack_serialization() {
-        <span class="kw">let </span>tick = create_stub_trade_tick();
+    </span><span class="kw">fn </span>test_msgpack_serialization(trade_tick_ethusdt_buyer: TradeTick) {
+        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
         <span class="kw">let </span>serialized = tick.as_msgpack_bytes().unwrap();
         <span class="kw">let </span>deserialized = TradeTick::from_msgpack_bytes(serialized).unwrap();
         <span class="macro">assert_eq!</span>(deserialized, tick);

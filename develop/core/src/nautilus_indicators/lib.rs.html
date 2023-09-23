@@ -34,6 +34,8 @@
 <a href="#34" id="34">34</a>
 <a href="#35" id="35">35</a>
 <a href="#36" id="36">36</a>
+<a href="#37" id="37">37</a>
+<a href="#38" id="38">38</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -50,6 +52,7 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">pub mod </span>ema;
+<span class="kw">pub mod </span>sma;
 
 <span class="kw">use </span>nautilus_model::data::{bar::Bar, quote::QuoteTick, trade::TradeTick};
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, types::PyModule, Python};
@@ -58,6 +61,7 @@
 </span><span class="attr">#[pymodule]
 </span><span class="kw">pub fn </span>indicators(<span class="kw">_</span>: Python&lt;<span class="lifetime">&#39;_</span>&gt;, m: <span class="kw-2">&amp;</span>PyModule) -&gt; PyResult&lt;()&gt; {
     m.add_class::&lt;ema::ExponentialMovingAverage&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;sma::SimpleMovingAverage&gt;()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 

@@ -186,6 +186,117 @@
 <a href="#186" id="186">186</a>
 <a href="#187" id="187">187</a>
 <a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
+<a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
+<a href="#208" id="208">208</a>
+<a href="#209" id="209">209</a>
+<a href="#210" id="210">210</a>
+<a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a>
+<a href="#238" id="238">238</a>
+<a href="#239" id="239">239</a>
+<a href="#240" id="240">240</a>
+<a href="#241" id="241">241</a>
+<a href="#242" id="242">242</a>
+<a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -201,7 +312,9 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>nautilus_model::{
+</span><span class="kw">use </span>std::fmt::Display;
+
+<span class="kw">use </span>nautilus_model::{
     data::{bar::Bar, quote::QuoteTick, trade::TradeTick},
     enums::PriceType,
 };
@@ -222,6 +335,12 @@
     is_initialized: bool,
 }
 
+<span class="kw">impl </span>Display <span class="kw">for </span>ExponentialMovingAverage {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>std::fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">&quot;{}({})&quot;</span>, <span class="self">self</span>.name(), <span class="self">self</span>.period,)
+    }
+}
+
 <span class="kw">impl </span>Indicator <span class="kw">for </span>ExponentialMovingAverage {
     <span class="kw">fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="macro">stringify!</span>(ExponentialMovingAverage).to_string()
@@ -236,15 +355,15 @@
     }
 
     <span class="kw">fn </span>handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.py_update_raw(tick.extract_price(<span class="self">self</span>.price_type).into());
+        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into());
     }
 
     <span class="kw">fn </span>handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>tick.price).into());
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into());
     }
 
     <span class="kw">fn </span>handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
-        <span class="self">self</span>.py_update_raw((<span class="kw-2">&amp;</span>bar.close).into());
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into());
     }
 
     <span class="kw">fn </span>reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
@@ -276,7 +395,7 @@
 #[pymethods]
 </span><span class="kw">impl </span>ExponentialMovingAverage {
     <span class="attr">#[new]
-    </span><span class="kw">fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(period: usize, price_type: <span class="prelude-ty">Option</span>&lt;PriceType&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             period,
             price_type: price_type.unwrap_or(PriceType::Last),
@@ -294,13 +413,39 @@
         <span class="self">self</span>.name()
     }
 
-    <span class="attr">#[pyo3(name = <span class="string">&quot;has_inputs&quot;</span>)]
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">&quot;period&quot;</span>)]
+    </span><span class="kw">fn </span>py_period(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.period
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">&quot;alpha&quot;</span>)]
+    </span><span class="kw">fn </span>py_alpha(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.alpha
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">&quot;count&quot;</span>)]
+    </span><span class="kw">pub fn </span>py_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.count
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">&quot;value&quot;</span>)]
+    </span><span class="kw">pub fn </span>py_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.value
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">&quot;has_inputs&quot;</span>)]
     </span><span class="kw">fn </span>py_has_inputs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.has_inputs()
     }
 
-    <span class="attr">#[pyo3(name = <span class="string">&quot;is_initialized&quot;</span>)]
-    </span><span class="kw">fn </span>py_is_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">&quot;initialized&quot;</span>)]
+    </span><span class="kw">fn </span>py_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.is_initialized
     }
 
@@ -328,6 +473,26 @@
     </span><span class="kw">fn </span>py_update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
         <span class="self">self</span>.update_raw(value);
     }
+
+    <span class="kw">fn </span>__repr__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="macro">format!</span>(<span class="string">&quot;ExponentialMovingAverage({})&quot;</span>, <span class="self">self</span>.period)
+    }
+}
+
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Stubs
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(test)]
+</span><span class="kw">pub mod </span>stubs {
+    <span class="kw">use </span>nautilus_model::enums::PriceType;
+    <span class="kw">use </span>rstest::fixture;
+
+    <span class="kw">use </span><span class="kw">crate</span>::ema::ExponentialMovingAverage;
+
+    <span class="attr">#[fixture]
+    </span><span class="kw">pub fn </span>indicator_ema_10() -&gt; ExponentialMovingAverage {
+        ExponentialMovingAverage::new(<span class="number">10</span>, <span class="prelude-val">Some</span>(PriceType::Mid))
+    }
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
@@ -335,43 +500,100 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>indicator_ema_10;
+    <span class="kw">use </span>nautilus_model::{
+        data::{quote::QuoteTick, trade::TradeTick},
+        enums::{AggressorSide, PriceType},
+        identifiers::{instrument_id::InstrumentId, trade_id::TradeId},
+        types::{price::Price, quantity::Quantity},
+    };
     <span class="kw">use </span>rstest::rstest;
 
-    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use </span><span class="kw">super</span>::stubs::<span class="kw-2">*</span>;
+    <span class="kw">use crate</span>::{ema::ExponentialMovingAverage, Indicator};
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_ema_initialized() {
-        <span class="kw">let </span>ema = ExponentialMovingAverage::new(<span class="number">20</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
-        <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">&quot;{ema:?}&quot;</span>);
-        <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;ExponentialMovingAverage { period: 20, price_type: Mid, alpha: 0.09523809523809523, value: 0.0, count: 0, has_inputs: false, is_initialized: false }&quot;</span>);
+    </span><span class="kw">fn </span>test_ema_initialized(indicator_ema_10: ExponentialMovingAverage) {
+        <span class="kw">let </span>ema = indicator_ema_10;
+        <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">&quot;{ema}&quot;</span>);
+        <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;ExponentialMovingAverage(10)&quot;</span>);
+        <span class="macro">assert_eq!</span>(ema.period, <span class="number">10</span>);
+        <span class="macro">assert_eq!</span>(ema.price_type, PriceType::Mid);
+        <span class="macro">assert_eq!</span>(ema.alpha, <span class="number">0.18181818181818182</span>);
+        <span class="macro">assert_eq!</span>(ema.is_initialized, <span class="bool-val">false</span>);
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_ema_update_raw() {
-        <span class="kw">let </span><span class="kw-2">mut </span>ema = ExponentialMovingAverage::new(<span class="number">3</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
-        ema.py_update_raw(<span class="number">1.0</span>);
-        ema.py_update_raw(<span class="number">2.0</span>);
-        ema.py_update_raw(<span class="number">3.0</span>);
+    </span><span class="kw">fn </span>test_one_value_input(indicator_ema_10: ExponentialMovingAverage) {
+        <span class="kw">let </span><span class="kw-2">mut </span>ema = indicator_ema_10;
+        ema.update_raw(<span class="number">1.0</span>);
+        <span class="macro">assert_eq!</span>(ema.count, <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(ema.value, <span class="number">1.0</span>);
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_ema_update_raw(indicator_ema_10: ExponentialMovingAverage) {
+        <span class="kw">let </span><span class="kw-2">mut </span>ema = indicator_ema_10;
+        ema.update_raw(<span class="number">1.0</span>);
+        ema.update_raw(<span class="number">2.0</span>);
+        ema.update_raw(<span class="number">3.0</span>);
+        ema.update_raw(<span class="number">4.0</span>);
+        ema.update_raw(<span class="number">5.0</span>);
+        ema.update_raw(<span class="number">6.0</span>);
+        ema.update_raw(<span class="number">7.0</span>);
+        ema.update_raw(<span class="number">8.0</span>);
+        ema.update_raw(<span class="number">9.0</span>);
+        ema.update_raw(<span class="number">10.0</span>);
 
         <span class="macro">assert!</span>(ema.has_inputs());
         <span class="macro">assert!</span>(ema.is_initialized());
-        <span class="macro">assert_eq!</span>(ema.count, <span class="number">3</span>);
-        <span class="macro">assert_eq!</span>(ema.value, <span class="number">2.25</span>);
+        <span class="macro">assert_eq!</span>(ema.count, <span class="number">10</span>);
+        <span class="macro">assert_eq!</span>(ema.value, <span class="number">6.2393684801212155</span>);
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_ema_reset() {
-        <span class="kw">let </span><span class="kw-2">mut </span>ema = ExponentialMovingAverage::new(<span class="number">3</span>, <span class="prelude-val">Some</span>(PriceType::Mid));
-        ema.py_update_raw(<span class="number">1.0</span>);
-        ema.py_update_raw(<span class="number">2.0</span>);
-        ema.py_update_raw(<span class="number">3.0</span>);
-
+    </span><span class="kw">fn </span>test_reset(indicator_ema_10: ExponentialMovingAverage) {
+        <span class="kw">let </span><span class="kw-2">mut </span>ema = indicator_ema_10;
+        ema.update_raw(<span class="number">1.0</span>);
+        <span class="macro">assert_eq!</span>(ema.count, <span class="number">1</span>);
         ema.reset();
-
         <span class="macro">assert_eq!</span>(ema.count, <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(ema.value, <span class="number">0.0</span>);
-        <span class="macro">assert!</span>(!ema.has_inputs());
-        <span class="macro">assert!</span>(!ema.is_initialized());
+        <span class="macro">assert_eq!</span>(ema.is_initialized, <span class="bool-val">false</span>)
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_handle_quote_tick(indicator_ema_10: ExponentialMovingAverage) {
+        <span class="kw">let </span><span class="kw-2">mut </span>ema = indicator_ema_10;
+        <span class="kw">let </span>tick = QuoteTick {
+            instrument_id: InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>),
+            bid_price: Price::from(<span class="string">&quot;1500.0000&quot;</span>),
+            ask_price: Price::from(<span class="string">&quot;1502.0000&quot;</span>),
+            bid_size: Quantity::from(<span class="string">&quot;1.00000000&quot;</span>),
+            ask_size: Quantity::from(<span class="string">&quot;1.00000000&quot;</span>),
+            ts_event: <span class="number">1</span>,
+            ts_init: <span class="number">0</span>,
+        };
+        ema.handle_quote_tick(<span class="kw-2">&amp;</span>tick);
+        <span class="macro">assert_eq!</span>(ema.has_inputs(), <span class="bool-val">true</span>);
+        <span class="macro">assert_eq!</span>(ema.value, <span class="number">1501.0</span>);
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_handle_trade_tick(indicator_ema_10: ExponentialMovingAverage) {
+        <span class="kw">let </span><span class="kw-2">mut </span>ema = indicator_ema_10;
+        <span class="kw">let </span>tick = TradeTick {
+            instrument_id: InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>),
+            price: Price::from(<span class="string">&quot;1500.0000&quot;</span>),
+            size: Quantity::from(<span class="string">&quot;1.00000000&quot;</span>),
+            aggressor_side: AggressorSide::Buyer,
+            trade_id: TradeId::new(<span class="string">&quot;123456789&quot;</span>).unwrap(),
+            ts_event: <span class="number">1</span>,
+            ts_init: <span class="number">0</span>,
+        };
+        ema.handle_trade_tick(<span class="kw-2">&amp;</span>tick);
+        <span class="macro">assert_eq!</span>(ema.has_inputs(), <span class="bool-val">true</span>);
+        <span class="macro">assert_eq!</span>(ema.value, <span class="number">1500.0</span>);
     }
 }
 </code></pre></div></section></main></body></html>
