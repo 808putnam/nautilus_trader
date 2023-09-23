@@ -746,6 +746,30 @@
                </span>
               </code>
              </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_env">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ParquetDataCatalog.from_env()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_uri">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ParquetDataCatalog.from_uri()
+                 </span>
+                </code>
+               </a>
+              </li>
+             </ul>
             </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#nautilus_trader.persistence.wranglers.BarDataWrangler">
@@ -850,6 +874,15 @@
               </i>
              </span>
              <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.is_closed">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  StreamingFeatherWriter.is_closed
+                 </span>
+                </code>
+               </a>
+              </li>
               <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.write">
                 <code class="docutils literal notranslate">
@@ -1349,9 +1382,179 @@ meaning the catalog operates on the local filesystem.
             Warning
            </p>
            <p>
-            The catalog is not threadsafe.
+            The data catalog is not threadsafe.
            </p>
           </div>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_env">
+            <em class="property">
+             <span class="pre">
+              classmethod
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_env
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog" title="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog">
+               <span class="pre">
+                ParquetDataCatalog
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_env" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Create a data catalog instance by accessing the ‘NAUTILUS_PATH’ environment
+variable.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                ParquetDataCatalog
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                OSError
+               </strong>
+               – If the ‘NAUTILUS_PATH’ environment variable is not set.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_uri">
+            <em class="property">
+             <span class="pre">
+              classmethod
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_uri
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               uri
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               str
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog" title="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog">
+               <span class="pre">
+                ParquetDataCatalog
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_uri" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Create a data catalog instance from the given
+             <cite>
+              uri
+             </cite>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                uri
+               </strong>
+               (
+               <em>
+                str
+               </em>
+               ) – The URI string for the backing path.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                ParquetDataCatalog
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
          </dd>
         </dl>
         <span class="target" id="module-nautilus_trader.persistence.wranglers">
@@ -2761,6 +2964,57 @@ the data source and the Nautilus system.
               </p>
              </li>
             </ul>
+           </dd>
+          </dl>
+          <dl class="py property">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.is_closed">
+            <em class="property">
+             <span class="pre">
+              property
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              is_closed
+             </span>
+            </span>
+            <em class="property">
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              bool
+             </span>
+            </em>
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.is_closed" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return whether all file streams are closed.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
+               </em>
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py method">
