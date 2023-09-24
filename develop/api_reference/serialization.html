@@ -1262,7 +1262,7 @@ and back to
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             cls
+             data_cls
             </span>
            </span>
            <span class="p">
@@ -1294,20 +1294,19 @@ and back to
            </span>
            <span class="n">
             <span class="pre">
-             Optional
+             pyarrow.lib.Schema
+            </span>
+            <span class="w">
             </span>
             <span class="p">
              <span class="pre">
-              [
+              |
              </span>
+            </span>
+            <span class="w">
             </span>
             <span class="pre">
-             Schema
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
+             None
             </span>
            </span>
           </em>
@@ -1438,13 +1437,13 @@ and back to
              <li>
               <p>
                <strong>
-                cls
+                data_cls
                </strong>
                (
                <em>
                 type
                </em>
-               ) – The type to register serialization for.
+               ) – The data type to register serialization for.
               </p>
              </li>
              <li>
@@ -1614,19 +1613,13 @@ its own.
                </span>
               </span>
               <span class="pre">
-               Union
-              </span>
-              <span class="p">
-               <span class="pre">
-                [
-               </span>
-              </span>
-              <span class="pre">
                nautilus_trader.core.data.Data
               </span>
+              <span class="w">
+              </span>
               <span class="p">
                <span class="pre">
-                ,
+                |
                </span>
               </span>
               <span class="w">
@@ -1641,18 +1634,13 @@ its own.
                 ]
                </span>
               </span>
-              <span class="p">
-               <span class="pre">
-                ]
-               </span>
-              </span>
              </span>
             </em>
             ,
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               cls
+               data_cls
               </span>
              </span>
              <span class="p">
@@ -1672,19 +1660,13 @@ its own.
                </span>
               </span>
               <span class="pre">
-               Union
-              </span>
-              <span class="p">
-               <span class="pre">
-                [
-               </span>
-              </span>
-              <span class="pre">
                nautilus_trader.core.data.Data
               </span>
+              <span class="w">
+              </span>
               <span class="p">
                <span class="pre">
-                ,
+                |
                </span>
               </span>
               <span class="w">
@@ -1694,11 +1676,6 @@ its own.
                 nautilus_trader.core.message.Event
                </span>
               </a>
-              <span class="p">
-               <span class="pre">
-                ]
-               </span>
-              </span>
               <span class="p">
                <span class="pre">
                 ]
@@ -1764,13 +1741,13 @@ its own.
                <li>
                 <p>
                  <strong>
-                  cls
+                  data_cls
                  </strong>
                  (
                  <em>
                   type
                  </em>
-                 ) – The class of the data
+                 ) – The data type for the serialization.
                 </p>
                </li>
               </ul>
@@ -1829,7 +1806,7 @@ its own.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               cls
+               data_cls
               </span>
              </span>
              <span class="p">
@@ -1861,30 +1838,19 @@ its own.
              </span>
              <span class="n">
               <span class="pre">
-               Union
+               pyarrow.lib.RecordBatch
+              </span>
+              <span class="w">
               </span>
               <span class="p">
                <span class="pre">
-                [
-               </span>
-              </span>
-              <span class="pre">
-               RecordBatch
-              </span>
-              <span class="p">
-               <span class="pre">
-                ,
+                |
                </span>
               </span>
               <span class="w">
               </span>
               <span class="pre">
-               Table
-              </span>
-              <span class="p">
-               <span class="pre">
-                ]
-               </span>
+               pyarrow.lib.Table
               </span>
              </span>
             </em>
@@ -1925,13 +1891,13 @@ its own.
                <li>
                 <p>
                  <strong>
-                  cls
+                  data_cls
                  </strong>
                  (
                  <em>
                   type
                  </em>
-                 ) – The type to deserialize to.
+                 ) – The data type to deserialize to.
                 </p>
                </li>
                <li>

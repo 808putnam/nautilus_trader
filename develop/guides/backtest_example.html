@@ -930,7 +930,7 @@ Firstly, we need to load this raw data into a
           <div class="highlight">
            <pre><span></span><span class="c1"># Here we just take the first data file found and load into a pandas DataFrame</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">CSVTickDataLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">raw_files</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"%Y%m</span><span class="si">%d</span><span class="s2"> %H%M%S</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"bid_price"</span><span class="p">,</span> <span class="s2">"ask_price"</span><span class="p">,</span> <span class="s2">"size"</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"bid_price"</span><span class="p">,</span> <span class="s2">"ask_price"</span><span class="p">]</span>
 
 <span class="c1"># Process quote ticks using a wrangler</span>
 <span class="n">EURUSD</span> <span class="o">=</span> <span class="n">TestInstrumentProvider</span><span class="o">.</span><span class="n">default_fx_ccy</span><span class="p">(</span><span class="s2">"EUR/USD"</span><span class="p">)</span>
@@ -1000,7 +1000,7 @@ It contains various methods to pull data from the catalog, such as
             quote_ticks(...)
            </span>
           </code>
-          (show below).
+          (shown below).
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
