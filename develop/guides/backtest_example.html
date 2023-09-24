@@ -741,7 +741,7 @@
          </a>
         </h1>
         <p>
-         This notebook runs through a complete backtest example using raw data (external to Nautilus) to a single backtest run.
+         This notebook runs through a complete backtest example using raw data (external to Nautilus) through to a single backtest run.
         </p>
         <section id="imports">
          <h2 id="imports">
@@ -759,19 +759,20 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">fsspec</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
 <span class="kn">from</span> <span class="nn">nautilus_trader.core.datetime</span> <span class="kn">import</span> <span class="n">dt_to_unix_nanos</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Price</span><span class="p">,</span> <span class="n">Quantity</span>
-
-<span class="kn">from</span> <span class="nn">nautilus_trader.test_kit.providers</span> <span class="kn">import</span> <span class="n">TestInstrumentProvider</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.backtest.node</span> <span class="kn">import</span> <span class="n">BacktestNode</span><span class="p">,</span> <span class="n">BacktestVenueConfig</span><span class="p">,</span> <span class="n">BacktestDataConfig</span><span class="p">,</span> <span class="n">BacktestRunConfig</span><span class="p">,</span> <span class="n">BacktestEngineConfig</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">ImportableStrategyConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.config.common</span> <span class="kn">import</span> <span class="n">ImportableStrategyConfig</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.persistence.catalog</span> <span class="kn">import</span> <span class="n">ParquetDataCatalog</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.persistence.external.core</span> <span class="kn">import</span> <span class="n">process_files</span><span class="p">,</span> <span class="n">write_objects</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.persistence.external.readers</span> <span class="kn">import</span> <span class="n">TextReader</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.persistence.wranglers</span> <span class="kn">import</span> <span class="n">QuoteTickDataWrangler</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.test_kit.providers</span> <span class="kn">import</span> <span class="n">CSVTickDataLoader</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.test_kit.providers</span> <span class="kn">import</span> <span class="n">TestInstrumentProvider</span>
 </pre>
           </div>
          </div>
@@ -822,13 +823,19 @@
           </div>
          </div>
          <p>
-          Run the cell below; you should see the files that you downloaded:
+          Then place the data archive into a
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            /"HISTDATA"
+           </span>
+          </code>
+          directory and run the cell below; you should see the files that you downloaded:
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="n">fs</span> <span class="o">=</span> <span class="n">fsspec</span><span class="o">.</span><span class="n">filesystem</span><span class="p">(</span><span class="s1">'file'</span><span class="p">)</span>
-<span class="n">raw_files</span> <span class="o">=</span> <span class="n">fs</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">DATA_DIR</span><span class="si">}</span><span class="s2">/HISTDATA*"</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">raw_files</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Unable to find any histdata files in directory </span><span class="si">{</span><span class="n">DATA_DIR</span><span class="si">}</span><span class="s2">"</span>
+           <pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">DATA_DIR</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"HISTDATA"</span>
+<span class="n">raw_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">iterdir</span><span class="p">())</span>
+<span class="k">assert</span> <span class="n">raw_files</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Unable to find any histdata files in directory </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">"</span>
 <span class="n">raw_files</span>
 </pre>
           </div>
@@ -877,15 +884,6 @@
           </a>
          </h2>
          <p>
-          We can load data from various sources into the data catalog using helper methods in the
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            nautilus_trader.persistence.external.readers
-           </span>
-          </code>
-          module. The module contains methods for reading various data formats (CSV, JSON, text), minimising the amount of code required to get data loaded correctly into the data catalog.
-         </p>
-         <p>
           The FX data from
           <code class="docutils literal notranslate">
            <span class="pre">
@@ -904,57 +902,53 @@
             ask_price
            </span>
           </code>
-          . To load the data into the catalog, we simply write a function that converts each row into a Nautilus object (in this case, a
+          .
+Firstly, we need to load this raw data into a
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            pandas.DataFrame
+           </span>
+          </code>
+          which has a compatible schema for Nautilus quote ticks.
+         </p>
+         <p>
+          Then we can create Nautilus
           <code class="docutils literal notranslate">
            <span class="pre">
             QuoteTick
            </span>
           </code>
-          ). For this example, we will use the
+          objects by processing the DataFrame with a
           <code class="docutils literal notranslate">
            <span class="pre">
-            TextReader
+            QuoteTickDataWrangler
            </span>
           </code>
-          helper, which allows reading and applying a parsing function line by line.
+          .
          </p>
+         <div class="highlight-python notranslate">
+          <div class="highlight">
+           <pre><span></span><span class="c1"># Here we just take the first data file found and load into a pandas DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">CSVTickDataLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">raw_files</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"%Y%m</span><span class="si">%d</span><span class="s2"> %H%M%S</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"bid_price"</span><span class="p">,</span> <span class="s2">"ask_price"</span><span class="p">,</span> <span class="s2">"size"</span><span class="p">]</span>
+
+<span class="c1"># Process quote ticks using a wrangler</span>
+<span class="n">EURUSD</span> <span class="o">=</span> <span class="n">TestInstrumentProvider</span><span class="o">.</span><span class="n">default_fx_ccy</span><span class="p">(</span><span class="s2">"EUR/USD"</span><span class="p">)</span>
+<span class="n">wrangler</span> <span class="o">=</span> <span class="n">QuoteTickDataWrangler</span><span class="p">(</span><span class="n">EURUSD</span><span class="p">)</span>
+
+<span class="n">ticks</span> <span class="o">=</span> <span class="n">wrangler</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre>
+          </div>
+         </div>
          <p>
-          Then, we simply instantiate a
+          Next, we simply instantiate a
           <code class="docutils literal notranslate">
            <span class="pre">
             ParquetDataCatalog
            </span>
           </code>
-          (passing in a directory where to store the data, by default we will just use the current directory) and pass our parsing function wrapping in the Reader class to
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            process_files
-           </span>
-          </code>
-          . We also need to know about which instrument this data is for; in this example, we will simply use one of the Nautilus test helpers to create a FX instrument.
-         </p>
-         <p>
-          It should only take a couple of minutes to load the data (depending on how many months).
-         </p>
-         <div class="highlight-python notranslate">
-          <div class="highlight">
-           <pre><span></span><span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="n">ts</span><span class="p">,</span> <span class="n">bid</span><span class="p">,</span> <span class="n">ask</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s2">","</span><span class="p">)</span>
-    <span class="n">dt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span> <span class="s2">"%Y%m</span><span class="si">%d</span><span class="s2"> %H%M%S</span><span class="si">%f</span><span class="s2">"</span><span class="p">),</span> <span class="n">tz</span><span class="o">=</span><span class="s1">'UTC'</span><span class="p">)</span>
-    <span class="k">yield</span> <span class="n">QuoteTick</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">AUDUSD</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-        <span class="n">bid_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">bid</span><span class="o">.</span><span class="n">decode</span><span class="p">()),</span>
-        <span class="n">ask_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">ask</span><span class="o">.</span><span class="n">decode</span><span class="p">()),</span>
-        <span class="n">bid_size</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">100_000</span><span class="p">),</span>
-        <span class="n">ask_size</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">100_000</span><span class="p">),</span>
-        <span class="n">ts_event</span><span class="o">=</span><span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span>
-        <span class="n">ts_init</span><span class="o">=</span><span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">dt</span><span class="p">),</span>
-    <span class="p">)</span>
-</pre>
-          </div>
-         </div>
-         <p>
-          We’ll set up a catalog in the current working directory.
+          (passing in a directory where to store the data, by default we will just use the current directory).
+We can then write the instrument and tick data to the catalog, it should only take a couple of minutes to load the data (depending on how many months).
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
@@ -964,23 +958,17 @@
 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">):</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
+
+<span class="c1"># Create a catalog instance</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">ParquetDataCatalog</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
 </pre>
           </div>
          </div>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="n">AUDUSD</span> <span class="o">=</span> <span class="n">TestInstrumentProvider</span><span class="o">.</span><span class="n">default_fx_ccy</span><span class="p">(</span><span class="s2">"AUD/USD"</span><span class="p">)</span>
-
-<span class="n">catalog</span> <span class="o">=</span> <span class="n">ParquetDataCatalog</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
-
-<span class="n">process_files</span><span class="p">(</span>
-    <span class="n">glob_path</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">DATA_DIR</span><span class="si">}</span><span class="s2">/HISTDATA*.zip"</span><span class="p">,</span>
-    <span class="n">reader</span><span class="o">=</span><span class="n">TextReader</span><span class="p">(</span><span class="n">line_parser</span><span class="o">=</span><span class="n">parser</span><span class="p">),</span>
-    <span class="n">catalog</span><span class="o">=</span><span class="n">catalog</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="c1"># Also manually write the AUD/USD instrument to the catalog</span>
-<span class="n">write_objects</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="p">[</span><span class="n">AUDUSD</span><span class="p">])</span>
+           <pre><span></span><span class="c1"># Write instrument and ticks to catalog (this currently takes a minute - investigating)</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">write_data</span><span class="p">([</span><span class="n">EURUSD</span><span class="p">])</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span>
 </pre>
           </div>
          </div>
@@ -999,10 +987,17 @@
             catalog
            </span>
           </code>
-          instance can be used for loading data for backtests, or simple for research purposes. It contains various methods to pull data from the catalog, like
+          instance can be used for loading data for backtests, or simply for research purposes.
+It contains various methods to pull data from the catalog, such as
           <code class="docutils literal notranslate">
            <span class="pre">
-            quote_ticks
+            .instruments(...)
+           </span>
+          </code>
+          and
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            quote_ticks(...)
            </span>
           </code>
           (show below).
@@ -1015,14 +1010,10 @@
          </div>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.core.datetime</span> <span class="kn">import</span> <span class="n">dt_to_unix_nanos</span>
+           <pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2020-01-03"</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">))</span>
+<span class="n">end</span> <span class="o">=</span>  <span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2020-01-04"</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s2">"UTC"</span><span class="p">))</span>
 
-
-<span class="n">start</span> <span class="o">=</span> <span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">'2020-01-01'</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s1">'UTC'</span><span class="p">))</span>
-<span class="n">end</span> <span class="o">=</span>  <span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s1">'2020-01-02'</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="s1">'UTC'</span><span class="p">))</span>
-
-<span class="n">catalog</span><span class="o">.</span><span class="n">quote_ticks</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
+<span class="n">catalog</span><span class="o">.</span><span class="n">quote_ticks</span><span class="p">(</span><span class="n">instrument_ids</span><span class="o">=</span><span class="p">[</span><span class="n">EURUSD</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">value</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
 </pre>
           </div>
          </div>
@@ -1060,24 +1051,24 @@
            <div class="highlight">
             <pre><span></span><span class="n">instrument</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">instruments</span><span class="p">(</span><span class="n">as_nautilus</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-<span class="n">venues_config</span><span class="o">=</span><span class="p">[</span>
+<span class="n">venue_configs</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">BacktestVenueConfig</span><span class="p">(</span>
         <span class="n">name</span><span class="o">=</span><span class="s2">"SIM"</span><span class="p">,</span>
         <span class="n">oms_type</span><span class="o">=</span><span class="s2">"HEDGING"</span><span class="p">,</span>
         <span class="n">account_type</span><span class="o">=</span><span class="s2">"MARGIN"</span><span class="p">,</span>
         <span class="n">base_currency</span><span class="o">=</span><span class="s2">"USD"</span><span class="p">,</span>
         <span class="n">starting_balances</span><span class="o">=</span><span class="p">[</span><span class="s2">"1_000_000 USD"</span><span class="p">],</span>
-    <span class="p">)</span>
+    <span class="p">),</span>
 <span class="p">]</span>
 
-<span class="n">data_config</span><span class="o">=</span><span class="p">[</span>
+<span class="n">data_configs</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">BacktestDataConfig</span><span class="p">(</span>
         <span class="n">catalog_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">ParquetDataCatalog</span><span class="o">.</span><span class="n">from_env</span><span class="p">()</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
         <span class="n">data_cls</span><span class="o">=</span><span class="n">QuoteTick</span><span class="p">,</span>
         <span class="n">instrument_id</span><span class="o">=</span><span class="n">instrument</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-        <span class="n">start_time</span><span class="o">=</span><span class="mi">1580398089820000000</span><span class="p">,</span>
-        <span class="n">end_time</span><span class="o">=</span><span class="mi">1580504394501000000</span><span class="p">,</span>
-    <span class="p">)</span>
+        <span class="n">start_time</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+        <span class="n">end_time</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+    <span class="p">),</span>
 <span class="p">]</span>
 
 <span class="n">strategies</span> <span class="o">=</span> <span class="p">[</span>
@@ -1096,8 +1087,8 @@
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">BacktestRunConfig</span><span class="p">(</span>
     <span class="n">engine</span><span class="o">=</span><span class="n">BacktestEngineConfig</span><span class="p">(</span><span class="n">strategies</span><span class="o">=</span><span class="n">strategies</span><span class="p">),</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">data_config</span><span class="p">,</span>
-    <span class="n">venues</span><span class="o">=</span><span class="n">venues_config</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data_configs</span><span class="p">,</span>
+    <span class="n">venues</span><span class="o">=</span><span class="n">venue_configs</span><span class="p">,</span>
 <span class="p">)</span>
 
 </pre>
@@ -1117,6 +1108,7 @@
            <pre><span></span><span class="n">node</span> <span class="o">=</span> <span class="n">BacktestNode</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="p">[</span><span class="n">config</span><span class="p">])</span>
 
 <span class="n">results</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">results</span>
 </pre>
           </div>
          </div>
