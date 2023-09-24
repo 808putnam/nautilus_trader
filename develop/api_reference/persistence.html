@@ -388,11 +388,6 @@
                Complete Backtest Example
               </a>
              </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
-              </a>
-             </li>
             </ul>
            </li>
            <li class="md-nav__item">
@@ -1307,7 +1302,7 @@ backtesting.
            </a>
           </p>
           <p>
-           Provides a queryable data catalog persisted to files in parquet format.
+           Provides a queryable data catalog persisted to files in Parquet (Arrow) format.
           </p>
           <dl class="field-list simple">
            <dt class="field-odd">
@@ -1400,9 +1395,24 @@ meaning the catalog operates on the local filesystem.
             Warning
            </p>
            <p>
-            The data catalog is not threadsafe.
+            The data catalog is not threadsafe. Using it in a multithreaded environment can lead to
+unexpected behavior.
            </p>
           </div>
+          <p class="rubric">
+           Notes
+          </p>
+          <p>
+           For more details about
+           <cite>
+            fsspec
+           </cite>
+           and its filesystem protocols, see
+           <a class="reference external" href="https://filesystem-spec.readthedocs.io/en/latest/">
+            https://filesystem-spec.readthedocs.io/en/latest/
+           </a>
+           .
+          </p>
           <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_env">
             <em class="property">
