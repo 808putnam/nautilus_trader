@@ -509,7 +509,7 @@
 <span class="doccomment">/// Represents an order in a book.
 </span><span class="attr">#[repr(C)]
 #[derive(Copy, Clone, Eq, Debug, Serialize, Deserialize)]
-#[pyclass]
+#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.data&quot;</span>)]
 </span><span class="kw">pub struct </span>BookOrder {
     <span class="doccomment">/// The order side.
     </span><span class="kw">pub </span>side: OrderSide,

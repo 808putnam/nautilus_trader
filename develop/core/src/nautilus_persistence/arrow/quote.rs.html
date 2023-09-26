@@ -304,6 +304,10 @@
 <a href="#304" id="304">304</a>
 <a href="#305" id="305">305</a>
 <a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -448,10 +452,14 @@
         <span class="comment">// Map record batch rows to vector of objects
         </span><span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="self">Self</span>&gt;, EncodingError&gt; = (<span class="number">0</span>..record_batch.num_rows())
             .map(|i| {
-                <span class="kw">let </span>bid_price = Price::from_raw(bid_price_values.value(i), price_precision);
-                <span class="kw">let </span>ask_price = Price::from_raw(ask_price_values.value(i), price_precision);
-                <span class="kw">let </span>bid_size = Quantity::from_raw(bid_size_values.value(i), size_precision);
-                <span class="kw">let </span>ask_size = Quantity::from_raw(ask_size_values.value(i), size_precision);
+                <span class="kw">let </span>bid_price =
+                    Price::from_raw(bid_price_values.value(i), price_precision).unwrap();
+                <span class="kw">let </span>ask_price =
+                    Price::from_raw(ask_price_values.value(i), price_precision).unwrap();
+                <span class="kw">let </span>bid_size =
+                    Quantity::from_raw(bid_size_values.value(i), size_precision).unwrap();
+                <span class="kw">let </span>ask_size =
+                    Quantity::from_raw(ask_size_values.value(i), size_precision).unwrap();
                 <span class="kw">let </span>ts_event = ts_event_values.value(i);
                 <span class="kw">let </span>ts_init = ts_init_values.value(i);
 

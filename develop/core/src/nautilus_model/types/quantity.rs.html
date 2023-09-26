@@ -891,8 +891,6 @@
 <a href="#891" id="891">891</a>
 <a href="#892" id="892">892</a>
 <a href="#893" id="893">893</a>
-<a href="#894" id="894">894</a>
-<a href="#895" id="895">895</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -957,10 +955,9 @@
         })
     }
 
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>from_raw(raw: u64, precision: u8) -&gt; <span class="self">Self </span>{
-        check_fixed_precision(precision).unwrap();
-        <span class="self">Self </span>{ raw, precision }
+    <span class="kw">pub fn </span>from_raw(raw: u64, precision: u8) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        check_fixed_precision(precision)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{ raw, precision })
     }
 
     <span class="attr">#[must_use]
@@ -1487,8 +1484,7 @@
     <span class="attr">#[staticmethod]
     #[pyo3(name = <span class="string">&quot;from_raw&quot;</span>)]
     </span><span class="kw">fn </span>py_from_raw(raw: u64, precision: u8) -&gt; PyResult&lt;Quantity&gt; {
-        check_fixed_precision(precision).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(Quantity::from_raw(raw, precision))
+        Quantity::from_raw(raw, precision).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[staticmethod]
@@ -1549,7 +1545,7 @@
 <span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>quantity_from_raw(raw: u64, precision: u8) -&gt; Quantity {
-    Quantity::from_raw(raw, precision)
+    Quantity::from_raw(raw, precision).unwrap()
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
@@ -1606,7 +1602,7 @@
     #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
     </span><span class="kw">fn </span>test_invalid_precision_from_raw() {
         <span class="comment">// Precision out of range for fixed
-        </span><span class="kw">let _ </span>= Quantity::from_raw(<span class="number">1</span>, <span class="number">10</span>);
+        </span><span class="kw">let _ </span>= Quantity::from_raw(<span class="number">1</span>, <span class="number">10</span>).unwrap();
     }
 
     <span class="attr">#[rstest]

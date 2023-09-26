@@ -464,11 +464,11 @@
         <span class="comment">// Map record batch rows to vector of objects
         </span><span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="self">Self</span>&gt;, EncodingError&gt; = (<span class="number">0</span>..record_batch.num_rows())
             .map(|i| {
-                <span class="kw">let </span>open = Price::from_raw(open_values.value(i), price_precision);
-                <span class="kw">let </span>high = Price::from_raw(high_values.value(i), price_precision);
-                <span class="kw">let </span>low = Price::from_raw(low_values.value(i), price_precision);
-                <span class="kw">let </span>close = Price::from_raw(close_values.value(i), price_precision);
-                <span class="kw">let </span>volume = Quantity::from_raw(volume_values.value(i), size_precision);
+                <span class="kw">let </span>open = Price::from_raw(open_values.value(i), price_precision).unwrap();
+                <span class="kw">let </span>high = Price::from_raw(high_values.value(i), price_precision).unwrap();
+                <span class="kw">let </span>low = Price::from_raw(low_values.value(i), price_precision).unwrap();
+                <span class="kw">let </span>close = Price::from_raw(close_values.value(i), price_precision).unwrap();
+                <span class="kw">let </span>volume = Quantity::from_raw(volume_values.value(i), size_precision).unwrap();
                 <span class="kw">let </span>ts_event = ts_event_values.value(i);
                 <span class="kw">let </span>ts_init = ts_init_values.value(i);
 

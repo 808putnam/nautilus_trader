@@ -187,7 +187,7 @@
 </span><span class="attr">#[repr(C)]
 #[derive(Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(tag = <span class="string">&quot;type&quot;</span>)]
-#[pyclass]
+#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.data&quot;</span>)]
 </span><span class="kw">pub struct </span>Ticker {
     <span class="doccomment">/// The quotes instrument ID.
     </span><span class="kw">pub </span>instrument_id: InstrumentId,

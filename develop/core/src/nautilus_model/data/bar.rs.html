@@ -1002,7 +1002,7 @@
 </span><span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Hash, PartialEq, Eq, Debug, Serialize, Deserialize)]
 #[serde(tag = <span class="string">&quot;type&quot;</span>)]
-#[pyclass]
+#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.data&quot;</span>)]
 </span><span class="kw">pub struct </span>Bar {
     <span class="doccomment">/// The bar type for this bar.
     </span><span class="kw">pub </span>bar_type: BarType,
@@ -1087,24 +1087,24 @@
         <span class="kw">let </span>open_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;open&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>price_prec: u8 = open_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>open_raw: i64 = open_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>open = Price::from_raw(open_raw, price_prec);
+        <span class="kw">let </span>open = Price::from_raw(open_raw, price_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>high_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;high&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>high_raw: i64 = high_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>high = Price::from_raw(high_raw, price_prec);
+        <span class="kw">let </span>high = Price::from_raw(high_raw, price_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>low_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;low&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>low_raw: i64 = low_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>low = Price::from_raw(low_raw, price_prec);
+        <span class="kw">let </span>low = Price::from_raw(low_raw, price_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>close_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;close&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>close_raw: i64 = close_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>close = Price::from_raw(close_raw, price_prec);
+        <span class="kw">let </span>close = Price::from_raw(close_raw, price_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>volume_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;volume&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>volume_raw: u64 = volume_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>volume_prec: u8 = volume_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>volume = Quantity::from_raw(volume_raw, volume_prec);
+        <span class="kw">let </span>volume = Quantity::from_raw(volume_raw, volume_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>ts_event: UnixNanos = obj.getattr(<span class="string">&quot;ts_event&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>ts_init: UnixNanos = obj.getattr(<span class="string">&quot;ts_init&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
@@ -1313,7 +1313,7 @@
             aggregation_source: AggregationSource::External,
         };
         Bar {
-            bar_type: bar_type,
+            bar_type,
             open: Price::from(<span class="string">&quot;1.00001&quot;</span>),
             high: Price::from(<span class="string">&quot;1.00004&quot;</span>),
             low: Price::from(<span class="string">&quot;1.00002&quot;</span>),
@@ -1524,7 +1524,7 @@
             aggregation_source: AggregationSource::External,
         };
         <span class="kw">let </span>bar1 = Bar {
-            bar_type: bar_type,
+            bar_type,
             open: Price::from(<span class="string">&quot;1.00001&quot;</span>),
             high: Price::from(<span class="string">&quot;1.00004&quot;</span>),
             low: Price::from(<span class="string">&quot;1.00002&quot;</span>),

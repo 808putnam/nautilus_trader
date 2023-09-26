@@ -553,8 +553,8 @@
                         <span class="macro">format!</span>(<span class="string">&quot;Invalid enum value, was {side_value}&quot;</span>),
                     )
                 })<span class="question-mark">?</span>;
-                <span class="kw">let </span>price = Price::from_raw(price_values.value(i), price_precision);
-                <span class="kw">let </span>size = Quantity::from_raw(size_values.value(i), size_precision);
+                <span class="kw">let </span>price = Price::from_raw(price_values.value(i), price_precision).unwrap();
+                <span class="kw">let </span>size = Quantity::from_raw(size_values.value(i), size_precision).unwrap();
                 <span class="kw">let </span>order_id = order_id_values.value(i);
                 <span class="kw">let </span>flags = flags_values.value(i);
                 <span class="kw">let </span>sequence = sequence_values.value(i);

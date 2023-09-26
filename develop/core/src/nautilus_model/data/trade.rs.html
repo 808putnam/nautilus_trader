@@ -433,10 +433,6 @@
 <a href="#433" id="433">433</a>
 <a href="#434" id="434">434</a>
 <a href="#435" id="435">435</a>
-<a href="#436" id="436">436</a>
-<a href="#437" id="437">437</a>
-<a href="#438" id="438">438</a>
-<a href="#439" id="439">439</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -474,7 +470,7 @@
 </span><span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(tag = <span class="string">&quot;type&quot;</span>)]
-#[pyclass]
+#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.data&quot;</span>)]
 </span><span class="kw">pub struct </span>TradeTick {
     <span class="doccomment">/// The trade instrument ID.
     </span><span class="kw">pub </span>instrument_id: InstrumentId,
@@ -543,19 +539,17 @@
     </span><span class="kw">pub fn </span>from_pyobject(obj: <span class="kw-2">&amp;</span>PyAny) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>instrument_id_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;instrument_id&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>instrument_id_str = instrument_id_obj.getattr(<span class="string">&quot;value&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>instrument_id = InstrumentId::from_str(instrument_id_str)
-            .map_err(to_pyvalue_err)
-            .unwrap();
+        <span class="kw">let </span>instrument_id = InstrumentId::from_str(instrument_id_str).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>price_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;price&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>price_raw: i64 = price_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>price_prec: u8 = price_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>price = Price::from_raw(price_raw, price_prec);
+        <span class="kw">let </span>price = Price::from_raw(price_raw, price_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>size_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;size&quot;</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>size_raw: u64 = size_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>size_prec: u8 = size_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>size = Quantity::from_raw(size_raw, size_prec);
+        <span class="kw">let </span>size = Quantity::from_raw(size_raw, size_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>aggressor_side_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;aggressor_side&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>aggressor_side_u8 = aggressor_side_obj.getattr(<span class="string">&quot;value&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
@@ -563,9 +557,7 @@
 
         <span class="kw">let </span>trade_id_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;trade_id&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>trade_id_str = trade_id_obj.getattr(<span class="string">&quot;value&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>trade_id = TradeId::from_str(trade_id_str)
-            .map_err(to_pyvalue_err)
-            .unwrap();
+        <span class="kw">let </span>trade_id = TradeId::from_str(trade_id_str).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>ts_event: UnixNanos = obj.getattr(<span class="string">&quot;ts_event&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>ts_init: UnixNanos = obj.getattr(<span class="string">&quot;ts_init&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
@@ -777,8 +769,8 @@
             size: Quantity::from(<span class="string">&quot;1.00000000&quot;</span>),
             aggressor_side: AggressorSide::Buyer,
             trade_id: TradeId::new(<span class="string">&quot;123456789&quot;</span>).unwrap(),
-            ts_event: <span class="number">1</span>,
-            ts_init: <span class="number">0</span>,
+            ts_event: <span class="number">0</span>,
+            ts_init: <span class="number">1</span>,
         }
     }
 }
@@ -800,7 +792,7 @@
         <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
         <span class="macro">assert_eq!</span>(
             tick.to_string(),
-            <span class="string">&quot;ETHUSDT-PERP.BINANCE,10000.0000,1.00000000,BUYER,123456789,1&quot;
+            <span class="string">&quot;ETHUSDT-PERP.BINANCE,10000.0000,1.00000000,BUYER,123456789,0&quot;
         </span>);
     }
 
@@ -813,8 +805,8 @@
             &quot;size&quot;: &quot;1.00000000&quot;,
             &quot;aggressor_side&quot;: &quot;BUYER&quot;,
             &quot;trade_id&quot;: &quot;123456789&quot;,
-            &quot;ts_event&quot;: 1,
-            &quot;ts_init&quot;: 0
+            &quot;ts_event&quot;: 0,
+            &quot;ts_init&quot;: 1
         }&quot;#</span>;
 
         <span class="kw">let </span>tick: TradeTick = serde_json::from_str(raw_string).unwrap();
@@ -830,7 +822,7 @@
 
         Python::with_gil(|py| {
             <span class="kw">let </span>dict_string = tick.as_dict(py).unwrap().to_string();
-            <span class="kw">let </span>expected_string = <span class="string">r#&quot;{&#39;type&#39;: &#39;TradeTick&#39;, &#39;instrument_id&#39;: &#39;ETHUSDT-PERP.BINANCE&#39;, &#39;price&#39;: &#39;10000.0000&#39;, &#39;size&#39;: &#39;1.00000000&#39;, &#39;aggressor_side&#39;: &#39;BUYER&#39;, &#39;trade_id&#39;: &#39;123456789&#39;, &#39;ts_event&#39;: 1, &#39;ts_init&#39;: 0}&quot;#</span>;
+            <span class="kw">let </span>expected_string = <span class="string">r#&quot;{&#39;type&#39;: &#39;TradeTick&#39;, &#39;instrument_id&#39;: &#39;ETHUSDT-PERP.BINANCE&#39;, &#39;price&#39;: &#39;10000.0000&#39;, &#39;size&#39;: &#39;1.00000000&#39;, &#39;aggressor_side&#39;: &#39;BUYER&#39;, &#39;trade_id&#39;: &#39;123456789&#39;, &#39;ts_event&#39;: 0, &#39;ts_init&#39;: 1}&quot;#</span>;
             <span class="macro">assert_eq!</span>(dict_string, expected_string);
         });
     }
