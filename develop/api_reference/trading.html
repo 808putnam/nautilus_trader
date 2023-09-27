@@ -3354,10 +3354,37 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.trading.trader.Trader.start_actor">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Trader.start_actor()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.trading.trader.Trader.start_strategy">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   Trader.start_strategy()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.trading.trader.Trader.remove_actor">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Trader.remove_actor()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.trading.trader.Trader.remove_strategy">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Trader.remove_strategy()
                  </span>
                 </code>
                </a>
@@ -32990,6 +33017,104 @@ strategies.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.trading.trader.Trader.start_actor">
+            <span class="sig-name descname">
+             <span class="pre">
+              start_actor
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               actor_id
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ComponentId" title="nautilus_trader.model.identifiers.ComponentId">
+               <span class="pre">
+                ComponentId
+               </span>
+              </a>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.trading.trader.Trader.start_actor" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Start the actor with the given
+             <cite>
+              actor_id
+             </cite>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                actor_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ComponentId" title="nautilus_trader.model.identifiers.ComponentId">
+                <em>
+                 ComponentId
+                </em>
+               </a>
+               ) – The component ID to start.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError:
+               </strong>
+               – If an actor with the given
+               <cite>
+                actor_id
+               </cite>
+               is not found.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.trading.trader.Trader.start_strategy">
             <span class="sig-name descname">
              <span class="pre">
@@ -33064,6 +33189,220 @@ strategies.
                 </em>
                </a>
                ) – The strategy ID to start.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError:
+               </strong>
+               – If a strategy with the given
+               <cite>
+                strategy_id
+               </cite>
+               is not found.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.trading.trader.Trader.remove_actor">
+            <span class="sig-name descname">
+             <span class="pre">
+              remove_actor
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               actor_id
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ComponentId" title="nautilus_trader.model.identifiers.ComponentId">
+               <span class="pre">
+                ComponentId
+               </span>
+              </a>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.trading.trader.Trader.remove_actor" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Remove the actor with the given
+             <cite>
+              actor_id
+             </cite>
+             .
+            </p>
+            <p>
+             Will stop the actor first if state is
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               RUNNING
+              </span>
+             </code>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                actor_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ComponentId" title="nautilus_trader.model.identifiers.ComponentId">
+                <em>
+                 ComponentId
+                </em>
+               </a>
+               ) – The actor ID to remove.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                ValueError:
+               </strong>
+               – If an actor with the given
+               <cite>
+                actor_id
+               </cite>
+               is not found.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.trading.trader.Trader.remove_strategy">
+            <span class="sig-name descname">
+             <span class="pre">
+              remove_strategy
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               strategy_id
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
+               <span class="pre">
+                StrategyId
+               </span>
+              </a>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.trading.trader.Trader.remove_strategy" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Remove the strategy with the given
+             <cite>
+              strategy_id
+             </cite>
+             .
+            </p>
+            <p>
+             Will stop the strategy first if state is
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               RUNNING
+              </span>
+             </code>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                strategy_id
+               </strong>
+               (
+               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
+                <em>
+                 StrategyId
+                </em>
+               </a>
+               ) – The strategy ID to remove.
               </p>
              </dd>
              <dt class="field-even">
