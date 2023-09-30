@@ -92,13 +92,47 @@
 <a href="#92" id="92">92</a>
 <a href="#93" id="93">93</a>
 <a href="#94" id="94">94</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>pyo3::{
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+</pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
+//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  https://nautechsystems.io
+//
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  You may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+// -------------------------------------------------------------------------------------------------
+
+</span><span class="kw">use </span>pyo3::{
     exceptions::PyValueError,
     prelude::<span class="kw-2">*</span>,
     types::{PyDict, PyList},
 };
 <span class="kw">use </span>serde_json::Value;
 <span class="kw">use </span>strum::IntoEnumIterator;
+
+<span class="kw">pub const </span>PY_MODULE_MODEL: <span class="kw-2">&amp;</span>str = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>;
 
 <span class="doccomment">/// Python iterator over the variants of an enum.
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]

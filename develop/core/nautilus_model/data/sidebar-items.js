@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Data"],"fn":["data_clone"],"mod":["bar","bar_api","delta","delta_api","order","order_api","quote","quote_api","ticker","ticker_api","trade","trade_api"]};
+window.SIDEBAR_ITEMS = {"enum":["Data"],"fn":["data_clone"],"mod":["bar","bar_api","bar_py","delta","delta_api","delta_py","order","order_api","order_py","quote","quote_api","quote_py","ticker","ticker_api","ticker_py","trade","trade_api","trade_py"]};
