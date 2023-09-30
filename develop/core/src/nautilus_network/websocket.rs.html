@@ -610,6 +610,18 @@
 <a href="#610" id="610">610</a>
 <a href="#611" id="611">611</a>
 <a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -849,7 +861,7 @@
     ///
     /// Creates an inner client and controller task to reconnect or disconnect
     /// the client. Also assumes ownership of writer from inner client
-    </span><span class="kw">pub async fn </span>connect_client(
+    </span><span class="kw">pub async fn </span>connect(
         url: <span class="kw-2">&amp;</span>str,
         handler: PyObject,
         heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
@@ -885,11 +897,11 @@
     ///
     /// Controller task will periodically check the disconnect mode
     /// and shutdown the client if it is alive
-    </span><span class="kw">pub async fn </span>disconnect_client(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+    </span><span class="kw">pub async fn </span>disconnect(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw-2">*</span><span class="self">self</span>.disconnect_mode.lock().<span class="kw">await </span>= <span class="bool-val">true</span>;
     }
 
-    <span class="kw">pub async fn </span>send_bytes_client(<span class="kw-2">&amp;</span><span class="self">self</span>, data: Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">pub async fn </span>send_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>, data: Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>guard = <span class="self">self</span>.writer.lock().<span class="kw">await</span>;
         guard.send(Message::Binary(data)).<span class="kw">await
     </span>}
@@ -967,9 +979,11 @@
     <span class="doccomment">/// Create a websocket client.
     ///
     /// # Safety
+    ///
     /// - Throws an Exception if it is unable to make websocket connection
     </span><span class="attr">#[staticmethod]
-    </span><span class="kw">fn </span>connect(
+    #[pyo3(name = <span class="string">&quot;connect&quot;</span>)]
+    </span><span class="kw">fn </span>py_connect(
         url: String,
         handler: PyObject,
         heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
@@ -979,7 +993,7 @@
         py: Python&lt;<span class="lifetime">&#39;_</span>&gt;,
     ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span>PyAny&gt; {
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="self">Self</span>::connect_client(
+            <span class="self">Self</span>::connect(
                 <span class="kw-2">&amp;</span>url,
                 handler,
                 heartbeat,
@@ -996,43 +1010,17 @@
         })
     }
 
-    <span class="doccomment">/// Send text data to the connection.
-    ///
-    /// # Safety
-    /// - Throws an Exception if it is not able to send data
-    </span><span class="kw">fn </span>send_text&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, data: String, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
-        <span class="kw">let </span>writer = slf.writer.clone();
-        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
-            guard.send(Message::Text(data)).<span class="kw">await</span>.map_err(|e| {
-                PyException::new_err(<span class="macro">format!</span>(<span class="string">&quot;Unable to send data because of error: {e}&quot;</span>))
-            })
-        })
-    }
-
-    <span class="doccomment">/// Send bytes data to the connection.
-    ///
-    /// # Safety
-    /// - Throws an Exception if it is not able to send data
-    </span><span class="kw">fn </span>send&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, data: Vec&lt;u8&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
-        <span class="kw">let </span>writer = slf.writer.clone();
-        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
-            guard.send(Message::Binary(data)).<span class="kw">await</span>.map_err(|e| {
-                PyException::new_err(<span class="macro">format!</span>(<span class="string">&quot;Unable to send data because of error: {e}&quot;</span>))
-            })
-        })
-    }
-
     <span class="doccomment">/// Closes the client heart beat and reader task.
     ///
     /// The connection is not completely closed the till all references
     /// to the client are gone and the client is dropped.
     ///
-    /// #Safety
+    /// # Safety
+    ///
     /// - The client should not be used after closing it
     /// - Any auto-reconnect job should be aborted before closing the client
-    </span><span class="kw">fn </span>disconnect&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;disconnect&quot;</span>)]
+    </span><span class="kw">fn </span>py_disconnect&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
         <span class="kw">let </span>disconnect_mode = slf.disconnect_mode.clone();
         <span class="macro">debug!</span>(<span class="string">&quot;Setting disconnect mode to true&quot;</span>);
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
@@ -1054,6 +1042,42 @@
     </span><span class="attr">#[getter]
     </span><span class="kw">fn </span>is_alive(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; bool {
         !slf.controller_task.is_finished()
+    }
+
+    <span class="doccomment">/// Send text data to the connection.
+    ///
+    /// # Safety
+    ///
+    /// - Throws an Exception if it is not able to send data
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;send_text&quot;</span>)]
+    </span><span class="kw">fn </span>py_send_text&lt;<span class="lifetime">&#39;py</span>&gt;(
+        slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;,
+        data: String,
+        py: Python&lt;<span class="lifetime">&#39;py</span>&gt;,
+    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+        <span class="kw">let </span>writer = slf.writer.clone();
+        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
+            guard.send(Message::Text(data)).<span class="kw">await</span>.map_err(|e| {
+                PyException::new_err(<span class="macro">format!</span>(<span class="string">&quot;Unable to send data because of error: {e}&quot;</span>))
+            })
+        })
+    }
+
+    <span class="doccomment">/// Send bytes data to the connection.
+    ///
+    /// # Safety
+    ///
+    /// - Throws an Exception if it is not able to send data
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;send&quot;</span>)]
+    </span><span class="kw">fn </span>py_send&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, data: Vec&lt;u8&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+        <span class="kw">let </span>writer = slf.writer.clone();
+        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
+            guard.send(Message::Binary(data)).<span class="kw">await</span>.map_err(|e| {
+                PyException::new_err(<span class="macro">format!</span>(<span class="string">&quot;Unable to send data because of error: {e}&quot;</span>))
+            })
+        })
     }
 }
 
@@ -1155,7 +1179,7 @@ counter = Counter()&quot;</span>,
             (counter, handler)
         });
 
-        <span class="kw">let </span>client = WebSocketClient::connect_client(
+        <span class="kw">let </span>client = WebSocketClient::connect(
             <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;ws://127.0.0.1:{}&quot;</span>, server.port),
             handler.clone(),
             <span class="prelude-val">None</span>,
@@ -1168,7 +1192,7 @@ counter = Counter()&quot;</span>,
 
         <span class="comment">// Send messages that increment the count
         </span><span class="kw">for _ in </span><span class="number">0</span>..N {
-            <span class="kw">if </span>client.send_bytes_client(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
+            <span class="kw">if </span>client.send_bytes(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
                 success_count += <span class="number">1</span>;
             };
         }
@@ -1197,7 +1221,7 @@ counter = Counter()&quot;</span>,
         <span class="comment">// Send messages that increment the count
         </span>sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
         <span class="kw">for _ in </span><span class="number">0</span>..N {
-            <span class="kw">if </span>client.send_bytes_client(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
+            <span class="kw">if </span>client.send_bytes(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
                 success_count += <span class="number">1</span>;
             };
         }
@@ -1217,7 +1241,7 @@ counter = Counter()&quot;</span>,
         <span class="macro">assert_eq!</span>(success_count, N + N);
 
         <span class="comment">// Shutdown client and wait for read task to terminate
-        </span>client.disconnect_client().<span class="kw">await</span>;
+        </span>client.disconnect().<span class="kw">await</span>;
         sleep(Duration::from_secs(<span class="number">1</span>)).<span class="kw">await</span>;
         <span class="macro">assert!</span>(client.is_disconnected());
     }

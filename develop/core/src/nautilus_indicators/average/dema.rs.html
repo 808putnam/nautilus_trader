@@ -378,7 +378,7 @@
         <span class="self">self</span>._ema1.update_raw(value);
         <span class="self">self</span>._ema2.update_raw(<span class="self">self</span>._ema1.value);
 
-        <span class="self">self</span>.value = <span class="number">2.0 </span>* <span class="self">self</span>._ema1.value - <span class="self">self</span>._ema2.value;
+        <span class="self">self</span>.value = <span class="number">2.0f64</span>.mul_add(<span class="self">self</span>._ema1.value, -<span class="self">self</span>._ema2.value);
         <span class="self">self</span>.count += <span class="number">1</span>;
 
         <span class="kw">if </span>!<span class="self">self</span>.is_initialized &amp;&amp; <span class="self">self</span>.count &gt;= <span class="self">self</span>.period {
@@ -473,11 +473,11 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_dema_initialized(indicator_dema_10: DoubleExponentialMovingAverage) {
-        <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, indicator_dema_10);
+        <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">&quot;{indicator_dema_10}&quot;</span>);
         <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;DoubleExponentialMovingAverage(period=10)&quot;</span>);
         <span class="macro">assert_eq!</span>(indicator_dema_10.period, <span class="number">10</span>);
-        <span class="macro">assert_eq!</span>(indicator_dema_10.is_initialized, <span class="bool-val">false</span>);
-        <span class="macro">assert_eq!</span>(indicator_dema_10.has_inputs, <span class="bool-val">false</span>);
+        <span class="macro">assert!</span>(!indicator_dema_10.is_initialized);
+        <span class="macro">assert!</span>(!indicator_dema_10.has_inputs);
     }
 
     <span class="attr">#[rstest]
@@ -491,17 +491,17 @@
         indicator_dema_10.update_raw(<span class="number">1.0</span>);
         indicator_dema_10.update_raw(<span class="number">2.0</span>);
         indicator_dema_10.update_raw(<span class="number">3.0</span>);
-        <span class="macro">assert_eq!</span>(indicator_dema_10.value, <span class="number">1.9045830202854994</span>);
+        <span class="macro">assert_eq!</span>(indicator_dema_10.value, <span class="number">1.904_583_020_285_499_4</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_initialized_with_required_input(<span class="kw-2">mut </span>indicator_dema_10: DoubleExponentialMovingAverage) {
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">1</span>..<span class="number">10 </span>{
-            indicator_dema_10.update_raw(i <span class="kw">as </span>f64);
+            indicator_dema_10.update_raw(f64::from(i));
         }
-        <span class="macro">assert_eq!</span>(indicator_dema_10.is_initialized, <span class="bool-val">false</span>);
+        <span class="macro">assert!</span>(!indicator_dema_10.is_initialized);
         indicator_dema_10.update_raw(<span class="number">10.0</span>);
-        <span class="macro">assert_eq!</span>(indicator_dema_10.is_initialized, <span class="bool-val">true</span>);
+        <span class="macro">assert!</span>(indicator_dema_10.is_initialized);
     }
 
     <span class="attr">#[rstest]
@@ -529,8 +529,8 @@
     ) {
         indicator_dema_10.handle_bar(<span class="kw-2">&amp;</span>bar_ethusdt_binance_minute_bid);
         <span class="macro">assert_eq!</span>(indicator_dema_10.value, <span class="number">1522.0</span>);
-        <span class="macro">assert_eq!</span>(indicator_dema_10.has_inputs, <span class="bool-val">true</span>);
-        <span class="macro">assert_eq!</span>(indicator_dema_10.is_initialized, <span class="bool-val">false</span>);
+        <span class="macro">assert!</span>(indicator_dema_10.has_inputs);
+        <span class="macro">assert!</span>(!indicator_dema_10.is_initialized);
     }
 
     <span class="attr">#[rstest]
@@ -540,8 +540,8 @@
         indicator_dema_10.reset();
         <span class="macro">assert_eq!</span>(indicator_dema_10.value, <span class="number">0.0</span>);
         <span class="macro">assert_eq!</span>(indicator_dema_10.count, <span class="number">0</span>);
-        <span class="macro">assert_eq!</span>(indicator_dema_10.has_inputs, <span class="bool-val">false</span>);
-        <span class="macro">assert_eq!</span>(indicator_dema_10.is_initialized, <span class="bool-val">false</span>);
+        <span class="macro">assert!</span>(!indicator_dema_10.has_inputs);
+        <span class="macro">assert!</span>(!indicator_dema_10.is_initialized);
     }
 }
 </code></pre></div></section></main></body></html>

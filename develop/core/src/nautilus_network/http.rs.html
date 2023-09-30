@@ -420,14 +420,6 @@
 <a href="#420" id="420">420</a>
 <a href="#421" id="421">421</a>
 <a href="#422" id="422">422</a>
-<a href="#423" id="423">423</a>
-<a href="#424" id="424">424</a>
-<a href="#425" id="425">425</a>
-<a href="#426" id="426">426</a>
-<a href="#427" id="427">427</a>
-<a href="#428" id="428">428</a>
-<a href="#429" id="429">429</a>
-<a href="#430" id="430">430</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -468,163 +460,6 @@
 </span><span class="kw">pub struct </span>InnerHttpClient {
     client: Client&lt;HttpsConnector&lt;hyper::client::HttpConnector&gt;&gt;,
     header_keys: Vec&lt;String&gt;,
-}
-
-<span class="attr">#[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
-)]
-</span><span class="kw">pub struct </span>HttpClient {
-    rate_limiter: Arc&lt;RateLimiter&lt;String, MonotonicClock&gt;&gt;,
-    client: InnerHttpClient,
-}
-
-<span class="attr">#[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
-)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-</span><span class="kw">pub enum </span>HttpMethod {
-    GET,
-    POST,
-    PUT,
-    DELETE,
-    PATCH,
-}
-
-<span class="attr">#[allow(clippy::from_over_into)]
-</span><span class="kw">impl </span>Into&lt;Method&gt; <span class="kw">for </span>HttpMethod {
-    <span class="kw">fn </span>into(<span class="self">self</span>) -&gt; Method {
-        <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::GET =&gt; Method::GET,
-            <span class="self">Self</span>::POST =&gt; Method::POST,
-            <span class="self">Self</span>::PUT =&gt; Method::PUT,
-            <span class="self">Self</span>::DELETE =&gt; Method::DELETE,
-            <span class="self">Self</span>::PATCH =&gt; Method::PATCH,
-        }
-    }
-}
-
-<span class="attr">#[pymethods]
-</span><span class="kw">impl </span>HttpMethod {
-    <span class="kw">fn </span>__hash__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; isize {
-        <span class="kw">let </span><span class="kw-2">mut </span>h = DefaultHasher::new();
-        <span class="self">self</span>.hash(<span class="kw-2">&amp;mut </span>h);
-        h.finish() <span class="kw">as </span>isize
-    }
-}
-
-<span class="doccomment">/// HttpResponse contains relevant data from a HTTP request.
-</span><span class="attr">#[derive(Debug, Clone)]
-#[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
-)]
-</span><span class="kw">pub struct </span>HttpResponse {
-    <span class="attr">#[pyo3(get)]
-    </span><span class="kw">pub </span>status: u16,
-    <span class="attr">#[pyo3(get)]
-    </span>headers: HashMap&lt;String, String&gt;,
-    body: Vec&lt;u8&gt;,
-}
-
-<span class="kw">impl </span>Default <span class="kw">for </span>InnerHttpClient {
-    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>https = HttpsConnector::new();
-        <span class="kw">let </span>client = Client::builder().build::&lt;<span class="kw">_</span>, hyper::Body&gt;(https);
-        <span class="self">Self </span>{
-            client,
-            header_keys: Default::default(),
-        }
-    }
-}
-
-<span class="attr">#[pymethods]
-</span><span class="kw">impl </span>HttpResponse {
-    <span class="attr">#[new]
-    </span><span class="kw">fn </span>new(status: u16, body: Vec&lt;u8&gt;) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            status,
-            body,
-            headers: Default::default(),
-        }
-    }
-
-    <span class="attr">#[getter]
-    </span><span class="kw">fn </span>get_body(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python) -&gt; PyResult&lt;Py&lt;PyBytes&gt;&gt; {
-        <span class="prelude-val">Ok</span>(PyBytes::new(py, <span class="kw-2">&amp;</span><span class="self">self</span>.body).into())
-    }
-}
-
-<span class="attr">#[pymethods]
-</span><span class="kw">impl </span>HttpClient {
-    <span class="doccomment">/// Create a new HttpClient
-    ///
-    /// * `header_keys` - The key value pairs for the given `header_keys` are retained from the responses.
-    /// * `keyed_quota` - A list of string quota pairs that gives quota for specific key values.
-    /// * `default_quota` - The default rate limiting quota for any request.
-    /// Default quota is optional and no quota is passthrough.
-    </span><span class="attr">#[new]
-    #[pyo3(signature = (header_keys = Vec::new(), keyed_quotas = Vec::new(), default_quota = <span class="prelude-val">None</span>))]
-    #[must_use]
-    </span><span class="kw">pub fn </span>py_new(
-        header_keys: Vec&lt;String&gt;,
-        keyed_quotas: Vec&lt;(String, Quota)&gt;,
-        default_quota: <span class="prelude-ty">Option</span>&lt;Quota&gt;,
-    ) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>https = HttpsConnector::new();
-        <span class="kw">let </span>client = Client::builder().build::&lt;<span class="kw">_</span>, hyper::Body&gt;(https);
-        <span class="kw">let </span>rate_limiter = Arc::new(RateLimiter::new_with_quota(default_quota, keyed_quotas));
-
-        <span class="kw">let </span>client = InnerHttpClient {
-            client,
-            header_keys,
-        };
-
-        <span class="self">Self </span>{
-            rate_limiter,
-            client,
-        }
-    }
-
-    <span class="doccomment">/// Send an HTTP request.
-    ///
-    /// * `method` - The HTTP method to call.
-    /// * `url` - The request is sent to this url.
-    /// * `headers` - The header key value pairs in the request.
-    /// * `body` - The bytes sent in the body of request.
-    /// * `keys` - The keys used for rate limiting the request.
-    </span><span class="kw">pub fn </span>request&lt;<span class="lifetime">&#39;py</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        method: HttpMethod,
-        url: String,
-        headers: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;,
-        body: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyBytes&gt;,
-        keys: <span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;,
-        py: Python&lt;<span class="lifetime">&#39;py</span>&gt;,
-    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
-        <span class="kw">let </span>headers = headers.unwrap_or_default();
-        <span class="kw">let </span>body_vec = body.map(|py_bytes| py_bytes.as_bytes().to_vec());
-        <span class="kw">let </span>keys = keys.unwrap_or_default();
-        <span class="kw">let </span>client = <span class="self">self</span>.client.clone();
-        <span class="kw">let </span>rate_limiter = <span class="self">self</span>.rate_limiter.clone();
-        <span class="kw">let </span>method = method.into();
-        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="comment">// Check keys for rate limiting quota
-            </span><span class="kw">let </span>tasks = keys.iter().map(|key| rate_limiter.until_key_ready(key));
-            stream::iter(tasks)
-                .for_each(|key| <span class="kw">async move </span>{
-                    key.<span class="kw">await</span>;
-                })
-                .<span class="kw">await</span>;
-            <span class="kw">match </span>client.send_request(method, url, headers, body_vec).<span class="kw">await </span>{
-                <span class="prelude-val">Ok</span>(res) =&gt; <span class="prelude-val">Ok</span>(res),
-                <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(PyErr::new::&lt;PyException, <span class="kw">_</span>&gt;(<span class="macro">format!</span>(
-                    <span class="string">&quot;Error handling response: {e}&quot;
-                </span>))),
-            }
-        })
-    }
 }
 
 <span class="kw">impl </span>InnerHttpClient {
@@ -669,6 +504,155 @@
             status,
             headers,
             body: bytes.to_vec(),
+        })
+    }
+}
+
+<span class="attr">#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+</span><span class="kw">pub enum </span>HttpMethod {
+    GET,
+    POST,
+    PUT,
+    DELETE,
+    PATCH,
+}
+
+<span class="attr">#[allow(clippy::from_over_into)]
+</span><span class="kw">impl </span>Into&lt;Method&gt; <span class="kw">for </span>HttpMethod {
+    <span class="kw">fn </span>into(<span class="self">self</span>) -&gt; Method {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::GET =&gt; Method::GET,
+            <span class="self">Self</span>::POST =&gt; Method::POST,
+            <span class="self">Self</span>::PUT =&gt; Method::PUT,
+            <span class="self">Self</span>::DELETE =&gt; Method::DELETE,
+            <span class="self">Self</span>::PATCH =&gt; Method::PATCH,
+        }
+    }
+}
+
+<span class="attr">#[pymethods]
+</span><span class="kw">impl </span>HttpMethod {
+    <span class="kw">fn </span>__hash__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; isize {
+        <span class="kw">let </span><span class="kw-2">mut </span>h = DefaultHasher::new();
+        <span class="self">self</span>.hash(<span class="kw-2">&amp;mut </span>h);
+        h.finish() <span class="kw">as </span>isize
+    }
+}
+
+<span class="doccomment">/// HttpResponse contains relevant data from a HTTP request.
+</span><span class="attr">#[derive(Debug, Clone)]
+#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)]
+</span><span class="kw">pub struct </span>HttpResponse {
+    <span class="attr">#[pyo3(get)]
+    </span><span class="kw">pub </span>status: u16,
+    <span class="attr">#[pyo3(get)]
+    </span>headers: HashMap&lt;String, String&gt;,
+    body: Vec&lt;u8&gt;,
+}
+
+<span class="kw">impl </span>Default <span class="kw">for </span>InnerHttpClient {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>https = HttpsConnector::new();
+        <span class="kw">let </span>client = Client::builder().build::&lt;<span class="kw">_</span>, hyper::Body&gt;(https);
+        <span class="self">Self </span>{
+            client,
+            header_keys: Default::default(),
+        }
+    }
+}
+
+<span class="attr">#[pymethods]
+</span><span class="kw">impl </span>HttpResponse {
+    <span class="attr">#[new]
+    </span><span class="kw">fn </span>py_new(status: u16, body: Vec&lt;u8&gt;) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            status,
+            body,
+            headers: Default::default(),
+        }
+    }
+
+    <span class="attr">#[getter]
+    </span><span class="kw">fn </span>get_body(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python) -&gt; PyResult&lt;Py&lt;PyBytes&gt;&gt; {
+        <span class="prelude-val">Ok</span>(PyBytes::new(py, <span class="kw-2">&amp;</span><span class="self">self</span>.body).into())
+    }
+}
+
+<span class="attr">#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)]
+</span><span class="kw">pub struct </span>HttpClient {
+    rate_limiter: Arc&lt;RateLimiter&lt;String, MonotonicClock&gt;&gt;,
+    client: InnerHttpClient,
+}
+
+<span class="attr">#[pymethods]
+</span><span class="kw">impl </span>HttpClient {
+    <span class="doccomment">/// Create a new HttpClient
+    ///
+    /// * `header_keys` - The key value pairs for the given `header_keys` are retained from the responses.
+    /// * `keyed_quota` - A list of string quota pairs that gives quota for specific key values.
+    /// * `default_quota` - The default rate limiting quota for any request.
+    /// Default quota is optional and no quota is passthrough.
+    </span><span class="attr">#[new]
+    #[pyo3(signature = (header_keys = Vec::new(), keyed_quotas = Vec::new(), default_quota = <span class="prelude-val">None</span>))]
+    #[must_use]
+    </span><span class="kw">pub fn </span>py_new(
+        header_keys: Vec&lt;String&gt;,
+        keyed_quotas: Vec&lt;(String, Quota)&gt;,
+        default_quota: <span class="prelude-ty">Option</span>&lt;Quota&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>https = HttpsConnector::new();
+        <span class="kw">let </span>client = Client::builder().build::&lt;<span class="kw">_</span>, hyper::Body&gt;(https);
+        <span class="kw">let </span>rate_limiter = Arc::new(RateLimiter::new_with_quota(default_quota, keyed_quotas));
+
+        <span class="kw">let </span>client = InnerHttpClient {
+            client,
+            header_keys,
+        };
+
+        <span class="self">Self </span>{
+            rate_limiter,
+            client,
+        }
+    }
+
+    <span class="doccomment">/// Send an HTTP request.
+    ///
+    /// * `method` - The HTTP method to call.
+    /// * `url` - The request is sent to this url.
+    /// * `headers` - The header key value pairs in the request.
+    /// * `body` - The bytes sent in the body of request.
+    /// * `keys` - The keys used for rate limiting the request.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;request&quot;</span>)]
+    </span><span class="kw">fn </span>py_request&lt;<span class="lifetime">&#39;py</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        method: HttpMethod,
+        url: String,
+        headers: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;,
+        body: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyBytes&gt;,
+        keys: <span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;,
+        py: Python&lt;<span class="lifetime">&#39;py</span>&gt;,
+    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+        <span class="kw">let </span>headers = headers.unwrap_or_default();
+        <span class="kw">let </span>body_vec = body.map(|py_bytes| py_bytes.as_bytes().to_vec());
+        <span class="kw">let </span>keys = keys.unwrap_or_default();
+        <span class="kw">let </span>client = <span class="self">self</span>.client.clone();
+        <span class="kw">let </span>rate_limiter = <span class="self">self</span>.rate_limiter.clone();
+        <span class="kw">let </span>method = method.into();
+        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
+            <span class="comment">// Check keys for rate limiting quota
+            </span><span class="kw">let </span>tasks = keys.iter().map(|key| rate_limiter.until_key_ready(key));
+            stream::iter(tasks)
+                .for_each(|key| <span class="kw">async move </span>{
+                    key.<span class="kw">await</span>;
+                })
+                .<span class="kw">await</span>;
+            <span class="kw">match </span>client.send_request(method, url, headers, body_vec).<span class="kw">await </span>{
+                <span class="prelude-val">Ok</span>(res) =&gt; <span class="prelude-val">Ok</span>(res),
+                <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(PyErr::new::&lt;PyException, <span class="kw">_</span>&gt;(<span class="macro">format!</span>(
+                    <span class="string">&quot;Error handling response: {e}&quot;
+                </span>))),
+            }
         })
     }
 }

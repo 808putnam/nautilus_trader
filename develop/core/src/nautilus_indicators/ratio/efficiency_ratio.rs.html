@@ -339,15 +339,15 @@
     }
 
     <span class="kw">fn </span>handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
+        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into());
     }
 
     <span class="kw">fn </span>handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into())
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into());
     }
 
     <span class="kw">fn </span>handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into())
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into());
     }
 
     <span class="kw">fn </span>reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
@@ -449,22 +449,22 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_efficiency_ratio_initialized(efficiency_ratio_10: EfficiencyRatio) {
-        <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, efficiency_ratio_10);
+        <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">&quot;{efficiency_ratio_10}&quot;</span>);
         <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;EfficiencyRatio(10)&quot;</span>);
         <span class="macro">assert_eq!</span>(efficiency_ratio_10.period, <span class="number">10</span>);
-        <span class="macro">assert_eq!</span>(efficiency_ratio_10.is_initialized, <span class="bool-val">false</span>);
+        <span class="macro">assert!</span>(!efficiency_ratio_10.is_initialized);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_with_correct_number_of_required_inputs(<span class="kw-2">mut </span>efficiency_ratio_10: EfficiencyRatio) {
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">1</span>..<span class="number">10 </span>{
-            efficiency_ratio_10.update_raw(i <span class="kw">as </span>f64);
+            efficiency_ratio_10.update_raw(f64::from(i));
         }
         <span class="macro">assert_eq!</span>(efficiency_ratio_10.inputs.len(), <span class="number">9</span>);
-        <span class="macro">assert_eq!</span>(efficiency_ratio_10.is_initialized, <span class="bool-val">false</span>);
+        <span class="macro">assert!</span>(!efficiency_ratio_10.is_initialized);
         efficiency_ratio_10.update_raw(<span class="number">1.0</span>);
         <span class="macro">assert_eq!</span>(efficiency_ratio_10.inputs.len(), <span class="number">10</span>);
-        <span class="macro">assert_eq!</span>(efficiency_ratio_10.is_initialized, <span class="bool-val">true</span>);
+        <span class="macro">assert!</span>(efficiency_ratio_10.is_initialized);
     }
 
     <span class="attr">#[rstest]
@@ -510,7 +510,7 @@
         efficiency_ratio_10.update_raw(<span class="number">1.00010</span>);
         efficiency_ratio_10.update_raw(<span class="number">1.00030</span>);
         efficiency_ratio_10.update_raw(<span class="number">1.00020</span>);
-        <span class="macro">assert_eq!</span>(efficiency_ratio_10.value, <span class="number">0.3333333333333333</span>);
+        <span class="macro">assert_eq!</span>(efficiency_ratio_10.value, <span class="number">0.333_333_333_333_333_3</span>);
     }
 
     <span class="attr">#[rstest]
@@ -522,17 +522,17 @@
         efficiency_ratio_10.update_raw(<span class="number">1.00012</span>);
         efficiency_ratio_10.update_raw(<span class="number">1.00005</span>);
         efficiency_ratio_10.update_raw(<span class="number">1.00015</span>);
-        <span class="macro">assert_eq!</span>(efficiency_ratio_10.value, <span class="number">0.42857142857215363</span>);
+        <span class="macro">assert_eq!</span>(efficiency_ratio_10.value, <span class="number">0.428_571_428_572_153_63</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_reset(<span class="kw-2">mut </span>efficiency_ratio_10: EfficiencyRatio) {
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">1</span>..=<span class="number">10 </span>{
-            efficiency_ratio_10.update_raw(i <span class="kw">as </span>f64);
+            efficiency_ratio_10.update_raw(f64::from(i));
         }
-        <span class="macro">assert_eq!</span>(efficiency_ratio_10.is_initialized, <span class="bool-val">true</span>);
+        <span class="macro">assert!</span>(efficiency_ratio_10.is_initialized);
         efficiency_ratio_10.reset();
-        <span class="macro">assert_eq!</span>(efficiency_ratio_10.is_initialized, <span class="bool-val">false</span>);
+        <span class="macro">assert!</span>(!efficiency_ratio_10.is_initialized);
         <span class="macro">assert_eq!</span>(efficiency_ratio_10.value, <span class="number">0.0</span>);
     }
 

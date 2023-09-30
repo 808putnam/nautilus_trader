@@ -502,8 +502,8 @@
         <span class="macro">assert_eq!</span>(display_str, <span class="string">&quot;ExponentialMovingAverage(10)&quot;</span>);
         <span class="macro">assert_eq!</span>(ema.period, <span class="number">10</span>);
         <span class="macro">assert_eq!</span>(ema.price_type, PriceType::Mid);
-        <span class="macro">assert_eq!</span>(ema.alpha, <span class="number">0.18181818181818182</span>);
-        <span class="macro">assert_eq!</span>(ema.is_initialized, <span class="bool-val">false</span>);
+        <span class="macro">assert_eq!</span>(ema.alpha, <span class="number">0.181_818_181_818_181_82</span>);
+        <span class="macro">assert!</span>(!ema.is_initialized);
     }
 
     <span class="attr">#[rstest]
@@ -531,7 +531,7 @@
         <span class="macro">assert!</span>(ema.has_inputs());
         <span class="macro">assert!</span>(ema.is_initialized());
         <span class="macro">assert_eq!</span>(ema.count, <span class="number">10</span>);
-        <span class="macro">assert_eq!</span>(ema.value, <span class="number">6.2393684801212155</span>);
+        <span class="macro">assert_eq!</span>(ema.value, <span class="number">6.239_368_480_121_215_5</span>);
     }
 
     <span class="attr">#[rstest]
@@ -542,7 +542,7 @@
         ema.reset();
         <span class="macro">assert_eq!</span>(ema.count, <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(ema.value, <span class="number">0.0</span>);
-        <span class="macro">assert_eq!</span>(ema.is_initialized, <span class="bool-val">false</span>)
+        <span class="macro">assert!</span>(!ema.is_initialized);
     }
 
     <span class="attr">#[rstest]
@@ -552,7 +552,7 @@
     ) {
         <span class="kw">let </span><span class="kw-2">mut </span>ema = indicator_ema_10;
         ema.handle_quote_tick(<span class="kw-2">&amp;</span>quote_tick);
-        <span class="macro">assert_eq!</span>(ema.has_inputs(), <span class="bool-val">true</span>);
+        <span class="macro">assert!</span>(ema.has_inputs());
         <span class="macro">assert_eq!</span>(ema.value, <span class="number">1501.0</span>);
     }
 
@@ -564,14 +564,14 @@
         indicator_ema_10.handle_quote_tick(<span class="kw-2">&amp;</span>tick1);
         indicator_ema_10.handle_quote_tick(<span class="kw-2">&amp;</span>tick2);
         <span class="macro">assert_eq!</span>(indicator_ema_10.count, <span class="number">2</span>);
-        <span class="macro">assert_eq!</span>(indicator_ema_10.value, <span class="number">1501.3636363636363</span>);
+        <span class="macro">assert_eq!</span>(indicator_ema_10.value, <span class="number">1_501.363_636_363_636_3</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_handle_trade_tick(indicator_ema_10: ExponentialMovingAverage, trade_tick: TradeTick) {
         <span class="kw">let </span><span class="kw-2">mut </span>ema = indicator_ema_10;
         ema.handle_trade_tick(<span class="kw-2">&amp;</span>trade_tick);
-        <span class="macro">assert_eq!</span>(ema.has_inputs(), <span class="bool-val">true</span>);
+        <span class="macro">assert!</span>(ema.has_inputs());
         <span class="macro">assert_eq!</span>(ema.value, <span class="number">1500.0</span>);
     }
 
@@ -581,8 +581,8 @@
         bar_ethusdt_binance_minute_bid: Bar,
     ) {
         indicator_ema_10.handle_bar(<span class="kw-2">&amp;</span>bar_ethusdt_binance_minute_bid);
-        <span class="macro">assert_eq!</span>(indicator_ema_10.has_inputs, <span class="bool-val">true</span>);
-        <span class="macro">assert_eq!</span>(indicator_ema_10.is_initialized, <span class="bool-val">false</span>);
+        <span class="macro">assert!</span>(indicator_ema_10.has_inputs);
+        <span class="macro">assert!</span>(!indicator_ema_10.is_initialized);
         <span class="macro">assert_eq!</span>(indicator_ema_10.value, <span class="number">1522.0</span>);
     }
 }

@@ -300,15 +300,15 @@
     }
 
     <span class="kw">fn </span>handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into())
+        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into());
     }
 
     <span class="kw">fn </span>handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into())
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into());
     }
 
     <span class="kw">fn </span>handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into())
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>bar.close).into());
     }
 
     <span class="kw">fn </span>reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
@@ -453,7 +453,7 @@
         sma.reset();
         <span class="macro">assert_eq!</span>(sma.count, <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(sma.value, <span class="number">0.0</span>);
-        <span class="macro">assert_eq!</span>(sma.is_initialized, <span class="bool-val">false</span>)
+        <span class="macro">assert!</span>(!sma.is_initialized);
     }
 
     <span class="attr">#[rstest]

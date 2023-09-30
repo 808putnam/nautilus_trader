@@ -662,6 +662,15 @@
 <a href="#662" id="662">662</a>
 <a href="#663" id="663">663</a>
 <a href="#664" id="664">664</a>
+<a href="#665" id="665">665</a>
+<a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
+<a href="#673" id="673">673</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -679,7 +688,8 @@
 
 </span><span class="kw">use </span>std::{io, sync::Arc, time::Duration};
 
-<span class="kw">use </span>pyo3::{exceptions::PyException, prelude::<span class="kw-2">*</span>, PyObject, Python};
+<span class="kw">use </span>nautilus_core::python::to_pyruntime_err;
+<span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, PyObject, Python};
 <span class="kw">use </span>tokio::{
     io::{split, AsyncReadExt, AsyncWriteExt, ReadHalf, WriteHalf},
     net::TcpStream,
@@ -698,26 +708,26 @@
 <span class="kw">type </span>SharedTcpWriter = Arc&lt;Mutex&lt;WriteHalf&lt;MaybeTlsStream&lt;TcpStream&gt;&gt;&gt;&gt;;
 <span class="kw">type </span>TcpReader = ReadHalf&lt;MaybeTlsStream&lt;TcpStream&gt;&gt;;
 
-<span class="doccomment">/// Configuration for TCP socket connection
-</span><span class="attr">#[pyclass]
-#[derive(Debug, Clone)]
+<span class="doccomment">/// Configuration for TCP socket connection.
+</span><span class="attr">#[derive(Debug, Clone)]
+#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)]
 </span><span class="kw">pub struct </span>SocketConfig {
-    <span class="doccomment">/// Url to connect to
+    <span class="doccomment">/// The URL to connect to.
     </span>url: String,
-    <span class="doccomment">/// Connection mode is plain or TLS
+    <span class="doccomment">/// The connection mode {Plain, TLS}.
     </span>mode: Mode,
-    <span class="doccomment">/// Sequence of bytes that separate lines
+    <span class="doccomment">/// The sequence of bytes which separates lines.
     </span>suffix: Vec&lt;u8&gt;,
-    <span class="doccomment">/// Python function to handle incoming messages
+    <span class="doccomment">/// The Python function to handle incoming messages.
     </span>handler: PyObject,
-    <span class="doccomment">/// Optional heartbeat with period and beat message
+    <span class="doccomment">/// The optional heartbeat with period and beat message.
     </span>heartbeat: <span class="prelude-ty">Option</span>&lt;(u64, Vec&lt;u8&gt;)&gt;,
 }
 
 <span class="attr">#[pymethods]
 </span><span class="kw">impl </span>SocketConfig {
     <span class="attr">#[new]
-    </span><span class="kw">fn </span>new(
+    </span><span class="kw">fn </span>py_new(
         url: String,
         ssl: bool,
         suffix: Vec&lt;u8&gt;,
@@ -728,9 +738,9 @@
         <span class="self">Self </span>{
             url,
             mode,
-            heartbeat,
             suffix,
             handler,
+            heartbeat,
         }
     }
 }
@@ -750,7 +760,7 @@
 /// The client uses a suffix to separate messages on the byte stream. It is
 /// appended to all sent messages and heartbeats. It is also used the split
 /// the received byte stream.
-</span><span class="attr">#[pyclass]
+</span><span class="attr">#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)]
 </span><span class="kw">struct </span>SocketClientInner {
     config: SocketConfig,
     read_task: task::JoinHandle&lt;()&gt;,
@@ -883,7 +893,7 @@
         <span class="comment">// Cancel heart beat task
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>handle) = <span class="self">self</span>.heartbeat_task.take() {
             <span class="kw">if </span>!handle.is_finished() {
-                <span class="macro">debug!</span>(<span class="string">&quot;Abort heart beat task&quot;</span>);
+                <span class="macro">debug!</span>(<span class="string">&quot;Abort heartbeat task&quot;</span>);
                 handle.abort();
             }
         }
@@ -894,7 +904,7 @@
         <span class="macro">debug!</span>(<span class="string">&quot;Closed connection&quot;</span>);
     }
 
-    <span class="doccomment">/// Reconnect with server
+    <span class="doccomment">/// Reconnect with server.
     ///
     /// Make a new connection with server. Use the new read and write halves
     /// to update the shared writer and the read and heartbeat tasks.
@@ -951,7 +961,7 @@
     }
 }
 
-<span class="attr">#[pyclass]
+<span class="attr">#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)]
 </span><span class="kw">pub struct </span>SocketClient {
     writer: SharedTcpWriter,
     controller_task: task::JoinHandle&lt;()&gt;,
@@ -960,7 +970,7 @@
 }
 
 <span class="kw">impl </span>SocketClient {
-    <span class="kw">pub async fn </span>connect_client(
+    <span class="kw">pub async fn </span>connect(
         config: SocketConfig,
         post_connection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_reconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
@@ -979,8 +989,8 @@
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(handler) = post_connection {
             Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
-                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_connection handler&quot;</span>),
-                <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Error calling post_connection handler: {e}&quot;</span>),
+                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called `post_connection` handler&quot;</span>),
+                <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Error calling `post_connection` handler: {e}&quot;</span>),
             });
         }
 
@@ -995,8 +1005,8 @@
     <span class="doccomment">/// Set disconnect mode to true.
     ///
     /// Controller task will periodically check the disconnect mode
-    /// and shutdown the client if it is alive
-    </span><span class="kw">pub async fn </span>disconnect_client(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+    /// and shutdown the client if it is not alive.
+    </span><span class="kw">pub async fn </span>disconnect(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw-2">*</span><span class="self">self</span>.disconnect_mode.lock().<span class="kw">await </span>= <span class="bool-val">true</span>;
     }
 
@@ -1034,9 +1044,9 @@
                             <span class="macro">debug!</span>(<span class="string">&quot;Reconnected successfully&quot;</span>);
                             <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>handler) = post_reconnection {
                                 Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
-                                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_reconnection handler&quot;</span>),
+                                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called `post_reconnection` handler&quot;</span>),
                                     <span class="prelude-val">Err</span>(e) =&gt; {
-                                        <span class="macro">error!</span>(<span class="string">&quot;Error calling post_reconnection handler: {e}&quot;</span>);
+                                        <span class="macro">error!</span>(<span class="string">&quot;Error calling `post_reconnection` handler: {e}&quot;</span>);
                                     }
                                 });
                             }
@@ -1051,9 +1061,9 @@
                         inner.shutdown().<span class="kw">await</span>;
                         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>handler) = post_disconnection {
                             Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
-                                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_reconnection handler&quot;</span>),
+                                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called `post_disconnection` handler&quot;</span>),
                                 <span class="prelude-val">Err</span>(e) =&gt; {
-                                    <span class="macro">error!</span>(<span class="string">&quot;Error calling post_reconnection handler: {e}&quot;</span>);
+                                    <span class="macro">error!</span>(<span class="string">&quot;Error calling `post_disconnection` handler: {e}&quot;</span>);
                                 }
                             });
                         }
@@ -1072,9 +1082,11 @@
     <span class="doccomment">/// Create a socket client.
     ///
     /// # Safety
+    ///
     /// - Throws an Exception if it is unable to make socket connection
     </span><span class="attr">#[staticmethod]
-    </span><span class="kw">fn </span>connect(
+    #[pyo3(name = <span class="string">&quot;connect&quot;</span>)]
+    </span><span class="kw">fn </span>py_connect(
         config: SocketConfig,
         post_connection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_reconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
@@ -1082,32 +1094,14 @@
         py: Python&lt;<span class="lifetime">&#39;_</span>&gt;,
     ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span>PyAny&gt; {
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="self">Self</span>::connect_client(
+            <span class="self">Self</span>::connect(
                 config,
                 post_connection,
                 post_reconnection,
                 post_disconnection,
             )
             .<span class="kw">await
-            </span>.map_err(|e| {
-                PyException::new_err(<span class="macro">format!</span>(
-                    <span class="string">&quot;Unable to make socket connection because of error: {e}&quot;</span>,
-                ))
-            })
-        })
-    }
-
-    <span class="doccomment">/// Send bytes data to the connection.
-    ///
-    /// # Safety
-    /// - Throws an Exception if it is not able to send data
-    </span><span class="kw">fn </span>send&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, <span class="kw-2">mut </span>data: Vec&lt;u8&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
-        <span class="kw">let </span>writer = slf.writer.clone();
-        data.extend(<span class="kw-2">&amp;</span>slf.suffix);
-        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>writer = writer.lock().<span class="kw">await</span>;
-            writer.write_all(<span class="kw-2">&amp;</span>data).<span class="kw">await</span><span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(())
+            </span>.map_err(to_pyruntime_err)
         })
     }
 
@@ -1116,12 +1110,15 @@
     /// The connection is not completely closed the till all references
     /// to the client are gone and the client is dropped.
     ///
-    /// #Safety
+    /// # Safety
+    ///
     /// - The client should not be used after closing it
     /// - Any auto-reconnect job should be aborted before closing the client
-    </span><span class="kw">fn </span>disconnect&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;disconnect&quot;</span>)]
+    </span><span class="kw">fn </span>py_disconnect&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
         <span class="kw">let </span>disconnect_mode = slf.disconnect_mode.clone();
         <span class="macro">debug!</span>(<span class="string">&quot;Setting disconnect mode to true&quot;</span>);
+
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
             <span class="kw-2">*</span>disconnect_mode.lock().<span class="kw">await </span>= <span class="bool-val">true</span>;
             <span class="prelude-val">Ok</span>(())
@@ -1141,6 +1138,27 @@
     </span><span class="attr">#[getter]
     </span><span class="kw">fn </span>is_alive(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; bool {
         !slf.controller_task.is_finished()
+    }
+
+    <span class="doccomment">/// Send bytes data to the connection.
+    ///
+    /// # Safety
+    ///
+    /// - Throws an Exception if it is not able to send data.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;send&quot;</span>)]
+    </span><span class="kw">fn </span>py_send&lt;<span class="lifetime">&#39;py</span>&gt;(
+        slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;,
+        <span class="kw-2">mut </span>data: Vec&lt;u8&gt;,
+        py: Python&lt;<span class="lifetime">&#39;py</span>&gt;,
+    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+        <span class="kw">let </span>writer = slf.writer.clone();
+        data.extend(<span class="kw-2">&amp;</span>slf.suffix);
+
+        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>writer = writer.lock().<span class="kw">await</span>;
+            writer.write_all(<span class="kw-2">&amp;</span>data).<span class="kw">await</span><span class="question-mark">?</span>;
+            <span class="prelude-val">Ok</span>(())
+        })
     }
 }
 
@@ -1263,13 +1281,13 @@ counter = Counter()&quot;</span>,
         });
 
         <span class="kw">let </span>config = SocketConfig {
-            url: <span class="macro">format!</span>(<span class="string">&quot;127.0.0.1:{}&quot;</span>, server.port).to_string(),
+            url: <span class="macro">format!</span>(<span class="string">&quot;127.0.0.1:{}&quot;</span>, server.port),
             handler: handler.clone(),
             mode: Mode::Plain,
             suffix: <span class="string">b&quot;\r\n&quot;</span>.to_vec(),
             heartbeat: <span class="prelude-val">None</span>,
         };
-        <span class="kw">let </span>client: SocketClient = SocketClient::connect_client(config, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)
+        <span class="kw">let </span>client: SocketClient = SocketClient::connect(config, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)
             .<span class="kw">await
             </span>.unwrap();
 
@@ -1321,7 +1339,7 @@ counter = Counter()&quot;</span>,
         </span><span class="macro">assert_eq!</span>(count_value, N + N);
 
         <span class="comment">// Shutdown client and wait for read task to terminate
-        </span>client.disconnect_client().<span class="kw">await</span>;
+        </span>client.disconnect().<span class="kw">await</span>;
         sleep(Duration::from_secs(<span class="number">1</span>)).<span class="kw">await</span>;
         <span class="macro">assert!</span>(client.is_disconnected());
     }
