@@ -1564,6 +1564,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_raw">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BSPOrderBookDelta.from_raw()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.fully_qualified_name">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -10923,6 +10932,394 @@ then the component state will not change, and an error will be logged.
                <p>
                 <em>
                  list[OrderBookDelta]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_raw">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               from_raw
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                instrument_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                BookAction
+               </span>
+               <span class="pre">
+                action
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderSide
+               </span>
+               <span class="pre">
+                side
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                int64_t
+               </span>
+               <span class="pre">
+                price_raw
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint8_t
+               </span>
+               <span class="pre">
+                price_prec
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                size_raw
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint8_t
+               </span>
+               <span class="pre">
+                size_prec
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                order_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint8_t
+               </span>
+               <span class="pre">
+                flags
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                sequence
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                ts_event
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                ts_init
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
+                <span class="pre">
+                 OrderBookDelta
+                </span>
+               </a>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_raw" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return an order book delta from the given raw values.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  ) – The trade instrument ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   action
+                  </strong>
+                  (BookAction {
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ADD
+                   </span>
+                  </code>
+                  ,
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    UPDATE
+                   </span>
+                  </code>
+                  ,
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DELETE
+                   </span>
+                  </code>
+                  ,
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    CLEAR
+                   </span>
+                  </code>
+                  }) – The order book delta action.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   side
+                  </strong>
+                  (OrderSide {
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BUY
+                   </span>
+                  </code>
+                  ,
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    SELL
+                   </span>
+                  </code>
+                  }) – The order side.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   price_raw
+                  </strong>
+                  (
+                  <em>
+                   int64_t
+                  </em>
+                  ) – The order raw price (as a scaled fixed precision integer).
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   price_prec
+                  </strong>
+                  (
+                  <em>
+                   uint8_t
+                  </em>
+                  ) – The order price precision.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   size_raw
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The order raw size (as a scaled fixed precision integer).
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   size_prec
+                  </strong>
+                  (
+                  <em>
+                   uint8_t
+                  </em>
+                  ) – The order size precision.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   order_id
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The order ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   flags
+                  </strong>
+                  (
+                  <em>
+                   uint8_t
+                  </em>
+                  ) – A combination of packet end with matching engine status.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   sequence
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The unique sequence number for the update.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   ts_event
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The UNIX timestamp (nanoseconds) when the tick event occurred.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   ts_init
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The UNIX timestamp (nanoseconds) when the data object was initialized.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   ts_event
+                  </strong>
+                  – The UNIX timestamp (nanoseconds) when the data event occurred.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   ts_init
+                  </strong>
+                  – The UNIX timestamp (nanoseconds) when the data object was initialized.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 OrderBookDelta
                 </em>
                </p>
               </dd>
