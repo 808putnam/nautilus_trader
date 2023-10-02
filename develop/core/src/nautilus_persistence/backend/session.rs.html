@@ -355,7 +355,7 @@
 <span class="kw">use </span>futures::{executor::block_on, Stream, StreamExt};
 <span class="kw">use </span>nautilus_core::{cvec::CVec, python::to_pyruntime_err};
 <span class="kw">use </span>nautilus_model::data::{
-    bar::Bar, delta::OrderBookDelta, quote::QuoteTick, trade::TradeTick, Data,
+    bar::Bar, delta::OrderBookDelta, quote::QuoteTick, trade::TradeTick, Data, HasTsInit,
 };
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, types::PyCapsule};
 <span class="kw">use </span>pyo3_asyncio::tokio::get_runtime;
