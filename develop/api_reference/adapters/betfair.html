@@ -2711,19 +2711,19 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_disconnection">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_reconnection">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairOrderStreamClient.post_disconnection()
+                    BetfairOrderStreamClient.post_reconnection()
                    </span>
                   </code>
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_reconnection">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_disconnection">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairOrderStreamClient.post_reconnection()
+                    BetfairOrderStreamClient.post_disconnection()
                    </span>
                   </code>
                  </a>
@@ -2753,19 +2753,19 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_disconnection">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_reconnection">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairMarketStreamClient.post_disconnection()
+                    BetfairMarketStreamClient.post_reconnection()
                    </span>
                   </code>
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_reconnection">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_disconnection">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairMarketStreamClient.post_reconnection()
+                    BetfairMarketStreamClient.post_disconnection()
                    </span>
                   </code>
                  </a>
@@ -21090,7 +21090,7 @@ If None then will source from the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              event_country_codes
+              country_codes
              </span>
             </span>
             <span class="p">
@@ -21150,7 +21150,7 @@ If None then will source from the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              market_market_types
+              market_types
              </span>
             </span>
             <span class="p">
@@ -23891,13 +23891,6 @@ the given filters.
            </dl>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairStreamClient.post_reconnection">
-             <em class="property">
-              <span class="pre">
-               async
-              </span>
-              <span class="w">
-              </span>
-             </em>
              <span class="sig-name descname">
               <span class="pre">
                post_reconnection
@@ -24236,6 +24229,29 @@ the given filters.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_reconnection">
+             <span class="sig-name descname">
+              <span class="pre">
+               post_reconnection
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_reconnection" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed post connection.
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_disconnection">
              <em class="property">
               <span class="pre">
@@ -24272,46 +24288,6 @@ the given filters.
             <dd>
              <p>
               Actions to be performed post disconnection.
-             </p>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_reconnection">
-             <em class="property">
-              <span class="pre">
-               async
-              </span>
-              <span class="w">
-              </span>
-             </em>
-             <span class="sig-name descname">
-              <span class="pre">
-               post_reconnection
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                None
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_reconnection" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Actions to be performed post connection.
              </p>
             </dd>
            </dl>
@@ -24466,6 +24442,29 @@ the given filters.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_reconnection">
+             <span class="sig-name descname">
+              <span class="pre">
+               post_reconnection
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_reconnection" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed post connection.
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_disconnection">
              <em class="property">
               <span class="pre">
@@ -24502,46 +24501,6 @@ the given filters.
             <dd>
              <p>
               Actions to be performed post disconnection.
-             </p>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_reconnection">
-             <em class="property">
-              <span class="pre">
-               async
-              </span>
-              <span class="w">
-              </span>
-             </em>
-             <span class="sig-name descname">
-              <span class="pre">
-               post_reconnection
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                None
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_reconnection" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Actions to be performed post connection.
              </p>
             </dd>
            </dl>
