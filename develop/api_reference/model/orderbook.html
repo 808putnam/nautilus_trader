@@ -719,10 +719,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.Level.volume">
+               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.Level.size">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Level.volume()
+                  Level.size()
                  </span>
                 </code>
                </a>
@@ -909,6 +909,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OrderBook.get_avg_px_for_quantity()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.OrderBook.get_quantity_for_price">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBook.get_quantity_for_price()
                  </span>
                 </code>
                </a>
@@ -1316,10 +1325,10 @@
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.Level.volume">
+           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.Level.size">
             <span class="sig-name descname">
              <span class="pre">
-              volume
+              size
              </span>
             </span>
             <span class="sig-paren">
@@ -1345,13 +1354,13 @@
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.Level.volume" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.Level.size" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Return the volume at this level.
+             Return the size at this level.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -2785,6 +2794,147 @@ of the order book.
               If no average price can be calculated then will return 0.0 (zero).
              </p>
             </div>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.OrderBook.get_quantity_for_price">
+            <span class="sig-name descname">
+             <span class="pre">
+              get_quantity_for_price
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Price
+              </span>
+              <span class="pre">
+               price
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               OrderSide
+              </span>
+              <span class="pre">
+               order_side
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               double
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.OrderBook.get_quantity_for_price" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the current total quantity for the given
+             <cite>
+              price
+             </cite>
+             based on the current state
+of the order book.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  price
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                  <em>
+                   Price
+                  </em>
+                 </a>
+                 ) – The quantity for the calculation.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  order_side
+                 </strong>
+                 (
+                 <em>
+                  OrderSide
+                 </em>
+                 ) – The order side for the calculation.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                double
+               </em>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                order_side
+               </cite>
+               is equal to
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 NO_ORDER_SIDE
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py attribute">

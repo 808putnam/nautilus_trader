@@ -772,8 +772,8 @@
     }
 
     <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>volumes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
-        <span class="kw">return </span><span class="self">self</span>.levels.values().map(|l| l.volume()).sum();
+    </span><span class="kw">pub fn </span>sizes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="kw">return </span><span class="self">self</span>.levels.values().map(|l| l.size()).sum();
     }
 
     <span class="attr">#[must_use]
@@ -870,7 +870,7 @@
 
         ladder.add(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(ladder.volumes(), <span class="number">20.0</span>);
+        <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">20.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">200.0</span>);
         <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">10.0</span>)
     }
@@ -885,7 +885,7 @@
 
         ladder.add_bulk(<span class="macro">vec!</span>[order1, order2, order3, order4]);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">3</span>);
-        <span class="macro">assert_eq!</span>(ladder.volumes(), <span class="number">300.0</span>);
+        <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">300.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">2520.0</span>);
         <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">10.0</span>)
     }
@@ -905,7 +905,7 @@
 
         ladder.add_bulk(<span class="macro">vec!</span>[order1, order2, order3, order4]);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">3</span>);
-        <span class="macro">assert_eq!</span>(ladder.volumes(), <span class="number">300.0</span>);
+        <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">300.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">3780.0</span>);
         <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.0</span>)
     }
@@ -921,7 +921,7 @@
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(ladder.volumes(), <span class="number">20.0</span>);
+        <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">20.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">222.000_000_000_000_03</span>);
         <span class="macro">assert_eq!</span>(
             ladder.top().unwrap().price.value.as_f64(),
@@ -940,7 +940,7 @@
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(ladder.volumes(), <span class="number">20.0</span>);
+        <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">20.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">222.000_000_000_000_03</span>);
         <span class="macro">assert_eq!</span>(
             ladder.top().unwrap().price.value.as_f64(),
@@ -959,7 +959,7 @@
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(ladder.volumes(), <span class="number">10.0</span>);
+        <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">10.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">110.0</span>);
         <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.0</span>)
     }
@@ -975,7 +975,7 @@
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(ladder.volumes(), <span class="number">10.0</span>);
+        <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">10.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">110.0</span>);
         <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.0</span>)
     }
@@ -991,7 +991,7 @@
 
         ladder.delete(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">0</span>);
-        <span class="macro">assert_eq!</span>(ladder.volumes(), <span class="number">0.0</span>);
+        <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">0.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">0.0</span>);
         <span class="macro">assert_eq!</span>(ladder.top(), <span class="prelude-val">None</span>)
     }
@@ -1007,7 +1007,7 @@
 
         ladder.delete(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">0</span>);
-        <span class="macro">assert_eq!</span>(ladder.volumes(), <span class="number">0.0</span>);
+        <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">0.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">0.0</span>);
         <span class="macro">assert_eq!</span>(ladder.top(), <span class="prelude-val">None</span>)
     }
@@ -1086,7 +1086,7 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_simulate_order_fills_buy_with_volume_depth_type() {
+    </span><span class="kw">fn </span>test_simulate_order_fills_buy() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
 
         ladder.add_bulk(<span class="macro">vec!</span>[
@@ -1135,7 +1135,7 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_simulate_order_fills_sell_with_volume_depth_type() {
+    </span><span class="kw">fn </span>test_simulate_order_fills_sell() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
 
         ladder.add_bulk(<span class="macro">vec!</span>[
@@ -1184,7 +1184,7 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_simulate_order_fills_sell_with_volume_at_limit_of_precision() {
+    </span><span class="kw">fn </span>test_simulate_order_fills_sell_with_size_at_limit_of_precision() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
 
         ladder.add_bulk(<span class="macro">vec!</span>[

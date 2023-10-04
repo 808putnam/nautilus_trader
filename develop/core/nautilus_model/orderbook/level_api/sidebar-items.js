@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["level_clone","level_drop","level_exposure","level_new","level_orders","level_price","level_volume","vec_levels_drop","vec_orders_drop"],"struct":["Level_API"]};
+window.SIDEBAR_ITEMS = {"fn":["level_clone","level_drop","level_exposure","level_new","level_orders","level_price","level_size","vec_levels_drop","vec_orders_drop"],"struct":["Level_API"]};
