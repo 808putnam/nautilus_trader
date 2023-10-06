@@ -379,6 +379,13 @@
 <a href="#379" id="379">379</a>
 <a href="#380" id="380">380</a>
 <a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -394,7 +401,7 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::cmp::Ordering;
+</span><span class="kw">use </span>std::{cmp::Ordering, collections::BTreeMap};
 
 <span class="kw">use crate</span>::{
     data::order::{BookOrder, OrderId},
@@ -405,7 +412,8 @@
 <span class="attr">#[derive(Clone, Debug, Eq)]
 </span><span class="kw">pub struct </span>Level {
     <span class="kw">pub </span>price: BookPrice,
-    <span class="kw">pub </span>orders: Vec&lt;BookOrder&gt;,
+    <span class="kw">pub </span>orders: BTreeMap&lt;OrderId, BookOrder&gt;,
+    insertion_order: Vec&lt;OrderId&gt;,
 }
 
 <span class="kw">impl </span>Level {
@@ -413,7 +421,8 @@
     </span><span class="kw">pub fn </span>new(price: BookPrice) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             price,
-            orders: Vec::new(),
+            orders: BTreeMap::new(),
+            insertion_order: Vec::new(),
         }
     }
 
@@ -421,7 +430,8 @@
     </span><span class="kw">pub fn </span>from_order(order: BookOrder) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>level = <span class="self">Self </span>{
             price: order.to_book_price(),
-            orders: Vec::new(),
+            orders: BTreeMap::new(),
+            insertion_order: Vec::new(),
         };
         level.add(order);
         level
@@ -437,82 +447,86 @@
         <span class="self">self</span>.orders.is_empty()
     }
 
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>first(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>BookOrder&gt; {
+        <span class="self">self</span>.insertion_order
+            .first()
+            .and_then(|<span class="kw-2">&amp;</span>id| <span class="self">self</span>.orders.get(<span class="kw-2">&amp;</span>id))
+    }
+
     <span class="kw">pub fn </span>add_bulk(<span class="kw-2">&amp;mut </span><span class="self">self</span>, orders: Vec&lt;BookOrder&gt;) {
+        <span class="self">self</span>.insertion_order
+            .extend(orders.iter().map(|o| o.order_id));
+
         <span class="kw">for </span>order <span class="kw">in </span>orders {
-            <span class="self">self</span>.add(order)
+            <span class="self">self</span>.check_order_for_this_level(<span class="kw-2">&amp;</span>order);
+            <span class="self">self</span>.orders.insert(order.order_id, order);
         }
     }
 
     <span class="kw">pub fn </span>add(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order: BookOrder) {
-        <span class="macro">assert_eq!</span>(order.price, <span class="self">self</span>.price.value); <span class="comment">// Confirm order for this level
+        <span class="self">self</span>.check_order_for_this_level(<span class="kw-2">&amp;</span>order);
 
-        </span><span class="self">self</span>.orders.push(order);
+        <span class="self">self</span>.orders.insert(order.order_id, order);
+        <span class="self">self</span>.insertion_order.push(order.order_id);
     }
 
     <span class="kw">pub fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order: BookOrder) {
-        <span class="macro">assert_eq!</span>(order.price, <span class="self">self</span>.price.value); <span class="comment">// Confirm order for this level
+        <span class="self">self</span>.check_order_for_this_level(<span class="kw-2">&amp;</span>order);
 
-        </span><span class="kw">if </span>order.size.raw == <span class="number">0 </span>{
-            <span class="self">self</span>.delete(<span class="kw-2">&amp;</span>order)
+        <span class="kw">if </span>order.size.raw == <span class="number">0 </span>{
+            <span class="self">self</span>.orders.remove(<span class="kw-2">&amp;</span>order.order_id);
+            <span class="self">self</span>.update_insertion_order();
         } <span class="kw">else </span>{
-            <span class="kw">let </span>idx = <span class="self">self
-                </span>.orders
-                .iter()
-                .position(|o| o.order_id == order.order_id)
-                .unwrap_or_else(|| {
-                    <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, <span class="kw-2">&amp;</span>BookIntegrityError::OrderNotFound(order.order_id))
-                });
-            <span class="self">self</span>.orders[idx] = order;
+            <span class="self">self</span>.orders.insert(order.order_id, order);
         }
     }
 
     <span class="kw">pub fn </span>delete(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order: <span class="kw-2">&amp;</span>BookOrder) {
-        <span class="self">self</span>.remove(order.order_id);
+        <span class="self">self</span>.orders.remove(<span class="kw-2">&amp;</span>order.order_id);
+        <span class="self">self</span>.update_insertion_order();
     }
 
-    <span class="kw">pub fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order_id: OrderId) {
-        <span class="kw">let </span>index = <span class="self">self
-            </span>.orders
-            .iter()
-            .position(|o| o.order_id == order_id)
-            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, <span class="kw-2">&amp;</span>BookIntegrityError::OrderNotFound(order_id)));
-        <span class="self">self</span>.orders.remove(index);
+    <span class="kw">pub fn </span>remove_by_id(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order_id: OrderId) {
+        <span class="kw">if </span><span class="self">self</span>.orders.remove(<span class="kw-2">&amp;</span>order_id).is_none() {
+            <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, <span class="kw-2">&amp;</span>BookIntegrityError::OrderNotFound(order_id));
+        }
+        <span class="self">self</span>.update_insertion_order();
     }
 
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
-        <span class="kw">let </span><span class="kw-2">mut </span>sum: f64 = <span class="number">0.0</span>;
-        <span class="kw">for </span>o <span class="kw">in </span><span class="self">self</span>.orders.iter() {
-            sum += o.size.as_f64()
-        }
-        sum
+        <span class="self">self</span>.orders.values().map(|o| o.size.as_f64()).sum()
     }
 
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>size_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
-        <span class="kw">let </span><span class="kw-2">mut </span>sum = <span class="number">0u64</span>;
-        <span class="kw">for </span>o <span class="kw">in </span><span class="self">self</span>.orders.iter() {
-            sum += o.size.raw
-        }
-        sum
+        <span class="self">self</span>.orders.values().map(|o| o.size.raw).sum()
     }
 
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>exposure(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
-        <span class="kw">let </span><span class="kw-2">mut </span>sum: f64 = <span class="number">0.0</span>;
-        <span class="kw">for </span>o <span class="kw">in </span><span class="self">self</span>.orders.iter() {
-            sum += o.price.as_f64() * o.size.as_f64()
-        }
-        sum
+        <span class="self">self</span>.orders
+            .values()
+            .map(|o| o.price.as_f64() * o.size.as_f64())
+            .sum()
     }
 
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>exposure_raw(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
-        <span class="kw">let </span><span class="kw-2">mut </span>sum = <span class="number">0u64</span>;
-        <span class="kw">for </span>o <span class="kw">in </span><span class="self">self</span>.orders.iter() {
-            sum += ((o.price.as_f64() * o.size.as_f64()) * FIXED_SCALAR) <span class="kw">as </span>u64
-        }
-        sum
+        <span class="self">self</span>.orders
+            .values()
+            .map(|o| ((o.price.as_f64() * o.size.as_f64()) * FIXED_SCALAR) <span class="kw">as </span>u64)
+            .sum()
+    }
+
+    <span class="kw">fn </span>check_order_for_this_level(<span class="kw-2">&amp;</span><span class="self">self</span>, order: <span class="kw-2">&amp;</span>BookOrder) {
+        <span class="macro">assert_eq!</span>(order.price, <span class="self">self</span>.price.value);
+    }
+
+    <span class="kw">fn </span>update_insertion_order(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="self">self</span>.insertion_order
+            .retain(|<span class="kw-2">&amp;</span>id| <span class="self">self</span>.orders.contains_key(<span class="kw-2">&amp;</span>id));
     }
 }
 
@@ -640,7 +654,7 @@
             Quantity::from(<span class="number">10</span>),
             order1_id,
         );
-        <span class="kw">let </span>order2_id = <span class="number">0</span>;
+        <span class="kw">let </span>order2_id = <span class="number">1</span>;
         <span class="kw">let </span>order2 = BookOrder::new(
             OrderSide::Buy,
             Price::from(<span class="string">&quot;1.00&quot;</span>),
@@ -652,8 +666,8 @@
         level.add(order2);
         level.delete(<span class="kw-2">&amp;</span>order1);
         <span class="macro">assert_eq!</span>(level.len(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(level.orders.first().unwrap().order_id, order2_id);
         <span class="macro">assert_eq!</span>(level.size(), <span class="number">20.0</span>);
+        <span class="macro">assert!</span>(level.orders.contains_key(<span class="kw-2">&amp;</span>order2_id));
         <span class="macro">assert_eq!</span>(level.exposure(), <span class="number">20.0</span>);
     }
 
@@ -677,9 +691,9 @@
 
         level.add(order1);
         level.add(order2);
-        level.remove(order2_id);
+        level.remove_by_id(order2_id);
         <span class="macro">assert_eq!</span>(level.len(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(level.orders.first().unwrap().order_id, order1_id);
+        <span class="macro">assert!</span>(level.orders.contains_key(<span class="kw-2">&amp;</span>order1_id));
         <span class="macro">assert_eq!</span>(level.size(), <span class="number">10.0</span>);
         <span class="macro">assert_eq!</span>(level.exposure(), <span class="number">10.0</span>);
     }
@@ -713,7 +727,7 @@
     #[should_panic(expected = <span class="string">&quot;Invalid book operation: order ID 1 not found&quot;</span>)]
     </span><span class="kw">fn </span>test_remove_nonexistent_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
-        level.remove(<span class="number">1</span>);
+        level.remove_by_id(<span class="number">1</span>);
     }
 
     <span class="attr">#[rstest]

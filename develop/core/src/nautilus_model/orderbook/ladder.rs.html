@@ -615,6 +615,7 @@
 <a href="#615" id="615">615</a>
 <a href="#616" id="616">616</a>
 <a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -644,7 +645,8 @@
     types::{price::Price, quantity::Quantity},
 };
 
-<span class="attr">#[derive(Copy, Clone, Debug, Eq)]
+<span class="doccomment">/// Represents a price level with a specified side in an order books ladder.
+</span><span class="attr">#[derive(Copy, Clone, Debug, Eq)]
 </span><span class="kw">pub struct </span>BookPrice {
     <span class="kw">pub </span>value: Price,
     <span class="kw">pub </span>side: OrderSide,
@@ -764,7 +766,7 @@
     <span class="kw">pub fn </span>remove(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order_id: OrderId) {
         <span class="kw">if let </span><span class="prelude-val">Some</span>(price) = <span class="self">self</span>.cache.remove(<span class="kw-2">&amp;</span>order_id) {
             <span class="kw">let </span>level = <span class="self">self</span>.levels.get_mut(<span class="kw-2">&amp;</span>price).unwrap();
-            level.remove(order_id);
+            level.remove_by_id(order_id);
             <span class="kw">if </span>level.is_empty() {
                 <span class="self">self</span>.levels.remove(<span class="kw-2">&amp;</span>price);
             }
@@ -803,7 +805,7 @@
                 <span class="kw">break</span>;
             }
 
-            <span class="kw">for </span>book_order <span class="kw">in </span><span class="kw-2">&amp;</span>level.orders {
+            <span class="kw">for </span>book_order <span class="kw">in </span>level.orders.values() {
                 <span class="kw">let </span>current = book_order.size;
                 <span class="kw">if </span>cumulative_denominator + current &gt;= target {
                     <span class="comment">// This order has filled us, add fill and return
@@ -879,9 +881,9 @@
     </span><span class="kw">fn </span>test_add_multiple_buy_orders() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
         <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">50</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order4 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;8.00&quot;</span>), Quantity::from(<span class="number">200</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">50</span>), <span class="number">2</span>);
+        <span class="kw">let </span>order4 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;8.00&quot;</span>), Quantity::from(<span class="number">200</span>), <span class="number">3</span>);
 
         ladder.add_bulk(<span class="macro">vec!</span>[order1, order2, order3, order4]);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">3</span>);
@@ -894,8 +896,8 @@
     </span><span class="kw">fn </span>test_add_multiple_sell_orders() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
         <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;12.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;12.00&quot;</span>), Quantity::from(<span class="number">50</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;12.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;12.00&quot;</span>), Quantity::from(<span class="number">50</span>), <span class="number">2</span>);
         <span class="kw">let </span>order4 = BookOrder::new(
             OrderSide::Sell,
             Price::from(<span class="string">&quot;13.00&quot;</span>),

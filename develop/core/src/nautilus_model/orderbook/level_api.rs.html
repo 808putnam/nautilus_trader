@@ -109,6 +109,9 @@
 <a href="#109" id="109">109</a>
 <a href="#110" id="110">110</a>
 <a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -172,7 +175,9 @@
         value: price,
         side: order_side,
     };
-    Level_API::new(Level { price, orders })
+    <span class="kw">let </span><span class="kw-2">mut </span>level = Level::new(price);
+    level.add_bulk(orders);
+    Level_API::new(level)
 }
 
 <span class="attr">#[no_mangle]
@@ -192,7 +197,8 @@
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>level_orders(level: <span class="kw-2">&amp;</span>Level_API) -&gt; CVec {
-    level.orders.to_vec().into()
+    <span class="kw">let </span>orders_vec: Vec&lt;BookOrder&gt; = level.orders.values().cloned().collect();
+    orders_vec.into()
 }
 
 <span class="attr">#[no_mangle]

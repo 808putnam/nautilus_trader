@@ -901,16 +901,6 @@
     types::{price::Price, quantity::Quantity},
 };
 
-<span class="kw">pub struct </span>OrderBook {
-    bids: Ladder,
-    asks: Ladder,
-    <span class="kw">pub </span>instrument_id: InstrumentId,
-    <span class="kw">pub </span>book_type: BookType,
-    <span class="kw">pub </span>sequence: u64,
-    <span class="kw">pub </span>ts_last: UnixNanos,
-    <span class="kw">pub </span>count: u64,
-}
-
 <span class="attr">#[derive(thiserror::Error, Debug)]
 </span><span class="kw">pub enum </span>InvalidBookOperation {
     <span class="attr">#[error(<span class="string">&quot;Invalid book operation: cannot pre-process order for {0} book&quot;</span>)]
@@ -938,6 +928,17 @@
     bids: String,
     price: String,
     asks: String,
+}
+
+<span class="doccomment">/// Provides an order book which can handle L1/L2/L3 granularity data.
+</span><span class="kw">pub struct </span>OrderBook {
+    bids: Ladder,
+    asks: Ladder,
+    <span class="kw">pub </span>instrument_id: InstrumentId,
+    <span class="kw">pub </span>book_type: BookType,
+    <span class="kw">pub </span>sequence: u64,
+    <span class="kw">pub </span>ts_last: UnixNanos,
+    <span class="kw">pub </span>count: u64,
 }
 
 <span class="kw">impl </span>OrderBook {
@@ -1070,14 +1071,14 @@
 
     <span class="kw">pub fn </span>best_bid_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Quantity&gt; {
         <span class="kw">match </span><span class="self">self</span>.bids.top() {
-            <span class="prelude-val">Some</span>(top) =&gt; top.orders.first().map(|order| order.size),
+            <span class="prelude-val">Some</span>(top) =&gt; top.first().map(|order| order.size),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
 
     <span class="kw">pub fn </span>best_ask_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Quantity&gt; {
         <span class="kw">match </span><span class="self">self</span>.asks.top() {
-            <span class="prelude-val">Some</span>(top) =&gt; top.orders.first().map(|order| order.size),
+            <span class="prelude-val">Some</span>(top) =&gt; top.first().map(|order| order.size),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
         }
     }
@@ -1098,8 +1099,8 @@
 
     <span class="kw">pub fn </span>get_avg_px_for_quantity(<span class="kw-2">&amp;</span><span class="self">self</span>, qty: Quantity, order_side: OrderSide) -&gt; f64 {
         <span class="kw">let </span>levels = <span class="kw">match </span>order_side {
-            OrderSide::Buy =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.asks.levels,
-            OrderSide::Sell =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.bids.levels,
+            OrderSide::Buy =&gt; <span class="self">self</span>.asks.levels.iter(),
+            OrderSide::Sell =&gt; <span class="self">self</span>.bids.levels.iter(),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Invalid `OrderSide` {}&quot;</span>, order_side),
         };
         <span class="kw">let </span><span class="kw-2">mut </span>cumulative_size_raw = <span class="number">0u64</span>;
@@ -1124,8 +1125,8 @@
 
     <span class="kw">pub fn </span>get_quantity_for_price(<span class="kw-2">&amp;</span><span class="self">self</span>, price: Price, order_side: OrderSide) -&gt; f64 {
         <span class="kw">let </span>levels = <span class="kw">match </span>order_side {
-            OrderSide::Buy =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.asks.levels,
-            OrderSide::Sell =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.bids.levels,
+            OrderSide::Buy =&gt; <span class="self">self</span>.asks.levels.iter(),
+            OrderSide::Sell =&gt; <span class="self">self</span>.bids.levels.iter(),
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Invalid `OrderSide` {}&quot;</span>, order_side),
         };
 
@@ -1170,31 +1171,30 @@
     }
 
     <span class="kw">pub fn </span>pprint(<span class="kw-2">&amp;</span><span class="self">self</span>, num_levels: usize) -&gt; String {
-        <span class="kw">let </span><span class="kw-2">mut </span>ask_levels: Vec&lt;(<span class="kw-2">&amp;</span>BookPrice, <span class="kw-2">&amp;</span>Level)&gt; =
-            <span class="self">self</span>.asks.levels.iter().take(num_levels).collect();
-
+        <span class="kw">let </span>ask_levels: Vec&lt;(<span class="kw-2">&amp;</span>BookPrice, <span class="kw-2">&amp;</span>Level)&gt; =
+            <span class="self">self</span>.asks.levels.iter().take(num_levels).rev().collect();
         <span class="kw">let </span>bid_levels: Vec&lt;(<span class="kw-2">&amp;</span>BookPrice, <span class="kw-2">&amp;</span>Level)&gt; =
             <span class="self">self</span>.bids.levels.iter().take(num_levels).collect();
-
-        ask_levels.reverse();
-
         <span class="kw">let </span>levels: Vec&lt;(<span class="kw-2">&amp;</span>BookPrice, <span class="kw-2">&amp;</span>Level)&gt; = ask_levels.into_iter().chain(bid_levels).collect();
 
         <span class="kw">let </span>data: Vec&lt;OrderLevelDisplay&gt; = levels
             .iter()
-            .map(|(<span class="kw">_</span>, level)| {
+            .map(|(book_price, level)| {
+                <span class="kw">let </span>is_bid_level = <span class="self">self</span>.bids.levels.contains_key(book_price);
+                <span class="kw">let </span>is_ask_level = <span class="self">self</span>.asks.levels.contains_key(book_price);
+
                 <span class="kw">let </span>bid_sizes: Vec&lt;String&gt; = level
                     .orders
                     .iter()
-                    .filter(|order| <span class="self">self</span>.bids.levels.contains_key(<span class="kw-2">&amp;</span>order.to_book_price()))
-                    .map(|order| <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, order.size))
+                    .filter(|<span class="kw">_</span>| is_bid_level)
+                    .map(|order| <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, order.<span class="number">1</span>.size))
                     .collect();
 
                 <span class="kw">let </span>ask_sizes: Vec&lt;String&gt; = level
                     .orders
                     .iter()
-                    .filter(|order| <span class="self">self</span>.asks.levels.contains_key(<span class="kw-2">&amp;</span>order.to_book_price()))
-                    .map(|order| <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, order.size))
+                    .filter(|<span class="kw">_</span>| is_ask_level)
+                    .map(|order| <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, order.<span class="number">1</span>.size))
                     .collect();
 
                 OrderLevelDisplay {
@@ -1316,7 +1316,7 @@
 
     <span class="kw">fn </span>update_bid(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order: BookOrder) {
         <span class="kw">match </span><span class="self">self</span>.bids.top() {
-            <span class="prelude-val">Some</span>(top_bids) =&gt; <span class="kw">match </span>top_bids.orders.first() {
+            <span class="prelude-val">Some</span>(top_bids) =&gt; <span class="kw">match </span>top_bids.first() {
                 <span class="prelude-val">Some</span>(top_bid) =&gt; {
                     <span class="kw">let </span>order_id = top_bid.order_id;
                     <span class="self">self</span>.bids.remove(order_id);
@@ -1334,7 +1334,7 @@
 
     <span class="kw">fn </span>update_ask(<span class="kw-2">&amp;mut </span><span class="self">self</span>, order: BookOrder) {
         <span class="kw">match </span><span class="self">self</span>.asks.top() {
-            <span class="prelude-val">Some</span>(top_asks) =&gt; <span class="kw">match </span>top_asks.orders.first() {
+            <span class="prelude-val">Some</span>(top_asks) =&gt; <span class="kw">match </span>top_asks.first() {
                 <span class="prelude-val">Some</span>(top_ask) =&gt; {
                     <span class="kw">let </span>order_id = top_ask.order_id;
                     <span class="self">self</span>.asks.remove(order_id);
@@ -1651,8 +1651,8 @@
         book.update_quote_tick(<span class="kw-2">&amp;</span>tick);
 
         <span class="comment">// Check if the top bid order in order_book is the same as the one created from tick
-        </span><span class="kw">let </span>top_bid_order = book.bids.top().unwrap().orders.first().unwrap();
-        <span class="kw">let </span>top_ask_order = book.asks.top().unwrap().orders.first().unwrap();
+        </span><span class="kw">let </span>top_bid_order = book.bids.top().unwrap().first().unwrap();
+        <span class="kw">let </span>top_ask_order = book.asks.top().unwrap().first().unwrap();
         <span class="kw">let </span>expected_bid_order = BookOrder::from_quote_tick(<span class="kw-2">&amp;</span>tick, OrderSide::Buy);
         <span class="kw">let </span>expected_ask_order = BookOrder::from_quote_tick(<span class="kw-2">&amp;</span>tick, OrderSide::Sell);
         <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>top_bid_order, expected_bid_order);
