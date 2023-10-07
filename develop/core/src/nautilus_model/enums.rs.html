@@ -1532,6 +1532,78 @@
 <a href="#1532" id="1532">1532</a>
 <a href="#1533" id="1533">1533</a>
 <a href="#1534" id="1534">1534</a>
+<a href="#1535" id="1535">1535</a>
+<a href="#1536" id="1536">1536</a>
+<a href="#1537" id="1537">1537</a>
+<a href="#1538" id="1538">1538</a>
+<a href="#1539" id="1539">1539</a>
+<a href="#1540" id="1540">1540</a>
+<a href="#1541" id="1541">1541</a>
+<a href="#1542" id="1542">1542</a>
+<a href="#1543" id="1543">1543</a>
+<a href="#1544" id="1544">1544</a>
+<a href="#1545" id="1545">1545</a>
+<a href="#1546" id="1546">1546</a>
+<a href="#1547" id="1547">1547</a>
+<a href="#1548" id="1548">1548</a>
+<a href="#1549" id="1549">1549</a>
+<a href="#1550" id="1550">1550</a>
+<a href="#1551" id="1551">1551</a>
+<a href="#1552" id="1552">1552</a>
+<a href="#1553" id="1553">1553</a>
+<a href="#1554" id="1554">1554</a>
+<a href="#1555" id="1555">1555</a>
+<a href="#1556" id="1556">1556</a>
+<a href="#1557" id="1557">1557</a>
+<a href="#1558" id="1558">1558</a>
+<a href="#1559" id="1559">1559</a>
+<a href="#1560" id="1560">1560</a>
+<a href="#1561" id="1561">1561</a>
+<a href="#1562" id="1562">1562</a>
+<a href="#1563" id="1563">1563</a>
+<a href="#1564" id="1564">1564</a>
+<a href="#1565" id="1565">1565</a>
+<a href="#1566" id="1566">1566</a>
+<a href="#1567" id="1567">1567</a>
+<a href="#1568" id="1568">1568</a>
+<a href="#1569" id="1569">1569</a>
+<a href="#1570" id="1570">1570</a>
+<a href="#1571" id="1571">1571</a>
+<a href="#1572" id="1572">1572</a>
+<a href="#1573" id="1573">1573</a>
+<a href="#1574" id="1574">1574</a>
+<a href="#1575" id="1575">1575</a>
+<a href="#1576" id="1576">1576</a>
+<a href="#1577" id="1577">1577</a>
+<a href="#1578" id="1578">1578</a>
+<a href="#1579" id="1579">1579</a>
+<a href="#1580" id="1580">1580</a>
+<a href="#1581" id="1581">1581</a>
+<a href="#1582" id="1582">1582</a>
+<a href="#1583" id="1583">1583</a>
+<a href="#1584" id="1584">1584</a>
+<a href="#1585" id="1585">1585</a>
+<a href="#1586" id="1586">1586</a>
+<a href="#1587" id="1587">1587</a>
+<a href="#1588" id="1588">1588</a>
+<a href="#1589" id="1589">1589</a>
+<a href="#1590" id="1590">1590</a>
+<a href="#1591" id="1591">1591</a>
+<a href="#1592" id="1592">1592</a>
+<a href="#1593" id="1593">1593</a>
+<a href="#1594" id="1594">1594</a>
+<a href="#1595" id="1595">1595</a>
+<a href="#1596" id="1596">1596</a>
+<a href="#1597" id="1597">1597</a>
+<a href="#1598" id="1598">1598</a>
+<a href="#1599" id="1599">1599</a>
+<a href="#1600" id="1600">1600</a>
+<a href="#1601" id="1601">1601</a>
+<a href="#1602" id="1602">1602</a>
+<a href="#1603" id="1603">1603</a>
+<a href="#1604" id="1604">1604</a>
+<a href="#1605" id="1605">1605</a>
+<a href="#1606" id="1606">1606</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1583,7 +1655,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>AccountType {
     <span class="doccomment">/// An account with unleveraged cash assets only.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;CASH&quot;</span>)]
@@ -1615,7 +1690,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>AggregationSource {
     <span class="doccomment">/// The data is externally aggregated (outside the Nautilus system boundary).
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;EXTERNAL&quot;</span>)]
@@ -1644,7 +1722,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>AggressorSide {
     <span class="doccomment">/// There was no specific aggressor for the trade.
     </span>NoAggressor = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -1686,7 +1767,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 #[allow(non_camel_case_types)]
 </span><span class="kw">pub enum </span>AssetClass {
     <span class="doccomment">/// Foreign exchange (FOREX) assets.
@@ -1736,7 +1820,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>AssetType {
     <span class="doccomment">/// A spot market asset type. The current market price of an asset that is bought or sold for immediate delivery and payment.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;SPOT&quot;</span>)]
@@ -1780,7 +1867,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>BarAggregation {
     <span class="doccomment">/// Based on a number of ticks.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;TICK&quot;</span>)]
@@ -1851,7 +1941,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>BookAction {
     <span class="doccomment">/// An order is added to the book.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;ADD&quot;</span>)]
@@ -1899,7 +1992,10 @@
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
 #[allow(non_camel_case_types)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>BookType {
     <span class="doccomment">/// Top-of-book best bid/offer, one level per side.
     </span>L1_MBP = <span class="number">1</span>,
@@ -1941,7 +2037,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>ContingencyType {
     <span class="doccomment">/// Not a contingent order.
     </span>NoContingency = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -1975,7 +2074,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>CurrencyType {
     <span class="doccomment">/// A type of cryptocurrency or crypto token.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;CRYPTO&quot;</span>)]
@@ -2007,7 +2109,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>InstrumentCloseType {
     <span class="doccomment">/// When the market session ended.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;END_OF_SESSION&quot;</span>)]
@@ -2036,8 +2141,11 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 #[allow(clippy::enum_variant_names)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
 </span><span class="kw">pub enum </span>LiquiditySide {
     <span class="doccomment">/// No specific liqudity side.
     </span>NoLiquiditySide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2068,7 +2176,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>MarketStatus {
     <span class="doccomment">/// The market is closed.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;CLOSED&quot;</span>)]
@@ -2106,7 +2217,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OmsType {
     <span class="doccomment">/// There is no specific type of order management specified (will defer to the venue).
     </span>Unspecified = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2139,7 +2253,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OptionKind {
     <span class="doccomment">/// A Call option gives the holder the right, but not the obligation, to buy an underlying asset at a specified strike price within a specified period of time.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;CALL&quot;</span>)]
@@ -2169,7 +2286,10 @@
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
 #[allow(clippy::enum_variant_names)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OrderSide {
     <span class="doccomment">/// No order side is specified (only valid in the context of a filter for actions involving orders).
     </span>NoOrderSide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2231,7 +2351,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OrderStatus {
     <span class="doccomment">/// The order is initialized (instantiated) within the Nautilus system.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;INITIALIZED&quot;</span>)]
@@ -2296,7 +2419,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OrderType {
     <span class="doccomment">/// A market order to buy or sell at the best available price in the current market.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;MARKET&quot;</span>)]
@@ -2347,7 +2473,10 @@
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
 #[allow(clippy::enum_variant_names)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>PositionSide {
     <span class="doccomment">/// No position side is specified (only valid in the context of a filter for actions involving positions).
     </span>NoPositionSide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2381,7 +2510,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>PriceType {
     <span class="doccomment">/// A quoted order price where a buyer is willing to buy a quantity of an instrument.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;BID&quot;</span>)]
@@ -2416,7 +2548,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>TimeInForce {
     <span class="doccomment">/// Good Till Canceled (GTC) - the order remains active until canceled.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;GTD&quot;</span>)]
@@ -2460,7 +2595,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>TradingState {
     <span class="doccomment">/// Normal trading operations.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;ACTIVE&quot;</span>)]
@@ -2492,7 +2630,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>TrailingOffsetType {
     <span class="doccomment">/// No trailing offset type is specified (invalid for trailing type orders).
     </span>NoTrailingOffset = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2529,7 +2670,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>TriggerType {
     <span class="doccomment">/// No trigger type is specified (invalid for orders with a trigger).
     </span>NoTrigger = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`

@@ -769,6 +769,9 @@
 <a href="#769" id="769">769</a>
 <a href="#770" id="770">770</a>
 <a href="#771" id="771">771</a>
+<a href="#772" id="772">772</a>
+<a href="#773" id="773">773</a>
+<a href="#774" id="774">774</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -819,7 +822,10 @@
 
 <span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Debug, Eq)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>Money {
     <span class="kw">pub </span>raw: i64,
     <span class="kw">pub </span>currency: Currency,

@@ -406,6 +406,9 @@
 <a href="#406" id="406">406</a>
 <a href="#407" id="407">407</a>
 <a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -446,7 +449,10 @@
     types::{price::Price, quantity::Quantity},
 };
 
-<span class="attr">#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)]
+<span class="attr">#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>TrailingStopLimitOrder {
     core: OrderCore,
     <span class="kw">pub </span>price: Price,

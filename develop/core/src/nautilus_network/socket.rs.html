@@ -671,6 +671,15 @@
 <a href="#671" id="671">671</a>
 <a href="#672" id="672">672</a>
 <a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
+<a href="#678" id="678">678</a>
+<a href="#679" id="679">679</a>
+<a href="#680" id="680">680</a>
+<a href="#681" id="681">681</a>
+<a href="#682" id="682">682</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -710,7 +719,10 @@
 
 <span class="doccomment">/// Configuration for TCP socket connection.
 </span><span class="attr">#[derive(Debug, Clone)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>SocketConfig {
     <span class="doccomment">/// The URL to connect to.
     </span>url: String,
@@ -760,7 +772,10 @@
 /// The client uses a suffix to separate messages on the byte stream. It is
 /// appended to all sent messages and heartbeats. It is also used the split
 /// the received byte stream.
-</span><span class="attr">#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)]
+</span><span class="attr">#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
+)]
 </span><span class="kw">struct </span>SocketClientInner {
     config: SocketConfig,
     read_task: task::JoinHandle&lt;()&gt;,
@@ -961,7 +976,10 @@
     }
 }
 
-<span class="attr">#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)]
+<span class="attr">#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>SocketClient {
     writer: SharedTcpWriter,
     controller_task: task::JoinHandle&lt;()&gt;,

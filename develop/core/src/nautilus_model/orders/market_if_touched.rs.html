@@ -384,6 +384,9 @@
 <a href="#384" id="384">384</a>
 <a href="#385" id="385">385</a>
 <a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -424,7 +427,10 @@
     types::{price::Price, quantity::Quantity},
 };
 
-<span class="attr">#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)]
+<span class="attr">#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>MarketIfTouchedOrder {
     core: OrderCore,
     <span class="kw">pub </span>trigger_price: Price,

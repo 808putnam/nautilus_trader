@@ -386,6 +386,14 @@
 <a href="#386" id="386">386</a>
 <a href="#387" id="387">387</a>
 <a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -579,6 +587,12 @@
     };
 
     <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_empty_level() {
+        <span class="kw">let </span>level = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
+        <span class="macro">assert!</span>(level.first().is_none());
+    }
+
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_comparisons_bid_side() {
         <span class="kw">let </span>level0 = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.00&quot;</span>), OrderSide::Buy));
         <span class="kw">let </span>level1 = Level::new(BookPrice::new(Price::from(<span class="string">&quot;1.01&quot;</span>), OrderSide::Buy));
@@ -603,6 +617,7 @@
         <span class="macro">assert!</span>(!level.is_empty());
         <span class="macro">assert_eq!</span>(level.len(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(level.size(), <span class="number">10.0</span>);
+        <span class="macro">assert_eq!</span>(level.first().unwrap(), <span class="kw-2">&amp;</span>order);
     }
 
     <span class="attr">#[rstest]
@@ -616,6 +631,7 @@
         <span class="macro">assert_eq!</span>(level.len(), <span class="number">2</span>);
         <span class="macro">assert_eq!</span>(level.size(), <span class="number">30.0</span>);
         <span class="macro">assert_eq!</span>(level.exposure(), <span class="number">60.0</span>);
+        <span class="macro">assert_eq!</span>(level.first().unwrap(), <span class="kw-2">&amp;</span>order1);
     }
 
     <span class="attr">#[rstest]
