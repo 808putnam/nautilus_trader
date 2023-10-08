@@ -295,44 +295,6 @@
 <a href="#295" id="295">295</a>
 <a href="#296" id="296">296</a>
 <a href="#297" id="297">297</a>
-<a href="#298" id="298">298</a>
-<a href="#299" id="299">299</a>
-<a href="#300" id="300">300</a>
-<a href="#301" id="301">301</a>
-<a href="#302" id="302">302</a>
-<a href="#303" id="303">303</a>
-<a href="#304" id="304">304</a>
-<a href="#305" id="305">305</a>
-<a href="#306" id="306">306</a>
-<a href="#307" id="307">307</a>
-<a href="#308" id="308">308</a>
-<a href="#309" id="309">309</a>
-<a href="#310" id="310">310</a>
-<a href="#311" id="311">311</a>
-<a href="#312" id="312">312</a>
-<a href="#313" id="313">313</a>
-<a href="#314" id="314">314</a>
-<a href="#315" id="315">315</a>
-<a href="#316" id="316">316</a>
-<a href="#317" id="317">317</a>
-<a href="#318" id="318">318</a>
-<a href="#319" id="319">319</a>
-<a href="#320" id="320">320</a>
-<a href="#321" id="321">321</a>
-<a href="#322" id="322">322</a>
-<a href="#323" id="323">323</a>
-<a href="#324" id="324">324</a>
-<a href="#325" id="325">325</a>
-<a href="#326" id="326">326</a>
-<a href="#327" id="327">327</a>
-<a href="#328" id="328">328</a>
-<a href="#329" id="329">329</a>
-<a href="#330" id="330">330</a>
-<a href="#331" id="331">331</a>
-<a href="#332" id="332">332</a>
-<a href="#333" id="333">333</a>
-<a href="#334" id="334">334</a>
-<a href="#335" id="335">335</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -348,54 +310,43 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::{collections::HashMap, vec::IntoIter};
+</span><span class="kw">use </span>std::{collections::HashMap, sync::Arc, vec::IntoIter};
 
 <span class="kw">use </span>compare::Compare;
 <span class="kw">use </span>datafusion::{error::Result, physical_plan::SendableRecordBatchStream, prelude::<span class="kw-2">*</span>};
-<span class="kw">use </span>futures::{executor::block_on, Stream, StreamExt};
+<span class="kw">use </span>futures::StreamExt;
 <span class="kw">use </span>nautilus_core::{cvec::CVec, python::to_pyruntime_err};
 <span class="kw">use </span>nautilus_model::data::{
     bar::Bar, delta::OrderBookDelta, quote::QuoteTick, trade::TradeTick, Data, HasTsInit,
 };
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, types::PyCapsule};
-<span class="kw">use </span>pyo3_asyncio::tokio::get_runtime;
 
 <span class="kw">use crate</span>::{
     arrow::{
         DataStreamingError, DecodeDataFromRecordBatch, EncodeToRecordBatch, NautilusDataType,
         WriteStream,
     },
-    kmerge_batch::{KMerge, PeekElementBatchStream},
+    kmerge_batch::{EagerStream, ElementBatchIter, KMerge},
 };
 
 <span class="attr">#[derive(Debug, Default)]
 </span><span class="kw">pub struct </span>TsInitComparator;
 
-<span class="kw">impl</span>&lt;S&gt; Compare&lt;PeekElementBatchStream&lt;S, Data&gt;&gt; <span class="kw">for </span>TsInitComparator
+<span class="kw">impl</span>&lt;I&gt; Compare&lt;ElementBatchIter&lt;I, Data&gt;&gt; <span class="kw">for </span>TsInitComparator
 <span class="kw">where
-    </span>S: Stream&lt;Item = IntoIter&lt;Data&gt;&gt;,
+    </span>I: Iterator&lt;Item = IntoIter&lt;Data&gt;&gt;,
 {
     <span class="kw">fn </span>compare(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        l: <span class="kw-2">&amp;</span>PeekElementBatchStream&lt;S, Data&gt;,
-        r: <span class="kw-2">&amp;</span>PeekElementBatchStream&lt;S, Data&gt;,
+        l: <span class="kw-2">&amp;</span>ElementBatchIter&lt;I, Data&gt;,
+        r: <span class="kw-2">&amp;</span>ElementBatchIter&lt;I, Data&gt;,
     ) -&gt; std::cmp::Ordering {
         <span class="comment">// Max heap ordering must be reversed
         </span>l.item.get_ts_init().cmp(<span class="kw-2">&amp;</span>r.item.get_ts_init()).reverse()
     }
 }
 
-<span class="kw">pub struct </span>QueryResult&lt;T = Data&gt; {
-    data: Box&lt;<span class="kw">dyn </span>Stream&lt;Item = Vec&lt;T&gt;&gt; + Unpin&gt;,
-}
-
-<span class="kw">impl </span>Iterator <span class="kw">for </span>QueryResult {
-    <span class="kw">type </span>Item = Vec&lt;Data&gt;;
-
-    <span class="kw">fn </span>next(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>::Item&gt; {
-        block_on(<span class="self">self</span>.data.next())
-    }
-}
+<span class="kw">pub type </span>QueryResult = KMerge&lt;EagerStream&lt;std::vec::IntoIter&lt;Data&gt;&gt;, Data, TsInitComparator&gt;;
 
 <span class="doccomment">/// Provides a DataFusion session and registers DataFusion queries.
 ///
@@ -405,17 +356,23 @@
 </span><span class="attr">#[pyclass]
 </span><span class="kw">pub struct </span>DataBackendSession {
     session_ctx: SessionContext,
-    batch_streams: Vec&lt;Box&lt;<span class="kw">dyn </span>Stream&lt;Item = IntoIter&lt;Data&gt;&gt; + Unpin + Send + <span class="lifetime">&#39;static</span>&gt;&gt;,
-    <span class="kw">pub </span>chunk_size: usize,
+    batch_streams: Vec&lt;EagerStream&lt;IntoIter&lt;Data&gt;&gt;&gt;,
+    chunk_size: usize,
+    runtime: Arc&lt;tokio::runtime::Runtime&gt;,
 }
 
 <span class="kw">impl </span>DataBackendSession {
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(chunk_size: usize) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>runtime = tokio::runtime::Builder::new_multi_thread()
+            .enable_all()
+            .build()
+            .unwrap();
         <span class="self">Self </span>{
             session_ctx: SessionContext::default(),
             batch_streams: Vec::default(),
             chunk_size,
+            runtime: Arc::new(runtime),
         }
     }
 
@@ -429,12 +386,23 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="comment">// Query a file for all it&#39;s records. the caller must specify `T` to indicate
-    // the kind of data expected from this query.
-    </span><span class="kw">pub async fn </span>add_file_default_query&lt;T&gt;(
+    <span class="doccomment">/// Query a file for its records. the caller must specify `T` to indicate
+    /// the kind of data expected from this query.
+    ///
+    /// table_name: Logical table_name assigned to this file. Queries to this file should address the
+    /// file by its table name.
+    /// file_path: Path to file
+    /// sql_query: A custom sql query to retrieve records from file. If no query is provided a default
+    /// query &quot;SELECT * FROM &lt;table_name&gt;&quot; is run.
+    ///
+    /// # Safety
+    /// The file data must be ordered by the ts_init in ascending order for this
+    /// to work correctly.
+    </span><span class="kw">pub fn </span>add_file&lt;T&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
         table_name: <span class="kw-2">&amp;</span>str,
         file_path: <span class="kw-2">&amp;</span>str,
+        sql_query: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
     <span class="kw">where
         </span>T: DecodeDataFromRecordBatch + Into&lt;Data&gt;,
@@ -443,50 +411,17 @@
             skip_metadata: <span class="prelude-val">Some</span>(<span class="bool-val">false</span>),
             ..Default::default()
         };
-        <span class="self">self</span>.session_ctx
-            .register_parquet(table_name, file_path, parquet_options)
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="self">self</span>.runtime.block_on(<span class="self">self</span>.session_ctx.register_parquet(
+            table_name,
+            file_path,
+            parquet_options,
+        ))<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>batch_stream = <span class="self">self
-            </span>.session_ctx
-            .sql(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;SELECT * FROM {} ORDER BY ts_init&quot;</span>, <span class="kw-2">&amp;</span>table_name))
-            .<span class="kw">await</span><span class="question-mark">?
-            </span>.execute_stream()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>default_query = <span class="macro">format!</span>(<span class="string">&quot;SELECT * FROM {}&quot;</span>, <span class="kw-2">&amp;</span>table_name);
+        <span class="kw">let </span>sql_query = sql_query.unwrap_or(<span class="kw-2">&amp;</span>default_query);
+        <span class="kw">let </span>query = <span class="self">self</span>.runtime.block_on(<span class="self">self</span>.session_ctx.sql(sql_query))<span class="question-mark">?</span>;
 
-        <span class="self">self</span>.add_batch_stream::&lt;T&gt;(batch_stream);
-        <span class="prelude-val">Ok</span>(())
-    }
-
-    <span class="comment">// Query a file for all it&#39;s records with a custom query. The caller must
-    // specify `T` to indicate what kind of data is expected from this query.
-    //
-    // # Safety
-    // The query should ensure the records are ordered by the `ts_init` field
-    // in ascending order.
-    </span><span class="kw">pub async fn </span>add_file_with_custom_query&lt;T&gt;(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        table_name: <span class="kw-2">&amp;</span>str,
-        file_path: <span class="kw-2">&amp;</span>str,
-        sql_query: <span class="kw-2">&amp;</span>str,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt;
-    <span class="kw">where
-        </span>T: DecodeDataFromRecordBatch + Into&lt;Data&gt;,
-    {
-        <span class="kw">let </span>parquet_options = ParquetReadOptions::&lt;<span class="lifetime">&#39;_</span>&gt; {
-            skip_metadata: <span class="prelude-val">Some</span>(<span class="bool-val">false</span>),
-            ..Default::default()
-        };
-        <span class="self">self</span>.session_ctx
-            .register_parquet(table_name, file_path, parquet_options)
-            .<span class="kw">await</span><span class="question-mark">?</span>;
-
-        <span class="kw">let </span>batch_stream = <span class="self">self
-            </span>.session_ctx
-            .sql(sql_query)
-            .<span class="kw">await</span><span class="question-mark">?
-            </span>.execute_stream()
-            .<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>batch_stream = <span class="self">self</span>.runtime.block_on(query.execute_stream())<span class="question-mark">?</span>;
 
         <span class="self">self</span>.add_batch_stream::&lt;T&gt;(batch_stream);
         <span class="prelude-val">Ok</span>(())
@@ -503,22 +438,25 @@
             <span class="prelude-val">Err</span>(_err) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Error getting next batch from RecordBatchStream&quot;</span>),
         });
 
-        <span class="self">self</span>.batch_streams.push(Box::new(transform));
+        <span class="self">self</span>.batch_streams
+            .push(EagerStream::from_stream_with_runtime(
+                transform,
+                <span class="self">self</span>.runtime.clone(),
+            ));
     }
 
     <span class="comment">// Consumes the registered queries and returns a [`QueryResult].
     // Passes the output of the query though the a KMerge which sorts the
     // queries in ascending order of `ts_init`.
     // QueryResult is an iterator that return Vec&lt;Data&gt;.
-    </span><span class="kw">pub async fn </span>get_query_result(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; QueryResult&lt;Data&gt; {
-        <span class="comment">// TODO: No need to kmerge if there is only one batch stream
-        </span><span class="kw">let </span><span class="kw-2">mut </span>kmerge: KMerge&lt;<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>&gt; = KMerge::new(TsInitComparator);
+    </span><span class="kw">pub fn </span>get_query_result(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; QueryResult {
+        <span class="kw">let </span><span class="kw-2">mut </span>kmerge: KMerge&lt;<span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span>&gt; = KMerge::new(TsInitComparator);
 
-        kmerge.push_iter_stream(<span class="self">self</span>.batch_streams.drain(..)).<span class="kw">await</span>;
+        <span class="self">self</span>.batch_streams
+            .drain(..)
+            .for_each(|eager_stream| kmerge.push_iter(eager_stream));
 
-        QueryResult {
-            data: Box::new(kmerge.chunks(<span class="self">self</span>.chunk_size)),
-        }
+        kmerge
     }
 }
 
@@ -534,81 +472,59 @@
     <span class="attr">#[new]
     #[pyo3(signature=(chunk_size=<span class="number">5_000</span>))]
     </span><span class="kw">fn </span>new_session(chunk_size: usize) -&gt; <span class="self">Self </span>{
-        <span class="comment">// Initialize runtime here
-        </span>get_runtime();
         <span class="self">Self</span>::new(chunk_size)
     }
 
-    <span class="kw">fn </span>add_file(
+    <span class="doccomment">/// Query a file for its records. the caller must specify `T` to indicate
+    /// the kind of data expected from this query.
+    ///
+    /// table_name: Logical table_name assigned to this file. Queries to this file should address the
+    /// file by its table name.
+    /// file_path: Path to file
+    /// sql_query: A custom sql query to retrieve records from file. If no query is provided a default
+    /// query &quot;SELECT * FROM &lt;table_name&gt;&quot; is run.
+    ///
+    /// # Safety
+    /// The file data must be ordered by the ts_init in ascending order for this
+    /// to work correctly.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;add_file&quot;</span>)]
+    </span><span class="kw">fn </span>add_file_py(
         <span class="kw-2">mut </span>slf: PyRefMut&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;,
+        data_type: NautilusDataType,
         table_name: <span class="kw-2">&amp;</span>str,
         file_path: <span class="kw-2">&amp;</span>str,
-        data_type: NautilusDataType,
+        sql_query: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;,
     ) -&gt; PyResult&lt;()&gt; {
-        <span class="kw">let </span>rt = get_runtime();
-        <span class="kw">let </span>_guard = rt.enter();
+        <span class="kw">let </span>_guard = slf.runtime.enter();
 
         <span class="kw">match </span>data_type {
-            NautilusDataType::OrderBookDelta =&gt; {
-                block_on(slf.add_file_default_query::&lt;OrderBookDelta&gt;(table_name, file_path))
-                    .map_err(to_pyruntime_err)
-            }
-            NautilusDataType::QuoteTick =&gt; {
-                block_on(slf.add_file_default_query::&lt;QuoteTick&gt;(table_name, file_path))
-                    .map_err(to_pyruntime_err)
-            }
-            NautilusDataType::TradeTick =&gt; {
-                block_on(slf.add_file_default_query::&lt;TradeTick&gt;(table_name, file_path))
-                    .map_err(to_pyruntime_err)
-            }
-            NautilusDataType::Bar =&gt; {
-                block_on(slf.add_file_default_query::&lt;Bar&gt;(table_name, file_path))
-                    .map_err(to_pyruntime_err)
-            }
-        }
-    }
-
-    <span class="kw">fn </span>add_file_with_query(
-        <span class="kw-2">mut </span>slf: PyRefMut&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;,
-        table_name: <span class="kw-2">&amp;</span>str,
-        file_path: <span class="kw-2">&amp;</span>str,
-        sql_query: <span class="kw-2">&amp;</span>str,
-        data_type: NautilusDataType,
-    ) -&gt; PyResult&lt;()&gt; {
-        <span class="kw">let </span>rt = get_runtime();
-        <span class="kw">let </span>_guard = rt.enter();
-
-        <span class="kw">match </span>data_type {
-            NautilusDataType::OrderBookDelta =&gt; block_on(
-                slf.add_file_with_custom_query::&lt;OrderBookDelta&gt;(table_name, file_path, sql_query),
-            )
-            .map_err(to_pyruntime_err),
-            NautilusDataType::QuoteTick =&gt; block_on(
-                slf.add_file_with_custom_query::&lt;QuoteTick&gt;(table_name, file_path, sql_query),
-            )
-            .map_err(to_pyruntime_err),
-            NautilusDataType::TradeTick =&gt; block_on(
-                slf.add_file_with_custom_query::&lt;TradeTick&gt;(table_name, file_path, sql_query),
-            )
-            .map_err(to_pyruntime_err),
-            NautilusDataType::Bar =&gt; {
-                block_on(slf.add_file_with_custom_query::&lt;Bar&gt;(table_name, file_path, sql_query))
-                    .map_err(to_pyruntime_err)
-            }
+            NautilusDataType::OrderBookDelta =&gt; slf
+                .add_file::&lt;OrderBookDelta&gt;(table_name, file_path, sql_query)
+                .map_err(to_pyruntime_err),
+            NautilusDataType::QuoteTick =&gt; slf
+                .add_file::&lt;QuoteTick&gt;(table_name, file_path, sql_query)
+                .map_err(to_pyruntime_err),
+            NautilusDataType::TradeTick =&gt; slf
+                .add_file::&lt;TradeTick&gt;(table_name, file_path, sql_query)
+                .map_err(to_pyruntime_err),
+            NautilusDataType::Bar =&gt; slf
+                .add_file::&lt;Bar&gt;(table_name, file_path, sql_query)
+                .map_err(to_pyruntime_err),
         }
     }
 
     <span class="kw">fn </span>to_query_result(<span class="kw-2">mut </span>slf: PyRefMut&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; DataQueryResult {
-        <span class="kw">let </span>rt = get_runtime();
-        <span class="kw">let </span>query_result = rt.block_on(slf.get_query_result());
-        DataQueryResult::new(query_result)
+        <span class="kw">let </span>query_result = slf.get_query_result();
+        DataQueryResult::new(query_result, slf.chunk_size)
     }
 }
 
 <span class="attr">#[pyclass]
 </span><span class="kw">pub struct </span>DataQueryResult {
-    result: QueryResult&lt;Data&gt;,
+    result: QueryResult,
     chunk: <span class="prelude-ty">Option</span>&lt;CVec&gt;,
+    acc: Vec&lt;Data&gt;,
+    size: usize,
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
@@ -623,28 +539,36 @@
     </span><span class="kw">fn </span>__next__(<span class="kw-2">mut </span>slf: PyRefMut&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; PyResult&lt;<span class="prelude-ty">Option</span>&lt;PyObject&gt;&gt; {
         slf.drop_chunk();
 
-        <span class="kw">let </span>rt = get_runtime();
-        <span class="kw">let </span>_guard = rt.enter();
-
-        <span class="kw">match </span>slf.result.next() {
-            <span class="prelude-val">Some</span>(chunk) =&gt; {
-                <span class="kw">let </span>cvec = chunk.into();
-                Python::with_gil(|py| <span class="kw">match </span>PyCapsule::new::&lt;CVec&gt;(py, cvec, <span class="prelude-val">None</span>) {
-                    <span class="prelude-val">Ok</span>(capsule) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(capsule.into_py(py))),
-                    <span class="prelude-val">Err</span>(err) =&gt; <span class="prelude-val">Err</span>(to_pyruntime_err(err)),
-                })
+        <span class="kw">for _ in </span><span class="number">0</span>..slf.size {
+            <span class="kw">match </span>slf.result.next() {
+                <span class="prelude-val">Some</span>(item) =&gt; slf.acc.push(item),
+                <span class="prelude-val">None </span>=&gt; <span class="kw">break</span>,
             }
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        }
+
+        <span class="kw">let </span><span class="kw-2">mut </span>acc: Vec&lt;Data&gt; = Vec::new();
+        std::mem::swap(<span class="kw-2">&amp;mut </span>acc, <span class="kw-2">&amp;mut </span>slf.acc);
+
+        <span class="kw">if </span>!acc.is_empty() {
+            <span class="kw">let </span>cvec = acc.into();
+            Python::with_gil(|py| <span class="kw">match </span>PyCapsule::new::&lt;CVec&gt;(py, cvec, <span class="prelude-val">None</span>) {
+                <span class="prelude-val">Ok</span>(capsule) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(capsule.into_py(py))),
+                <span class="prelude-val">Err</span>(err) =&gt; <span class="prelude-val">Err</span>(to_pyruntime_err(err)),
+            })
+        } <span class="kw">else </span>{
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
         }
     }
 }
 
 <span class="kw">impl </span>DataQueryResult {
     <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(result: QueryResult&lt;Data&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(result: QueryResult, size: usize) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             result,
             chunk: <span class="prelude-val">None</span>,
+            acc: Vec::new(),
+            size,
         }
     }
 
