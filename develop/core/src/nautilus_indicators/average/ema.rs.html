@@ -292,6 +292,19 @@
 <a href="#292" id="292">292</a>
 <a href="#293" id="293">293</a>
 <a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -317,7 +330,7 @@
 };
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use </span><span class="kw">crate</span>::indicator::Indicator;
+<span class="kw">use </span><span class="kw">crate</span>::indicator::{Indicator, MovingAverage};
 
 <span class="attr">#[repr(C)]
 #[derive(Debug)]
@@ -385,8 +398,17 @@
             is_initialized: <span class="bool-val">false</span>,
         })
     }
+}
 
-    <span class="kw">pub fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
+<span class="kw">impl </span>MovingAverage <span class="kw">for </span>ExponentialMovingAverage {
+    <span class="kw">fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.value
+    }
+
+    <span class="kw">fn </span>count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.count
+    }
+    <span class="kw">fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
         <span class="kw">if </span>!<span class="self">self</span>.has_inputs {
             <span class="self">self</span>.has_inputs = <span class="bool-val">true</span>;
             <span class="self">self</span>.value = value;
@@ -493,7 +515,11 @@
     };
     <span class="kw">use </span>rstest::rstest;
 
-    <span class="kw">use crate</span>::{average::ema::ExponentialMovingAverage, indicator::Indicator, stubs::<span class="kw-2">*</span>};
+    <span class="kw">use crate</span>::{
+        average::ema::ExponentialMovingAverage,
+        indicator::{Indicator, MovingAverage},
+        stubs::<span class="kw-2">*</span>,
+    };
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_ema_initialized(indicator_ema_10: ExponentialMovingAverage) {

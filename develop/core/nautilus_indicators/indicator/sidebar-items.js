@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":["Indicator"]};
+window.SIDEBAR_ITEMS = {"trait":["Indicator","MovingAverage"]};

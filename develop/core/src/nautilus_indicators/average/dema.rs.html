@@ -271,6 +271,22 @@
 <a href="#271" id="271">271</a>
 <a href="#272" id="272">272</a>
 <a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -296,7 +312,10 @@
 };
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use crate</span>::{average::ema::ExponentialMovingAverage, indicator::Indicator};
+<span class="kw">use crate</span>::{
+    average::ema::ExponentialMovingAverage,
+    indicator::{Indicator, MovingAverage},
+};
 
 <span class="doccomment">/// The Double Exponential Moving Average attempts to a smoother average with less
 /// lag than the normal Exponential Moving Average (EMA)
@@ -369,8 +388,17 @@
             _ema2: ExponentialMovingAverage::new(period, price_type)<span class="question-mark">?</span>,
         })
     }
+}
 
-    <span class="kw">pub fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
+<span class="kw">impl </span>MovingAverage <span class="kw">for </span>DoubleExponentialMovingAverage {
+    <span class="kw">fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.value
+    }
+
+    <span class="kw">fn </span>count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">self</span>.count
+    }
+    <span class="kw">fn </span>update_raw(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: f64) {
         <span class="kw">if </span>!<span class="self">self</span>.has_inputs {
             <span class="self">self</span>.has_inputs = <span class="bool-val">true</span>;
             <span class="self">self</span>.value = value;
@@ -469,7 +497,11 @@
     <span class="kw">use </span>nautilus_model::data::{bar::Bar, quote::QuoteTick, trade::TradeTick};
     <span class="kw">use </span>rstest::rstest;
 
-    <span class="kw">use crate</span>::{average::dema::DoubleExponentialMovingAverage, indicator::Indicator, stubs::<span class="kw-2">*</span>};
+    <span class="kw">use crate</span>::{
+        average::dema::DoubleExponentialMovingAverage,
+        indicator::{Indicator, MovingAverage},
+        stubs::<span class="kw-2">*</span>,
+    };
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_dema_initialized(indicator_dema_10: DoubleExponentialMovingAverage) {
