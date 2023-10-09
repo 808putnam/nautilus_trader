@@ -855,7 +855,7 @@ To facilitate this, nearly all configuration and domain objects can be serialize
          </h2>
          <p>
           The common system core is utilized by both the backtest, sandbox, and live trading nodes.
-User-defined Actor and Strategy components are managed consistently across these environment contexts.
+User-defined Actor, Strategy and ExecAlgorithm components are managed consistently across these environment contexts.
          </p>
         </section>
         <section id="backtesting">
@@ -913,7 +913,7 @@ Live deployments can use both demo/paper trading accounts, or real accounts.
            </span>
           </code>
           can ingest data and events from multiple data and execution clients.
-The system supports both demo/paper trading accounts and real accounts. High performance can be achieved by running
+The platform supports both demo/paper trading accounts and real accounts. High performance can be achieved by running
 asynchronously on a single
           <a class="reference external" href="https://docs.python.org/3/library/asyncio-eventloop.html">
            event loop
@@ -925,6 +925,14 @@ with the potential to further boost performance by leveraging the
           </a>
           implementation (available for Linux and macOS).
          </p>
+         <div class="admonition tip">
+          <p class="admonition-title">
+           Tip
+          </p>
+          <p>
+           Python 3.11 offers improved run-time performance, while Python 3.12 additionally offers improved asyncio performance.
+          </p>
+         </div>
         </section>
         <section id="domain-model">
          <h2 id="domain-model">
@@ -977,15 +985,6 @@ which are used to aggregate multiple events to determine state.
              <code class="docutils literal notranslate">
               <span class="pre">
                OrderBookDelta
-              </span>
-             </code>
-            </p>
-           </li>
-           <li>
-            <p>
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               OrderBookDeltas
               </span>
              </code>
              (L1/L2/L3)
@@ -1337,7 +1336,7 @@ This enables maximum flexibility and now allows alternative bars to be aggregate
            </a>
           </h3>
           <p>
-           The following order types are available (when possible on an exchange);
+           The following order types are available (when possible on a venue);
           </p>
           <ul class="simple">
            <li>

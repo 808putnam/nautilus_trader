@@ -390,7 +390,7 @@
 }
 
 <span class="comment">// TODO: Investigate implementing Iterator for ElementBatchIter
-// to reduce next element duplication. May be difficult to make it peekable
+// to reduce next element duplication. May be difficult to make it peekable.
 </span><span class="kw">pub struct </span>ElementBatchIter&lt;I, T&gt;
 <span class="kw">where
     </span>I: Iterator&lt;Item = IntoIter&lt;T&gt;&gt;,
@@ -456,7 +456,7 @@
             <span class="prelude-val">Some</span>(<span class="kw-2">mut </span>heap_elem) =&gt; {
                 <span class="comment">// Get next element from batch
                 </span><span class="kw">match </span>heap_elem.batch.next() {
-                    <span class="comment">// swap current heap element with new element
+                    <span class="comment">// Swap current heap element with new element
                     // return the old element
                     </span><span class="prelude-val">Some</span>(<span class="kw-2">mut </span>item) =&gt; {
                         std::mem::swap(<span class="kw-2">&amp;mut </span>item, <span class="kw-2">&amp;mut </span>heap_elem.item);
@@ -472,10 +472,10 @@
                                     std::mem::swap(<span class="kw-2">&amp;mut </span>item, <span class="kw-2">&amp;mut </span>heap_elem.item);
                                     <span class="kw">break </span><span class="prelude-val">Some</span>(item);
                                 }
-                                <span class="comment">// get next batch from iterator
+                                <span class="comment">// Get next batch from iterator
                                 </span><span class="prelude-val">None </span>=&gt; <span class="kw">continue</span>,
                             },
-                            <span class="comment">// iterator has no more batches return current element
+                            <span class="comment">// Iterator has no more batches return current element
                             // and pop the heap element
                             </span><span class="prelude-val">None </span>=&gt; {
                                 <span class="kw">let </span>ElementBatchIter {

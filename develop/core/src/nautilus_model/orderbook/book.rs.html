@@ -873,6 +873,7 @@
 <a href="#873" id="873">873</a>
 <a href="#874" id="874">874</a>
 <a href="#875" id="875">875</a>
+<a href="#876" id="876">876</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1170,7 +1171,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>pprint(<span class="kw-2">&amp;</span><span class="self">self</span>, num_levels: usize) -&gt; String {
+    <span class="doccomment">/// Return a [`String`] representation of the order book in a human-readable table format.
+    </span><span class="kw">pub fn </span>pprint(<span class="kw-2">&amp;</span><span class="self">self</span>, num_levels: usize) -&gt; String {
         <span class="kw">let </span>ask_levels: Vec&lt;(<span class="kw-2">&amp;</span>BookPrice, <span class="kw-2">&amp;</span>Level)&gt; =
             <span class="self">self</span>.asks.levels.iter().take(num_levels).rev().collect();
         <span class="kw">let </span>bid_levels: Vec&lt;(<span class="kw-2">&amp;</span>BookPrice, <span class="kw-2">&amp;</span>Level)&gt; =

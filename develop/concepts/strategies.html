@@ -677,6 +677,48 @@
              <a class="md-nav__link" href="#implementation">
               Implementation
              </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#handlers">
+                Handlers
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#stateful-actions">
+                  Stateful actions
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#data-handling">
+                  Data handling
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#order-management">
+                  Order management
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#position-management">
+                  Position management
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#generic-event-handling">
+                  Generic event handling
+                 </a>
+                </li>
+               </ul>
+              </li>
+             </ul>
             </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#configuration">
@@ -786,6 +828,41 @@ of all the possible functionality.
           Once a strategy is defined, the same source can be used for backtesting and live trading.
          </p>
         </div>
+        <p>
+         The main capabilities of a strategy include:
+        </p>
+        <ul class="simple">
+         <li>
+          <p>
+           Historical data requests
+          </p>
+         </li>
+         <li>
+          <p>
+           Live data feed subscriptions
+          </p>
+         </li>
+         <li>
+          <p>
+           Setting time alerts or timers
+          </p>
+         </li>
+         <li>
+          <p>
+           Accessing the cache
+          </p>
+         </li>
+         <li>
+          <p>
+           Accessing the portfolio
+          </p>
+         </li>
+         <li>
+          <p>
+           Creating and managing orders
+          </p>
+         </li>
+        </ul>
         <section id="implementation">
          <h2 id="implementation">
           Implementation
@@ -811,6 +888,208 @@ a constructor where you can handle initialization. Minimally the base/super clas
 </pre>
           </div>
          </div>
+         <section id="handlers">
+          <h3 id="handlers">
+           Handlers
+           <a class="headerlink" href="#handlers" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Handlers are methods within the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             Strategy
+            </span>
+           </code>
+           class which may perform actions based on different types of events or state changes.
+These methods are named with the prefix
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             on_*
+            </span>
+           </code>
+           . You can choose to implement any or all of these handler
+methods depending on the specific needs of your strategy.
+          </p>
+          <p>
+           The purpose of having multiple handlers for similar types of events is to provide flexibility in handling granularity.
+This means that you can choose to respond to specific events with a dedicated handler, or use a more generic
+handler to react to a range of related events (using switch type logic). The call sequence is generally most specific to most general.
+          </p>
+          <section id="stateful-actions">
+           <h4 id="stateful-actions">
+            Stateful actions
+            <a class="headerlink" href="#stateful-actions" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            These handlers are triggered by lifecycle state changes of the
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              Strategy
+             </span>
+            </code>
+            . It’s recommended to:
+           </p>
+           <ul class="simple">
+            <li>
+             <p>
+              Use the
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                on_start
+               </span>
+              </code>
+              method to initialize your strategy (e.g., fetch instruments, subscribe to data)
+             </p>
+            </li>
+            <li>
+             <p>
+              Use the
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                on_stop
+               </span>
+              </code>
+              method for cleanup tasks (e.g., unsubscribe from data)
+             </p>
+            </li>
+           </ul>
+          </section>
+          <section id="data-handling">
+           <h4 id="data-handling">
+            Data handling
+            <a class="headerlink" href="#data-handling" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            These handlers deal with market data updates.
+           </p>
+          </section>
+          <section id="order-management">
+           <h4 id="order-management">
+            Order management
+            <a class="headerlink" href="#order-management" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            Handlers in this category are triggered by events related to order management.
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              OrderEvent
+             </span>
+            </code>
+            type messages are passed to handlers in this sequence:
+           </p>
+           <ul class="simple">
+            <li>
+             <ol class="arabic simple">
+              <li>
+               <p>
+                Specific handlers (e.g., on_order_accepted, on_order_rejected, etc.)
+               </p>
+              </li>
+             </ol>
+            </li>
+            <li>
+             <ol class="arabic simple" start="2">
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  on_order_event(...)
+                 </span>
+                </code>
+               </p>
+              </li>
+             </ol>
+            </li>
+            <li>
+             <ol class="arabic simple" start="3">
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  on_event(...)
+                 </span>
+                </code>
+               </p>
+              </li>
+             </ol>
+            </li>
+           </ul>
+          </section>
+          <section id="position-management">
+           <h4 id="position-management">
+            Position management
+            <a class="headerlink" href="#position-management" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            Handlers in this category are triggered by events related to position management.
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              PositionEvent
+             </span>
+            </code>
+            type messages are passed to handlers in this sequence:
+           </p>
+           <ul class="simple">
+            <li>
+             <ol class="arabic simple">
+              <li>
+               <p>
+                Specific handlers (e.g., on_position_opened, on_position_changed, etc.)
+               </p>
+              </li>
+             </ol>
+            </li>
+            <li>
+             <ol class="arabic simple" start="2">
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  on_position_event(...)
+                 </span>
+                </code>
+               </p>
+              </li>
+             </ol>
+            </li>
+            <li>
+             <ol class="arabic simple" start="2">
+              <li>
+               <p>
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  on_event(...)
+                 </span>
+                </code>
+               </p>
+              </li>
+             </ol>
+            </li>
+           </ul>
+          </section>
+          <section id="generic-event-handling">
+           <h4 id="generic-event-handling">
+            Generic event handling
+            <a class="headerlink" href="#generic-event-handling" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            This handler will eventually receive all event messages which arrive at the strategy, including those for
+which no other specific handler exists.
+           </p>
+          </section>
+         </section>
         </section>
         <section id="configuration">
          <h2 id="configuration">
@@ -882,8 +1161,7 @@ live trading servers remotely, then you will need to define a configuration.
           </p>
           <p>
            Even though it often makes sense to define a strategy which will trade a single
-instrument. There is actually no limit to the number of instruments a single strategy
-can work with.
+instrument. The number of instruments a single strategy can work with is only limited by machine resources.
           </p>
          </div>
          <section id="multiple-strategies">
@@ -910,7 +1188,7 @@ a unique
            </p>
            <p>
             The platform has built-in safety measures in the event that two strategies share a
-duplicated strategy ID, then an exception will be thrown that the strategy ID has already been registered.
+duplicated strategy ID, then an exception will be raised that the strategy ID has already been registered.
            </p>
           </div>
           <p>
