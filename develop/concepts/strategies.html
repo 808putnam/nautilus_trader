@@ -957,6 +957,20 @@ handler to react to a range of related events (using switch type logic). The cal
              </p>
             </li>
            </ul>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span><span class="n">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="n">on_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="n">on_resume</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="n">on_reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="n">on_dispose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="n">on_degrade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="n">on_fault</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="n">on_save</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]</span>  <span class="c1"># Returns user defined dictionary of state to be saved</span>
+<span class="n">on_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span>
+</pre>
+            </div>
+           </div>
           </section>
           <section id="data-handling">
            <h4 id="data-handling">
@@ -968,6 +982,23 @@ handler to react to a range of related events (using switch type logic). The cal
            <p>
             These handlers deal with market data updates.
            </p>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span><span class="n">on_order_book_deltas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deltas</span><span class="p">:</span> <span class="n">OrderBookDeltas</span><span class="p">)</span>
+<span class="n">on_order_book</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_book</span><span class="p">:</span> <span class="n">OrderBook</span><span class="p">)</span>
+<span class="n">on_ticker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticker</span><span class="p">:</span> <span class="n">Ticker</span><span class="p">)</span>
+<span class="n">on_quote_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">:</span> <span class="n">QuoteTick</span><span class="p">)</span>
+<span class="n">on_trade_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">:</span> <span class="n">TradeTick</span><span class="p">)</span>
+<span class="n">on_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bar</span><span class="p">:</span> <span class="n">Bar</span><span class="p">)</span>
+<span class="n">on_venue_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">VenueStatus</span><span class="p">)</span>
+<span class="n">on_instrument</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instrument</span><span class="p">:</span> <span class="n">Instrument</span><span class="p">)</span>
+<span class="n">on_instrument_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">InstrumentStatus</span><span class="p">)</span>
+<span class="n">on_instrument_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">InstrumentClose</span><span class="p">)</span>
+<span class="n">on_historical_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">)</span>
+<span class="n">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">)</span>  <span class="c1"># Generic data passed to this handler</span>
+</pre>
+            </div>
+           </div>
           </section>
           <section id="order-management">
            <h4 id="order-management">
@@ -1063,7 +1094,7 @@ handler to react to a range of related events (using switch type logic). The cal
              </ol>
             </li>
             <li>
-             <ol class="arabic simple" start="2">
+             <ol class="arabic simple" start="3">
               <li>
                <p>
                 <code class="docutils literal notranslate">
@@ -1076,6 +1107,15 @@ handler to react to a range of related events (using switch type logic). The cal
              </ol>
             </li>
            </ul>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span><span class="n">on_position_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionOpened</span><span class="p">)</span>
+<span class="n">on_position_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionChanged</span><span class="p">)</span>
+<span class="n">on_position_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionClosed</span><span class="p">)</span>
+<span class="n">on_position_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionEvent</span><span class="p">)</span>  <span class="c1"># All position event messages are eventually passed to this handler</span>
+</pre>
+            </div>
+           </div>
           </section>
           <section id="generic-event-handling">
            <h4 id="generic-event-handling">
@@ -1088,6 +1128,12 @@ handler to react to a range of related events (using switch type logic). The cal
             This handler will eventually receive all event messages which arrive at the strategy, including those for
 which no other specific handler exists.
            </p>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span><span class="n">on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">Event</span><span class="p">)</span>
+</pre>
+            </div>
+           </div>
           </section>
          </section>
         </section>
