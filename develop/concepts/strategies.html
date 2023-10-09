@@ -1025,7 +1025,19 @@ You can use these handlers to define actions upon receiving new market data.
            <ol class="arabic simple">
             <li>
              <p>
-              Specific handler (e.g., on_order_accepted, on_order_rejected, etc.)
+              Specific handler (e.g.,
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                on_order_accepted
+               </span>
+              </code>
+              ,
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                on_order_rejected
+               </span>
+              </code>
+              , etc.)
              </p>
             </li>
             <li>
@@ -1067,7 +1079,19 @@ You can use these handlers to define actions upon receiving new market data.
            <ol class="arabic simple">
             <li>
              <p>
-              Specific handler (e.g., on_position_opened, on_position_changed, etc.)
+              Specific handler (e.g.,
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                on_position_opened
+               </span>
+              </code>
+              ,
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                on_position_changed
+               </span>
+              </code>
+              , etc.)
              </p>
             </li>
             <li>
@@ -1091,10 +1115,10 @@ You can use these handlers to define actions upon receiving new market data.
            </ol>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span><span class="n">on_position_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionOpened</span><span class="p">)</span>
-<span class="n">on_position_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionChanged</span><span class="p">)</span>
-<span class="n">on_position_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionClosed</span><span class="p">)</span>
-<span class="n">on_position_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionEvent</span><span class="p">)</span>  <span class="c1"># All position event messages are eventually passed to this handler</span>
+             <pre><span></span><span class="k">def</span> <span class="nf">on_position_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionOpened</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">on_position_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionChanged</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">on_position_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionClosed</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">on_position_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># All position event messages are eventually passed to this handler</span>
 </pre>
             </div>
            </div>

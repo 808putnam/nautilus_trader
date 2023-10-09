@@ -943,7 +943,7 @@ Multiple configurations can be bundled into a list and fed to the node to be run
             A list of
             <code class="docutils literal notranslate">
              <span class="pre">
-              ActorConfig
+              ImportableActorConfig
              </span>
             </code>
             objects
@@ -954,7 +954,7 @@ Multiple configurations can be bundled into a list and fed to the node to be run
             A list of
             <code class="docutils literal notranslate">
              <span class="pre">
-              StrategyConfig
+              ImportableStrategyConfig
              </span>
             </code>
             objects
@@ -965,7 +965,7 @@ Multiple configurations can be bundled into a list and fed to the node to be run
             A list of
             <code class="docutils literal notranslate">
              <span class="pre">
-              ExecAlgorithmConfig
+              ImportableExecAlgorithmConfig
              </span>
             </code>
             objects
@@ -976,10 +976,21 @@ Multiple configurations can be bundled into a list and fed to the node to be run
             An optional
             <code class="docutils literal notranslate">
              <span class="pre">
+              ImportableControllerConfig
+             </span>
+            </code>
+            object
+           </p>
+          </li>
+          <li>
+           <p>
+            An optional
+            <code class="docutils literal notranslate">
+             <span class="pre">
               BacktestEngineConfig
              </span>
             </code>
-            objects (otherwise will be the default)
+            object (otherwise will be the default)
            </p>
           </li>
          </ul>
