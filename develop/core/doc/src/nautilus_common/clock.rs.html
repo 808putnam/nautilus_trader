@@ -736,13 +736,13 @@
     <span class="doccomment">/// Return the count of active timers in the clock.
     </span><span class="kw">fn </span>timer_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize;
 
-    <span class="doccomment">/// Register a default event handler for the clock. If a [`Timer`]
+    <span class="doccomment">/// Register a default event handler for the clock. If a `Timer`
     /// does not have an event handler, then this handler is used.
     </span><span class="kw">fn </span>register_default_handler(<span class="kw-2">&amp;mut </span><span class="self">self</span>, callback: Box&lt;<span class="kw">dyn </span>Fn(TimeEvent)&gt;);
 
     <span class="kw">fn </span>register_default_handler_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, callback_py: PyObject);
 
-    <span class="doccomment">/// Set a [`Timer`] to alert at a particular time. Optional
+    <span class="doccomment">/// Set a `Timer` to alert at a particular time. Optional
     /// callback gets used to handle generated events.
     </span><span class="kw">fn </span>set_time_alert_ns_py(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
@@ -751,7 +751,7 @@
         callback_py: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
     );
 
-    <span class="doccomment">/// Set a [`Timer`] to start alerting at every interval
+    <span class="doccomment">/// Set a `Timer` to start alerting at every interval
     /// between start and stop time. Optional callback gets
     /// used to handle generated event.
     </span><span class="kw">fn </span>set_timer_ns_py(

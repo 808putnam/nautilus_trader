@@ -352,7 +352,7 @@
 ///
 /// The session is used to register data sources and make queries on them. A
 /// query returns a Chunk of Arrow records. It is decoded and converted into
-/// a Vec of data by types that implement [`DecodeFromRecordBatch`].
+/// a Vec of data by types that implement [`DecodeDataFromRecordBatch`].
 </span><span class="attr">#[pyclass]
 </span><span class="kw">pub struct </span>DataBackendSession {
     session_ctx: SessionContext,
