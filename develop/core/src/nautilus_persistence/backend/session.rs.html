@@ -295,6 +295,16 @@
 <a href="#295" id="295">295</a>
 <a href="#296" id="296">296</a>
 <a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -313,7 +323,12 @@
 </span><span class="kw">use </span>std::{collections::HashMap, sync::Arc, vec::IntoIter};
 
 <span class="kw">use </span>compare::Compare;
-<span class="kw">use </span>datafusion::{error::Result, physical_plan::SendableRecordBatchStream, prelude::<span class="kw-2">*</span>};
+<span class="kw">use </span>datafusion::{
+    error::Result,
+    logical_expr::{col, expr::Sort},
+    physical_plan::SendableRecordBatchStream,
+    prelude::<span class="kw-2">*</span>,
+};
 <span class="kw">use </span>futures::StreamExt;
 <span class="kw">use </span>nautilus_core::{cvec::CVec, python::to_pyruntime_err};
 <span class="kw">use </span>nautilus_model::data::{
@@ -409,6 +424,11 @@
     {
         <span class="kw">let </span>parquet_options = ParquetReadOptions::&lt;<span class="lifetime">&#39;_</span>&gt; {
             skip_metadata: <span class="prelude-val">Some</span>(<span class="bool-val">false</span>),
+            file_sort_order: <span class="macro">vec!</span>[<span class="macro">vec!</span>[Expr::Sort(Sort {
+                expr: Box::new(col(<span class="string">&quot;ts_init&quot;</span>)),
+                asc: <span class="bool-val">true</span>,
+                nulls_first: <span class="bool-val">true</span>,
+            })]],
             ..Default::default()
         };
         <span class="self">self</span>.runtime.block_on(<span class="self">self</span>.session_ctx.register_parquet(

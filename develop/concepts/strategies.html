@@ -789,6 +789,11 @@
                </span>
                <ul class="submenu">
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#submitting-orders">
+                  Submitting orders
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#managed-gtd-expiry">
                   Managed GTD expiry
                  </a>
@@ -1444,6 +1449,187 @@ tailored for algorithmic trading. These commands are essential for executing str
 and ensuring seamless interaction with various trading venues. In the following sections, we will
 delve into the specifics of each command and its use cases.
           </p>
+          <section id="submitting-orders">
+           <h4 id="submitting-orders">
+            Submitting orders
+            <a class="headerlink" href="#submitting-orders" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            An
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              OrderFactory
+             </span>
+            </code>
+            is provided on the base class for every
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              Strategy
+             </span>
+            </code>
+            as a convenience, reducing
+the amount of boilerplate required to create different
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              Order
+             </span>
+            </code>
+            objects (although these objects
+can still be initialized directly with the
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              Order.__init__(...)
+             </span>
+            </code>
+            constructor if the trader prefers).
+           </p>
+           <p>
+            The component an order flows to when submitted for execution depends on the following:
+           </p>
+           <ul class="simple">
+            <li>
+             <p>
+              If an
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                emulation_trigger
+               </span>
+              </code>
+              is specified, the order will
+              <em>
+               firstly
+              </em>
+              be sent to the
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                OrderEmulator
+               </span>
+              </code>
+             </p>
+            </li>
+            <li>
+             <p>
+              If an
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                exec_algorithm_id
+               </span>
+              </code>
+              is specified (with no
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                emulation_trigger
+               </span>
+              </code>
+              ), the order will
+              <em>
+               firstly
+              </em>
+              be sent to the relevant
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                ExecAlgorithm
+               </span>
+              </code>
+              (assuming it exists and has been registered correctly)
+             </p>
+            </li>
+            <li>
+             <p>
+              Otherwise, the order will
+              <em>
+               firstly
+              </em>
+              be sent to the
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                RiskEngine
+               </span>
+              </code>
+             </p>
+            </li>
+           </ul>
+           <p>
+            The following examples show method implementations for a
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              Strategy
+             </span>
+            </code>
+            .
+           </p>
+           <p>
+            This example submits a
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              LIMIT
+             </span>
+            </code>
+            BUY order for emulation (see
+            <a class="reference internal" href="advanced/emulated_orders.html">
+             <span class="doc std std-doc">
+              OrderEmulator
+             </span>
+            </a>
+            ):
+           </p>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span>    <span class="k">def</span> <span class="nf">buy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Users simple buy method (example).</span>
+<span class="sd">        """</span>
+        <span class="n">order</span><span class="p">:</span> <span class="n">LimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
+            <span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
+            <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+            <span class="n">quantity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">make_qty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span><span class="p">),</span>
+            <span class="n">price</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">make_price</span><span class="p">(</span><span class="mf">5000.00</span><span class="p">),</span>
+            <span class="n">emulation_trigger</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+</pre>
+            </div>
+           </div>
+           <div class="admonition note">
+            <p class="admonition-title">
+             Note
+            </p>
+            <p>
+             It’s possible to specify both order emulation, and an execution algorithm.
+            </p>
+           </div>
+           <p>
+            This example submits a
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              MARKET
+             </span>
+            </code>
+            BUY order to a TWAP execution algorithm:
+           </p>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span>    <span class="k">def</span> <span class="nf">buy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""</span>
+<span class="sd">        Users simple buy method (example).</span>
+<span class="sd">        """</span>
+        <span class="n">order</span><span class="p">:</span> <span class="n">MarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market</span><span class="p">(</span>
+            <span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
+            <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+            <span class="n">quantity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">make_qty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span><span class="p">),</span>
+            <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">FOK</span><span class="p">,</span>
+            <span class="n">exec_algorithm_id</span><span class="o">=</span><span class="n">ExecAlgorithmId</span><span class="p">(</span><span class="s2">"TWAP"</span><span class="p">),</span>
+            <span class="n">exec_algorithm_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"horizon_secs"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">"interval_secs"</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">},</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+</pre>
+            </div>
+           </div>
+          </section>
           <section id="managed-gtd-expiry">
            <h4 id="managed-gtd-expiry">
             Managed GTD expiry
