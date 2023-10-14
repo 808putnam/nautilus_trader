@@ -366,6 +366,11 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
+                <a class="md-nav__link" href="advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
                 <a class="md-nav__link" href="advanced/custom_data.html">
                  Custom/Generic Data
                 </a>
@@ -741,6 +746,11 @@
                   Generic event handling
                  </a>
                 </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#handler-example">
+                  Handler example
+                 </a>
+                </li>
                </ul>
               </li>
               <li class="md-nav__item">
@@ -828,7 +838,7 @@ trading strategies. Defining a trading strategy is achieved by inheriting the
           </span>
          </code>
          class,
-and implementing the methods required by the strategy.
+and implementing the methods required by the users trading strategy logic.
         </p>
         <p>
          Using the basic building blocks of data ingest, event handling, and order management (which we will discuss
@@ -925,23 +935,6 @@ of all the possible functionality.
           </p>
          </li>
         </ul>
-        <div class="admonition note">
-         <p class="admonition-title">
-          Note
-         </p>
-         <p>
-          See the
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            Strategy
-           </span>
-          </code>
-          <span class="xref myst">
-           API reference
-          </span>
-          for a complete list of available methods.
-         </p>
-        </div>
         <section id="implementation">
          <h2 id="implementation">
           Implementation
@@ -967,6 +960,10 @@ a constructor where you can handle initialization. Minimally the base/super clas
 </pre>
           </div>
          </div>
+         <p>
+          From here, you can implement handlers as necessary to perform actions based on state transitions
+and events.
+         </p>
          <section id="handlers">
           <h3 id="handlers">
            Handlers
@@ -1237,6 +1234,66 @@ which no other specific handler exists.
             </div>
            </div>
           </section>
+          <section id="handler-example">
+           <h4 id="handler-example">
+            Handler example
+            <a class="headerlink" href="#handler-example" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            The following example shows a typical
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              on_start
+             </span>
+            </code>
+            handler method implementation (taken from the example EMA cross strategy).
+Here we can see the following:
+           </p>
+           <ul class="simple">
+            <li>
+             <p>
+              Indicators being registered to receive bar updates
+             </p>
+            </li>
+            <li>
+             <p>
+              Historical data being requested (to hydrate the indicators)
+             </p>
+            </li>
+            <li>
+             <p>
+              Live data being subscribed to
+             </p>
+            </li>
+           </ul>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span><span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Actions to be performed on strategy start.</span>
+<span class="sd">    """</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">instrument</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Could not find instrument for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Register the indicators for updating</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">register_indicator_for_bars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast_ema</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">register_indicator_for_bars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slow_ema</span><span class="p">)</span>
+
+    <span class="c1"># Get historical data</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">request_bars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_type</span><span class="p">)</span>
+
+    <span class="c1"># Subscribe to live data</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">subscribe_bars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_type</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">subscribe_quote_ticks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>
+</pre>
+            </div>
+           </div>
+          </section>
          </section>
          <section id="clock-and-timers">
           <h3 id="clock-and-timers">
@@ -1282,32 +1339,24 @@ different timestamps, as well as setting time alerts or timers.
            <p>
             While there are multiple ways to obtain current timestamps, here are two commonly used methods as examples:
            </p>
-           <ul class="simple">
-            <li>
-             <p>
-              <strong>
-               UTC Timestamp:
-              </strong>
-              This method returns a timezone-aware (UTC) timestamp.
-             </p>
-            </li>
-           </ul>
+           <p>
+            <strong>
+             UTC Timestamp:
+            </strong>
+            This method returns a timezone-aware (UTC) timestamp:
+           </p>
            <div class="highlight-python notranslate">
             <div class="highlight">
              <pre><span></span><span class="n">now</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">utc_now</span><span class="p">()</span>
 </pre>
             </div>
            </div>
-           <ul class="simple">
-            <li>
-             <p>
-              <strong>
-               Unix Nanoseconds:
-              </strong>
-              This method provides the current timestamp in nanoseconds since the UNIX epoch.
-             </p>
-            </li>
-           </ul>
+           <p>
+            <strong>
+             Unix Nanoseconds:
+            </strong>
+            This method provides the current timestamp in nanoseconds since the UNIX epoch:
+           </p>
            <div class="highlight-python notranslate">
             <div class="highlight">
              <pre><span></span><span class="n">unix_nanos</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">timestamp_ns</span><span class="p">()</span>
@@ -1359,14 +1408,14 @@ specified alert time. In a live context, this might be slightly delayed by a few
             </a>
            </h4>
            <p>
-            Continuous timers can be setup which will generate
+            Continuous timers can be setup which will generate a
             <code class="docutils literal notranslate">
              <span class="pre">
               TimeEvent
              </span>
             </code>
-            s at regular intervals until expired
-or canceled.
+            at regular intervals until the timer expires
+or is canceled.
            </p>
            <p>
             This example sets a timer to fire once per minute, starting immediately:

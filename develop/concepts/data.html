@@ -366,6 +366,11 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
+                <a class="md-nav__link" href="advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
                 <a class="md-nav__link" href="advanced/custom_data.html">
                  Custom/Generic Data
                 </a>
@@ -1046,6 +1051,32 @@ To achieve this two components are necessary:
            </p>
           </li>
          </ul>
+         <p>
+          The following example shows how to accomplish the above in Python:
+         </p>
+         <div class="highlight-python notranslate">
+          <div class="highlight">
+           <pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">nautilus_trader</span> <span class="kn">import</span> <span class="n">PACKAGE_ROOT</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.persistence.loaders</span> <span class="kn">import</span> <span class="n">BinanceOrderBookDeltaDataLoader</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.persistence.wranglers</span> <span class="kn">import</span> <span class="n">OrderBookDeltaDataWrangler</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.test_kit.providers</span> <span class="kn">import</span> <span class="n">TestInstrumentProvider</span>
+
+
+<span class="c1"># Load raw data</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PACKAGE_ROOT</span><span class="p">,</span> <span class="s2">"tests/test_data/binance-btcusdt-depth-snap.csv"</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">BinanceOrderBookDeltaDataLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+
+<span class="c1"># Setup a wrangler</span>
+<span class="n">instrument</span> <span class="o">=</span> <span class="n">TestInstrumentProvider</span><span class="o">.</span><span class="n">btcusdt_binance</span><span class="p">()</span>
+<span class="n">wrangler</span> <span class="o">=</span> <span class="n">OrderBookDeltaDataWrangler</span><span class="p">(</span><span class="n">instrument</span><span class="p">)</span>
+
+<span class="c1"># Process to a list `OrderBookDelta` Nautilus objects</span>
+<span class="n">deltas</span> <span class="o">=</span> <span class="n">wrangler</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre>
+          </div>
+         </div>
         </section>
         <section id="data-catalog">
          <h2 id="data-catalog">
@@ -1062,7 +1093,7 @@ To achieve this two components are necessary:
           file format.
          </p>
          <p>
-          We have chosen parquet as the storage format for the following reasons:
+          We have chosen Parquet as the storage format for the following reasons:
          </p>
          <ul class="simple">
           <li>
@@ -1081,6 +1112,30 @@ To achieve this two components are necessary:
            </p>
           </li>
          </ul>
+         <p>
+          The Arrow schemas used for the Parquet format are either single sourced in the core
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            persistence
+           </span>
+          </code>
+          Rust library, or available
+from the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            /serialization/arrow/schema.py
+           </span>
+          </code>
+          module.
+         </p>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           2023-10-14: The current plan is to eventually phase out the Python schemas module, so that all schemas are single sourced in the Rust core.
+          </p>
+         </div>
          <p>
           <strong>
            This doc is an evolving work in progress and will continue to describe the data catalog more fully…
