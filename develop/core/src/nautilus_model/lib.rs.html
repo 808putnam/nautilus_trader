@@ -90,6 +90,18 @@
 <a href="#90" id="90">90</a>
 <a href="#91" id="91">91</a>
 <a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -123,14 +135,16 @@
 <span class="doccomment">/// Loaded as nautilus_pyo3.model
 </span><span class="attr">#[pymodule]
 </span><span class="kw">pub fn </span>model(<span class="kw">_</span>: Python&lt;<span class="lifetime">&#39;_</span>&gt;, m: <span class="kw-2">&amp;</span>PyModule) -&gt; PyResult&lt;()&gt; {
-    m.add_class::&lt;data::bar::BarSpecification&gt;()<span class="question-mark">?</span>;
+    <span class="comment">// data
+    </span>m.add_class::&lt;data::bar::BarSpecification&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;data::bar::BarType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;data::bar::Bar&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;data::order::BookOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;data::delta::OrderBookDelta&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;data::quote::QuoteTick&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;data::trade::TradeTick&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;enums::AccountType&gt;()<span class="question-mark">?</span>;
+    <span class="comment">// enums
+    </span>m.add_class::&lt;enums::AccountType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::AggregationSource&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::AggressorSide&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::AssetClass&gt;()<span class="question-mark">?</span>;
@@ -154,7 +168,8 @@
     m.add_class::&lt;enums::TradingState&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::TrailingOffsetType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::TriggerType&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;identifiers::account_id::AccountId&gt;()<span class="question-mark">?</span>;
+    <span class="comment">// identifiers
+    </span>m.add_class::&lt;identifiers::account_id::AccountId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;identifiers::client_id::ClientId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;identifiers::client_order_id::ClientOrderId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;identifiers::component_id::ComponentId&gt;()<span class="question-mark">?</span>;
@@ -168,7 +183,8 @@
     m.add_class::&lt;identifiers::trader_id::TraderId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;identifiers::venue::Venue&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;identifiers::venue_order_id::VenueOrderId&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;orders::limit::LimitOrder&gt;()<span class="question-mark">?</span>;
+    <span class="comment">// orders
+    </span>m.add_class::&lt;orders::limit::LimitOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;orders::limit_if_touched::LimitIfTouchedOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;orders::market::MarketOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;orders::market_to_limit::MarketToLimitOrder&gt;()<span class="question-mark">?</span>;
@@ -180,6 +196,14 @@
     m.add_class::&lt;types::money::Money&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;types::price::Price&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;types::quantity::Quantity&gt;()<span class="question-mark">?</span>;
+    <span class="comment">// instruments
+    </span>m.add_class::&lt;instruments::crypto_future::CryptoFuture&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;instruments::crypto_perpetual::CryptoPerpetual&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;instruments::currency_pair::CurrencyPair&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;instruments::equity::Equity&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;instruments::futures_contract::FuturesContract&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;instruments::options_contract::OptionsContract&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;instruments::synthetic::SyntheticInstrument&gt;()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>

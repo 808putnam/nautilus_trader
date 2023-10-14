@@ -320,9 +320,6 @@
 <a href="#320" id="320">320</a>
 <a href="#321" id="321">321</a>
 <a href="#322" id="322">322</a>
-<a href="#323" id="323">323</a>
-<a href="#324" id="324">324</a>
-<a href="#325" id="325">325</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -343,7 +340,11 @@
     hash::{Hash, Hasher},
 };
 
-<span class="kw">use </span>nautilus_core::{python::to_pyvalue_err, serialization::Serializable, time::UnixNanos};
+<span class="kw">use </span>nautilus_core::{
+    python::to_pyvalue_err,
+    serialization::{from_dict_pyo3, Serializable},
+    time::UnixNanos,
+};
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, pyclass::CompareOp, types::PyDict};
 
 <span class="kw">use </span><span class="kw">super</span>::bar::{Bar, BarSpecification, BarType};
@@ -540,14 +541,7 @@
     </span><span class="attr">#[staticmethod]
     #[pyo3(name = <span class="string">&quot;from_dict&quot;</span>)]
     </span><span class="kw">fn </span>py_from_dict(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, values: Py&lt;PyDict&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        <span class="comment">// Extract to JSON string
-        </span><span class="kw">let </span>json_str: String = PyModule::import(py, <span class="string">&quot;json&quot;</span>)<span class="question-mark">?
-            </span>.call_method(<span class="string">&quot;dumps&quot;</span>, (values,), <span class="prelude-val">None</span>)<span class="question-mark">?
-            </span>.extract()<span class="question-mark">?</span>;
-
-        <span class="comment">// Deserialize to object
-        </span><span class="kw">let </span>instance = serde_json::from_slice(<span class="kw-2">&amp;</span>json_str.into_bytes()).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(instance)
+        from_dict_pyo3(py, values)
     }
 
     <span class="attr">#[staticmethod]
