@@ -205,8 +205,8 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
@@ -215,7 +215,7 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/core/index.html">
+       <a class="md-tabs__link" href="../rust.html">
         Rust API
        </a>
       </li>
@@ -285,11 +285,6 @@
              </i>
             </span>
             <ul class="submenu">
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../getting_started/introduction.html">
-               Introduction
-              </a>
-             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../getting_started/installation.html">
                Installation
@@ -443,7 +438,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../api_reference/index.html">
-             Python API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -635,6 +630,11 @@
             </ul>
            </li>
            <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
+           </li>
+           <li class="md-nav__item">
             <a class="md-nav__link" href="index.html">
              Developer Guide
             </a>
@@ -699,6 +699,11 @@
            </span>
            <ul class="submenu">
             <li class="md-nav__item">
+             <a class="md-nav__link" href="#what-is-cython">
+              What is Cython?
+             </a>
+            </li>
+            <li class="md-nav__item">
              <a class="md-nav__link" href="#function-and-method-signatures">
               Function and method signatures
              </a>
@@ -753,6 +758,31 @@ More information on Cython syntax and conventions can be found by reading the
          </a>
          .
         </p>
+        <section id="what-is-cython">
+         <h2 id="what-is-cython">
+          What is Cython?
+          <a class="headerlink" href="#what-is-cython" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          <a class="reference external" href="https://cython.org">
+           Cython
+          </a>
+          is a compiled programming language that aims to be a superset of the Python programming
+language, designed to give C-like performance with code that is written mostly in Python with
+optional additional C-inspired syntax.
+         </p>
+         <p>
+          The project heavily utilizes Cython to provide static type safety and increased performance
+for Python through
+          <a class="reference external" href="https://docs.python.org/3/extending/extending.html">
+           C extension modules
+          </a>
+          . The vast majority of the production code is actually
+written in Cython, however the libraries can be accessed from both Python and Cython.
+         </p>
+        </section>
         <section id="function-and-method-signatures">
          <h2 id="function-and-method-signatures">
           Function and method signatures
