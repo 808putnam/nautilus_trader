@@ -395,6 +395,9 @@
 <a href="#395" id="395">395</a>
 <a href="#396" id="396">396</a>
 <a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -432,7 +435,10 @@
 
 <span class="attr">#[repr(C)]
 #[derive(Clone, Debug, Serialize, Deserialize)]
-#[pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>CryptoPerpetual {
     <span class="kw">pub </span>id: InstrumentId,
     <span class="kw">pub </span>raw_symbol: Symbol,
@@ -683,7 +689,7 @@
     <span class="attr">#[pyo3(name = <span class="string">&quot;to_dict&quot;</span>)]
     </span><span class="kw">fn </span>py_to_dict(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; PyResult&lt;PyObject&gt; {
         <span class="kw">let </span>dict = PyDict::new(py);
-        dict.set_item(<span class="string">&quot;type&quot;</span>, <span class="string">&quot;CryptoPerpetual&quot;</span>.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">&quot;type&quot;</span>, <span class="macro">stringify!</span>(CryptoPerpetual))<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;id&quot;</span>, <span class="self">self</span>.id.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;raw_symbol&quot;</span>, <span class="self">self</span>.raw_symbol.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;base_currency&quot;</span>, <span class="self">self</span>.base_currency.code.to_string())<span class="question-mark">?</span>;

@@ -227,6 +227,9 @@
 <a href="#227" id="227">227</a>
 <a href="#228" id="228">228</a>
 <a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -260,7 +263,10 @@
 <span class="doccomment">/// Represents a synthetic instrument with prices derived from component instruments using a
 /// formula.
 </span><span class="attr">#[derive(Clone, Debug)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>SyntheticInstrument {
     <span class="kw">pub </span>id: InstrumentId,
     <span class="kw">pub </span>price_precision: u8,
