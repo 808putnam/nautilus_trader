@@ -1179,7 +1179,25 @@
            Provides the core Nautilus system kernel.
           </p>
           <p>
-           The kernel is common between backtest, sandbox and live environment context types.
+           The kernel is common between
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             backtest
+            </span>
+           </code>
+           ,
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             sandbox
+            </span>
+           </code>
+           and
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             live
+            </span>
+           </code>
+           environment context types.
           </p>
           <dl class="field-list simple">
            <dt class="field-odd">
@@ -1280,6 +1298,15 @@
                 TypeError
                </strong>
                – If any configuration object is not of the expected type.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                InvalidConfiguration
+               </strong>
+               – If any configuration object is mismatched with the environment context,
+    (live configurations for ‘backtest’, or backtest configurations for ‘live’).
               </p>
              </li>
             </ul>

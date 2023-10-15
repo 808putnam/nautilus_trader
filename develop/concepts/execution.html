@@ -1005,6 +1005,35 @@ initialization of new orders i.e.
           (s) components are optional in the flow, depending on
 individual order parameters (as explained below).
          </p>
+         <div class="highlight-default notranslate">
+          <div class="highlight">
+           <pre><span></span>                    ┌───────────────────┐
+                    │                   │
+                    │                   │
+            ┌───────►                   ├────────────┐
+            │       │   OrderEmulator   │            │
+            │       │                   │            │
+  ┌─────────┴──┐    │                   │            │
+  │            │    │                   │    ┌───────▼────────┐   ┌─────────────────────┐   ┌─────────────────────┐
+  │            │    └───────┬───▲───────┘    │                │   │                     │   │                     │
+  │            │            │   │            │                ├───►                     ├───►                     │
+  │  Strategy  ◄────────────┼───┼────────────┤                │   │                     │   │                     │
+  │            │            │   │            │   RiskEngine   │   │   ExecutionEngine   │   │   ExecutionClient   │
+  │            │            │   │            │                ◄───┤                     ◄───┤                     │
+  │            │    ┌───────▼───┴───────┐    │                │   │                     │   │                     │
+  │            │    │                   │    │                │   │                     │   │                     │
+  └─────────┬──┘    │                   │    └────────▲───────┘   └─────────────────────┘   └─────────────────────┘
+            │       │                   │             │
+            │       │   ExecAlgorithm   ├─────────────┘
+            │       │                   │
+            └───────►                   │
+                    │                   │
+                    └───────────────────┘
+
+- This diagram illustrates message flow (commands and events) across the Nautilus execution components.
+</pre>
+          </div>
+         </div>
         </section>
         <section id="execution-algorithms">
          <h2 id="execution-algorithms">
@@ -1484,15 +1513,14 @@ or confusion with the “parent” and “child” contingency orders terminolog
            provides several methods to aid in managing (keeping track of) the activity of
 an execution algorithm:
           </p>
-          <div class="highlight-python notranslate">
+          <div class="highlight-cython notranslate">
            <div class="highlight">
-            <pre><span></span>
-<span class="n">cpdef</span> <span class="nb">list</span> <span class="n">orders_for_exec_algorithm</span><span class="p">(</span>
+            <pre><span></span><span class="k">cpdef</span> <span class="kt">list</span> <span class="nf">orders_for_exec_algorithm</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">ExecAlgorithmId</span> <span class="n">exec_algorithm_id</span><span class="p">,</span>
-    <span class="n">Venue</span> <span class="n">venue</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">InstrumentId</span> <span class="n">instrument_id</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">StrategyId</span> <span class="n">strategy_id</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">Venue</span> <span class="n">venue</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="n">InstrumentId</span> <span class="n">instrument_id</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="n">StrategyId</span> <span class="n">strategy_id</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
     <span class="n">OrderSide</span> <span class="n">side</span> <span class="o">=</span> <span class="n">OrderSide</span><span class="o">.</span><span class="n">NO_ORDER_SIDE</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">"""</span>

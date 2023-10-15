@@ -707,11 +707,58 @@
              <a class="md-nav__link" href="#loading-data">
               Loading data
              </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#data-loaders">
+                Data loaders
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#data-wranglers">
+                Data wranglers
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#transformation-pipeline">
+                Transformation pipeline
+               </a>
+              </li>
+             </ul>
             </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#data-catalog">
               Data catalog
              </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#initializing">
+                Initializing
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#writing-data">
+                Writing data
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#reading-data">
+                Reading data
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#streaming-data">
+                Streaming data
+               </a>
+              </li>
+             </ul>
             </li>
            </ul>
           </li>
@@ -781,7 +828,10 @@ a trading domain:
              Bar
             </span>
            </code>
-           - OHLCV data aggregated using a specific method
+           - OHLCV ‘bar’ data, aggregated using a specific
+           <em>
+            method
+           </em>
           </p>
          </li>
          <li>
@@ -867,10 +917,28 @@ a trading domain:
          </li>
         </ul>
         <p>
-         This inheritance ensures chronological data ordering, vital for backtesting, while also enhancing analytics.
+         This inheritance ensures chronological data ordering (vital for backtesting), while also enhancing analytics.
         </p>
         <p>
-         Consistency is key; data flows through the platform in exactly the same way between all system contexts (backtest, sandbox and live),
+         Consistency is key; data flows through the platform in exactly the same way for all system contexts (
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           backtest
+          </span>
+         </code>
+         ,
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           sandbox
+          </span>
+         </code>
+         ,
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           live
+          </span>
+         </code>
+         )
 primarily through the
          <code class="docutils literal notranslate">
           <span class="pre">
@@ -886,10 +954,12 @@ primarily through the
          and onto subscribed or registered handlers.
         </p>
         <p>
-         For those seeking customization, the platform supports user-defined data types. Refer to the
-         <span class="xref myst">
-          advanced custom guide
-         </span>
+         For those seeking customization, the platform supports user-defined data types. Refer to the advanced
+         <a class="reference internal" href="advanced/custom_data.html">
+          <span class="doc std std-doc">
+           Custom/Generic data guide
+          </span>
+         </a>
          for more details.
         </p>
         <section id="loading-data">
@@ -911,18 +981,18 @@ primarily through the
               BacktestEngine
              </span>
             </code>
-            directly
+            directly to run backtests
            </p>
           </li>
           <li>
            <p>
-            Persisting the Nautilus-specific Parquet format via
+            Persisting the Nautilus-specific Parquet format for the data catalog via
             <code class="docutils literal notranslate">
              <span class="pre">
               ParquetDataCatalog.write_data(...)
              </span>
             </code>
-            to be used with a
+            to be later used with a
             <code class="docutils literal notranslate">
              <span class="pre">
               BacktestNode
@@ -932,18 +1002,20 @@ primarily through the
           </li>
           <li>
            <p>
-            Research purposes
+            For research purposes (to ensure data is consistent between research and backtesting)
            </p>
           </li>
          </ul>
          <p>
           Regardless of the destination, the process remains the same: converting diverse external data formats into Nautilus data structures.
-To achieve this two components are necessary:
+         </p>
+         <p>
+          To achieve this, two main components are necessary:
          </p>
          <ul class="simple">
           <li>
            <p>
-            A data loader which can read the data and return a
+            A type of DataLoader (normally specific per raw source/format) which can read the data and return a
             <code class="docutils literal notranslate">
              <span class="pre">
               pd.DataFrame
@@ -954,7 +1026,7 @@ To achieve this two components are necessary:
           </li>
           <li>
            <p>
-            A data wrangler which takes this
+            A type of DataWrangler (specific per data type) which takes this
             <code class="docutils literal notranslate">
              <span class="pre">
               pd.DataFrame
@@ -970,93 +1042,219 @@ To achieve this two components are necessary:
            </p>
           </li>
          </ul>
-         <p>
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            raw
-           </span>
-           <span class="pre">
-            data
-           </span>
-           <span class="pre">
-            (e.g.
-           </span>
-           <span class="pre">
-            CSV)
-           </span>
-          </code>
-          -&gt;
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            *DataLoader
-           </span>
-          </code>
-          -&gt;
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            pd.DataFrame
-           </span>
-          </code>
-          -&gt;
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            *DataWrangler
-           </span>
-          </code>
-          -&gt; Nautilus
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            list[Data]
-           </span>
-          </code>
-         </p>
-         <p>
-          Conceretely, this would involve for example:
-         </p>
-         <ul class="simple">
-          <li>
+         <section id="data-loaders">
+          <h3 id="data-loaders">
+           Data loaders
+           <a class="headerlink" href="#data-loaders" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Data loader components are typically specific for the raw source/format and per integration. For instance, Binance order book data is stored in its raw CSV file form with
+an entirely different format to
+           <a class="reference external" href="https://docs.databento.com/knowledge-base/new-users/dbn-encoding/getting-started-with-dbn">
+            Databento Binary Encoding (DBN)
+           </a>
+           files.
+          </p>
+         </section>
+         <section id="data-wranglers">
+          <h3 id="data-wranglers">
+           Data wranglers
+           <a class="headerlink" href="#data-wranglers" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Data wranglers are implemented per specific Nautilus data type, and can be found in the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             nautilus_trader.persistence.wranglers
+            </span>
+           </code>
+           modules.
+Currently there exists:
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OrderBookDeltaDataWrangler
+              </span>
+             </code>
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               QuoteTickDataWrangler
+              </span>
+             </code>
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               TradeTickDataWrangler
+              </span>
+             </code>
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               BarDataWrangler
+              </span>
+             </code>
+            </p>
+           </li>
+          </ul>
+          <div class="admonition warning">
+           <p class="admonition-title">
+            Warning
+           </p>
            <p>
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              BinanceOrderBookDeltaDataLoader.load(...)
-             </span>
-            </code>
-            which reads CSV files provided by Binance from disk, and returns a
+            At the risk of causing confusion, there are also a growing number of DataWrangler v2 components, which will take a
             <code class="docutils literal notranslate">
              <span class="pre">
               pd.DataFrame
              </span>
             </code>
+            typically
+with a different fixed width Nautilus arrow v2 schema, and output pyo3 Nautilus objects which are only compatible with the new version
+of the Nautilus core, currently in development.
            </p>
-          </li>
-          <li>
            <p>
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              OrderBookDeltaDataWrangler.process(...)
-             </span>
-            </code>
-            which takes the
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              pd.DataFrame
-             </span>
-            </code>
-            and returns
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              list[OrderBookDelta]
-             </span>
-            </code>
+            <strong>
+             These pyo3 provided data objects are not compatible where the legacy Cython objects are currently used (adding directly to a
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               BacktestEngine
+              </span>
+             </code>
+             etc).
+            </strong>
            </p>
-          </li>
-         </ul>
-         <p>
-          The following example shows how to accomplish the above in Python:
-         </p>
-         <div class="highlight-python notranslate">
-          <div class="highlight">
-           <pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+          </div>
+         </section>
+         <section id="transformation-pipeline">
+          <h3 id="transformation-pipeline">
+           Transformation pipeline
+           <a class="headerlink" href="#transformation-pipeline" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           <strong>
+            Process flow:
+           </strong>
+          </p>
+          <ol class="arabic simple">
+           <li>
+            <p>
+             Raw data (e.g., CSV) is input into the pipeline
+            </p>
+           </li>
+           <li>
+            <p>
+             DataLoader processes the raw data and converts it into a
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               pd.DataFrame
+              </span>
+             </code>
+            </p>
+           </li>
+           <li>
+            <p>
+             DataWrangler further processes the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               pd.DataFrame
+              </span>
+             </code>
+             to generate a list of Nautilus objects
+            </p>
+           </li>
+           <li>
+            <p>
+             The Nautilus
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               list[Data]
+              </span>
+             </code>
+             is the output of the data loading process
+            </p>
+           </li>
+          </ol>
+          <div class="highlight-default notranslate">
+           <div class="highlight">
+            <pre><span></span>  ┌──────────┐    ┌──────────────────────┐                  ┌──────────────────────┐
+  │          │    │                      │                  │                      │
+  │          │    │                      │                  │                      │
+  │ Raw data │    │                      │  `pd.DataFrame`  │                      │
+  │ (CSV)    ├───►│      DataLoader      ├─────────────────►│     DataWrangler     ├───► Nautilus `list[Data]`
+  │          │    │                      │                  │                      │
+  │          │    │                      │                  │                      │
+  │          │    │                      │                  │                      │
+  └──────────┘    └──────────────────────┘                  └──────────────────────┘
+
+- This diagram illustrates how raw data is transformed into Nautilus data structures.
+</pre>
+           </div>
+          </div>
+          <p>
+           Conceretely, this would involve:
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               BinanceOrderBookDeltaDataLoader.load(...)
+              </span>
+             </code>
+             which reads CSV files provided by Binance from disk, and returns a
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               pd.DataFrame
+              </span>
+             </code>
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OrderBookDeltaDataWrangler.process(...)
+              </span>
+             </code>
+             which takes the
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               pd.DataFrame
+              </span>
+             </code>
+             and returns
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               list[OrderBookDelta]
+              </span>
+             </code>
+            </p>
+           </li>
+          </ul>
+          <p>
+           The following example shows how to accomplish the above in Python:
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">from</span> <span class="nn">nautilus_trader</span> <span class="kn">import</span> <span class="n">PACKAGE_ROOT</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.persistence.loaders</span> <span class="kn">import</span> <span class="n">BinanceOrderBookDeltaDataLoader</span>
@@ -1075,8 +1273,9 @@ To achieve this two components are necessary:
 <span class="c1"># Process to a list `OrderBookDelta` Nautilus objects</span>
 <span class="n">deltas</span> <span class="o">=</span> <span class="n">wrangler</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre>
+           </div>
           </div>
-         </div>
+         </section>
         </section>
         <section id="data-catalog">
          <h2 id="data-catalog">
@@ -1136,11 +1335,195 @@ from the
            2023-10-14: The current plan is to eventually phase out the Python schemas module, so that all schemas are single sourced in the Rust core.
           </p>
          </div>
-         <p>
-          <strong>
-           This doc is an evolving work in progress and will continue to describe the data catalog more fully…
-          </strong>
-         </p>
+         <section id="initializing">
+          <h3 id="initializing">
+           Initializing
+           <a class="headerlink" href="#initializing" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           The data catalog can be initialized from a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             NAUTILUS_PATH
+            </span>
+           </code>
+           environment variable, or by explicitly passing in a path like object.
+          </p>
+          <p>
+           The following example shows how to initialize a data catalog where there is pre-existing data already written to disk at the given path.
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="n">CATALOG_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"/catalog"</span>
+
+<span class="c1"># Create a new catalog instance</span>
+<span class="n">catalog</span> <span class="o">=</span> <span class="n">ParquetDataCatalog</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
+</pre>
+           </div>
+          </div>
+         </section>
+         <section id="writing-data">
+          <h3 id="writing-data">
+           Writing data
+           <a class="headerlink" href="#writing-data" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           New data can be stored in the catalog, which is effectively writing the given data to disk in the Nautilus-specific Parquet format.
+All Nautilus built-in
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             Data
+            </span>
+           </code>
+           objects are supported, and any data which inherits from
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             Data
+            </span>
+           </code>
+           can be written.
+          </p>
+          <p>
+           The following example shows the above list of Binance
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             OrderBookDelta
+            </span>
+           </code>
+           objects being written.
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="n">catalog</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">deltas</span><span class="p">)</span>
+</pre>
+           </div>
+          </div>
+          <p>
+           Rust Arrow schema implementations and available for the follow data types (enhanced performance):
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               OrderBookDelta
+              </span>
+             </code>
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               QuoteTick
+              </span>
+             </code>
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               TradeTick
+              </span>
+             </code>
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               Bar
+              </span>
+             </code>
+            </p>
+           </li>
+          </ul>
+         </section>
+         <section id="reading-data">
+          <h3 id="reading-data">
+           Reading data
+           <a class="headerlink" href="#reading-data" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Any stored data can then we read back into memory:
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2020-01-03"</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">pytz</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
+<span class="n">end</span> <span class="o">=</span>  <span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2020-01-04"</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">pytz</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
+
+<span class="n">deltas</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">order_book_deltas</span><span class="p">(</span><span class="n">instrument_ids</span><span class="o">=</span><span class="p">[</span><span class="n">instrument</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">value</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
+</pre>
+           </div>
+          </div>
+         </section>
+         <section id="streaming-data">
+          <h3 id="streaming-data">
+           Streaming data
+           <a class="headerlink" href="#streaming-data" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           When running backtests in streaming mode with a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             BacktestNode
+            </span>
+           </code>
+           , the data catalog can be used to stream the data in batches.
+          </p>
+          <p>
+           The following example shows how to achieve this by initializing a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             BacktestDataConfig
+            </span>
+           </code>
+           configuration object:
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="n">data_config</span> <span class="o">=</span> <span class="n">BacktestDataConfig</span><span class="p">(</span>
+    <span class="n">catalog_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
+    <span class="n">data_cls</span><span class="o">=</span><span class="n">OrderBookDelta</span><span class="p">,</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">instrument</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+    <span class="n">start_time</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+    <span class="n">end_time</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+<span class="p">)</span>
+</pre>
+           </div>
+          </div>
+          <p>
+           This configuration object then be passed into a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             BacktestRunConfig
+            </span>
+           </code>
+           and then in turn passed into a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             BacktestNode
+            </span>
+           </code>
+           as part of a run.
+See the
+           <a class="reference internal" href="../tutorials/backtest_high_level.html">
+            <span class="doc std std-doc">
+             Backtest (high-level API)
+            </span>
+           </a>
+           tutorial for more details.
+          </p>
+         </section>
         </section>
        </section>
       </article>
