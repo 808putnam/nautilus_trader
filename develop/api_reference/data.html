@@ -752,6 +752,15 @@
                   </code>
                  </a>
                 </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.BarAggregator.set_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BarAggregator.set_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
                </ul>
               </li>
               <li class="md-nav__item">
@@ -895,6 +904,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     TickBarAggregator.handle_trade_tick()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.TickBarAggregator.set_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TickBarAggregator.set_partial()
                    </span>
                   </code>
                  </a>
@@ -1046,6 +1064,15 @@
                   </code>
                  </a>
                 </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.ValueBarAggregator.set_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ValueBarAggregator.set_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
                </ul>
               </li>
               <li class="md-nav__item">
@@ -1084,6 +1111,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     VolumeBarAggregator.handle_trade_tick()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.VolumeBarAggregator.set_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    VolumeBarAggregator.set_partial()
                    </span>
                   </code>
                  </a>
@@ -3111,6 +3147,82 @@ trading operations.
              </dl>
             </dd>
            </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.BarAggregator.set_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Bar
+               </span>
+               <span class="pre">
+                partial_bar
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.BarAggregator.set_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Set the initial values for a partially completed bar.
+             </p>
+             <p>
+              This method can only be called once per instance.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 partial_bar
+                </strong>
+                (
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
+                 <em>
+                  Bar
+                 </em>
+                </a>
+                ) – The partial bar with values to set.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
           </dd>
          </dl>
          <dl class="py class">
@@ -4161,6 +4273,82 @@ specification, then a bar is created and sent to the handler.
                  </em>
                 </a>
                 ) – The tick for the update.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.TickBarAggregator.set_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Bar
+               </span>
+               <span class="pre">
+                partial_bar
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.TickBarAggregator.set_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Set the initial values for a partially completed bar.
+             </p>
+             <p>
+              This method can only be called once per instance.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 partial_bar
+                </strong>
+                (
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
+                 <em>
+                  Bar
+                 </em>
+                </a>
+                ) – The partial bar with values to set.
                </p>
               </dd>
              </dl>
@@ -5276,6 +5464,82 @@ specification, then a bar is created and sent to the handler.
              </dl>
             </dd>
            </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.ValueBarAggregator.set_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Bar
+               </span>
+               <span class="pre">
+                partial_bar
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.ValueBarAggregator.set_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Set the initial values for a partially completed bar.
+             </p>
+             <p>
+              This method can only be called once per instance.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 partial_bar
+                </strong>
+                (
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
+                 <em>
+                  Bar
+                 </em>
+                </a>
+                ) – The partial bar with values to set.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
           </dd>
          </dl>
          <dl class="py class">
@@ -5633,6 +5897,82 @@ specification, then a bar is created and sent to the handler.
                  </em>
                 </a>
                 ) – The tick for the update.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.VolumeBarAggregator.set_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Bar
+               </span>
+               <span class="pre">
+                partial_bar
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.VolumeBarAggregator.set_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Set the initial values for a partially completed bar.
+             </p>
+             <p>
+              This method can only be called once per instance.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 partial_bar
+                </strong>
+                (
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
+                 <em>
+                  Bar
+                 </em>
+                </a>
+                ) – The partial bar with values to set.
                </p>
               </dd>
              </dl>
