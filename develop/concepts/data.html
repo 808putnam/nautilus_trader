@@ -1072,7 +1072,7 @@ an entirely different format to
              nautilus_trader.persistence.wranglers
             </span>
            </code>
-           modules.
+           module.
 Currently there exists:
           </p>
           <ul class="simple">
@@ -1402,6 +1402,21 @@ All Nautilus built-in
 </pre>
            </div>
           </div>
+          <div class="admonition warning">
+           <p class="admonition-title">
+            Warning
+           </p>
+           <p>
+            Existing data for the same data type,
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              instrument_id
+             </span>
+            </code>
+            , and date will be overwritten without prior warning.
+Ensure you have appropriate backups or safeguards in place before performing this action.
+           </p>
+          </div>
           <p>
            Rust Arrow schema implementations and available for the follow data types (enhanced performance):
           </p>
@@ -1502,7 +1517,7 @@ All Nautilus built-in
            </div>
           </div>
           <p>
-           This configuration object then be passed into a
+           This configuration object can then be passed into a
            <code class="docutils literal notranslate">
             <span class="pre">
              BacktestRunConfig
