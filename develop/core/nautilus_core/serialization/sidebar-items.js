@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["from_dict_pyo3"],"trait":["Serializable"]};
+window.SIDEBAR_ITEMS = {"trait":["Serializable"]};

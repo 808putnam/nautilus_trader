@@ -587,6 +587,8 @@
 <a href="#587" id="587">587</a>
 <a href="#588" id="588">588</a>
 <a href="#589" id="589">589</a>
+<a href="#590" id="590">590</a>
+<a href="#591" id="591">591</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -610,7 +612,7 @@
 };
 
 <span class="kw">use </span>indexmap::IndexMap;
-<span class="kw">use </span>nautilus_core::{python::to_pyvalue_err, serialization::Serializable, time::UnixNanos};
+<span class="kw">use </span>nautilus_core::{serialization::Serializable, time::UnixNanos};
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize, Serializer};
 <span class="kw">use </span>thiserror;
@@ -845,6 +847,8 @@
     <span class="doccomment">/// Create a new [`Bar`] extracted from the given [`PyAny`].
     </span><span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
     </span><span class="kw">pub fn </span>from_pyobject(obj: <span class="kw-2">&amp;</span>PyAny) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">use </span>nautilus_core::python::to_pyvalue_err;
+
         <span class="kw">let </span>bar_type_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;bar_type&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>bar_type_str = bar_type_obj.call_method0(<span class="string">&quot;__str__&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>bar_type = BarType::from_str(bar_type_str)

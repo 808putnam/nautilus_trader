@@ -246,7 +246,7 @@
     <span class="kw">let </span>sys_modules: <span class="kw-2">&amp;</span>PyDict = sys.getattr(<span class="string">&quot;modules&quot;</span>)<span class="question-mark">?</span>.downcast()<span class="question-mark">?</span>;
 
     <span class="comment">// Core
-    </span><span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_core::core);
+    </span><span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_core::python::core);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(
         <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.core&quot;</span>,

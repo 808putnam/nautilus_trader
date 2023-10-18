@@ -144,8 +144,8 @@
 };
 
 <span class="kw">use </span>nautilus_core::{
-    python::to_pyvalue_err,
-    serialization::{from_dict_pyo3, Serializable},
+    python::{serialization::from_dict_pyo3, to_pyvalue_err},
+    serialization::Serializable,
     time::UnixNanos,
 };
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, pyclass::CompareOp, types::PyDict};

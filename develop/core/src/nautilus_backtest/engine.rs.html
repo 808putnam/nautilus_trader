@@ -178,7 +178,7 @@
 </span><span class="kw">use </span>std::ops::{Deref, DerefMut};
 
 <span class="kw">use </span>nautilus_common::{clock::TestClock, clock_api::TestClock_API, timer::TimeEventHandler};
-<span class="kw">use </span>nautilus_core::{cvec::CVec, time::UnixNanos};
+<span class="kw">use </span>nautilus_core::{ffi::cvec::CVec, time::UnixNanos};
 
 <span class="doccomment">/// Provides a means of accumulating and draining time event handlers.
 </span><span class="kw">pub struct </span>TimeEventAccumulator {

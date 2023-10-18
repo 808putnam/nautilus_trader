@@ -421,7 +421,7 @@
 };
 
 <span class="kw">use </span>anyhow::Result;
-<span class="kw">use </span>nautilus_core::{python::to_pyvalue_err, serialization::from_dict_pyo3};
+<span class="kw">use </span>nautilus_core::python::{serialization::from_dict_pyo3, to_pyvalue_err};
 <span class="kw">use </span>pyo3::{basic::CompareOp, prelude::<span class="kw-2">*</span>, types::PyDict};
 <span class="kw">use </span>rust_decimal::{prelude::<span class="kw-2">*</span>, Decimal};
 <span class="kw">use </span>serde::{Deserialize, Serialize};
