@@ -139,6 +139,8 @@
 <a href="#139" id="139">139</a>
 <a href="#140" id="140">140</a>
 <a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -160,8 +162,10 @@
 };
 
 <span class="kw">use </span>nautilus_core::{
-    parsing::optional_bytes_to_json,
-    string::{cstr_to_string, optional_cstr_to_string, str_to_cstr},
+    ffi::{
+        parsing::optional_bytes_to_json,
+        string::{cstr_to_string, optional_cstr_to_string, str_to_cstr},
+    },
     uuid::UUID4,
 };
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;

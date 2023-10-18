@@ -545,8 +545,8 @@
 <span class="kw">use </span>anyhow::{anyhow, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>nautilus_core::{
     correctness::check_valid_string,
+    ffi::string::{cstr_to_string, str_to_cstr},
     python::to_pyvalue_err,
-    string::{cstr_to_string, str_to_cstr},
 };
 <span class="kw">use </span>pyo3::{
     exceptions::PyRuntimeError,
@@ -907,7 +907,7 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::ffi::{CStr, CString};
 
-    <span class="kw">use </span>nautilus_core::string::str_to_cstr;
+    <span class="kw">use </span>nautilus_core::ffi::string::str_to_cstr;
     <span class="kw">use </span>rstest::rstest;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;

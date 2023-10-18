@@ -389,8 +389,8 @@
 
 <span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>nautilus_core::{
+    ffi::string::{cstr_to_str, str_to_cstr},
     python::to_pyvalue_err,
-    string::{cstr_to_str, str_to_cstr},
 };
 <span class="kw">use </span>pyo3::{
     prelude::<span class="kw-2">*</span>,
