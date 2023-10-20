@@ -753,6 +753,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.BarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BarAggregator.set_await_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.data.aggregation.BarAggregator.set_partial">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -909,6 +918,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.TickBarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TickBarAggregator.set_await_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.data.aggregation.TickBarAggregator.set_partial">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -996,6 +1014,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.TimeBarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TimeBarAggregator.set_await_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.data.aggregation.TimeBarAggregator.set_partial">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1065,6 +1092,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.ValueBarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ValueBarAggregator.set_await_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.data.aggregation.ValueBarAggregator.set_partial">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1111,6 +1147,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     VolumeBarAggregator.handle_trade_tick()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.VolumeBarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    VolumeBarAggregator.set_await_partial()
                    </span>
                   </code>
                  </a>
@@ -2836,7 +2881,13 @@ trading operations.
              Logger
             </span>
             <span class="pre">
-             logger
+             logger,
+            </span>
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             await_partial=False
             </span>
            </em>
            <span class="sig-paren">
@@ -2942,6 +2993,24 @@ trading operations.
                  </em>
                 </a>
                 ) – The logger for the aggregator.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 await_partial
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If the aggregator should await an initial partial bar prior to aggregating.
                </p>
               </li>
              </ul>
@@ -3145,6 +3214,44 @@ trading operations.
                </p>
               </dd>
              </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.BarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.BarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
             </dd>
            </dl>
            <dl class="py method">
@@ -4279,6 +4386,44 @@ specification, then a bar is created and sent to the handler.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.TickBarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.TickBarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.TickBarAggregator.set_partial">
              <span class="sig-name descname">
               <span class="pre">
@@ -4942,6 +5087,44 @@ If False then timestamp will be bar open.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.TimeBarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.TimeBarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.TimeBarAggregator.set_partial">
              <span class="sig-name descname">
               <span class="pre">
@@ -5465,6 +5648,44 @@ specification, then a bar is created and sent to the handler.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.ValueBarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.ValueBarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.ValueBarAggregator.set_partial">
              <span class="sig-name descname">
               <span class="pre">
@@ -5900,6 +6121,44 @@ specification, then a bar is created and sent to the handler.
                </p>
               </dd>
              </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.VolumeBarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.VolumeBarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
             </dd>
            </dl>
            <dl class="py method">
