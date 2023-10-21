@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["PY_MODULE_MODEL"],"fn":["value_to_pydict","value_to_pyobject"],"struct":["EnumIterator"]};
+window.SIDEBAR_ITEMS = {"constant":["PY_MODULE_MODEL"],"fn":["model","value_to_pydict","value_to_pyobject"],"mod":["data","identifiers","macros","types"],"struct":["EnumIterator"]};

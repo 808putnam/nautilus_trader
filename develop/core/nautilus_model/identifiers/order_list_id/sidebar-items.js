@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["order_list_id_hash","order_list_id_new"],"struct":["OrderListId"]};
+window.SIDEBAR_ITEMS = {"struct":["OrderListId"]};
