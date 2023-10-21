@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["arrow","backend","python","wranglers"]};
+window.SIDEBAR_ITEMS = {"mod":["arrow","backend","python"]};

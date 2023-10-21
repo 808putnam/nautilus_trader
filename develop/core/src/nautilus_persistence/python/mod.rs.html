@@ -30,6 +30,7 @@
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
 <a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -48,6 +49,7 @@
 </span><span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">mod </span>backend;
+<span class="kw">mod </span>wranglers;
 
 <span class="doccomment">/// Loaded as nautilus_pyo3.persistence
 </span><span class="attr">#[pymodule]
@@ -56,10 +58,10 @@
     m.add_class::&lt;<span class="kw">crate</span>::backend::session::DataBackendSession&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::backend::session::DataQueryResult&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;backend::transformer::DataTransformer&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;<span class="kw">crate</span>::wranglers::bar::BarDataWrangler&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;<span class="kw">crate</span>::wranglers::delta::OrderBookDeltaDataWrangler&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;<span class="kw">crate</span>::wranglers::quote::QuoteTickDataWrangler&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;<span class="kw">crate</span>::wranglers::trade::TradeTickDataWrangler&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;wranglers::bar::BarDataWrangler&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;wranglers::delta::OrderBookDeltaDataWrangler&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;wranglers::quote::QuoteTickDataWrangler&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;wranglers::trade::TradeTickDataWrangler&gt;()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>
