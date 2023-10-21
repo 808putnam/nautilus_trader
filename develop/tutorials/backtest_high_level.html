@@ -95,7 +95,7 @@
   <link href="../genindex.html" rel="index" title="Index"/>
   <link href="../search.html" rel="search" title="Search"/>
   <link href="../integrations/index.html" rel="next" title="Integrations"/>
-  <link href="index.html" rel="prev" title="Tutorials"/>
+  <link href="backtest_low_level.html" rel="prev" title="Backtest (low-level API)"/>
   <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
  </head>
  <body data-md-color-accent="#282f38" data-md-color-primary="#282f38" dir="ltr">
@@ -408,6 +408,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="backtest_low_level.html">
+               Backtest (low-level API)
+              </a>
+             </li>
              <li class="md-nav__item md-nav__link--active">
               <a class="md-nav__link" href="#">
                Backtest (high-level API)
@@ -761,7 +766,19 @@
          </a>
         </h1>
         <p>
-         This tutorial runs through the following:
+         <strong>
+          This tutorial walks through how to use a
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            BacktestNode
+           </span>
+          </code>
+          to backtest a simple EMA cross strategy
+on a simulated FX ECN venue using historical quote tick data.
+         </strong>
+        </p>
+        <p>
+         The following points will be covered:
         </p>
         <ul class="simple">
          <li>
@@ -798,7 +815,7 @@
           </a>
          </h2>
          <p>
-          We’ll start with all of our imports for the remainder of this guide:
+          We’ll start with all of our imports for the remainder of this tutorial:
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
@@ -987,8 +1004,10 @@ We can then write the instrument and tick data to the catalog, it should only ta
          </div>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="c1"># Write instrument and ticks to catalog (this currently takes a minute - investigating)</span>
+           <pre><span></span><span class="c1"># Write instrument to the catalog</span>
 <span class="n">catalog</span><span class="o">.</span><span class="n">write_data</span><span class="p">([</span><span class="n">EURUSD</span><span class="p">])</span>
+
+<span class="c1"># Write ticks to catalog</span>
 <span class="n">catalog</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span>
 </pre>
           </div>
@@ -1077,6 +1096,9 @@ It contains various methods to pull data from the catalog, such as
             ¶
            </a>
           </h3>
+          <p>
+           We can now use configuration objects to build up our final run configuration:
+          </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">instrument</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">instruments</span><span class="p">(</span><span class="n">as_nautilus</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -1133,6 +1155,9 @@ It contains various methods to pull data from the catalog, such as
            ¶
           </a>
          </h2>
+         <p>
+          Now we can simply run the backtest node, which will simulate trading across the entire data stream:
+         </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
            <pre><span></span><span class="n">node</span> <span class="o">=</span> <span class="n">BacktestNode</span><span class="p">(</span><span class="n">configs</span><span class="o">=</span><span class="p">[</span><span class="n">config</span><span class="p">])</span>
@@ -1152,7 +1177,7 @@ It contains various methods to pull data from the catalog, such as
   <footer class="md-footer">
    <div class="md-footer-nav">
     <nav class="md-footer-nav__inner md-grid">
-     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="index.html" rel="prev" title="Tutorials">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="backtest_low_level.html" rel="prev" title="Backtest (low-level API)">
       <div class="md-flex__cell md-flex__cell--shrink">
        <i class="md-icon md-icon--arrow-back md-footer-nav__button">
        </i>
@@ -1162,7 +1187,7 @@ It contains various methods to pull data from the catalog, such as
         <span class="md-footer-nav__direction">
          Previous
         </span>
-        Tutorials
+        Backtest (low-level API)
        </span>
       </div>
      </a>
