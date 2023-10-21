@@ -245,9 +245,9 @@
 <span class="kw">use </span>nautilus_model::data::{Data, HasTsInit};
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 
-<span class="kw">use crate</span>::{
-    arrow::{DataStreamingError, DecodeDataFromRecordBatch, EncodeToRecordBatch, WriteStream},
-    kmerge_batch::{EagerStream, ElementBatchIter, KMerge},
+<span class="kw">use </span><span class="kw">super</span>::kmerge_batch::{EagerStream, ElementBatchIter, KMerge};
+<span class="kw">use </span><span class="kw">crate</span>::arrow::{
+    DataStreamingError, DecodeDataFromRecordBatch, EncodeToRecordBatch, WriteStream,
 };
 
 <span class="attr">#[derive(Debug, Default)]
