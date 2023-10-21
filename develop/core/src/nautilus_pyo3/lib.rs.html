@@ -278,7 +278,7 @@
     )<span class="question-mark">?</span>;
 
     <span class="comment">// Persistence
-    </span><span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_persistence::persistence);
+    </span><span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_persistence::python::persistence);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(
         <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.persistence&quot;</span>,

@@ -294,6 +294,8 @@
 <a href="#294" id="294">294</a>
 <a href="#295" id="295">295</a>
 <a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -318,11 +320,13 @@
 <span class="kw">use </span>serde_json::Value;
 <span class="kw">use </span>strum::IntoEnumIterator;
 
-<span class="kw">use crate</span>::{enums, instruments, orders};
+<span class="kw">use </span><span class="kw">crate</span>::enums;
 
 <span class="kw">pub mod </span>data;
 <span class="kw">pub mod </span>identifiers;
+<span class="kw">pub mod </span>instruments;
 <span class="kw">pub mod </span>macros;
+<span class="kw">pub mod </span>orders;
 <span class="kw">pub mod </span>types;
 
 <span class="kw">pub const </span>PY_MODULE_MODEL: <span class="kw-2">&amp;</span>str = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>;
@@ -568,26 +572,26 @@
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::venue::Venue&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::venue_order_id::VenueOrderId&gt;()<span class="question-mark">?</span>;
     <span class="comment">// orders
-    </span>m.add_class::&lt;orders::limit::LimitOrder&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;orders::limit_if_touched::LimitIfTouchedOrder&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;orders::market::MarketOrder&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;orders::market_to_limit::MarketToLimitOrder&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;orders::stop_limit::StopLimitOrder&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;orders::stop_market::StopMarketOrder&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;orders::trailing_stop_limit::TrailingStopLimitOrder&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;orders::trailing_stop_market::TrailingStopMarketOrder&gt;()<span class="question-mark">?</span>;
+    </span>m.add_class::&lt;<span class="kw">crate</span>::orders::limit::LimitOrder&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::orders::limit_if_touched::LimitIfTouchedOrder&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::orders::market::MarketOrder&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::orders::market_to_limit::MarketToLimitOrder&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::orders::stop_limit::StopLimitOrder&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::orders::stop_market::StopMarketOrder&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::orders::trailing_stop_limit::TrailingStopLimitOrder&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::orders::trailing_stop_market::TrailingStopMarketOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::types::currency::Currency&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::types::money::Money&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::types::price::Price&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::types::quantity::Quantity&gt;()<span class="question-mark">?</span>;
     <span class="comment">// instruments
-    </span>m.add_class::&lt;instruments::crypto_future::CryptoFuture&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;instruments::crypto_perpetual::CryptoPerpetual&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;instruments::currency_pair::CurrencyPair&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;instruments::equity::Equity&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;instruments::futures_contract::FuturesContract&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;instruments::options_contract::OptionsContract&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;instruments::synthetic::SyntheticInstrument&gt;()<span class="question-mark">?</span>;
+    </span>m.add_class::&lt;<span class="kw">crate</span>::instruments::crypto_future::CryptoFuture&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::instruments::crypto_perpetual::CryptoPerpetual&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::instruments::currency_pair::CurrencyPair&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::instruments::equity::Equity&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::instruments::futures_contract::FuturesContract&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::instruments::options_contract::OptionsContract&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::instruments::synthetic::SyntheticInstrument&gt;()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>

@@ -184,6 +184,9 @@
 <a href="#184" id="184">184</a>
 <a href="#185" id="185">185</a>
 <a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
 </pre></div><pre class="rust"><code><span class="doccomment">//! Time sources for rate limiters.
 //!
 //! The time sources contained in this module allow the rate limiter
@@ -336,7 +339,10 @@
     }
 }
 
-<span class="attr">#[cfg(test)]
+<span class="comment">////////////////////////////////////////////////////////////////////////////////
+// Tests
+////////////////////////////////////////////////////////////////////////////////
+</span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>test {
     <span class="kw">use </span>std::{iter::repeat, sync::Arc, thread, time::Duration};
 
