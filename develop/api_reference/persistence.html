@@ -799,6 +799,15 @@
                 </code>
                </a>
               </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.write_data">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ParquetDataCatalog.write_data()
+                 </span>
+                </code>
+               </a>
+              </li>
              </ul>
             </li>
             <li class="md-nav__item">
@@ -1437,6 +1446,48 @@ meaning the catalog operates on the local filesystem.
              <li>
               <p>
                <strong>
+                min_rows_per_group
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default 0
+               </em>
+               ) – The minimum number of rows per group. When the value is greater than 0,
+the dataset writer will batch incoming data and only write the row
+groups to the disk when sufficient rows have accumulated.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                max_rows_per_group
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default 5000
+               </em>
+               ) – The maximum number of rows per group. If the value is greater than 0,
+then the dataset writer may split up large incoming batches into
+multiple row groups.  If this value is set, then min_rows_per_group
+should also be set. Otherwise it could end up with very small row
+groups.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
                 show_query_paths
                </strong>
                (
@@ -1643,6 +1694,244 @@ variable.
                <em>
                 ParquetDataCatalog
                </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.write_data">
+            <span class="sig-name descname">
+             <span class="pre">
+              write_data
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               data
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               list
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <span class="pre">
+               nautilus_trader.core.data.Data
+              </span>
+              <span class="w">
+              </span>
+              <span class="p">
+               <span class="pre">
+                |
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <a class="reference internal" href="core.html#nautilus_trader.core.message.Event" title="nautilus_trader.core.message.Event">
+               <span class="pre">
+                nautilus_trader.core.message.Event
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="o">
+              <span class="pre">
+               **
+              </span>
+             </span>
+             <span class="n">
+              <span class="pre">
+               kwargs
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               Any
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.write_data" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Write the given
+             <cite>
+              data
+             </cite>
+             to the catalog.
+            </p>
+            <p>
+             The function categorizes the data based on their class name and, when applicable, their
+associated instrument ID. It then delegates the actual writing process to the
+             <cite>
+              write_chunk
+             </cite>
+             method.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  data
+                 </strong>
+                 (
+                 <em>
+                  list
+                 </em>
+                 <em>
+                  [
+                 </em>
+                 <em>
+                  Data
+                 </em>
+                 <em>
+                  |
+                 </em>
+                 <a class="reference internal" href="core.html#nautilus_trader.core.message.Event" title="nautilus_trader.core.message.Event">
+                  <em>
+                   Event
+                  </em>
+                 </a>
+                 <em>
+                  ]
+                 </em>
+                 ) – The data or event objects to be written to the catalog.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  kwargs
+                 </strong>
+                 (
+                 <em>
+                  Any
+                 </em>
+                 ) – Additional keyword arguments to be passed to the
+                 <cite>
+                  write_chunk
+                 </cite>
+                 method.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+            <p class="rubric">
+             Notes
+            </p>
+            <ul class="simple">
+             <li>
+              <p>
+               All data of the same type is expected to be monotonically increasing, or non-decreasing
+              </p>
+             </li>
+             <li>
+              <p>
+               The data is sorted and grouped based on its class name and instrument ID (if applicable) before writing
+              </p>
+             </li>
+             <li>
+              <p>
+               Instrument-specific data should have either an
+               <cite>
+                instrument_id
+               </cite>
+               attribute or be an instance of
+               <cite>
+                Instrument
+               </cite>
+              </p>
+             </li>
+             <li>
+              <p>
+               The
+               <cite>
+                Bar
+               </cite>
+               class is treated as a special case, being grouped based on its
+               <cite>
+                bar_type
+               </cite>
+               attribute
+              </p>
+             </li>
+             <li>
+              <p>
+               The input data list must be non-empty, and all data items must be of the appropriate class type
+              </p>
+             </li>
+            </ul>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If data of the same type is not monotonically increasing (or non-decreasing) based on
+               <cite>
+                ts_init
+               </cite>
+               .
               </p>
              </dd>
             </dl>

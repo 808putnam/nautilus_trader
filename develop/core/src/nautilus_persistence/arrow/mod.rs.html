@@ -144,17 +144,6 @@
 <a href="#144" id="144">144</a>
 <a href="#145" id="145">145</a>
 <a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a>
-<a href="#157" id="157">157</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -196,17 +185,6 @@
 <span class="kw">const </span>KEY_INSTRUMENT_ID: <span class="kw-2">&amp;</span>str = <span class="string">&quot;instrument_id&quot;</span>;
 <span class="kw">const </span>KEY_PRICE_PRECISION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;price_precision&quot;</span>;
 <span class="kw">const </span>KEY_SIZE_PRECISION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;size_precision&quot;</span>;
-
-<span class="attr">#[repr(C)]
-#[pyclass]
-#[derive(Debug, Clone, Copy)]
-</span><span class="kw">pub enum </span>NautilusDataType {
-    <span class="comment">// Custom = 0,  # First slot reserved for custom data
-    </span>OrderBookDelta = <span class="number">1</span>,
-    QuoteTick = <span class="number">2</span>,
-    TradeTick = <span class="number">3</span>,
-    Bar = <span class="number">4</span>,
-}
 
 <span class="attr">#[derive(thiserror::Error, Debug)]
 </span><span class="kw">pub enum </span>DataStreamingError {
