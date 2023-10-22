@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["session","transformer"]};
+window.SIDEBAR_ITEMS = {"mod":["kmerge_batch","session"]};

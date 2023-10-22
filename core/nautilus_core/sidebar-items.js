@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["core"],"mod":["correctness","cvec","datetime","parsing","python","serialization","string","time","uuid"]};
+window.SIDEBAR_ITEMS = {"mod":["correctness","datetime","ffi","parsing","python","serialization","time","uuid"]};

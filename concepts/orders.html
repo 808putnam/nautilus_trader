@@ -95,7 +95,7 @@
   <link href="../genindex.html" rel="index" title="Index"/>
   <link href="../search.html" rel="search" title="Search"/>
   <link href="execution.html" rel="next" title="Execution"/>
-  <link href="adapters.html" rel="prev" title="Adapters"/>
+  <link href="instruments.html" rel="prev" title="Instruments"/>
   <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
  </head>
  <body data-md-color-accent="#282f38" data-md-color-primary="#282f38" dir="ltr">
@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -286,8 +291,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -301,6 +306,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="architecture.html">
                Architecture
@@ -316,11 +326,6 @@
                Instruments
               </a>
              </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="adapters.html">
-               Adapters
-              </a>
-             </li>
              <li class="md-nav__item md-nav__link--active">
               <a class="md-nav__link" href="#">
                Orders
@@ -329,6 +334,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -346,8 +366,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -362,7 +387,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -375,8 +400,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -384,13 +409,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -423,7 +448,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../api_reference/index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -613,6 +638,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../developer_guide/index.html">
@@ -1491,6 +1521,9 @@ examples will leverage an
            ¶
           </a>
          </h2>
+         <p>
+          The following order types are available for the platform.
+         </p>
          <section id="market">
           <h3 id="market">
            Market
@@ -1523,12 +1556,12 @@ to BUY 100,000 AUD using USD:
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">MarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"AUD/USD.IDEALPRO"</span><span class="p">),</span>
-        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
-        <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">100_000</span><span class="p">),</span>
-        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">IOC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
-        <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">tags</span><span class="o">=</span><span class="s2">"ENTRY"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"AUD/USD.IDEALPRO"</span><span class="p">),</span>
+    <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+    <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">100_000</span><span class="p">),</span>
+    <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">IOC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
+    <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="s2">"ENTRY"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
 <span class="p">)</span>
 </pre>
            </div>
@@ -1565,16 +1598,16 @@ contracts at a limit price of 5000 USDT, as a market maker.
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">LimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT-PERP.BINANCE"</span><span class="p">),</span>
-        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
-        <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
-        <span class="n">price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"5000.00"</span><span class="p">),</span>
-        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
-        <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
-        <span class="n">post_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">display_qty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None which indicates full display)</span>
-        <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT-PERP.BINANCE"</span><span class="p">),</span>
+    <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
+    <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"5000.00"</span><span class="p">),</span>
+    <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
+    <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">post_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">display_qty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None which indicates full display)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
 <span class="p">)</span>
 </pre>
            </div>
@@ -1616,15 +1649,15 @@ to SELL 1 BTC at a trigger price of 100,000 USDT, active until further notice:
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">StopMarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">stop_market</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT.BINANCE"</span><span class="p">),</span>
-        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
-        <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
-        <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">100_000</span><span class="p">),</span>
-        <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
-        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
-        <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
-        <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT.BINANCE"</span><span class="p">),</span>
+    <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
+    <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+    <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">100_000</span><span class="p">),</span>
+    <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
+    <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
+    <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
 <span class="p">)</span>
 </pre>
            </div>
@@ -1665,17 +1698,17 @@ once the market hits the trigger price of 1.30010 USD, active until midday 6th J
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">StopLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">stop_limit</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"GBP/USD.CURRENEX"</span><span class="p">),</span>
-        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
-        <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">50_000</span><span class="p">),</span>
-        <span class="n">price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"1.30000"</span><span class="p">),</span>
-        <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"1.30010"</span><span class="p">),</span>
-        <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">BID</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
-        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTD</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
-        <span class="n">expire_time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2022-06-06T12:00"</span><span class="p">),</span>
-        <span class="n">post_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"GBP/USD.CURRENEX"</span><span class="p">),</span>
+    <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+    <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">50_000</span><span class="p">),</span>
+    <span class="n">price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"1.30000"</span><span class="p">),</span>
+    <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"1.30010"</span><span class="p">),</span>
+    <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">BID</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
+    <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTD</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
+    <span class="n">expire_time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2022-06-06T12:00"</span><span class="p">),</span>
+    <span class="n">post_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
 <span class="p">)</span>
 </pre>
            </div>
@@ -1721,13 +1754,13 @@ to BUY 200,000 USD using JPY:
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">MarketToLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market_to_limit</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"USD/JPY.IDEALPRO"</span><span class="p">),</span>
-        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
-        <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">200_000</span><span class="p">),</span>
-        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
-        <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">display_qty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None which indicates full display)</span>
-        <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"USD/JPY.IDEALPRO"</span><span class="p">),</span>
+    <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+    <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">200_000</span><span class="p">),</span>
+    <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
+    <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">display_qty</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None which indicates full display)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
 <span class="p">)</span>
 </pre>
            </div>
@@ -1770,15 +1803,15 @@ to SELL 10 ETHUSDT-PERP Perpetual Futures contracts at a trigger price of 10,000
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">MarketIfTouchedOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market_if_touched</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT-PERP.BINANCE"</span><span class="p">),</span>
-        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
-        <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
-        <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="s2">"10000.00"</span><span class="p">),</span>
-        <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
-        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
-        <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
-        <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">tags</span><span class="o">=</span><span class="s2">"ENTRY"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT-PERP.BINANCE"</span><span class="p">),</span>
+    <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
+    <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="s2">"10000.00"</span><span class="p">),</span>
+    <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
+    <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
+    <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="s2">"ENTRY"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
 <span class="p">)</span>
 </pre>
            </div>
@@ -1820,17 +1853,17 @@ active until midday 6th June, 2022 (UTC):
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">StopLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">limit_if_touched</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT-PERP.BINANCE"</span><span class="p">),</span>
-        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
-        <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
-        <span class="n">price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"30100"</span><span class="p">),</span>
-        <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"30150"</span><span class="p">),</span>
-        <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
-        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTD</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
-        <span class="n">expire_time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2022-06-06T12:00"</span><span class="p">),</span>
-        <span class="n">post_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">tags</span><span class="o">=</span><span class="s2">"TAKE_PROFIT"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT-PERP.BINANCE"</span><span class="p">),</span>
+    <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+    <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"30100"</span><span class="p">),</span>
+    <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"30150"</span><span class="p">),</span>
+    <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
+    <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTD</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
+    <span class="n">expire_time</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2022-06-06T12:00"</span><span class="p">),</span>
+    <span class="n">post_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">reduce_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="s2">"TAKE_PROFIT"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
 <span class="p">)</span>
 </pre>
            </div>
@@ -1872,17 +1905,17 @@ Perpetual Futures Contracts activating at a trigger price of 5000 USD, then trai
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">TrailingStopMarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">trailing_stop_market</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSD-PERP.BINANCE"</span><span class="p">),</span>
-        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
-        <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
-        <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"5000"</span><span class="p">),</span>
-        <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
-        <span class="n">trailing_offset</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
-        <span class="n">trailing_offset_type</span><span class="o">=</span><span class="n">TrailingOffsetType</span><span class="o">.</span><span class="n">BASIS_POINTS</span><span class="p">,</span>
-        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
-        <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
-        <span class="n">reduce_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">tags</span><span class="o">=</span><span class="s2">"TRAILING_STOP-1"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSD-PERP.BINANCE"</span><span class="p">),</span>
+    <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
+    <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"5000"</span><span class="p">),</span>
+    <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
+    <span class="n">trailing_offset</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+    <span class="n">trailing_offset_type</span><span class="o">=</span><span class="n">TrailingOffsetType</span><span class="o">.</span><span class="n">BASIS_POINTS</span><span class="p">,</span>
+    <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
+    <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">reduce_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="s2">"TRAILING_STOP-1"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
 <span class="p">)</span>
 </pre>
            </div>
@@ -1925,19 +1958,19 @@ away from the current ask price, active until further notice:
           <div class="highlight-python notranslate">
            <div class="highlight">
             <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">TrailingStopLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">trailing_stop_limit</span><span class="p">(</span>
-        <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"AUD/USD.CURRENEX"</span><span class="p">),</span>
-        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
-        <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">1_250_000</span><span class="p">),</span>
-        <span class="n">price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"0.71000"</span><span class="p">),</span>
-        <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"0.72000"</span><span class="p">),</span>
-        <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">BID_ASK</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
-        <span class="n">limit_offset</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">"0.00050"</span><span class="p">),</span>
-        <span class="n">trailing_offset</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">"0.00100"</span><span class="p">),</span>
-        <span class="n">trailing_offset_type</span><span class="o">=</span><span class="n">TrailingOffsetType</span><span class="o">.</span><span class="n">PRICE</span><span class="p">,</span>
-        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
-        <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
-        <span class="n">reduce_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
-        <span class="n">tags</span><span class="o">=</span><span class="s2">"TRAILING_STOP"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"AUD/USD.CURRENEX"</span><span class="p">),</span>
+    <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+    <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">1_250_000</span><span class="p">),</span>
+    <span class="n">price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"0.71000"</span><span class="p">),</span>
+    <span class="n">trigger_price</span><span class="o">=</span><span class="n">Price</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"0.72000"</span><span class="p">),</span>
+    <span class="n">trigger_type</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">BID_ASK</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default DEFAULT)</span>
+    <span class="n">limit_offset</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">"0.00050"</span><span class="p">),</span>
+    <span class="n">trailing_offset</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">"0.00100"</span><span class="p">),</span>
+    <span class="n">trailing_offset_type</span><span class="o">=</span><span class="n">TrailingOffsetType</span><span class="o">.</span><span class="n">PRICE</span><span class="p">,</span>
+    <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">GTC</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default GTC)</span>
+    <span class="n">expire_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
+    <span class="n">reduce_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default False)</span>
+    <span class="n">tags</span><span class="o">=</span><span class="s2">"TRAILING_STOP"</span><span class="p">,</span>  <span class="c1"># &lt;-- optional (default None)</span>
 <span class="p">)</span>
 </pre>
            </div>
@@ -1958,7 +1991,7 @@ away from the current ask price, active until further notice:
   <footer class="md-footer">
    <div class="md-footer-nav">
     <nav class="md-footer-nav__inner md-grid">
-     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="adapters.html" rel="prev" title="Adapters">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="instruments.html" rel="prev" title="Instruments">
       <div class="md-flex__cell md-flex__cell--shrink">
        <i class="md-icon md-icon--arrow-back md-footer-nav__button">
        </i>
@@ -1968,7 +2001,7 @@ away from the current ask price, active until further notice:
         <span class="md-footer-nav__direction">
          Previous
         </span>
-        Adapters
+        Instruments
        </span>
       </div>
      </a>

@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -236,7 +241,7 @@
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="index.html">
-        API Reference
+        Python API
        </a>
       </li>
      </ul>
@@ -286,8 +291,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -301,6 +306,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/architecture.html">
                Architecture
@@ -317,11 +327,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/orders.html">
                Orders
               </a>
@@ -329,6 +334,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -346,8 +366,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -362,7 +387,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -375,8 +400,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -384,13 +409,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -423,7 +448,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -615,6 +640,11 @@
             </ul>
            </li>
            <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
+           </li>
+           <li class="md-nav__item">
             <a class="md-nav__link" href="../developer_guide/index.html">
              Developer Guide
             </a>
@@ -723,6 +753,24 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     BarAggregator.handle_trade_tick()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.BarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BarAggregator.set_await_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.BarAggregator.set_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BarAggregator.set_partial()
                    </span>
                   </code>
                  </a>
@@ -874,6 +922,24 @@
                   </code>
                  </a>
                 </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.TickBarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TickBarAggregator.set_await_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.TickBarAggregator.set_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TickBarAggregator.set_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
                </ul>
               </li>
               <li class="md-nav__item">
@@ -953,6 +1019,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.TimeBarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    TimeBarAggregator.set_await_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.data.aggregation.TimeBarAggregator.set_partial">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1021,6 +1096,24 @@
                   </code>
                  </a>
                 </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.ValueBarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ValueBarAggregator.set_await_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.ValueBarAggregator.set_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ValueBarAggregator.set_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
                </ul>
               </li>
               <li class="md-nav__item">
@@ -1059,6 +1152,24 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     VolumeBarAggregator.handle_trade_tick()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.VolumeBarAggregator.set_await_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    VolumeBarAggregator.set_await_partial()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.data.aggregation.VolumeBarAggregator.set_partial">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    VolumeBarAggregator.set_partial()
                    </span>
                   </code>
                  </a>
@@ -1564,10 +1675,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribe_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribe_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    MarketDataClient.subscribe_instrument_status_updates()
+                    MarketDataClient.subscribe_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -1627,10 +1738,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribe_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribe_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    MarketDataClient.subscribe_venue_status_updates()
+                    MarketDataClient.subscribe_venue_status()
                    </span>
                   </code>
                  </a>
@@ -1663,10 +1774,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribed_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribed_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    MarketDataClient.subscribed_instrument_status_updates()
+                    MarketDataClient.subscribed_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -1726,10 +1837,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribed_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribed_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    MarketDataClient.subscribed_venue_status_updates()
+                    MarketDataClient.subscribed_venue_status()
                    </span>
                   </code>
                  </a>
@@ -1789,10 +1900,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    MarketDataClient.unsubscribe_instrument_status_updates()
+                    MarketDataClient.unsubscribe_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -1852,10 +1963,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    MarketDataClient.unsubscribe_venue_status_updates()
+                    MarketDataClient.unsubscribe_venue_status()
                    </span>
                   </code>
                  </a>
@@ -2247,10 +2358,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.subscribed_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.subscribed_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    DataEngine.subscribed_instrument_status_updates()
+                    DataEngine.subscribed_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -2775,7 +2886,13 @@ trading operations.
              Logger
             </span>
             <span class="pre">
-             logger
+             logger,
+            </span>
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             await_partial=False
             </span>
            </em>
            <span class="sig-paren">
@@ -2881,6 +2998,24 @@ trading operations.
                  </em>
                 </a>
                 ) – The logger for the aggregator.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 await_partial
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If the aggregator should await an initial partial bar prior to aggregating.
                </p>
               </li>
              </ul>
@@ -3081,6 +3216,120 @@ trading operations.
                  </em>
                 </a>
                 ) – The tick for the update.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.BarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.BarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.BarAggregator.set_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Bar
+               </span>
+               <span class="pre">
+                partial_bar
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.BarAggregator.set_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Set the initial values for a partially completed bar.
+             </p>
+             <p>
+              This method can only be called once per instance.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 partial_bar
+                </strong>
+                (
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
+                 <em>
+                  Bar
+                 </em>
+                </a>
+                ) – The partial bar with values to set.
                </p>
               </dd>
              </dl>
@@ -4141,6 +4390,120 @@ specification, then a bar is created and sent to the handler.
              </dl>
             </dd>
            </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.TickBarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.TickBarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.TickBarAggregator.set_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Bar
+               </span>
+               <span class="pre">
+                partial_bar
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.TickBarAggregator.set_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Set the initial values for a partially completed bar.
+             </p>
+             <p>
+              This method can only be called once per instance.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 partial_bar
+                </strong>
+                (
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
+                 <em>
+                  Bar
+                 </em>
+                </a>
+                ) – The partial bar with values to set.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
           </dd>
          </dl>
          <dl class="py class">
@@ -4729,6 +5092,44 @@ If False then timestamp will be bar open.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.TimeBarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.TimeBarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.TimeBarAggregator.set_partial">
              <span class="sig-name descname">
               <span class="pre">
@@ -5251,6 +5652,120 @@ specification, then a bar is created and sent to the handler.
              </dl>
             </dd>
            </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.ValueBarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.ValueBarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.ValueBarAggregator.set_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Bar
+               </span>
+               <span class="pre">
+                partial_bar
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.ValueBarAggregator.set_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Set the initial values for a partially completed bar.
+             </p>
+             <p>
+              This method can only be called once per instance.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 partial_bar
+                </strong>
+                (
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
+                 <em>
+                  Bar
+                 </em>
+                </a>
+                ) – The partial bar with values to set.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
           </dd>
          </dl>
          <dl class="py class">
@@ -5608,6 +6123,120 @@ specification, then a bar is created and sent to the handler.
                  </em>
                 </a>
                 ) – The tick for the update.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.VolumeBarAggregator.set_await_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_await_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                value
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.VolumeBarAggregator.set_await_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.data.aggregation.VolumeBarAggregator.set_partial">
+             <span class="sig-name descname">
+              <span class="pre">
+               set_partial
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Bar
+               </span>
+               <span class="pre">
+                partial_bar
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.data.aggregation.VolumeBarAggregator.set_partial" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Set the initial values for a partially completed bar.
+             </p>
+             <p>
+              This method can only be called once per instance.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 partial_bar
+                </strong>
+                (
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
+                 <em>
+                  Bar
+                 </em>
+                </a>
+                ) – The partial bar with values to set.
                </p>
               </dd>
              </dl>
@@ -9663,10 +10292,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribe_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribe_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribe_instrument_status_updates
+               subscribe_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -9703,7 +10332,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribe_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribe_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -9711,7 +10340,7 @@ then the component state will not change, and an error will be logged.
              <p>
               Subscribe to
               <cite>
-               InstrumentStatusUpdates
+               InstrumentStatus
               </cite>
               data for the given instrument ID.
              </p>
@@ -9900,7 +10529,7 @@ then the component state will not change, and an error will be logged.
                   (BookType {
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    L1_TBBO
+                    L1_MBP
                    </span>
                   </code>
                   ,
@@ -10082,7 +10711,7 @@ then the component state will not change, and an error will be logged.
                   (BookType {
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    L1_TBBO
+                    L1_MBP
                    </span>
                   </code>
                   ,
@@ -10373,10 +11002,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribe_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribe_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribe_venue_status_updates
+               subscribe_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -10413,7 +11042,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribe_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribe_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -10421,7 +11050,7 @@ then the component state will not change, and an error will be logged.
              <p>
               Subscribe to
               <cite>
-               InstrumentStatusUpdate
+               InstrumentStatus
               </cite>
               data for the venue.
              </p>
@@ -10615,10 +11244,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribed_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribed_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribed_instrument_status_updates
+               subscribed_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -10644,7 +11273,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribed_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribed_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -11000,10 +11629,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribed_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribed_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribed_venue_status_updates
+               subscribed_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -11029,7 +11658,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribed_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribed_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -11423,10 +12052,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.unsubscribe_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.unsubscribe_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               unsubscribe_instrument_status_updates
+               unsubscribe_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -11463,7 +12092,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -11471,7 +12100,7 @@ then the component state will not change, and an error will be logged.
              <p>
               Unsubscribe from
               <cite>
-               InstrumentStatusUpdate
+               InstrumentStatus
               </cite>
               data for the given instrument ID.
              </p>
@@ -11929,10 +12558,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.unsubscribe_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.unsubscribe_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               unsubscribe_venue_status_updates
+               unsubscribe_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -11969,7 +12598,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -11977,7 +12606,7 @@ then the component state will not change, and an error will be logged.
              <p>
               Unsubscribe from
               <cite>
-               InstrumentStatusUpdate
+               InstrumentStatus
               </cite>
               data for the given venue.
              </p>
@@ -13482,22 +14111,22 @@ then the component state will not change, and an error will be logged.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                catalog:
-               </span>
-               <span class="pre">
-                ParquetDataCatalog
+                catalog
                </span>
               </span>
-             </em>
-             ,
-             <em class="sig-param">
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
               <span class="n">
-               <span class="pre">
-                bool
-               </span>
-               <span class="pre">
-                use_rust=False
-               </span>
+               <a class="reference internal" href="persistence.html#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog" title="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog">
+                <span class="pre">
+                 ParquetDataCatalog
+                </span>
+               </a>
               </span>
              </em>
              <span class="sig-paren">
@@ -14554,10 +15183,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.subscribed_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.subscribed_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribed_instrument_status_updates
+               subscribed_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -14583,7 +15212,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.engine.DataEngine.subscribed_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.engine.DataEngine.subscribed_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>

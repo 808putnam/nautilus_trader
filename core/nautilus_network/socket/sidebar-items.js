@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["SocketClient"]};
+window.SIDEBAR_ITEMS = {"struct":["SocketClient","SocketConfig"]};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/enums.rs`."><title>enums.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (35e416303 2023-09-01)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../nautilus_model/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/enums.rs`."><title>enums.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (1c05d50c8 2023-10-21)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1529,6 +1529,140 @@
 <a href="#1529" id="1529">1529</a>
 <a href="#1530" id="1530">1530</a>
 <a href="#1531" id="1531">1531</a>
+<a href="#1532" id="1532">1532</a>
+<a href="#1533" id="1533">1533</a>
+<a href="#1534" id="1534">1534</a>
+<a href="#1535" id="1535">1535</a>
+<a href="#1536" id="1536">1536</a>
+<a href="#1537" id="1537">1537</a>
+<a href="#1538" id="1538">1538</a>
+<a href="#1539" id="1539">1539</a>
+<a href="#1540" id="1540">1540</a>
+<a href="#1541" id="1541">1541</a>
+<a href="#1542" id="1542">1542</a>
+<a href="#1543" id="1543">1543</a>
+<a href="#1544" id="1544">1544</a>
+<a href="#1545" id="1545">1545</a>
+<a href="#1546" id="1546">1546</a>
+<a href="#1547" id="1547">1547</a>
+<a href="#1548" id="1548">1548</a>
+<a href="#1549" id="1549">1549</a>
+<a href="#1550" id="1550">1550</a>
+<a href="#1551" id="1551">1551</a>
+<a href="#1552" id="1552">1552</a>
+<a href="#1553" id="1553">1553</a>
+<a href="#1554" id="1554">1554</a>
+<a href="#1555" id="1555">1555</a>
+<a href="#1556" id="1556">1556</a>
+<a href="#1557" id="1557">1557</a>
+<a href="#1558" id="1558">1558</a>
+<a href="#1559" id="1559">1559</a>
+<a href="#1560" id="1560">1560</a>
+<a href="#1561" id="1561">1561</a>
+<a href="#1562" id="1562">1562</a>
+<a href="#1563" id="1563">1563</a>
+<a href="#1564" id="1564">1564</a>
+<a href="#1565" id="1565">1565</a>
+<a href="#1566" id="1566">1566</a>
+<a href="#1567" id="1567">1567</a>
+<a href="#1568" id="1568">1568</a>
+<a href="#1569" id="1569">1569</a>
+<a href="#1570" id="1570">1570</a>
+<a href="#1571" id="1571">1571</a>
+<a href="#1572" id="1572">1572</a>
+<a href="#1573" id="1573">1573</a>
+<a href="#1574" id="1574">1574</a>
+<a href="#1575" id="1575">1575</a>
+<a href="#1576" id="1576">1576</a>
+<a href="#1577" id="1577">1577</a>
+<a href="#1578" id="1578">1578</a>
+<a href="#1579" id="1579">1579</a>
+<a href="#1580" id="1580">1580</a>
+<a href="#1581" id="1581">1581</a>
+<a href="#1582" id="1582">1582</a>
+<a href="#1583" id="1583">1583</a>
+<a href="#1584" id="1584">1584</a>
+<a href="#1585" id="1585">1585</a>
+<a href="#1586" id="1586">1586</a>
+<a href="#1587" id="1587">1587</a>
+<a href="#1588" id="1588">1588</a>
+<a href="#1589" id="1589">1589</a>
+<a href="#1590" id="1590">1590</a>
+<a href="#1591" id="1591">1591</a>
+<a href="#1592" id="1592">1592</a>
+<a href="#1593" id="1593">1593</a>
+<a href="#1594" id="1594">1594</a>
+<a href="#1595" id="1595">1595</a>
+<a href="#1596" id="1596">1596</a>
+<a href="#1597" id="1597">1597</a>
+<a href="#1598" id="1598">1598</a>
+<a href="#1599" id="1599">1599</a>
+<a href="#1600" id="1600">1600</a>
+<a href="#1601" id="1601">1601</a>
+<a href="#1602" id="1602">1602</a>
+<a href="#1603" id="1603">1603</a>
+<a href="#1604" id="1604">1604</a>
+<a href="#1605" id="1605">1605</a>
+<a href="#1606" id="1606">1606</a>
+<a href="#1607" id="1607">1607</a>
+<a href="#1608" id="1608">1608</a>
+<a href="#1609" id="1609">1609</a>
+<a href="#1610" id="1610">1610</a>
+<a href="#1611" id="1611">1611</a>
+<a href="#1612" id="1612">1612</a>
+<a href="#1613" id="1613">1613</a>
+<a href="#1614" id="1614">1614</a>
+<a href="#1615" id="1615">1615</a>
+<a href="#1616" id="1616">1616</a>
+<a href="#1617" id="1617">1617</a>
+<a href="#1618" id="1618">1618</a>
+<a href="#1619" id="1619">1619</a>
+<a href="#1620" id="1620">1620</a>
+<a href="#1621" id="1621">1621</a>
+<a href="#1622" id="1622">1622</a>
+<a href="#1623" id="1623">1623</a>
+<a href="#1624" id="1624">1624</a>
+<a href="#1625" id="1625">1625</a>
+<a href="#1626" id="1626">1626</a>
+<a href="#1627" id="1627">1627</a>
+<a href="#1628" id="1628">1628</a>
+<a href="#1629" id="1629">1629</a>
+<a href="#1630" id="1630">1630</a>
+<a href="#1631" id="1631">1631</a>
+<a href="#1632" id="1632">1632</a>
+<a href="#1633" id="1633">1633</a>
+<a href="#1634" id="1634">1634</a>
+<a href="#1635" id="1635">1635</a>
+<a href="#1636" id="1636">1636</a>
+<a href="#1637" id="1637">1637</a>
+<a href="#1638" id="1638">1638</a>
+<a href="#1639" id="1639">1639</a>
+<a href="#1640" id="1640">1640</a>
+<a href="#1641" id="1641">1641</a>
+<a href="#1642" id="1642">1642</a>
+<a href="#1643" id="1643">1643</a>
+<a href="#1644" id="1644">1644</a>
+<a href="#1645" id="1645">1645</a>
+<a href="#1646" id="1646">1646</a>
+<a href="#1647" id="1647">1647</a>
+<a href="#1648" id="1648">1648</a>
+<a href="#1649" id="1649">1649</a>
+<a href="#1650" id="1650">1650</a>
+<a href="#1651" id="1651">1651</a>
+<a href="#1652" id="1652">1652</a>
+<a href="#1653" id="1653">1653</a>
+<a href="#1654" id="1654">1654</a>
+<a href="#1655" id="1655">1655</a>
+<a href="#1656" id="1656">1656</a>
+<a href="#1657" id="1657">1657</a>
+<a href="#1658" id="1658">1658</a>
+<a href="#1659" id="1659">1659</a>
+<a href="#1660" id="1660">1660</a>
+<a href="#1661" id="1661">1661</a>
+<a href="#1662" id="1662">1662</a>
+<a href="#1663" id="1663">1663</a>
+<a href="#1664" id="1664">1664</a>
+<a href="#1665" id="1665">1665</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1548,7 +1682,7 @@
 
 </span><span class="kw">use </span>std::{ffi::c_char, str::FromStr};
 
-<span class="kw">use </span>nautilus_core::string::{cstr_to_string, str_to_cstr};
+<span class="kw">use </span>nautilus_core::ffi::string::{cstr_to_str, str_to_cstr};
 <span class="kw">use </span>pyo3::{exceptions::PyValueError, prelude::<span class="kw-2">*</span>, types::PyType, PyTypeInfo};
 <span class="kw">use </span>serde::{Deserialize, Deserializer, Serialize, Serializer};
 <span class="kw">use </span>strum::{AsRefStr, Display, EnumIter, EnumString, FromRepr};
@@ -1580,7 +1714,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>AccountType {
     <span class="doccomment">/// An account with unleveraged cash assets only.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;CASH&quot;</span>)]
@@ -1612,7 +1749,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>AggregationSource {
     <span class="doccomment">/// The data is externally aggregated (outside the Nautilus system boundary).
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;EXTERNAL&quot;</span>)]
@@ -1641,7 +1781,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>AggressorSide {
     <span class="doccomment">/// There was no specific aggressor for the trade.
     </span>NoAggressor = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -1683,7 +1826,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 #[allow(non_camel_case_types)]
 </span><span class="kw">pub enum </span>AssetClass {
     <span class="doccomment">/// Foreign exchange (FOREX) assets.
@@ -1733,7 +1879,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>AssetType {
     <span class="doccomment">/// A spot market asset type. The current market price of an asset that is bought or sold for immediate delivery and payment.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;SPOT&quot;</span>)]
@@ -1777,7 +1926,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>BarAggregation {
     <span class="doccomment">/// Based on a number of ticks.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;TICK&quot;</span>)]
@@ -1848,7 +2000,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>BookAction {
     <span class="doccomment">/// An order is added to the book.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;ADD&quot;</span>)]
@@ -1896,10 +2051,13 @@
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
 #[allow(non_camel_case_types)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>BookType {
     <span class="doccomment">/// Top-of-book best bid/offer, one level per side.
-    </span>L1_TBBO = <span class="number">1</span>,
+    </span>L1_MBP = <span class="number">1</span>,
     <span class="doccomment">/// Market by price, one order per level (aggregated).
     </span>L2_MBP = <span class="number">2</span>,
     <span class="doccomment">/// Market by order, multiple orders per level (full granularity).
@@ -1909,7 +2067,7 @@
 <span class="kw">impl </span>FromU8 <span class="kw">for </span>BookType {
     <span class="kw">fn </span>from_u8(value: u8) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; {
         <span class="kw">match </span>value {
-            <span class="number">1 </span>=&gt; <span class="prelude-val">Some</span>(BookType::L1_TBBO),
+            <span class="number">1 </span>=&gt; <span class="prelude-val">Some</span>(BookType::L1_MBP),
             <span class="number">2 </span>=&gt; <span class="prelude-val">Some</span>(BookType::L2_MBP),
             <span class="number">3 </span>=&gt; <span class="prelude-val">Some</span>(BookType::L3_MBO),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
@@ -1938,7 +2096,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>ContingencyType {
     <span class="doccomment">/// Not a contingent order.
     </span>NoContingency = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -1972,7 +2133,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>CurrencyType {
     <span class="doccomment">/// A type of cryptocurrency or crypto token.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;CRYPTO&quot;</span>)]
@@ -1980,6 +2144,9 @@
     <span class="doccomment">/// A type of currency issued by governments which is not backed by a commodity.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;FIAT&quot;</span>)]
     </span>Fiat = <span class="number">2</span>,
+    <span class="doccomment">/// A type of currency that is based on the value of an underlying commodity.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;COMMODITY_BACKED&quot;</span>)]
+    </span>CommodityBacked = <span class="number">3</span>,
 }
 
 <span class="doccomment">/// The type of event for an instrument close.
@@ -2001,7 +2168,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>InstrumentCloseType {
     <span class="doccomment">/// When the market session ended.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;END_OF_SESSION&quot;</span>)]
@@ -2030,8 +2200,11 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 #[allow(clippy::enum_variant_names)]
-#[pyclass]
 </span><span class="kw">pub enum </span>LiquiditySide {
     <span class="doccomment">/// No specific liqudity side.
     </span>NoLiquiditySide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2062,23 +2235,67 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>MarketStatus {
-    <span class="doccomment">/// The market is closed.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CLOSED&quot;</span>)]
-    </span>Closed = <span class="number">1</span>,
-    <span class="doccomment">/// The market is in the pre-open session.
+    <span class="doccomment">/// The market session is in the pre-open.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;PRE_OPEN&quot;</span>)]
-    </span>PreOpen = <span class="number">2</span>,
-    <span class="doccomment">/// The market is open for the normal session.
+    </span>PreOpen = <span class="number">1</span>,
+    <span class="doccomment">/// The market session is open.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;OPEN&quot;</span>)]
-    </span>Open = <span class="number">3</span>,
+    </span>Open = <span class="number">2</span>,
     <span class="doccomment">/// The market session is paused.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;PAUSE&quot;</span>)]
-    </span>Pause = <span class="number">4</span>,
-    <span class="doccomment">/// The market is in the pre-close session.
+    </span>Pause = <span class="number">3</span>,
+    <span class="doccomment">/// The market session is halted.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;HALT&quot;</span>)]
+    </span>Halt = <span class="number">4</span>,
+    <span class="doccomment">/// The market session has reopened after a pause or halt.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;REOPEN&quot;</span>)]
+    </span>Reopen = <span class="number">5</span>,
+    <span class="doccomment">/// The market session is in the pre-close.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;PRE_CLOSE&quot;</span>)]
-    </span>PreClose = <span class="number">5</span>,
+    </span>PreClose = <span class="number">6</span>,
+    <span class="doccomment">/// The market session is closed.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CLOSED&quot;</span>)]
+    </span>Closed = <span class="number">7</span>,
+}
+
+<span class="doccomment">/// The reason for a venue or market halt.
+</span><span class="attr">#[repr(C)]
+#[derive(
+    Copy,
+    Clone,
+    Debug,
+    Display,
+    Hash,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Ord,
+    AsRefStr,
+    FromRepr,
+    EnumIter,
+    EnumString,
+)]
+#[strum(ascii_case_insensitive)]
+#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
+</span><span class="kw">pub enum </span>HaltReason {
+    <span class="doccomment">/// The venue or market session is not halted.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;NOT_HALTED&quot;</span>)]
+    </span>NotHalted = <span class="number">1</span>,
+    <span class="doccomment">/// Trading halt is imposed for purely regulatory reasons with/without volatility halt.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;GENERAL&quot;</span>)]
+    </span>General = <span class="number">2</span>,
+    <span class="doccomment">/// Trading halt is imposed by the venue to protect against extreme volatility.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;VOLATILITY&quot;</span>)]
+    </span>Volatility = <span class="number">3</span>,
 }
 
 <span class="doccomment">/// The order management system (OMS) type for a trading venue or trading strategy.
@@ -2100,7 +2317,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OmsType {
     <span class="doccomment">/// There is no specific type of order management specified (will defer to the venue).
     </span>Unspecified = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2133,7 +2353,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OptionKind {
     <span class="doccomment">/// A Call option gives the holder the right, but not the obligation, to buy an underlying asset at a specified strike price within a specified period of time.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;CALL&quot;</span>)]
@@ -2163,7 +2386,10 @@
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
 #[allow(clippy::enum_variant_names)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OrderSide {
     <span class="doccomment">/// No order side is specified (only valid in the context of a filter for actions involving orders).
     </span>NoOrderSide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2225,7 +2451,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OrderStatus {
     <span class="doccomment">/// The order is initialized (instantiated) within the Nautilus system.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;INITIALIZED&quot;</span>)]
@@ -2290,7 +2519,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>OrderType {
     <span class="doccomment">/// A market order to buy or sell at the best available price in the current market.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;MARKET&quot;</span>)]
@@ -2341,7 +2573,10 @@
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
 #[allow(clippy::enum_variant_names)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>PositionSide {
     <span class="doccomment">/// No position side is specified (only valid in the context of a filter for actions involving positions).
     </span>NoPositionSide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2375,7 +2610,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>PriceType {
     <span class="doccomment">/// A quoted order price where a buyer is willing to buy a quantity of an instrument.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;BID&quot;</span>)]
@@ -2410,7 +2648,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>TimeInForce {
     <span class="doccomment">/// Good Till Canceled (GTC) - the order remains active until canceled.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;GTD&quot;</span>)]
@@ -2454,7 +2695,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>TradingState {
     <span class="doccomment">/// Normal trading operations.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;ACTIVE&quot;</span>)]
@@ -2486,7 +2730,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>TrailingOffsetType {
     <span class="doccomment">/// No trailing offset type is specified (invalid for trailing type orders).
     </span>NoTrailingOffset = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2523,7 +2770,10 @@
 )]
 #[strum(ascii_case_insensitive)]
 #[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+)]
 </span><span class="kw">pub enum </span>TriggerType {
     <span class="doccomment">/// No trigger type is specified (invalid for orders with a trigger).
     </span>NoTrigger = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
@@ -2618,8 +2868,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>account_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AccountType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    AccountType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    AccountType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AccountType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2636,8 +2886,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>aggregation_source_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AggregationSource {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    AggregationSource::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    AggregationSource::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AggregationSource` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2654,8 +2904,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>aggressor_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AggressorSide {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    AggressorSide::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    AggressorSide::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AggressorSide` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2672,8 +2922,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>asset_class_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AssetClass {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    AssetClass::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    AssetClass::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AssetClass` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2690,8 +2940,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>asset_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AssetType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    AssetType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    AssetType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `AssetType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2708,8 +2958,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>bar_aggregation_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; BarAggregation {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    BarAggregation::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    BarAggregation::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `BarAggregation` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2726,8 +2976,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>book_action_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; BookAction {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    BookAction::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    BookAction::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `BookAction` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2744,8 +2994,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>book_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; BookType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    BookType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    BookType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `BookType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2762,8 +3012,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>contingency_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; ContingencyType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    ContingencyType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    ContingencyType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `ContingencyType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2780,8 +3030,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; CurrencyType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    CurrencyType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    CurrencyType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `CurrencyType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2794,8 +3044,8 @@
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>instrument_close_type_from_cstr(
     ptr: <span class="kw-2">*const </span>c_char,
 ) -&gt; InstrumentCloseType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    InstrumentCloseType::from_str(<span class="kw-2">&amp;</span>value).unwrap_or_else(|<span class="kw">_</span>| {
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    InstrumentCloseType::from_str(value).unwrap_or_else(|<span class="kw">_</span>| {
         <span class="macro">panic!</span>(<span class="string">&quot;invalid `InstrumentCloseType` enum string value, was &#39;{value}&#39;&quot;</span>)
     })
 }
@@ -2819,8 +3069,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>liquidity_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; LiquiditySide {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    LiquiditySide::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    LiquiditySide::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `LiquiditySide` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2837,9 +3087,27 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>market_status_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; MarketStatus {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    MarketStatus::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    MarketStatus::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `MarketStatus` enum string value, was &#39;{value}&#39;&quot;</span>))
+}
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>halt_reason_to_cstr(value: HaltReason) -&gt; <span class="kw-2">*const </span>c_char {
+    str_to_cstr(value.as_ref())
+}
+
+<span class="doccomment">/// Returns an enum from a Python string.
+///
+/// # Safety
+/// - Assumes `ptr` is a valid C string pointer.
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+#[no_mangle]
+</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>halt_reason_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; HaltReason {
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    HaltReason::from_str(value)
+        .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `HaltReason` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
@@ -2855,8 +3123,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>oms_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OmsType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    OmsType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    OmsType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OmsType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2873,8 +3141,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>option_kind_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OptionKind {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    OptionKind::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    OptionKind::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OptionKind` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2891,8 +3159,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderSide {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    OrderSide::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    OrderSide::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OrderSide` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2909,8 +3177,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_status_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderStatus {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    OrderStatus::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    OrderStatus::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OrderStatus` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2927,8 +3195,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>order_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    OrderType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    OrderType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `OrderType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2945,8 +3213,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>position_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; PositionSide {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    PositionSide::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    PositionSide::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `PositionSide` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2963,8 +3231,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>price_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; PriceType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    PriceType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    PriceType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `PriceType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2981,8 +3249,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>time_in_force_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TimeInForce {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    TimeInForce::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    TimeInForce::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `TimeInForce` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -2999,8 +3267,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trading_state_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TradingState {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    TradingState::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    TradingState::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `TradingState` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -3017,8 +3285,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trailing_offset_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TrailingOffsetType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    TrailingOffsetType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    TrailingOffsetType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `TrailingOffsetType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 
@@ -3035,8 +3303,8 @@
 </span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 #[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>trigger_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TriggerType {
-    <span class="kw">let </span>value = cstr_to_string(ptr);
-    TriggerType::from_str(<span class="kw-2">&amp;</span>value)
+    <span class="kw">let </span>value = cstr_to_str(ptr);
+    TriggerType::from_str(value)
         .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">&quot;invalid `TriggerType` enum string value, was &#39;{value}&#39;&quot;</span>))
 }
 

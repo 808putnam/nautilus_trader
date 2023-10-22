@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -236,7 +241,7 @@
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="index.html">
-        API Reference
+        Python API
        </a>
       </li>
      </ul>
@@ -286,8 +291,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -301,6 +306,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/architecture.html">
                Architecture
@@ -317,11 +327,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/orders.html">
                Orders
               </a>
@@ -329,6 +334,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -346,8 +366,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -362,7 +387,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -375,8 +400,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -384,13 +409,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -423,7 +448,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -613,6 +638,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../developer_guide/index.html">
@@ -1574,6 +1604,135 @@
                  </a>
                 </li>
                </ul>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.config.common.ImportableControllerConfig">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ImportableControllerConfig
+                 </span>
+                </code>
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ImportableControllerConfig.dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ImportableControllerConfig.dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ImportableControllerConfig.fully_qualified_name">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ImportableControllerConfig.fully_qualified_name()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ImportableControllerConfig.json">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ImportableControllerConfig.json()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ImportableControllerConfig.parse">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ImportableControllerConfig.parse()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ImportableControllerConfig.validate">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ImportableControllerConfig.validate()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.config.common.ControllerConfig">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ControllerConfig
+                 </span>
+                </code>
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ControllerConfig.dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ControllerConfig.dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ControllerConfig.fully_qualified_name">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ControllerConfig.fully_qualified_name()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ControllerConfig.json">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ControllerConfig.json()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ControllerConfig.parse">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ControllerConfig.parse()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.common.ControllerConfig.validate">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ControllerConfig.validate()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.config.common.ControllerFactory">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ControllerFactory
+                 </span>
+                </code>
+               </a>
               </li>
               <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.config.common.ExecAlgorithmConfig">
@@ -8562,40 +8721,6 @@ The value should be a valid decimal format.
              </span>
             </span>
            </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              use_rust
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              bool
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              False
-             </span>
-            </span>
-           </em>
            <span class="sig-paren">
             )
            </span>
@@ -8672,24 +8797,6 @@ The value should be a valid decimal format.
                  optional
                 </em>
                 ) – The fsspec storage options for the data catalog.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 use_rust
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default False
-                </em>
-                ) – If queries will be for Rust schema versions (when implemented).
                </p>
               </li>
              </ul>
@@ -10377,6 +10484,40 @@ The value should be a valid decimal format.
              </span>
             </span>
            </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              manage_gtd_expiry
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
            <span class="sig-paren">
             )
            </span>
@@ -10493,6 +10634,25 @@ how the
                 </em>
                 ) – The external order claim instrument IDs.
 External orders for matching instrument IDs will be associated with (claimed by) the strategy.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 manage_gtd_expiry
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If all order GTD time in force expirations should be managed by the strategy.
+If True then will ensure open orders have their GTD timers re-activated on start.
                </p>
               </li>
              </ul>
@@ -11515,6 +11675,926 @@ External orders for matching instrument IDs will be associated with (claimed by)
              </dl>
             </dd>
            </dl>
+          </dd>
+         </dl>
+         <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.config.common.ImportableControllerConfig">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             ImportableControllerConfig
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              controller_path
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              config_path
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              config
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              dict
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <a class="headerlink" href="#nautilus_trader.config.common.ImportableControllerConfig" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <a class="reference internal" href="#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+             <code class="xref py py-class docutils literal notranslate">
+              <span class="pre">
+               NautilusConfig
+              </span>
+             </code>
+            </a>
+           </p>
+           <p>
+            Configuration for a controller instance.
+           </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 controller_path
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                ) – The fully qualified name of the controller class.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 config_path
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                ) – The fully qualified name of the config class.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 config
+                </strong>
+                (
+                <em>
+                 dict
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 Any
+                </em>
+                <em>
+                 ]
+                </em>
+                ) – The controller configuration.
+               </p>
+              </li>
+             </ul>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ImportableControllerConfig.dict">
+             <span class="sig-name descname">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                dict
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                str
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ,
+                </span>
+               </span>
+               <span class="w">
+               </span>
+               <span class="pre">
+                Any
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ImportableControllerConfig.dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a dictionary representation of the configuration.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, Any]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ImportableControllerConfig.fully_qualified_name">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               fully_qualified_name
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                str
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ImportableControllerConfig.fully_qualified_name" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the fully qualified name for the
+              <cite>
+               NautilusConfig
+              </cite>
+              class.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 str
+                </em>
+               </p>
+              </dd>
+             </dl>
+             <p class="rubric">
+              References
+             </p>
+             <p>
+              <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
+               https://www.python.org/dev/peps/pep-3155/
+              </a>
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ImportableControllerConfig.json">
+             <span class="sig-name descname">
+              <span class="pre">
+               json
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ImportableControllerConfig.json" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return serialized JSON encoded bytes.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bytes
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ImportableControllerConfig.parse">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               parse
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                raw
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                Any
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ImportableControllerConfig.parse" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a decoded object of the given
+              <cite>
+               cls
+              </cite>
+              .
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   cls
+                  </strong>
+                  (
+                  <em>
+                   type
+                  </em>
+                  ) – The type to decode to.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   raw
+                  </strong>
+                  (
+                  <em>
+                   bytes
+                  </em>
+                  ) – The raw bytes to decode.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 Any
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ImportableControllerConfig.validate">
+             <span class="sig-name descname">
+              <span class="pre">
+               validate
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ImportableControllerConfig.validate" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return whether the configuration can be represented as valid JSON.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bool
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+          </dd>
+         </dl>
+         <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.config.common.ControllerConfig">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             ControllerConfig
+            </span>
+           </span>
+           <a class="headerlink" href="#nautilus_trader.config.common.ControllerConfig" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <a class="reference internal" href="#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+             <code class="xref py py-class docutils literal notranslate">
+              <span class="pre">
+               NautilusConfig
+              </span>
+             </code>
+            </a>
+           </p>
+           <p>
+            The base model for all trading strategy configurations.
+           </p>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ControllerConfig.dict">
+             <span class="sig-name descname">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                dict
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                str
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ,
+                </span>
+               </span>
+               <span class="w">
+               </span>
+               <span class="pre">
+                Any
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ControllerConfig.dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a dictionary representation of the configuration.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, Any]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ControllerConfig.fully_qualified_name">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               fully_qualified_name
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                str
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ControllerConfig.fully_qualified_name" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the fully qualified name for the
+              <cite>
+               NautilusConfig
+              </cite>
+              class.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 str
+                </em>
+               </p>
+              </dd>
+             </dl>
+             <p class="rubric">
+              References
+             </p>
+             <p>
+              <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
+               https://www.python.org/dev/peps/pep-3155/
+              </a>
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ControllerConfig.json">
+             <span class="sig-name descname">
+              <span class="pre">
+               json
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ControllerConfig.json" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return serialized JSON encoded bytes.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bytes
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ControllerConfig.parse">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               parse
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                raw
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                Any
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ControllerConfig.parse" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a decoded object of the given
+              <cite>
+               cls
+              </cite>
+              .
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   cls
+                  </strong>
+                  (
+                  <em>
+                   type
+                  </em>
+                  ) – The type to decode to.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   raw
+                  </strong>
+                  (
+                  <em>
+                   bytes
+                  </em>
+                  ) – The raw bytes to decode.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 Any
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.config.common.ControllerConfig.validate">
+             <span class="sig-name descname">
+              <span class="pre">
+               validate
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.config.common.ControllerConfig.validate" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return whether the configuration can be represented as valid JSON.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bool
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+          </dd>
+         </dl>
+         <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.config.common.ControllerFactory">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             ControllerFactory
+            </span>
+           </span>
+           <a class="headerlink" href="#nautilus_trader.config.common.ControllerFactory" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              object
+             </span>
+            </code>
+           </p>
+           <p>
+            Provides controller creation from importable configurations.
+           </p>
           </dd>
          </dl>
          <dl class="py class">
@@ -14458,6 +15538,23 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              controller:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.ImportableControllerConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               load_state:
              </span>
              <span class="pre">
@@ -14902,6 +15999,49 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                  ]
                 </em>
                 ) – The strategy configurations for the kernel.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 exec_algorithms
+                </strong>
+                (
+                <em>
+                 list
+                </em>
+                <em>
+                 [
+                </em>
+                <a class="reference internal" href="#nautilus_trader.config.common.ImportableExecAlgorithmConfig" title="nautilus_trader.config.common.ImportableExecAlgorithmConfig">
+                 <em>
+                  ImportableExecAlgorithmConfig
+                 </em>
+                </a>
+                <em>
+                 ]
+                </em>
+                ) – The execution algorithm configurations for the kernel.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 controller
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.config.common.ImportableControllerConfig" title="nautilus_trader.config.common.ImportableControllerConfig">
+                 <em>
+                  ImportableControllerConfig
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The trader controller for the kernel.
                </p>
               </li>
               <li>
@@ -16550,7 +17690,7 @@ client).
             </span>
             <span class="default_value">
              <span class="pre">
-              'L1_TBBO'
+              'L1_MBP'
              </span>
             </span>
            </em>
@@ -17486,7 +18626,7 @@ client).
               </span>
              </span>
              <span class="pre">
-              str
+              int
              </span>
              <span class="p">
               <span class="pre">
@@ -17496,7 +18636,7 @@ client).
              <span class="w">
              </span>
              <span class="pre">
-              int
+              str
              </span>
              <span class="p">
               <span class="pre">
@@ -17556,7 +18696,7 @@ client).
               </span>
              </span>
              <span class="pre">
-              str
+              int
              </span>
              <span class="p">
               <span class="pre">
@@ -17566,7 +18706,7 @@ client).
              <span class="w">
              </span>
              <span class="pre">
-              int
+              str
              </span>
              <span class="p">
               <span class="pre">
@@ -17779,53 +18919,6 @@ client).
             <span class="default_value">
              <span class="pre">
               None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              use_rust
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <span class="pre">
-              bool
-             </span>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              False
              </span>
             </span>
            </em>
@@ -18575,6 +19668,23 @@ client).
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              controller:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.ImportableControllerConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               load_state:
              </span>
              <span class="pre">
@@ -18982,7 +20092,7 @@ client).
                 <em>
                  ]
                 </em>
-                ) – The strategy configurations for the node.
+                ) – The strategy configurations for the kernel.
                </p>
               </li>
               <li>
@@ -19005,7 +20115,50 @@ client).
                 <em>
                  ]
                 </em>
-                ) – The actor configurations for the node.
+                ) – The actor configurations for the kernel.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 exec_algorithms
+                </strong>
+                (
+                <em>
+                 list
+                </em>
+                <em>
+                 [
+                </em>
+                <a class="reference internal" href="#nautilus_trader.config.common.ImportableExecAlgorithmConfig" title="nautilus_trader.config.common.ImportableExecAlgorithmConfig">
+                 <em>
+                  ImportableExecAlgorithmConfig
+                 </em>
+                </a>
+                <em>
+                 ]
+                </em>
+                ) – The execution algorithm configurations for the kernel.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 controller
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.config.common.ImportableControllerConfig" title="nautilus_trader.config.common.ImportableControllerConfig">
+                 <em>
+                  ImportableControllerConfig
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The trader controller for the kernel.
                </p>
               </li>
               <li>
@@ -19451,6 +20604,76 @@ client).
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              venues
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestVenueConfig" title="nautilus_trader.config.backtest.BacktestVenueConfig">
+              <span class="pre">
+               nautilus_trader.config.backtest.BacktestVenueConfig
+              </span>
+             </a>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              data
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestDataConfig" title="nautilus_trader.config.backtest.BacktestDataConfig">
+              <span class="pre">
+               nautilus_trader.config.backtest.BacktestDataConfig
+              </span>
+             </a>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               engine
              </span>
             </span>
@@ -19475,130 +20698,6 @@ client).
                BacktestEngineConfig
               </span>
              </a>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              venues
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <span class="pre">
-              list
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestVenueConfig" title="nautilus_trader.config.backtest.BacktestVenueConfig">
-              <span class="pre">
-               nautilus_trader.config.backtest.BacktestVenueConfig
-              </span>
-             </a>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              data
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <span class="pre">
-              list
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestDataConfig" title="nautilus_trader.config.backtest.BacktestDataConfig">
-              <span class="pre">
-               nautilus_trader.config.backtest.BacktestDataConfig
-              </span>
-             </a>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
              <span class="p">
               <span class="pre">
                ]
@@ -19704,26 +20803,6 @@ external inputs of venues and data.
               <li>
                <p>
                 <strong>
-                 engine
-                </strong>
-                (
-                <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestEngineConfig" title="nautilus_trader.config.backtest.BacktestEngineConfig">
-                 <em>
-                  BacktestEngineConfig
-                 </em>
-                </a>
-                <em>
-                 ,
-                </em>
-                <em>
-                 optional
-                </em>
-                ) – The backtest engine configuration (represents the core system kernel).
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
                  venues
                 </strong>
                 (
@@ -19742,6 +20821,7 @@ external inputs of venues and data.
                  ]
                 </em>
                 ) – The venue configurations for the backtest run.
+A valid configuration must include at least one venue config.
                </p>
               </li>
               <li>
@@ -19765,6 +20845,21 @@ external inputs of venues and data.
                  ]
                 </em>
                 ) – The data configurations for the backtest run.
+A valid configuration must include at least one data config.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 engine
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.config.backtest.BacktestEngineConfig" title="nautilus_trader.config.backtest.BacktestEngineConfig">
+                 <em>
+                  BacktestEngineConfig
+                 </em>
+                </a>
+                ) – The backtest engine configuration (the core system kernel).
                </p>
               </li>
               <li>
@@ -24247,6 +25342,23 @@ are colocated with the venue (to avoid the potential for race conditions).
              </span>
              <span class="pre">
               &lt;factory&gt;
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              controller:
+             </span>
+             <span class="pre">
+              ~typing.Optional[~nautilus_trader.config.common.ImportableControllerConfig]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>

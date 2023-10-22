@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -236,7 +241,7 @@
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="index.html">
-        API Reference
+        Python API
        </a>
       </li>
      </ul>
@@ -286,8 +291,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -301,6 +306,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/architecture.html">
                Architecture
@@ -317,11 +327,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/orders.html">
                Orders
               </a>
@@ -329,6 +334,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -346,8 +366,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -362,7 +387,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -375,8 +400,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -384,13 +409,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -423,7 +448,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -613,6 +638,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../developer_guide/index.html">
@@ -863,10 +893,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.handle_instrument_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.handle_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.handle_instrument_status_update()
+                  Actor.handle_instrument_status()
                  </span>
                 </code>
                </a>
@@ -944,10 +974,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.handle_venue_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.handle_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.handle_venue_status_update()
+                  Actor.handle_venue_status()
                  </span>
                 </code>
                </a>
@@ -993,6 +1023,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   Actor.id
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.indicators_initialized">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Actor.indicators_initialized()
                  </span>
                 </code>
                </a>
@@ -1169,10 +1208,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.on_instrument_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.on_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.on_instrument_status_update()
+                  Actor.on_instrument_status()
                  </span>
                 </code>
                </a>
@@ -1277,10 +1316,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.on_venue_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.on_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.on_venue_status_update()
+                  Actor.on_venue_status()
                  </span>
                 </code>
                </a>
@@ -1349,10 +1388,46 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.register_indicator_for_bars">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Actor.register_indicator_for_bars()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.register_indicator_for_quote_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Actor.register_indicator_for_quote_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.register_indicator_for_trade_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Actor.register_indicator_for_trade_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.register_warning_event">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   Actor.register_warning_event()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.registered_indicators">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Actor.registered_indicators
                  </span>
                 </code>
                </a>
@@ -1511,10 +1586,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.subscribe_instrument_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.subscribe_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.subscribe_instrument_status_updates()
+                  Actor.subscribe_instrument_status()
                  </span>
                 </code>
                </a>
@@ -1574,10 +1649,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.subscribe_venue_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.subscribe_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.subscribe_venue_status_updates()
+                  Actor.subscribe_venue_status()
                  </span>
                 </code>
                </a>
@@ -1637,10 +1712,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.unsubscribe_instrument_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.unsubscribe_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.unsubscribe_instrument_status_updates()
+                  Actor.unsubscribe_instrument_status()
                  </span>
                 </code>
                </a>
@@ -1700,10 +1775,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.unsubscribe_venue_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.common.actor.Actor.unsubscribe_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Actor.unsubscribe_venue_status_updates()
+                  Actor.unsubscribe_venue_status()
                  </span>
                 </code>
                </a>
@@ -5411,7 +5486,7 @@ then the component state will not change, and an error will be logged.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                 <em>
                  InstrumentClose
                 </em>
@@ -5431,10 +5506,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.handle_instrument_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.handle_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              handle_instrument_status_update
+              handle_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -5451,10 +5526,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               InstrumentStatusUpdate
+               InstrumentStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -5471,7 +5546,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.handle_instrument_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.handle_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -5488,7 +5563,7 @@ then the component state will not change, and an error will be logged.
              </code>
              then passes to
              <cite>
-              on_instrument_status_update
+              on_instrument_status
              </cite>
              .
             </p>
@@ -5502,15 +5577,15 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                 <em>
-                 InstrumentStatusUpdate
+                 InstrumentStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The status update received.
               </p>
              </dd>
             </dl>
@@ -6221,7 +6296,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             Handle the given tick data by handling each tick individually.
+             Handle the given historical trade tick data by handling each tick individually.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -6265,10 +6340,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.handle_venue_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.handle_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              handle_venue_status_update
+              handle_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -6285,10 +6360,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               VenueStatusUpdate
+               VenueStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -6305,7 +6380,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.handle_venue_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.handle_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -6322,7 +6397,7 @@ then the component state will not change, and an error will be logged.
              </code>
              then passes to
              <cite>
-              on_venue_status_update
+              on_venue_status
              </cite>
              .
             </p>
@@ -6336,15 +6411,15 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                 <em>
-                 VenueStatusUpdate
+                 VenueStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The status update received.
               </p>
              </dd>
             </dl>
@@ -6606,6 +6681,62 @@ then the component state will not change, and an error will be logged.
                <cite>
                 ComponentId
                </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.indicators_initialized">
+            <span class="sig-name descname">
+             <span class="pre">
+              indicators_initialized
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               bool
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.indicators_initialized" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return a value indicating whether all indicators are initialized.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
+               </em>
+               – True if all initialized, else False
               </p>
              </dd>
             </dl>
@@ -7819,12 +7950,12 @@ update.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                 <em>
                  InstrumentClose
                 </em>
                </a>
-               ) – The update received.
+               ) – The instrument close received.
               </p>
              </dd>
             </dl>
@@ -7839,10 +7970,10 @@ update.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.on_instrument_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.on_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              on_instrument_status_update
+              on_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -7859,10 +7990,10 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               InstrumentStatusUpdate
+               InstrumentStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -7879,7 +8010,7 @@ update.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.on_instrument_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.on_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -7898,15 +8029,15 @@ update.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                 <em>
-                 InstrumentStatusUpdate
+                 InstrumentStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The instrument status update received.
               </p>
              </dd>
             </dl>
@@ -8666,10 +8797,10 @@ initially starting.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.on_venue_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.on_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              on_venue_status_update
+              on_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -8686,10 +8817,10 @@ initially starting.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               VenueStatusUpdate
+               VenueStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -8706,7 +8837,7 @@ initially starting.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.on_venue_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.on_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -8724,15 +8855,15 @@ initially starting.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                 <em>
-                 VenueStatusUpdate
+                 VenueStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The venue status update received.
               </p>
              </dd>
             </dl>
@@ -9547,6 +9678,313 @@ and so the results of
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.register_indicator_for_bars">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_bars
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               BarType
+              </span>
+              <span class="pre">
+               bar_type
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.register_indicator_for_bars" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive bar data for the
+given bar type.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  bar_type
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
+                  <em>
+                   BarType
+                  </em>
+                 </a>
+                 ) – The bar type for bar updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.register_indicator_for_quote_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_quote_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.register_indicator_for_quote_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive quote tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.register_indicator_for_trade_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_trade_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.register_indicator_for_trade_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive trade tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <em>
+                  indicator
+                 </em>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.register_warning_event">
             <span class="sig-name descname">
              <span class="pre">
@@ -9612,6 +10050,38 @@ and so the results of
                 type
                </em>
                ) – The event class to register.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.registered_indicators">
+            <span class="sig-name descname">
+             <span class="pre">
+              registered_indicators
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.registered_indicators" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the registered indicators for the strategy.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                list[Indicator]
+               </em>
               </p>
              </dd>
             </dl>
@@ -11756,6 +12226,17 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               await_partial=False
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -11829,6 +12310,25 @@ If
                   </span>
                  </code>
                  then will be inferred from the venue in the instrument ID.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  await_partial
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – If the bar aggregator should await the arrival of a historical partial bar prior
+to activaely aggregating new bars.
                 </p>
                </li>
               </ul>
@@ -12184,10 +12684,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.subscribe_instrument_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.subscribe_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribe_instrument_status_updates
+              subscribe_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -12235,7 +12735,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.subscribe_instrument_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.subscribe_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -12542,7 +13042,7 @@ for the given instrument ID.
                  (BookType {
                  <code class="docutils literal notranslate">
                   <span class="pre">
-                   L1_TBBO
+                   L1_MBP
                   </span>
                  </code>
                  ,
@@ -12776,7 +13276,7 @@ as per the last subscription request (this will also affect all subscribers).
                  (BookType {
                  <code class="docutils literal notranslate">
                   <span class="pre">
-                   L1_TBBO
+                   L1_MBP
                   </span>
                  </code>
                  ,
@@ -13266,10 +13766,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.subscribe_venue_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.subscribe_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribe_venue_status_updates
+              subscribe_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -13317,7 +13817,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.subscribe_venue_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.subscribe_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -13853,10 +14353,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.unsubscribe_instrument_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.unsubscribe_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              unsubscribe_instrument_status_updates
+              unsubscribe_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -13904,7 +14404,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.unsubscribe_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -14704,10 +15204,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.unsubscribe_venue_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.unsubscribe_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              unsubscribe_venue_status_updates
+              unsubscribe_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -14755,7 +15255,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.unsubscribe_venue_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.common.actor.Actor.unsubscribe_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -21298,7 +21798,11 @@ then the component state will not change, and an error will be logged.
             </code>
            </p>
            <p>
-            Represents a unique identifier for a task managed by the ActorExecutor.
+            Represents a unique identifier for a task managed by the
+            <cite>
+             ActorExecutor
+            </cite>
+            .
            </p>
            <p>
             This ID can be associated with a task that is either queued for execution or
@@ -21473,7 +21977,7 @@ actively executing as an
             classes.
            </p>
            <p>
-            Provides an executor designed to handle asynchronous tasks for
+            The executor is designed to handle asynchronous tasks for
             <cite>
              Actor
             </cite>

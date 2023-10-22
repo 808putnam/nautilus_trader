@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/clock.rs`."><title>clock.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (35e416303 2023-09-01)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../nautilus_common/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/clock.rs`."><title>clock.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (1c05d50c8 2023-10-21)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -623,6 +623,8 @@
 <a href="#623" id="623">623</a>
 <a href="#624" id="624">624</a>
 <a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
+<a href="#627" id="627">627</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -652,7 +654,7 @@
 <span class="kw">const </span>ONE_NANOSECOND: Duration = Duration::from_nanos(<span class="number">1</span>);
 
 <span class="kw">pub struct </span>MonotonicClock {
-    <span class="doccomment">/// The last recorded duration value from the clock.
+    <span class="doccomment">/// The last recorded duration value for the clock.
     </span>last: Duration,
 }
 
@@ -676,7 +678,7 @@
     <span class="doccomment">/// Initializes a new `MonotonicClock` instance.
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
-        MonotonicClock {
+        <span class="self">Self </span>{
             last: duration_since_unix_epoch(),
         }
     }
@@ -704,7 +706,7 @@
 
 <span class="kw">impl </span>Default <span class="kw">for </span>MonotonicClock {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        MonotonicClock::new()
+        <span class="self">Self</span>::new()
     }
 }
 
@@ -734,13 +736,13 @@
     <span class="doccomment">/// Return the count of active timers in the clock.
     </span><span class="kw">fn </span>timer_count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize;
 
-    <span class="doccomment">/// Register a default event handler for the clock. If a [`Timer`]
+    <span class="doccomment">/// Register a default event handler for the clock. If a `Timer`
     /// does not have an event handler, then this handler is used.
     </span><span class="kw">fn </span>register_default_handler(<span class="kw-2">&amp;mut </span><span class="self">self</span>, callback: Box&lt;<span class="kw">dyn </span>Fn(TimeEvent)&gt;);
 
     <span class="kw">fn </span>register_default_handler_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, callback_py: PyObject);
 
-    <span class="doccomment">/// Set a [`Timer`] to alert at a particular time. Optional
+    <span class="doccomment">/// Set a `Timer` to alert at a particular time. Optional
     /// callback gets used to handle generated events.
     </span><span class="kw">fn </span>set_time_alert_ns_py(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
@@ -749,7 +751,7 @@
         callback_py: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
     );
 
-    <span class="doccomment">/// Set a [`Timer`] to start alerting at every interval
+    <span class="doccomment">/// Set a `Timer` to start alerting at every interval
     /// between start and stop time. Optional callback gets
     /// used to handle generated event.
     </span><span class="kw">fn </span>set_timer_ns_py(
@@ -776,12 +778,13 @@
 }
 
 <span class="kw">impl </span>TestClock {
-    <span class="kw">pub fn </span>get_timers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;String, TestTimer&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>get_timers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;String, TestTimer&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.timers
     }
 
     <span class="kw">pub fn </span>set_time(<span class="kw-2">&amp;mut </span><span class="self">self</span>, to_time_ns: UnixNanos) {
-        <span class="self">self</span>.time_ns = to_time_ns
+        <span class="self">self</span>.time_ns = to_time_ns;
     }
 
     <span class="kw">pub fn </span>advance_time(<span class="kw-2">&amp;mut </span><span class="self">self</span>, to_time_ns: UnixNanos, set_time: bool) -&gt; Vec&lt;TimeEvent&gt; {
@@ -807,6 +810,7 @@
     }
 
     <span class="doccomment">/// Assumes time events are sorted by their `ts_event`.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>match_handlers_py(<span class="kw-2">&amp;</span><span class="self">self</span>, events: Vec&lt;TimeEvent&gt;) -&gt; Vec&lt;TimeEventHandler&gt; {
         events
             .into_iter()
@@ -830,8 +834,8 @@
 }
 
 <span class="kw">impl </span>Clock <span class="kw">for </span>TestClock {
-    <span class="kw">fn </span>new() -&gt; TestClock {
-        TestClock {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
             time_ns: <span class="number">0</span>,
             timers: HashMap::new(),
             default_callback: <span class="prelude-val">None</span>,
@@ -877,7 +881,7 @@
     }
 
     <span class="kw">fn </span>register_default_handler_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, callback_py: PyObject) {
-        <span class="self">self</span>.default_callback_py = <span class="prelude-val">Some</span>(callback_py)
+        <span class="self">self</span>.default_callback_py = <span class="prelude-val">Some</span>(callback_py);
     }
 
     <span class="kw">fn </span>set_time_alert_ns_py(
@@ -946,8 +950,8 @@
     }
 
     <span class="kw">fn </span>cancel_timers(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">for </span>(<span class="kw">_</span>, timer) <span class="kw">in </span><span class="self">self</span>.timers.iter_mut() {
-            timer.cancel()
+        <span class="kw">for </span>timer <span class="kw">in </span><span class="kw-2">&amp;mut </span><span class="self">self</span>.timers.values_mut() {
+            timer.cancel();
         }
         <span class="self">self</span>.timers = HashMap::new();
     }
@@ -963,8 +967,8 @@
 }
 
 <span class="kw">impl </span>Clock <span class="kw">for </span>LiveClock {
-    <span class="kw">fn </span>new() -&gt; LiveClock {
-        LiveClock {
+    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
             internal: MonotonicClock::default(),
             timers: HashMap::new(),
             default_callback: <span class="prelude-val">None</span>,
@@ -1010,7 +1014,7 @@
     }
 
     <span class="kw">fn </span>register_default_handler_py(<span class="kw-2">&amp;mut </span><span class="self">self</span>, callback_py: PyObject) {
-        <span class="self">self</span>.default_callback_py = <span class="prelude-val">Some</span>(callback_py)
+        <span class="self">self</span>.default_callback_py = <span class="prelude-val">Some</span>(callback_py);
     }
 
     <span class="kw">fn </span>set_time_alert_ns_py(
@@ -1081,8 +1085,8 @@
     }
 
     <span class="kw">fn </span>cancel_timers(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">for </span>(<span class="kw">_</span>, timer) <span class="kw">in </span><span class="self">self</span>.timers.iter_mut() {
-            timer.cancel()
+        <span class="kw">for </span>timer <span class="kw">in </span><span class="kw-2">&amp;mut </span><span class="self">self</span>.timers.values_mut() {
+            timer.cancel();
         }
         <span class="self">self</span>.timers = HashMap::new();
     }

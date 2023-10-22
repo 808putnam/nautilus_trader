@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["DataBackendSession","DataQueryResult","QueryResult","TsInitComparator"]};
+window.SIDEBAR_ITEMS = {"struct":["DataBackendSession","DataQueryResult","TsInitComparator"],"type":["QueryResult"]};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/types/currency.rs`."><title>currency.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (35e416303 2023-09-01)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../nautilus_model/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/types/currency.rs`."><title>currency.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (1c05d50c8 2023-10-21)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -204,74 +204,6 @@
 <a href="#204" id="204">204</a>
 <a href="#205" id="205">205</a>
 <a href="#206" id="206">206</a>
-<a href="#207" id="207">207</a>
-<a href="#208" id="208">208</a>
-<a href="#209" id="209">209</a>
-<a href="#210" id="210">210</a>
-<a href="#211" id="211">211</a>
-<a href="#212" id="212">212</a>
-<a href="#213" id="213">213</a>
-<a href="#214" id="214">214</a>
-<a href="#215" id="215">215</a>
-<a href="#216" id="216">216</a>
-<a href="#217" id="217">217</a>
-<a href="#218" id="218">218</a>
-<a href="#219" id="219">219</a>
-<a href="#220" id="220">220</a>
-<a href="#221" id="221">221</a>
-<a href="#222" id="222">222</a>
-<a href="#223" id="223">223</a>
-<a href="#224" id="224">224</a>
-<a href="#225" id="225">225</a>
-<a href="#226" id="226">226</a>
-<a href="#227" id="227">227</a>
-<a href="#228" id="228">228</a>
-<a href="#229" id="229">229</a>
-<a href="#230" id="230">230</a>
-<a href="#231" id="231">231</a>
-<a href="#232" id="232">232</a>
-<a href="#233" id="233">233</a>
-<a href="#234" id="234">234</a>
-<a href="#235" id="235">235</a>
-<a href="#236" id="236">236</a>
-<a href="#237" id="237">237</a>
-<a href="#238" id="238">238</a>
-<a href="#239" id="239">239</a>
-<a href="#240" id="240">240</a>
-<a href="#241" id="241">241</a>
-<a href="#242" id="242">242</a>
-<a href="#243" id="243">243</a>
-<a href="#244" id="244">244</a>
-<a href="#245" id="245">245</a>
-<a href="#246" id="246">246</a>
-<a href="#247" id="247">247</a>
-<a href="#248" id="248">248</a>
-<a href="#249" id="249">249</a>
-<a href="#250" id="250">250</a>
-<a href="#251" id="251">251</a>
-<a href="#252" id="252">252</a>
-<a href="#253" id="253">253</a>
-<a href="#254" id="254">254</a>
-<a href="#255" id="255">255</a>
-<a href="#256" id="256">256</a>
-<a href="#257" id="257">257</a>
-<a href="#258" id="258">258</a>
-<a href="#259" id="259">259</a>
-<a href="#260" id="260">260</a>
-<a href="#261" id="261">261</a>
-<a href="#262" id="262">262</a>
-<a href="#263" id="263">263</a>
-<a href="#264" id="264">264</a>
-<a href="#265" id="265">265</a>
-<a href="#266" id="266">266</a>
-<a href="#267" id="267">267</a>
-<a href="#268" id="268">268</a>
-<a href="#269" id="269">269</a>
-<a href="#270" id="270">270</a>
-<a href="#271" id="271">271</a>
-<a href="#272" id="272">272</a>
-<a href="#273" id="273">273</a>
-<a href="#274" id="274">274</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -288,16 +220,12 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">use </span>std::{
-    ffi::{c_char, CStr},
     hash::{Hash, Hasher},
     str::FromStr,
 };
 
-<span class="kw">use </span>anyhow::Result;
-<span class="kw">use </span>nautilus_core::{
-    correctness::check_valid_string,
-    string::{cstr_to_string, str_to_cstr},
-};
+<span class="kw">use </span>anyhow::{anyhow, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span>nautilus_core::correctness::check_valid_string;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>serde::{Deserialize, Serialize, Serializer};
 <span class="kw">use </span>ustr::Ustr;
@@ -307,7 +235,10 @@
 
 <span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Debug, Eq)]
-#[pyclass]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>Currency {
     <span class="kw">pub </span>code: Ustr,
     <span class="kw">pub </span>precision: u8,
@@ -326,7 +257,7 @@
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         check_valid_string(code, <span class="string">&quot;`Currency` code&quot;</span>)<span class="question-mark">?</span>;
         check_valid_string(name, <span class="string">&quot;`Currency` name&quot;</span>)<span class="question-mark">?</span>;
-        check_fixed_precision(precision).unwrap();
+        check_fixed_precision(precision)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             code: Ustr::from(code),
@@ -335,6 +266,34 @@
             name: Ustr::from(name),
             currency_type,
         })
+    }
+
+    <span class="kw">pub fn </span>register(currency: Currency, overwrite: bool) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>map = CURRENCY_MAP.lock().map_err(|e| <span class="macro">anyhow!</span>(e.to_string()))<span class="question-mark">?</span>;
+
+        <span class="kw">if </span>!overwrite &amp;&amp; map.contains_key(currency.code.as_str()) {
+            <span class="comment">// If overwrite is false and the currency already exists, simply return
+            </span><span class="kw">return </span><span class="prelude-val">Ok</span>(());
+        }
+
+        <span class="comment">// Insert or overwrite the currency in the map
+        </span>map.insert(currency.code.to_string(), currency);
+        <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="kw">pub fn </span>is_fiat(code: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt; {
+        <span class="kw">let </span>currency = Currency::from_str(code)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(currency.currency_type == CurrencyType::Fiat)
+    }
+
+    <span class="kw">pub fn </span>is_crypto(code: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt; {
+        <span class="kw">let </span>currency = Currency::from_str(code)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(currency.currency_type == CurrencyType::Crypto)
+    }
+
+    <span class="kw">pub fn </span>is_commodity_backed(code: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;bool&gt; {
+        <span class="kw">let </span>currency = Currency::from_str(code)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(currency.currency_type == CurrencyType::CommodityBacked)
     }
 }
 
@@ -351,21 +310,22 @@
 }
 
 <span class="kw">impl </span>FromStr <span class="kw">for </span>Currency {
-    <span class="kw">type </span><span class="prelude-val">Err </span>= String;
+    <span class="kw">type </span><span class="prelude-val">Err </span>= anyhow::Error;
 
-    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
-        CURRENCY_MAP
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
+        <span class="kw">let </span>map_guard = CURRENCY_MAP
             .lock()
-            .unwrap()
+            .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to acquire lock on `CURRENCY_MAP`: {e}&quot;</span>))<span class="question-mark">?</span>;
+        map_guard
             .get(s)
-            .cloned()
-            .ok_or_else(|| <span class="macro">format!</span>(<span class="string">&quot;Unknown currency: {}&quot;</span>, s))
+            .copied()
+            .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Unknown currency: {s}&quot;</span>))
     }
 }
 
 <span class="kw">impl </span>From&lt;<span class="kw-2">&amp;</span>str&gt; <span class="kw">for </span>Currency {
     <span class="kw">fn </span>from(input: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
-        input.parse().unwrap_or_else(|err| <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, err))
+        input.parse().unwrap()
     }
 }
 
@@ -389,99 +349,13 @@
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
-// C API
-////////////////////////////////////////////////////////////////////////////////
-</span><span class="doccomment">/// Returns a [`Currency`] from pointers and primitives.
-///
-/// # Safety
-///
-/// - Assumes `code_ptr` is a valid C string pointer.
-/// - Assumes `name_ptr` is a valid C string pointer.
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
-#[no_mangle]
-</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_from_py(
-    code_ptr: <span class="kw-2">*const </span>c_char,
-    precision: u8,
-    iso4217: u16,
-    name_ptr: <span class="kw-2">*const </span>c_char,
-    currency_type: CurrencyType,
-) -&gt; Currency {
-    <span class="macro">assert!</span>(!code_ptr.is_null(), <span class="string">&quot;`code_ptr` was NULL&quot;</span>);
-    <span class="macro">assert!</span>(!name_ptr.is_null(), <span class="string">&quot;`name_ptr` was NULL&quot;</span>);
-
-    Currency::new(
-        CStr::from_ptr(code_ptr)
-            .to_str()
-            .expect(<span class="string">&quot;CStr::from_ptr failed for `code_ptr`&quot;</span>),
-        precision,
-        iso4217,
-        CStr::from_ptr(name_ptr)
-            .to_str()
-            .expect(<span class="string">&quot;CStr::from_ptr failed for `name_ptr`&quot;</span>),
-        currency_type,
-    )
-    .unwrap()
-}
-
-<span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_to_cstr(currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="kw-2">*const </span>c_char {
-    str_to_cstr(<span class="macro">format!</span>(<span class="string">&quot;{currency:?}&quot;</span>).as_str())
-}
-
-<span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_code_to_cstr(currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="kw-2">*const </span>c_char {
-    str_to_cstr(<span class="kw-2">&amp;</span>currency.code)
-}
-
-<span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_name_to_cstr(currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="kw-2">*const </span>c_char {
-    str_to_cstr(<span class="kw-2">&amp;</span>currency.name)
-}
-
-<span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_hash(currency: <span class="kw-2">&amp;</span>Currency) -&gt; u64 {
-    currency.code.precomputed_hash()
-}
-
-<span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_register(currency: Currency) {
-    CURRENCY_MAP
-        .lock()
-        .unwrap()
-        .insert(currency.code.to_string(), currency);
-}
-
-<span class="doccomment">/// # Safety
-///
-/// - Assumes `code_ptr` is borrowed from a valid Python UTF-8 `str`.
-</span><span class="attr">#[no_mangle]
-</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_exists(code_ptr: <span class="kw-2">*const </span>c_char) -&gt; u8 {
-    <span class="kw">let </span>code = cstr_to_string(code_ptr);
-    u8::from(CURRENCY_MAP.lock().unwrap().contains_key(<span class="kw-2">&amp;</span>code))
-}
-
-<span class="doccomment">/// # Safety
-///
-/// - Assumes `code_ptr` is borrowed from a valid Python UTF-8 `str`.
-</span><span class="attr">#[no_mangle]
-</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_from_cstr(code_ptr: <span class="kw-2">*const </span>c_char) -&gt; Currency {
-    <span class="kw">let </span>code = cstr_to_string(code_ptr);
-    Currency::from_str(<span class="kw-2">&amp;</span>code).unwrap()
-}
-
-<span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Tests
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>nautilus_core::string::str_to_cstr;
     <span class="kw">use </span>rstest::rstest;
 
-    <span class="kw">use </span><span class="kw">super</span>::currency_register;
-    <span class="kw">use crate</span>::{
-        enums::CurrencyType,
-        types::currency::{currency_exists, Currency},
-    };
+    <span class="kw">use crate</span>::{enums::CurrencyType, types::currency::Currency};
 
     <span class="attr">#[rstest]
     #[should_panic(expected = <span class="string">&quot;`Currency` code&quot;</span>)]
@@ -530,20 +404,10 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_serialization_deserialization() {
-        <span class="kw">let </span>currency =
-            Currency::new(<span class="string">&quot;USD&quot;</span>, <span class="number">2</span>, <span class="number">840</span>, <span class="string">&quot;United States dollar&quot;</span>, CurrencyType::Fiat).unwrap();
+        <span class="kw">let </span>currency = Currency::USD();
         <span class="kw">let </span>serialized = serde_json::to_string(<span class="kw-2">&amp;</span>currency).unwrap();
         <span class="kw">let </span>deserialized: Currency = serde_json::from_str(<span class="kw-2">&amp;</span>serialized).unwrap();
         <span class="macro">assert_eq!</span>(currency, deserialized);
-    }
-
-    <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_registration() {
-        <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;MYC&quot;</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="string">&quot;My Currency&quot;</span>, CurrencyType::Crypto).unwrap();
-        currency_register(currency);
-        <span class="kw">unsafe </span>{
-            <span class="macro">assert_eq!</span>(currency_exists(str_to_cstr(<span class="string">&quot;MYC&quot;</span>)), <span class="number">1</span>);
-        }
     }
 }
 </code></pre></div></section></main></body></html>

@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["Data"],"fn":["data_clone","is_monotonically_increasing_by_init"],"mod":["bar","delta","order","quote","ticker","trade"],"trait":["HasTsInit"]};

@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -236,7 +241,7 @@
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="../index.html">
-        API Reference
+        Python API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -291,8 +296,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -306,6 +311,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/architecture.html">
                Architecture
@@ -322,11 +332,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/orders.html">
                Orders
               </a>
@@ -334,6 +339,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -351,8 +371,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -367,7 +392,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -380,8 +405,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -389,13 +414,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -428,7 +453,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -620,6 +645,11 @@
             </ul>
            </li>
            <li class="md-nav__item">
+            <a class="md-nav__link" href="../../rust.html">
+             Rust API
+            </a>
+           </li>
+           <li class="md-nav__item">
             <a class="md-nav__link" href="../../developer_guide/index.html">
              Developer Guide
             </a>
@@ -724,10 +754,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.Level.volume">
+               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.Level.size">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  Level.volume()
+                  Level.size()
                  </span>
                 </code>
                </a>
@@ -914,6 +944,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OrderBook.get_avg_px_for_quantity()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.orderbook.book.OrderBook.get_quantity_for_price">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBook.get_quantity_for_price()
                  </span>
                 </code>
                </a>
@@ -1321,10 +1360,10 @@
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.Level.volume">
+           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.Level.size">
             <span class="sig-name descname">
              <span class="pre">
-              volume
+              size
              </span>
             </span>
             <span class="sig-paren">
@@ -1350,13 +1389,13 @@
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.Level.volume" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.Level.size" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Return the volume at this level.
+             Return the size at this level.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -2792,6 +2831,147 @@ of the order book.
             </div>
            </dd>
           </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.OrderBook.get_quantity_for_price">
+            <span class="sig-name descname">
+             <span class="pre">
+              get_quantity_for_price
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Price
+              </span>
+              <span class="pre">
+               price
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               OrderSide
+              </span>
+              <span class="pre">
+               order_side
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               double
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.orderbook.book.OrderBook.get_quantity_for_price" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the current total quantity for the given
+             <cite>
+              price
+             </cite>
+             based on the current state
+of the order book.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  price
+                 </strong>
+                 (
+                 <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+                  <em>
+                   Price
+                  </em>
+                 </a>
+                 ) – The quantity for the calculation.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  order_side
+                 </strong>
+                 (
+                 <em>
+                  OrderSide
+                 </em>
+                 ) – The order side for the calculation.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                double
+               </em>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                order_side
+               </cite>
+               is equal to
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 NO_ORDER_SIDE
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.model.orderbook.book.OrderBook.instrument_id">
             <span class="sig-name descname">
@@ -2939,7 +3119,7 @@ of the order book.
            </dt>
            <dd>
             <p>
-             Print the order book in a clear format.
+             Return a string representation of the order book in a human-readable table format.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -2957,7 +3137,7 @@ of the order book.
                <em>
                 int
                </em>
-               ) – The number of levels to print.
+               ) – The number of levels to include.
               </p>
              </dd>
              <dt class="field-even">

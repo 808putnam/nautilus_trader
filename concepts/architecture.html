@@ -95,7 +95,7 @@
   <link href="../genindex.html" rel="index" title="Index"/>
   <link href="../search.html" rel="search" title="Search"/>
   <link href="strategies.html" rel="next" title="Strategies"/>
-  <link href="index.html" rel="prev" title="Concepts"/>
+  <link href="overview.html" rel="prev" title="Overview"/>
   <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
  </head>
  <body data-md-color-accent="#282f38" data-md-color-primary="#282f38" dir="ltr">
@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -286,8 +291,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -301,6 +306,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item md-nav__link--active">
               <a class="md-nav__link" href="#">
                Architecture
@@ -317,11 +327,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="orders.html">
                Orders
               </a>
@@ -329,6 +334,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -346,8 +366,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -362,7 +387,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -375,8 +400,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -384,13 +409,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -423,7 +448,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../api_reference/index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -615,6 +640,11 @@
             </ul>
            </li>
            <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
+           </li>
+           <li class="md-nav__item">
             <a class="md-nav__link" href="../developer_guide/index.html">
              Developer Guide
             </a>
@@ -789,37 +819,66 @@
          </a>
         </h1>
         <p>
-         This guide describes the architecture of NautilusTrader from highest to lowest level, including:
+         Welcome to the architectural overview of NautilusTrader.
+        </p>
+        <p>
+         This guide dives deep into the foundational principles, structures, and designs that underpin
+the platform. Whether you’re a developer, system architect, or just curious about the inner workings
+of NautilusTrader, this exposition covers:
         </p>
         <ul class="simple">
          <li>
           <p>
-           Design philosophy
+           The
+           <strong>
+            Design Philosophy
+           </strong>
+           that drives decisions and shapes the system’s evolution
           </p>
          </li>
          <li>
           <p>
-           System architecture
+           The overarching
+           <strong>
+            System Architecture
+           </strong>
+           providing a bird’s-eye view of the entire system framework
           </p>
          </li>
          <li>
           <p>
-           Framework organization
+           How the
+           <strong>
+            Framework
+           </strong>
+           is organized to facilitate modularity and maintainability
           </p>
          </li>
          <li>
           <p>
-           Code structure
+           The
+           <strong>
+            Code Structure
+           </strong>
+           that ensures readability and scalability
           </p>
          </li>
          <li>
           <p>
-           Component organization and interaction
+           A breakdown of
+           <strong>
+            Component Organization and Interaction
+           </strong>
+           to understand how different parts communicate and collaborate
           </p>
          </li>
          <li>
           <p>
-           Implementation techniques
+           And finally, the
+           <strong>
+            Implementation Techniques
+           </strong>
+           that are crucial for performance, reliability, and robustness
           </p>
          </li>
         </ul>
@@ -942,9 +1001,12 @@ environment contexts.
             “Nautilus system boundary”
            </em>
            refers to operations within
-the runtime of a single Nautilus node (also known as a trader instance).
+the runtime of a single Nautilus node (also known as a “trader instance”).
           </p>
          </div>
+         <p>
+          <img alt="Architecture" src="https://github.com/nautechsystems/nautilus_trader/blob/develop/docs/_images/architecture-overview.png?raw=true"/>
+         </p>
          <section id="environment-contexts">
           <h3 id="environment-contexts">
            Environment contexts
@@ -1041,8 +1103,8 @@ resulted in arriving at this design, as it was found the overhead of context swi
 didn’t actually result in improved performance.
           </p>
           <p>
-           When considering the logic of how your trading will work within the system boundary, you can expect each component to consume messages
-in a predictable synchronous way (
+           When considering the logic of how your algo trading will work within the system boundary, you can expect each component to consume messages
+in a deterministic synchronous way (
            <em>
             similar
            </em>
@@ -1318,7 +1380,25 @@ for each of these subpackages from the left nav menu.
                system
               </span>
              </code>
-             - the core system kernel common between backtest, sandbox and live contexts
+             - the core system kernel common between
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               backtest
+              </span>
+             </code>
+             ,
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               sandbox
+              </span>
+             </code>
+             ,
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               live
+              </span>
+             </code>
+             contexts
             </p>
            </li>
           </ul>
@@ -1338,7 +1418,7 @@ for each of these subpackages from the left nav menu.
             nautilus_core
            </span>
           </code>
-          directory, containing a collection of core Rust libraries including a C API interface generated by
+          directory, containing a collection of core Rust crates including a C foreign function interface (FFI) generated by
           <code class="docutils literal notranslate">
            <span class="pre">
             cbindgen
@@ -1353,10 +1433,10 @@ for each of these subpackages from the left nav menu.
             nautilus_trader
            </span>
           </code>
-          directory, which contains a collection of Python and Cython modules.
+          directory, which contains a collection of Python/Cython subpackages and modules.
          </p>
          <p>
-          Python bindings for the Rust core are achieved by statically linking the Rust libraries to the C extension modules generated by Cython at compile time (effectively extending the CPython API).
+          Python bindings for the Rust core are provided by statically linking the Rust libraries to the C extension modules generated by Cython at compile time (effectively extending the CPython API).
          </p>
          <div class="admonition note">
           <p class="admonition-title">
@@ -1524,7 +1604,7 @@ library, or from third party library dependencies.
   <footer class="md-footer">
    <div class="md-footer-nav">
     <nav class="md-footer-nav__inner md-grid">
-     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="index.html" rel="prev" title="Concepts">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="overview.html" rel="prev" title="Overview">
       <div class="md-flex__cell md-flex__cell--shrink">
        <i class="md-icon md-icon--arrow-back md-footer-nav__button">
        </i>
@@ -1534,7 +1614,7 @@ library, or from third party library dependencies.
         <span class="md-footer-nav__direction">
          Previous
         </span>
-        Concepts
+        Overview
        </span>
       </div>
      </a>

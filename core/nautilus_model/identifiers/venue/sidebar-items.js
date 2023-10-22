@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["SYNTHETIC_VENUE"],"fn":["venue_hash","venue_is_synthetic","venue_new"],"struct":["Venue"]};
+window.SIDEBAR_ITEMS = {"constant":["SYNTHETIC_VENUE"],"struct":["Venue"]};

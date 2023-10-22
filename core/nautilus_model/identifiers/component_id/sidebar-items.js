@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["component_id_hash","component_id_new"],"struct":["ComponentId"]};
+window.SIDEBAR_ITEMS = {"struct":["ComponentId"]};

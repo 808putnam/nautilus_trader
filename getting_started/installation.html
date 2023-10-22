@@ -94,7 +94,7 @@
   <link href="../_static/favicon-32x32.png" rel="shortcut icon"/>
   <link href="../genindex.html" rel="index" title="Index"/>
   <link href="../search.html" rel="search" title="Search"/>
-  <link href="quick_start.html" rel="next" title="Quick Start"/>
+  <link href="quickstart.html" rel="next" title="Quickstart"/>
   <link href="index.html" rel="prev" title="Getting Started"/>
   <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
  </head>
@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -286,8 +291,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -301,6 +306,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/architecture.html">
                Architecture
@@ -317,11 +327,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/orders.html">
                Orders
               </a>
@@ -329,6 +334,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -346,8 +366,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -362,7 +387,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -375,8 +400,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -384,13 +409,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -423,7 +448,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../api_reference/index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -615,6 +640,11 @@
             </ul>
            </li>
            <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
+           </li>
+           <li class="md-nav__item">
             <a class="md-nav__link" href="../developer_guide/index.html">
              Developer Guide
             </a>
@@ -715,10 +745,90 @@
          </a>
         </h1>
         <p>
-         The package is tested against Python 3.9, 3.10, 3.11 on 64-bit Linux, macOS and Windows.
-We recommend running the platform with the latest stable version of Python, and
-in a virtual environment to isolate the dependencies.
+         NautilusTrader is tested and supported for Python 3.9-3.11 on the following 64-bit platforms:
         </p>
+        <table>
+         <thead>
+          <tr class="row-odd">
+           <th class="head">
+            <p>
+             Operating System
+            </p>
+           </th>
+           <th class="head">
+            <p>
+             Supported Versions
+            </p>
+           </th>
+           <th class="head">
+            <p>
+             CPU Architecture
+            </p>
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr class="row-even">
+           <td>
+            <p>
+             Linux (Ubuntu)
+            </p>
+           </td>
+           <td>
+            <p>
+             20.04 or later
+            </p>
+           </td>
+           <td>
+            <p>
+             x86_64
+            </p>
+           </td>
+          </tr>
+          <tr class="row-odd">
+           <td>
+            <p>
+             macOS
+            </p>
+           </td>
+           <td>
+            <p>
+             12 or later
+            </p>
+           </td>
+           <td>
+            <p>
+             x86_64, ARM64
+            </p>
+           </td>
+          </tr>
+          <tr class="row-even">
+           <td>
+            <p>
+             Windows Server
+            </p>
+           </td>
+           <td>
+            <p>
+             2022 or later
+            </p>
+           </td>
+           <td>
+            <p>
+             x86_64
+            </p>
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <div class="admonition tip">
+         <p class="admonition-title">
+          Tip
+         </p>
+         <p>
+          We recommend running the platform with the latest supported stable version of Python, and in a virtual environment to isolate the dependencies.
+         </p>
+        </div>
         <section id="from-pypi">
          <h2 id="from-pypi">
           From PyPI
@@ -727,7 +837,11 @@ in a virtual environment to isolate the dependencies.
           </a>
          </h2>
          <p>
-          To install the latest binary wheel (or sdist package) from PyPI:
+          To install the latest binary wheel (or sdist package) from PyPI using Pythons
+          <em>
+           pip
+          </em>
+          package manager:
          </p>
          <div class="highlight-none notranslate">
           <div class="highlight">
@@ -744,7 +858,7 @@ in a virtual environment to isolate the dependencies.
           </a>
          </h2>
          <p>
-          Also, the following optional dependency ‘extras’ are separately available for installation.
+          Install optional dependencies as ‘extras’ for specific integrations:
          </p>
          <ul class="simple">
           <li>
@@ -754,7 +868,7 @@ in a virtual environment to isolate the dependencies.
               betfair
              </span>
             </code>
-            - package required for the Betfair integration
+            : Betfair adapter
            </p>
           </li>
           <li>
@@ -764,7 +878,7 @@ in a virtual environment to isolate the dependencies.
               docker
              </span>
             </code>
-            - package required for docker when using the IB gateway
+            : Needed for Docker when using the IB gateway
            </p>
           </li>
           <li>
@@ -774,7 +888,7 @@ in a virtual environment to isolate the dependencies.
               ib
              </span>
             </code>
-            - package required for the Interactive Brokers adapter
+            : Interactive Brokers adapter
            </p>
           </li>
           <li>
@@ -784,34 +898,20 @@ in a virtual environment to isolate the dependencies.
               redis
              </span>
             </code>
-            - packages required to use Redis as a cache database
+            : Use Redis as a cache database
            </p>
           </li>
          </ul>
          <p>
-          For example, to install including the
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            docker
-           </span>
-          </code>
-          ,
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            ib
-           </span>
-          </code>
-          and
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            redis
-           </span>
-          </code>
-          extras using pip:
+          To install with specific extras using
+          <em>
+           pip
+          </em>
+          :
          </p>
          <div class="highlight-none notranslate">
           <div class="highlight">
-           <pre><span></span>pip install -U nautilus_trader[docker,ib,redis]
+           <pre><span></span>pip install -U "nautilus_trader[docker,ib,redis]"
 </pre>
           </div>
          </div>
@@ -1056,13 +1156,13 @@ Download the appropriate
        </span>
       </div>
      </a>
-     <a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="quick_start.html" rel="next" title="Quick Start">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="quickstart.html" rel="next" title="Quickstart">
       <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
        <span class="md-flex__ellipsis">
         <span class="md-footer-nav__direction">
          Next
         </span>
-        Quick Start
+        Quickstart
        </span>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">

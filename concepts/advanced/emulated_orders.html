@@ -94,7 +94,7 @@
   <link href="../../_static/favicon-32x32.png" rel="shortcut icon"/>
   <link href="../../genindex.html" rel="index" title="Index"/>
   <link href="../../search.html" rel="search" title="Search"/>
-  <link href="synthetic_instruments.html" rel="next" title="Synthetic instruments"/>
+  <link href="synthetic_instruments.html" rel="next" title="Synthetic Instruments"/>
   <link href="advanced_orders.html" rel="prev" title="Advanced Orders"/>
   <link href="../../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
  </head>
@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -291,8 +296,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -306,6 +311,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../architecture.html">
                Architecture
@@ -322,11 +332,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../orders.html">
                Orders
               </a>
@@ -334,6 +339,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -351,8 +371,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="data.html">
-                 Data
+                <a class="md-nav__link" href="actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -367,7 +392,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -380,8 +405,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -389,13 +414,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -428,7 +453,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../../api_reference/index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -620,6 +645,11 @@
             </ul>
            </li>
            <li class="md-nav__item">
+            <a class="md-nav__link" href="../../rust.html">
+             Rust API
+            </a>
+           </li>
+           <li class="md-nav__item">
             <a class="md-nav__link" href="../../developer_guide/index.html">
              Developer Guide
             </a>
@@ -743,7 +773,25 @@
         <p>
          The platform makes it possible to emulate most order types locally, regardless
 of whether the type is supported on a trading venue. The logic and code paths for
-order emulation are exactly the same for all environment contexts (backtest, sandbox, live),
+order emulation are exactly the same for all environment contexts (
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           backtest
+          </span>
+         </code>
+         ,
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           sandbox
+          </span>
+         </code>
+         ,
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           live
+          </span>
+         </code>
+         )
 and utilize a common
          <code class="docutils literal notranslate">
           <span class="pre">
@@ -1103,7 +1151,6 @@ trading venue.
             </td>
             <td>
              <p>
-              No
              </p>
             </td>
             <td>
@@ -1124,7 +1171,6 @@ trading venue.
             </td>
             <td>
              <p>
-              No
              </p>
             </td>
             <td>
@@ -1145,7 +1191,7 @@ trading venue.
             </td>
             <td>
              <p>
-              Yes
+              ✓
              </p>
             </td>
             <td>
@@ -1170,7 +1216,7 @@ trading venue.
             </td>
             <td>
              <p>
-              Yes
+              ✓
              </p>
             </td>
             <td>
@@ -1195,7 +1241,7 @@ trading venue.
             </td>
             <td>
              <p>
-              Yes
+              ✓
              </p>
             </td>
             <td>
@@ -1220,7 +1266,7 @@ trading venue.
             </td>
             <td>
              <p>
-              Yes
+              ✓
              </p>
             </td>
             <td>
@@ -1245,7 +1291,7 @@ trading venue.
             </td>
             <td>
              <p>
-              Yes
+              ✓
              </p>
             </td>
             <td>
@@ -1270,7 +1316,7 @@ trading venue.
             </td>
             <td>
              <p>
-              Yes
+              ✓
              </p>
             </td>
             <td>
@@ -1295,7 +1341,7 @@ trading venue.
             </td>
             <td>
              <p>
-              Yes
+              ✓
              </p>
             </td>
             <td>
@@ -1367,7 +1413,7 @@ It’s possible to query for emulated orders through the following
           for additional details.
          </p>
          <p>
-          You can also query order objects directly in Python:
+          You can also query order objects directly:
          </p>
          <ul class="simple">
           <li>
@@ -1375,20 +1421,6 @@ It’s possible to query for emulated orders through the following
             <code class="docutils literal notranslate">
              <span class="pre">
               order.is_emulated
-             </span>
-            </code>
-           </p>
-          </li>
-         </ul>
-         <p>
-          Or through the C API if in Cython:
-         </p>
-         <ul class="simple">
-          <li>
-           <p>
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              order.is_emulated_c()
              </span>
             </code>
            </p>
@@ -1450,14 +1482,6 @@ they will be reloaded inside the
            </span>
           </code>
           from any configured cache database.
-It should be remembered that any custom
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            position_id
-           </span>
-          </code>
-          originally assigned to the
-submit order command will be lost (as per the above warning).
          </p>
         </section>
        </section>
@@ -1483,13 +1507,13 @@ submit order command will be lost (as per the above warning).
        </span>
       </div>
      </a>
-     <a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="synthetic_instruments.html" rel="next" title="Synthetic instruments">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="synthetic_instruments.html" rel="next" title="Synthetic Instruments">
       <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
        <span class="md-flex__ellipsis">
         <span class="md-footer-nav__direction">
          Next
         </span>
-        Synthetic instruments
+        Synthetic Instruments
        </span>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">

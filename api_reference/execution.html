@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -236,7 +241,7 @@
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="index.html">
-        API Reference
+        Python API
        </a>
       </li>
      </ul>
@@ -286,8 +291,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -301,6 +306,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/architecture.html">
                Architecture
@@ -317,11 +327,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/orders.html">
                Orders
               </a>
@@ -329,6 +334,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -346,8 +366,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -362,7 +387,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -375,8 +400,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -384,13 +409,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -423,7 +448,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -613,6 +638,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../developer_guide/index.html">
@@ -890,10 +920,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instrument_status_update">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    ExecAlgorithm.handle_instrument_status_update()
+                    ExecAlgorithm.handle_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -971,10 +1001,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_venue_status_update">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    ExecAlgorithm.handle_venue_status_update()
+                    ExecAlgorithm.handle_venue_status()
                    </span>
                   </code>
                  </a>
@@ -1020,6 +1050,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     ExecAlgorithm.id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.indicators_initialized">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.indicators_initialized()
                    </span>
                   </code>
                  </a>
@@ -1214,10 +1253,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_instrument_status_update">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    ExecAlgorithm.on_instrument_status_update()
+                    ExecAlgorithm.on_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -1241,6 +1280,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_accepted">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_accepted()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_book">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1259,6 +1307,42 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_cancel_rejected">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_cancel_rejected()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_canceled">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_canceled()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_denied">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_denied()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_emulated">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_emulated()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_event">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1268,10 +1352,145 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_expired">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_expired()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_filled">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_filled()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_initialized">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_initialized()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_list">
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     ExecAlgorithm.on_order_list()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_modify_rejected">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_modify_rejected()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_pending_cancel">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_pending_cancel()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_pending_update">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_pending_update()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_rejected">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_rejected()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_released">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_released()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_submitted">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_submitted()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_triggered">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_triggered()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_updated">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_order_updated()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_changed">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_position_changed()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_closed">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_position_closed()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_event">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_position_event()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_opened">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.on_position_opened()
                    </span>
                   </code>
                  </a>
@@ -1349,10 +1568,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_venue_status_update">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    ExecAlgorithm.on_venue_status_update()
+                    ExecAlgorithm.on_venue_status()
                    </span>
                   </code>
                  </a>
@@ -1439,10 +1658,46 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.register_indicator_for_bars">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.register_indicator_for_bars()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.register_indicator_for_quote_ticks">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.register_indicator_for_quote_ticks()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.register_indicator_for_trade_ticks">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.register_indicator_for_trade_ticks()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.register_warning_event">
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     ExecAlgorithm.register_warning_event()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.registered_indicators">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecAlgorithm.registered_indicators
                    </span>
                   </code>
                  </a>
@@ -1637,10 +1892,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    ExecAlgorithm.subscribe_instrument_status_updates()
+                    ExecAlgorithm.subscribe_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -1700,10 +1955,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    ExecAlgorithm.subscribe_venue_status_updates()
+                    ExecAlgorithm.subscribe_venue_status()
                    </span>
                   </code>
                  </a>
@@ -1763,10 +2018,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    ExecAlgorithm.unsubscribe_instrument_status_updates()
+                    ExecAlgorithm.unsubscribe_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -1826,10 +2081,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    ExecAlgorithm.unsubscribe_venue_status_updates()
+                    ExecAlgorithm.unsubscribe_venue_status()
                    </span>
                   </code>
                  </a>
@@ -1881,6 +2136,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     ExecutionClient.base_currency
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.client.ExecutionClient.batch_cancel_orders">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ExecutionClient.batch_cancel_orders()
                    </span>
                   </code>
                  </a>
@@ -2486,10 +2750,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.handle_instrument_status_update">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.handle_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderEmulator.handle_instrument_status_update()
+                    OrderEmulator.handle_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -2567,10 +2831,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.handle_venue_status_update">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.handle_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderEmulator.handle_venue_status_update()
+                    OrderEmulator.handle_venue_status()
                    </span>
                   </code>
                  </a>
@@ -2616,6 +2880,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     OrderEmulator.id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.indicators_initialized">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderEmulator.indicators_initialized()
                    </span>
                   </code>
                  </a>
@@ -2792,10 +3065,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.on_instrument_status_update">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.on_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderEmulator.on_instrument_status_update()
+                    OrderEmulator.on_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -2900,10 +3173,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.on_venue_status_update">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.on_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderEmulator.on_venue_status_update()
+                    OrderEmulator.on_venue_status()
                    </span>
                   </code>
                  </a>
@@ -2972,10 +3245,46 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.register_indicator_for_bars">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderEmulator.register_indicator_for_bars()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.register_indicator_for_quote_ticks">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderEmulator.register_indicator_for_quote_ticks()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.register_indicator_for_trade_ticks">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderEmulator.register_indicator_for_trade_ticks()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.register_warning_event">
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     OrderEmulator.register_warning_event()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.registered_indicators">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderEmulator.registered_indicators
                    </span>
                   </code>
                  </a>
@@ -3134,10 +3443,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.subscribe_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.subscribe_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderEmulator.subscribe_instrument_status_updates()
+                    OrderEmulator.subscribe_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -3197,10 +3506,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.subscribe_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.subscribe_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderEmulator.subscribe_venue_status_updates()
+                    OrderEmulator.subscribe_venue_status()
                    </span>
                   </code>
                  </a>
@@ -3278,10 +3587,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderEmulator.unsubscribe_instrument_status_updates()
+                    OrderEmulator.unsubscribe_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -3341,10 +3650,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderEmulator.unsubscribe_venue_status_updates()
+                    OrderEmulator.unsubscribe_venue_status()
                    </span>
                   </code>
                  </a>
@@ -4253,6 +4562,93 @@
               </i>
              </span>
              <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  BatchCancelOrders
+                 </span>
+                </code>
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.client_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.client_id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.from_dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.from_dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.instrument_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.instrument_id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.strategy_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.strategy_id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.to_dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.to_dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.trader_id">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.trader_id
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.messages.BatchCancelOrders.ts_init">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BatchCancelOrders.ts_init
+                   </span>
+                  </code>
+                 </a>
+                </li>
+               </ul>
+              </li>
               <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.execution.messages.CancelAllOrders">
                 <code class="docutils literal notranslate">
@@ -7001,7 +7397,7 @@ then the component state will not change, and an error will be logged.
                  update
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                  <em>
                   InstrumentClose
                  </em>
@@ -7021,10 +7417,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instrument_status_update">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               handle_instrument_status_update
+               handle_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -7041,10 +7437,10 @@ then the component state will not change, and an error will be logged.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                InstrumentStatusUpdate
+                InstrumentStatus
                </span>
                <span class="pre">
-                update
+                data
                </span>
               </span>
              </em>
@@ -7061,7 +7457,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instrument_status_update" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -7078,7 +7474,7 @@ then the component state will not change, and an error will be logged.
               </code>
               then passes to
               <cite>
-               on_instrument_status_update
+               on_instrument_status
               </cite>
               .
              </p>
@@ -7092,15 +7488,15 @@ then the component state will not change, and an error will be logged.
               <dd class="field-odd">
                <p>
                 <strong>
-                 update
+                 data
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                  <em>
-                  InstrumentStatusUpdate
+                  InstrumentStatus
                  </em>
                 </a>
-                ) – The update received.
+                ) – The status update received.
                </p>
               </dd>
              </dl>
@@ -7811,7 +8207,7 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
-              Handle the given tick data by handling each tick individually.
+              Handle the given historical trade tick data by handling each tick individually.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -7855,10 +8251,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.handle_venue_status_update">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.handle_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               handle_venue_status_update
+               handle_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -7875,10 +8271,10 @@ then the component state will not change, and an error will be logged.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                VenueStatusUpdate
+                VenueStatus
                </span>
                <span class="pre">
-                update
+                data
                </span>
               </span>
              </em>
@@ -7895,7 +8291,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_venue_status_update" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -7912,7 +8308,7 @@ then the component state will not change, and an error will be logged.
               </code>
               then passes to
               <cite>
-               on_venue_status_update
+               on_venue_status
               </cite>
               .
              </p>
@@ -7926,15 +8322,15 @@ then the component state will not change, and an error will be logged.
               <dd class="field-odd">
                <p>
                 <strong>
-                 update
+                 data
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                  <em>
-                  VenueStatusUpdate
+                  VenueStatus
                  </em>
                 </a>
-                ) – The update received.
+                ) – The status update received.
                </p>
               </dd>
              </dl>
@@ -8196,6 +8592,62 @@ then the component state will not change, and an error will be logged.
                 <cite>
                  ComponentId
                 </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.indicators_initialized">
+             <span class="sig-name descname">
+              <span class="pre">
+               indicators_initialized
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.indicators_initialized" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a value indicating whether all indicators are initialized.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bool
+                </em>
+                – True if all initialized, else False
                </p>
               </dd>
              </dl>
@@ -9994,12 +10446,12 @@ update.
                  update
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                  <em>
                   InstrumentClose
                  </em>
                 </a>
-                ) – The update received.
+                ) – The instrument close received.
                </p>
               </dd>
              </dl>
@@ -10014,10 +10466,10 @@ update.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_instrument_status_update">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               on_instrument_status_update
+               on_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -10034,10 +10486,10 @@ update.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                InstrumentStatusUpdate
+                InstrumentStatus
                </span>
                <span class="pre">
-                update
+                data
                </span>
               </span>
              </em>
@@ -10054,7 +10506,7 @@ update.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_instrument_status_update" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -10073,15 +10525,15 @@ update.
               <dd class="field-odd">
                <p>
                 <strong>
-                 update
+                 data
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                  <em>
-                  InstrumentStatusUpdate
+                  InstrumentStatus
                  </em>
                 </a>
-                ) – The update received.
+                ) – The instrument status update received.
                </p>
               </dd>
              </dl>
@@ -10225,6 +10677,87 @@ update.
                  </em>
                 </a>
                 ) – The order to be handled.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_accepted">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_accepted
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderAccepted
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_accepted" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order accepted event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderAccepted" title="nautilus_trader.model.events.order.OrderAccepted">
+                 <em>
+                  OrderAccepted
+                 </em>
+                </a>
+                ) – The event received.
                </p>
               </dd>
              </dl>
@@ -10401,6 +10934,330 @@ update.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_cancel_rejected">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_cancel_rejected
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderCancelRejected
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_cancel_rejected" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order cancel rejected event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderCancelRejected" title="nautilus_trader.model.events.order.OrderCancelRejected">
+                 <em>
+                  OrderCancelRejected
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_canceled">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_canceled
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderCanceled
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_canceled" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order canceled event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderCanceled" title="nautilus_trader.model.events.order.OrderCanceled">
+                 <em>
+                  OrderCanceled
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_denied">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_denied
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderDenied
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_denied" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order denied event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderDenied" title="nautilus_trader.model.events.order.OrderDenied">
+                 <em>
+                  OrderDenied
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_emulated">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_emulated
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderEmulated
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_emulated" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order initialized event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderEmulated" title="nautilus_trader.model.events.order.OrderEmulated">
+                 <em>
+                  OrderEmulated
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_event">
              <span class="sig-name descname">
               <span class="pre">
@@ -10467,7 +11324,250 @@ update.
                   OrderEvent
                  </em>
                 </a>
-                ) – The order event to be handled.
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_expired">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_expired
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderExpired
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_expired" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order expired event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderExpired" title="nautilus_trader.model.events.order.OrderExpired">
+                 <em>
+                  OrderExpired
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_filled">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_filled
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderFilled
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_filled" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order filled event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderFilled" title="nautilus_trader.model.events.order.OrderFilled">
+                 <em>
+                  OrderFilled
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_initialized">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_initialized
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderInitialized
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_initialized" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order initialized event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderInitialized" title="nautilus_trader.model.events.order.OrderInitialized">
+                 <em>
+                  OrderInitialized
+                 </em>
+                </a>
+                ) – The event received.
                </p>
               </dd>
              </dl>
@@ -10549,6 +11649,978 @@ update.
                  </em>
                 </a>
                 ) – The order list to be handled.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_modify_rejected">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_modify_rejected
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderModifyRejected
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_modify_rejected" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order modify rejected event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderModifyRejected" title="nautilus_trader.model.events.order.OrderModifyRejected">
+                 <em>
+                  OrderModifyRejected
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_pending_cancel">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_pending_cancel
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderPendingCancel
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_pending_cancel" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order pending cancel event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderPendingCancel" title="nautilus_trader.model.events.order.OrderPendingCancel">
+                 <em>
+                  OrderPendingCancel
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_pending_update">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_pending_update
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderPendingUpdate
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_pending_update" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order pending update event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderPendingUpdate" title="nautilus_trader.model.events.order.OrderPendingUpdate">
+                 <em>
+                  OrderPendingUpdate
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_rejected">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_rejected
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderRejected
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_rejected" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order rejected event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderRejected" title="nautilus_trader.model.events.order.OrderRejected">
+                 <em>
+                  OrderRejected
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_released">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_released
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderReleased
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_released" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order released event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderReleased" title="nautilus_trader.model.events.order.OrderReleased">
+                 <em>
+                  OrderReleased
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_submitted">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_submitted
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderSubmitted
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_submitted" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order submitted event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderSubmitted" title="nautilus_trader.model.events.order.OrderSubmitted">
+                 <em>
+                  OrderSubmitted
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_triggered">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_triggered
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderTriggered
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_triggered" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order triggered event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderTriggered" title="nautilus_trader.model.events.order.OrderTriggered">
+                 <em>
+                  OrderTriggered
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_updated">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_order_updated
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderUpdated
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_order_updated" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives an order updated event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.order.OrderUpdated" title="nautilus_trader.model.events.order.OrderUpdated">
+                 <em>
+                  OrderUpdated
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_changed">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_position_changed
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                PositionChanged
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_changed" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives a position changed event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.position.PositionChanged" title="nautilus_trader.model.events.position.PositionChanged">
+                 <em>
+                  PositionChanged
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_closed">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_position_closed
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                PositionClosed
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_closed" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives a position closed event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.position.PositionClosed" title="nautilus_trader.model.events.position.PositionClosed">
+                 <em>
+                  PositionClosed
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_event">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_position_event
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                PositionEvent
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_event" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives a position event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.position.PositionEvent" title="nautilus_trader.model.events.position.PositionEvent">
+                 <em>
+                  PositionEvent
+                 </em>
+                </a>
+                ) – The event received.
+               </p>
+              </dd>
+             </dl>
+             <div class="admonition warning">
+              <p class="admonition-title">
+               Warning
+              </p>
+              <p>
+               System method (not intended to be called by user code).
+              </p>
+             </div>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_opened">
+             <span class="sig-name descname">
+              <span class="pre">
+               on_position_opened
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                PositionOpened
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_position_opened" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed when running and receives a position opened event.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="model/events.html#nautilus_trader.model.events.position.PositionOpened" title="nautilus_trader.model.events.position.PositionOpened">
+                 <em>
+                  PositionOpened
+                 </em>
+                </a>
+                ) – The event received.
                </p>
               </dd>
              </dl>
@@ -11084,10 +13156,10 @@ initially starting.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_venue_status_update">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.on_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               on_venue_status_update
+               on_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -11104,10 +13176,10 @@ initially starting.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                VenueStatusUpdate
+                VenueStatus
                </span>
                <span class="pre">
-                update
+                data
                </span>
               </span>
              </em>
@@ -11124,7 +13196,7 @@ initially starting.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_venue_status_update" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.on_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -11142,15 +13214,15 @@ initially starting.
               <dd class="field-odd">
                <p>
                 <strong>
-                 update
+                 data
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                  <em>
-                  VenueStatusUpdate
+                  VenueStatus
                  </em>
                 </a>
-                ) – The update received.
+                ) – The venue status update received.
                </p>
               </dd>
              </dl>
@@ -12207,6 +14279,313 @@ and so the results of
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.register_indicator_for_bars">
+             <span class="sig-name descname">
+              <span class="pre">
+               register_indicator_for_bars
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                BarType
+               </span>
+               <span class="pre">
+                bar_type
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Indicator
+               </span>
+               <span class="pre">
+                indicator
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.register_indicator_for_bars" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Register the given indicator with the actor/strategy to receive bar data for the
+given bar type.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   bar_type
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
+                   <em>
+                    BarType
+                   </em>
+                  </a>
+                  ) – The bar type for bar updates.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   indicator
+                  </strong>
+                  (
+                  <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                   <em>
+                    Indicator
+                   </em>
+                  </a>
+                  ) – The indicator to register.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.register_indicator_for_quote_ticks">
+             <span class="sig-name descname">
+              <span class="pre">
+               register_indicator_for_quote_ticks
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                instrument_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Indicator
+               </span>
+               <span class="pre">
+                indicator
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.register_indicator_for_quote_ticks" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Register the given indicator with the actor/strategy to receive quote tick
+data for the given instrument ID.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  ) – The instrument ID for tick updates.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   indicator
+                  </strong>
+                  (
+                  <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                   <em>
+                    Indicator
+                   </em>
+                  </a>
+                  ) – The indicator to register.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.register_indicator_for_trade_ticks">
+             <span class="sig-name descname">
+              <span class="pre">
+               register_indicator_for_trade_ticks
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                instrument_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Indicator
+               </span>
+               <span class="pre">
+                indicator
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.register_indicator_for_trade_ticks" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Register the given indicator with the actor/strategy to receive trade tick
+data for the given instrument ID.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  ) – The instrument ID for tick updates.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   indicator
+                  </strong>
+                  (
+                  <em>
+                   indicator
+                  </em>
+                  ) – The indicator to register.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.register_warning_event">
              <span class="sig-name descname">
               <span class="pre">
@@ -12272,6 +14651,38 @@ and so the results of
                  type
                 </em>
                 ) – The event class to register.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.registered_indicators">
+             <span class="sig-name descname">
+              <span class="pre">
+               registered_indicators
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.registered_indicators" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the registered indicators for the strategy.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 list[Indicator]
+                </em>
                </p>
               </dd>
              </dl>
@@ -15889,6 +18300,17 @@ not be what you intended.
                </span>
               </span>
              </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                await_partial=False
+               </span>
+              </span>
+             </em>
              <span class="sig-paren">
               )
              </span>
@@ -15962,6 +18384,25 @@ If
                    </span>
                   </code>
                   then will be inferred from the venue in the instrument ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   await_partial
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   default False
+                  </em>
+                  ) – If the bar aggregator should await the arrival of a historical partial bar prior
+to activaely aggregating new bars.
                  </p>
                 </li>
                </ul>
@@ -16317,10 +18758,10 @@ If
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribe_instrument_status_updates
+               subscribe_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -16368,7 +18809,7 @@ If
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -16675,7 +19116,7 @@ for the given instrument ID.
                   (BookType {
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    L1_TBBO
+                    L1_MBP
                    </span>
                   </code>
                   ,
@@ -16909,7 +19350,7 @@ as per the last subscription request (this will also affect all subscribers).
                   (BookType {
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    L1_TBBO
+                    L1_MBP
                    </span>
                   </code>
                   ,
@@ -17399,10 +19840,10 @@ If
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribe_venue_status_updates
+               subscribe_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -17450,7 +19891,7 @@ If
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -17986,10 +20427,10 @@ If
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               unsubscribe_instrument_status_updates
+               unsubscribe_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -18037,7 +20478,7 @@ If
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -18837,10 +21278,10 @@ If
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               unsubscribe_venue_status_updates
+               unsubscribe_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -18888,7 +21329,7 @@ If
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -19496,6 +21937,79 @@ If
                   None
                  </span>
                 </code>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.client.ExecutionClient.batch_cancel_orders">
+             <span class="sig-name descname">
+              <span class="pre">
+               batch_cancel_orders
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                BatchCancelOrders
+               </span>
+               <span class="pre">
+                command
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.client.ExecutionClient.batch_cancel_orders" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Batch cancel orders for the instrument ID contained in the given command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 command
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.execution.messages.BatchCancelOrders" title="nautilus_trader.execution.messages.BatchCancelOrders">
+                 <em>
+                  BatchCancelOrders
+                 </em>
+                </a>
+                ) – The command to execute.
                </p>
               </dd>
              </dl>
@@ -25465,7 +27979,7 @@ then the component state will not change, and an error will be logged.
                  update
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                  <em>
                   InstrumentClose
                  </em>
@@ -25485,10 +27999,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.handle_instrument_status_update">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.handle_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               handle_instrument_status_update
+               handle_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -25505,10 +28019,10 @@ then the component state will not change, and an error will be logged.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                InstrumentStatusUpdate
+                InstrumentStatus
                </span>
                <span class="pre">
-                update
+                data
                </span>
               </span>
              </em>
@@ -25525,7 +28039,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.handle_instrument_status_update" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.handle_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -25542,7 +28056,7 @@ then the component state will not change, and an error will be logged.
               </code>
               then passes to
               <cite>
-               on_instrument_status_update
+               on_instrument_status
               </cite>
               .
              </p>
@@ -25556,15 +28070,15 @@ then the component state will not change, and an error will be logged.
               <dd class="field-odd">
                <p>
                 <strong>
-                 update
+                 data
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                  <em>
-                  InstrumentStatusUpdate
+                  InstrumentStatus
                  </em>
                 </a>
-                ) – The update received.
+                ) – The status update received.
                </p>
               </dd>
              </dl>
@@ -26275,7 +28789,7 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
-              Handle the given tick data by handling each tick individually.
+              Handle the given historical trade tick data by handling each tick individually.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -26319,10 +28833,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.handle_venue_status_update">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.handle_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               handle_venue_status_update
+               handle_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -26339,10 +28853,10 @@ then the component state will not change, and an error will be logged.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                VenueStatusUpdate
+                VenueStatus
                </span>
                <span class="pre">
-                update
+                data
                </span>
               </span>
              </em>
@@ -26359,7 +28873,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.handle_venue_status_update" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.handle_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -26376,7 +28890,7 @@ then the component state will not change, and an error will be logged.
               </code>
               then passes to
               <cite>
-               on_venue_status_update
+               on_venue_status
               </cite>
               .
              </p>
@@ -26390,15 +28904,15 @@ then the component state will not change, and an error will be logged.
               <dd class="field-odd">
                <p>
                 <strong>
-                 update
+                 data
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                  <em>
-                  VenueStatusUpdate
+                  VenueStatus
                  </em>
                 </a>
-                ) – The update received.
+                ) – The status update received.
                </p>
               </dd>
              </dl>
@@ -26660,6 +29174,62 @@ then the component state will not change, and an error will be logged.
                 <cite>
                  ComponentId
                 </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.indicators_initialized">
+             <span class="sig-name descname">
+              <span class="pre">
+               indicators_initialized
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.indicators_initialized" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a value indicating whether all indicators are initialized.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bool
+                </em>
+                – True if all initialized, else False
                </p>
               </dd>
              </dl>
@@ -27855,12 +30425,12 @@ update.
                  update
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                  <em>
                   InstrumentClose
                  </em>
                 </a>
-                ) – The update received.
+                ) – The instrument close received.
                </p>
               </dd>
              </dl>
@@ -27875,10 +30445,10 @@ update.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.on_instrument_status_update">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.on_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               on_instrument_status_update
+               on_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -27895,10 +30465,10 @@ update.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                InstrumentStatusUpdate
+                InstrumentStatus
                </span>
                <span class="pre">
-                update
+                data
                </span>
               </span>
              </em>
@@ -27915,7 +30485,7 @@ update.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.on_instrument_status_update" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.on_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -27934,15 +30504,15 @@ update.
               <dd class="field-odd">
                <p>
                 <strong>
-                 update
+                 data
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                  <em>
-                  InstrumentStatusUpdate
+                  InstrumentStatus
                  </em>
                 </a>
-                ) – The update received.
+                ) – The instrument status update received.
                </p>
               </dd>
              </dl>
@@ -28584,10 +31154,10 @@ update.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.on_venue_status_update">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.on_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               on_venue_status_update
+               on_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -28604,10 +31174,10 @@ update.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                VenueStatusUpdate
+                VenueStatus
                </span>
                <span class="pre">
-                update
+                data
                </span>
               </span>
              </em>
@@ -28624,7 +31194,7 @@ update.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.on_venue_status_update" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.on_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -28642,15 +31212,15 @@ update.
               <dd class="field-odd">
                <p>
                 <strong>
-                 update
+                 data
                 </strong>
                 (
-                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+                <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                  <em>
-                  VenueStatusUpdate
+                  VenueStatus
                  </em>
                 </a>
-                ) – The update received.
+                ) – The venue status update received.
                </p>
               </dd>
              </dl>
@@ -29465,6 +32035,313 @@ and so the results of
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.register_indicator_for_bars">
+             <span class="sig-name descname">
+              <span class="pre">
+               register_indicator_for_bars
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                BarType
+               </span>
+               <span class="pre">
+                bar_type
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Indicator
+               </span>
+               <span class="pre">
+                indicator
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.register_indicator_for_bars" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Register the given indicator with the actor/strategy to receive bar data for the
+given bar type.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   bar_type
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
+                   <em>
+                    BarType
+                   </em>
+                  </a>
+                  ) – The bar type for bar updates.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   indicator
+                  </strong>
+                  (
+                  <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                   <em>
+                    Indicator
+                   </em>
+                  </a>
+                  ) – The indicator to register.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.register_indicator_for_quote_ticks">
+             <span class="sig-name descname">
+              <span class="pre">
+               register_indicator_for_quote_ticks
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                instrument_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Indicator
+               </span>
+               <span class="pre">
+                indicator
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.register_indicator_for_quote_ticks" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Register the given indicator with the actor/strategy to receive quote tick
+data for the given instrument ID.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  ) – The instrument ID for tick updates.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   indicator
+                  </strong>
+                  (
+                  <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                   <em>
+                    Indicator
+                   </em>
+                  </a>
+                  ) – The indicator to register.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.register_indicator_for_trade_ticks">
+             <span class="sig-name descname">
+              <span class="pre">
+               register_indicator_for_trade_ticks
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                instrument_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Indicator
+               </span>
+               <span class="pre">
+                indicator
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.register_indicator_for_trade_ticks" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Register the given indicator with the actor/strategy to receive trade tick
+data for the given instrument ID.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  ) – The instrument ID for tick updates.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   indicator
+                  </strong>
+                  (
+                  <em>
+                   indicator
+                  </em>
+                  ) – The indicator to register.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.register_warning_event">
              <span class="sig-name descname">
               <span class="pre">
@@ -29530,6 +32407,38 @@ and so the results of
                  type
                 </em>
                 ) – The event class to register.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.registered_indicators">
+             <span class="sig-name descname">
+              <span class="pre">
+               registered_indicators
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.registered_indicators" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the registered indicators for the strategy.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 list[Indicator]
+                </em>
                </p>
               </dd>
              </dl>
@@ -31674,6 +34583,17 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                bool
+               </span>
+               <span class="pre">
+                await_partial=False
+               </span>
+              </span>
+             </em>
              <span class="sig-paren">
               )
              </span>
@@ -31747,6 +34667,25 @@ If
                    </span>
                   </code>
                   then will be inferred from the venue in the instrument ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   await_partial
+                  </strong>
+                  (
+                  <em>
+                   bool
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   default False
+                  </em>
+                  ) – If the bar aggregator should await the arrival of a historical partial bar prior
+to activaely aggregating new bars.
                  </p>
                 </li>
                </ul>
@@ -32102,10 +35041,10 @@ If
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.subscribe_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.subscribe_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribe_instrument_status_updates
+               subscribe_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -32153,7 +35092,7 @@ If
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.subscribe_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.subscribe_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -32460,7 +35399,7 @@ for the given instrument ID.
                   (BookType {
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    L1_TBBO
+                    L1_MBP
                    </span>
                   </code>
                   ,
@@ -32694,7 +35633,7 @@ as per the last subscription request (this will also affect all subscribers).
                   (BookType {
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    L1_TBBO
+                    L1_MBP
                    </span>
                   </code>
                   ,
@@ -33184,10 +36123,10 @@ If
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.subscribe_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.subscribe_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribe_venue_status_updates
+               subscribe_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -33235,7 +36174,7 @@ If
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.subscribe_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.subscribe_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -33863,10 +36802,10 @@ If
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               unsubscribe_instrument_status_updates
+               unsubscribe_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -33914,7 +36853,7 @@ If
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -34714,10 +37653,10 @@ If
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               unsubscribe_venue_status_updates
+               unsubscribe_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -34765,7 +37704,7 @@ If
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -41158,6 +44097,636 @@ cache (if found).
            ¶
           </a>
          </h2>
+         <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             BatchCancelOrders
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              TraderId
+             </span>
+             <span class="pre">
+              trader_id
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              StrategyId
+             </span>
+             <span class="pre">
+              strategy_id
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              InstrumentId
+             </span>
+             <span class="pre">
+              instrument_id
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              list
+             </span>
+             <span class="pre">
+              cancels
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              UUID4
+             </span>
+             <span class="pre">
+              command_id
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              uint64_t
+             </span>
+             <span class="pre">
+              ts_init
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              client_id=None
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <a class="reference internal" href="#nautilus_trader.execution.messages.TradingCommand" title="nautilus_trader.execution.messages.TradingCommand">
+             <code class="xref py py-class docutils literal notranslate">
+              <span class="pre">
+               TradingCommand
+              </span>
+             </code>
+            </a>
+           </p>
+           <p>
+            Represents a command to batch cancel orders working on a venue for an instrument.
+           </p>
+           <dl class="field-list simple">
+            <dt class="field-odd">
+             Parameters
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-odd">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 trader_id
+                </strong>
+                (
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.TraderId" title="nautilus_trader.model.identifiers.TraderId">
+                 <em>
+                  TraderId
+                 </em>
+                </a>
+                ) – The trader ID for the command.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 strategy_id
+                </strong>
+                (
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.StrategyId" title="nautilus_trader.model.identifiers.StrategyId">
+                 <em>
+                  StrategyId
+                 </em>
+                </a>
+                ) – The strategy ID for the command.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 instrument_id
+                </strong>
+                (
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                 <em>
+                  InstrumentId
+                 </em>
+                </a>
+                ) – The instrument ID for the command.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 cancels
+                </strong>
+                (
+                <em>
+                 list
+                </em>
+                <em>
+                 [
+                </em>
+                <a class="reference internal" href="#nautilus_trader.execution.messages.CancelOrder" title="nautilus_trader.execution.messages.CancelOrder">
+                 <em>
+                  CancelOrder
+                 </em>
+                </a>
+                <em>
+                 ]
+                </em>
+                ) – The inner list of cancel order commands.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 command_id
+                </strong>
+                (
+                <a class="reference internal" href="core.html#nautilus_trader.core.uuid.UUID4" title="nautilus_trader.core.uuid.UUID4">
+                 <em>
+                  UUID4
+                 </em>
+                </a>
+                ) – The command ID.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 ts_init
+                </strong>
+                (
+                <em>
+                 uint64_t
+                </em>
+                ) – The UNIX timestamp (nanoseconds) when the object was initialized.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 client_id
+                </strong>
+                (
+                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.ClientId" title="nautilus_trader.model.identifiers.ClientId">
+                 <em>
+                  ClientId
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The execution client ID for the command.
+               </p>
+              </li>
+             </ul>
+            </dd>
+            <dt class="field-even">
+             Raises
+             <span class="colon">
+              :
+             </span>
+            </dt>
+            <dd class="field-even">
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 ValueError
+                </strong>
+                – If
+                <cite>
+                 cancels
+                </cite>
+                is empty.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 ValueError
+                </strong>
+                – If
+                <cite>
+                 cancels
+                </cite>
+                contains a type other than
+                <cite>
+                 CancelOrder
+                </cite>
+                .
+               </p>
+              </li>
+             </ul>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.client_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               client_id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.client_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The execution client ID for the command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 ClientId
+                </cite>
+                or
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.from_dict">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               from_dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                values
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <a class="reference internal" href="#nautilus_trader.execution.messages.BatchCancelOrders" title="nautilus_trader.execution.messages.BatchCancelOrders">
+                <span class="pre">
+                 BatchCancelOrders
+                </span>
+               </a>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.from_dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a batch cancel order command from the given dict values.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 values
+                </strong>
+                (
+                <em>
+                 dict
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 object
+                </em>
+                <em>
+                 ]
+                </em>
+                ) – The values for initialization.
+               </p>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 BatchCancelOrders
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.id">
+             <span class="sig-name descname">
+              <span class="pre">
+               id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The command message ID.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 UUID4
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.instrument_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.instrument_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The instrument ID associated with the command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 InstrumentId
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.strategy_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               strategy_id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.strategy_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The strategy ID associated with the command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 StrategyId
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.to_dict">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               to_dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                BatchCancelOrders
+               </span>
+               <span class="pre">
+                obj
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.to_dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a dictionary representation of this object.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, object]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.trader_id">
+             <span class="sig-name descname">
+              <span class="pre">
+               trader_id
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.trader_id" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The trader ID associated with the command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 TraderId
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.messages.BatchCancelOrders.ts_init">
+             <span class="sig-name descname">
+              <span class="pre">
+               ts_init
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.messages.BatchCancelOrders.ts_init" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              The UNIX timestamp (nanoseconds) when the object was initialized.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 uint64_t
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+          </dd>
+         </dl>
          <dl class="py class">
           <dt class="sig sig-object py" id="nautilus_trader.execution.messages.CancelAllOrders">
            <em class="property">

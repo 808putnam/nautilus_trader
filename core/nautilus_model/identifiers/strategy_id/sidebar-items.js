@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["strategy_id_hash","strategy_id_new"],"struct":["StrategyId"]};
+window.SIDEBAR_ITEMS = {"struct":["StrategyId"]};

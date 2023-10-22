@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `network/src/websocket.rs`."><title>websocket.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_network" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (35e416303 2023-09-01)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-f194925aa375ae96.css" data-theme-dark-css="dark-1dd4d1ce031e15de.css" data-theme-ayu-css="ayu-49e58d069f567085.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-f194925aa375ae96.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1dd4d1ce031e15de.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../nautilus_network/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `network/src/websocket.rs`."><title>websocket.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_network" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (1c05d50c8 2023-10-21)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -611,6 +611,23 @@
 <a href="#611" id="611">611</a>
 <a href="#612" id="612">612</a>
 <a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
+<a href="#627" id="627">627</a>
+<a href="#628" id="628">628</a>
+<a href="#629" id="629">629</a>
+<a href="#630" id="630">630</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -632,6 +649,7 @@
     stream::{SplitSink, SplitStream},
     SinkExt, StreamExt,
 };
+<span class="kw">use </span>nautilus_core::python::to_pyruntime_err;
 <span class="kw">use </span>pyo3::{exceptions::PyException, prelude::<span class="kw-2">*</span>, types::PyBytes, PyObject, Python};
 <span class="kw">use </span>tokio::{net::TcpStream, sync::Mutex, task, time::sleep};
 <span class="kw">use </span>tokio_tungstenite::{
@@ -715,8 +733,8 @@
                     <span class="macro">debug!</span>(<span class="string">&quot;Sending heartbeat&quot;</span>);
                     <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
                     <span class="kw">match </span>guard.send(Message::Ping(<span class="macro">vec!</span>[])).<span class="kw">await </span>{
-                        <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Sent heartbeat&quot;</span>),
-                        <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Failed to send heartbeat: {}&quot;</span>, err),
+                        <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Sent heartbeat&quot;</span>),
+                        <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Failed to send heartbeat: {e}&quot;</span>),
                     }
                 }
             })
@@ -731,19 +749,19 @@
                 <span class="kw">match </span>reader.next().<span class="kw">await </span>{
                     <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(Message::Binary(data))) =&gt; {
                         <span class="macro">debug!</span>(<span class="string">&quot;Received binary message&quot;</span>);
-                        <span class="kw">if let </span><span class="prelude-val">Err</span>(err) =
+                        <span class="kw">if let </span><span class="prelude-val">Err</span>(e) =
                             Python::with_gil(|py| handler.call1(py, (PyBytes::new(py, <span class="kw-2">&amp;</span>data),)))
                         {
-                            <span class="macro">error!</span>(<span class="string">&quot;Call to handler failed: {}&quot;</span>, err);
+                            <span class="macro">error!</span>(<span class="string">&quot;Call to handler failed: {e}&quot;</span>);
                             <span class="kw">break</span>;
                         }
                     }
                     <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(Message::Text(data))) =&gt; {
                         <span class="macro">debug!</span>(<span class="string">&quot;Received text message&quot;</span>);
-                        <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = Python::with_gil(|py| {
+                        <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = Python::with_gil(|py| {
                             handler.call1(py, (PyBytes::new(py, data.as_bytes()),))
                         }) {
-                            <span class="macro">error!</span>(<span class="string">&quot;Call to handler failed: {}&quot;</span>, err);
+                            <span class="macro">error!</span>(<span class="string">&quot;Call to handler failed: {e}&quot;</span>);
                             <span class="kw">break</span>;
                         }
                     }
@@ -752,8 +770,8 @@
                         <span class="kw">break</span>;
                     }
                     <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="kw">_</span>)) =&gt; (),
-                    <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(err)) =&gt; {
-                        <span class="macro">error!</span>(<span class="string">&quot;Received error message. Terminating. {err}&quot;</span>);
+                    <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)) =&gt; {
+                        <span class="macro">error!</span>(<span class="string">&quot;Received error message. Terminating. {e}&quot;</span>);
                         <span class="kw">break</span>;
                     }
                     <span class="comment">// Internally tungstenite considers the connection closed when polling
@@ -838,7 +856,10 @@
     }
 }
 
-<span class="attr">#[pyclass]
+<span class="attr">#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>WebSocketClient {
     writer: SharedMessageWriter,
     controller_task: task::JoinHandle&lt;()&gt;,
@@ -850,7 +871,7 @@
     ///
     /// Creates an inner client and controller task to reconnect or disconnect
     /// the client. Also assumes ownership of writer from inner client
-    </span><span class="kw">pub async fn </span>connect_client(
+    </span><span class="kw">pub async fn </span>connect(
         url: <span class="kw-2">&amp;</span>str,
         handler: PyObject,
         heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
@@ -871,7 +892,7 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(handler) = post_connection {
             Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
                 <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_connection handler&quot;</span>),
-                <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">error!</span>(<span class="string">&quot;post_connection handler failed because: {}&quot;</span>, err),
+                <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Error calling post_connection handler: {e}&quot;</span>),
             });
         }
 
@@ -886,11 +907,11 @@
     ///
     /// Controller task will periodically check the disconnect mode
     /// and shutdown the client if it is alive
-    </span><span class="kw">pub async fn </span>disconnect_client(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+    </span><span class="kw">pub async fn </span>disconnect(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw-2">*</span><span class="self">self</span>.disconnect_mode.lock().<span class="kw">await </span>= <span class="bool-val">true</span>;
     }
 
-    <span class="kw">pub async fn </span>send_bytes_client(<span class="kw-2">&amp;</span><span class="self">self</span>, data: Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+    <span class="kw">pub async fn </span>send_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>, data: Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>guard = <span class="self">self</span>.writer.lock().<span class="kw">await</span>;
         guard.send(Message::Binary(data)).<span class="kw">await
     </span>}
@@ -903,8 +924,8 @@
     <span class="kw">pub async fn </span>send_close_message(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">let </span><span class="kw-2">mut </span>guard = <span class="self">self</span>.writer.lock().<span class="kw">await</span>;
         <span class="kw">match </span>guard.send(Message::Close(<span class="prelude-val">None</span>)).<span class="kw">await </span>{
-            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Sent close message&quot;</span>),
-            <span class="prelude-val">Err</span>(err) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Failed to send message: {}&quot;</span>, err),
+            <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Sent close message&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Failed to send message: {e}&quot;</span>),
         }
     }
 
@@ -926,19 +947,19 @@
 
                 <span class="kw">match </span>(disconnect_flag, inner.is_alive()) {
                     (<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="kw">match </span>inner.reconnect().<span class="kw">await </span>{
-                        <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
+                        <span class="prelude-val">Ok</span>(()) =&gt; {
                             <span class="macro">debug!</span>(<span class="string">&quot;Reconnected successfully&quot;</span>);
                             <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>handler) = post_reconnection {
                                 Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
                                     <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_reconnection handler&quot;</span>),
-                                    <span class="prelude-val">Err</span>(err) =&gt; {
-                                        <span class="macro">error!</span>(<span class="string">&quot;post_reconnection handler failed because: {}&quot;</span>, err);
+                                    <span class="prelude-val">Err</span>(e) =&gt; {
+                                        <span class="macro">error!</span>(<span class="string">&quot;Error calling post_reconnection handler: {e}&quot;</span>);
                                     }
                                 });
                             }
                         }
-                        <span class="prelude-val">Err</span>(err) =&gt; {
-                            <span class="macro">error!</span>(<span class="string">&quot;Reconnect failed {}&quot;</span>, err);
+                        <span class="prelude-val">Err</span>(e) =&gt; {
+                            <span class="macro">error!</span>(<span class="string">&quot;Reconnect failed {e}&quot;</span>);
                             <span class="kw">break</span>;
                         }
                     },
@@ -948,8 +969,8 @@
                         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>handler) = post_disconnection {
                             Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
                                 <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_reconnection handler&quot;</span>),
-                                <span class="prelude-val">Err</span>(err) =&gt; {
-                                    <span class="macro">error!</span>(<span class="string">&quot;post_reconnection handler failed because: {}&quot;</span>, err);
+                                <span class="prelude-val">Err</span>(e) =&gt; {
+                                    <span class="macro">error!</span>(<span class="string">&quot;Error calling post_reconnection handler: {e}&quot;</span>);
                                 }
                             });
                         }
@@ -968,9 +989,11 @@
     <span class="doccomment">/// Create a websocket client.
     ///
     /// # Safety
+    ///
     /// - Throws an Exception if it is unable to make websocket connection
     </span><span class="attr">#[staticmethod]
-    </span><span class="kw">fn </span>connect(
+    #[pyo3(name = <span class="string">&quot;connect&quot;</span>)]
+    </span><span class="kw">fn </span>py_connect(
         url: String,
         handler: PyObject,
         heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
@@ -980,7 +1003,7 @@
         py: Python&lt;<span class="lifetime">&#39;_</span>&gt;,
     ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span>PyAny&gt; {
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="self">Self</span>::connect_client(
+            <span class="self">Self</span>::connect(
                 <span class="kw-2">&amp;</span>url,
                 handler,
                 heartbeat,
@@ -989,39 +1012,10 @@
                 post_disconnection,
             )
             .<span class="kw">await
-            </span>.map_err(|err| {
+            </span>.map_err(|e| {
                 PyException::new_err(<span class="macro">format!</span>(
-                    <span class="string">&quot;Unable to make websocket connection because of error: {}&quot;</span>,
-                    err
+                    <span class="string">&quot;Unable to make websocket connection because of error: {e}&quot;</span>,
                 ))
-            })
-        })
-    }
-
-    <span class="doccomment">/// Send text data to the connection.
-    ///
-    /// # Safety
-    /// - Throws an Exception if it is not able to send data
-    </span><span class="kw">fn </span>send_text&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, data: String, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
-        <span class="kw">let </span>writer = slf.writer.clone();
-        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
-            guard.send(Message::Text(data)).<span class="kw">await</span>.map_err(|err| {
-                PyException::new_err(<span class="macro">format!</span>(<span class="string">&quot;Unable to send data because of error: {}&quot;</span>, err))
-            })
-        })
-    }
-
-    <span class="doccomment">/// Send bytes data to the connection.
-    ///
-    /// # Safety
-    /// - Throws an Exception if it is not able to send data
-    </span><span class="kw">fn </span>send&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, data: Vec&lt;u8&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
-        <span class="kw">let </span>writer = slf.writer.clone();
-        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
-            guard.send(Message::Binary(data)).<span class="kw">await</span>.map_err(|err| {
-                PyException::new_err(<span class="macro">format!</span>(<span class="string">&quot;Unable to send data because of error: {}&quot;</span>, err))
             })
         })
     }
@@ -1031,10 +1025,12 @@
     /// The connection is not completely closed the till all references
     /// to the client are gone and the client is dropped.
     ///
-    /// #Safety
+    /// # Safety
+    ///
     /// - The client should not be used after closing it
     /// - Any auto-reconnect job should be aborted before closing the client
-    </span><span class="kw">fn </span>disconnect&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;disconnect&quot;</span>)]
+    </span><span class="kw">fn </span>py_disconnect&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
         <span class="kw">let </span>disconnect_mode = slf.disconnect_mode.clone();
         <span class="macro">debug!</span>(<span class="string">&quot;Setting disconnect mode to true&quot;</span>);
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
@@ -1052,10 +1048,48 @@
     /// This is particularly useful for check why a `send` failed. It could
     /// because the connection disconnected and the client is still alive
     /// and reconnecting. In such cases the send can be retried after some
-    /// delay
+    /// delay.
     </span><span class="attr">#[getter]
     </span><span class="kw">fn </span>is_alive(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; bool {
         !slf.controller_task.is_finished()
+    }
+
+    <span class="doccomment">/// Send text data to the connection.
+    ///
+    /// # Safety
+    ///
+    /// - Raises PyRuntimeError if not able to send data.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;send_text&quot;</span>)]
+    </span><span class="kw">fn </span>py_send_text&lt;<span class="lifetime">&#39;py</span>&gt;(
+        slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;,
+        data: String,
+        py: Python&lt;<span class="lifetime">&#39;py</span>&gt;,
+    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+        <span class="kw">let </span>writer = slf.writer.clone();
+        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
+            guard
+                .send(Message::Text(data))
+                .<span class="kw">await
+                </span>.map_err(to_pyruntime_err)
+        })
+    }
+
+    <span class="doccomment">/// Send bytes data to the connection.
+    ///
+    /// # Safety
+    ///
+    /// - Raises PyRuntimeError if not able to send data.
+    </span><span class="attr">#[pyo3(name = <span class="string">&quot;send&quot;</span>)]
+    </span><span class="kw">fn </span>py_send&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, data: Vec&lt;u8&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+        <span class="kw">let </span>writer = slf.writer.clone();
+        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
+            guard
+                .send(Message::Binary(data))
+                .<span class="kw">await
+                </span>.map_err(to_pyruntime_err)
+        })
     }
 }
 
@@ -1098,8 +1132,8 @@
                             </span><span class="kw">if </span>msg.is_binary() || msg.is_text() {
                                 websocket.send(msg).<span class="kw">await</span>.unwrap();
                             } <span class="kw">else if </span>msg.is_close() {
-                                <span class="kw">if let </span><span class="prelude-val">Err</span>(err) = websocket.close(<span class="prelude-val">None</span>).<span class="kw">await </span>{
-                                    <span class="macro">debug!</span>(<span class="string">&quot;Connection already closed {err}&quot;</span>);
+                                <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = websocket.close(<span class="prelude-val">None</span>).<span class="kw">await </span>{
+                                    <span class="macro">debug!</span>(<span class="string">&quot;Connection already closed {e}&quot;</span>);
                                 };
                                 <span class="kw">break</span>;
                             }
@@ -1157,7 +1191,7 @@ counter = Counter()&quot;</span>,
             (counter, handler)
         });
 
-        <span class="kw">let </span>client = WebSocketClient::connect_client(
+        <span class="kw">let </span>client = WebSocketClient::connect(
             <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;ws://127.0.0.1:{}&quot;</span>, server.port),
             handler.clone(),
             <span class="prelude-val">None</span>,
@@ -1170,7 +1204,7 @@ counter = Counter()&quot;</span>,
 
         <span class="comment">// Send messages that increment the count
         </span><span class="kw">for _ in </span><span class="number">0</span>..N {
-            <span class="kw">if </span>client.send_bytes_client(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
+            <span class="kw">if </span>client.send_bytes(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
                 success_count += <span class="number">1</span>;
             };
         }
@@ -1199,7 +1233,7 @@ counter = Counter()&quot;</span>,
         <span class="comment">// Send messages that increment the count
         </span>sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
         <span class="kw">for _ in </span><span class="number">0</span>..N {
-            <span class="kw">if </span>client.send_bytes_client(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
+            <span class="kw">if </span>client.send_bytes(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
                 success_count += <span class="number">1</span>;
             };
         }
@@ -1219,7 +1253,7 @@ counter = Counter()&quot;</span>,
         <span class="macro">assert_eq!</span>(success_count, N + N);
 
         <span class="comment">// Shutdown client and wait for read task to terminate
-        </span>client.disconnect_client().<span class="kw">await</span>;
+        </span>client.disconnect().<span class="kw">await</span>;
         sleep(Duration::from_secs(<span class="number">1</span>)).<span class="kw">await</span>;
         <span class="macro">assert!</span>(client.is_disconnected());
     }

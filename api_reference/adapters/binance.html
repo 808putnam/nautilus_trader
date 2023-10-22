@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -236,7 +241,7 @@
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="../index.html">
-        API Reference
+        Python API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -291,8 +296,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -306,6 +311,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/architecture.html">
                Architecture
@@ -322,11 +332,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/orders.html">
                Orders
               </a>
@@ -334,6 +339,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -351,8 +371,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -367,7 +392,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -380,8 +405,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -389,13 +414,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -428,7 +453,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -618,6 +643,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../../rust.html">
+             Rust API
+            </a>
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../../developer_guide/index.html">
@@ -1578,10 +1608,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_instrument_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_instrument_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceFuturesDataClient.subscribe_instrument_status_updates()
+                      BinanceFuturesDataClient.subscribe_instrument_status()
                      </span>
                     </code>
                    </a>
@@ -1641,10 +1671,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_venue_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_venue_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceFuturesDataClient.subscribe_venue_status_updates()
+                      BinanceFuturesDataClient.subscribe_venue_status()
                      </span>
                     </code>
                    </a>
@@ -1677,10 +1707,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_instrument_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_instrument_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceFuturesDataClient.subscribed_instrument_status_updates()
+                      BinanceFuturesDataClient.subscribed_instrument_status()
                      </span>
                     </code>
                    </a>
@@ -1740,10 +1770,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_venue_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_venue_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceFuturesDataClient.subscribed_venue_status_updates()
+                      BinanceFuturesDataClient.subscribed_venue_status()
                      </span>
                     </code>
                    </a>
@@ -1803,10 +1833,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_instrument_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_instrument_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceFuturesDataClient.unsubscribe_instrument_status_updates()
+                      BinanceFuturesDataClient.unsubscribe_instrument_status()
                      </span>
                     </code>
                    </a>
@@ -1866,10 +1896,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_venue_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_venue_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceFuturesDataClient.unsubscribe_venue_status_updates()
+                      BinanceFuturesDataClient.unsubscribe_venue_status()
                      </span>
                     </code>
                    </a>
@@ -2015,6 +2045,15 @@
                     <code class="docutils literal notranslate">
                      <span class="pre">
                       BinanceFuturesExecutionClient.base_currency
+                     </span>
+                    </code>
+                   </a>
+                  </li>
+                  <li class="md-nav__item">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.futures.execution.BinanceFuturesExecutionClient.batch_cancel_orders">
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      BinanceFuturesExecutionClient.batch_cancel_orders()
                      </span>
                     </code>
                    </a>
@@ -3036,10 +3075,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_instrument_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_instrument_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceSpotDataClient.subscribe_instrument_status_updates()
+                      BinanceSpotDataClient.subscribe_instrument_status()
                      </span>
                     </code>
                    </a>
@@ -3099,10 +3138,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_venue_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_venue_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceSpotDataClient.subscribe_venue_status_updates()
+                      BinanceSpotDataClient.subscribe_venue_status()
                      </span>
                     </code>
                    </a>
@@ -3135,10 +3174,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_instrument_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_instrument_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceSpotDataClient.subscribed_instrument_status_updates()
+                      BinanceSpotDataClient.subscribed_instrument_status()
                      </span>
                     </code>
                    </a>
@@ -3198,10 +3237,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_venue_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_venue_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceSpotDataClient.subscribed_venue_status_updates()
+                      BinanceSpotDataClient.subscribed_venue_status()
                      </span>
                     </code>
                    </a>
@@ -3261,10 +3300,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_instrument_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_instrument_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceSpotDataClient.unsubscribe_instrument_status_updates()
+                      BinanceSpotDataClient.unsubscribe_instrument_status()
                      </span>
                     </code>
                    </a>
@@ -3324,10 +3363,10 @@
                    </a>
                   </li>
                   <li class="md-nav__item">
-                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_venue_status_updates">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_venue_status">
                     <code class="docutils literal notranslate">
                      <span class="pre">
-                      BinanceSpotDataClient.unsubscribe_venue_status_updates()
+                      BinanceSpotDataClient.unsubscribe_venue_status()
                      </span>
                     </code>
                    </a>
@@ -3437,6 +3476,15 @@
                     <code class="docutils literal notranslate">
                      <span class="pre">
                       BinanceSpotExecutionClient.base_currency
+                     </span>
+                    </code>
+                   </a>
+                  </li>
+                  <li class="md-nav__item">
+                   <a class="md-nav__link" href="#nautilus_trader.adapters.binance.spot.execution.BinanceSpotExecutionClient.batch_cancel_orders">
+                    <code class="docutils literal notranslate">
+                     <span class="pre">
+                      BinanceSpotExecutionClient.batch_cancel_orders()
                      </span>
                     </code>
                    </a>
@@ -5566,6 +5614,40 @@ TradeId of ticks will be the Aggregate tradeId returned by Binance.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              use_gtd
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              True
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               use_reduce_only
              </span>
             </span>
@@ -5950,6 +6032,26 @@ If
                  default False
                 </em>
                 ) – If the client is connecting to a Binance testnet.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 use_gtd
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default True
+                </em>
+                ) – If GTD orders will use the Binance GTD TIF option.
+If False then GTD time in force will be remapped to GTC (this is useful if manageing GTD
+orders locally).
                </p>
               </li>
               <li>
@@ -16369,10 +16471,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_instrument_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_instrument_status">
               <span class="sig-name descname">
                <span class="pre">
-                subscribe_instrument_status_updates
+                subscribe_instrument_status
                </span>
               </span>
               <span class="sig-paren">
@@ -16409,7 +16511,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_instrument_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_instrument_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -16417,7 +16519,7 @@ then the component state will not change, and an error will be logged.
               <p>
                Subscribe to
                <cite>
-                InstrumentStatusUpdates
+                InstrumentStatus
                </cite>
                data for the given instrument ID.
               </p>
@@ -16606,7 +16708,7 @@ then the component state will not change, and an error will be logged.
                    (BookType {
                    <code class="docutils literal notranslate">
                     <span class="pre">
-                     L1_TBBO
+                     L1_MBP
                     </span>
                    </code>
                    ,
@@ -16788,7 +16890,7 @@ then the component state will not change, and an error will be logged.
                    (BookType {
                    <code class="docutils literal notranslate">
                     <span class="pre">
-                     L1_TBBO
+                     L1_MBP
                     </span>
                    </code>
                    ,
@@ -17079,10 +17181,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_venue_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_venue_status">
               <span class="sig-name descname">
                <span class="pre">
-                subscribe_venue_status_updates
+                subscribe_venue_status
                </span>
               </span>
               <span class="sig-paren">
@@ -17119,7 +17221,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_venue_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_venue_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -17127,7 +17229,7 @@ then the component state will not change, and an error will be logged.
               <p>
                Subscribe to
                <cite>
-                InstrumentStatusUpdate
+                InstrumentStatus
                </cite>
                data for the venue.
               </p>
@@ -17321,10 +17423,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_instrument_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_instrument_status">
               <span class="sig-name descname">
                <span class="pre">
-                subscribed_instrument_status_updates
+                subscribed_instrument_status
                </span>
               </span>
               <span class="sig-paren">
@@ -17350,7 +17452,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_instrument_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_instrument_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -17706,10 +17808,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_venue_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_venue_status">
               <span class="sig-name descname">
                <span class="pre">
-                subscribed_venue_status_updates
+                subscribed_venue_status
                </span>
               </span>
               <span class="sig-paren">
@@ -17735,7 +17837,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_venue_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_venue_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -18129,10 +18231,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_instrument_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_instrument_status">
               <span class="sig-name descname">
                <span class="pre">
-                unsubscribe_instrument_status_updates
+                unsubscribe_instrument_status
                </span>
               </span>
               <span class="sig-paren">
@@ -18169,7 +18271,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_instrument_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -18177,7 +18279,7 @@ then the component state will not change, and an error will be logged.
               <p>
                Unsubscribe from
                <cite>
-                InstrumentStatusUpdate
+                InstrumentStatus
                </cite>
                data for the given instrument ID.
               </p>
@@ -18635,10 +18737,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_venue_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_venue_status">
               <span class="sig-name descname">
                <span class="pre">
-                unsubscribe_venue_status_updates
+                unsubscribe_venue_status
                </span>
               </span>
               <span class="sig-paren">
@@ -18675,7 +18777,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_venue_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_venue_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -18683,7 +18785,7 @@ then the component state will not change, and an error will be logged.
               <p>
                Unsubscribe from
                <cite>
-                InstrumentStatusUpdate
+                InstrumentStatus
                </cite>
                data for the given venue.
               </p>
@@ -20491,6 +20593,79 @@ then the component state will not change, and an error will be logged.
                    None
                   </span>
                  </code>
+                </p>
+               </dd>
+              </dl>
+             </dd>
+            </dl>
+            <dl class="py method">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.futures.execution.BinanceFuturesExecutionClient.batch_cancel_orders">
+              <span class="sig-name descname">
+               <span class="pre">
+                batch_cancel_orders
+               </span>
+              </span>
+              <span class="sig-paren">
+               (
+              </span>
+              <em class="sig-param">
+               <span class="n">
+                <span class="pre">
+                 self
+                </span>
+               </span>
+              </em>
+              ,
+              <em class="sig-param">
+               <span class="n">
+                <span class="pre">
+                 BatchCancelOrders
+                </span>
+                <span class="pre">
+                 command
+                </span>
+               </span>
+              </em>
+              <span class="sig-paren">
+               )
+              </span>
+              <span class="sig-return">
+               <span class="sig-return-icon">
+                →
+               </span>
+               <span class="sig-return-typehint">
+                <span class="pre">
+                 void
+                </span>
+               </span>
+              </span>
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.futures.execution.BinanceFuturesExecutionClient.batch_cancel_orders" title="Permalink to this definition">
+               ¶
+              </a>
+             </dt>
+             <dd>
+              <p>
+               Batch cancel orders for the instrument ID contained in the given command.
+              </p>
+              <dl class="field-list simple">
+               <dt class="field-odd">
+                Parameters
+                <span class="colon">
+                 :
+                </span>
+               </dt>
+               <dd class="field-odd">
+                <p>
+                 <strong>
+                  command
+                 </strong>
+                 (
+                 <a class="reference internal" href="../execution.html#nautilus_trader.execution.messages.BatchCancelOrders" title="nautilus_trader.execution.messages.BatchCancelOrders">
+                  <em>
+                   BatchCancelOrders
+                  </em>
+                 </a>
+                 ) – The command to execute.
                 </p>
                </dd>
               </dl>
@@ -32199,10 +32374,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_instrument_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_instrument_status">
               <span class="sig-name descname">
                <span class="pre">
-                subscribe_instrument_status_updates
+                subscribe_instrument_status
                </span>
               </span>
               <span class="sig-paren">
@@ -32239,7 +32414,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_instrument_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_instrument_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -32247,7 +32422,7 @@ then the component state will not change, and an error will be logged.
               <p>
                Subscribe to
                <cite>
-                InstrumentStatusUpdates
+                InstrumentStatus
                </cite>
                data for the given instrument ID.
               </p>
@@ -32436,7 +32611,7 @@ then the component state will not change, and an error will be logged.
                    (BookType {
                    <code class="docutils literal notranslate">
                     <span class="pre">
-                     L1_TBBO
+                     L1_MBP
                     </span>
                    </code>
                    ,
@@ -32618,7 +32793,7 @@ then the component state will not change, and an error will be logged.
                    (BookType {
                    <code class="docutils literal notranslate">
                     <span class="pre">
-                     L1_TBBO
+                     L1_MBP
                     </span>
                    </code>
                    ,
@@ -32909,10 +33084,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_venue_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_venue_status">
               <span class="sig-name descname">
                <span class="pre">
-                subscribe_venue_status_updates
+                subscribe_venue_status
                </span>
               </span>
               <span class="sig-paren">
@@ -32949,7 +33124,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_venue_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_venue_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -32957,7 +33132,7 @@ then the component state will not change, and an error will be logged.
               <p>
                Subscribe to
                <cite>
-                InstrumentStatusUpdate
+                InstrumentStatus
                </cite>
                data for the venue.
               </p>
@@ -33151,10 +33326,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_instrument_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_instrument_status">
               <span class="sig-name descname">
                <span class="pre">
-                subscribed_instrument_status_updates
+                subscribed_instrument_status
                </span>
               </span>
               <span class="sig-paren">
@@ -33180,7 +33355,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_instrument_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_instrument_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -33536,10 +33711,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_venue_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_venue_status">
               <span class="sig-name descname">
                <span class="pre">
-                subscribed_venue_status_updates
+                subscribed_venue_status
                </span>
               </span>
               <span class="sig-paren">
@@ -33565,7 +33740,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_venue_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_venue_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -33959,10 +34134,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_instrument_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_instrument_status">
               <span class="sig-name descname">
                <span class="pre">
-                unsubscribe_instrument_status_updates
+                unsubscribe_instrument_status
                </span>
               </span>
               <span class="sig-paren">
@@ -33999,7 +34174,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_instrument_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -34007,7 +34182,7 @@ then the component state will not change, and an error will be logged.
               <p>
                Unsubscribe from
                <cite>
-                InstrumentStatusUpdate
+                InstrumentStatus
                </cite>
                data for the given instrument ID.
               </p>
@@ -34465,10 +34640,10 @@ then the component state will not change, and an error will be logged.
              </dd>
             </dl>
             <dl class="py method">
-             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_venue_status_updates">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_venue_status">
               <span class="sig-name descname">
                <span class="pre">
-                unsubscribe_venue_status_updates
+                unsubscribe_venue_status
                </span>
               </span>
               <span class="sig-paren">
@@ -34505,7 +34680,7 @@ then the component state will not change, and an error will be logged.
                 </span>
                </span>
               </span>
-              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_venue_status_updates" title="Permalink to this definition">
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_venue_status" title="Permalink to this definition">
                ¶
               </a>
              </dt>
@@ -34513,7 +34688,7 @@ then the component state will not change, and an error will be logged.
               <p>
                Unsubscribe from
                <cite>
-                InstrumentStatusUpdate
+                InstrumentStatus
                </cite>
                data for the given venue.
               </p>
@@ -35661,6 +35836,79 @@ then the component state will not change, and an error will be logged.
                    None
                   </span>
                  </code>
+                </p>
+               </dd>
+              </dl>
+             </dd>
+            </dl>
+            <dl class="py method">
+             <dt class="sig sig-object py" id="nautilus_trader.adapters.binance.spot.execution.BinanceSpotExecutionClient.batch_cancel_orders">
+              <span class="sig-name descname">
+               <span class="pre">
+                batch_cancel_orders
+               </span>
+              </span>
+              <span class="sig-paren">
+               (
+              </span>
+              <em class="sig-param">
+               <span class="n">
+                <span class="pre">
+                 self
+                </span>
+               </span>
+              </em>
+              ,
+              <em class="sig-param">
+               <span class="n">
+                <span class="pre">
+                 BatchCancelOrders
+                </span>
+                <span class="pre">
+                 command
+                </span>
+               </span>
+              </em>
+              <span class="sig-paren">
+               )
+              </span>
+              <span class="sig-return">
+               <span class="sig-return-icon">
+                →
+               </span>
+               <span class="sig-return-typehint">
+                <span class="pre">
+                 void
+                </span>
+               </span>
+              </span>
+              <a class="headerlink" href="#nautilus_trader.adapters.binance.spot.execution.BinanceSpotExecutionClient.batch_cancel_orders" title="Permalink to this definition">
+               ¶
+              </a>
+             </dt>
+             <dd>
+              <p>
+               Batch cancel orders for the instrument ID contained in the given command.
+              </p>
+              <dl class="field-list simple">
+               <dt class="field-odd">
+                Parameters
+                <span class="colon">
+                 :
+                </span>
+               </dt>
+               <dd class="field-odd">
+                <p>
+                 <strong>
+                  command
+                 </strong>
+                 (
+                 <a class="reference internal" href="../execution.html#nautilus_trader.execution.messages.BatchCancelOrders" title="nautilus_trader.execution.messages.BatchCancelOrders">
+                  <em>
+                   BatchCancelOrders
+                  </em>
+                 </a>
+                 ) – The command to execute.
                 </p>
                </dd>
               </dl>

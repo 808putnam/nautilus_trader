@@ -204,13 +204,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -280,8 +285,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -295,6 +300,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="concepts/architecture.html">
                Architecture
@@ -311,11 +321,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="concepts/orders.html">
                Orders
               </a>
@@ -323,6 +328,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -340,8 +360,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -356,7 +381,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -369,8 +394,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="guides/index.html">
-             Guides
+            <a class="md-nav__link" href="tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -378,13 +403,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -417,7 +442,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="api_reference/index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -609,6 +634,11 @@
             </ul>
            </li>
            <li class="md-nav__item">
+            <a class="md-nav__link" href="rust.html">
+             Rust API
+            </a>
+           </li>
+           <li class="md-nav__item">
             <a class="md-nav__link" href="developer_guide/index.html">
              Developer Guide
             </a>
@@ -673,33 +703,45 @@
            </span>
            <ul class="submenu">
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#features">
-              Features
+             <a class="md-nav__link" href="#getting-started">
+              <span class="xref myst">
+               Getting Started
+              </span>
              </a>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#why-nautilustrader">
-              Why NautilusTrader?
+             <a class="md-nav__link" href="#concepts">
+              <span class="xref myst">
+               Concepts
+              </span>
              </a>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#why-python">
-              Why Python?
+             <a class="md-nav__link" href="#tutorials">
+              <span class="xref myst">
+               Tutorials
+              </span>
              </a>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#what-is-cython">
-              What is Cython?
+             <a class="md-nav__link" href="#integrations">
+              <span class="xref myst">
+               Integrations
+              </span>
              </a>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#what-is-rust">
-              What is Rust?
+             <a class="md-nav__link" href="#api-reference">
+              <span class="xref myst">
+               API Reference
+              </span>
              </a>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#architecture-quality-attributes">
-              Architecture Quality Attributes
+             <a class="md-nav__link" href="#developer-guide">
+              <span class="xref myst">
+               Developer Guide
+              </span>
              </a>
             </li>
            </ul>
@@ -718,362 +760,156 @@
           ¶
          </a>
         </h1>
+        <div class="toctree-wrapper compound">
+        </div>
         <p>
          Welcome to the official documentation for NautilusTrader!
         </p>
         <p>
-         NautilusTrader is an open-source, high-performance, production-grade algorithmic trading platform,
+         <strong>
+          NautilusTrader is an open-source, high-performance, production-grade algorithmic trading platform,
 providing quantitative traders with the ability to backtest portfolios of automated trading strategies
 on historical data with an event-driven engine, and also deploy those same strategies live, with no code changes.
+         </strong>
         </p>
         <p>
-         The platform is ‘AI-first’, designed to develop and deploy algorithmic trading strategies within a highly performant
-and robust Python native environment. This helps to address the parity challenge of keeping the Python research/backtest
-environment, consistent with the production live trading environment.
+         The platform boasts an extensive array of features and capabilities, coupled with open-ended flexibility for assembling
+trading systems using the framework. Given the breadth of information, and required pre-requisite knowledge, both beginners and experts alike may find the learning curve steep.
+However, this documentation aims to assist you in learning and understanding NautilusTrader, so that you can then leverage it to achieve your algorithmic trading goals.
         </p>
         <p>
-         NautilusTraders design, architecture and implementation philosophy holds software correctness and safety at the
-highest level, with the aim of supporting Python native, mission-critical, trading system backtesting
-and live deployment workloads.
+         If you have any questions or need further assistance, please reach out to the NautilusTrader community for support.
         </p>
+        <div class="admonition note">
+         <p class="admonition-title">
+          Note
+         </p>
+         <p>
+          The terms “NautilusTrader”, “Nautilus” and “platform” are used interchageably throughout the documentation.
+         </p>
+        </div>
         <p>
-         The platform is also universal and asset class agnostic - with any REST, WebSocket or FIX API able to be integrated via modular
-adapters. Thus, it can handle high-frequency trading operations for any asset classes
-including FX, Equities, Futures, Options, CFDs, Crypto and Betting - across multiple venues simultaneously.
+         The following is a brief summary of what you’ll find in the documentation, and how to use each section.
         </p>
-        <section id="features">
-         <h2 id="features">
-          Features
-          <a class="headerlink" href="#features" title="Permalink to this heading">
+        <section id="getting-started">
+         <h2 id="getting-started">
+          <a class="reference internal" href="getting_started/index.html">
+           <span class="doc std std-doc">
+            Getting Started
+           </span>
+          </a>
+          <a class="headerlink" href="#getting-started" title="Permalink to this heading">
            ¶
           </a>
          </h2>
-         <ul class="simple">
-          <li>
-           <p>
-            <strong>
-             Fast:
-            </strong>
-            C-level speed through Rust and Cython. Asynchronous networking with
-            <a class="reference external" href="https://github.com/MagicStack/uvloop">
-             uvloop
-            </a>
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Reliable:
-            </strong>
-            Type safety through Rust and Cython. Redis backed performant state persistence
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Flexible:
-            </strong>
-            OS independent, runs on Linux, macOS, Windows. Deploy using Docker
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Integrated:
-            </strong>
-            Modular adapters mean any REST, WebSocket, or FIX API can be integrated
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Advanced:
-            </strong>
-            Time in force
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              IOC
-             </span>
-            </code>
-            ,
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              FOK
-             </span>
-            </code>
-            ,
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              GTD
-             </span>
-            </code>
-            ,
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              AT_THE_OPEN
-             </span>
-            </code>
-            ,
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              AT_THE_CLOSE
-             </span>
-            </code>
-            , advanced order types and conditional triggers. Execution instructions
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              post-only
-             </span>
-            </code>
-            ,
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              reduce-only
-             </span>
-            </code>
-            , and icebergs. Contingency order lists including
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              OCO
-             </span>
-            </code>
-            ,
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              OTO
-             </span>
-            </code>
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Backtesting:
-            </strong>
-            Run with multiple venues, instruments and strategies simultaneously using historical quote tick, trade tick, bar, order book and custom data with nanosecond resolution
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Live:
-            </strong>
-            Use identical strategy implementations between backtesting and live deployments
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Multi-venue:
-            </strong>
-            Multiple venue capabilities facilitate market making and statistical arbitrage strategies
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             AI Agent Training:
-            </strong>
-            Backtest engine fast enough to be used to train AI trading agents (RL/ES)
-           </p>
-          </li>
-         </ul>
          <p>
-          <img alt="Nautilus" src="https://github.com/nautechsystems/nautilus_trader/blob/develop/docs/_images/nautilus-art.png?raw=true"/>
-         </p>
-         <blockquote>
-          <div>
-           <p>
-            <em>
-             nautilus - from ancient Greek ‘sailor’ and naus ‘ship’.
-            </em>
-           </p>
-           <p>
-            <em>
-             The nautilus shell consists of modular chambers with a growth factor which approximates a logarithmic spiral.
-The idea is that this can be translated to the aesthetics of design and architecture.
-            </em>
-           </p>
-          </div>
-         </blockquote>
-        </section>
-        <section id="why-nautilustrader">
-         <h2 id="why-nautilustrader">
-          Why NautilusTrader?
-          <a class="headerlink" href="#why-nautilustrader" title="Permalink to this heading">
-           ¶
-          </a>
-         </h2>
-         <ul class="simple">
-          <li>
-           <p>
-            <strong>
-             Highly performant event-driven Python
-            </strong>
-            - native binary core components
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Parity between backtesting and live trading
-            </strong>
-            - identical strategy code
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Reduced operational risk
-            </strong>
-            - risk management functionality, logical correctness and type safety
-           </p>
-          </li>
-          <li>
-           <p>
-            <strong>
-             Highly extendable
-            </strong>
-            - message bus, custom components and actors, custom data, custom adapters
-           </p>
-          </li>
-         </ul>
-         <p>
-          Traditionally, trading strategy research and backtesting might be conducted in Python (or other suitable language)
-using vectorized methods, with the strategy then needing to be reimplemented in a more event-drive way
-using C++, C#, Java or other statically typed language(s). The reasoning here is that vectorized backtesting code cannot
-express the granular time and event dependent complexity of real-time trading, where compiled languages have
-proven to be more suitable due to their inherently higher performance, and type safety.
-         </p>
-         <p>
-          One of the key advantages of NautilusTrader here, is that this reimplementation step is now circumvented - as the critical core components of the platform
-have all been written entirely in Rust or Cython. This means we’re using the right tools for the job, where systems programming languages compile performant binaries,
-with CPython C extension modules then able to offer a Python native environment, suitable for professional quantitative traders and trading firms.
+          The
+          <strong>
+           Getting Started
+          </strong>
+          section offers an introductory overview of the platform,
+a step-by-step guide to installing NautilusTrader, and a tutorial on setting up and running your first backtest.
+This section is crafted for those who are hands-on learners and are eager to see results quickly.
          </p>
         </section>
-        <section id="why-python">
-         <h2 id="why-python">
-          Why Python?
-          <a class="headerlink" href="#why-python" title="Permalink to this heading">
+        <section id="concepts">
+         <h2 id="concepts">
+          <a class="reference internal" href="concepts/index.html">
+           <span class="doc std std-doc">
+            Concepts
+           </span>
+          </a>
+          <a class="headerlink" href="#concepts" title="Permalink to this heading">
            ¶
           </a>
          </h2>
          <p>
-          Python was originally created decades ago as a simple scripting language with a clean straight
-forward syntax. It has since evolved into a fully fledged general purpose object-oriented
-programming language. Based on the TIOBE index, Python is currently the most popular programming language in the world.
-Not only that, Python has become the
-          <em>
-           de facto lingua franca
-          </em>
-          of data science, machine learning, and artificial intelligence.
-         </p>
-         <p>
-          The language out of the box is not without its drawbacks however, especially in the context of
-implementing large performance-critical systems. Cython has addressed a lot of these issues, offering all the advantages
-of a statically typed language, embedded into Pythons rich ecosystem of software libraries and
-developer/user communities.
+          The
+          <strong>
+           Concepts
+          </strong>
+          section breaks down the fundamental ideas, terminologies, and components of the platform, ensuring you have a solid grasp before diving deeper.
          </p>
         </section>
-        <section id="what-is-cython">
-         <h2 id="what-is-cython">
-          What is Cython?
-          <a class="headerlink" href="#what-is-cython" title="Permalink to this heading">
+        <section id="tutorials">
+         <h2 id="tutorials">
+          <a class="reference internal" href="tutorials/index.html">
+           <span class="doc std std-doc">
+            Tutorials
+           </span>
+          </a>
+          <a class="headerlink" href="#tutorials" title="Permalink to this heading">
            ¶
           </a>
          </h2>
          <p>
-          <a class="reference external" href="https://cython.org">
-           Cython
-          </a>
-          is a compiled programming language that aims to be a superset of the Python programming
-language, designed to give C-like performance with code that is written mostly in Python with
-optional additional C-inspired syntax.
-         </p>
-         <p>
-          The project heavily utilizes Cython to provide static type safety and increased performance
-for Python through
-          <a class="reference external" href="https://docs.python.org/3/extending/extending.html">
-           C extension modules
-          </a>
-          . The vast majority of the production code is actually
-written in Cython, however the libraries can be accessed from both Python and Cython.
+          The
+          <strong>
+           Tutorials
+          </strong>
+          section offers a guided learning experience with a series of comprehensive step-by-step walkthroughs.
+Each tutorial targets specific features or workflows, allowing you to learn by doing.
+From basic tasks to more advanced operations, these tutorials cater to a wide range of skill levels.
          </p>
         </section>
-        <section id="what-is-rust">
-         <h2 id="what-is-rust">
-          What is Rust?
-          <a class="headerlink" href="#what-is-rust" title="Permalink to this heading">
+        <section id="integrations">
+         <h2 id="integrations">
+          <a class="reference internal" href="integrations/index.html">
+           <span class="doc std std-doc">
+            Integrations
+           </span>
+          </a>
+          <a class="headerlink" href="#integrations" title="Permalink to this heading">
            ¶
           </a>
          </h2>
          <p>
-          <a class="reference external" href="https://www.rust-lang.org/">
-           Rust
-          </a>
-          is a multi-paradigm programming language designed for performance and safety, especially safe
-concurrency. Rust is blazingly fast and memory-efficient (comparable to C and C++) with no runtime or
-garbage collector. It can power mission-critical systems, run on embedded devices, and easily
-integrates with other languages.
-         </p>
-         <p>
-          Rust’s rich type system and ownership model guarantees memory-safety and thread-safety deterministically —
-eliminating many classes of bugs at compile-time.
-         </p>
-         <p>
-          The project increasingly utilizes Rust for core performance-critical components. Python language binding is handled through
-Cython, with static libraries linked at compile-time before the wheel binaries are packaged, so a user
-does not need to have Rust installed to run NautilusTrader. In the future as more Rust code is introduced,
-          <a class="reference external" href="https://pyo3.rs/latest">
-           PyO3
-          </a>
-          will be leveraged for easier Python bindings.
+          The
+          <strong>
+           Integrations
+          </strong>
+          guides for the platform, covers adapter differences in configuration, available features and capabilities,
+as well as providing tips for a smoother trading experience.
          </p>
         </section>
-        <section id="architecture-quality-attributes">
-         <h2 id="architecture-quality-attributes">
-          Architecture Quality Attributes
-          <a class="headerlink" href="#architecture-quality-attributes" title="Permalink to this heading">
+        <section id="api-reference">
+         <h2 id="api-reference">
+          <a class="reference internal" href="api_reference/index.html">
+           <span class="doc std std-doc">
+            API Reference
+           </span>
+          </a>
+          <a class="headerlink" href="#api-reference" title="Permalink to this heading">
            ¶
           </a>
          </h2>
-         <ul class="simple">
-          <li>
-           <p>
-            Reliability
-           </p>
-          </li>
-          <li>
-           <p>
-            Performance
-           </p>
-          </li>
-          <li>
-           <p>
-            Modularity
-           </p>
-          </li>
-          <li>
-           <p>
-            Testability
-           </p>
-          </li>
-          <li>
-           <p>
-            Maintainability
-           </p>
-          </li>
-          <li>
-           <p>
-            Deployability
-           </p>
-          </li>
-         </ul>
          <p>
-          <img alt="Architecture" src="https://github.com/nautechsystems/nautilus_trader/blob/develop/docs/_images/architecture-overview.png?raw=true"/>
+          The
+          <strong>
+           API Reference
+          </strong>
+          provides comprehensive technical information on available modules, functions, classes, methods, and other components for both the Python and Rust APIs.
          </p>
-         <div class="toctree-wrapper compound">
-         </div>
+        </section>
+        <section id="developer-guide">
+         <h2 id="developer-guide">
+          <a class="reference internal" href="developer_guide/index.html">
+           <span class="doc std std-doc">
+            Developer Guide
+           </span>
+          </a>
+          <a class="headerlink" href="#developer-guide" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The
+          <strong>
+           Developer Guide
+          </strong>
+          is tailored for those who wish to delve further into and potentially modify the codebase.
+It provides insights into the architectural decisions, coding standards, and best practices, helping to ensuring a pleasant and productive development experience.
+         </p>
         </section>
        </section>
       </article>

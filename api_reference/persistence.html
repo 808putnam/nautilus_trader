@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -236,7 +241,7 @@
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="index.html">
-        API Reference
+        Python API
        </a>
       </li>
      </ul>
@@ -286,8 +291,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -301,6 +306,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/architecture.html">
                Architecture
@@ -317,11 +327,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/orders.html">
                Orders
               </a>
@@ -329,6 +334,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -346,8 +366,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -362,7 +387,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -375,8 +400,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -384,13 +409,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -423,7 +448,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -615,6 +640,11 @@
             </ul>
            </li>
            <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
+           </li>
+           <li class="md-nav__item">
             <a class="md-nav__link" href="../developer_guide/index.html">
              Developer Guide
             </a>
@@ -688,6 +718,57 @@
              </a>
             </li>
             <li class="md-nav__item">
+             <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile">
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                FeatherFile
+               </span>
+              </code>
+             </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile.path">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FeatherFile.path
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile.class_name">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FeatherFile.class_name
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile.count">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FeatherFile.count()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile.index">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FeatherFile.index()
+                 </span>
+                </code>
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
              <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog">
               <code class="docutils literal notranslate">
                <span class="pre">
@@ -695,6 +776,39 @@
                </span>
               </code>
              </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_env">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ParquetDataCatalog.from_env()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_uri">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ParquetDataCatalog.from_uri()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.write_data">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  ParquetDataCatalog.write_data()
+                 </span>
+                </code>
+               </a>
+              </li>
+             </ul>
             </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#nautilus_trader.persistence.wranglers.BarDataWrangler">
@@ -714,6 +828,30 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   BarDataWrangler.process()
+                 </span>
+                </code>
+               </a>
+              </li>
+             </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#nautilus_trader.persistence.wranglers.OrderBookDeltaDataWrangler">
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                OrderBookDeltaDataWrangler
+               </span>
+              </code>
+             </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.wranglers.OrderBookDeltaDataWrangler.process">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBookDeltaDataWrangler.process()
                  </span>
                 </code>
                </a>
@@ -778,88 +916,7 @@
              </ul>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.wranglers.list_from_capsule">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                list_from_capsule()
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.external.readers.LinePreprocessor">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                LinePreprocessor
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.external.readers.Reader">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                Reader
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.external.readers.ByteReader">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                ByteReader
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.external.readers.TextReader">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                TextReader
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.external.readers.CSVReader">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                CSVReader
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.external.readers.ParquetReader">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                ParquetReader
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.engine.StreamingEngine">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                StreamingEngine
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.engine.extract_generic_data_client_ids">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                extract_generic_data_client_ids()
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter">
+             <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter">
               <code class="docutils literal notranslate">
                <span class="pre">
                 StreamingFeatherWriter
@@ -872,7 +929,16 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.write">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.is_closed">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  StreamingFeatherWriter.is_closed
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.write">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   StreamingFeatherWriter.write()
@@ -881,7 +947,7 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.check_flush">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.check_flush">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   StreamingFeatherWriter.check_flush()
@@ -890,7 +956,7 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.flush">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.flush">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   StreamingFeatherWriter.flush()
@@ -899,7 +965,7 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.close">
+               <a class="md-nav__link" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.close">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   StreamingFeatherWriter.close()
@@ -910,7 +976,7 @@
              </ul>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.persistence.streaming.writer.generate_signal_class">
+             <a class="md-nav__link" href="#nautilus_trader.persistence.writer.generate_signal_class">
               <code class="docutils literal notranslate">
                <span class="pre">
                 generate_signal_class()
@@ -1012,6 +1078,229 @@ backtesting.
         <span class="target" id="module-nautilus_trader.persistence.catalog.parquet">
         </span>
         <dl class="py class">
+         <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.FeatherFile">
+          <em class="property">
+           <span class="pre">
+            class
+           </span>
+           <span class="w">
+           </span>
+          </em>
+          <span class="sig-name descname">
+           <span class="pre">
+            FeatherFile
+           </span>
+          </span>
+          <span class="sig-paren">
+           (
+          </span>
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             path
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             class_name
+            </span>
+           </span>
+          </em>
+          <span class="sig-paren">
+           )
+          </span>
+          <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile" title="Permalink to this definition">
+           ¶
+          </a>
+         </dt>
+         <dd>
+          <p>
+           Bases:
+           <code class="xref py py-class docutils literal notranslate">
+            <span class="pre">
+             NamedTuple
+            </span>
+           </code>
+          </p>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.FeatherFile.path">
+            <span class="sig-name descname">
+             <span class="pre">
+              path
+             </span>
+            </span>
+            <em class="property">
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              str
+             </span>
+            </em>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile.path" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Alias for field number 0
+            </p>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.FeatherFile.class_name">
+            <span class="sig-name descname">
+             <span class="pre">
+              class_name
+             </span>
+            </span>
+            <em class="property">
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              str
+             </span>
+            </em>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile.class_name" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Alias for field number 1
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.FeatherFile.count">
+            <span class="sig-name descname">
+             <span class="pre">
+              count
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               value
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="o">
+              <span class="pre">
+               /
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile.count" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return number of occurrences of value.
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.FeatherFile.index">
+            <span class="sig-name descname">
+             <span class="pre">
+              index
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               value
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               start
+              </span>
+             </span>
+             <span class="o">
+              <span class="pre">
+               =
+              </span>
+             </span>
+             <span class="default_value">
+              <span class="pre">
+               0
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               stop
+              </span>
+             </span>
+             <span class="o">
+              <span class="pre">
+               =
+              </span>
+             </span>
+             <span class="default_value">
+              <span class="pre">
+               9223372036854775807
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="o">
+              <span class="pre">
+               /
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.FeatherFile.index" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return first index of value.
+            </p>
+            <p>
+             Raises ValueError if the value is not present.
+            </p>
+           </dd>
+          </dl>
+         </dd>
+        </dl>
+        <dl class="py class">
          <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog">
           <em class="property">
            <span class="pre">
@@ -1072,7 +1361,7 @@ backtesting.
            </a>
           </p>
           <p>
-           Provides a queryable data catalog persisted to files in parquet format.
+           Provides a queryable data catalog persisted to files in Parquet (Arrow) format.
           </p>
           <dl class="field-list simple">
            <dt class="field-odd">
@@ -1089,6 +1378,21 @@ backtesting.
                 path
                </strong>
                (
+               <em>
+                PathLike
+               </em>
+               <em>
+                [
+               </em>
+               <em>
+                str
+               </em>
+               <em>
+                ]
+               </em>
+               <em>
+                |
+               </em>
                <em>
                 str
                </em>
@@ -1110,7 +1414,15 @@ backtesting.
                <em>
                 default 'file'
                </em>
-               ) – The fsspec filesystem protocol to use.
+               ) – The filesystem protocol used by
+               <cite>
+                fsspec
+               </cite>
+               to handle file operations.
+This determines how the data catalog interacts with storage, be it local filesystem,
+cloud storage, or others. Common protocols include ‘file’ for local storage,
+‘s3’ for Amazon S3, and ‘gcs’ for Google Cloud Storage. If not provided, it defaults to ‘file’,
+meaning the catalog operates on the local filesystem.
               </p>
              </li>
              <li>
@@ -1131,6 +1443,66 @@ backtesting.
                ) – The fs storage options.
               </p>
              </li>
+             <li>
+              <p>
+               <strong>
+                min_rows_per_group
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default 0
+               </em>
+               ) – The minimum number of rows per group. When the value is greater than 0,
+the dataset writer will batch incoming data and only write the row
+groups to the disk when sufficient rows have accumulated.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                max_rows_per_group
+               </strong>
+               (
+               <em>
+                int
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default 5000
+               </em>
+               ) – The maximum number of rows per group. If the value is greater than 0,
+then the dataset writer may split up large incoming batches into
+multiple row groups.  If this value is set, then min_rows_per_group
+should also be set. Otherwise it could end up with very small row
+groups.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                show_query_paths
+               </strong>
+               (
+               <em>
+                bool
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default False
+               </em>
+               ) – If globed query paths should be printed to stdout.
+              </p>
+             </li>
             </ul>
            </dd>
           </dl>
@@ -1139,9 +1511,432 @@ backtesting.
             Warning
            </p>
            <p>
-            The catalog is not threadsafe.
+            The data catalog is not threadsafe. Using it in a multithreaded environment can lead to
+unexpected behavior.
            </p>
           </div>
+          <p class="rubric">
+           Notes
+          </p>
+          <p>
+           For more details about
+           <cite>
+            fsspec
+           </cite>
+           and its filesystem protocols, see
+           <a class="reference external" href="https://filesystem-spec.readthedocs.io/en/latest/">
+            https://filesystem-spec.readthedocs.io/en/latest/
+           </a>
+           .
+          </p>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_env">
+            <em class="property">
+             <span class="pre">
+              classmethod
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_env
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog" title="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog">
+               <span class="pre">
+                ParquetDataCatalog
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_env" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Create a data catalog instance by accessing the ‘NAUTILUS_PATH’ environment
+variable.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                ParquetDataCatalog
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <strong>
+                OSError
+               </strong>
+               – If the ‘NAUTILUS_PATH’ environment variable is not set.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_uri">
+            <em class="property">
+             <span class="pre">
+              classmethod
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_uri
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               uri
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               str
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog" title="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog">
+               <span class="pre">
+                ParquetDataCatalog
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_uri" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Create a data catalog instance from the given
+             <cite>
+              uri
+             </cite>
+             .
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                uri
+               </strong>
+               (
+               <em>
+                str
+               </em>
+               ) – The URI string for the backing path.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                ParquetDataCatalog
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.write_data">
+            <span class="sig-name descname">
+             <span class="pre">
+              write_data
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               data
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               list
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <span class="pre">
+               nautilus_trader.core.data.Data
+              </span>
+              <span class="w">
+              </span>
+              <span class="p">
+               <span class="pre">
+                |
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <a class="reference internal" href="core.html#nautilus_trader.core.message.Event" title="nautilus_trader.core.message.Event">
+               <span class="pre">
+                nautilus_trader.core.message.Event
+               </span>
+              </a>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="o">
+              <span class="pre">
+               **
+              </span>
+             </span>
+             <span class="n">
+              <span class="pre">
+               kwargs
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               Any
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               None
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.write_data" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Write the given
+             <cite>
+              data
+             </cite>
+             to the catalog.
+            </p>
+            <p>
+             The function categorizes the data based on their class name and, when applicable, their
+associated instrument ID. It then delegates the actual writing process to the
+             <cite>
+              write_chunk
+             </cite>
+             method.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  data
+                 </strong>
+                 (
+                 <em>
+                  list
+                 </em>
+                 <em>
+                  [
+                 </em>
+                 <em>
+                  Data
+                 </em>
+                 <em>
+                  |
+                 </em>
+                 <a class="reference internal" href="core.html#nautilus_trader.core.message.Event" title="nautilus_trader.core.message.Event">
+                  <em>
+                   Event
+                  </em>
+                 </a>
+                 <em>
+                  ]
+                 </em>
+                 ) – The data or event objects to be written to the catalog.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  kwargs
+                 </strong>
+                 (
+                 <em>
+                  Any
+                 </em>
+                 ) – Additional keyword arguments to be passed to the
+                 <cite>
+                  write_chunk
+                 </cite>
+                 method.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+            <p class="rubric">
+             Notes
+            </p>
+            <ul class="simple">
+             <li>
+              <p>
+               All data of the same type is expected to be monotonically increasing, or non-decreasing
+              </p>
+             </li>
+             <li>
+              <p>
+               The data is sorted and grouped based on its class name and instrument ID (if applicable) before writing
+              </p>
+             </li>
+             <li>
+              <p>
+               Instrument-specific data should have either an
+               <cite>
+                instrument_id
+               </cite>
+               attribute or be an instance of
+               <cite>
+                Instrument
+               </cite>
+              </p>
+             </li>
+             <li>
+              <p>
+               The
+               <cite>
+                Bar
+               </cite>
+               class is treated as a special case, being grouped based on its
+               <cite>
+                bar_type
+               </cite>
+               attribute
+              </p>
+             </li>
+             <li>
+              <p>
+               The input data list must be non-empty, and all data items must be of the appropriate class type
+              </p>
+             </li>
+            </ul>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If data of the same type is not monotonically increasing (or non-decreasing) based on
+               <cite>
+                ts_init
+               </cite>
+               .
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
          </dd>
         </dl>
         <span class="target" id="module-nautilus_trader.persistence.wranglers">
@@ -1410,6 +2205,233 @@ the data source and the Nautilus system.
               </span>
              </dt>
              <dd class="field-odd">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                data
+               </cite>
+               is empty.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+         </dd>
+        </dl>
+        <dl class="py class">
+         <dt class="sig sig-object py" id="nautilus_trader.persistence.wranglers.OrderBookDeltaDataWrangler">
+          <em class="property">
+           <span class="pre">
+            class
+           </span>
+           <span class="w">
+           </span>
+          </em>
+          <span class="sig-name descname">
+           <span class="pre">
+            OrderBookDeltaDataWrangler
+           </span>
+          </span>
+          <span class="sig-paren">
+           (
+          </span>
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Instrument
+            </span>
+            <span class="pre">
+             instrument
+            </span>
+           </span>
+          </em>
+          <span class="sig-paren">
+           )
+          </span>
+          <a class="headerlink" href="#nautilus_trader.persistence.wranglers.OrderBookDeltaDataWrangler" title="Permalink to this definition">
+           ¶
+          </a>
+         </dt>
+         <dd>
+          <p>
+           Bases:
+           <code class="xref py py-class docutils literal notranslate">
+            <span class="pre">
+             object
+            </span>
+           </code>
+          </p>
+          <p>
+           Provides a means of building lists of Nautilus
+           <cite>
+            OrderBookDelta
+           </cite>
+           objects.
+          </p>
+          <dl class="field-list simple">
+           <dt class="field-odd">
+            Parameters
+            <span class="colon">
+             :
+            </span>
+           </dt>
+           <dd class="field-odd">
+            <p>
+             <strong>
+              instrument
+             </strong>
+             (
+             <a class="reference internal" href="model/instruments.html#nautilus_trader.model.instruments.base.Instrument" title="nautilus_trader.model.instruments.base.Instrument">
+              <em>
+               Instrument
+              </em>
+             </a>
+             ) – The instrument for the data wrangler.
+            </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.wranglers.OrderBookDeltaDataWrangler.process">
+            <span class="sig-name descname">
+             <span class="pre">
+              process
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               data:
+              </span>
+              <span class="pre">
+               pd.DataFrame
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               int
+              </span>
+              <span class="pre">
+               ts_init_delta:
+              </span>
+              <span class="pre">
+               int
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               0
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               is_raw=False
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <a class="headerlink" href="#nautilus_trader.persistence.wranglers.OrderBookDeltaDataWrangler.process" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Process the given order book dataset into Nautilus
+             <cite>
+              OrderBookDelta
+             </cite>
+             objects.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  data
+                 </strong>
+                 (
+                 <em>
+                  pd.DataFrame
+                 </em>
+                 ) – The data to process.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  ts_init_delta
+                 </strong>
+                 (
+                 <em>
+                  int
+                 </em>
+                 ) – The difference in nanoseconds between the data timestamps and the
+                 <cite>
+                  ts_init
+                 </cite>
+                 value. Can be used to represent/simulate latency between
+the data source and the Nautilus system.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  is_raw
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – If the data is scaled to the Nautilus fixed precision.
+                </p>
+               </li>
+              </ul>
+             </dd>
+             <dt class="field-even">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
               <p>
                <strong>
                 ValueError
@@ -2139,1805 +3161,10 @@ the data source and the Nautilus system.
           </dl>
          </dd>
         </dl>
-        <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.wranglers.list_from_capsule">
-          <span class="sig-name descname">
-           <span class="pre">
-            list_from_capsule
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             capsule
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <span class="sig-return">
-           <span class="sig-return-icon">
-            →
-           </span>
-           <span class="sig-return-typehint">
-            <span class="pre">
-             list
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
-             Data
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.wranglers.list_from_capsule" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-         </dd>
-        </dl>
-        <span class="target" id="module-nautilus_trader.persistence.external.readers">
+        <span class="target" id="module-nautilus_trader.persistence.writer">
         </span>
         <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.external.readers.LinePreprocessor">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            LinePreprocessor
-           </span>
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.external.readers.LinePreprocessor" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <code class="xref py py-class docutils literal notranslate">
-            <span class="pre">
-             object
-            </span>
-           </code>
-          </p>
-          <p>
-           Provides pre-processing lines before they are passed to a
-           <cite>
-            Reader
-           </cite>
-           class (currently
-only
-           <cite>
-            TextReader
-           </cite>
-           ).
-          </p>
-          <p>
-           Used if the input data requires any pre-processing that may also be required
-as attributes on the resulting Nautilus objects that are created.
-          </p>
-          <p class="rubric">
-           Examples
-          </p>
-          <p>
-           For example, if you were logging data in Python with a prepended timestamp, as below:
-          </p>
-          <p>
-           2021-06-29T06:03:14.528000 - {“op”:”mcm”,”pt”:1624946594395,”mc”:[{“id”:”1.179082386”,”rc”:[{“atb”:[[1.93,0]]}]}
-          </p>
-          <p>
-           The raw JSON data is contained after the logging timestamp, additionally we would
-also want to use this timestamp as the Nautilus
-           <cite>
-            ts_init
-           </cite>
-           value. In
-this instance, you could use something like:
-          </p>
-          <div class="doctest highlight-default notranslate">
-           <div class="highlight">
-            <pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">LoggingLinePreprocessor</span><span class="p">(</span><span class="n">LinePreprocessor</span><span class="p">):</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="nd">@staticmethod</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-<span class="gp">&gt;&gt;&gt; </span>       <span class="n">timestamp</span><span class="p">,</span> <span class="n">json_data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' - '</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>       <span class="k">yield</span> <span class="n">json_data</span><span class="p">,</span> <span class="p">{</span><span class="s1">'ts_init'</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)}</span>
-<span class="gp">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="nd">@staticmethod</span>
-<span class="gp">&gt;&gt;&gt; </span>   <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-<span class="gp">&gt;&gt;&gt; </span>       <span class="n">obj</span><span class="o">.</span><span class="n">ts_init</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s1">'ts_init'</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span>       <span class="k">return</span> <span class="n">obj</span>
-</pre>
-           </div>
-          </div>
-         </dd>
-        </dl>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.external.readers.Reader">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            Reader
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-             <span class="pre">
-              InstrumentProvider
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider_update
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
-             Callable
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.external.readers.Reader" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <code class="xref py py-class docutils literal notranslate">
-            <span class="pre">
-             object
-            </span>
-           </code>
-          </p>
-          <p>
-           Provides parsing of raw byte blocks to Nautilus objects.
-          </p>
-         </dd>
-        </dl>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.external.readers.ByteReader">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            ByteReader
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             block_parser
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Callable
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-             <span class="pre">
-              InstrumentProvider
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider_update
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
-             Callable
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.external.readers.ByteReader" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <a class="reference internal" href="#nautilus_trader.persistence.external.readers.Reader" title="nautilus_trader.persistence.external.readers.Reader">
-            <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              Reader
-             </span>
-            </code>
-           </a>
-          </p>
-          <p>
-           A Reader subclass for reading blocks of raw bytes;
-           <cite>
-            byte_parser
-           </cite>
-           will be passed a
-blocks of raw bytes.
-          </p>
-          <dl class="field-list simple">
-           <dt class="field-odd">
-            Parameters
-            <span class="colon">
-             :
-            </span>
-           </dt>
-           <dd class="field-odd">
-            <ul class="simple">
-             <li>
-              <p>
-               <strong>
-                block_parser
-               </strong>
-               (
-               <em>
-                Callable
-               </em>
-               ) – The handler which takes a blocks of bytes and yields Nautilus objects.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                instrument_provider
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-                <em>
-                 InstrumentProvider
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – The instrument provider for the reader.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                instrument_provider_update
-               </strong>
-               (
-               <em>
-                Callable
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – An optional hook/callable to update instrument provider before data is passed to
-               <cite>
-                byte_parser
-               </cite>
-               (in many cases instruments need to be known ahead of parsing).
-              </p>
-             </li>
-            </ul>
-           </dd>
-          </dl>
-         </dd>
-        </dl>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.external.readers.TextReader">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            TextReader
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             line_parser
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Callable
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             line_preprocessor
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="#nautilus_trader.persistence.external.readers.LinePreprocessor" title="nautilus_trader.persistence.external.readers.LinePreprocessor">
-             <span class="pre">
-              LinePreprocessor
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-             <span class="pre">
-              InstrumentProvider
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider_update
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
-             Callable
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             newline
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             bytes
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             b'\n'
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.external.readers.TextReader" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <a class="reference internal" href="#nautilus_trader.persistence.external.readers.ByteReader" title="nautilus_trader.persistence.external.readers.ByteReader">
-            <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              ByteReader
-             </span>
-            </code>
-           </a>
-          </p>
-          <p>
-           A Reader subclass for reading lines of a text-like file;
-           <cite>
-            line_parser
-           </cite>
-           will be
-passed a single row of bytes.
-          </p>
-          <dl class="field-list simple">
-           <dt class="field-odd">
-            Parameters
-            <span class="colon">
-             :
-            </span>
-           </dt>
-           <dd class="field-odd">
-            <ul class="simple">
-             <li>
-              <p>
-               <strong>
-                line_parser
-               </strong>
-               (
-               <em>
-                Callable
-               </em>
-               ) – The handler which takes byte strings and yields Nautilus objects.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                line_preprocessor
-               </strong>
-               (
-               <em>
-                Callable
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – The context manager for pre-processing (cleaning log lines) of lines
-before json.loads is called. Nautilus objects are returned to the
-context manager for any post-processing also (for example, setting
-the
-               <cite>
-                ts_init
-               </cite>
-               ).
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                instrument_provider
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-                <em>
-                 InstrumentProvider
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – The instrument provider for the reader.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                instrument_provider_update
-               </strong>
-               (
-               <em>
-                Callable
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – An optional hook/callable to update instrument provider before
-data is passed to
-               <cite>
-                line_parser
-               </cite>
-               (in many cases instruments need to
-be known ahead of parsing).
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                newline
-               </strong>
-               (
-               <em>
-                bytes
-               </em>
-               ) – The newline char value.
-              </p>
-             </li>
-            </ul>
-           </dd>
-          </dl>
-         </dd>
-        </dl>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.external.readers.CSVReader">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            CSVReader
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             block_parser
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Callable
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-             <span class="pre">
-              InstrumentProvider
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider_update
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
-             Callable
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             header
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
-             list
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
-             str
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             chunked
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             bool
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             True
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             as_dataframe
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             bool
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             True
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             separator
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             str
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             ','
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             newline
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             bytes
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             b'\n'
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             encoding
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             str
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             'utf-8'
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.external.readers.CSVReader" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <a class="reference internal" href="#nautilus_trader.persistence.external.readers.Reader" title="nautilus_trader.persistence.external.readers.Reader">
-            <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              Reader
-             </span>
-            </code>
-           </a>
-          </p>
-          <p>
-           Provides parsing of CSV formatted bytes strings to Nautilus objects.
-          </p>
-          <dl class="field-list simple">
-           <dt class="field-odd">
-            Parameters
-            <span class="colon">
-             :
-            </span>
-           </dt>
-           <dd class="field-odd">
-            <ul class="simple">
-             <li>
-              <p>
-               <strong>
-                block_parser
-               </strong>
-               (
-               <em>
-                callable
-               </em>
-               ) – The handler which takes byte strings and yields Nautilus objects.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                instrument_provider
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-                <em>
-                 InstrumentProvider
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – The readers instrument provider.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                instrument_provider_update
-               </strong>
-               – Optional hook to call before
-               <cite>
-                parser
-               </cite>
-               for the purpose of loading instruments into an InstrumentProvider
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                header
-               </strong>
-               (
-               <em>
-                list
-               </em>
-               <em>
-                [
-               </em>
-               <em>
-                str
-               </em>
-               <em>
-                ]
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                default None
-               </em>
-               ) – If first row contains names of columns, header has to be set to
-               <cite>
-                None
-               </cite>
-               .
-If data starts right at the first row, header has to be provided the list of column names.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                chunked
-               </strong>
-               (
-               <em>
-                bool
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                default True
-               </em>
-               ) – If chunked=False, each CSV line will be passed to
-               <cite>
-                block_parser
-               </cite>
-               individually, if chunked=True, the data
-passed will potentially contain many lines (a block).
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                as_dataframe
-               </strong>
-               (
-               <em>
-                bool
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                default False
-               </em>
-               ) – If as_dataframe=True, the passes block will be parsed into a DataFrame before passing to
-               <cite>
-                block_parser
-               </cite>
-               .
-              </p>
-             </li>
-            </ul>
-           </dd>
-          </dl>
-         </dd>
-        </dl>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.external.readers.ParquetReader">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            ParquetReader
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             parser
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
-             Callable
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-             <span class="pre">
-              InstrumentProvider
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             instrument_provider_update
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
-             Callable
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.external.readers.ParquetReader" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <a class="reference internal" href="#nautilus_trader.persistence.external.readers.ByteReader" title="nautilus_trader.persistence.external.readers.ByteReader">
-            <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              ByteReader
-             </span>
-            </code>
-           </a>
-          </p>
-          <p>
-           Provides parsing of parquet specification bytes to Nautilus objects.
-          </p>
-          <dl class="field-list simple">
-           <dt class="field-odd">
-            Parameters
-            <span class="colon">
-             :
-            </span>
-           </dt>
-           <dd class="field-odd">
-            <ul class="simple">
-             <li>
-              <p>
-               <strong>
-                parser
-               </strong>
-               (
-               <em>
-                Callable
-               </em>
-               ) – The parser.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                instrument_provider
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-                <em>
-                 InstrumentProvider
-                </em>
-               </a>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – The readers instrument provider.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                instrument_provider_update
-               </strong>
-               (
-               <em>
-                Callable
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – An optional hook/callable to update instrument provider before data is passed to
-               <cite>
-                byte_parser
-               </cite>
-               (in many cases instruments need to be known ahead of parsing).
-              </p>
-             </li>
-            </ul>
-           </dd>
-          </dl>
-         </dd>
-        </dl>
-        <span class="target" id="module-nautilus_trader.persistence.streaming.batching">
-        </span>
-        <span class="target" id="module-nautilus_trader.persistence.streaming.engine">
-        </span>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.engine.StreamingEngine">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            StreamingEngine
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             data_configs
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             list
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="config.html#nautilus_trader.config.backtest.BacktestDataConfig" title="nautilus_trader.config.backtest.BacktestDataConfig">
-             <span class="pre">
-              nautilus_trader.config.backtest.BacktestDataConfig
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             target_batch_size_bytes
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             int
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             512000000
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.streaming.engine.StreamingEngine" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <code class="xref py py-class docutils literal notranslate">
-            <span class="pre">
-             _BufferIterator
-            </span>
-           </code>
-          </p>
-          <p>
-           Streams merged batches of Nautilus objects from
-           <cite>
-            BacktestDataConfig
-           </cite>
-           objects.
-          </p>
-         </dd>
-        </dl>
-        <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.engine.extract_generic_data_client_ids">
-          <span class="sig-name descname">
-           <span class="pre">
-            extract_generic_data_client_ids
-           </span>
-          </span>
-          <span class="sig-paren">
-           (
-          </span>
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             data_configs
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             list
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <a class="reference internal" href="config.html#nautilus_trader.config.backtest.BacktestDataConfig" title="nautilus_trader.config.backtest.BacktestDataConfig">
-             <span class="pre">
-              nautilus_trader.config.backtest.BacktestDataConfig
-             </span>
-            </a>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
-           </span>
-          </em>
-          <span class="sig-paren">
-           )
-          </span>
-          <span class="sig-return">
-           <span class="sig-return-icon">
-            →
-           </span>
-           <span class="sig-return-typehint">
-            <span class="pre">
-             dict
-            </span>
-           </span>
-          </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.streaming.engine.extract_generic_data_client_ids" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Extract a mapping of data_type : client_id from the list of
-           <cite>
-            data_configs
-           </cite>
-           .
-In the process of merging the streaming data, we lose the
-           <cite>
-            client_id
-           </cite>
-           for
-generic data, we need to inject this back in so the backtest engine can be
-correctly loaded.
-          </p>
-         </dd>
-        </dl>
-        <span class="target" id="module-nautilus_trader.persistence.streaming.writer">
-        </span>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter">
+         <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter">
           <em class="property">
            <span class="pre">
             class
@@ -4010,20 +3237,19 @@ correctly loaded.
            </span>
            <span class="n">
             <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
              str
             </span>
+            <span class="w">
+            </span>
             <span class="p">
              <span class="pre">
-              ]
+              |
              </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="pre">
+             None
             </span>
            </span>
            <span class="w">
@@ -4057,20 +3283,19 @@ correctly loaded.
            </span>
            <span class="n">
             <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
              int
             </span>
+            <span class="w">
+            </span>
             <span class="p">
              <span class="pre">
-              ]
+              |
              </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="pre">
+             None
             </span>
            </span>
            <span class="w">
@@ -4138,14 +3363,6 @@ correctly loaded.
            </span>
            <span class="n">
             <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
              tuple
             </span>
             <span class="p">
@@ -4161,10 +3378,17 @@ correctly loaded.
               ]
              </span>
             </span>
+            <span class="w">
+            </span>
             <span class="p">
              <span class="pre">
-              ]
+              |
              </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="pre">
+             None
             </span>
            </span>
            <span class="w">
@@ -4185,7 +3409,7 @@ correctly loaded.
           <span class="sig-paren">
            )
           </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter" title="Permalink to this definition">
+          <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter" title="Permalink to this definition">
            ¶
           </a>
          </dt>
@@ -4301,8 +3525,59 @@ correctly loaded.
             </ul>
            </dd>
           </dl>
+          <dl class="py property">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.is_closed">
+            <em class="property">
+             <span class="pre">
+              property
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              is_closed
+             </span>
+            </span>
+            <em class="property">
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              bool
+             </span>
+            </em>
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.is_closed" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return whether all file streams are closed.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.write">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.write">
             <span class="sig-name descname">
              <span class="pre">
               write
@@ -4343,7 +3618,7 @@ correctly loaded.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.write" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.write" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -4398,7 +3673,7 @@ correctly loaded.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.check_flush">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.check_flush">
             <span class="sig-name descname">
              <span class="pre">
               check_flush
@@ -4420,7 +3695,7 @@ correctly loaded.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.check_flush" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.check_flush" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -4431,7 +3706,7 @@ correctly loaded.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.flush">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.flush">
             <span class="sig-name descname">
              <span class="pre">
               flush
@@ -4453,7 +3728,7 @@ correctly loaded.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.flush" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.flush" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -4464,7 +3739,7 @@ correctly loaded.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.close">
+           <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.StreamingFeatherWriter.close">
             <span class="sig-name descname">
              <span class="pre">
               close
@@ -4486,7 +3761,7 @@ correctly loaded.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.StreamingFeatherWriter.close" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.persistence.writer.StreamingFeatherWriter.close" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -4499,7 +3774,7 @@ correctly loaded.
          </dd>
         </dl>
         <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.persistence.streaming.writer.generate_signal_class">
+         <dt class="sig sig-object py" id="nautilus_trader.persistence.writer.generate_signal_class">
           <span class="sig-name descname">
            <span class="pre">
             generate_signal_class
@@ -4560,7 +3835,7 @@ correctly loaded.
             </span>
            </span>
           </span>
-          <a class="headerlink" href="#nautilus_trader.persistence.streaming.writer.generate_signal_class" title="Permalink to this definition">
+          <a class="headerlink" href="#nautilus_trader.persistence.writer.generate_signal_class" title="Permalink to this definition">
            ¶
           </a>
          </dt>

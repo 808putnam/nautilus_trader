@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -236,7 +241,7 @@
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="../index.html">
-        API Reference
+        Python API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -291,8 +296,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -306,6 +311,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/architecture.html">
                Architecture
@@ -322,11 +332,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/orders.html">
                Orders
               </a>
@@ -334,6 +339,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -351,8 +371,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -367,7 +392,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -380,8 +405,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -389,13 +414,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -428,7 +453,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -618,6 +643,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../../rust.html">
+             Rust API
+            </a>
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../../developer_guide/index.html">
@@ -1174,10 +1204,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairDataClient.subscribe_instrument_status_updates()
+                    BetfairDataClient.subscribe_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -1237,10 +1267,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairDataClient.subscribe_venue_status_updates()
+                    BetfairDataClient.subscribe_venue_status()
                    </span>
                   </code>
                  </a>
@@ -1273,10 +1303,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairDataClient.subscribed_instrument_status_updates()
+                    BetfairDataClient.subscribed_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -1336,10 +1366,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairDataClient.subscribed_venue_status_updates()
+                    BetfairDataClient.subscribed_venue_status()
                    </span>
                   </code>
                  </a>
@@ -1399,10 +1429,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_instrument_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_instrument_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairDataClient.unsubscribe_instrument_status_updates()
+                    BetfairDataClient.unsubscribe_instrument_status()
                    </span>
                   </code>
                  </a>
@@ -1462,10 +1492,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_venue_status_updates">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_venue_status">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    BetfairDataClient.unsubscribe_venue_status_updates()
+                    BetfairDataClient.unsubscribe_venue_status()
                    </span>
                   </code>
                  </a>
@@ -1502,102 +1532,6 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  BSPOrderBookDeltas
-                 </span>
-                </code>
-               </a>
-               <span class="arrow">
-                <i class="fa-solid fa-chevron-right">
-                </i>
-               </span>
-               <ul class="submenu">
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.deltas">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDeltas.deltas
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.from_dict">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDeltas.from_dict()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.fully_qualified_name">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDeltas.fully_qualified_name()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.instrument_id">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDeltas.instrument_id
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.is_snapshot">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDeltas.is_snapshot
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.sequence">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDeltas.sequence
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.to_dict">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDeltas.to_dict()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.ts_event">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDeltas.ts_event
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.ts_init">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDeltas.ts_init
-                   </span>
-                  </code>
-                 </a>
-                </li>
-               </ul>
-              </li>
-              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1611,28 +1545,19 @@
                </span>
                <ul class="submenu">
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_dict">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDelta.from_dict()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.to_dict">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BSPOrderBookDelta.to_dict()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.action">
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     BSPOrderBookDelta.action
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.capsule_from_list">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BSPOrderBookDelta.capsule_from_list()
                    </span>
                   </code>
                  </a>
@@ -1656,10 +1581,28 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BSPOrderBookDelta.from_dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_pyo3">
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     BSPOrderBookDelta.from_pyo3()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_raw">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BSPOrderBookDelta.from_raw()
                    </span>
                   </code>
                  </a>
@@ -1719,6 +1662,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.list_from_capsule">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BSPOrderBookDelta.list_from_capsule()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.order">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1732,6 +1684,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     BSPOrderBookDelta.sequence
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.to_dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BSPOrderBookDelta.to_dict()
                    </span>
                   </code>
                  </a>
@@ -1892,15 +1853,6 @@
                </span>
                <ul class="submenu">
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.watch_stream">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BetfairExecutionClient.watch_stream()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.generate_order_status_report">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1986,6 +1938,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     BetfairExecutionClient.base_currency
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.batch_cancel_orders">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairExecutionClient.batch_cancel_orders()
                    </span>
                   </code>
                  </a>
@@ -2468,9 +2429,42 @@
              </ul>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#module-nautilus_trader.adapters.betfair.historic">
-              Historic
+             <a class="md-nav__link" href="#module-nautilus_trader.adapters.betfair.orderbook">
+              OrderBook
              </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.orderbook.betfair_float_to_price">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  betfair_float_to_price()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.orderbook.betfair_float_to_quantity">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  betfair_float_to_quantity()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.orderbook.create_betfair_order_book">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  create_betfair_order_book()
+                 </span>
+                </code>
+               </a>
+              </li>
+             </ul>
             </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#module-nautilus_trader.adapters.betfair.providers">
@@ -2481,6 +2475,66 @@
               </i>
              </span>
              <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  BetfairInstrumentProviderConfig
+                 </span>
+                </code>
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.dict">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairInstrumentProviderConfig.dict()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.fully_qualified_name">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairInstrumentProviderConfig.fully_qualified_name()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.json">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairInstrumentProviderConfig.json()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.parse">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairInstrumentProviderConfig.parse()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.validate">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairInstrumentProviderConfig.validate()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+               </ul>
+              </li>
               <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider">
                 <code class="docutils literal notranslate">
@@ -2517,33 +2571,6 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     BetfairInstrumentProvider.load_all_async()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider.load_markets">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BetfairInstrumentProvider.load_markets()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider.search_instruments">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BetfairInstrumentProvider.search_instruments()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider.get_betting_instrument">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    BetfairInstrumentProvider.get_betting_instrument()
                    </span>
                   </code>
                  </a>
@@ -2710,6 +2737,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairStreamClient.post_reconnection">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairStreamClient.post_reconnection()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairStreamClient.post_disconnection">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -2743,6 +2779,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_reconnection">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairOrderStreamClient.post_reconnection()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_disconnection">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -2771,6 +2816,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     BetfairMarketStreamClient.post_connection()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_reconnection">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BetfairMarketStreamClient.post_reconnection()
                    </span>
                   </code>
                  </a>
@@ -3430,6 +3484,34 @@
            </em>
            ,
            <em class="sig-param">
+            <span class="o">
+             <span class="pre">
+              *
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              account_currency
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
             <span class="n">
              <span class="pre">
               username
@@ -3620,7 +3702,7 @@
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              market_filter
+              instrument_config
              </span>
             </span>
             <span class="p">
@@ -3639,9 +3721,11 @@
                [
               </span>
              </span>
-             <span class="pre">
-              tuple
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig" title="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig">
+              <span class="pre">
+               BetfairInstrumentProviderConfig
+              </span>
+             </a>
              <span class="p">
               <span class="pre">
                ]
@@ -4237,7 +4321,7 @@
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              base_currency
+              account_currency
              </span>
             </span>
             <span class="p">
@@ -4445,7 +4529,7 @@
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              market_filter
+              instrument_config
              </span>
             </span>
             <span class="p">
@@ -4464,9 +4548,11 @@
                [
               </span>
              </span>
-             <span class="pre">
-              tuple
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig" title="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig">
+              <span class="pre">
+               BetfairInstrumentProviderConfig
+              </span>
+             </a>
              <span class="p">
               <span class="pre">
                ]
@@ -5107,26 +5193,6 @@
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              market_filter
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              dict
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               instrument_provider
              </span>
             </span>
@@ -5138,37 +5204,30 @@
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
              <a class="reference internal" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider" title="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider">
               <span class="pre">
                BetfairInstrumentProvider
               </span>
              </a>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              account_currency
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
              </span>
             </span>
             <span class="w">
             </span>
-            <span class="o">
+            <span class="n">
              <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              None
+              str
              </span>
             </span>
            </em>
@@ -5314,18 +5373,6 @@
                  </em>
                 </a>
                 ) – The logger for the client.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 market_filter
-                </strong>
-                (
-                <em>
-                 dict
-                </em>
-                ) – The market filter.
                </p>
               </li>
               <li>
@@ -7967,10 +8014,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribe_instrument_status_updates
+               subscribe_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -8007,7 +8054,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -8015,7 +8062,7 @@ then the component state will not change, and an error will be logged.
              <p>
               Subscribe to
               <cite>
-               InstrumentStatusUpdates
+               InstrumentStatus
               </cite>
               data for the given instrument ID.
              </p>
@@ -8204,7 +8251,7 @@ then the component state will not change, and an error will be logged.
                   (BookType {
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    L1_TBBO
+                    L1_MBP
                    </span>
                   </code>
                   ,
@@ -8386,7 +8433,7 @@ then the component state will not change, and an error will be logged.
                   (BookType {
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    L1_TBBO
+                    L1_MBP
                    </span>
                   </code>
                   ,
@@ -8677,10 +8724,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribe_venue_status_updates
+               subscribe_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -8717,7 +8764,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -8725,7 +8772,7 @@ then the component state will not change, and an error will be logged.
              <p>
               Subscribe to
               <cite>
-               InstrumentStatusUpdate
+               InstrumentStatus
               </cite>
               data for the venue.
              </p>
@@ -8919,10 +8966,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribed_instrument_status_updates
+               subscribed_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -8948,7 +8995,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -9304,10 +9351,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               subscribed_venue_status_updates
+               subscribed_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -9333,7 +9380,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -9727,10 +9774,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_instrument_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_instrument_status">
              <span class="sig-name descname">
               <span class="pre">
-               unsubscribe_instrument_status_updates
+               unsubscribe_instrument_status
               </span>
              </span>
              <span class="sig-paren">
@@ -9767,7 +9814,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_instrument_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -9775,7 +9822,7 @@ then the component state will not change, and an error will be logged.
              <p>
               Unsubscribe from
               <cite>
-               InstrumentStatusUpdate
+               InstrumentStatus
               </cite>
               data for the given instrument ID.
              </p>
@@ -10233,10 +10280,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_venue_status_updates">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_venue_status">
              <span class="sig-name descname">
               <span class="pre">
-               unsubscribe_venue_status_updates
+               unsubscribe_venue_status
               </span>
              </span>
              <span class="sig-paren">
@@ -10273,7 +10320,7 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_venue_status_updates" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_venue_status" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -10281,7 +10328,7 @@ then the component state will not change, and an error will be logged.
              <p>
               Unsubscribe from
               <cite>
-               InstrumentStatusUpdate
+               InstrumentStatus
               </cite>
               data for the given venue.
              </p>
@@ -10525,461 +10572,6 @@ then the component state will not change, and an error will be logged.
           </dd>
          </dl>
          <dl class="py class">
-          <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas">
-           <em class="property">
-            <span class="pre">
-             class
-            </span>
-            <span class="w">
-            </span>
-           </em>
-           <span class="sig-name descname">
-            <span class="pre">
-             BSPOrderBookDeltas
-            </span>
-           </span>
-           <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas" title="Permalink to this definition">
-            ¶
-           </a>
-          </dt>
-          <dd>
-           <p>
-            Bases:
-            <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               OrderBookDeltas
-              </span>
-             </code>
-            </a>
-           </p>
-           <p>
-            Represents a batch of Betfair BSP order book delta.
-           </p>
-           <dl class="py attribute">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.deltas">
-             <span class="sig-name descname">
-              <span class="pre">
-               deltas
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.deltas" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              The order book deltas.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <cite>
-                 list[OrderBookDelta]
-                </cite>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.from_dict">
-             <em class="property">
-              <span class="pre">
-               static
-              </span>
-              <span class="w">
-              </span>
-             </em>
-             <span class="sig-name descname">
-              <span class="pre">
-               from_dict
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                dict
-               </span>
-               <span class="pre">
-                values
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
-                <span class="pre">
-                 OrderBookDeltas
-                </span>
-               </a>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.from_dict" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Return order book deltas from the given dict values.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Parameters
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <strong>
-                 values
-                </strong>
-                (
-                <em>
-                 dict
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 object
-                </em>
-                <em>
-                 ]
-                </em>
-                ) – The values for initialization.
-               </p>
-              </dd>
-              <dt class="field-even">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-even">
-               <p>
-                <em>
-                 OrderBookDeltas
-                </em>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.fully_qualified_name">
-             <em class="property">
-              <span class="pre">
-               classmethod
-              </span>
-              <span class="w">
-              </span>
-             </em>
-             <span class="sig-name descname">
-              <span class="pre">
-               fully_qualified_name
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                cls
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                str
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.fully_qualified_name" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Return the fully qualified name for the
-              <cite>
-               Data
-              </cite>
-              class.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <em>
-                 str
-                </em>
-               </p>
-              </dd>
-             </dl>
-             <p class="rubric">
-              References
-             </p>
-             <p>
-              <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
-               https://www.python.org/dev/peps/pep-3155/
-              </a>
-             </p>
-            </dd>
-           </dl>
-           <dl class="py attribute">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.instrument_id">
-             <span class="sig-name descname">
-              <span class="pre">
-               instrument_id
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.instrument_id" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              The instrument ID for the order book.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <cite>
-                 InstrumentId
-                </cite>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py attribute">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.is_snapshot">
-             <span class="sig-name descname">
-              <span class="pre">
-               is_snapshot
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.is_snapshot" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              If the deltas represent a snapshot (an initial CLEAR then deltas).
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <cite>
-                 bool
-                </cite>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py attribute">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.sequence">
-             <span class="sig-name descname">
-              <span class="pre">
-               sequence
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.sequence" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              If the sequence number for the last delta.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <cite>
-                 bool
-                </cite>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.to_dict">
-             <em class="property">
-              <span class="pre">
-               static
-              </span>
-              <span class="w">
-              </span>
-             </em>
-             <span class="sig-name descname">
-              <span class="pre">
-               to_dict
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                OrderBookDeltas
-               </span>
-               <span class="pre">
-                obj
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.to_dict" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Return a dictionary representation of this object.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <em>
-                 dict[str, object]
-                </em>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py attribute">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.ts_event">
-             <span class="sig-name descname">
-              <span class="pre">
-               ts_event
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.ts_event" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              The UNIX timestamp (nanoseconds) when the last delta event occurred.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <cite>
-                 uint64_t
-                </cite>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py attribute">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.ts_init">
-             <span class="sig-name descname">
-              <span class="pre">
-               ts_init
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDeltas.ts_init" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              The UNIX timestamp (nanoseconds) when the last delta event was initialized.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <cite>
-                 uint64_t
-                </cite>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-          </dd>
-         </dl>
-         <dl class="py class">
           <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta">
            <em class="property">
             <span class="pre">
@@ -11008,168 +10600,6 @@ then the component state will not change, and an error will be logged.
              </code>
             </a>
            </p>
-           <p>
-            Represents a
-            <cite>
-             Betfair
-            </cite>
-            BSP order book delta.
-           </p>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_dict">
-             <em class="property">
-              <span class="pre">
-               static
-              </span>
-              <span class="w">
-              </span>
-             </em>
-             <span class="sig-name descname">
-              <span class="pre">
-               from_dict
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                dict
-               </span>
-               <span class="pre">
-                values
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
-                <span class="pre">
-                 OrderBookDelta
-                </span>
-               </a>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_dict" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Return an order book delta from the given dict values.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Parameters
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <strong>
-                 values
-                </strong>
-                (
-                <em>
-                 dict
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 object
-                </em>
-                <em>
-                 ]
-                </em>
-                ) – The values for initialization.
-               </p>
-              </dd>
-              <dt class="field-even">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-even">
-               <p>
-                <em>
-                 OrderBookDelta
-                </em>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.to_dict">
-             <em class="property">
-              <span class="pre">
-               static
-              </span>
-              <span class="w">
-              </span>
-             </em>
-             <span class="sig-name descname">
-              <span class="pre">
-               to_dict
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                OrderBookDelta
-               </span>
-               <span class="pre">
-                obj
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.to_dict" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Return a dictionary representation of this object.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <em>
-                 dict[str, object]
-                </em>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
            <dl class="py attribute">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.action">
              <span class="sig-name descname">
@@ -11238,6 +10668,43 @@ then the component state will not change, and an error will be logged.
                </p>
               </dd>
              </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.capsule_from_list">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               capsule_from_list
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                list
+               </span>
+               <span class="pre">
+                items
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.capsule_from_list" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
             </dd>
            </dl>
            <dl class="py method">
@@ -11381,6 +10848,106 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_dict">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               from_dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                dict
+               </span>
+               <span class="pre">
+                values
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
+                <span class="pre">
+                 OrderBookDelta
+                </span>
+               </a>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return an order book delta from the given dict values.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 values
+                </strong>
+                (
+                <em>
+                 dict
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 object
+                </em>
+                <em>
+                 ]
+                </em>
+                ) – The values for initialization.
+               </p>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 OrderBookDelta
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_pyo3">
              <em class="property">
               <span class="pre">
@@ -11481,6 +11048,378 @@ then the component state will not change, and an error will be logged.
                <p>
                 <em>
                  list[OrderBookDelta]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_raw">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               from_raw
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                InstrumentId
+               </span>
+               <span class="pre">
+                instrument_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                BookAction
+               </span>
+               <span class="pre">
+                action
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderSide
+               </span>
+               <span class="pre">
+                side
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                int64_t
+               </span>
+               <span class="pre">
+                price_raw
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint8_t
+               </span>
+               <span class="pre">
+                price_prec
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                size_raw
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint8_t
+               </span>
+               <span class="pre">
+                size_prec
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                order_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint8_t
+               </span>
+               <span class="pre">
+                flags
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                sequence
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                ts_event
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                uint64_t
+               </span>
+               <span class="pre">
+                ts_init
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
+                <span class="pre">
+                 OrderBookDelta
+                </span>
+               </a>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_raw" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return an order book delta from the given raw values.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   instrument_id
+                  </strong>
+                  (
+                  <a class="reference internal" href="../model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                   <em>
+                    InstrumentId
+                   </em>
+                  </a>
+                  ) – The trade instrument ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   action
+                  </strong>
+                  (BookAction {
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    ADD
+                   </span>
+                  </code>
+                  ,
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    UPDATE
+                   </span>
+                  </code>
+                  ,
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    DELETE
+                   </span>
+                  </code>
+                  ,
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    CLEAR
+                   </span>
+                  </code>
+                  }) – The order book delta action.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   side
+                  </strong>
+                  (OrderSide {
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BUY
+                   </span>
+                  </code>
+                  ,
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    SELL
+                   </span>
+                  </code>
+                  }) – The order side.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   price_raw
+                  </strong>
+                  (
+                  <em>
+                   int64_t
+                  </em>
+                  ) – The order raw price (as a scaled fixed precision integer).
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   price_prec
+                  </strong>
+                  (
+                  <em>
+                   uint8_t
+                  </em>
+                  ) – The order price precision.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   size_raw
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The order raw size (as a scaled fixed precision integer).
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   size_prec
+                  </strong>
+                  (
+                  <em>
+                   uint8_t
+                  </em>
+                  ) – The order size precision.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   order_id
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The order ID.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   flags
+                  </strong>
+                  (
+                  <em>
+                   uint8_t
+                  </em>
+                  ) – A combination of packet end with matching engine status.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   sequence
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The unique sequence number for the update.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   ts_event
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The UNIX timestamp (nanoseconds) when the tick event occurred.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   ts_init
+                  </strong>
+                  (
+                  <em>
+                   uint64_t
+                  </em>
+                  ) – The UNIX timestamp (nanoseconds) when the data object was initialized.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 OrderBookDelta
                 </em>
                </p>
               </dd>
@@ -11815,6 +11754,65 @@ then the component state will not change, and an error will be logged.
              </dl>
             </dd>
            </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.list_from_capsule">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               list_from_capsule
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                capsule
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                list
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
+                <span class="pre">
+                 QuoteTick
+                </span>
+               </a>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.list_from_capsule" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+            </dd>
+           </dl>
            <dl class="py attribute">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.order">
              <span class="sig-name descname">
@@ -11828,7 +11826,7 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
-              BookOrder
+              Optional[BookOrder]
              </p>
              <p>
               Return the deltas book order for the action.
@@ -11902,6 +11900,61 @@ then the component state will not change, and an error will be logged.
               <dd class="field-even">
                <p>
                 OrderBookDelta.sequence
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.to_dict">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               to_dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                OrderBookDelta
+               </span>
+               <span class="pre">
+                obj
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.to_dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a dictionary representation of this object.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, object]
+                </em>
                </p>
               </dd>
              </dl>
@@ -12394,6 +12447,13 @@ then the component state will not change, and an error will be logged.
            </dl>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.data_types.BetfairTicker.to_dict">
+             <em class="property">
+              <span class="pre">
+               static
+              </span>
+              <span class="w">
+              </span>
+             </em>
              <span class="sig-name descname">
               <span class="pre">
                to_dict
@@ -13144,26 +13204,6 @@ then the component state will not change, and an error will be logged.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              market_filter
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              dict
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               instrument_provider
              </span>
             </span>
@@ -13311,18 +13351,6 @@ then the component state will not change, and an error will be logged.
               <li>
                <p>
                 <strong>
-                 market_filter
-                </strong>
-                (
-                <em>
-                 dict
-                </em>
-                ) – The market filter.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
                  instrument_provider
                 </strong>
                 (
@@ -13335,46 +13363,6 @@ then the component state will not change, and an error will be logged.
                </p>
               </li>
              </ul>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.watch_stream">
-             <em class="property">
-              <span class="pre">
-               async
-              </span>
-              <span class="w">
-              </span>
-             </em>
-             <span class="sig-name descname">
-              <span class="pre">
-               watch_stream
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                None
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.watch_stream" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Ensure socket stream is connected.
-             </p>
             </dd>
            </dl>
            <dl class="py method">
@@ -14692,7 +14680,11 @@ then the component state will not change, and an error will be logged.
             </dt>
             <dd>
              <p>
-              Check account currency against BetfairHttpClient.
+              Check account currency against
+              <cite>
+               BetfairHttpClient
+              </cite>
+              .
              </p>
             </dd>
            </dl>
@@ -14958,6 +14950,79 @@ to
                   None
                  </span>
                 </code>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.batch_cancel_orders">
+             <span class="sig-name descname">
+              <span class="pre">
+               batch_cancel_orders
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                BatchCancelOrders
+               </span>
+               <span class="pre">
+                command
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.batch_cancel_orders" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Batch cancel orders for the instrument ID contained in the given command.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 command
+                </strong>
+                (
+                <a class="reference internal" href="../execution.html#nautilus_trader.execution.messages.BatchCancelOrders" title="nautilus_trader.execution.messages.BatchCancelOrders">
+                 <em>
+                  BatchCancelOrders
+                 </em>
+                </a>
+                ) – The command to execute.
                </p>
               </dd>
              </dl>
@@ -19528,26 +19593,6 @@ then the component state will not change, and an error will be logged.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              loop
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              AbstractEventLoop
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               logger
              </span>
             </span>
@@ -19746,18 +19791,6 @@ cached client will be returned.
               <li>
                <p>
                 <strong>
-                 loop
-                </strong>
-                (
-                <em>
-                 asyncio.AbstractEventLoop
-                </em>
-                ) – The event loop for the client.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
                  logger
                 </strong>
                 (
@@ -19913,7 +19946,7 @@ If None then will source from the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              market_filter
+              config
              </span>
             </span>
             <span class="p">
@@ -19924,9 +19957,11 @@ If None then will source from the
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              tuple
-             </span>
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig" title="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig">
+              <span class="pre">
+               BetfairInstrumentProviderConfig
+              </span>
+             </a>
             </span>
            </em>
            <span class="sig-paren">
@@ -19993,13 +20028,15 @@ If None then will source from the
               <li>
                <p>
                 <strong>
-                 market_filter
+                 config
                 </strong>
                 (
-                <em>
-                 tuple
-                </em>
-                ) – The market filter to load into the instrument provider.
+                <a class="reference internal" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig" title="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig">
+                 <em>
+                  BetfairInstrumentProviderConfig
+                 </em>
+                </a>
+                ) – The config for the instrument provider.
                </p>
               </li>
              </ul>
@@ -20711,15 +20748,141 @@ If None then will source from the
           </dd>
          </dl>
         </section>
-        <section id="module-nautilus_trader.adapters.betfair.historic">
-         <span id="historic">
+        <section id="module-nautilus_trader.adapters.betfair.orderbook">
+         <span id="orderbook">
          </span>
-         <h2 id="module-nautilus_trader.adapters.betfair.historic">
-          Historic
-          <a class="headerlink" href="#module-nautilus_trader.adapters.betfair.historic" title="Permalink to this heading">
+         <h2 id="module-nautilus_trader.adapters.betfair.orderbook">
+          OrderBook
+          <a class="headerlink" href="#module-nautilus_trader.adapters.betfair.orderbook" title="Permalink to this heading">
            ¶
           </a>
          </h2>
+         <dl class="py function">
+          <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.orderbook.betfair_float_to_price">
+           <span class="sig-name descname">
+            <span class="pre">
+             betfair_float_to_price
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              double
+             </span>
+             <span class="pre">
+              value
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <span class="sig-return">
+            <span class="sig-return-icon">
+             →
+            </span>
+            <span class="sig-return-typehint">
+             <a class="reference internal" href="../model/objects.html#nautilus_trader.model.objects.Price" title="nautilus_trader.model.objects.Price">
+              <span class="pre">
+               Price
+              </span>
+             </a>
+            </span>
+           </span>
+           <a class="headerlink" href="#nautilus_trader.adapters.betfair.orderbook.betfair_float_to_price" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+          </dd>
+         </dl>
+         <dl class="py function">
+          <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.orderbook.betfair_float_to_quantity">
+           <span class="sig-name descname">
+            <span class="pre">
+             betfair_float_to_quantity
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              double
+             </span>
+             <span class="pre">
+              value
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <span class="sig-return">
+            <span class="sig-return-icon">
+             →
+            </span>
+            <span class="sig-return-typehint">
+             <a class="reference internal" href="../model/objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+              <span class="pre">
+               Quantity
+              </span>
+             </a>
+            </span>
+           </span>
+           <a class="headerlink" href="#nautilus_trader.adapters.betfair.orderbook.betfair_float_to_quantity" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+          </dd>
+         </dl>
+         <dl class="py function">
+          <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.orderbook.create_betfair_order_book">
+           <span class="sig-name descname">
+            <span class="pre">
+             create_betfair_order_book
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              InstrumentId
+             </span>
+             <span class="pre">
+              instrument_id
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <span class="sig-return">
+            <span class="sig-return-icon">
+             →
+            </span>
+            <span class="sig-return-typehint">
+             <a class="reference internal" href="../model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook" title="nautilus_trader.model.orderbook.book.OrderBook">
+              <span class="pre">
+               OrderBook
+              </span>
+             </a>
+            </span>
+           </span>
+           <a class="headerlink" href="#nautilus_trader.adapters.betfair.orderbook.create_betfair_order_book" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+          </dd>
+         </dl>
         </section>
         <section id="module-nautilus_trader.adapters.betfair.providers">
          <span id="providers">
@@ -20730,6 +20893,993 @@ If None then will source from the
            ¶
           </a>
          </h2>
+         <dl class="py class">
+          <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig">
+           <em class="property">
+            <span class="pre">
+             class
+            </span>
+            <span class="w">
+            </span>
+           </em>
+           <span class="sig-name descname">
+            <span class="pre">
+             BetfairInstrumentProviderConfig
+            </span>
+           </span>
+           <span class="sig-paren">
+            (
+           </span>
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              load_all
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              load_ids
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              frozenset
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              filters
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              dict
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ,
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              Any
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              filter_callable
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              log_warnings
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              True
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              event_type_ids
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              event_ids
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              market_ids
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              country_codes
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              market_types
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              event_type_names
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              str
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           <span class="sig-paren">
+            )
+           </span>
+           <a class="headerlink" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Bases:
+            <a class="reference internal" href="../config.html#nautilus_trader.config.common.InstrumentProviderConfig" title="nautilus_trader.config.common.InstrumentProviderConfig">
+             <code class="xref py py-class docutils literal notranslate">
+              <span class="pre">
+               InstrumentProviderConfig
+              </span>
+             </code>
+            </a>
+           </p>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.dict">
+             <span class="sig-name descname">
+              <span class="pre">
+               dict
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                dict
+               </span>
+               <span class="p">
+                <span class="pre">
+                 [
+                </span>
+               </span>
+               <span class="pre">
+                str
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ,
+                </span>
+               </span>
+               <span class="w">
+               </span>
+               <span class="pre">
+                Any
+               </span>
+               <span class="p">
+                <span class="pre">
+                 ]
+                </span>
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.dict" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a dictionary representation of the configuration.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, Any]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.fully_qualified_name">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               fully_qualified_name
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                str
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.fully_qualified_name" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the fully qualified name for the
+              <cite>
+               NautilusConfig
+              </cite>
+              class.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 str
+                </em>
+               </p>
+              </dd>
+             </dl>
+             <p class="rubric">
+              References
+             </p>
+             <p>
+              <a class="reference external" href="https://www.python.org/dev/peps/pep-3155/">
+               https://www.python.org/dev/peps/pep-3155/
+              </a>
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.json">
+             <span class="sig-name descname">
+              <span class="pre">
+               json
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.json" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return serialized JSON encoded bytes.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bytes
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.parse">
+             <em class="property">
+              <span class="pre">
+               classmethod
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               parse
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                raw
+               </span>
+              </span>
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="n">
+               <span class="pre">
+                bytes
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                Any
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.parse" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a decoded object of the given
+              <cite>
+               cls
+              </cite>
+              .
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <ul class="simple">
+                <li>
+                 <p>
+                  <strong>
+                   cls
+                  </strong>
+                  (
+                  <em>
+                   type
+                  </em>
+                  ) – The type to decode to.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   raw
+                  </strong>
+                  (
+                  <em>
+                   bytes
+                  </em>
+                  ) – The raw bytes to decode.
+                 </p>
+                </li>
+               </ul>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 Any
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.validate">
+             <span class="sig-name descname">
+              <span class="pre">
+               validate
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                bool
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig.validate" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return whether the configuration can be represented as valid JSON.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 bool
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+          </dd>
+         </dl>
          <dl class="py class">
           <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider">
            <em class="property">
@@ -20807,53 +21957,6 @@ If None then will source from the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              filters
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <span class="pre">
-              dict
-             </span>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               config
              </span>
             </span>
@@ -20865,38 +21968,11 @@ If None then will source from the
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              Optional
-             </span>
-             <span class="p">
+             <a class="reference internal" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig" title="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProviderConfig">
               <span class="pre">
-               [
-              </span>
-             </span>
-             <a class="reference internal" href="../config.html#nautilus_trader.config.common.InstrumentProviderConfig" title="nautilus_trader.config.common.InstrumentProviderConfig">
-              <span class="pre">
-               InstrumentProviderConfig
+               BetfairInstrumentProviderConfig
               </span>
              </a>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              None
-             </span>
             </span>
            </em>
            <span class="sig-paren">
@@ -21370,7 +22446,7 @@ optionally applying the given filters.
              <em class="sig-param">
               <span class="n">
                <span class="pre">
-                market_filter
+                filters
                </span>
               </span>
               <span class="p">
@@ -21424,244 +22500,6 @@ optionally applying the given filters.
              <p>
               Load the latest instruments into the provider asynchronously, optionally
 applying the given filters.
-             </p>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider.load_markets">
-             <span class="sig-name descname">
-              <span class="pre">
-               load_markets
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                market_filter
-               </span>
-              </span>
-              <span class="p">
-               <span class="pre">
-                :
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="n">
-               <span class="pre">
-                Optional
-               </span>
-               <span class="p">
-                <span class="pre">
-                 [
-                </span>
-               </span>
-               <span class="pre">
-                dict
-               </span>
-               <span class="p">
-                <span class="pre">
-                 ]
-                </span>
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="o">
-               <span class="pre">
-                =
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="default_value">
-               <span class="pre">
-                None
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider.load_markets" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Search for betfair markets.
-             </p>
-             <p>
-              Useful for debugging / interactive use
-             </p>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider.search_instruments">
-             <span class="sig-name descname">
-              <span class="pre">
-               search_instruments
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                instrument_filter
-               </span>
-              </span>
-              <span class="p">
-               <span class="pre">
-                :
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="n">
-               <span class="pre">
-                Optional
-               </span>
-               <span class="p">
-                <span class="pre">
-                 [
-                </span>
-               </span>
-               <span class="pre">
-                dict
-               </span>
-               <span class="p">
-                <span class="pre">
-                 ]
-                </span>
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="o">
-               <span class="pre">
-                =
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="default_value">
-               <span class="pre">
-                None
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider.search_instruments" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Search for instruments within the cache.
-             </p>
-             <p>
-              Useful for debugging / interactive use
-             </p>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider.get_betting_instrument">
-             <span class="sig-name descname">
-              <span class="pre">
-               get_betting_instrument
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                market_id
-               </span>
-              </span>
-              <span class="p">
-               <span class="pre">
-                :
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="n">
-               <span class="pre">
-                str
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                selection_id
-               </span>
-              </span>
-              <span class="p">
-               <span class="pre">
-                :
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="n">
-               <span class="pre">
-                str
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                handicap
-               </span>
-              </span>
-              <span class="p">
-               <span class="pre">
-                :
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="n">
-               <span class="pre">
-                str
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <a class="reference internal" href="../model/instruments.html#nautilus_trader.model.instruments.betting.BettingInstrument" title="nautilus_trader.model.instruments.betting.BettingInstrument">
-                <span class="pre">
-                 BettingInstrument
-                </span>
-               </a>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.betfair.providers.BetfairInstrumentProvider.get_betting_instrument" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Return a betting instrument with performance friendly lookup.
              </p>
             </dd>
            </dl>
@@ -23279,7 +24117,50 @@ the given filters.
              <span class="sig-paren">
               )
              </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
              <a class="headerlink" href="#nautilus_trader.adapters.betfair.sockets.BetfairStreamClient.post_connection" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed post connection.
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairStreamClient.post_reconnection">
+             <span class="sig-name descname">
+              <span class="pre">
+               post_reconnection
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                None
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.sockets.BetfairStreamClient.post_reconnection" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -23596,6 +24477,29 @@ the given filters.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_reconnection">
+             <span class="sig-name descname">
+              <span class="pre">
+               post_reconnection
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_reconnection" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed post connection.
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairOrderStreamClient.post_disconnection">
              <em class="property">
               <span class="pre">
@@ -23776,6 +24680,29 @@ the given filters.
               )
              </span>
              <a class="headerlink" href="#nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_connection" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Actions to be performed post connection.
+             </p>
+            </dd>
+           </dl>
+           <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_reconnection">
+             <span class="sig-name descname">
+              <span class="pre">
+               post_reconnection
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <span class="sig-paren">
+              )
+             </span>
+             <a class="headerlink" href="#nautilus_trader.adapters.betfair.sockets.BetfairMarketStreamClient.post_reconnection" title="Permalink to this definition">
               ¶
              </a>
             </dt>

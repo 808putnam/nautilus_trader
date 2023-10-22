@@ -205,13 +205,18 @@
        </a>
       </li>
       <li class="md-tabs__item">
-       <a class="md-tabs__link" href="/user_guide/index.html">
-        User Guide
+       <a class="md-tabs__link" href="/concepts/index.html">
+        Concepts
        </a>
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="/api_reference/index.html">
-        API Reference
+        Python API
+       </a>
+      </li>
+      <li class="md-tabs__item">
+       <a class="md-tabs__link" href="../rust.html">
+        Rust API
        </a>
       </li>
       <li class="md-tabs__item">
@@ -236,7 +241,7 @@
       </li>
       <li class="md-tabs__item">
        <a class="md-tabs__link" href="index.html">
-        API Reference
+        Python API
        </a>
       </li>
      </ul>
@@ -286,8 +291,8 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../getting_started/quick_start.html">
-               Quick Start
+              <a class="md-nav__link" href="../getting_started/quickstart.html">
+               Quickstart
               </a>
              </li>
             </ul>
@@ -301,6 +306,11 @@
              </i>
             </span>
             <ul class="submenu">
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/overview.html">
+               Overview
+              </a>
+             </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/architecture.html">
                Architecture
@@ -317,11 +327,6 @@
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../concepts/adapters.html">
-               Adapters
-              </a>
-             </li>
-             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/orders.html">
                Orders
               </a>
@@ -329,6 +334,21 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/execution.html">
                Execution
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/backtesting.html">
+               Backtesting
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/data.html">
+               Data
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/adapters.html">
+               Adapters
               </a>
              </li>
              <li class="md-nav__item">
@@ -346,8 +366,13 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../concepts/advanced/data.html">
-                 Data
+                <a class="md-nav__link" href="../concepts/advanced/actors.html">
+                 Actors
+                </a>
+               </li>
+               <li class="md-nav__item">
+                <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
+                 Custom/Generic Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -362,7 +387,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/synthetic_instruments.html">
-                 Synthetic instruments
+                 Synthetic Instruments
                 </a>
                </li>
                <li class="md-nav__item">
@@ -375,8 +400,8 @@
             </ul>
            </li>
            <li class="md-nav__item">
-            <a class="md-nav__link" href="../guides/index.html">
-             Guides
+            <a class="md-nav__link" href="../tutorials/index.html">
+             Tutorials
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -384,13 +409,13 @@
             </span>
             <ul class="submenu">
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/backtest_example.html">
-               Complete Backtest Example
+              <a class="md-nav__link" href="../tutorials/backtest_low_level.html">
+               Backtest (low-level API)
               </a>
              </li>
              <li class="md-nav__item">
-              <a class="md-nav__link" href="../guides/loading_external_data.html">
-               Loading External Data
+              <a class="md-nav__link" href="../tutorials/backtest_high_level.html">
+               Backtest (high-level API)
               </a>
              </li>
             </ul>
@@ -423,7 +448,7 @@
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="index.html">
-             API Reference
+             Python API
             </a>
             <span class="arrow">
              <i class="fa-solid fa-chevron-right">
@@ -613,6 +638,11 @@
               </a>
              </li>
             </ul>
+           </li>
+           <li class="md-nav__item">
+            <a class="md-nav__link" href="../rust.html">
+             Rust API
+            </a>
            </li>
            <li class="md-nav__item">
             <a class="md-nav__link" href="../developer_guide/index.html">
@@ -1166,10 +1196,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_instrument_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  BacktestMarketDataClient.subscribe_instrument_status_updates()
+                  BacktestMarketDataClient.subscribe_instrument_status()
                  </span>
                 </code>
                </a>
@@ -1229,10 +1259,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_venue_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  BacktestMarketDataClient.subscribe_venue_status_updates()
+                  BacktestMarketDataClient.subscribe_venue_status()
                  </span>
                 </code>
                </a>
@@ -1265,10 +1295,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_instrument_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  BacktestMarketDataClient.subscribed_instrument_status_updates()
+                  BacktestMarketDataClient.subscribed_instrument_status()
                  </span>
                 </code>
                </a>
@@ -1328,10 +1358,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_venue_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  BacktestMarketDataClient.subscribed_venue_status_updates()
+                  BacktestMarketDataClient.subscribed_venue_status()
                  </span>
                 </code>
                </a>
@@ -1391,10 +1421,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_instrument_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  BacktestMarketDataClient.unsubscribe_instrument_status_updates()
+                  BacktestMarketDataClient.unsubscribe_instrument_status()
                  </span>
                 </code>
                </a>
@@ -1454,10 +1484,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_venue_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  BacktestMarketDataClient.unsubscribe_venue_status_updates()
+                  BacktestMarketDataClient.unsubscribe_venue_status()
                  </span>
                 </code>
                </a>
@@ -2309,6 +2339,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.execution_client.BacktestExecClient.batch_cancel_orders">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  BacktestExecClient.batch_cancel_orders()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.execution_client.BacktestExecClient.cancel_all_orders">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -3026,10 +3065,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instrument_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.handle_instrument_status_update()
+                  FXRolloverInterestModule.handle_instrument_status()
                  </span>
                 </code>
                </a>
@@ -3107,10 +3146,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_venue_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.handle_venue_status_update()
+                  FXRolloverInterestModule.handle_venue_status()
                  </span>
                 </code>
                </a>
@@ -3156,6 +3195,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   FXRolloverInterestModule.id
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.indicators_initialized">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.indicators_initialized()
                  </span>
                 </code>
                </a>
@@ -3341,10 +3389,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_instrument_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.on_instrument_status_update()
+                  FXRolloverInterestModule.on_instrument_status()
                  </span>
                 </code>
                </a>
@@ -3449,10 +3497,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_venue_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.on_venue_status_update()
+                  FXRolloverInterestModule.on_venue_status()
                  </span>
                 </code>
                </a>
@@ -3462,6 +3510,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   FXRolloverInterestModule.pending_requests()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.pre_process">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.pre_process()
                  </span>
                 </code>
                </a>
@@ -3530,6 +3587,33 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_bars">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.register_indicator_for_bars()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_quote_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.register_indicator_for_quote_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_trade_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.register_indicator_for_trade_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_venue">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -3543,6 +3627,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   FXRolloverInterestModule.register_warning_event()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.registered_indicators">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FXRolloverInterestModule.registered_indicators
                  </span>
                 </code>
                </a>
@@ -3701,10 +3794,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instrument_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.subscribe_instrument_status_updates()
+                  FXRolloverInterestModule.subscribe_instrument_status()
                  </span>
                 </code>
                </a>
@@ -3764,10 +3857,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_venue_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.subscribe_venue_status_updates()
+                  FXRolloverInterestModule.subscribe_venue_status()
                  </span>
                 </code>
                </a>
@@ -3827,10 +3920,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_instrument_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.unsubscribe_instrument_status_updates()
+                  FXRolloverInterestModule.unsubscribe_instrument_status()
                  </span>
                 </code>
                </a>
@@ -3890,10 +3983,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_venue_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  FXRolloverInterestModule.unsubscribe_venue_status_updates()
+                  FXRolloverInterestModule.unsubscribe_venue_status()
                  </span>
                 </code>
                </a>
@@ -4094,10 +4187,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.handle_instrument_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.handle_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.handle_instrument_status_update()
+                  SimulationModule.handle_instrument_status()
                  </span>
                 </code>
                </a>
@@ -4175,10 +4268,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.handle_venue_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.handle_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.handle_venue_status_update()
+                  SimulationModule.handle_venue_status()
                  </span>
                 </code>
                </a>
@@ -4224,6 +4317,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   SimulationModule.id
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.indicators_initialized">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.indicators_initialized()
                  </span>
                 </code>
                </a>
@@ -4409,10 +4511,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.on_instrument_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.on_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.on_instrument_status_update()
+                  SimulationModule.on_instrument_status()
                  </span>
                 </code>
                </a>
@@ -4517,10 +4619,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.on_venue_status_update">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.on_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.on_venue_status_update()
+                  SimulationModule.on_venue_status()
                  </span>
                 </code>
                </a>
@@ -4530,6 +4632,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   SimulationModule.pending_requests()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.pre_process">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.pre_process()
                  </span>
                 </code>
                </a>
@@ -4598,6 +4709,33 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_bars">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.register_indicator_for_bars()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_quote_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.register_indicator_for_quote_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_trade_ticks">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.register_indicator_for_trade_ticks()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.register_venue">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -4611,6 +4749,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   SimulationModule.register_warning_event()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.registered_indicators">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulationModule.registered_indicators
                  </span>
                 </code>
                </a>
@@ -4769,10 +4916,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.subscribe_instrument_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.subscribe_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.subscribe_instrument_status_updates()
+                  SimulationModule.subscribe_instrument_status()
                  </span>
                 </code>
                </a>
@@ -4832,10 +4979,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.subscribe_venue_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.subscribe_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.subscribe_venue_status_updates()
+                  SimulationModule.subscribe_venue_status()
                  </span>
                 </code>
                </a>
@@ -4895,10 +5042,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_instrument_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_instrument_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.unsubscribe_instrument_status_updates()
+                  SimulationModule.unsubscribe_instrument_status()
                  </span>
                 </code>
                </a>
@@ -4958,10 +5105,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_venue_status_updates">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_venue_status">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  SimulationModule.unsubscribe_venue_status_updates()
+                  SimulationModule.unsubscribe_venue_status()
                  </span>
                 </code>
                </a>
@@ -8542,10 +8689,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_instrument_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribe_instrument_status_updates
+              subscribe_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -8582,7 +8729,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_instrument_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -8933,10 +9080,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_venue_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribe_venue_status_updates
+              subscribe_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -8973,7 +9120,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_venue_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -9146,10 +9293,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_instrument_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribed_instrument_status_updates
+              subscribed_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -9175,7 +9322,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_instrument_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -9531,10 +9678,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_venue_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribed_venue_status_updates
+              subscribed_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -9560,7 +9707,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_venue_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -9867,10 +10014,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_instrument_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              unsubscribe_instrument_status_updates
+              unsubscribe_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -9907,7 +10054,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -10192,10 +10339,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_venue_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              unsubscribe_venue_status_updates
+              unsubscribe_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -10232,7 +10379,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_venue_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -10609,6 +10756,28 @@ data.
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               validate=True
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               sort=True
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -10678,6 +10847,56 @@ data.
                   optional
                  </em>
                  ) – The data client ID to associate with generic data.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  validate
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If
+                 <cite>
+                  data
+                 </cite>
+                 should be validated
+(recommended when adding data directly to the engine).
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  sort
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If
+                 <cite>
+                  data
+                 </cite>
+                 should be sorted by
+                 <cite>
+                  ts_init
+                 </cite>
+                 with the rest of the stream after adding
+(recommended when adding data directly to the engine).
                 </p>
                </li>
               </ul>
@@ -10756,6 +10975,18 @@ data.
                  .
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  TypeError
+                 </strong>
+                 – If
+                 <cite>
+                  data
+                 </cite>
+                 is a type provided by Rust pyo3 (cannot add directly to engine yet).
+                </p>
+               </li>
               </ul>
              </dd>
             </dl>
@@ -10766,6 +10997,14 @@ data.
              <p>
               Assumes all data elements are of the same type. Adding lists of varying
 data types could result in incorrect backtest logic.
+             </p>
+             <p>
+              Caution if adding data without
+              <cite>
+               sort
+              </cite>
+              being True, as this could lead to running backtests
+on a stream which does not have monotonically increasing timestamps.
              </p>
             </div>
            </dd>
@@ -11349,7 +11588,7 @@ a venue with a
               =
              </span>
              <span class="pre">
-              BookType.L1_TBBO,
+              BookType.L1_MBP,
              </span>
              <span class="pre">
               routing:
@@ -11714,7 +11953,7 @@ generate new position IDs.
                  (BookType, default
                  <code class="docutils literal notranslate">
                   <span class="pre">
-                   BookType.L1_TBBO
+                   BookType.L1_MBP
                   </span>
                  </code>
                  ) – The default order book type for fill modelling.
@@ -13776,7 +14015,7 @@ following the run iterations.
             BookType
            </span>
            <span class="pre">
-            book_type=BookType.L1_TBBO,
+            book_type=BookType.L1_MBP,
            </span>
            <span class="pre">
             bool
@@ -16032,10 +16271,10 @@ following the run iterations.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               InstrumentStatusUpdate
+               InstrumentStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -16070,15 +16309,15 @@ following the run iterations.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                 <em>
-                 VenueStatusUpdate
+                 VenueStatus
                 </em>
                </a>
-               ) – The status to process.
+               ) – The status update to process.
               </p>
              </dd>
             </dl>
@@ -16403,10 +16642,10 @@ following the run iterations.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               VenueStatusUpdate
+               VenueStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -16441,15 +16680,15 @@ following the run iterations.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                 <em>
-                 VenueStatusUpdate
+                 VenueStatus
                 </em>
                </a>
-               ) – The status to process.
+               ) – The status update to process.
               </p>
              </dd>
             </dl>
@@ -17320,6 +17559,54 @@ following the run iterations.
               </p>
              </dd>
             </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.execution_client.BacktestExecClient.batch_cancel_orders">
+            <span class="sig-name descname">
+             <span class="pre">
+              batch_cancel_orders
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               BatchCancelOrders
+              </span>
+              <span class="pre">
+               command
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.execution_client.BacktestExecClient.batch_cancel_orders" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
            </dd>
           </dl>
           <dl class="py method">
@@ -23854,7 +24141,7 @@ then the component state will not change, and an error will be logged.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                 <em>
                  InstrumentClose
                 </em>
@@ -23874,10 +24161,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instrument_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              handle_instrument_status_update
+              handle_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -23894,10 +24181,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               InstrumentStatusUpdate
+               InstrumentStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -23914,7 +24201,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instrument_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -23931,7 +24218,7 @@ then the component state will not change, and an error will be logged.
              </code>
              then passes to
              <cite>
-              on_instrument_status_update
+              on_instrument_status
              </cite>
              .
             </p>
@@ -23945,15 +24232,15 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                 <em>
-                 InstrumentStatusUpdate
+                 InstrumentStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The status update received.
               </p>
              </dd>
             </dl>
@@ -24664,7 +24951,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             Handle the given tick data by handling each tick individually.
+             Handle the given historical trade tick data by handling each tick individually.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -24708,10 +24995,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_venue_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              handle_venue_status_update
+              handle_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -24728,10 +25015,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               VenueStatusUpdate
+               VenueStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -24748,7 +25035,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_venue_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -24765,7 +25052,7 @@ then the component state will not change, and an error will be logged.
              </code>
              then passes to
              <cite>
-              on_venue_status_update
+              on_venue_status
              </cite>
              .
             </p>
@@ -24779,15 +25066,15 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                 <em>
-                 VenueStatusUpdate
+                 VenueStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The status update received.
               </p>
              </dd>
             </dl>
@@ -25049,6 +25336,62 @@ then the component state will not change, and an error will be logged.
                <cite>
                 ComponentId
                </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.indicators_initialized">
+            <span class="sig-name descname">
+             <span class="pre">
+              indicators_initialized
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               bool
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.indicators_initialized" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return a value indicating whether all indicators are initialized.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
+               </em>
+               – True if all initialized, else False
               </p>
              </dd>
             </dl>
@@ -26339,12 +26682,12 @@ update.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                 <em>
                  InstrumentClose
                 </em>
                </a>
-               ) – The update received.
+               ) – The instrument close received.
               </p>
              </dd>
             </dl>
@@ -26359,10 +26702,10 @@ update.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.on_instrument_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.on_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              on_instrument_status_update
+              on_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -26379,10 +26722,10 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               InstrumentStatusUpdate
+               InstrumentStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -26399,7 +26742,7 @@ update.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_instrument_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -26418,15 +26761,15 @@ update.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                 <em>
-                 InstrumentStatusUpdate
+                 InstrumentStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The instrument status update received.
               </p>
              </dd>
             </dl>
@@ -27186,10 +27529,10 @@ initially starting.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.on_venue_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.on_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              on_venue_status_update
+              on_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -27206,10 +27549,10 @@ initially starting.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               VenueStatusUpdate
+               VenueStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -27226,7 +27569,7 @@ initially starting.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_venue_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -27244,15 +27587,15 @@ initially starting.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                 <em>
-                 VenueStatusUpdate
+                 VenueStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The venue status update received.
               </p>
              </dd>
             </dl>
@@ -27319,6 +27662,57 @@ initially starting.
               </p>
              </dd>
             </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.pre_process">
+            <span class="sig-name descname">
+             <span class="pre">
+              pre_process
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Data
+              </span>
+              <span class="pre">
+               data
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.pre_process" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -28138,6 +28532,313 @@ and so the results of
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_bars">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_bars
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               BarType
+              </span>
+              <span class="pre">
+               bar_type
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_bars" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive bar data for the
+given bar type.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  bar_type
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
+                  <em>
+                   BarType
+                  </em>
+                 </a>
+                 ) – The bar type for bar updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_quote_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_quote_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_quote_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive quote tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_trade_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_trade_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.register_indicator_for_trade_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive trade tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <em>
+                  indicator
+                 </em>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.register_venue">
             <span class="sig-name descname">
              <span class="pre">
@@ -28276,6 +28977,38 @@ and so the results of
                 type
                </em>
                ) – The event class to register.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.registered_indicators">
+            <span class="sig-name descname">
+             <span class="pre">
+              registered_indicators
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.registered_indicators" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the registered indicators for the strategy.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                list[Indicator]
+               </em>
               </p>
              </dd>
             </dl>
@@ -30388,6 +31121,17 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               await_partial=False
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -30461,6 +31205,25 @@ If
                   </span>
                  </code>
                  then will be inferred from the venue in the instrument ID.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  await_partial
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – If the bar aggregator should await the arrival of a historical partial bar prior
+to activaely aggregating new bars.
                 </p>
                </li>
               </ul>
@@ -30816,10 +31579,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instrument_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribe_instrument_status_updates
+              subscribe_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -30867,7 +31630,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instrument_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -31174,7 +31937,7 @@ for the given instrument ID.
                  (BookType {
                  <code class="docutils literal notranslate">
                   <span class="pre">
-                   L1_TBBO
+                   L1_MBP
                   </span>
                  </code>
                  ,
@@ -31408,7 +32171,7 @@ as per the last subscription request (this will also affect all subscribers).
                  (BookType {
                  <code class="docutils literal notranslate">
                   <span class="pre">
-                   L1_TBBO
+                   L1_MBP
                   </span>
                  </code>
                  ,
@@ -31898,10 +32661,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_venue_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribe_venue_status_updates
+              subscribe_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -31949,7 +32712,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_venue_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -32485,10 +33248,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_instrument_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              unsubscribe_instrument_status_updates
+              unsubscribe_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -32536,7 +33299,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -33336,10 +34099,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_venue_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              unsubscribe_venue_status_updates
+              unsubscribe_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -33387,7 +34150,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_venue_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -34964,7 +35727,7 @@ then the component state will not change, and an error will be logged.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                 <em>
                  InstrumentClose
                 </em>
@@ -34984,10 +35747,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.handle_instrument_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.handle_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              handle_instrument_status_update
+              handle_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -35004,10 +35767,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               InstrumentStatusUpdate
+               InstrumentStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -35024,7 +35787,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.handle_instrument_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.handle_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -35041,7 +35804,7 @@ then the component state will not change, and an error will be logged.
              </code>
              then passes to
              <cite>
-              on_instrument_status_update
+              on_instrument_status
              </cite>
              .
             </p>
@@ -35055,15 +35818,15 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                 <em>
-                 InstrumentStatusUpdate
+                 InstrumentStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The status update received.
               </p>
              </dd>
             </dl>
@@ -35774,7 +36537,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             Handle the given tick data by handling each tick individually.
+             Handle the given historical trade tick data by handling each tick individually.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -35818,10 +36581,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.handle_venue_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.handle_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              handle_venue_status_update
+              handle_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -35838,10 +36601,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               VenueStatusUpdate
+               VenueStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -35858,7 +36621,7 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.handle_venue_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.handle_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -35875,7 +36638,7 @@ then the component state will not change, and an error will be logged.
              </code>
              then passes to
              <cite>
-              on_venue_status_update
+              on_venue_status
              </cite>
              .
             </p>
@@ -35889,15 +36652,15 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                 <em>
-                 VenueStatusUpdate
+                 VenueStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The status update received.
               </p>
              </dd>
             </dl>
@@ -36159,6 +36922,62 @@ then the component state will not change, and an error will be logged.
                <cite>
                 ComponentId
                </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.indicators_initialized">
+            <span class="sig-name descname">
+             <span class="pre">
+              indicators_initialized
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               bool
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.indicators_initialized" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return a value indicating whether all indicators are initialized.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                bool
+               </em>
+               – True if all initialized, else False
               </p>
              </dd>
             </dl>
@@ -37423,12 +38242,12 @@ update.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentClose" title="nautilus_trader.model.data.venue.InstrumentClose">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
                 <em>
                  InstrumentClose
                 </em>
                </a>
-               ) – The update received.
+               ) – The instrument close received.
               </p>
              </dd>
             </dl>
@@ -37443,10 +38262,10 @@ update.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.on_instrument_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.on_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              on_instrument_status_update
+              on_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -37463,10 +38282,10 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               InstrumentStatusUpdate
+               InstrumentStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -37483,7 +38302,7 @@ update.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.on_instrument_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.on_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -37502,15 +38321,15 @@ update.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.InstrumentStatusUpdate" title="nautilus_trader.model.data.venue.InstrumentStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
                 <em>
-                 InstrumentStatusUpdate
+                 InstrumentStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The instrument status update received.
               </p>
              </dd>
             </dl>
@@ -38270,10 +39089,10 @@ initially starting.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.on_venue_status_update">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.on_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              on_venue_status_update
+              on_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -38290,10 +39109,10 @@ initially starting.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               VenueStatusUpdate
+               VenueStatus
               </span>
               <span class="pre">
-               update
+               data
               </span>
              </span>
             </em>
@@ -38310,7 +39129,7 @@ initially starting.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.on_venue_status_update" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.on_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -38328,15 +39147,15 @@ initially starting.
              <dd class="field-odd">
               <p>
                <strong>
-                update
+                data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.venue.VenueStatusUpdate" title="nautilus_trader.model.data.venue.VenueStatusUpdate">
+               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
                 <em>
-                 VenueStatusUpdate
+                 VenueStatus
                 </em>
                </a>
-               ) – The update received.
+               ) – The venue status update received.
               </p>
              </dd>
             </dl>
@@ -38403,6 +39222,57 @@ initially starting.
               </p>
              </dd>
             </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.pre_process">
+            <span class="sig-name descname">
+             <span class="pre">
+              pre_process
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Data
+              </span>
+              <span class="pre">
+               data
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.pre_process" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Abstract method (implement in subclass).
+            </p>
            </dd>
           </dl>
           <dl class="py method">
@@ -39202,6 +40072,313 @@ and so the results of
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_bars">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_bars
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               BarType
+              </span>
+              <span class="pre">
+               bar_type
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_bars" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive bar data for the
+given bar type.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  bar_type
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
+                  <em>
+                   BarType
+                  </em>
+                 </a>
+                 ) – The bar type for bar updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_quote_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_quote_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_quote_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive quote tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <a class="reference internal" href="indicators.html#nautilus_trader.indicators.base.indicator.Indicator" title="nautilus_trader.indicators.base.indicator.Indicator">
+                  <em>
+                   Indicator
+                  </em>
+                 </a>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_trade_ticks">
+            <span class="sig-name descname">
+             <span class="pre">
+              register_indicator_for_trade_ticks
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Indicator
+              </span>
+              <span class="pre">
+               indicator
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               void
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.register_indicator_for_trade_ticks" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Register the given indicator with the actor/strategy to receive trade tick
+data for the given instrument ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  instrument_id
+                 </strong>
+                 (
+                 <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+                  <em>
+                   InstrumentId
+                  </em>
+                 </a>
+                 ) – The instrument ID for tick updates.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  indicator
+                 </strong>
+                 (
+                 <em>
+                  indicator
+                 </em>
+                 ) – The indicator to register.
+                </p>
+               </li>
+              </ul>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.register_venue">
             <span class="sig-name descname">
              <span class="pre">
@@ -39340,6 +40517,38 @@ and so the results of
                 type
                </em>
                ) – The event class to register.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.registered_indicators">
+            <span class="sig-name descname">
+             <span class="pre">
+              registered_indicators
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.registered_indicators" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the registered indicators for the strategy.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                list[Indicator]
+               </em>
               </p>
              </dd>
             </dl>
@@ -41455,6 +42664,17 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               await_partial=False
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -41528,6 +42748,25 @@ If
                   </span>
                  </code>
                  then will be inferred from the venue in the instrument ID.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  await_partial
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – If the bar aggregator should await the arrival of a historical partial bar prior
+to activaely aggregating new bars.
                 </p>
                </li>
               </ul>
@@ -41883,10 +43122,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.subscribe_instrument_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.subscribe_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribe_instrument_status_updates
+              subscribe_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -41934,7 +43173,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.subscribe_instrument_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.subscribe_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -42241,7 +43480,7 @@ for the given instrument ID.
                  (BookType {
                  <code class="docutils literal notranslate">
                   <span class="pre">
-                   L1_TBBO
+                   L1_MBP
                   </span>
                  </code>
                  ,
@@ -42475,7 +43714,7 @@ as per the last subscription request (this will also affect all subscribers).
                  (BookType {
                  <code class="docutils literal notranslate">
                   <span class="pre">
-                   L1_TBBO
+                   L1_MBP
                   </span>
                  </code>
                  ,
@@ -42965,10 +44204,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.subscribe_venue_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.subscribe_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              subscribe_venue_status_updates
+              subscribe_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -43016,7 +44255,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.subscribe_venue_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.subscribe_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -43552,10 +44791,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.unsubscribe_instrument_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.unsubscribe_instrument_status">
             <span class="sig-name descname">
              <span class="pre">
-              unsubscribe_instrument_status_updates
+              unsubscribe_instrument_status
              </span>
             </span>
             <span class="sig-paren">
@@ -43603,7 +44842,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_instrument_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_instrument_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -44403,10 +45642,10 @@ If
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.unsubscribe_venue_status_updates">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.modules.SimulationModule.unsubscribe_venue_status">
             <span class="sig-name descname">
              <span class="pre">
-              unsubscribe_venue_status_updates
+              unsubscribe_venue_status
              </span>
             </span>
             <span class="sig-paren">
@@ -44454,7 +45693,7 @@ If
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_venue_status_updates" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_venue_status" title="Permalink to this definition">
              ¶
             </a>
            </dt>

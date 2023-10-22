@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["trade_id_hash","trade_id_new"],"struct":["TradeId"]};
+window.SIDEBAR_ITEMS = {"struct":["TradeId"]};
