@@ -628,6 +628,84 @@
 <a href="#628" id="628">628</a>
 <a href="#629" id="629">629</a>
 <a href="#630" id="630">630</a>
+<a href="#631" id="631">631</a>
+<a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
+<a href="#636" id="636">636</a>
+<a href="#637" id="637">637</a>
+<a href="#638" id="638">638</a>
+<a href="#639" id="639">639</a>
+<a href="#640" id="640">640</a>
+<a href="#641" id="641">641</a>
+<a href="#642" id="642">642</a>
+<a href="#643" id="643">643</a>
+<a href="#644" id="644">644</a>
+<a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
+<a href="#652" id="652">652</a>
+<a href="#653" id="653">653</a>
+<a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
+<a href="#657" id="657">657</a>
+<a href="#658" id="658">658</a>
+<a href="#659" id="659">659</a>
+<a href="#660" id="660">660</a>
+<a href="#661" id="661">661</a>
+<a href="#662" id="662">662</a>
+<a href="#663" id="663">663</a>
+<a href="#664" id="664">664</a>
+<a href="#665" id="665">665</a>
+<a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
+<a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
+<a href="#678" id="678">678</a>
+<a href="#679" id="679">679</a>
+<a href="#680" id="680">680</a>
+<a href="#681" id="681">681</a>
+<a href="#682" id="682">682</a>
+<a href="#683" id="683">683</a>
+<a href="#684" id="684">684</a>
+<a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -643,18 +721,19 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::{sync::Arc, time::Duration};
+</span><span class="kw">use </span>std::{str::FromStr, sync::Arc, time::Duration};
 
 <span class="kw">use </span>futures_util::{
     stream::{SplitSink, SplitStream},
     SinkExt, StreamExt,
 };
+<span class="kw">use </span>hyper::header::HeaderName;
 <span class="kw">use </span>nautilus_core::python::to_pyruntime_err;
 <span class="kw">use </span>pyo3::{exceptions::PyException, prelude::<span class="kw-2">*</span>, types::PyBytes, PyObject, Python};
 <span class="kw">use </span>tokio::{net::TcpStream, sync::Mutex, task, time::sleep};
 <span class="kw">use </span>tokio_tungstenite::{
     connect_async,
-    tungstenite::{Error, Message},
+    tungstenite::{client::IntoClientRequest, http::HeaderValue, Error, Message},
     MaybeTlsStream, WebSocketStream,
 };
 <span class="kw">use </span>tracing::{debug, error};
@@ -663,6 +742,36 @@
 <span class="kw">type </span>SharedMessageWriter =
     Arc&lt;Mutex&lt;SplitSink&lt;WebSocketStream&lt;MaybeTlsStream&lt;TcpStream&gt;&gt;, Message&gt;&gt;&gt;;
 <span class="kw">type </span>MessageReader = SplitStream&lt;WebSocketStream&lt;MaybeTlsStream&lt;TcpStream&gt;&gt;&gt;;
+
+<span class="attr">#[derive(Debug, Clone)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
+)]
+</span><span class="kw">pub struct </span>WebSocketConfig {
+    url: String,
+    handler: PyObject,
+    headers: Vec&lt;(String, String)&gt;,
+    heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
+}
+
+<span class="attr">#[pymethods]
+</span><span class="kw">impl </span>WebSocketConfig {
+    <span class="attr">#[new]
+    </span><span class="kw">fn </span>new(
+        url: String,
+        handler: PyObject,
+        headers: Vec&lt;(String, String)&gt;,
+        heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            url,
+            handler,
+            headers,
+            heartbeat,
+        }
+    }
+}
 
 <span class="doccomment">/// `WebSocketClient` connects to a websocket server to read and send messages.
 ///
@@ -680,44 +789,53 @@
 /// It&#39;s preferable to set the duration slightly lower - heartbeat more
 /// frequently - than the required amount.
 </span><span class="kw">struct </span>WebSocketClientInner {
+    config: WebSocketConfig,
     read_task: task::JoinHandle&lt;()&gt;,
     heartbeat_task: <span class="prelude-ty">Option</span>&lt;task::JoinHandle&lt;()&gt;&gt;,
     writer: SharedMessageWriter,
-    url: String,
-    handler: PyObject,
-    heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
 }
 
 <span class="kw">impl </span>WebSocketClientInner {
     <span class="doccomment">/// Create an inner websocket client.
-    </span><span class="kw">pub async fn </span>connect_url(
-        url: <span class="kw-2">&amp;</span>str,
-        handler: PyObject,
-        heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
-        <span class="kw">let </span>(writer, reader) = <span class="self">Self</span>::connect_with_server(url).<span class="kw">await</span><span class="question-mark">?</span>;
+    </span><span class="kw">pub async fn </span>connect_url(config: WebSocketConfig) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
+        <span class="kw">let </span>WebSocketConfig {
+            url,
+            handler,
+            heartbeat,
+            headers,
+        } = <span class="kw-2">&amp;</span>config;
+        <span class="kw">let </span>(writer, reader) = <span class="self">Self</span>::connect_with_server(url, headers.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let </span>writer = Arc::new(Mutex::new(writer));
-        <span class="kw">let </span>handler_clone = handler.clone();
 
         <span class="comment">// Keep receiving messages from socket and pass them as arguments to handler
-        </span><span class="kw">let </span>read_task = <span class="self">Self</span>::spawn_read_task(reader, handler);
+        </span><span class="kw">let </span>read_task = <span class="self">Self</span>::spawn_read_task(reader, handler.clone());
 
-        <span class="kw">let </span>heartbeat_task = <span class="self">Self</span>::spawn_heartbeat_task(heartbeat, writer.clone());
+        <span class="kw">let </span>heartbeat_task = <span class="self">Self</span>::spawn_heartbeat_task(<span class="kw-2">*</span>heartbeat, writer.clone());
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
+            config,
             read_task,
             heartbeat_task,
             writer,
-            url: url.to_string(),
-            handler: handler_clone,
-            heartbeat,
         })
     }
 
     <span class="doccomment">/// Connects with the server creating a tokio-tungstenite websocket stream.
     </span><span class="attr">#[inline]
-    </span><span class="kw">pub async fn </span>connect_with_server(url: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(MessageWriter, MessageReader), Error&gt; {
-        connect_async(url).<span class="kw">await</span>.map(|resp| resp.<span class="number">0</span>.split())
+    </span><span class="kw">pub async fn </span>connect_with_server(
+        url: <span class="kw-2">&amp;</span>str,
+        headers: Vec&lt;(String, String)&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(MessageWriter, MessageReader), Error&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>request = url.into_client_request()<span class="question-mark">?</span>;
+        <span class="kw">let </span>req_headers = request.headers_mut();
+
+        headers.into_iter().for_each(|(key, val)| {
+            <span class="kw">let </span>header_value = HeaderValue::from_str(<span class="kw-2">&amp;</span>val).unwrap();
+            <span class="kw">let </span>header_name = HeaderName::from_str(<span class="kw-2">&amp;</span>key).unwrap();
+            req_headers.insert(header_name, header_value);
+        });
+
+        connect_async(request).<span class="kw">await</span>.map(|resp| resp.<span class="number">0</span>.split())
     }
 
     <span class="doccomment">/// Optionally spawn a hearbeat task to periodically ping the server.
@@ -818,13 +936,15 @@
     /// Make a new connection with server. Use the new read and write halves
     /// to update self writer and read and heartbeat tasks.
     </span><span class="kw">pub async fn </span>reconnect(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
-        <span class="kw">let </span>(new_writer, reader) = <span class="self">Self</span>::connect_with_server(<span class="kw-2">&amp;</span><span class="self">self</span>.url).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>(new_writer, reader) =
+            <span class="self">Self</span>::connect_with_server(<span class="kw-2">&amp;</span><span class="self">self</span>.config.url, <span class="self">self</span>.config.headers.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>guard = <span class="self">self</span>.writer.lock().<span class="kw">await</span>;
         <span class="kw-2">*</span>guard = new_writer;
         drop(guard);
 
-        <span class="self">self</span>.read_task = <span class="self">Self</span>::spawn_read_task(reader, <span class="self">self</span>.handler.clone());
-        <span class="self">self</span>.heartbeat_task = <span class="self">Self</span>::spawn_heartbeat_task(<span class="self">self</span>.heartbeat, <span class="self">self</span>.writer.clone());
+        <span class="self">self</span>.read_task = <span class="self">Self</span>::spawn_read_task(reader, <span class="self">self</span>.config.handler.clone());
+        <span class="self">self</span>.heartbeat_task =
+            <span class="self">Self</span>::spawn_heartbeat_task(<span class="self">self</span>.config.heartbeat, <span class="self">self</span>.writer.clone());
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -872,14 +992,12 @@
     /// Creates an inner client and controller task to reconnect or disconnect
     /// the client. Also assumes ownership of writer from inner client
     </span><span class="kw">pub async fn </span>connect(
-        url: <span class="kw-2">&amp;</span>str,
-        handler: PyObject,
-        heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
+        config: WebSocketConfig,
         post_connection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_reconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_disconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
-        <span class="kw">let </span>inner = WebSocketClientInner::connect_url(url, handler, heartbeat).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>inner = WebSocketClientInner::connect_url(config).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let </span>writer = inner.writer.clone();
         <span class="kw">let </span>disconnect_mode = Arc::new(Mutex::new(<span class="bool-val">false</span>));
         <span class="kw">let </span>controller_task = <span class="self">Self</span>::spawn_controller_task(
@@ -894,7 +1012,7 @@
                 <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_connection handler&quot;</span>),
                 <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Error calling post_connection handler: {e}&quot;</span>),
             });
-        }
+        };
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             writer,
@@ -994,9 +1112,7 @@
     </span><span class="attr">#[staticmethod]
     #[pyo3(name = <span class="string">&quot;connect&quot;</span>)]
     </span><span class="kw">fn </span>py_connect(
-        url: String,
-        handler: PyObject,
-        heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
+        config: WebSocketConfig,
         post_connection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_reconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_disconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
@@ -1004,9 +1120,7 @@
     ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span>PyAny&gt; {
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
             <span class="self">Self</span>::connect(
-                <span class="kw-2">&amp;</span>url,
-                handler,
-                heartbeat,
+                config,
                 post_connection,
                 post_reconnection,
                 post_disconnection,
@@ -1102,28 +1216,69 @@
         task::{<span class="self">self</span>, JoinHandle},
         time::{sleep, Duration},
     };
-    <span class="kw">use </span>tokio_tungstenite::accept_async;
+    <span class="kw">use </span>tokio_tungstenite::{
+        accept_hdr_async,
+        tungstenite::{
+            handshake::server::{<span class="self">self</span>, Callback},
+            http::HeaderValue,
+        },
+    };
     <span class="kw">use </span>tracing::debug;
     <span class="kw">use </span>tracing_test::traced_test;
 
-    <span class="kw">use </span><span class="kw">crate</span>::websocket::WebSocketClient;
+    <span class="kw">use </span><span class="kw">crate</span>::websocket::{WebSocketClient, WebSocketConfig};
 
     <span class="kw">struct </span>TestServer {
         task: JoinHandle&lt;()&gt;,
         port: u16,
     }
 
+    <span class="attr">#[derive(Debug, Clone)]
+    </span><span class="kw">struct </span>TestCallback {
+        key: String,
+        value: HeaderValue,
+    }
+
+    <span class="kw">impl </span>Callback <span class="kw">for </span>TestCallback {
+        <span class="kw">fn </span>on_request(
+            <span class="self">self</span>,
+            request: <span class="kw-2">&amp;</span>server::Request,
+            response: server::Response,
+        ) -&gt; <span class="prelude-ty">Result</span>&lt;server::Response, server::ErrorResponse&gt; {
+            <span class="kw">let _ </span>= response;
+            <span class="kw">let </span>value = request.headers().get(<span class="kw-2">&amp;</span><span class="self">self</span>.key);
+            <span class="macro">assert!</span>(value.is_some());
+
+            <span class="kw">match </span>request.headers().get(<span class="kw-2">&amp;</span><span class="self">self</span>.key) {
+                <span class="prelude-val">Some</span>(value) =&gt; {
+                    <span class="macro">assert_eq!</span>(value, <span class="self">self</span>.value);
+                    ()
+                }
+                <span class="kw">_ </span>=&gt; (),
+            }
+
+            <span class="prelude-val">Ok</span>(response)
+        }
+    }
+
     <span class="kw">impl </span>TestServer {
-        <span class="kw">async fn </span>setup() -&gt; <span class="self">Self </span>{
+        <span class="kw">async fn </span>setup(key: String, value: String) -&gt; <span class="self">Self </span>{
             <span class="kw">let </span>server = TcpListener::bind(<span class="string">&quot;127.0.0.1:0&quot;</span>).<span class="kw">await</span>.unwrap();
             <span class="kw">let </span>port = TcpListener::local_addr(<span class="kw-2">&amp;</span>server).unwrap().port();
+
+            <span class="kw">let </span>test_call_back = TestCallback {
+                key,
+                value: HeaderValue::from_str(<span class="kw-2">&amp;</span>value).unwrap(),
+            };
 
             <span class="comment">// Setup test server
             </span><span class="kw">let </span>task = task::spawn(<span class="kw">async move </span>{
                 <span class="comment">// keep accepting connections
                 </span><span class="kw">loop </span>{
                     <span class="kw">let </span>(conn, <span class="kw">_</span>) = server.accept().<span class="kw">await</span>.unwrap();
-                    <span class="kw">let </span><span class="kw-2">mut </span>websocket = accept_async(conn).<span class="kw">await</span>.unwrap();
+                    <span class="kw">let </span><span class="kw-2">mut </span>websocket = accept_hdr_async(conn, test_call_back.clone())
+                        .<span class="kw">await
+                        </span>.unwrap();
 
                     task::spawn(<span class="kw">async move </span>{
                         <span class="kw">loop </span>{
@@ -1159,9 +1314,11 @@
 
         <span class="kw">const </span>N: usize = <span class="number">10</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>success_count = <span class="number">0</span>;
+        <span class="kw">let </span>header_key = <span class="string">&quot;hello-custom-key&quot;</span>.to_string();
+        <span class="kw">let </span>header_value = <span class="string">&quot;hello-custom-value&quot;</span>.to_string();
 
         <span class="comment">// Initialize test server
-        </span><span class="kw">let </span>server = TestServer::setup().<span class="kw">await</span>;
+        </span><span class="kw">let </span>server = TestServer::setup(header_key.clone(), header_value.clone()).<span class="kw">await</span>;
 
         <span class="comment">// Create counter class and handler that increments it
         </span><span class="kw">let </span>(counter, handler) = Python::with_gil(|py| {
@@ -1191,16 +1348,15 @@ counter = Counter()&quot;</span>,
             (counter, handler)
         });
 
-        <span class="kw">let </span>client = WebSocketClient::connect(
-            <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;ws://127.0.0.1:{}&quot;</span>, server.port),
+        <span class="kw">let </span>config = WebSocketConfig::new(
+            <span class="macro">format!</span>(<span class="string">&quot;ws://127.0.0.1:{}&quot;</span>, server.port),
             handler.clone(),
+            <span class="macro">vec!</span>[(header_key, header_value)],
             <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-        )
-        .<span class="kw">await
-        </span>.unwrap();
+        );
+        <span class="kw">let </span>client = WebSocketClient::connect(config, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)
+            .<span class="kw">await
+            </span>.unwrap();
 
         <span class="comment">// Send messages that increment the count
         </span><span class="kw">for _ in </span><span class="number">0</span>..N {

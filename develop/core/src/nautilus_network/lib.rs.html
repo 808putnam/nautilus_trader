@@ -37,6 +37,7 @@
 <a href="#37" id="37">37</a>
 <a href="#38" id="38">38</a>
 <a href="#39" id="39">39</a>
+<a href="#40" id="40">40</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -62,7 +63,7 @@
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>ratelimiter::quota::Quota;
 <span class="kw">use </span>socket::{SocketClient, SocketConfig};
-<span class="kw">use </span>websocket::WebSocketClient;
+<span class="kw">use </span>websocket::{WebSocketClient, WebSocketConfig};
 
 <span class="doccomment">/// Loaded as nautilus_pyo3.network
 </span><span class="attr">#[pymodule]
@@ -72,6 +73,7 @@
     m.add_class::&lt;Quota&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;HttpResponse&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;WebSocketClient&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;WebSocketConfig&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;SocketClient&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;SocketConfig&gt;()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
