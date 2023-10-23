@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["indicators"],"mod":["average","indicator","momentum","ratio"]};

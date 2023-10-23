@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["crypto_future","crypto_perpetual"]};
