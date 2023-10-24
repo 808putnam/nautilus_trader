@@ -1383,7 +1383,9 @@ configuration(s):
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.live.node</span> <span class="kn">import</span> <span class="n">TradingNode</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
     <span class="o">...</span><span class="p">,</span>  <span class="c1"># Omitted</span>
     <span class="n">data_clients</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">"BINANCE"</span><span class="p">:</span> <span class="p">{</span>
@@ -1420,7 +1422,11 @@ configuration(s):
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="c1"># Instantiate the live trading node with a configuration</span>
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.binance.factories</span> <span class="kn">import</span> <span class="n">BinanceLiveDataClientFactory</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.binance.factories</span> <span class="kn">import</span> <span class="n">BinanceLiveExecClientFactory</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.live.node</span> <span class="kn">import</span> <span class="n">TradingNode</span>
+
+<span class="c1"># Instantiate the live trading node with a configuration</span>
 <span class="n">node</span> <span class="o">=</span> <span class="n">TradingNode</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 
 <span class="c1"># Register the client factories with the node</span>
@@ -1796,7 +1802,9 @@ example below:
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">instrument_provider</span><span class="o">=</span><span class="n">InstrumentProviderConfig</span><span class="p">(</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">InstrumentProviderConfig</span>
+
+<span class="n">instrument_provider</span><span class="o">=</span><span class="n">InstrumentProviderConfig</span><span class="p">(</span>
     <span class="n">load_all</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">log_warnings</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span>
@@ -1845,7 +1853,11 @@ data streams by subscribing in the following way from your actor or strategy:
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="c1"># In your `on_start` method</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.binance.futures.types</span> <span class="kn">import</span> <span class="n">BinanceFuturesMarkPriceUpdate</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">DataType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">ClientId</span>
+
+<span class="c1"># In your `on_start` method</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">subscribe_data</span><span class="p">(</span>
     <span class="n">data_type</span><span class="o">=</span><span class="n">DataType</span><span class="p">(</span><span class="n">BinanceFuturesMarkPriceUpdate</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">"instrument_id"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">id</span><span class="p">}),</span>
     <span class="n">client_id</span><span class="o">=</span><span class="n">ClientId</span><span class="p">(</span><span class="s2">"BINANCE"</span><span class="p">),</span>
@@ -1871,7 +1883,9 @@ method acts as a flexible handler for all custom/generic data.
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">):</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.core.data</span> <span class="kn">import</span> <span class="n">Data</span>
+
+<span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">):</span>
     <span class="c1"># First check the type of data</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">BinanceFuturesMarkPriceUpdate</span><span class="p">):</span>
         <span class="c1"># Do something with the data</span>
