@@ -1757,6 +1757,40 @@ variable.
             </em>
             ,
             <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               basename_template
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="n">
+              <span class="pre">
+               str
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="o">
+              <span class="pre">
+               =
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="default_value">
+              <span class="pre">
+               'part-{i}'
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
              <span class="o">
               <span class="pre">
                **
@@ -1854,6 +1888,27 @@ associated instrument ID. It then delegates the actual writing process to the
                <li>
                 <p>
                  <strong>
+                  basename_template
+                 </strong>
+                 (
+                 <em>
+                  str
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default 'part-{i}'
+                 </em>
+                 ) – A template string used to generate basenames of written data files.
+The token ‘{i}’ will be replaced with an automatically incremented
+integer as files are partitioned.
+If not specified, it defaults to ‘part-{i}’ + the default extension ‘.parquet’.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
                   kwargs
                  </strong>
                  (
@@ -1870,6 +1925,25 @@ associated instrument ID. It then delegates the actual writing process to the
               </ul>
              </dd>
             </dl>
+            <div class="admonition warning">
+             <p class="admonition-title">
+              Warning
+             </p>
+             <p>
+              Any existing data which already exists under a filename will be overwritten.
+If a
+              <cite>
+               basename_template
+              </cite>
+              is not provided, then its very likely existing data for the data type and instrument ID will
+be overwritten. To prevent data loss, ensure that the
+              <cite>
+               basename_template
+              </cite>
+              (or the default naming scheme)
+generates unique filenames for different data sets.
+             </p>
+            </div>
             <p class="rubric">
              Notes
             </p>
