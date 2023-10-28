@@ -10471,6 +10471,40 @@ The value should be a valid decimal format.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              manage_contingencies
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               manage_gtd_expiry
              </span>
             </span>
@@ -10617,6 +10651,28 @@ how the
                 </em>
                 ) – The external order claim instrument IDs.
 External orders for matching instrument IDs will be associated with (claimed by) the strategy.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 manage_contingencies
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If OUO and OCO
+                <strong>
+                 open
+                </strong>
+                contingency orders should be managed automatically by the strategy.
                </p>
               </li>
               <li>
