@@ -10471,7 +10471,7 @@ The value should be a valid decimal format.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              manage_contingencies
+              manage_contingent_orders
              </span>
             </span>
             <span class="p">
@@ -10656,7 +10656,7 @@ External orders for matching instrument IDs will be associated with (claimed by)
               <li>
                <p>
                 <strong>
-                 manage_contingencies
+                 manage_contingent_orders
                 </strong>
                 (
                 <em>
@@ -10672,7 +10672,12 @@ External orders for matching instrument IDs will be associated with (claimed by)
                 <strong>
                  open
                 </strong>
-                contingency orders should be managed automatically by the strategy.
+                contingent orders should be managed automatically by the strategy.
+Any emulated orders which are active local will be managed by the
+                <cite>
+                 OrderEmulator
+                </cite>
+                instead.
                </p>
               </li>
               <li>
@@ -17941,6 +17946,40 @@ client).
             <span class="n">
              <span class="pre">
               support_gtd_orders
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              True
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              support_contingent_orders
              </span>
             </span>
             <span class="p">
