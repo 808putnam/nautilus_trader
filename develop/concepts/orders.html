@@ -712,6 +712,17 @@
              <a class="md-nav__link" href="#overview">
               Overview
              </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#terminology">
+                Terminology
+               </a>
+              </li>
+             </ul>
             </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#execution-instructions">
@@ -979,6 +990,240 @@ is not available, then the system will not submit the order and an error will be
 a clear explanatory message.
           </p>
          </div>
+         <section id="terminology">
+          <h3 id="terminology">
+           Terminology
+           <a class="headerlink" href="#terminology" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <ul class="simple">
+           <li>
+            <p>
+             An order is
+             <strong>
+              aggressive
+             </strong>
+             if the type is
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               MARKET
+              </span>
+             </code>
+             or if its executing like a
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               MARKET
+              </span>
+             </code>
+             order (taking liquidity).
+            </p>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              passive
+             </strong>
+             if the type is not
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               MARKET
+              </span>
+             </code>
+             (providing liquidity).
+            </p>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              active local
+             </strong>
+             if it is still within the local system boundary in one of the following three (non-terminal) status:
+            </p>
+            <ul>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 INITIALIZED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 EMULATED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 RELEASED
+                </span>
+               </code>
+              </p>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              in-flight
+             </strong>
+             when in one of the following status:
+            </p>
+            <ul>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 SUBMITTED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PENDING_UPDATE
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PENDING_CANCEL
+                </span>
+               </code>
+              </p>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              open
+             </strong>
+             when in one of the following (non-terminal) status:
+            </p>
+            <ul>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 ACCEPTED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 TRIGGERED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PENDING_UPDATE
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PENDING_CANCEL
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PARTIALLY_FILLED
+                </span>
+               </code>
+              </p>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              closed
+             </strong>
+             when in one of the following (terminal) status:
+            </p>
+            <ul>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 DENIED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 REJECTED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 CANCELED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 EXPIRED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 FILLED
+                </span>
+               </code>
+              </p>
+             </li>
+            </ul>
+           </li>
+          </ul>
+         </section>
         </section>
         <section id="execution-instructions">
          <h2 id="execution-instructions">
