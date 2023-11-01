@@ -280,6 +280,11 @@
 <a href="#280" id="280">280</a>
 <a href="#281" id="281">281</a>
 <a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -324,7 +329,8 @@
     <span class="kw">pub </span>underlying: Currency,
     <span class="kw">pub </span>quote_currency: Currency,
     <span class="kw">pub </span>settlement_currency: Currency,
-    <span class="kw">pub </span>expiration: UnixNanos,
+    <span class="kw">pub </span>activation_ns: UnixNanos,
+    <span class="kw">pub </span>expiration_ns: UnixNanos,
     <span class="kw">pub </span>price_precision: u8,
     <span class="kw">pub </span>size_precision: u8,
     <span class="kw">pub </span>price_increment: Price,
@@ -350,7 +356,8 @@
         underlying: Currency,
         quote_currency: Currency,
         settlement_currency: Currency,
-        expiration: UnixNanos,
+        activation_ns: UnixNanos,
+        expiration_ns: UnixNanos,
         price_precision: u8,
         size_precision: u8,
         price_increment: Price,
@@ -373,7 +380,8 @@
             underlying,
             quote_currency,
             settlement_currency,
-            expiration,
+            activation_ns,
+            expiration_ns,
             price_precision,
             size_precision,
             price_increment,
@@ -518,6 +526,7 @@
 
     <span class="attr">#[fixture]
     </span><span class="kw">pub fn </span>crypto_future_btcusdt() -&gt; CryptoFuture {
+        <span class="kw">let </span>activation = Utc.with_ymd_and_hms(<span class="number">2014</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>).unwrap();
         <span class="kw">let </span>expiration = Utc.with_ymd_and_hms(<span class="number">2014</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>).unwrap();
         CryptoFuture::new(
             InstrumentId::from(<span class="string">&quot;ETHUSDT-123.BINANCE&quot;</span>),
@@ -525,6 +534,7 @@
             Currency::from(<span class="string">&quot;BTC&quot;</span>),
             Currency::from(<span class="string">&quot;USDT&quot;</span>),
             Currency::from(<span class="string">&quot;USDT&quot;</span>),
+            activation.timestamp_nanos_opt().unwrap() <span class="kw">as </span>UnixNanos,
             expiration.timestamp_nanos_opt().unwrap() <span class="kw">as </span>UnixNanos,
             <span class="number">2</span>,
             <span class="number">6</span>,

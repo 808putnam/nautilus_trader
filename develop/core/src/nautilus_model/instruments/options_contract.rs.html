@@ -272,6 +272,11 @@
 <a href="#272" id="272">272</a>
 <a href="#273" id="273">273</a>
 <a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -316,7 +321,8 @@
     <span class="kw">pub </span>asset_class: AssetClass,
     <span class="kw">pub </span>underlying: String,
     <span class="kw">pub </span>option_kind: OptionKind,
-    <span class="kw">pub </span>expiration: UnixNanos,
+    <span class="kw">pub </span>activation_ns: UnixNanos,
+    <span class="kw">pub </span>expiration_ns: UnixNanos,
     <span class="kw">pub </span>strike_price: Price,
     <span class="kw">pub </span>currency: Currency,
     <span class="kw">pub </span>price_precision: u8,
@@ -340,7 +346,8 @@
         asset_class: AssetClass,
         underlying: String,
         option_kind: OptionKind,
-        expiration: UnixNanos,
+        activation_ns: UnixNanos,
+        expiration_ns: UnixNanos,
         strike_price: Price,
         currency: Currency,
         price_precision: u8,
@@ -361,7 +368,8 @@
             asset_class,
             underlying,
             option_kind,
-            expiration,
+            activation_ns,
+            expiration_ns,
             strike_price,
             currency,
             price_precision,
@@ -504,6 +512,7 @@
 
     <span class="attr">#[fixture]
     </span><span class="kw">pub fn </span>options_contract_appl() -&gt; OptionsContract {
+        <span class="kw">let </span>activation = Utc.with_ymd_and_hms(<span class="number">2021</span>, <span class="number">9</span>, <span class="number">17</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>).unwrap();
         <span class="kw">let </span>expiration = Utc.with_ymd_and_hms(<span class="number">2021</span>, <span class="number">12</span>, <span class="number">17</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>).unwrap();
         OptionsContract::new(
             InstrumentId::from(<span class="string">&quot;AAPL211217C00150000.OPRA&quot;</span>),
@@ -511,6 +520,7 @@
             AssetClass::Equity,
             String::from(<span class="string">&quot;AAPL&quot;</span>),
             OptionKind::Call,
+            activation.timestamp_nanos_opt().unwrap() <span class="kw">as </span>UnixNanos,
             expiration.timestamp_nanos_opt().unwrap() <span class="kw">as </span>UnixNanos,
             Price::from(<span class="string">&quot;149.0&quot;</span>),
             Currency::USD(),

@@ -154,6 +154,9 @@
 <a href="#154" id="154">154</a>
 <a href="#155" id="155">155</a>
 <a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -197,7 +200,8 @@
         underlying: Currency,
         quote_currency: Currency,
         settlement_currency: Currency,
-        expiration: UnixNanos,
+        activation_ns: UnixNanos,
+        expiration_ns: UnixNanos,
         price_precision: u8,
         size_precision: u8,
         price_increment: Price,
@@ -220,7 +224,8 @@
             underlying,
             quote_currency,
             settlement_currency,
-            expiration,
+            activation_ns,
+            expiration_ns,
             price_precision,
             size_precision,
             price_increment,
@@ -270,7 +275,8 @@
             <span class="string">&quot;settlement_currency&quot;</span>,
             <span class="self">self</span>.settlement_currency.code.to_string(),
         )<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;expiration&quot;</span>, <span class="self">self</span>.expiration.to_i64())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">&quot;activation_ns&quot;</span>, <span class="self">self</span>.activation_ns.to_u64())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">&quot;expiration_ns&quot;</span>, <span class="self">self</span>.expiration_ns.to_u64())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;price_precision&quot;</span>, <span class="self">self</span>.price_precision)<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;size_precision&quot;</span>, <span class="self">self</span>.size_precision)<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;price_increment&quot;</span>, <span class="self">self</span>.price_increment.to_string())<span class="question-mark">?</span>;

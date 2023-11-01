@@ -141,6 +141,9 @@
 <a href="#141" id="141">141</a>
 <a href="#142" id="142">142</a>
 <a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -185,7 +188,8 @@
         asset_class: AssetClass,
         underlying: String,
         option_kind: OptionKind,
-        expiration: UnixNanos,
+        activation_ns: UnixNanos,
+        expiration_ns: UnixNanos,
         strike_price: Price,
         currency: Currency,
         price_precision: u8,
@@ -206,7 +210,8 @@
             asset_class,
             underlying,
             option_kind,
-            expiration,
+            activation_ns,
+            expiration_ns,
             strike_price,
             currency,
             price_precision,
@@ -252,7 +257,8 @@
         dict.set_item(<span class="string">&quot;asset_class&quot;</span>, <span class="self">self</span>.asset_class.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;underlying&quot;</span>, <span class="self">self</span>.underlying.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;option_kind&quot;</span>, <span class="self">self</span>.option_kind.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;expiration&quot;</span>, <span class="self">self</span>.expiration.to_i64())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">&quot;activation_ns&quot;</span>, <span class="self">self</span>.activation_ns.to_u64())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">&quot;expiration_ns&quot;</span>, <span class="self">self</span>.expiration_ns.to_u64())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;strike_price&quot;</span>, <span class="self">self</span>.strike_price.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;currency&quot;</span>, <span class="self">self</span>.currency.code.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">&quot;price_precision&quot;</span>, <span class="self">self</span>.price_precision)<span class="question-mark">?</span>;
