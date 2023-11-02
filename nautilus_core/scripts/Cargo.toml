@@ -1,0 +1,21 @@
+[package]
+name = "scripts"
+rust-version.workspace = true
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description.workspace = true
+documentation.workspace = true
+
+[[bin]]
+name = "init-db"
+path = "src/bin/init_db.rs"
+
+[[bin]]
+name = "drop-db"
+path = "src/bin/drop_db.rs"
+
+[dependencies]
+tokio = { workspace = true }
+sqlx = { workspace = true, features = ["runtime-tokio-rustls", "postgres"] }
+
