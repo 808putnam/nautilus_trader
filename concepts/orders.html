@@ -712,6 +712,17 @@
              <a class="md-nav__link" href="#overview">
               Overview
              </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#terminology">
+                Terminology
+               </a>
+              </li>
+             </ul>
             </li>
             <li class="md-nav__item">
              <a class="md-nav__link" href="#execution-instructions">
@@ -758,8 +769,8 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#contingency-orders">
-                Contingency Orders
+               <a class="md-nav__link" href="#contingent-orders">
+                Contingent Orders
                </a>
               </li>
              </ul>
@@ -979,6 +990,240 @@ is not available, then the system will not submit the order and an error will be
 a clear explanatory message.
           </p>
          </div>
+         <section id="terminology">
+          <h3 id="terminology">
+           Terminology
+           <a class="headerlink" href="#terminology" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <ul class="simple">
+           <li>
+            <p>
+             An order is
+             <strong>
+              aggressive
+             </strong>
+             if the type is
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               MARKET
+              </span>
+             </code>
+             or if its executing like a
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               MARKET
+              </span>
+             </code>
+             order (taking liquidity).
+            </p>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              passive
+             </strong>
+             if the type is not
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               MARKET
+              </span>
+             </code>
+             (providing liquidity).
+            </p>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              active local
+             </strong>
+             if it is still within the local system boundary in one of the following three (non-terminal) status:
+            </p>
+            <ul>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 INITIALIZED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 EMULATED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 RELEASED
+                </span>
+               </code>
+              </p>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              in-flight
+             </strong>
+             when in one of the following status:
+            </p>
+            <ul>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 SUBMITTED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PENDING_UPDATE
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PENDING_CANCEL
+                </span>
+               </code>
+              </p>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              open
+             </strong>
+             when in one of the following (non-terminal) status:
+            </p>
+            <ul>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 ACCEPTED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 TRIGGERED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PENDING_UPDATE
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PENDING_CANCEL
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 PARTIALLY_FILLED
+                </span>
+               </code>
+              </p>
+             </li>
+            </ul>
+           </li>
+           <li>
+            <p>
+             An order is
+             <strong>
+              closed
+             </strong>
+             when in one of the following (terminal) status:
+            </p>
+            <ul>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 DENIED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 REJECTED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 CANCELED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 EXPIRED
+                </span>
+               </code>
+              </p>
+             </li>
+             <li>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 FILLED
+                </span>
+               </code>
+              </p>
+             </li>
+            </ul>
+           </li>
+          </ul>
+         </section>
         </section>
         <section id="execution-instructions">
          <h2 id="execution-instructions">
@@ -1438,10 +1683,10 @@ of the stop price based on the offset from the ‘market’ (bid, ask or last pr
            </li>
           </ul>
          </section>
-         <section id="contingency-orders">
-          <h3 id="contingency-orders">
-           Contingency Orders
-           <a class="headerlink" href="#contingency-orders" title="Permalink to this heading">
+         <section id="contingent-orders">
+          <h3 id="contingent-orders">
+           Contingent Orders
+           <a class="headerlink" href="#contingent-orders" title="Permalink to this heading">
             ¶
            </a>
           </h3>
@@ -1555,7 +1800,13 @@ to BUY 100,000 AUD using USD:
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">MarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market</span><span class="p">(</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">MarketOrder</span>
+
+<span class="n">order</span><span class="p">:</span> <span class="n">MarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market</span><span class="p">(</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"AUD/USD.IDEALPRO"</span><span class="p">),</span>
     <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">100_000</span><span class="p">),</span>
@@ -1597,7 +1848,14 @@ contracts at a limit price of 5000 USDT, as a market maker.
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">LimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Price</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">LimitOrder</span>
+
+<span class="n">order</span><span class="p">:</span> <span class="n">LimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT-PERP.BINANCE"</span><span class="p">),</span>
     <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
@@ -1648,7 +1906,15 @@ to SELL 1 BTC at a trigger price of 100,000 USDT, active until further notice:
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">StopMarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">stop_market</span><span class="p">(</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TriggerType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Price</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">StopMarketOrder</span>
+
+<span class="n">order</span><span class="p">:</span> <span class="n">StopMarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">stop_market</span><span class="p">(</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT.BINANCE"</span><span class="p">),</span>
     <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
@@ -1697,7 +1963,16 @@ once the market hits the trigger price of 1.30010 USD, active until midday 6th J
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">StopLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">stop_limit</span><span class="p">(</span>
+            <pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TriggerType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Price</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">StopLimitOrder</span>
+
+<span class="n">order</span><span class="p">:</span> <span class="n">StopLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">stop_limit</span><span class="p">(</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"GBP/USD.CURRENEX"</span><span class="p">),</span>
     <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">50_000</span><span class="p">),</span>
@@ -1753,7 +2028,13 @@ to BUY 200,000 USD using JPY:
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">MarketToLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market_to_limit</span><span class="p">(</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">MarketToLimitOrder</span>
+
+<span class="n">order</span><span class="p">:</span> <span class="n">MarketToLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market_to_limit</span><span class="p">(</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"USD/JPY.IDEALPRO"</span><span class="p">),</span>
     <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">200_000</span><span class="p">),</span>
@@ -1802,7 +2083,15 @@ to SELL 10 ETHUSDT-PERP Perpetual Futures contracts at a trigger price of 10,000
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">MarketIfTouchedOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market_if_touched</span><span class="p">(</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TriggerType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Price</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">MarketIfTouchedOrder</span>
+
+<span class="n">order</span><span class="p">:</span> <span class="n">MarketIfTouchedOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market_if_touched</span><span class="p">(</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT-PERP.BINANCE"</span><span class="p">),</span>
     <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
@@ -1852,7 +2141,16 @@ active until midday 6th June, 2022 (UTC):
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">StopLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">limit_if_touched</span><span class="p">(</span>
+            <pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TriggerType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Price</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">StopLimitOrder</span>
+
+<span class="n">order</span><span class="p">:</span> <span class="n">StopLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">limit_if_touched</span><span class="p">(</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"BTCUSDT-PERP.BINANCE"</span><span class="p">),</span>
     <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
@@ -1904,7 +2202,18 @@ Perpetual Futures Contracts activating at a trigger price of 5000 USD, then trai
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">TrailingStopMarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">trailing_stop_market</span><span class="p">(</span>
+            <pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TriggerType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TrailingOffsetType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Price</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">TrailingStopMarketOrder</span>
+
+<span class="n">order</span><span class="p">:</span> <span class="n">TrailingStopMarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">trailing_stop_market</span><span class="p">(</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSD-PERP.BINANCE"</span><span class="p">),</span>
     <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">SELL</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
@@ -1957,7 +2266,18 @@ away from the current ask price, active until further notice:
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">order</span><span class="p">:</span> <span class="n">TrailingStopLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">trailing_stop_limit</span><span class="p">(</span>
+            <pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TriggerType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TrailingOffsetType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Price</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">TrailingStopLimitOrder</span>
+
+<span class="n">order</span><span class="p">:</span> <span class="n">TrailingStopLimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">trailing_stop_limit</span><span class="p">(</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"AUD/USD.CURRENEX"</span><span class="p">),</span>
     <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
     <span class="n">quantity</span><span class="o">=</span><span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">1_250_000</span><span class="p">),</span>

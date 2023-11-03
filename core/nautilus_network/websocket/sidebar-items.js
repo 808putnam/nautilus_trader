@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["WebSocketClient"]};
+window.SIDEBAR_ITEMS = {"struct":["WebSocketClient","WebSocketConfig"]};

@@ -2546,6 +2546,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.trading.strategy.Strategy.manage_contingent_orders">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Strategy.manage_contingent_orders
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.trading.strategy.Strategy.manage_gtd_expiry">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -3789,6 +3798,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   Trader.generate_order_fills_report()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.trading.trader.Trader.generate_fills_report">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Trader.generate_fills_report()
                  </span>
                 </code>
                </a>
@@ -23076,6 +23094,38 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.trading.strategy.Strategy.manage_contingent_orders">
+            <span class="sig-name descname">
+             <span class="pre">
+              manage_contingent_orders
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.trading.strategy.Strategy.manage_contingent_orders" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             If contingent orders should be managed automatically by the strategy.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <cite>
+                bool
+               </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.trading.strategy.Strategy.manage_gtd_expiry">
             <span class="sig-name descname">
              <span class="pre">
@@ -23088,7 +23138,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             If all order GTD time in force expirations should be managed by the strategy.
+             If all order GTD time in force expirations should be managed automatically by the strategy.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -23176,17 +23226,6 @@ then the component state will not change, and an error will be logged.
               </span>
               <span class="pre">
                client_id=None
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               bool
-              </span>
-              <span class="pre">
-               batch_more=False
               </span>
              </span>
             </em>
@@ -23353,38 +23392,6 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
-               <li>
-                <p>
-                 <strong>
-                  batch_more
-                 </strong>
-                 (
-                 <em>
-                  bool
-                 </em>
-                 <em>
-                  ,
-                 </em>
-                 <em>
-                  default False
-                 </em>
-                 ) – Indicates if this command should be batched (grouped) with subsequent modify order
-commands for the venue. When set to
-                 <cite>
-                  True
-                 </cite>
-                 , we expect more calls to
-                 <cite>
-                  modify_order
-                 </cite>
-                 which will add to the current batch. Final processing of the batch occurs on a call
-with
-                 <cite>
-                  batch_more=False
-                 </cite>
-                 . For proper behavior, maintain the correct call sequence.
-                </p>
-               </li>
               </ul>
              </dd>
              <dt class="field-even">
@@ -23453,23 +23460,6 @@ with
               </cite>
               status
 then the command will not be generated, and a warning will be logged.
-             </p>
-             <p>
-              The
-              <cite>
-               batch_more
-              </cite>
-              flag is an advanced feature which may have unintended consequences if not
-called in the correct sequence. If a series of
-              <cite>
-               batch_more=True
-              </cite>
-              calls are not followed by
-a
-              <cite>
-               batch_more=False
-              </cite>
-              , then no command will be sent from the strategy.
              </p>
             </div>
             <p class="rubric">
@@ -37349,6 +37339,54 @@ strategies.
            <dd>
             <p>
              Generate an order fills report.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                pd.DataFrame
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.trading.trader.Trader.generate_fills_report">
+            <span class="sig-name descname">
+             <span class="pre">
+              generate_fills_report
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <span class="pre">
+               DataFrame
+              </span>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.trading.trader.Trader.generate_fills_report" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Generate a fills report.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">

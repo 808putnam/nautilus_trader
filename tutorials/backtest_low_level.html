@@ -913,7 +913,7 @@ We’ll use this instrument for the remainder of this backtest run.
           <div class="highlight">
            <pre><span></span><span class="c1"># Load stub test data</span>
 <span class="n">provider</span> <span class="o">=</span> <span class="n">TestDataProvider</span><span class="p">()</span>
-<span class="n">trades_df</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">read_csv_ticks</span><span class="p">(</span><span class="s2">"binance-ethusdt-trades.csv"</span><span class="p">)</span>
+<span class="n">trades_df</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">read_csv_ticks</span><span class="p">(</span><span class="s2">"binance/ethusdt-trades.csv"</span><span class="p">)</span>
 
 <span class="c1"># Initialize the instrument which matches the data</span>
 <span class="n">ETHUSDT_BINANCE</span> <span class="o">=</span> <span class="n">TestInstrumentProvider</span><span class="o">.</span><span class="n">ethusdt_binance</span><span class="p">()</span>

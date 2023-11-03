@@ -951,6 +951,7 @@ First, download and load the data by running the next cell (this should take ~ 1
           <div class="highlight">
            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.persistence.catalog</span> <span class="kn">import</span> <span class="n">ParquetDataCatalog</span>
 
+
 <span class="c1"># You can also use `ParquetDataCatalog.from_env()` which will use the `NAUTILUS_PATH` environment variable </span>
 <span class="c1"># catalog = ParquetDataCatalog.from_env()</span>
 <span class="n">catalog</span> <span class="o">=</span> <span class="n">ParquetDataCatalog</span><span class="p">(</span><span class="s2">"./catalog"</span><span class="p">)</span>
@@ -1205,6 +1206,7 @@ the account type (
           <div class="highlight">
            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">BacktestVenueConfig</span>
 
+
 <span class="n">venue</span> <span class="o">=</span> <span class="n">BacktestVenueConfig</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">"SIM"</span><span class="p">,</span>
     <span class="n">oms_type</span><span class="o">=</span><span class="s2">"NETTING"</span><span class="p">,</span>
@@ -1272,6 +1274,7 @@ adding the
            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">BacktestDataConfig</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
 
+
 <span class="n">data</span> <span class="o">=</span> <span class="n">BacktestDataConfig</span><span class="p">(</span>
     <span class="n">catalog_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
     <span class="n">data_cls</span><span class="o">=</span><span class="n">QuoteTick</span><span class="p">,</span>
@@ -1327,6 +1330,7 @@ user packages. In this instance, our
            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">BacktestEngineConfig</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">ImportableStrategyConfig</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">LoggingConfig</span>
+
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">BacktestEngineConfig</span><span class="p">(</span>
     <span class="n">strategies</span><span class="o">=</span><span class="p">[</span>
@@ -1431,6 +1435,7 @@ parameters or batches of data).
           <div class="highlight">
            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.backtest.engine</span> <span class="kn">import</span> <span class="n">BacktestEngine</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">Venue</span>
+
 
 <span class="n">engine</span><span class="p">:</span> <span class="n">BacktestEngine</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">get_engine</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 

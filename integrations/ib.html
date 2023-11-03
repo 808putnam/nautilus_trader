@@ -929,7 +929,12 @@ queries below for common use cases
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="n">config_node</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.common</span> <span class="kn">import</span> <span class="n">IBContract</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">InteractiveBrokersDataClientConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">InteractiveBrokersInstrumentProviderConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">TradingNodeConfig</span>
+
+<span class="n">config_node</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
     <span class="n">data_clients</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">"IB"</span><span class="p">:</span> <span class="n">InteractiveBrokersDataClientConfig</span><span class="p">(</span>
             <span class="n">instrument_provider</span><span class="o">=</span><span class="n">InteractiveBrokersInstrumentProviderConfig</span><span class="p">(</span>
@@ -1147,6 +1152,9 @@ configuration(s) and set the environment variables to your TWS (Traders Workstat
          <div class="highlight-python notranslate">
           <div class="highlight">
            <pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">InteractiveBrokersExecClientConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">TradingNodeConfig</span>
+
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
     <span class="n">data_clients</span><span class="o">=</span><span class="p">{</span>
@@ -1156,7 +1164,7 @@ configuration(s) and set the environment variables to your TWS (Traders Workstat
             <span class="o">...</span>  <span class="c1"># Omitted</span>
     <span class="p">},</span>
     <span class="n">exec_clients</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"IB"</span><span class="p">:</span> <span class="n">InteractiveBrokersExecutionClientConfig</span><span class="p">(</span>
+        <span class="s2">"IB"</span><span class="p">:</span> <span class="n">InteractiveBrokersExecClientConfig</span><span class="p">(</span>
             <span class="n">username</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"TWS_USERNAME"</span><span class="p">),</span>
             <span class="n">password</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"TWS_PASSWORD"</span><span class="p">),</span>
             <span class="o">...</span>  <span class="c1"># Omitted</span>
@@ -1177,7 +1185,10 @@ configuration(s) and set the environment variables to your TWS (Traders Workstat
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="c1"># Instantiate the live trading node with a configuration</span>
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.factories</span> <span class="kn">import</span> <span class="n">InteractiveBrokersLiveDataClientFactory</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.factories</span> <span class="kn">import</span> <span class="n">InteractiveBrokersLiveExecClientFactory</span>
+
+<span class="c1"># Instantiate the live trading node with a configuration</span>
 <span class="n">node</span> <span class="o">=</span> <span class="n">TradingNode</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 
 <span class="c1"># Register the client factories with the node</span>

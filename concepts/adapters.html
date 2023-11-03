@@ -949,7 +949,9 @@ as configured:
           </ul>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">InstrumentProviderConfig</span><span class="p">(</span><span class="n">load_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">InstrumentProviderConfig</span>
+
+<span class="n">InstrumentProviderConfig</span><span class="p">(</span><span class="n">load_all</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre>
            </div>
           </div>
@@ -1154,7 +1156,11 @@ as configured:
            </p>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span><span class="c1"># nautilus_trader/adapters/binance/spot/data.py</span>
+             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.core.uuid</span> <span class="kn">import</span> <span class="n">UUID4</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">DataType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+
+<span class="c1"># nautilus_trader/adapters/binance/spot/data.py</span>
 <span class="k">def</span> <span class="nf">request_instrument</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instrument_id</span><span class="p">:</span> <span class="n">InstrumentId</span><span class="p">,</span> <span class="n">correlation_id</span><span class="p">:</span> <span class="n">UUID4</span><span class="p">):</span>
     <span class="n">instrument</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Instrument</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instrument_provider</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">instrument_id</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">instrument</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

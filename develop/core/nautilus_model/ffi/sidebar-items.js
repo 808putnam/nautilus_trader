@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"mod":["data","events","identifiers","orderbook","types"]};

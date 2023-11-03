@@ -2261,6 +2261,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.exchange.SimulatedExchange.support_contingent_orders">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  SimulatedExchange.support_contingent_orders
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.exchange.SimulatedExchange.support_gtd_orders">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -11651,6 +11660,18 @@ a venue with a
               True,
              </span>
              <span class="pre">
+              support_contingent_orders:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              True,
+             </span>
+             <span class="pre">
               use_position_ids:
              </span>
              <span class="pre">
@@ -12047,6 +12068,25 @@ generate new position IDs.
                   default True
                  </em>
                  ) – If orders with GTD time in force will be supported by the venue.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  support_contingent_orders
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If contingent orders will be supported/respected by the venue.
+If False then its expected the strategy will be managing any contingent orders.
                 </p>
                </li>
                <li>
@@ -14045,6 +14085,12 @@ following the run iterations.
             bool
            </span>
            <span class="pre">
+            support_contingent_orders=True,
+           </span>
+           <span class="pre">
+            bool
+           </span>
+           <span class="pre">
             use_position_ids=True,
            </span>
            <span class="pre">
@@ -14396,6 +14442,25 @@ following the run iterations.
                 default True
                </em>
                ) – If orders with GTD time in force will be supported by the venue.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                support_contingent_orders
+               </strong>
+               (
+               <em>
+                bool
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default True
+               </em>
+               ) – If contingent orders will be supported/respected by the venue.
+If False then its expected the strategy will be managing any contingent orders.
               </p>
              </li>
              <li>
@@ -17075,6 +17140,38 @@ following the run iterations.
            <dd>
             <p>
              The account starting balances for each backtest run.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <cite>
+                bool
+               </cite>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.exchange.SimulatedExchange.support_contingent_orders">
+            <span class="sig-name descname">
+             <span class="pre">
+              support_contingent_orders
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.exchange.SimulatedExchange.support_contingent_orders" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             If contingent orders will be supported/respected by the venue.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -22296,20 +22393,19 @@ of fills and slippage by order type.
            </span>
            <span class="n">
             <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
              str
             </span>
+            <span class="w">
+            </span>
             <span class="p">
              <span class="pre">
-              ]
+              |
              </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="pre">
+             None
             </span>
            </span>
            <span class="w">
@@ -45899,20 +45995,19 @@ If
            </span>
            <span class="n">
             <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
-            <span class="pre">
              str
             </span>
+            <span class="w">
+            </span>
             <span class="p">
              <span class="pre">
-              ]
+              |
              </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="pre">
+             None
             </span>
            </span>
            <span class="w">
@@ -46718,7 +46813,12 @@ If
            </dt>
            <dd>
             <p>
-             Execute a group of backtest run configs synchronously.
+             Run the backtest node which will synchronously execute the list of loaded
+backtest run configs.
+            </p>
+            <p>
+             Any exceptions raised from a backtest will be printed to stdout and
+the next backtest run will commence (if any).
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">

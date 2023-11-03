@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["precision_from_str"]};

@@ -841,8 +841,13 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#managed-gtd-expiry">
-                  Managed GTD expiry
+                 <a class="md-nav__link" href="#canceling-orders">
+                  Canceling orders
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#modifying-orders">
+                  Modifying orders
                  </a>
                 </li>
                </ul>
@@ -858,6 +863,11 @@
               </i>
              </span>
              <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#managed-gtd-expiry">
+                Managed GTD expiry
+               </a>
+              </li>
               <li class="md-nav__item">
                <a class="md-nav__link" href="#multiple-strategies">
                 Multiple strategies
@@ -1006,7 +1016,9 @@ a constructor where you can handle initialization. Minimally the base/super clas
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="k">class</span> <span class="nc">MyStrategy</span><span class="p">(</span><span class="n">Strategy</span><span class="p">):</span>
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.trading.strategy</span> <span class="kn">import</span> <span class="n">Strategy</span>
+
+<span class="k">class</span> <span class="nc">MyStrategy</span><span class="p">(</span><span class="n">Strategy</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>  <span class="c1"># &lt;-- the super class must be called to initialize the strategy</span>
 </pre>
@@ -1113,7 +1125,19 @@ You can use these handlers to define actions upon receiving new market data.
            </p>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span><span class="k">def</span> <span class="nf">on_order_book_deltas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deltas</span><span class="p">:</span> <span class="n">OrderBookDeltas</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.core.data</span> <span class="kn">import</span> <span class="n">Data</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">Bar</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">TradeTick</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data.book</span> <span class="kn">import</span> <span class="n">OrderBookDeltas</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data.status</span> <span class="kn">import</span> <span class="n">InstrumentClose</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data.status</span> <span class="kn">import</span> <span class="n">InstrumentStatus</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data.status</span> <span class="kn">import</span> <span class="n">VenueStatus</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data.ticker</span> <span class="kn">import</span> <span class="n">Ticker</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.instruments</span> <span class="kn">import</span> <span class="n">Instrument</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orderbook</span> <span class="kn">import</span> <span class="n">OrderBook</span>
+
+<span class="k">def</span> <span class="nf">on_order_book_deltas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deltas</span><span class="p">:</span> <span class="n">OrderBookDeltas</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_order_book</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_book</span><span class="p">:</span> <span class="n">OrderBook</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_ticker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticker</span><span class="p">:</span> <span class="n">Ticker</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_quote_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">:</span> <span class="n">QuoteTick</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1184,7 +1208,25 @@ You can use these handlers to define actions upon receiving new market data.
            </ol>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span><span class="k">def</span> <span class="nf">on_order_initialized</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">OrderInitialized</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderAccepted</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderCanceled</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderCancelRejected</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderDenied</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderEmulated</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderEvent</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderExpired</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderFilled</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderInitialized</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderModifyRejected</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderPendingCancel</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderPendingUpdate</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderRejected</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderReleased</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderSubmitted</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderTriggered</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">OrderUpdated</span>
+
+<span class="k">def</span> <span class="nf">on_order_initialized</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">OrderInitialized</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_order_denied</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">OrderDenied</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_order_emulated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">OrderEmulated</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_order_released</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">OrderReleased</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1260,7 +1302,12 @@ You can use these handlers to define actions upon receiving new market data.
            </ol>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span><span class="k">def</span> <span class="nf">on_position_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionOpened</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">PositionChanged</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">PositionClosed</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">PositionEvent</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.events</span> <span class="kn">import</span> <span class="n">PositionOpened</span>
+
+<span class="k">def</span> <span class="nf">on_position_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionOpened</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_position_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionChanged</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_position_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionClosed</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_position_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">PositionEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># All position event messages are eventually passed to this handler</span>
@@ -1281,7 +1328,9 @@ which no other specific handler exists.
            </p>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span><span class="k">def</span> <span class="nf">on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.core.message</span> <span class="kn">import</span> <span class="n">Event</span>
+
+<span class="k">def</span> <span class="nf">on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">Event</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </pre>
             </div>
            </div>
@@ -1375,9 +1424,11 @@ different timestamps, as well as setting time alerts or timers.
               Clock
              </span>
             </code>
-            <span class="xref myst">
-             API reference
-            </span>
+            <a class="reference internal" href="../api_reference/common.html">
+             <span class="doc std std-doc">
+              API reference
+             </span>
+            </a>
             for a complete list of available methods.
            </p>
           </div>
@@ -1392,22 +1443,25 @@ different timestamps, as well as setting time alerts or timers.
             While there are multiple ways to obtain current timestamps, here are two commonly used methods as examples:
            </p>
            <p>
-            <strong>
-             UTC Timestamp:
-            </strong>
-            This method returns a timezone-aware (UTC) timestamp:
+            To get the current UTC timestamp as a tz-aware
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              pd.Timestamp
+             </span>
+            </code>
+            :
            </p>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span><span class="n">now</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">utc_now</span><span class="p">()</span>
+             <pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="n">now</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">utc_now</span><span class="p">()</span>
 </pre>
             </div>
            </div>
            <p>
-            <strong>
-             Unix Nanoseconds:
-            </strong>
-            This method provides the current timestamp in nanoseconds since the UNIX epoch:
+            To get the current UTC timestamp as nanoseconds since the UNIX epoch:
            </p>
            <div class="highlight-python notranslate">
             <div class="highlight">
@@ -1581,7 +1635,15 @@ The following shows a general outline of available methods.
            </h4>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span><span class="k">def</span> <span class="nf">account</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">venue</span><span class="p">:</span> <span class="n">Venue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Account</span>
+             <pre><span></span><span class="kn">import</span> <span class="nn">decimal</span>
+
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">Venue</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.accounting.accounts.base</span> <span class="kn">import</span> <span class="n">Account</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.currency</span> <span class="kn">import</span> <span class="n">Currency</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Money</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
+
+<span class="k">def</span> <span class="nf">account</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">venue</span><span class="p">:</span> <span class="n">Venue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Account</span>
 
 <span class="k">def</span> <span class="nf">balances_locked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">venue</span><span class="p">:</span> <span class="n">Venue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Currency</span><span class="p">,</span> <span class="n">Money</span><span class="p">]</span>
 <span class="k">def</span> <span class="nf">margins_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">venue</span><span class="p">:</span> <span class="n">Venue</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Currency</span><span class="p">,</span> <span class="n">Money</span><span class="p">]</span>
@@ -1657,9 +1719,9 @@ metrics and statistics.
             for a complete description
 of all available methods.
            </p>
-           <div class="admonition tip">
+           <div class="admonition note">
             <p class="admonition-title">
-             Tip
+             Note
             </p>
             <p>
              Also see the
@@ -1686,6 +1748,20 @@ tailored for algorithmic trading. These commands are essential for executing str
 and ensuring seamless interaction with various trading venues. In the following sections, we will
 delve into the specifics of each command and its use cases.
           </p>
+          <div class="admonition tip">
+           <p class="admonition-title">
+            Tip
+           </p>
+           <p>
+            The
+            <a class="reference internal" href="execution.html">
+             <span class="doc std std-doc">
+              Execution
+             </span>
+            </a>
+            guide explains the flow through the system, and can be helpful to read in conjunction with the below.
+           </p>
+          </div>
           <section id="submitting-orders">
            <h4 id="submitting-orders">
             Submitting orders
@@ -1723,7 +1799,19 @@ can still be initialized directly with the
             constructor if the trader prefers).
            </p>
            <p>
-            The component an order flows to when submitted for execution depends on the following:
+            The component a
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              SubmitOrder
+             </span>
+            </code>
+            or
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              SubmitOrderList
+             </span>
+            </code>
+            command will flow to for execution depends on the following:
            </p>
            <ul class="simple">
             <li>
@@ -1734,7 +1822,7 @@ can still be initialized directly with the
                 emulation_trigger
                </span>
               </code>
-              is specified, the order will
+              is specified, the command will
               <em>
                firstly
               </em>
@@ -1760,7 +1848,7 @@ can still be initialized directly with the
                 emulation_trigger
                </span>
               </code>
-              ), the order will
+              ), the command will
               <em>
                firstly
               </em>
@@ -1770,12 +1858,11 @@ can still be initialized directly with the
                 ExecAlgorithm
                </span>
               </code>
-              (assuming it exists and has been registered correctly)
              </p>
             </li>
             <li>
              <p>
-              Otherwise, the order will
+              Otherwise, the command will
               <em>
                firstly
               </em>
@@ -1788,15 +1875,6 @@ can still be initialized directly with the
              </p>
             </li>
            </ul>
-           <p>
-            The following examples show method implementations for a
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              Strategy
-             </span>
-            </code>
-            .
-           </p>
            <p>
             This example submits a
             <code class="docutils literal notranslate">
@@ -1814,19 +1892,24 @@ can still be initialized directly with the
            </p>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span>    <span class="k">def</span> <span class="nf">buy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""</span>
-<span class="sd">        Users simple buy method (example).</span>
-<span class="sd">        """</span>
-        <span class="n">order</span><span class="p">:</span> <span class="n">LimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
-            <span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
-            <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
-            <span class="n">quantity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">make_qty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span><span class="p">),</span>
-            <span class="n">price</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">make_price</span><span class="p">(</span><span class="mf">5000.00</span><span class="p">),</span>
-            <span class="n">emulation_trigger</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>
-        <span class="p">)</span>
+             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TriggerType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.orders</span> <span class="kn">import</span> <span class="n">LimitOrder</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">buy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Users simple buy method (example).</span>
+<span class="sd">    """</span>
+    <span class="n">order</span><span class="p">:</span> <span class="n">LimitOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span>
+        <span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
+        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+        <span class="n">quantity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">make_qty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span><span class="p">),</span>
+        <span class="n">price</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">make_price</span><span class="p">(</span><span class="mf">5000.00</span><span class="p">),</span>
+        <span class="n">emulation_trigger</span><span class="o">=</span><span class="n">TriggerType</span><span class="o">.</span><span class="n">LAST_TRADE</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
 </pre>
             </div>
            </div>
@@ -1849,72 +1932,300 @@ can still be initialized directly with the
            </p>
            <div class="highlight-python notranslate">
             <div class="highlight">
-             <pre><span></span>    <span class="k">def</span> <span class="nf">buy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""</span>
-<span class="sd">        Users simple buy method (example).</span>
-<span class="sd">        """</span>
-        <span class="n">order</span><span class="p">:</span> <span class="n">MarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market</span><span class="p">(</span>
-            <span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
-            <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
-            <span class="n">quantity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">make_qty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span><span class="p">),</span>
-            <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">FOK</span><span class="p">,</span>
-            <span class="n">exec_algorithm_id</span><span class="o">=</span><span class="n">ExecAlgorithmId</span><span class="p">(</span><span class="s2">"TWAP"</span><span class="p">),</span>
-            <span class="n">exec_algorithm_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"horizon_secs"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">"interval_secs"</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">},</span>
-        <span class="p">)</span>
+             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OrderSide</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">TimeInForce</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">ExecAlgorithmId</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">buy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Users simple buy method (example).</span>
+<span class="sd">    """</span>
+    <span class="n">order</span><span class="p">:</span> <span class="n">MarketOrder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">order_factory</span><span class="o">.</span><span class="n">market</span><span class="p">(</span>
+        <span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">,</span>
+        <span class="n">order_side</span><span class="o">=</span><span class="n">OrderSide</span><span class="o">.</span><span class="n">BUY</span><span class="p">,</span>
+        <span class="n">quantity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument</span><span class="o">.</span><span class="n">make_qty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span><span class="p">),</span>
+        <span class="n">time_in_force</span><span class="o">=</span><span class="n">TimeInForce</span><span class="o">.</span><span class="n">FOK</span><span class="p">,</span>
+        <span class="n">exec_algorithm_id</span><span class="o">=</span><span class="n">ExecAlgorithmId</span><span class="p">(</span><span class="s2">"TWAP"</span><span class="p">),</span>
+        <span class="n">exec_algorithm_params</span><span class="o">=</span><span class="p">{</span><span class="s2">"horizon_secs"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">"interval_secs"</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">submit_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
 </pre>
             </div>
            </div>
           </section>
-          <section id="managed-gtd-expiry">
-           <h4 id="managed-gtd-expiry">
-            Managed GTD expiry
-            <a class="headerlink" href="#managed-gtd-expiry" title="Permalink to this heading">
+          <section id="canceling-orders">
+           <h4 id="canceling-orders">
+            Canceling orders
+            <a class="headerlink" href="#canceling-orders" title="Permalink to this heading">
              ¶
             </a>
            </h4>
            <p>
-            It’s possible for the strategy to manage expiry for orders with a time in force of GTD (
+            Orders can be canceled individually, as a batch, or all orders for an instrument (with an optional side filter).
+           </p>
+           <p>
+            If the order is already
             <em>
-             Good ‘till Date
+             closed
             </em>
-            ).
-This may be desirable if the exchange/broker does not support this time in force option, or for any
-reason you prefer the strategy to manage this.
+            or already pending cancel, then a warning will be logged.
            </p>
            <p>
-            To use this option, pass
+            If the order is currently
+            <em>
+             open
+            </em>
+            then the status will become
             <code class="docutils literal notranslate">
              <span class="pre">
-              manage_gtd_expiry=True
+              PENDING_CANCEL
              </span>
             </code>
-            to your
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              StrategyConfig
-             </span>
-            </code>
-            . When an order is submitted with
-a time in force of GTD, the strategy will automatically start an internal time alert.
-Once the internal GTD time alert is reached, the order will be canceled (if not already closed).
+            .
            </p>
            <p>
-            Some venues (such as Binance Futures) support the GTD time in force, so to avoid conflicts when using
+            The component a
             <code class="docutils literal notranslate">
              <span class="pre">
-              managed_gtd_expiry
+              CancelOrder
              </span>
             </code>
-            you should set
+            ,
             <code class="docutils literal notranslate">
              <span class="pre">
-              use_gtd=False
+              CancelAllOrders
              </span>
             </code>
-            for your execution client config.
+            or
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              BatchCancelOrders
+             </span>
+            </code>
+            command will flow to for execution depends on the following:
            </p>
+           <ul class="simple">
+            <li>
+             <p>
+              If the order is currently emulated, the command will
+              <em>
+               firstly
+              </em>
+              be sent to the
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                OrderEmulator
+               </span>
+              </code>
+             </p>
+            </li>
+            <li>
+             <p>
+              If an
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                exec_algorithm_id
+               </span>
+              </code>
+              is specified (with no
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                emulation_trigger
+               </span>
+              </code>
+              ), and the order is still active within the local system, the command will
+              <em>
+               firstly
+              </em>
+              be sent to the relevant
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                ExecAlgorithm
+               </span>
+              </code>
+             </p>
+            </li>
+            <li>
+             <p>
+              Otherwise, the order will
+              <em>
+               firstly
+              </em>
+              be sent to the
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                ExecutionEngine
+               </span>
+              </code>
+             </p>
+            </li>
+           </ul>
+           <div class="admonition note">
+            <p class="admonition-title">
+             Note
+            </p>
+            <p>
+             Any managed GTD timer will also be canceled after the command has left the strategy.
+            </p>
+           </div>
+           <p>
+            The following shows how to cancel an individual order:
+           </p>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cancel_order</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+</pre>
+            </div>
+           </div>
+           <p>
+            The following shows how to cancel a batch of orders:
+           </p>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model</span> <span class="kn">import</span> <span class="n">Order</span>
+
+
+<span class="n">my_order_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Order</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">order1</span><span class="p">,</span> <span class="n">order2</span><span class="p">,</span> <span class="n">order3</span><span class="p">]</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cancel_orders</span><span class="p">(</span><span class="n">my_order_list</span><span class="p">)</span>
+
+</pre>
+            </div>
+           </div>
+           <p>
+            The following shows how to cancel all orders:
+           </p>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span>
+<span class="bp">self</span><span class="o">.</span><span class="n">cancel_all_orders</span><span class="p">()</span>
+
+</pre>
+            </div>
+           </div>
+          </section>
+          <section id="modifying-orders">
+           <h4 id="modifying-orders">
+            Modifying orders
+            <a class="headerlink" href="#modifying-orders" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            Orders can be modified individually when emulated, or
+            <em>
+             open
+            </em>
+            on a venue (if supported).
+           </p>
+           <p>
+            If the order is already
+            <em>
+             closed
+            </em>
+            or already pending cancel, then a warning will be logged.
+If the order is currently
+            <em>
+             open
+            </em>
+            then the status will become
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              PENDING_UPDATE
+             </span>
+            </code>
+            .
+           </p>
+           <div class="admonition warning">
+            <p class="admonition-title">
+             Warning
+            </p>
+            <p>
+             At least one value must differ from the original order for the command to be valid.
+            </p>
+           </div>
+           <p>
+            The component a
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              ModifyOrder
+             </span>
+            </code>
+            command will flow to for execution depends on the following:
+           </p>
+           <ul class="simple">
+            <li>
+             <p>
+              If the order is currently emulated, the command will
+              <em>
+               firstly
+              </em>
+              be sent to the
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                OrderEmulator
+               </span>
+              </code>
+             </p>
+            </li>
+            <li>
+             <p>
+              Otherwise, the order will
+              <em>
+               firstly
+              </em>
+              be sent to the
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                RiskEngine
+               </span>
+              </code>
+             </p>
+            </li>
+           </ul>
+           <div class="admonition note">
+            <p class="admonition-title">
+             Note
+            </p>
+            <p>
+             Once an order is under the control of an execution algorithm, it cannot be directly modified by a strategy (only canceled).
+            </p>
+           </div>
+           <p>
+            The following shows how to modify the size of
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              LIMIT
+             </span>
+            </code>
+            BUY order currently
+            <em>
+             open
+            </em>
+            on a venue:
+           </p>
+           <div class="highlight-python notranslate">
+            <div class="highlight">
+             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.model</span> <span class="kn">import</span> <span class="n">Quantity</span>
+
+
+<span class="n">new_quantity</span><span class="p">:</span> <span class="n">Quantity</span> <span class="o">=</span> <span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">modify_order</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">new_quantity</span><span class="p">)</span>
+
+</pre>
+            </div>
+           </div>
+           <div class="admonition note">
+            <p class="admonition-title">
+             Note
+            </p>
+            <p>
+             The price and trigger price can also be modified (when emulated or supported by a venue).
+            </p>
+           </div>
           </section>
          </section>
         </section>
@@ -1991,6 +2302,59 @@ live trading servers remotely, then you will need to define a configuration.
 instrument. The number of instruments a single strategy can work with is only limited by machine resources.
           </p>
          </div>
+         <section id="managed-gtd-expiry">
+          <h3 id="managed-gtd-expiry">
+           Managed GTD expiry
+           <a class="headerlink" href="#managed-gtd-expiry" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           It’s possible for the strategy to manage expiry for orders with a time in force of GTD (
+           <em>
+            Good ‘till Date
+           </em>
+           ).
+This may be desirable if the exchange/broker does not support this time in force option, or for any
+reason you prefer the strategy to manage this.
+          </p>
+          <p>
+           To use this option, pass
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             manage_gtd_expiry=True
+            </span>
+           </code>
+           to your
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             StrategyConfig
+            </span>
+           </code>
+           . When an order is submitted with
+a time in force of GTD, the strategy will automatically start an internal time alert.
+Once the internal GTD time alert is reached, the order will be canceled (if not already
+           <em>
+            closed
+           </em>
+           ).
+          </p>
+          <p>
+           Some venues (such as Binance Futures) support the GTD time in force, so to avoid conflicts when using
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             managed_gtd_expiry
+            </span>
+           </code>
+           you should set
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             use_gtd=False
+            </span>
+           </code>
+           for your execution client config.
+          </p>
+         </section>
          <section id="multiple-strategies">
           <h3 id="multiple-strategies">
            Multiple strategies

@@ -754,6 +754,11 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#basename-template">
+                Basename template
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#reading-data">
                 Reading data
                </a>
@@ -1268,7 +1273,7 @@ of the Nautilus core, currently in development.
 
 
 <span class="c1"># Load raw data</span>
-<span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PACKAGE_ROOT</span><span class="p">,</span> <span class="s2">"tests/test_data/binance-btcusdt-depth-snap.csv"</span><span class="p">)</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PACKAGE_ROOT</span><span class="p">,</span> <span class="s2">"tests/test_data/binance/binance/btcusdt-depth-snap.csv"</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">BinanceOrderBookDeltaDataLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
 
 <span class="c1"># Setup a wrangler</span>
@@ -1361,7 +1366,11 @@ from the
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">CATALOG_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"/catalog"</span>
+            <pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.persistence.catalog</span> <span class="kn">import</span> <span class="n">ParquetDataCatalog</span>
+
+
+<span class="n">CATALOG_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"/catalog"</span>
 
 <span class="c1"># Create a new catalog instance</span>
 <span class="n">catalog</span> <span class="o">=</span> <span class="n">ParquetDataCatalog</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
@@ -1407,19 +1416,89 @@ All Nautilus built-in
 </pre>
            </div>
           </div>
+         </section>
+         <section id="basename-template">
+          <h3 id="basename-template">
+           Basename template
+           <a class="headerlink" href="#basename-template" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Nautilus makes no assumptions about how data may be partitioned between files for a particular
+data type and instrument ID.
+          </p>
+          <p>
+           The
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             basename_template
+            </span>
+           </code>
+           keyword argument is an additional optional naming component for the output files.
+The template should include placeholders that will be filled in with actual values at runtime.
+These values can be automatically derived from the data or provided as additional keyword arguments.
+          </p>
+          <p>
+           For example, using a basename template like
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             "{date}"
+            </span>
+           </code>
+           for AUD/USD.SIM quote tick data,
+and assuming
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             "date"
+            </span>
+           </code>
+           is a provided or derivable field, could result in a filename like
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             "2023-01-01.parquet"
+            </span>
+           </code>
+           under the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             "quote_tick/audusd.sim/"
+            </span>
+           </code>
+           catalog directory.
+If not provided, a default naming scheme will be applied. This parameter should be specified as a
+keyword argument, like
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             write_data(data,
+            </span>
+            <span class="pre">
+             basename_template="{date}")
+            </span>
+           </code>
+           .
+          </p>
           <div class="admonition warning">
            <p class="admonition-title">
             Warning
            </p>
            <p>
-            Existing data for the same data type,
+            Any existing data which already exists under a filename will be overwritten.
+If a
             <code class="docutils literal notranslate">
              <span class="pre">
-              instrument_id
+              basename_template
              </span>
             </code>
-            , and date will be overwritten without prior warning.
-Ensure you have appropriate backups or safeguards in place before performing this action.
+            is not provided, then its very likely existing data for the data type and instrument ID will
+be overwritten. To prevent data loss, ensure that the
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              basename_template
+             </span>
+            </code>
+            (or the default naming scheme)
+generates unique filenames for different data sets.
            </p>
           </div>
           <p>
@@ -1476,7 +1555,11 @@ Ensure you have appropriate backups or safeguards in place before performing thi
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">start</span> <span class="o">=</span> <span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2020-01-03"</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">pytz</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.core.datetime</span> <span class="kn">import</span> <span class="n">dt_to_unix_nanos</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2020-01-03"</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">pytz</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
 <span class="n">end</span> <span class="o">=</span>  <span class="n">dt_to_unix_nanos</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2020-01-04"</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="n">pytz</span><span class="o">.</span><span class="n">utc</span><span class="p">))</span>
 
 <span class="n">deltas</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">order_book_deltas</span><span class="p">(</span><span class="n">instrument_ids</span><span class="o">=</span><span class="p">[</span><span class="n">instrument</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">value</span><span class="p">],</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
@@ -1511,7 +1594,11 @@ Ensure you have appropriate backups or safeguards in place before performing thi
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="n">data_config</span> <span class="o">=</span> <span class="n">BacktestDataConfig</span><span class="p">(</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">BacktestDataConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">OrderBookDelta</span>
+
+
+<span class="n">data_config</span> <span class="o">=</span> <span class="n">BacktestDataConfig</span><span class="p">(</span>
     <span class="n">catalog_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
     <span class="n">data_cls</span><span class="o">=</span><span class="n">OrderBookDelta</span><span class="p">,</span>
     <span class="n">instrument_id</span><span class="o">=</span><span class="n">instrument</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>

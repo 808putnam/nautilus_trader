@@ -818,7 +818,9 @@ configuration(s):
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">TradingNodeConfig</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
     <span class="o">...</span><span class="p">,</span>  <span class="c1"># Omitted </span>
     <span class="n">data_clients</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">"BETFAIR"</span><span class="p">:</span> <span class="p">{</span>
@@ -852,7 +854,11 @@ configuration(s):
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="c1"># Instantiate the live trading node with a configuration</span>
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.betfair.factories</span> <span class="kn">import</span> <span class="n">BetfairLiveDataClientFactory</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.betfair.factories</span> <span class="kn">import</span> <span class="n">BetfairLiveExecClientFactory</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.live.node</span> <span class="kn">import</span> <span class="n">TradingNode</span>
+
+<span class="c1"># Instantiate the live trading node with a configuration</span>
 <span class="n">node</span> <span class="o">=</span> <span class="n">TradingNode</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 
 <span class="c1"># Register the client factories with the node</span>

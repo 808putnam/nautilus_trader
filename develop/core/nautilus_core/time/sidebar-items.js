@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["duration_since_unix_epoch","unix_timestamp","unix_timestamp_ms","unix_timestamp_ns","unix_timestamp_us"],"type":["TimedeltaNanos","UnixNanos"]};

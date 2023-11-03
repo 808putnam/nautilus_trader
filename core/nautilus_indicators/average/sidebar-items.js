@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["MovingAverageType"],"mod":["ama","dema","ema","sma"],"struct":["MovingAverageFactory","MovingAverageTypeIter"]};
+window.SIDEBAR_ITEMS = {"enum":["MovingAverageType"],"mod":["ama","dema","ema","sma","wma"],"struct":["MovingAverageFactory","MovingAverageTypeIter"]};

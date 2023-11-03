@@ -4184,6 +4184,15 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.manager.OrderManager.handle_event">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderManager.handle_event()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.execution.manager.OrderManager.handle_order_canceled">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -4233,6 +4242,15 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     OrderManager.handle_position_event()
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.manager.OrderManager.modify_order_quantity">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    OrderManager.modify_order_quantity()
                    </span>
                   </code>
                  </a>
@@ -4310,10 +4328,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.execution.manager.OrderManager.update_order_quantity">
+                 <a class="md-nav__link" href="#nautilus_trader.execution.manager.OrderManager.should_manage_order">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    OrderManager.update_order_quantity()
+                    OrderManager.should_manage_order()
                    </span>
                   </code>
                  </a>
@@ -41108,6 +41126,12 @@ then the component state will not change, and an error will be logged.
              component_name,
             </span>
             <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             active_local,
+            </span>
+            <span class="pre">
              submit_order_handler:
             </span>
             <span class="pre">
@@ -41127,6 +41151,24 @@ then the component state will not change, and an error will be logged.
             </span>
             <span class="pre">
              Optional[Callable[[Order],
+            </span>
+            <span class="pre">
+             None]]
+            </span>
+            <span class="pre">
+             =
+            </span>
+            <span class="pre">
+             None,
+            </span>
+            <span class="pre">
+             modify_order_handler:
+            </span>
+            <span class="pre">
+             Optional[Callable[[Order,
+            </span>
+            <span class="pre">
+             Quantity],
             </span>
             <span class="pre">
              None]]
@@ -41243,6 +41285,18 @@ then the component state will not change, and an error will be logged.
               <li>
                <p>
                 <strong>
+                 active_local
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                ) – If the manager if for active local orders.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
                  submit_order_handler
                 </strong>
                 (
@@ -41325,6 +41379,55 @@ then the component state will not change, and an error will be logged.
               <li>
                <p>
                 <strong>
+                 modify_order_handler
+                </strong>
+                (
+                <em>
+                 Callable
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 [
+                </em>
+                <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.base.Order" title="nautilus_trader.model.orders.base.Order">
+                 <em>
+                  Order
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Quantity" title="nautilus_trader.model.objects.Quantity">
+                 <em>
+                  Quantity
+                 </em>
+                </a>
+                <em>
+                 ]
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 None
+                </em>
+                <em>
+                 ]
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The handler to call when modifying orders (limited to modifying quantity).
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
                  debug
                 </strong>
                 (
@@ -41359,7 +41462,13 @@ then the component state will not change, and an error will be logged.
                 <cite>
                  submit_order_handler
                 </cite>
-                is not of type
+                is not
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                and not of type
                 <cite>
                  Callable
                 </cite>
@@ -41375,7 +41484,35 @@ then the component state will not change, and an error will be logged.
                 <cite>
                  cancel_order_handler
                 </cite>
-                is not of type
+                is not
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                and not of type
+                <cite>
+                 Callable
+                </cite>
+                .
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 TypeError
+                </strong>
+                – If
+                <cite>
+                 modify_order_handler
+                </cite>
+                is not
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                and not of type
                 <cite>
                  Callable
                 </cite>
@@ -41834,6 +41971,86 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.manager.OrderManager.handle_event">
+             <span class="sig-name descname">
+              <span class="pre">
+               handle_event
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Event
+               </span>
+               <span class="pre">
+                event
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.manager.OrderManager.handle_event" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Handle the given
+              <cite>
+               event
+              </cite>
+              .
+             </p>
+             <p>
+              If a handler for the given event is not implemented then this will simply be a no-op.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 event
+                </strong>
+                (
+                <a class="reference internal" href="core.html#nautilus_trader.core.message.Event" title="nautilus_trader.core.message.Event">
+                 <em>
+                  Event
+                 </em>
+                </a>
+                ) – The event to handle
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.execution.manager.OrderManager.handle_order_canceled">
              <span class="sig-name descname">
               <span class="pre">
@@ -42122,6 +42339,94 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.manager.OrderManager.modify_order_quantity">
+             <span class="sig-name descname">
+              <span class="pre">
+               modify_order_quantity
+              </span>
+             </span>
+             <span class="sig-paren">
+              (
+             </span>
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                self
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Order
+               </span>
+               <span class="pre">
+                order
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                Quantity
+               </span>
+               <span class="pre">
+                new_quantity
+               </span>
+              </span>
+             </em>
+             <span class="sig-paren">
+              )
+             </span>
+             <span class="sig-return">
+              <span class="sig-return-icon">
+               →
+              </span>
+              <span class="sig-return-typehint">
+               <span class="pre">
+                void
+               </span>
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.execution.manager.OrderManager.modify_order_quantity" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Modify the given
+              <cite>
+               order
+              </cite>
+              with the manager.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 order
+                </strong>
+                (
+                <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.base.Order" title="nautilus_trader.model.orders.base.Order">
+                 <em>
+                  Order
+                 </em>
+                </a>
+                ) – The order to modify.
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.execution.manager.OrderManager.pop_submit_order_command">
              <span class="sig-name descname">
               <span class="pre">
@@ -42282,6 +42587,17 @@ cache (if found).
                </span>
                <span class="pre">
                 command
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                ExecAlgorithmId
+               </span>
+               <span class="pre">
+                exec_algorithm_id
                </span>
               </span>
              </em>
@@ -42546,10 +42862,10 @@ cache (if found).
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.execution.manager.OrderManager.update_order_quantity">
+            <dt class="sig sig-object py" id="nautilus_trader.execution.manager.OrderManager.should_manage_order">
              <span class="sig-name descname">
               <span class="pre">
-               update_order_quantity
+               should_manage_order
               </span>
              </span>
              <span class="sig-paren">
@@ -42573,17 +42889,6 @@ cache (if found).
                </span>
               </span>
              </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                Quantity
-               </span>
-               <span class="pre">
-                new_quantity
-               </span>
-              </span>
-             </em>
              <span class="sig-paren">
               )
              </span>
@@ -42593,15 +42898,54 @@ cache (if found).
               </span>
               <span class="sig-return-typehint">
                <span class="pre">
-                void
+                bool
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.execution.manager.OrderManager.update_order_quantity" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.execution.manager.OrderManager.should_manage_order" title="Permalink to this definition">
               ¶
              </a>
             </dt>
             <dd>
+             <p>
+              Check if the given order should be managed.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Parameters
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <strong>
+                 order
+                </strong>
+                (
+                <a class="reference internal" href="model/orders.html#nautilus_trader.model.orders.base.Order" title="nautilus_trader.model.orders.base.Order">
+                 <em>
+                  Order
+                 </em>
+                </a>
+                ) – The order to check.
+               </p>
+              </dd>
+              <dt class="field-even">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-even">
+               <p>
+                <em>
+                 bool
+                </em>
+                – True if the order should be managed, else False.
+               </p>
+              </dd>
+             </dl>
             </dd>
            </dl>
           </dd>
