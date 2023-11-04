@@ -275,12 +275,12 @@
     <span class="kw">use </span>rstest::rstest;
 
     <span class="kw">use </span><span class="kw">super</span>::InstrumentId;
+    <span class="kw">use </span><span class="kw">crate</span>::identifiers::stubs::<span class="kw-2">*</span>;
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_instrument_id_parse_success() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">&quot;ETH/USDT.BINANCE&quot;</span>);
-        <span class="macro">assert_eq!</span>(instrument_id.symbol.to_string(), <span class="string">&quot;ETH/USDT&quot;</span>);
-        <span class="macro">assert_eq!</span>(instrument_id.venue.to_string(), <span class="string">&quot;BINANCE&quot;</span>);
+    </span><span class="kw">fn </span>test_instrument_id_parse_success(instrument_id_eth_usdt_binance: InstrumentId) {
+        <span class="macro">assert_eq!</span>(instrument_id_eth_usdt_binance.symbol.to_string(), <span class="string">&quot;ETHUSDT&quot;</span>);
+        <span class="macro">assert_eq!</span>(instrument_id_eth_usdt_binance.venue.to_string(), <span class="string">&quot;BINANCE&quot;</span>);
     }
 
     <span class="attr">#[rstest]
