@@ -3,7 +3,7 @@
 </div></details><details class="toggle method-toggle" open><summary><section id="method.advance_clock" class="method"><a class="src rightside" href="../../src/nautilus_backtest/engine.rs.html#36-40">source</a><h4 class="code-header">pub fn <a href="#method.advance_clock" class="fn">advance_clock</a>(
     &amp;mut self,
     clock: &amp;mut <a class="struct" href="../../nautilus_common/clock/struct.TestClock.html" title="struct nautilus_common::clock::TestClock">TestClock</a>,
-    to_time_ns: <a class="type" href="../../nautilus_core/time/type.UnixNanos.html" title="type nautilus_core::time::UnixNanos">UnixNanos</a>,
+    to_time_ns: UnixNanos,
     set_time: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>
 )</h4></section></summary><div class="docblock"><p>Advance the given clock to the <code>to_time_ns</code>.</p>
 </div></details><details class="toggle method-toggle" open><summary><section id="method.drain" class="method"><a class="src rightside" href="../../src/nautilus_backtest/engine.rs.html#43-49">source</a><h4 class="code-header">pub fn <a href="#method.drain" class="fn">drain</a>(&amp;mut self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../nautilus_common/timer/struct.TimeEventHandler.html" title="struct nautilus_common::timer::TimeEventHandler">TimeEventHandler</a>&gt;</h4></section></summary><div class="docblock"><p>Drain the accumulated time event handlers in sorted order (by the events <code>ts_event</code>).</p>
