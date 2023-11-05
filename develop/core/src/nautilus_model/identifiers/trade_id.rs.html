@@ -177,9 +177,9 @@
     <span class="kw">use </span><span class="kw">crate</span>::identifiers::{stubs::<span class="kw-2">*</span>, trade_id::TradeId};
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_string_reprs(test_trade_id: TradeId) {
-        <span class="macro">assert_eq!</span>(test_trade_id.to_string(), <span class="string">&quot;1234567890&quot;</span>);
-        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{test_trade_id}&quot;</span>), <span class="string">&quot;1234567890&quot;</span>);
+    </span><span class="kw">fn </span>test_string_reprs(trade_id: TradeId) {
+        <span class="macro">assert_eq!</span>(trade_id.to_string(), <span class="string">&quot;1234567890&quot;</span>);
+        <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{trade_id}&quot;</span>), <span class="string">&quot;1234567890&quot;</span>);
     }
 }
 </code></pre></div></section></main></body></html>

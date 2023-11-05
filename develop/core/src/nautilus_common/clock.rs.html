@@ -625,6 +625,17 @@
 <a href="#625" id="625">625</a>
 <a href="#626" id="626">626</a>
 <a href="#627" id="627">627</a>
+<a href="#628" id="628">628</a>
+<a href="#629" id="629">629</a>
+<a href="#630" id="630">630</a>
+<a href="#631" id="631">631</a>
+<a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
+<a href="#636" id="636">636</a>
+<a href="#637" id="637">637</a>
+<a href="#638" id="638">638</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -715,9 +726,6 @@
 /// # Notes
 /// An active timer is one which has not expired (`timer.is_expired == False`).
 </span><span class="kw">pub trait </span>Clock {
-    <span class="doccomment">/// Return a new [Clock].
-    </span><span class="kw">fn </span>new() -&gt; <span class="self">Self</span>;
-
     <span class="doccomment">/// Return the current UNIX time in seconds.
     </span><span class="kw">fn </span>timestamp(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; f64;
 
@@ -778,6 +786,17 @@
 }
 
 <span class="kw">impl </span>TestClock {
+    <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            time_ns: <span class="number">0</span>,
+            timers: HashMap::new(),
+            default_callback: <span class="prelude-val">None</span>,
+            default_callback_py: <span class="prelude-val">None</span>,
+            _callbacks: HashMap::new(), <span class="comment">// TBC
+            </span>callbacks_py: HashMap::new(),
+        }
+    }
+
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>get_timers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;String, TestTimer&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.timers
@@ -833,18 +852,13 @@
     }
 }
 
-<span class="kw">impl </span>Clock <span class="kw">for </span>TestClock {
-    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            time_ns: <span class="number">0</span>,
-            timers: HashMap::new(),
-            default_callback: <span class="prelude-val">None</span>,
-            default_callback_py: <span class="prelude-val">None</span>,
-            _callbacks: HashMap::new(), <span class="comment">// TBC
-            </span>callbacks_py: HashMap::new(),
-        }
+<span class="kw">impl </span>Default <span class="kw">for </span>TestClock {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new()
     }
+}
 
+<span class="kw">impl </span>Clock <span class="kw">for </span>TestClock {
     <span class="kw">fn </span>timestamp(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; f64 {
         nanos_to_secs(<span class="self">self</span>.time_ns)
     }
@@ -966,8 +980,8 @@
     </span>callbacks_py: HashMap&lt;String, PyObject&gt;,
 }
 
-<span class="kw">impl </span>Clock <span class="kw">for </span>LiveClock {
-    <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+<span class="kw">impl </span>LiveClock {
+    <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             internal: MonotonicClock::default(),
             timers: HashMap::new(),
@@ -977,7 +991,15 @@
             callbacks_py: HashMap::new(),
         }
     }
+}
 
+<span class="kw">impl </span>Default <span class="kw">for </span>LiveClock {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::new()
+    }
+}
+
+<span class="kw">impl </span>Clock <span class="kw">for </span>LiveClock {
     <span class="kw">fn </span>timestamp(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.internal.unix_timestamp_secs()
     }

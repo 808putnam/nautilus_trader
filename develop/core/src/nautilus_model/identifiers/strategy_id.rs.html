@@ -95,6 +95,15 @@
 <a href="#95" id="95">95</a>
 <a href="#96" id="96">96</a>
 <a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -148,6 +157,10 @@
             value: Ustr::from(s),
         })
     }
+
+    <span class="kw">pub fn </span>get_tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.value.split(<span class="string">&#39;-&#39;</span>).last().unwrap()
+    }
 }
 
 <span class="kw">impl </span>Default <span class="kw">for </span>StrategyId {
@@ -190,6 +203,11 @@
     </span><span class="kw">fn </span>test_string_reprs(strategy_id_ema_cross: StrategyId) {
         <span class="macro">assert_eq!</span>(strategy_id_ema_cross.to_string(), <span class="string">&quot;EMACross-001&quot;</span>);
         <span class="macro">assert_eq!</span>(<span class="macro">format!</span>(<span class="string">&quot;{strategy_id_ema_cross}&quot;</span>), <span class="string">&quot;EMACross-001&quot;</span>);
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_tag(strategy_id_ema_cross: StrategyId) {
+        <span class="macro">assert_eq!</span>(strategy_id_ema_cross.get_tag(), <span class="string">&quot;001&quot;</span>);
     }
 }
 </code></pre></div></section></main></body></html>

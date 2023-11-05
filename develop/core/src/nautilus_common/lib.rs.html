@@ -46,15 +46,15 @@
 
 </span><span class="kw">pub mod </span>clock;
 <span class="kw">pub mod </span>enums;
-<span class="kw">pub mod </span>logging;
-<span class="kw">pub mod </span>msgbus;
-<span class="kw">pub mod </span>testing;
-<span class="kw">pub mod </span>timer;
-
 <span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
 </span><span class="kw">pub mod </span>ffi;
+<span class="kw">pub mod </span>generators;
+<span class="kw">pub mod </span>logging;
+<span class="kw">pub mod </span>msgbus;
 <span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
 </span><span class="kw">pub mod </span>python;
+<span class="kw">pub mod </span>testing;
+<span class="kw">pub mod </span>timer;
 
 <span class="attr">#[cfg(feature = <span class="string">&quot;test&quot;</span>)]
 </span><span class="kw">pub mod </span>stubs {
