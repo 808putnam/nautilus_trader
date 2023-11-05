@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["test_msgbus_new"],"struct":["MessageBus_API","PythonSwitchboard"]};
+window.SIDEBAR_ITEMS = {"fn":["msgbus_endpoints","msgbus_get_endpoint","msgbus_get_matching_handlers","msgbus_new","msgbus_topics","vec_msgbus_handlers_drop"],"struct":["MessageBus_API"]};

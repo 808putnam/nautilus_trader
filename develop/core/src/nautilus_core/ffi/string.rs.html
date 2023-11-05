@@ -329,7 +329,7 @@
 ///
 /// # Safety
 ///
-/// - Assumes `ptr` is a valid C string pointer.
+/// - Assumes `ptr` is a valid C string pointer or NULL.
 </span><span class="attr">#[must_use]
 </span><span class="kw">pub unsafe fn </span>optional_cstr_to_string(ptr: <span class="kw-2">*const </span>c_char) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
     <span class="kw">if </span>ptr.is_null() {

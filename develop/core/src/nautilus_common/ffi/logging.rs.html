@@ -141,6 +141,10 @@
 <a href="#141" id="141">141</a>
 <a href="#142" id="142">142</a>
 <a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -208,6 +212,10 @@
 /// - Assumes `trader_id_ptr` is a valid C string pointer.
 /// - Assumes `machine_id_ptr` is a valid C string pointer.
 /// - Assumes `instance_id_ptr` is a valid C string pointer.
+/// - Assumes `directory_ptr` is a valid C string pointer or NULL.
+/// - Assumes `file_name_ptr` is a valid C string pointer or NULL.
+/// - Assumes `file_format_ptr` is a valid C string pointer or NULL.
+/// - Assumes `component_levels_ptr` is a valid C string pointer or NULL.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>logger_new(
     trader_id_ptr: <span class="kw-2">*const </span>c_char,
