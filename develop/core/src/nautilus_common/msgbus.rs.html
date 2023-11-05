@@ -226,6 +226,7 @@
 <a href="#226" id="226">226</a>
 <a href="#227" id="227">227</a>
 <a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -243,61 +244,62 @@
 
 </span><span class="kw">use </span>std::{collections::HashMap, rc::Rc};
 
-<span class="kw">use </span>nautilus_core::uuid::UUID4;
-
-<span class="kw">use </span><span class="kw">crate</span>::clock::TestClock;
+<span class="kw">use </span>nautilus_core::{message::Message, uuid::UUID4};
 
 <span class="kw">type </span>Handler = Rc&lt;<span class="kw">dyn </span>Fn(<span class="kw-2">&amp;</span>Message)&gt;;
 
-<span class="attr">#[allow(dead_code)]
-#[derive(Debug, Clone)]
-</span><span class="kw">enum </span>Message {
-    Command {
-        id: UUID4,
-        ts_init: u64,
-    },
-    Document {
-        id: UUID4,
-        ts_init: u64,
-    },
-    Event {
-        id: UUID4,
-        ts_init: u64,
-        ts_event: u64,
-    },
-    Request {
-        id: UUID4,
-        ts_init: u64,
-    },
-    Response {
-        id: UUID4,
-        ts_init: u64,
-        correlation_id: UUID4,
-    },
-}
-
-<span class="attr">#[allow(dead_code)]
-</span><span class="kw">struct </span>MessageBus {
-    name: String,
-    clock: TestClock,
+<span class="doccomment">/// Provides a generic message bus to facilitate various messaging patterns.
+///
+/// The bus provides both a producer and consumer API for Pub/Sub, Req/Rep, as
+/// well as direct point-to-point messaging to registered endpoints.
+///
+/// Pub/Sub wildcard patterns for hierarchical topics are possible:
+///  - `*` asterisk represents one or more characters in a pattern.
+///  - `?` question mark represents a single character in a pattern.
+///
+/// Given a topic and pattern potentially containing wildcard characters, i.e.
+/// `*` and `?`, where `?` can match any single character in the topic, and `*`
+/// can match any number of characters including zero characters.
+///
+/// The asterisk in a wildcard matches any character zero or more times. For
+/// example, `comp*` matches anything beginning with `comp` which means `comp`,
+/// `complete`, and `computer` are all matched.
+///
+/// A question mark matches a single character once. For example, `c?mp` matches
+/// `camp` and `comp`. The question mark can also be used more than once.
+/// For example, `c??p` would match both of the above examples and `coop`.
+</span><span class="attr">#[allow(dead_code)]
+</span><span class="kw">pub struct </span>MessageBus {
+    <span class="doccomment">/// The name for the message bus.
+    </span><span class="kw">pub </span>name: String,
     <span class="doccomment">/// mapping from topic to the corresponding handler
     /// a topic can be a string with wildcards
     /// * &#39;?&#39; - any character
     /// * &#39;*&#39; - any number of any characters
     </span>subscriptions: HashMap&lt;String, Handler&gt;,
     <span class="doccomment">/// maps a pattern to all the handlers registered for it
-    /// this is updated whenever a new subscription is created
+    /// this is updated whenever a new subscription is created.
     </span>patterns: HashMap&lt;String, Vec&lt;Handler&gt;&gt;,
-    <span class="doccomment">/// handles a message or a request destined for a specific endpoint
+    <span class="doccomment">/// handles a message or a request destined for a specific endpoint.
     </span>endpoints: HashMap&lt;String, Handler&gt;,
     <span class="doccomment">/// Relates a request with a response
     /// a request maps it&#39;s id to a handler so that a response
-    /// with the same id can later be handled
+    /// with the same id can later be handled.
     </span>correlation_index: HashMap&lt;UUID4, Handler&gt;,
 }
 
 <span class="attr">#[allow(dead_code)]
 </span><span class="kw">impl </span>MessageBus {
+    <span class="kw">pub fn </span>new(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            name: name.to_owned(),
+            subscriptions: HashMap::new(),
+            patterns: HashMap::new(),
+            endpoints: HashMap::new(),
+            correlation_index: HashMap::new(),
+        }
+    }
+
     <span class="comment">// TODO: not needed accessible from struct field
     </span><span class="kw">fn </span>endpoints(<span class="kw-2">&amp;</span><span class="self">self</span>) {}
 
