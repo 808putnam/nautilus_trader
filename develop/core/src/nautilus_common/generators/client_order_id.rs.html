@@ -166,6 +166,18 @@
 <a href="#166" id="166">166</a>
 <a href="#167" id="167">167</a>
 <a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -181,9 +193,7 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::sync::{Arc, Mutex};
-
-<span class="kw">use </span>chrono::{Datelike, NaiveDateTime, Timelike};
+</span><span class="kw">use </span>chrono::{Datelike, NaiveDateTime, Timelike};
 <span class="kw">use </span>nautilus_model::identifiers::{
     client_order_id::ClientOrderId, strategy_id::StrategyId, trader_id::TraderId,
 };
@@ -195,7 +205,7 @@
     trader_id: TraderId,
     strategy_id: StrategyId,
     clock: Box&lt;<span class="kw">dyn </span>Clock&gt;,
-    count: Arc&lt;Mutex&lt;usize&gt;&gt;,
+    count: usize,
 }
 
 <span class="kw">impl </span>ClientOrderIdGenerator {
@@ -205,42 +215,36 @@
         clock: Box&lt;<span class="kw">dyn </span>Clock&gt;,
         initial_count: <span class="prelude-ty">Option</span>&lt;usize&gt;,
     ) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>count = Arc::new(Mutex::new(initial_count.unwrap_or(<span class="number">0</span>)));
         <span class="self">Self </span>{
             trader_id,
             strategy_id,
             clock,
-            count,
+            count: initial_count.unwrap_or(<span class="number">0</span>),
         }
     }
 }
 
 <span class="kw">impl </span>IdentifierGenerator&lt;ClientOrderId&gt; <span class="kw">for </span>ClientOrderIdGenerator {
     <span class="kw">fn </span>set_count(<span class="kw-2">&amp;mut </span><span class="self">self</span>, count: usize) {
-        <span class="kw">let </span><span class="kw-2">mut </span>c = <span class="self">self</span>.count.lock().unwrap();
-        <span class="kw-2">*</span>c = count;
+        <span class="self">self</span>.count = count;
     }
 
     <span class="kw">fn </span>reset(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="kw">let </span><span class="kw-2">mut </span>c = <span class="self">self</span>.count.lock().unwrap();
-        <span class="kw-2">*</span>c = <span class="number">0</span>;
+        <span class="self">self</span>.count = <span class="number">0</span>;
     }
 
     <span class="kw">fn </span>count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="kw">let </span>c = <span class="self">self</span>.count.lock().unwrap();
-        <span class="kw-2">*</span>c
+        <span class="self">self</span>.count
     }
 
     <span class="kw">fn </span>generate(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; ClientOrderId {
         <span class="kw">let </span>datetime_tag = <span class="self">self</span>.get_datetime_tag();
         <span class="kw">let </span>trader_tag = <span class="self">self</span>.trader_id.get_tag();
         <span class="kw">let </span>strategy_tag = <span class="self">self</span>.strategy_id.get_tag();
-        <span class="kw">let </span><span class="kw-2">mut </span>c = <span class="self">self</span>.count.lock().unwrap();
-        <span class="kw-2">*</span>c += <span class="number">1</span>;
-        <span class="kw">let </span>current_count = <span class="kw-2">*</span>c;
+        <span class="self">self</span>.count += <span class="number">1</span>;
         <span class="kw">let </span>id = <span class="macro">format!</span>(
             <span class="string">&quot;O-{}-{}-{}-{}&quot;</span>,
-            datetime_tag, trader_tag, strategy_tag, current_count
+            datetime_tag, trader_tag, strategy_tag, <span class="self">self</span>.count
         );
         ClientOrderId::new(<span class="kw-2">&amp;</span>id).unwrap()
     }
@@ -302,7 +306,7 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_generate_order_id() {
+    </span><span class="kw">fn </span>test_generate_client_order_id_from_start() {
         <span class="kw">let </span><span class="kw-2">mut </span>generator = get_client_order_id_generator(<span class="prelude-val">None</span>);
         <span class="kw">let </span>result1 = generator.generate();
         <span class="kw">let </span>result2 = generator.generate();
@@ -318,6 +322,26 @@
         <span class="macro">assert_eq!</span>(
             result3,
             ClientOrderId::new(<span class="string">&quot;O-19700101-0000-001-001-3&quot;</span>).unwrap()
+        );
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_generate_client_order_id_from_initial() {
+        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_client_order_id_generator(<span class="prelude-val">Some</span>(<span class="number">5</span>));
+        <span class="kw">let </span>result1 = generator.generate();
+        <span class="kw">let </span>result2 = generator.generate();
+        <span class="kw">let </span>result3 = generator.generate();
+        <span class="macro">assert_eq!</span>(
+            result1,
+            ClientOrderId::new(<span class="string">&quot;O-19700101-0000-001-001-6&quot;</span>).unwrap()
+        );
+        <span class="macro">assert_eq!</span>(
+            result2,
+            ClientOrderId::new(<span class="string">&quot;O-19700101-0000-001-001-7&quot;</span>).unwrap()
+        );
+        <span class="macro">assert_eq!</span>(
+            result3,
+            ClientOrderId::new(<span class="string">&quot;O-19700101-0000-001-001-8&quot;</span>).unwrap()
         );
     }
 
