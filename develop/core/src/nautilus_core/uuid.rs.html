@@ -210,7 +210,7 @@
 
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>to_cstr(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>CStr {
-        <span class="comment">// SAFETY: unwrap is safe here as we always store valid C strings
+        <span class="comment">// SAFETY: Unwrap safe as we always store valid C strings
         </span>CStr::from_bytes_with_nul(<span class="kw-2">&amp;</span><span class="self">self</span>.value).unwrap()
     }
 }

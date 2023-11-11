@@ -316,7 +316,7 @@
     <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use </span><span class="kw">crate</span>::msgbus::Handler;
+    <span class="kw">use </span><span class="kw">crate</span>::handlers::MessageHandler;
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_subscribe_python_callable() {
@@ -324,9 +324,9 @@
         <span class="kw">let </span>topic = <span class="string">&quot;my-topic&quot;</span>.to_string();
 
         <span class="comment">// TODO: Create a Python list and pass the message in a closure to the `append` method
-        </span><span class="kw">let </span>handler: Handler = Rc::new(|_m: <span class="kw-2">&amp;</span><span class="kw">_</span>| Python::with_gil(|<span class="kw">_</span>| {}));
+        </span><span class="kw">let </span>handler: MessageHandler = Rc::new(|_m: <span class="kw-2">&amp;</span><span class="kw">_</span>| Python::with_gil(|<span class="kw">_</span>| {}));
 
-        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = MessageBus::&lt;Handler&gt;::new(trader_id, <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = MessageBus::&lt;MessageHandler&gt;::new(trader_id, <span class="prelude-val">None</span>);
         msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler.clone(), <span class="string">&quot;id_of_method&quot;</span>, <span class="prelude-val">None</span>);
 
         <span class="macro">assert_eq!</span>(msgbus.topics(), <span class="macro">vec!</span>[topic]);

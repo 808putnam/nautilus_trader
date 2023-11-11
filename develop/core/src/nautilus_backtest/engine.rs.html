@@ -197,7 +197,7 @@
     <span class="doccomment">/// Advance the given clock to the `to_time_ns`.
     </span><span class="kw">pub fn </span>advance_clock(<span class="kw-2">&amp;mut </span><span class="self">self</span>, clock: <span class="kw-2">&amp;mut </span>TestClock, to_time_ns: UnixNanos, set_time: bool) {
         <span class="kw">let </span>events = clock.advance_time(to_time_ns, set_time);
-        <span class="kw">let </span>handlers = clock.match_handlers_py(events);
+        <span class="kw">let </span>handlers = clock.match_handlers(events);
         <span class="self">self</span>.event_handlers.extend(handlers);
     }
 

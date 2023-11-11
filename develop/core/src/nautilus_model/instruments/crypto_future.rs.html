@@ -465,7 +465,7 @@
     }
 
     <span class="kw">fn </span>multiplier(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Quantity {
-        <span class="comment">// SAFETY: Known value
+        <span class="comment">// SAFETY: Unwrap safe as using known values
         </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>).unwrap()
     }
 

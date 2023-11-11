@@ -556,14 +556,14 @@
     <span class="doccomment">/// Return JSON encoded bytes representation of the object.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;as_json&quot;</span>)]
     </span><span class="kw">fn </span>py_as_json(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
-        <span class="comment">// SAFETY: Unwrapping is safe when serializing a valid object
+        <span class="comment">// SAFETY: Unwrap safe when serializing a valid object
         </span><span class="self">self</span>.as_json_bytes().unwrap().into_py(py)
     }
 
     <span class="doccomment">/// Return MsgPack encoded bytes representation of the object.
     </span><span class="attr">#[pyo3(name = <span class="string">&quot;as_msgpack&quot;</span>)]
     </span><span class="kw">fn </span>py_as_msgpack(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
-        <span class="comment">// SAFETY: Unwrapping is safe when serializing a valid object
+        <span class="comment">// SAFETY: Unwrap safe when serializing a valid object
         </span><span class="self">self</span>.as_msgpack_bytes().unwrap().into_py(py)
     }
 }

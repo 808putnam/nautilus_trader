@@ -486,7 +486,7 @@
 
         <span class="kw">let </span>data_type: String = data
             .first()
-            .unwrap() <span class="comment">// SAFETY: already checked that `data` not empty
+            .unwrap() <span class="comment">// SAFETY: Unwrap safe as already checked that `data` not empty
             </span>.as_ref(py)
             .getattr(<span class="string">&quot;__class__&quot;</span>)<span class="question-mark">?
             </span>.getattr(<span class="string">&quot;__name__&quot;</span>)<span class="question-mark">?
@@ -525,7 +525,7 @@
         }
 
         <span class="comment">// Take first element and extract metadata
-        // SAFETY: already checked that `data` not empty
+        // SAFETY: Unwrap safe as already checked that `data` not empty
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = OrderBookDelta::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
@@ -558,7 +558,7 @@
         }
 
         <span class="comment">// Take first element and extract metadata
-        // SAFETY: already checked that `data` not empty
+        // SAFETY: Unwrap safe as already checked that `data` not empty
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
@@ -591,7 +591,7 @@
         }
 
         <span class="comment">// Take first element and extract metadata
-        // SAFETY: already checked that `data` not empty
+        // SAFETY: Unwrap safe as already checked that `data` not empty
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = TradeTick::get_metadata(
             <span class="kw-2">&amp;</span>first.instrument_id,
@@ -621,7 +621,7 @@
         }
 
         <span class="comment">// Take first element and extract metadata
-        // SAFETY: already checked that `data` not empty
+        // SAFETY: Unwrap safe as already checked that `data` not empty
         </span><span class="kw">let </span>first = data.first().unwrap();
         <span class="kw">let </span>metadata = Bar::get_metadata(
             <span class="kw-2">&amp;</span>first.bar_type,

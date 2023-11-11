@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["MessageBus","Subscription"],"type":["Handler"]};
+window.SIDEBAR_ITEMS = {"struct":["MessageBus","Subscription"]};

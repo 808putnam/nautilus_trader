@@ -316,7 +316,7 @@
                 <span class="kw">if </span>strict {
                     <span class="prelude-val">Err</span>(to_pyvalue_err(e))
                 } <span class="kw">else </span>{
-                    <span class="comment">// SAFETY: Safe default arguments for the unwrap
+                    <span class="comment">// SAFETY: Unwrap safe as using known values
                     </span><span class="kw">let </span>new_crypto =
                         Currency::new(value, <span class="number">8</span>, <span class="number">0</span>, value, CurrencyType::Crypto).unwrap();
                     <span class="prelude-val">Ok</span>(new_crypto)

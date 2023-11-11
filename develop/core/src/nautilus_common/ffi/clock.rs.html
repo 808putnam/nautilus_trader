@@ -285,6 +285,20 @@
 <a href="#285" id="285">285</a>
 <a href="#286" id="286">286</a>
 <a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -318,6 +332,7 @@
 
 <span class="kw">use crate</span>::{
     clock::{Clock, LiveClock, TestClock},
+    handlers::EventHandler,
     timer::{TimeEvent, TimeEventHandler},
 };
 
@@ -369,7 +384,9 @@
     <span class="macro">assert!</span>(ffi::Py_None() != callback_ptr);
 
     <span class="kw">let </span>callback_py = Python::with_gil(|py| PyObject::from_borrowed_ptr(py, callback_ptr));
-    clock.register_default_handler_py(callback_py);
+    <span class="kw">let </span>handler = EventHandler::new(<span class="prelude-val">Some</span>(callback_py), <span class="prelude-val">None</span>);
+
+    clock.register_default_handler(handler);
 }
 
 <span class="attr">#[no_mangle]
@@ -433,7 +450,9 @@
         ptr <span class="kw">if </span>ptr != ffi::Py_None() =&gt; <span class="prelude-val">Some</span>(PyObject::from_borrowed_ptr(py, ptr)),
         <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
     });
-    clock.set_time_alert_ns_py(name, alert_time_ns, callback_py);
+    <span class="kw">let </span>handler = EventHandler::new(callback_py.clone(), <span class="prelude-val">None</span>);
+
+    clock.set_time_alert_ns(name, alert_time_ns, callback_py.map(|<span class="kw">_</span>| handler));
 }
 
 <span class="doccomment">/// # Safety
@@ -460,7 +479,16 @@
         ptr <span class="kw">if </span>ptr != ffi::Py_None() =&gt; <span class="prelude-val">Some</span>(PyObject::from_borrowed_ptr(py, ptr)),
         <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
     });
-    clock.set_timer_ns_py(name, interval_ns, start_time_ns, stop_time_ns, callback_py);
+
+    <span class="kw">let </span>handler = EventHandler::new(callback_py.clone(), <span class="prelude-val">None</span>);
+
+    clock.set_timer_ns(
+        name,
+        interval_ns,
+        start_time_ns,
+        stop_time_ns,
+        callback_py.map(|<span class="kw">_</span>| handler),
+    );
 }
 
 <span class="doccomment">/// # Safety
@@ -473,7 +501,7 @@
     set_time: u8,
 ) -&gt; CVec {
     <span class="kw">let </span>events: Vec&lt;TimeEvent&gt; = clock.advance_time(to_time_ns, set_time != <span class="number">0</span>);
-    clock.match_handlers_py(events).into()
+    clock.match_handlers(events).into()
 }
 
 <span class="comment">// TODO: This struct implementation potentially leaks memory

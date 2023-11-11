@@ -104,6 +104,7 @@
 <a href="#104" id="104">104</a>
 <a href="#105" id="105">105</a>
 <a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -159,7 +160,8 @@
     }
 
     <span class="kw">pub fn </span>get_tag(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="self">self</span>.value.split(<span class="string">&#39;-&#39;</span>).last().unwrap()
+        <span class="comment">// SAFETY: Unwrap safe as value previously validated
+        </span><span class="self">self</span>.value.split(<span class="string">&#39;-&#39;</span>).last().unwrap()
     }
 }
 
