@@ -697,6 +697,19 @@
 <a href="#697" id="697">697</a>
 <a href="#698" id="698">698</a>
 <a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -746,6 +759,8 @@
     </span><span class="kw">pub </span>level_stdout: LogLevel,
     <span class="doccomment">/// The minimum log level to write to a log file.
     </span><span class="kw">pub </span>level_file: <span class="prelude-ty">Option</span>&lt;LogLevel&gt;,
+    <span class="doccomment">/// If logger is using ANSI color codes.
+    </span><span class="kw">pub </span>is_colored: bool,
     <span class="doccomment">/// If logging is bypassed.
     </span><span class="kw">pub </span>is_bypassed: bool,
 }
@@ -788,6 +803,7 @@
         file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
         file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
         component_levels: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, Value&gt;&gt;,
+        is_colored: bool,
         is_bypassed: bool,
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>(tx, rx) = channel::&lt;LogEvent&gt;();
@@ -820,6 +836,7 @@
                 file_name,
                 file_format,
                 level_filters,
+                is_colored,
                 rx,
             );
         });
@@ -831,11 +848,13 @@
             instance_id,
             level_stdout,
             level_file,
+            is_colored,
             is_bypassed,
         }
     }
 
-    <span class="kw">fn </span>handle_messages(
+    <span class="attr">#[allow(clippy::useless_format)] </span><span class="comment">// Format is not actually useless as we escape braces
+    </span><span class="kw">fn </span>handle_messages(
         trader_id: <span class="kw-2">&amp;</span>str,
         instance_id: <span class="kw-2">&amp;</span>str,
         level_stdout: LogLevel,
@@ -844,6 +863,7 @@
         file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
         file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
         level_filters: HashMap&lt;String, LogLevel&gt;,
+        is_colored: bool,
         rx: Receiver&lt;LogEvent&gt;,
     ) {
         <span class="comment">// Setup std I/O buffers
@@ -886,9 +906,11 @@
         <span class="kw">let </span><span class="kw-2">mut </span>file_buf = file.map(BufWriter::new);
 
         <span class="comment">// Setup templates for formatting
-        </span><span class="kw">let </span>template_console = String::from(
-            <span class="string">&quot;\x1b[1m{ts}\x1b[0m {color}[{level}] {trader_id}.{component}: {message}\x1b[0m\n&quot;</span>,
-        );
+        </span><span class="kw">let </span>template_console = <span class="kw">match </span>is_colored {
+            <span class="bool-val">true </span>=&gt; <span class="macro">format!</span>(<span class="string">&quot;\x1b[1m{{ts}}\x1b[0m {{color}}[{{level}}] {{trader_id}}.{{component}}: {{message}}\x1b[0m\n&quot;</span>),
+            <span class="bool-val">false </span>=&gt; <span class="macro">format!</span>(<span class="string">&quot;{{ts}} [{{level}}] {{trader_id}}.{{component}}: {{message}}\n&quot;</span>)
+        };
+
         <span class="kw">let </span>template_file = String::from(<span class="string">&quot;{ts} [{level}] {trader_id}.{component}: {message}\n&quot;</span>);
 
         <span class="comment">// Continue to receive and handle log events until channel is hung up
@@ -1148,6 +1170,7 @@
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
+            <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
         )
     }
@@ -1249,6 +1272,7 @@
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
+            <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
         );
 
@@ -1309,6 +1333,7 @@
                 String::from(<span class="string">&quot;RiskEngine&quot;</span>),
                 Value::from(<span class="string">&quot;ERROR&quot;</span>), <span class="comment">// &lt;-- This should be filtered
             </span>)))),
+            <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
         );
 
@@ -1360,6 +1385,7 @@
             <span class="prelude-val">None</span>,
             <span class="prelude-val">Some</span>(<span class="string">&quot;json&quot;</span>.to_string()),
             <span class="prelude-val">None</span>,
+            <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
         );
 

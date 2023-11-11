@@ -737,6 +737,11 @@
                 Component filtering
                </a>
               </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#log-colors">
+                Log Colors
+               </a>
+              </li>
              </ul>
             </li>
            </ul>
@@ -1056,6 +1061,43 @@ The input value should be a dictionary of component ID strings to log level stri
             </span>
            </code>
            , as the same options are available.
+          </p>
+         </section>
+         <section id="log-colors">
+          <h3 id="log-colors">
+           Log Colors
+           <a class="headerlink" href="#log-colors" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           ANSI color codes are utilized to enhance the readability of logs when viewed in a terminal.
+These color codes can make it easier to distinguish different parts of log messages.
+However, in environments that do not support ANSI color rendering (such as some cloud environments or text editors),
+these color codes may not be appropriate as they can appear as raw text.
+          </p>
+          <p>
+           To accommodate for such scenarios, the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             LoggingConfig.log_colors
+            </span>
+           </code>
+           option can be set to
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             false
+            </span>
+           </code>
+           .
+Disabling
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             log_colors
+            </span>
+           </code>
+           will prevent the addition of ANSI color codes to the log messages, ensuring
+compatibility across different environments where color rendering is not supported.
           </p>
          </section>
         </section>

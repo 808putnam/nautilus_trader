@@ -8599,6 +8599,126 @@ encoding/decoding.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              host
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+             <span class="w">
+             </span>
+             <span class="p">
+              <span class="pre">
+               |
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              '127.0.0.1'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              port
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              Literal
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="m">
+              <span class="pre">
+               4001
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ,
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="m">
+              <span class="pre">
+               4002
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               trading_mode
              </span>
             </span>
@@ -8848,6 +8968,42 @@ If
                  TWS_PASSWORD
                 </cite>
                 .
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 host
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The hostname or ip address for the IB Gateway or TWS.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 port
+                </strong>
+                (
+                <em>
+                 int
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The port for the gateway server (“paper” 4002, or “live” 4001).
                </p>
               </li>
               <li>
@@ -10634,6 +10790,22 @@ Example: value set to 1, InstrumentProvider will make fresh pull every day even 
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              host='127.0.0.1'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              port=None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               trading_mode='paper'
              </span>
             </span>
@@ -10695,7 +10867,7 @@ Example: value set to 1, InstrumentProvider will make fresh pull every day even 
               at
              </span>
              <span class="pre">
-              0x7f5b723a0890&gt;
+              0x7fd0143d5510&gt;
              </span>
              <span class="pre">
               =
@@ -11478,6 +11650,12 @@ Configure
               password=None,
              </span>
              <span class="pre">
+              host='127.0.0.1',
+             </span>
+             <span class="pre">
+              port=None,
+             </span>
+             <span class="pre">
               trading_mode='paper',
              </span>
              <span class="pre">
@@ -11600,19 +11778,7 @@ Configure
                 <em>
                  int
                 </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default for "paper" 4002
-                </em>
-                <em>
-                 , or
-                </em>
-                <em>
-                 "live" 4001
-                </em>
-                ) – The port for the gateway server.
+                ) – The port for the gateway server (“paper” 4002, or “live” 4001).
                </p>
               </li>
               <li>
@@ -12244,7 +12410,12 @@ If
             </a>
            </p>
            <p>
-            Provides a data client for the InteractiveBrokers exchange.
+            Provides a data client for the InteractiveBrokers exchange by using the
+            <cite>
+             Gateway
+            </cite>
+            to
+stream market data.
            </p>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.interactive_brokers.data.InteractiveBrokersDataClient.connect">
@@ -17468,7 +17639,8 @@ then the component state will not change, and an error will be logged.
             </a>
            </p>
            <p>
-            Provides an execution client for Interactive Brokers TWS API.
+            Provides an execution client for Interactive Brokers TWS API, allowing for the
+retrieval of account information and execution of orders.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -23859,6 +24031,12 @@ then the component state will not change, and an error will be logged.
              </span>
              <span class="pre">
               password=None,
+             </span>
+             <span class="pre">
+              host='127.0.0.1',
+             </span>
+             <span class="pre">
+              port=None,
              </span>
              <span class="pre">
               trading_mode='paper',
