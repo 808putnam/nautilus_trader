@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["MessageBus","Subscription"]};
+window.SIDEBAR_ITEMS = {"fn":["is_matching"],"struct":["MessageBus","Subscription"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["EventHandler"],"type":["MessageHandler"]};
+window.SIDEBAR_ITEMS = {"struct":["EventHandler","MessageHandler","PyCallableWrapper"]};

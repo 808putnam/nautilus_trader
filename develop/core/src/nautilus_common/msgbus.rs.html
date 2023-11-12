@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/msgbus.rs`."><title>msgbus.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (edf0b1db0 2023-11-10)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/msgbus.rs`."><title>msgbus.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (2c1b65ee1 2023-11-11)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -448,6 +448,9 @@
 <a href="#448" id="448">448</a>
 <a href="#449" id="449">449</a>
 <a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -472,71 +475,53 @@
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
 <span class="kw">use </span>ustr::Ustr;
 
+<span class="kw">use </span><span class="kw">crate</span>::handlers::MessageHandler;
+
 <span class="comment">// Represents a subscription to a particular topic.
 //
 // This is an internal class intended to be used by the message bus to organize
 // topics and their subscribers.
-</span><span class="attr">#[derive(Copy, Clone, Debug)]
-</span><span class="kw">pub struct </span>Subscription&lt;T&gt;
-<span class="kw">where
-    </span>T: Clone,
-{
+</span><span class="attr">#[derive(Clone)]
+</span><span class="kw">pub struct </span>Subscription {
+    <span class="kw">pub </span>handler: MessageHandler,
     topic: Ustr,
-    handler: T,
-    handler_id: Ustr,
     priority: u8,
 }
 
-<span class="kw">impl</span>&lt;T&gt; Subscription&lt;T&gt;
-<span class="kw">where
-    </span>T: Clone,
-{
-    <span class="kw">pub fn </span>new(topic: Ustr, handler: T, handler_id: Ustr, priority: <span class="prelude-ty">Option</span>&lt;u8&gt;) -&gt; <span class="self">Self </span>{
+<span class="kw">impl </span>Subscription {
+    <span class="kw">pub fn </span>new(topic: Ustr, handler: MessageHandler, priority: <span class="prelude-ty">Option</span>&lt;u8&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             topic,
             handler,
-            handler_id,
             priority: priority.unwrap_or(<span class="number">0</span>),
         }
     }
 }
 
-<span class="kw">impl</span>&lt;T&gt; PartialEq&lt;<span class="self">Self</span>&gt; <span class="kw">for </span>Subscription&lt;T&gt;
-<span class="kw">where
-    </span>T: Clone,
-{
+<span class="kw">impl </span>PartialEq&lt;<span class="self">Self</span>&gt; <span class="kw">for </span>Subscription {
     <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; bool {
-        <span class="self">self</span>.topic == other.topic &amp;&amp; <span class="self">self</span>.handler_id == other.handler_id
+        <span class="self">self</span>.topic == other.topic &amp;&amp; <span class="self">self</span>.handler.handler_id == other.handler.handler_id
     }
 }
 
-<span class="kw">impl</span>&lt;T&gt; Eq <span class="kw">for </span>Subscription&lt;T&gt; <span class="kw">where </span>T: Clone {}
+<span class="kw">impl </span>Eq <span class="kw">for </span>Subscription {}
 
-<span class="kw">impl</span>&lt;T&gt; PartialOrd <span class="kw">for </span>Subscription&lt;T&gt;
-<span class="kw">where
-    </span>T: Clone,
-{
+<span class="kw">impl </span>PartialOrd <span class="kw">for </span>Subscription {
     <span class="kw">fn </span>partial_cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;std::cmp::Ordering&gt; {
         <span class="prelude-val">Some</span>(<span class="self">self</span>.cmp(other))
     }
 }
 
-<span class="kw">impl</span>&lt;T&gt; Ord <span class="kw">for </span>Subscription&lt;T&gt;
-<span class="kw">where
-    </span>T: Clone,
-{
+<span class="kw">impl </span>Ord <span class="kw">for </span>Subscription {
     <span class="kw">fn </span>cmp(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; std::cmp::Ordering {
         <span class="self">self</span>.priority.cmp(<span class="kw-2">&amp;</span>other.priority)
     }
 }
 
-<span class="kw">impl</span>&lt;T&gt; Hash <span class="kw">for </span>Subscription&lt;T&gt;
-<span class="kw">where
-    </span>T: Clone,
-{
+<span class="kw">impl </span>Hash <span class="kw">for </span>Subscription {
     <span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
         <span class="self">self</span>.topic.hash(state);
-        <span class="self">self</span>.handler_id.hash(state);
+        <span class="self">self</span>.handler.handler_id.hash(state);
     }
 }
 
@@ -561,10 +546,7 @@
 /// `camp` and `comp`. The question mark can also be used more than once.
 /// For example, `c??p` would match both of the above examples and `coop`.
 </span><span class="attr">#[allow(dead_code)]
-</span><span class="kw">pub struct </span>MessageBus&lt;T&gt;
-<span class="kw">where
-    </span>T: Clone,
-{
+</span><span class="kw">pub struct </span>MessageBus {
     <span class="doccomment">/// The trader ID for the message bus.
     </span><span class="kw">pub </span>trader_id: TraderId,
     <span class="doccomment">/// The name for the message bus.
@@ -573,24 +555,21 @@
     /// a topic can be a string with wildcards
     /// * &#39;?&#39; - any character
     /// * &#39;*&#39; - any number of any characters
-    </span>subscriptions: HashMap&lt;Subscription&lt;T&gt;, Vec&lt;Ustr&gt;&gt;,
+    </span>subscriptions: HashMap&lt;Subscription, Vec&lt;Ustr&gt;&gt;,
     <span class="doccomment">/// maps a pattern to all the handlers registered for it
     /// this is updated whenever a new subscription is created.
-    </span>patterns: HashMap&lt;Ustr, Vec&lt;Subscription&lt;T&gt;&gt;&gt;,
+    </span>patterns: HashMap&lt;Ustr, Vec&lt;Subscription&gt;&gt;,
     <span class="doccomment">/// handles a message or a request destined for a specific endpoint.
-    </span>endpoints: HashMap&lt;Ustr, T&gt;,
+    </span>endpoints: HashMap&lt;Ustr, MessageHandler&gt;,
     <span class="doccomment">/// Relates a request with a response
     /// a request maps it&#39;s id to a handler so that a response
     /// with the same id can later be handled.
-    </span>correlation_index: HashMap&lt;UUID4, T&gt;,
+    </span>correlation_index: HashMap&lt;UUID4, MessageHandler&gt;,
 }
 
 <span class="attr">#[allow(dead_code)]
-</span><span class="kw">impl</span>&lt;T&gt; MessageBus&lt;T&gt;
-<span class="kw">where
-    </span>T: Clone,
-{
-    <span class="doccomment">/// Initializes a new instance of the [`MessageBus&lt;T&gt;`].
+</span><span class="kw">impl </span>MessageBus {
+    <span class="doccomment">/// Initializes a new instance of the [`MessageBus`].
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(trader_id: TraderId, name: <span class="prelude-ty">Option</span>&lt;String&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
@@ -619,7 +598,7 @@
     }
 
     <span class="doccomment">/// Registers the given `handler` for the `endpoint` address.
-    </span><span class="kw">pub fn </span>register(<span class="kw-2">&amp;mut </span><span class="self">self</span>, endpoint: String, handler: T) {
+    </span><span class="kw">pub fn </span>register(<span class="kw-2">&amp;mut </span><span class="self">self</span>, endpoint: String, handler: MessageHandler) {
         <span class="comment">// updates value if key already exists
         </span><span class="self">self</span>.endpoints.insert(Ustr::from(<span class="kw-2">&amp;</span>endpoint), handler);
     }
@@ -631,8 +610,8 @@
     }
 
     <span class="doccomment">/// Subscribes the given `handler` to the `topic`.
-    </span><span class="kw">pub fn </span>subscribe(<span class="kw-2">&amp;mut </span><span class="self">self</span>, topic: <span class="kw-2">&amp;</span>str, handler: T, handler_id: <span class="kw-2">&amp;</span>str, priority: <span class="prelude-ty">Option</span>&lt;u8&gt;) {
-        <span class="kw">let </span>sub = Subscription::new(Ustr::from(topic), handler, Ustr::from(handler_id), priority);
+    </span><span class="kw">pub fn </span>subscribe(<span class="kw-2">&amp;mut </span><span class="self">self</span>, topic: <span class="kw-2">&amp;</span>str, handler: MessageHandler, priority: <span class="prelude-ty">Option</span>&lt;u8&gt;) {
+        <span class="kw">let </span>sub = Subscription::new(Ustr::from(topic), handler, priority);
 
         <span class="kw">if </span><span class="self">self</span>.subscriptions.contains_key(<span class="kw-2">&amp;</span>sub) {
             <span class="comment">// TODO: log
@@ -653,15 +632,15 @@
     }
 
     <span class="doccomment">/// Unsubscribes the given `handler` from the `topic`.
-    </span><span class="kw">pub fn </span>unsubscribe(<span class="kw-2">&amp;mut </span><span class="self">self</span>, topic: <span class="kw-2">&amp;</span>str, handler: T, handler_id: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">let </span>sub = Subscription::new(Ustr::from(topic), handler, Ustr::from(handler_id), <span class="prelude-val">None</span>);
+    </span><span class="kw">pub fn </span>unsubscribe(<span class="kw-2">&amp;mut </span><span class="self">self</span>, topic: <span class="kw-2">&amp;</span>str, handler: MessageHandler) {
+        <span class="kw">let </span>sub = Subscription::new(Ustr::from(topic), handler, <span class="prelude-val">None</span>);
 
         <span class="self">self</span>.subscriptions.remove(<span class="kw-2">&amp;</span>sub);
     }
 
     <span class="doccomment">/// Returns the handler for the given `endpoint`.
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>get_endpoint(<span class="kw-2">&amp;</span><span class="self">self</span>, endpoint: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
+    </span><span class="kw">pub fn </span>get_endpoint(<span class="kw-2">&amp;</span><span class="self">self</span>, endpoint: <span class="kw-2">&amp;</span>Ustr) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>MessageHandler&gt; {
         <span class="self">self</span>.endpoints.get(<span class="kw-2">&amp;</span>Ustr::from(endpoint))
     }
 
@@ -673,9 +652,11 @@
             .is_some()
     }
 
-    <span class="comment">// fn send(&amp;self, endpoint: &amp;String, msg: &amp;Message) {
+    <span class="comment">// fn send(&amp;self, endpoint: &amp;Ustr, msg: &amp;Message) {
     //     if let Some(handler) = self.endpoints.get(endpoint) {
-    //         handler(msg);
+    //         if let Some(py_callable) = handler.py_callback {
+    //             Python::with_gil(|| msg)
+    //         }
     //     }
     // }
 
@@ -725,7 +706,10 @@
     // one of those fields or reconstruct the subscription as a tuple and
     // return that.
     // Depends on on how the output of this function is meant to be used
-    </span><span class="kw">fn </span>matching_handlers&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, pattern: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ustr) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>T&gt; {
+    </span><span class="kw">fn </span>matching_handlers&lt;<span class="lifetime">&#39;a</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
+        pattern: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ustr,
+    ) -&gt; <span class="kw">impl </span>Iterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>MessageHandler&gt; {
         <span class="self">self</span>.subscriptions.iter().filter_map(<span class="kw">move </span>|(sub, <span class="kw">_</span>)| {
             <span class="kw">if </span>is_matching(<span class="kw-2">&amp;</span>sub.topic, pattern) {
                 <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>sub.handler)
@@ -736,28 +720,26 @@
     }
 
     <span class="comment">// TODO: Need to improve the efficiency of this
-    </span><span class="kw">pub fn </span>get_matching_handlers&lt;<span class="lifetime">&#39;a</span>&gt;(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>,
-        pattern: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ustr,
-    ) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Vec&lt;Subscription&lt;T&gt;&gt; {
-        <span class="comment">// The closure must return Vec&lt;Subscription&lt;T&gt;&gt;, not Vec&lt;T&gt;
-        </span><span class="kw">let </span>matching_handlers = || {
+    </span><span class="kw">pub fn </span>get_matching_handlers&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>, pattern: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ustr) -&gt; Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Subscription&gt; {
+        <span class="kw">let </span>matching_handlers = || {
             <span class="self">self</span>.subscriptions
                 .iter()
                 .filter_map(|(sub, <span class="kw">_</span>)| {
                     <span class="kw">if </span>is_matching(<span class="kw-2">&amp;</span>sub.topic, pattern) {
-                        <span class="prelude-val">Some</span>(sub.clone())
+                        <span class="prelude-val">Some</span>(sub)
                     } <span class="kw">else </span>{
                         <span class="prelude-val">None
                     </span>}
                 })
-                .collect::&lt;Vec&lt;Subscription&lt;T&gt;&gt;&gt;()
+                .collect::&lt;Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Subscription&gt;&gt;()
         };
 
-        <span class="self">self</span>.patterns
-            .entry(<span class="kw-2">*</span>pattern)
-            .or_insert_with(matching_handlers)
-    }
+        matching_handlers()
+
+        <span class="comment">// self.patterns
+        //     .entry(*pattern)
+        //     .or_insert_with(matching_handlers)
+    </span>}
 
     <span class="kw">pub fn </span>publish(<span class="kw-2">&amp;mut </span><span class="self">self</span>, pattern: Ustr, _msg: <span class="kw-2">&amp;</span>Message) {
         <span class="kw">let </span>_handlers = <span class="self">self</span>.get_matching_handlers(<span class="kw-2">&amp;</span>pattern);
@@ -772,7 +754,7 @@
 /// &#39;*&#39; - match 0 or more characters after this
 /// &#39;?&#39; - match any character once
 /// &#39;a-z&#39; - match the specific character
-</span><span class="kw">fn </span>is_matching(topic: <span class="kw-2">&amp;</span>Ustr, pattern: <span class="kw-2">&amp;</span>Ustr) -&gt; bool {
+</span><span class="kw">pub fn </span>is_matching(topic: <span class="kw-2">&amp;</span>Ustr, pattern: <span class="kw-2">&amp;</span>Ustr) -&gt; bool {
     <span class="kw">let </span><span class="kw-2">mut </span>table = [[<span class="bool-val">false</span>; <span class="number">256</span>]; <span class="number">256</span>];
     table[<span class="number">0</span>][<span class="number">0</span>] = <span class="bool-val">true</span>;
 
@@ -810,10 +792,20 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::handlers::MessageHandler;
 
+    <span class="kw">fn </span>stub_msgbus() -&gt; MessageBus {
+        MessageBus::new(TraderId::from(<span class="string">&quot;trader-001&quot;</span>), <span class="prelude-val">None</span>)
+    }
+
+    <span class="kw">fn </span>stub_rust_callback() -&gt; Rc&lt;<span class="kw">dyn </span>Fn(Message)&gt; {
+        Rc::new(|m: Message| {
+            <span class="macro">format!</span>(<span class="string">&quot;{m:?}&quot;</span>);
+        })
+    }
+
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new() {
         <span class="kw">let </span>trader_id = TraderId::from(<span class="string">&quot;trader-001&quot;</span>);
-        <span class="kw">let </span>msgbus = MessageBus::&lt;MessageHandler&gt;::new(trader_id, <span class="prelude-val">None</span>);
+        <span class="kw">let </span>msgbus = MessageBus::new(trader_id, <span class="prelude-val">None</span>);
 
         <span class="macro">assert_eq!</span>(msgbus.trader_id, trader_id);
         <span class="macro">assert_eq!</span>(msgbus.name, <span class="macro">stringify!</span>(MessageBus));
@@ -821,14 +813,14 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_endpoints_when_no_endpoints() {
-        <span class="kw">let </span>msgbus = MessageBus::&lt;MessageHandler&gt;::new(TraderId::from(<span class="string">&quot;trader-001&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="kw">let </span>msgbus = stub_msgbus();
 
         <span class="macro">assert!</span>(msgbus.endpoints().is_empty());
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_topics_when_no_subscriptions() {
-        <span class="kw">let </span>msgbus = MessageBus::&lt;MessageHandler&gt;::new(TraderId::from(<span class="string">&quot;trader-001&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="kw">let </span>msgbus = stub_msgbus();
 
         <span class="macro">assert!</span>(msgbus.topics().is_empty());
         <span class="macro">assert!</span>(!msgbus.has_subscribers(<span class="string">&quot;my-topic&quot;</span>));
@@ -836,29 +828,27 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_regsiter_endpoint() {
-        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = MessageBus::&lt;MessageHandler&gt;::new(TraderId::from(<span class="string">&quot;trader-001&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = stub_msgbus();
         <span class="kw">let </span>endpoint = <span class="string">&quot;MyEndpoint&quot;</span>.to_string();
 
-        <span class="comment">// Useless handler for testing
-        </span><span class="kw">let </span>handler = Rc::new(|m: <span class="kw-2">&amp;</span><span class="kw">_</span>| {
-            <span class="macro">format!</span>(<span class="string">&quot;{m:?}&quot;</span>);
-        });
+        <span class="kw">let </span>callback = stub_rust_callback();
+        <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
+        <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(callback));
 
         msgbus.register(endpoint.clone(), handler.clone());
 
         <span class="macro">assert_eq!</span>(msgbus.endpoints(), <span class="macro">vec!</span>[<span class="string">&quot;MyEndpoint&quot;</span>.to_string()]);
-        <span class="macro">assert!</span>(msgbus.get_endpoint(<span class="kw-2">&amp;</span>endpoint).is_some());
+        <span class="macro">assert!</span>(msgbus.get_endpoint(<span class="kw-2">&amp;</span>Ustr::from(<span class="kw-2">&amp;</span>endpoint)).is_some());
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_deregsiter_endpoint() {
-        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = MessageBus::&lt;MessageHandler&gt;::new(TraderId::from(<span class="string">&quot;trader-001&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = stub_msgbus();
         <span class="kw">let </span>endpoint = <span class="string">&quot;MyEndpoint&quot;</span>.to_string();
 
-        <span class="comment">// Useless handler for testing
-        </span><span class="kw">let </span>handler = Rc::new(|m: <span class="kw-2">&amp;</span><span class="kw">_</span>| {
-            <span class="macro">format!</span>(<span class="string">&quot;{m:?}&quot;</span>);
-        });
+        <span class="kw">let </span>callback = stub_rust_callback();
+        <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
+        <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(callback));
 
         msgbus.register(endpoint.clone(), handler.clone());
         msgbus.deregister(<span class="kw-2">&amp;</span>endpoint);
@@ -868,15 +858,14 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_subscribe() {
-        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = MessageBus::&lt;MessageHandler&gt;::new(TraderId::from(<span class="string">&quot;trader-001&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = stub_msgbus();
         <span class="kw">let </span>topic = <span class="string">&quot;my-topic&quot;</span>.to_string();
 
-        <span class="comment">// Useless handler for testing
-        </span><span class="kw">let </span>handler = Rc::new(|m: <span class="kw-2">&amp;</span><span class="kw">_</span>| {
-            <span class="macro">format!</span>(<span class="string">&quot;{m:?}&quot;</span>);
-        });
+        <span class="kw">let </span>callback = stub_rust_callback();
+        <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
+        <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler.clone(), <span class="string">&quot;a&quot;</span>, <span class="prelude-val">Some</span>(<span class="number">1</span>));
+        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler.clone(), <span class="prelude-val">Some</span>(<span class="number">1</span>));
 
         <span class="macro">assert!</span>(msgbus.has_subscribers(<span class="kw-2">&amp;</span>topic));
         <span class="macro">assert_eq!</span>(msgbus.topics(), <span class="macro">vec!</span>[topic]);
@@ -884,18 +873,35 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_unsubscribe() {
-        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = MessageBus::&lt;MessageHandler&gt;::new(TraderId::from(<span class="string">&quot;trader-001&quot;</span>), <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>msgbus = stub_msgbus();
         <span class="kw">let </span>topic = <span class="string">&quot;my-topic&quot;</span>.to_string();
 
-        <span class="comment">// Useless handler for testing
-        </span><span class="kw">let </span>handler = Rc::new(|m: <span class="kw-2">&amp;</span><span class="kw">_</span>| {
-            <span class="macro">format!</span>(<span class="string">&quot;{m:?}&quot;</span>);
-        });
+        <span class="kw">let </span>callback = stub_rust_callback();
+        <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
+        <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler.clone(), <span class="string">&quot;a&quot;</span>, <span class="prelude-val">None</span>);
-        msgbus.unsubscribe(<span class="kw-2">&amp;</span>topic, handler.clone(), <span class="string">&quot;a&quot;</span>);
+        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler.clone(), <span class="prelude-val">None</span>);
+        msgbus.unsubscribe(<span class="kw-2">&amp;</span>topic, handler.clone());
 
+        <span class="macro">assert!</span>(!msgbus.has_subscribers(<span class="kw-2">&amp;</span>topic));
         <span class="macro">assert!</span>(msgbus.topics().is_empty());
+    }
+
+    <span class="attr">#[rstest]
+    #[case(<span class="string">&quot;*&quot;</span>, <span class="string">&quot;*&quot;</span>, <span class="bool-val">true</span>)]
+    #[case(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;*&quot;</span>, <span class="bool-val">true</span>)]
+    #[case(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;a&quot;</span>, <span class="bool-val">true</span>)]
+    #[case(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="bool-val">false</span>)]
+    #[case(<span class="string">&quot;data.quotes.BINANCE&quot;</span>, <span class="string">&quot;data.*&quot;</span>, <span class="bool-val">true</span>)]
+    #[case(<span class="string">&quot;data.quotes.BINANCE&quot;</span>, <span class="string">&quot;data.quotes*&quot;</span>, <span class="bool-val">true</span>)]
+    #[case(<span class="string">&quot;data.quotes.BINANCE&quot;</span>, <span class="string">&quot;data.*.BINANCE&quot;</span>, <span class="bool-val">true</span>)]
+    #[case(<span class="string">&quot;data.trades.BINANCE.ETHUSDT&quot;</span>, <span class="string">&quot;data.*.BINANCE.*&quot;</span>, <span class="bool-val">true</span>)]
+    #[case(<span class="string">&quot;data.trades.BINANCE.ETHUSDT&quot;</span>, <span class="string">&quot;data.*.BINANCE.ETH*&quot;</span>, <span class="bool-val">true</span>)]
+    </span><span class="kw">fn </span>test_is_matching(<span class="attr">#[case] </span>topic: <span class="kw-2">&amp;</span>str, <span class="attr">#[case] </span>pattern: <span class="kw-2">&amp;</span>str, <span class="attr">#[case] </span>expected: bool) {
+        <span class="macro">assert_eq!</span>(
+            is_matching(<span class="kw-2">&amp;</span>Ustr::from(topic), <span class="kw-2">&amp;</span>Ustr::from(pattern)),
+            expected
+        );
     }
 }
 </code></pre></div></section></main></body></html>
