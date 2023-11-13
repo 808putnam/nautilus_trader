@@ -5,9 +5,9 @@ pub unsafe extern &quot;C&quot; fn order_denied_new(
     instrument_id: <a class="struct" href="../../../identifiers/instrument_id/struct.InstrumentId.html" title="struct nautilus_model::identifiers::instrument_id::InstrumentId">InstrumentId</a>,
     client_order_id: <a class="struct" href="../../../identifiers/client_order_id/struct.ClientOrderId.html" title="struct nautilus_model::identifiers::client_order_id::ClientOrderId">ClientOrderId</a>,
     reason_ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="https://doc.rust-lang.org/nightly/core/ffi/type.c_char.html" title="type core::ffi::c_char">c_char</a>,
-    event_id: UUID4,
-    ts_event: UnixNanos,
-    ts_init: UnixNanos
+    event_id: <a class="struct" href="../../../../nautilus_core/uuid/struct.UUID4.html" title="struct nautilus_core::uuid::UUID4">UUID4</a>,
+    ts_event: <a class="type" href="../../../../nautilus_core/time/type.UnixNanos.html" title="type nautilus_core::time::UnixNanos">UnixNanos</a>,
+    ts_init: <a class="type" href="../../../../nautilus_core/time/type.UnixNanos.html" title="type nautilus_core::time::UnixNanos">UnixNanos</a>
 ) -&gt; <a class="struct" href="../../../events/order/struct.OrderDenied.html" title="struct nautilus_model::events::order::OrderDenied">OrderDenied</a></code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="safety"><a href="#safety">Safety</a></h2>
 <ul>
 <li>Assumes valid C string pointers.</li>
