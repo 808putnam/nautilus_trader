@@ -14,6 +14,19 @@
 <a href="#14" id="14">14</a>
 <a href="#15" id="15">15</a>
 <a href="#16" id="16">16</a>
+<a href="#17" id="17">17</a>
+<a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
+<a href="#20" id="20">20</a>
+<a href="#21" id="21">21</a>
+<a href="#22" id="22">22</a>
+<a href="#23" id="23">23</a>
+<a href="#24" id="24">24</a>
+<a href="#25" id="25">25</a>
+<a href="#26" id="26">26</a>
+<a href="#27" id="27">27</a>
+<a href="#28" id="28">28</a>
+<a href="#29" id="29">29</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -30,4 +43,17 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">pub mod </span>timer;
+
+<span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
+
+<span class="doccomment">/// Loaded as nautilus_pyo3.common
+</span><span class="attr">#[pymodule]
+</span><span class="kw">pub fn </span>common(<span class="kw">_</span>: Python&lt;<span class="lifetime">&#39;_</span>&gt;, m: <span class="kw-2">&amp;</span>PyModule) -&gt; PyResult&lt;()&gt; {
+    m.add_class::&lt;<span class="kw">crate</span>::enums::ComponentState&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::enums::ComponentTrigger&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::enums::LogColor&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::enums::LogLevel&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::enums::LogFormat&gt;()<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(())
+}
 </code></pre></div></section></main></body></html>
