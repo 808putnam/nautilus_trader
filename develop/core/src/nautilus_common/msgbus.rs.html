@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/msgbus.rs`."><title>msgbus.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (2c1b65ee1 2023-11-11)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/msgbus.rs`."><title>msgbus.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (2b603f95a 2023-11-12)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -436,21 +436,6 @@
 <a href="#436" id="436">436</a>
 <a href="#437" id="437">437</a>
 <a href="#438" id="438">438</a>
-<a href="#439" id="439">439</a>
-<a href="#440" id="440">440</a>
-<a href="#441" id="441">441</a>
-<a href="#442" id="442">442</a>
-<a href="#443" id="443">443</a>
-<a href="#444" id="444">444</a>
-<a href="#445" id="445">445</a>
-<a href="#446" id="446">446</a>
-<a href="#447" id="447">447</a>
-<a href="#448" id="448">448</a>
-<a href="#449" id="449">449</a>
-<a href="#450" id="450">450</a>
-<a href="#451" id="451">451</a>
-<a href="#452" id="452">452</a>
-<a href="#453" id="453">453</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -471,7 +456,7 @@
     hash::{Hash, Hasher},
 };
 
-<span class="kw">use </span>nautilus_core::{message::Message, uuid::UUID4};
+<span class="kw">use </span>nautilus_core::uuid::UUID4;
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
 <span class="kw">use </span>ustr::Ustr;
 
@@ -598,9 +583,9 @@
     }
 
     <span class="doccomment">/// Registers the given `handler` for the `endpoint` address.
-    </span><span class="kw">pub fn </span>register(<span class="kw-2">&amp;mut </span><span class="self">self</span>, endpoint: String, handler: MessageHandler) {
-        <span class="comment">// updates value if key already exists
-        </span><span class="self">self</span>.endpoints.insert(Ustr::from(<span class="kw-2">&amp;</span>endpoint), handler);
+    </span><span class="kw">pub fn </span>register(<span class="kw-2">&amp;mut </span><span class="self">self</span>, endpoint: <span class="kw-2">&amp;</span>str, handler: MessageHandler) {
+        <span class="comment">// Updates value if key already exists
+        </span><span class="self">self</span>.endpoints.insert(Ustr::from(endpoint), handler);
     }
 
     <span class="doccomment">/// Deregisters the given `handler` for the `endpoint` address.
@@ -652,15 +637,7 @@
             .is_some()
     }
 
-    <span class="comment">// fn send(&amp;self, endpoint: &amp;Ustr, msg: &amp;Message) {
-    //     if let Some(handler) = self.endpoints.get(endpoint) {
-    //         if let Some(py_callable) = handler.py_callback {
-    //             Python::with_gil(|| msg)
-    //         }
-    //     }
-    // }
-
-    // #[allow(unused_variables)]
+    <span class="comment">// #[allow(unused_variables)]
     // fn request(&amp;mut self, endpoint: &amp;String, request: &amp;Message, callback: T) {
     //     match request {
     //         Message::Request { id, ts_init } =&gt; {
@@ -701,11 +678,6 @@
     //     }
     // }
 
-    // TODO: This is the modified version of matching_subscriptions
-    // Since we&#39;ve separated subscription and handler we can choose to return
-    // one of those fields or reconstruct the subscription as a tuple and
-    // return that.
-    // Depends on on how the output of this function is meant to be used
     </span><span class="kw">fn </span>matching_handlers&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
         pattern: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ustr,
@@ -719,37 +691,34 @@
         })
     }
 
-    <span class="comment">// TODO: Need to improve the efficiency of this
-    </span><span class="kw">pub fn </span>get_matching_handlers&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>, pattern: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ustr) -&gt; Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Subscription&gt; {
-        <span class="kw">let </span>matching_handlers = || {
-            <span class="self">self</span>.subscriptions
-                .iter()
-                .filter_map(|(sub, <span class="kw">_</span>)| {
-                    <span class="kw">if </span>is_matching(<span class="kw-2">&amp;</span>sub.topic, pattern) {
-                        <span class="prelude-val">Some</span>(sub)
-                    } <span class="kw">else </span>{
-                        <span class="prelude-val">None
-                    </span>}
-                })
-                .collect::&lt;Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Subscription&gt;&gt;()
-        };
+    <span class="kw">pub fn </span>get_matching_subscriptions&lt;<span class="lifetime">&#39;a</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span><span class="self">self</span>,
+        pattern: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Ustr,
+    ) -&gt; Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Subscription&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>matching_subs = <span class="self">self
+            </span>.subscriptions
+            .iter()
+            .filter_map(|(sub, <span class="kw">_</span>)| {
+                <span class="kw">if </span>is_matching(<span class="kw-2">&amp;</span>sub.topic, pattern) {
+                    <span class="prelude-val">Some</span>(sub)
+                } <span class="kw">else </span>{
+                    <span class="prelude-val">None
+                </span>}
+            })
+            .collect::&lt;Vec&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>Subscription&gt;&gt;();
 
-        matching_handlers()
+        <span class="kw">for </span>(p, subs) <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.patterns {
+            <span class="kw">if </span>is_matching(p, pattern) {
+                matching_subs.extend(subs.iter());
+            }
+        }
 
-        <span class="comment">// self.patterns
-        //     .entry(*pattern)
-        //     .or_insert_with(matching_handlers)
-    </span>}
-
-    <span class="kw">pub fn </span>publish(<span class="kw-2">&amp;mut </span><span class="self">self</span>, pattern: Ustr, _msg: <span class="kw-2">&amp;</span>Message) {
-        <span class="kw">let </span>_handlers = <span class="self">self</span>.get_matching_handlers(<span class="kw-2">&amp;</span>pattern);
-
-        <span class="comment">// call matched handlers
-        // handlers.iter().for_each(|handler| handler(msg));
-    </span>}
+        matching_subs.sort();
+        matching_subs
+    }
 }
 
-<span class="doccomment">/// match a topic and a string pattern
+<span class="doccomment">/// Match a topic and a string pattern
 /// pattern can contains -
 /// &#39;*&#39; - match 0 or more characters after this
 /// &#39;?&#39; - match any character once
@@ -787,6 +756,7 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::rc::Rc;
 
+    <span class="kw">use </span>nautilus_core::message::Message;
     <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
@@ -829,13 +799,13 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_regsiter_endpoint() {
         <span class="kw">let </span><span class="kw-2">mut </span>msgbus = stub_msgbus();
-        <span class="kw">let </span>endpoint = <span class="string">&quot;MyEndpoint&quot;</span>.to_string();
+        <span class="kw">let </span>endpoint = <span class="string">&quot;MyEndpoint&quot;</span>;
 
         <span class="kw">let </span>callback = stub_rust_callback();
         <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.register(endpoint.clone(), handler.clone());
+        msgbus.register(<span class="kw-2">&amp;</span>endpoint, handler);
 
         <span class="macro">assert_eq!</span>(msgbus.endpoints(), <span class="macro">vec!</span>[<span class="string">&quot;MyEndpoint&quot;</span>.to_string()]);
         <span class="macro">assert!</span>(msgbus.get_endpoint(<span class="kw-2">&amp;</span>Ustr::from(<span class="kw-2">&amp;</span>endpoint)).is_some());
@@ -844,13 +814,13 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_deregsiter_endpoint() {
         <span class="kw">let </span><span class="kw-2">mut </span>msgbus = stub_msgbus();
-        <span class="kw">let </span>endpoint = <span class="string">&quot;MyEndpoint&quot;</span>.to_string();
+        <span class="kw">let </span>endpoint = <span class="string">&quot;MyEndpoint&quot;</span>;
 
         <span class="kw">let </span>callback = stub_rust_callback();
         <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.register(endpoint.clone(), handler.clone());
+        msgbus.register(<span class="kw-2">&amp;</span>endpoint, handler);
         msgbus.deregister(<span class="kw-2">&amp;</span>endpoint);
 
         <span class="macro">assert!</span>(msgbus.endpoints().is_empty());
@@ -859,13 +829,13 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_subscribe() {
         <span class="kw">let </span><span class="kw-2">mut </span>msgbus = stub_msgbus();
-        <span class="kw">let </span>topic = <span class="string">&quot;my-topic&quot;</span>.to_string();
+        <span class="kw">let </span>topic = <span class="string">&quot;my-topic&quot;</span>;
 
         <span class="kw">let </span>callback = stub_rust_callback();
         <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler.clone(), <span class="prelude-val">Some</span>(<span class="number">1</span>));
+        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler, <span class="prelude-val">Some</span>(<span class="number">1</span>));
 
         <span class="macro">assert!</span>(msgbus.has_subscribers(<span class="kw-2">&amp;</span>topic));
         <span class="macro">assert_eq!</span>(msgbus.topics(), <span class="macro">vec!</span>[topic]);
@@ -874,14 +844,14 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_unsubscribe() {
         <span class="kw">let </span><span class="kw-2">mut </span>msgbus = stub_msgbus();
-        <span class="kw">let </span>topic = <span class="string">&quot;my-topic&quot;</span>.to_string();
+        <span class="kw">let </span>topic = <span class="string">&quot;my-topic&quot;</span>;
 
         <span class="kw">let </span>callback = stub_rust_callback();
         <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(callback));
 
         msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler.clone(), <span class="prelude-val">None</span>);
-        msgbus.unsubscribe(<span class="kw-2">&amp;</span>topic, handler.clone());
+        msgbus.unsubscribe(<span class="kw-2">&amp;</span>topic, handler);
 
         <span class="macro">assert!</span>(!msgbus.has_subscribers(<span class="kw-2">&amp;</span>topic));
         <span class="macro">assert!</span>(msgbus.topics().is_empty());

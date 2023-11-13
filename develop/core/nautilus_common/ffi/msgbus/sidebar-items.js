@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["msgbus_endpoints","msgbus_get_endpoint","msgbus_get_matching_handlers","msgbus_is_matching","msgbus_new","msgbus_subscribe","msgbus_topics","vec_msgbus_handlers_drop","vec_pycallable_drop"],"struct":["MessageBus_API"]};
+window.SIDEBAR_ITEMS = {"fn":["msgbus_endpoints","msgbus_get_endpoint","msgbus_get_matching_callables","msgbus_is_matching","msgbus_new","msgbus_subscribe","msgbus_topics","vec_pycallable_drop"],"struct":["MessageBus_API"]};
