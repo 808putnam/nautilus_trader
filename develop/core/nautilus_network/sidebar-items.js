@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["network"],"mod":["http","socket","websocket"]};
+window.SIDEBAR_ITEMS = {"mod":["http","python","socket","websocket"]};

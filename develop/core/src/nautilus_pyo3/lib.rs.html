@@ -294,7 +294,7 @@
 
     <span class="comment">// Network
     </span><span class="kw">let </span>n = <span class="string">&quot;network&quot;</span>;
-    <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_network::network);
+    <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_network::python::network);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     re_export_module_attributes(m, n)<span class="question-mark">?</span>;
