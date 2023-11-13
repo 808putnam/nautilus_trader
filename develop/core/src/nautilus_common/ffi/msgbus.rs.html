@@ -451,6 +451,7 @@
 <a href="#451" id="451">451</a>
 <a href="#452" id="452">452</a>
 <a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -728,7 +729,7 @@
         <span class="macro">assert_eq!</span>(msgbus.topics(), <span class="macro">vec!</span>[topic]);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_msgbus_new() {
         <span class="kw">let </span>trader_id = TraderId::from_str(<span class="string">&quot;trader-001&quot;</span>).unwrap();
         <span class="kw">let </span>name = CString::new(<span class="string">&quot;Test MessageBus&quot;</span>).unwrap();
@@ -742,7 +743,7 @@
     }
 
     <span class="attr">#[ignore]
-    #[test]
+    #[rstest]
     </span><span class="kw">fn </span>test_msgbus_endpoints() {
         <span class="kw">let </span><span class="kw-2">mut </span>bus = MessageBus::new(TraderId::from_str(<span class="string">&quot;trader-001&quot;</span>).unwrap(), <span class="prelude-val">None</span>);
         <span class="kw">let </span>endpoint1 = <span class="string">&quot;endpoint1&quot;</span>;
@@ -771,7 +772,7 @@
     }
 
     <span class="attr">#[ignore]
-    #[test]
+    #[rstest]
     </span><span class="kw">fn </span>test_msgbus_topics() {
         <span class="kw">let </span><span class="kw-2">mut </span>bus = MessageBus::new(TraderId::from_str(<span class="string">&quot;trader-001&quot;</span>).unwrap(), <span class="prelude-val">None</span>);
         <span class="kw">let </span>topic1 = <span class="string">&quot;topic1&quot;</span>;
@@ -800,7 +801,7 @@
     }
 
     <span class="attr">#[ignore]
-    #[test]
+    #[rstest]
     </span><span class="kw">fn </span>test_msgbus_subscribe() {
         <span class="kw">let </span>bus = MessageBus::new(TraderId::from_str(<span class="string">&quot;trader-001&quot;</span>).unwrap(), <span class="prelude-val">None</span>);
         <span class="kw">let </span>topic = <span class="string">&quot;test-topic&quot;</span>;
@@ -823,7 +824,7 @@
     }
 
     <span class="attr">#[ignore]
-    #[test]
+    #[rstest]
     </span><span class="kw">fn </span>test_msgbus_get_endpoint() {
         <span class="kw">let </span><span class="kw-2">mut </span>bus = MessageBus::new(TraderId::from_str(<span class="string">&quot;trader-001&quot;</span>).unwrap(), <span class="prelude-val">None</span>);
         <span class="kw">let </span>endpoint = <span class="string">&quot;test-endpoint&quot;</span>;
@@ -843,7 +844,7 @@
     }
 
     <span class="attr">#[ignore]
-    #[test]
+    #[rstest]
     </span><span class="kw">fn </span>test_msgbus_request_handler() {
         <span class="kw">let </span><span class="kw-2">mut </span>bus = MessageBus::new(TraderId::from_str(<span class="string">&quot;trader-001&quot;</span>).unwrap(), <span class="prelude-val">None</span>);
         <span class="kw">let </span>endpoint = <span class="string">&quot;test-endpoint&quot;</span>;
@@ -873,7 +874,7 @@
     }
 
     <span class="attr">#[ignore]
-    #[test]
+    #[rstest]
     </span><span class="kw">fn </span>test_msgbus_response_handler() {
         <span class="kw">let </span><span class="kw-2">mut </span>bus = MessageBus::new(TraderId::from_str(<span class="string">&quot;trader-001&quot;</span>).unwrap(), <span class="prelude-val">None</span>);
         <span class="kw">let </span>correlation_id = UUID4::new();
@@ -890,7 +891,8 @@
         <span class="macro">assert_eq!</span>(py_callable, handler.py_callback.unwrap().ptr);
     }
 
-    <span class="attr">#[test]
+    <span class="attr">#[ignore]
+    #[rstest]
     </span><span class="kw">fn </span>test_msgbus_is_matching() {
         <span class="kw">let </span>topic = <span class="string">&quot;data.quotes.BINANCE&quot;</span>;
         <span class="kw">let </span>pattern = <span class="string">&quot;data.*.BINANCE&quot;</span>;
