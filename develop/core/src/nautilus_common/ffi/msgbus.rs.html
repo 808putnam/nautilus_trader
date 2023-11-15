@@ -391,6 +391,25 @@
 <a href="#391" id="391">391</a>
 <a href="#392" id="392">392</a>
 <a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
+<a href="#402" id="402">402</a>
+<a href="#403" id="403">403</a>
+<a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -415,7 +434,8 @@
 <span class="kw">use </span>nautilus_core::{
     ffi::{
         cvec::CVec,
-        string::{cstr_to_string, cstr_to_ustr, optional_cstr_to_string},
+        parsing::optional_bytes_to_json,
+        string::{cstr_to_string, cstr_to_ustr, cstr_to_vec, optional_cstr_to_string},
     },
     uuid::UUID4,
 };
@@ -466,10 +486,12 @@
 </span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>msgbus_new(
     trader_id_ptr: <span class="kw-2">*const </span>c_char,
     name_ptr: <span class="kw-2">*const </span>c_char,
+    config_ptr: <span class="kw-2">*const </span>c_char,
 ) -&gt; MessageBus_API {
     <span class="kw">let </span>trader_id = TraderId::from_str(<span class="kw-2">&amp;</span>cstr_to_string(trader_id_ptr)).unwrap();
     <span class="kw">let </span>name = optional_cstr_to_string(name_ptr);
-    MessageBus_API(Box::new(MessageBus::new(trader_id, name)))
+    <span class="kw">let </span>config = optional_bytes_to_json(config_ptr);
+    MessageBus_API(Box::new(MessageBus::new(trader_id, name, config)))
 }
 
 <span class="attr">#[no_mangle]
@@ -783,5 +805,21 @@
     <span class="kw">let </span>topic = cstr_to_ustr(topic_ptr);
     <span class="kw">let </span>pattern = cstr_to_ustr(pattern_ptr);
     is_matching(<span class="kw-2">&amp;</span>topic, <span class="kw-2">&amp;</span>pattern) <span class="kw">as </span>u8
+}
+
+<span class="doccomment">/// # Safety
+///
+/// - Assumes `topic_ptr` is a valid C string pointer.
+/// - Assumes `handler_id_ptr` is a valid C string pointer.
+/// - Assumes `py_callable_ptr` points to a valid Python callable.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>msgbus_publish_external(
+    bus: <span class="kw-2">&amp;mut </span>MessageBus_API,
+    topic_ptr: <span class="kw-2">*const </span>c_char,
+    payload_ptr: <span class="kw-2">*const </span>c_char,
+) {
+    <span class="kw">let </span>topic = cstr_to_string(topic_ptr);
+    <span class="kw">let </span>payload = cstr_to_vec(payload_ptr);
+    bus.publish_external(topic, payload);
 }
 </code></pre></div></section></main></body></html>

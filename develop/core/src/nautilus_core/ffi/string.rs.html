@@ -226,6 +226,40 @@
 <a href="#226" id="226">226</a>
 <a href="#227" id="227">227</a>
 <a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a>
+<a href="#238" id="238">238</a>
+<a href="#239" id="239">239</a>
+<a href="#240" id="240">240</a>
+<a href="#241" id="241">241</a>
+<a href="#242" id="242">242</a>
+<a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -274,10 +308,24 @@
 ///
 /// - If `ptr` is null.
 </span><span class="attr">#[must_use]
-#[no_mangle]
-</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cstr_to_ustr(ptr: <span class="kw-2">*const </span>c_char) -&gt; Ustr {
+</span><span class="kw">pub unsafe fn </span>cstr_to_ustr(ptr: <span class="kw-2">*const </span>c_char) -&gt; Ustr {
     <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">&quot;`ptr` was NULL&quot;</span>);
     Ustr::from(CStr::from_ptr(ptr).to_str().expect(<span class="string">&quot;CStr::from_ptr failed&quot;</span>))
+}
+
+<span class="doccomment">/// Convert a C string pointer into an owned `String`.
+///
+/// # Safety
+///
+/// - Assumes `ptr` is a valid C string pointer.
+///
+/// # Panics
+///
+/// - If `ptr` is null.
+</span><span class="attr">#[must_use]
+</span><span class="kw">pub unsafe fn </span>cstr_to_vec(ptr: <span class="kw-2">*const </span>c_char) -&gt; Vec&lt;u8&gt; {
+    <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">&quot;`ptr` was NULL&quot;</span>);
+    CStr::from_ptr(ptr).to_bytes().to_vec()
 }
 
 <span class="doccomment">/// Convert a C string pointer into an owned `Option&lt;Ustr&gt;`.
@@ -417,6 +465,26 @@
         </span><span class="kw">let </span>ptr: <span class="kw-2">*const </span>c_char = std::ptr::null();
         <span class="kw">unsafe </span>{
             <span class="kw">let _ </span>= cstr_to_string(ptr);
+        };
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_cstr_to_vec() {
+        <span class="comment">// Create a valid C string pointer
+        </span><span class="kw">let </span>sample_c_string = CString::new(<span class="string">&quot;Hello, world!&quot;</span>).expect(<span class="string">&quot;CString::new failed&quot;</span>);
+        <span class="kw">let </span>cstr_ptr = sample_c_string.as_ptr();
+        <span class="kw">let </span>result = <span class="kw">unsafe </span>{ cstr_to_vec(cstr_ptr) };
+        <span class="macro">assert_eq!</span>(result, <span class="string">b&quot;Hello, world!&quot;</span>);
+        <span class="macro">assert_eq!</span>(result.len(), <span class="number">13</span>);
+    }
+
+    <span class="attr">#[rstest]
+    #[should_panic]
+    </span><span class="kw">fn </span>test_cstr_to_vec_with_null_ptr() {
+        <span class="comment">// Create a null C string pointer
+        </span><span class="kw">let </span>ptr: <span class="kw-2">*const </span>c_char = std::ptr::null();
+        <span class="kw">unsafe </span>{
+            <span class="kw">let _ </span>= cstr_to_vec(ptr);
         };
     }
 
