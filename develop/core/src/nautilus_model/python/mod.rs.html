@@ -290,6 +290,9 @@
 <a href="#290" id="290">290</a>
 <a href="#291" id="291">291</a>
 <a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -437,6 +440,7 @@
                 py_dict
                     .get_item(<span class="string">&quot;type&quot;</span>)
                     .unwrap()
+                    .unwrap()
                     .downcast::&lt;PyString&gt;()
                     .unwrap()
                     .to_str()
@@ -447,6 +451,7 @@
                 py_dict
                     .get_item(<span class="string">&quot;ts_event&quot;</span>)
                     .unwrap()
+                    .unwrap()
                     .downcast::&lt;PyInt&gt;()
                     .unwrap()
                     .extract::&lt;i64&gt;()
@@ -456,6 +461,7 @@
             <span class="macro">assert_eq!</span>(
                 py_dict
                     .get_item(<span class="string">&quot;is_reconciliation&quot;</span>)
+                    .unwrap()
                     .unwrap()
                     .downcast::&lt;PyBool&gt;()
                     .unwrap()
