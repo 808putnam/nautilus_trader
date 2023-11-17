@@ -652,6 +652,8 @@
 <a href="#652" id="652">652</a>
 <a href="#653" id="653">653</a>
 <a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -697,7 +699,8 @@
 }
 
 <span class="kw">impl </span>Subscription {
-    <span class="kw">pub fn </span>new(
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>new(
         topic: Ustr,
         handler: MessageHandler,
         sequence: usize,
@@ -929,7 +932,7 @@
 
         <span class="kw">if </span><span class="self">self</span>.subscriptions.contains_key(<span class="kw-2">&amp;</span>sub) {
             <span class="comment">// TODO: Implement proper logging
-            </span><span class="macro">println!</span>(<span class="string">&quot;{:?} already exists.&quot;</span>, sub);
+            </span><span class="macro">println!</span>(<span class="string">&quot;{sub:?} already exists.&quot;</span>);
             <span class="kw">return</span>;
         }
 
@@ -1048,7 +1051,7 @@
     ) {
         <span class="comment">// Continue to receive and handle bus messages until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = rx.recv() {
-            <span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, msg);
+            <span class="macro">println!</span>(<span class="string">&quot;{msg}&quot;</span>);
         }
 
         <span class="comment">// TODO: WIP
@@ -1060,6 +1063,7 @@
 /// &#39;*&#39; - match 0 or more characters after this
 /// &#39;?&#39; - match any character once
 /// &#39;a-z&#39; - match the specific character
+</span><span class="attr">#[must_use]
 </span><span class="kw">pub fn </span>is_matching(topic: <span class="kw-2">&amp;</span>Ustr, pattern: <span class="kw-2">&amp;</span>Ustr) -&gt; bool {
     <span class="kw">let </span><span class="kw-2">mut </span>table = [[<span class="bool-val">false</span>; <span class="number">256</span>]; <span class="number">256</span>];
     table[<span class="number">0</span>][<span class="number">0</span>] = <span class="bool-val">true</span>;
@@ -1167,10 +1171,10 @@
         <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.register(<span class="kw-2">&amp;</span>endpoint, handler);
+        msgbus.register(endpoint, handler);
 
         <span class="macro">assert_eq!</span>(msgbus.endpoints(), <span class="macro">vec!</span>[<span class="string">&quot;MyEndpoint&quot;</span>.to_string()]);
-        <span class="macro">assert!</span>(msgbus.get_endpoint(<span class="kw-2">&amp;</span>Ustr::from(<span class="kw-2">&amp;</span>endpoint)).is_some());
+        <span class="macro">assert!</span>(msgbus.get_endpoint(<span class="kw-2">&amp;</span>Ustr::from(endpoint)).is_some());
     }
 
     <span class="attr">#[rstest]
@@ -1182,8 +1186,8 @@
         <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.register(<span class="kw-2">&amp;</span>endpoint, handler);
-        msgbus.deregister(<span class="kw-2">&amp;</span>endpoint);
+        msgbus.register(endpoint, handler);
+        msgbus.deregister(endpoint);
 
         <span class="macro">assert!</span>(msgbus.endpoints().is_empty());
     }
@@ -1197,9 +1201,9 @@
         <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler, <span class="prelude-val">Some</span>(<span class="number">1</span>));
+        msgbus.subscribe(topic, handler, <span class="prelude-val">Some</span>(<span class="number">1</span>));
 
-        <span class="macro">assert!</span>(msgbus.has_subscribers(<span class="kw-2">&amp;</span>topic));
+        <span class="macro">assert!</span>(msgbus.has_subscribers(topic));
         <span class="macro">assert_eq!</span>(msgbus.topics(), <span class="macro">vec!</span>[topic]);
     }
 
@@ -1212,10 +1216,10 @@
         <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler.clone(), <span class="prelude-val">None</span>);
-        msgbus.unsubscribe(<span class="kw-2">&amp;</span>topic, handler);
+        msgbus.subscribe(topic, handler.clone(), <span class="prelude-val">None</span>);
+        msgbus.unsubscribe(topic, handler);
 
-        <span class="macro">assert!</span>(!msgbus.has_subscribers(<span class="kw-2">&amp;</span>topic));
+        <span class="macro">assert!</span>(!msgbus.has_subscribers(topic));
         <span class="macro">assert!</span>(msgbus.topics().is_empty());
     }
 
@@ -1229,14 +1233,14 @@
         <span class="kw">let </span>handler_id1 = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler1 = MessageHandler::new(handler_id1, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.register(<span class="kw-2">&amp;</span>endpoint, handler1.clone());
+        msgbus.register(endpoint, handler1.clone());
 
         <span class="kw">let </span>callback = stub_rust_callback();
         <span class="kw">let </span>handler_id2 = Ustr::from(<span class="string">&quot;1&quot;</span>);
         <span class="kw">let </span>handler2 = MessageHandler::new(handler_id2, <span class="prelude-val">Some</span>(callback));
 
         <span class="macro">assert_eq!</span>(
-            msgbus.request_handler(<span class="kw-2">&amp;</span>Ustr::from(endpoint), request_id.clone(), handler2),
+            msgbus.request_handler(<span class="kw-2">&amp;</span>Ustr::from(endpoint), request_id, handler2),
             <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>handler1)
         );
     }
@@ -1248,11 +1252,11 @@
 
         <span class="kw">let </span>callback = stub_rust_callback();
         <span class="kw">let </span>handler_id = Ustr::from(<span class="string">&quot;1&quot;</span>);
-        <span class="kw">let </span>handler = MessageHandler::new(handler_id.clone(), <span class="prelude-val">Some</span>(callback));
+        <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">Some</span>(callback));
 
         msgbus
             .correlation_index
-            .insert(correlation_id.clone(), handler.clone());
+            .insert(correlation_id, handler.clone());
 
         <span class="macro">assert_eq!</span>(msgbus.response_handler(<span class="kw-2">&amp;</span>correlation_id), <span class="prelude-val">Some</span>(handler));
     }
@@ -1275,10 +1279,10 @@
         <span class="kw">let </span>handler_id4 = Ustr::from(<span class="string">&quot;4&quot;</span>);
         <span class="kw">let </span>handler4 = MessageHandler::new(handler_id4, <span class="prelude-val">Some</span>(callback));
 
-        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler1, <span class="prelude-val">None</span>);
-        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler2, <span class="prelude-val">None</span>);
-        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler3, <span class="prelude-val">Some</span>(<span class="number">1</span>));
-        msgbus.subscribe(<span class="kw-2">&amp;</span>topic, handler4, <span class="prelude-val">Some</span>(<span class="number">2</span>));
+        msgbus.subscribe(topic, handler1, <span class="prelude-val">None</span>);
+        msgbus.subscribe(topic, handler2, <span class="prelude-val">None</span>);
+        msgbus.subscribe(topic, handler3, <span class="prelude-val">Some</span>(<span class="number">1</span>));
+        msgbus.subscribe(topic, handler4, <span class="prelude-val">Some</span>(<span class="number">2</span>));
         <span class="kw">let </span>topic_ustr = Ustr::from(topic);
         <span class="kw">let </span>subs = msgbus.matching_subscriptions(<span class="kw-2">&amp;</span>topic_ustr);
 

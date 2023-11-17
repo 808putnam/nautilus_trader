@@ -552,7 +552,7 @@
     pattern_ptr: <span class="kw-2">*const </span>c_char,
 ) -&gt; u8 {
     <span class="kw">let </span>pattern = cstr_to_ustr(pattern_ptr);
-    bus.has_subscribers(pattern.as_str()) <span class="kw">as </span>u8
+    u8::from(bus.has_subscribers(pattern.as_str()))
 }
 
 <span class="attr">#[no_mangle]
@@ -574,7 +574,7 @@
         <span class="kw">let </span>subs_info: Vec&lt;Py&lt;PyString&gt;&gt; = bus
             .subscriptions()
             .iter()
-            .map(|s| PyString::new(py, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, s)).into())
+            .map(|s| PyString::new(py, <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{s:?}&quot;</span>)).into())
             .collect();
         PyList::new(py, subs_info).into()
     })
@@ -590,7 +590,7 @@
     endpoint_ptr: <span class="kw-2">*const </span>c_char,
 ) -&gt; u8 {
     <span class="kw">let </span>endpoint = cstr_to_string(endpoint_ptr);
-    bus.is_registered(<span class="kw-2">&amp;</span>endpoint) <span class="kw">as </span>u8
+    u8::from(bus.is_registered(<span class="kw-2">&amp;</span>endpoint))
 }
 
 <span class="doccomment">/// # Safety
@@ -607,7 +607,7 @@
     <span class="kw">let </span>topic = cstr_to_ustr(topic_ptr);
     <span class="kw">let </span>handler_id = cstr_to_ustr(handler_id_ptr);
     <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>);
-    bus.is_subscribed(topic.as_str(), handler) <span class="kw">as </span>u8
+    u8::from(bus.is_subscribed(topic.as_str(), handler))
 }
 
 <span class="doccomment">/// # Safety
@@ -618,7 +618,7 @@
     bus: <span class="kw-2">&amp;</span>MessageBus_API,
     request_id: <span class="kw-2">&amp;</span>UUID4,
 ) -&gt; u8 {
-    bus.is_pending_response(request_id) <span class="kw">as </span>u8
+    u8::from(bus.is_pending_response(request_id))
 }
 
 <span class="attr">#[no_mangle]
@@ -656,7 +656,7 @@
     <span class="kw">let </span>handler_id = cstr_to_ustr(handler_id_ptr);
     <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>);
     bus.register(<span class="kw-2">&amp;</span>endpoint, handler);
-    handler_id.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char
+    handler_id.as_ptr().cast::&lt;c_char&gt;()
 }
 
 <span class="doccomment">/// # Safety
@@ -684,7 +684,7 @@
     <span class="kw">let </span>handler_id = cstr_to_ustr(handler_id_ptr);
     <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>);
     bus.subscribe(<span class="kw-2">&amp;</span>topic, handler, <span class="prelude-val">Some</span>(priority));
-    handler_id.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char
+    handler_id.as_ptr().cast::&lt;c_char&gt;()
 }
 
 <span class="doccomment">/// # Safety
@@ -715,7 +715,7 @@
 ) -&gt; <span class="kw-2">*const </span>c_char {
     <span class="kw">let </span>endpoint = cstr_to_ustr(endpoint_ptr);
     <span class="kw">match </span>bus.get_endpoint(<span class="kw-2">&amp;</span>endpoint) {
-        <span class="prelude-val">Some</span>(handler) =&gt; handler.handler_id.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char,
+        <span class="prelude-val">Some</span>(handler) =&gt; handler.handler_id.as_ptr().cast::&lt;c_char&gt;(),
         <span class="prelude-val">None </span>=&gt; std::ptr::null(),
     }
 }
@@ -731,7 +731,7 @@
     <span class="kw">let </span>pattern = cstr_to_ustr(pattern_ptr);
     <span class="kw">let </span>subs: Vec&lt;<span class="kw-2">&amp;</span>Subscription&gt; = bus.matching_subscriptions(<span class="kw-2">&amp;</span>pattern);
     subs.iter()
-        .map(|s| s.handler.handler_id.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char)
+        .map(|s| s.handler.handler_id.as_ptr().cast::&lt;c_char&gt;())
         .collect::&lt;Vec&lt;<span class="kw-2">*const </span>c_char&gt;&gt;()
         .into()
 }
@@ -760,7 +760,7 @@
     <span class="kw">let </span>handler_id = cstr_to_ustr(handler_id_ptr);
     <span class="kw">let </span>handler = MessageHandler::new(handler_id, <span class="prelude-val">None</span>);
     <span class="kw">match </span>bus.request_handler(<span class="kw-2">&amp;</span>endpoint, request_id, handler) {
-        <span class="prelude-val">Some</span>(handler) =&gt; handler.handler_id.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char,
+        <span class="prelude-val">Some</span>(handler) =&gt; handler.handler_id.as_ptr().cast::&lt;c_char&gt;(),
         <span class="prelude-val">None </span>=&gt; std::ptr::null(),
     }
 }
@@ -774,7 +774,7 @@
     correlation_id: <span class="kw-2">&amp;</span>UUID4,
 ) -&gt; <span class="kw-2">*const </span>c_char {
     <span class="kw">match </span>bus.response_handler(correlation_id) {
-        <span class="prelude-val">Some</span>(handler) =&gt; handler.handler_id.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char,
+        <span class="prelude-val">Some</span>(handler) =&gt; handler.handler_id.as_ptr().cast::&lt;c_char&gt;(),
         <span class="prelude-val">None </span>=&gt; std::ptr::null(),
     }
 }
@@ -788,7 +788,7 @@
     correlation_id: <span class="kw-2">&amp;</span>UUID4,
 ) -&gt; <span class="kw-2">*const </span>c_char {
     <span class="kw">match </span>bus.correlation_id_handler(correlation_id) {
-        <span class="prelude-val">Some</span>(handler) =&gt; handler.handler_id.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char,
+        <span class="prelude-val">Some</span>(handler) =&gt; handler.handler_id.as_ptr().cast::&lt;c_char&gt;(),
         <span class="prelude-val">None </span>=&gt; std::ptr::null(),
     }
 }
@@ -804,7 +804,7 @@
 ) -&gt; u8 {
     <span class="kw">let </span>topic = cstr_to_ustr(topic_ptr);
     <span class="kw">let </span>pattern = cstr_to_ustr(pattern_ptr);
-    is_matching(<span class="kw-2">&amp;</span>topic, <span class="kw-2">&amp;</span>pattern) <span class="kw">as </span>u8
+    u8::from(is_matching(<span class="kw-2">&amp;</span>topic, <span class="kw-2">&amp;</span>pattern))
 }
 
 <span class="doccomment">/// # Safety

@@ -235,7 +235,7 @@
         generators::position_id::PositionIdGenerator,
     };
 
-    <span class="kw">fn </span>get_position_id_generator&lt;<span class="lifetime">&#39;a</span>&gt;(clock: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Box&lt;<span class="kw">dyn </span>Clock&gt;) -&gt; PositionIdGenerator {
+    <span class="kw">fn </span>get_position_id_generator(clock: <span class="kw-2">&amp;mut </span>Box&lt;<span class="kw">dyn </span>Clock&gt;) -&gt; PositionIdGenerator {
         <span class="kw">let </span>trader_id = TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>);
         PositionIdGenerator::new(trader_id, clock)
     }
