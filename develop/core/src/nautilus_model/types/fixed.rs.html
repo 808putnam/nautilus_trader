@@ -244,13 +244,13 @@
 
 <span class="attr">#[must_use]
 </span><span class="kw">pub fn </span>fixed_i64_to_f64(value: i64) -&gt; f64 {
-    (value <span class="kw">as </span>f64) * <span class="number">0.000_000_001
-</span>}
+    (value <span class="kw">as </span>f64) / FIXED_SCALAR
+}
 
 <span class="attr">#[must_use]
 </span><span class="kw">pub fn </span>fixed_u64_to_f64(value: u64) -&gt; f64 {
-    (value <span class="kw">as </span>f64) * <span class="number">0.000_000_001
-</span>}
+    (value <span class="kw">as </span>f64) / FIXED_SCALAR
+}
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Tests
@@ -364,7 +364,7 @@
     </span><span class="kw">fn </span>test_fixed_i64_to_f64(
         <span class="attr">#[values(<span class="number">1</span>, -<span class="number">1</span>, <span class="number">2</span>, -<span class="number">2</span>, <span class="number">10</span>, -<span class="number">10</span>, <span class="number">100</span>, -<span class="number">100</span>, <span class="number">1_000</span>, -<span class="number">1_000</span>)] </span>value: i64,
     ) {
-        <span class="macro">assert_eq!</span>(fixed_i64_to_f64(value), value <span class="kw">as </span>f64 * <span class="number">0.000_000_001</span>);
+        <span class="macro">assert_eq!</span>(fixed_i64_to_f64(value), value <span class="kw">as </span>f64 / FIXED_SCALAR);
     }
 
     <span class="attr">#[rstest]
@@ -393,7 +393,7 @@
         </span>value: u64,
     ) {
         <span class="kw">let </span>result = fixed_u64_to_f64(value);
-        <span class="macro">assert_eq!</span>(result, (value <span class="kw">as </span>f64) * <span class="number">0.000_000_001</span>);
+        <span class="macro">assert_eq!</span>(result, (value <span class="kw">as </span>f64) / FIXED_SCALAR);
     }
 }
 </code></pre></div></section></main></body></html>
