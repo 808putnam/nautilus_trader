@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["database"]};
+window.SIDEBAR_ITEMS = {"mod":["database","schema","sql"]};
