@@ -654,6 +654,45 @@
 <a href="#654" id="654">654</a>
 <a href="#655" id="655">655</a>
 <a href="#656" id="656">656</a>
+<a href="#657" id="657">657</a>
+<a href="#658" id="658">658</a>
+<a href="#659" id="659">659</a>
+<a href="#660" id="660">660</a>
+<a href="#661" id="661">661</a>
+<a href="#662" id="662">662</a>
+<a href="#663" id="663">663</a>
+<a href="#664" id="664">664</a>
+<a href="#665" id="665">665</a>
+<a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
+<a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
+<a href="#678" id="678">678</a>
+<a href="#679" id="679">679</a>
+<a href="#680" id="680">680</a>
+<a href="#681" id="681">681</a>
+<a href="#682" id="682">682</a>
+<a href="#683" id="683">683</a>
+<a href="#684" id="684">684</a>
+<a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -680,6 +719,7 @@
 <span class="kw">use </span>indexmap::IndexMap;
 <span class="kw">use </span>nautilus_core::uuid::UUID4;
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
+<span class="kw">use </span>redis::<span class="kw-2">*</span>;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>serde_json::Value;
 <span class="kw">use </span>ustr::Ustr;
@@ -787,7 +827,7 @@
 /// For example, `c??p` would match both of the above examples and `coop`.
 </span><span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>MessageBus {
-    tx: Sender&lt;BusMessage&gt;,
+    tx: <span class="prelude-ty">Option</span>&lt;Sender&lt;BusMessage&gt;&gt;,
     <span class="doccomment">/// mapping from topic to the corresponding handler
     /// a topic can be a string with wildcards
     /// * &#39;?&#39; - any character
@@ -826,13 +866,17 @@
         name: <span class="prelude-ty">Option</span>&lt;String&gt;,
         config: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, Value&gt;&gt;,
     ) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>(tx, rx) = channel::&lt;BusMessage&gt;();
         <span class="kw">let </span>config = config.unwrap_or_default();
         <span class="kw">let </span>has_backing = config.get(<span class="string">&quot;database&quot;</span>).is_some();
-
-        thread::spawn(<span class="kw">move </span>|| {
-            <span class="self">Self</span>::handle_messages(trader_id.value.as_ref(), config, rx);
-        });
+        <span class="kw">let </span>tx = <span class="kw">if </span>has_backing {
+            <span class="kw">let </span>(tx, rx) = channel::&lt;BusMessage&gt;();
+            thread::spawn(<span class="kw">move </span>|| {
+                <span class="self">Self</span>::handle_messages(trader_id.value.as_ref(), config, rx);
+            });
+            <span class="prelude-val">Some</span>(tx)
+        } <span class="kw">else </span>{
+            <span class="prelude-val">None
+        </span>};
 
         <span class="self">Self </span>{
             tx,
@@ -1038,24 +1082,58 @@
     }
 
     <span class="kw">pub fn </span>publish_external(<span class="kw-2">&amp;</span><span class="self">self</span>, topic: String, payload: Vec&lt;u8&gt;) {
-        <span class="kw">let </span>msg = BusMessage { topic, payload };
-        <span class="kw">if let </span><span class="prelude-val">Err</span>(SendError(e)) = <span class="self">self</span>.tx.send(msg) {
-            <span class="macro">eprintln!</span>(<span class="string">&quot;Error publishing external message: {e}&quot;</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(tx) = <span class="kw-2">&amp;</span><span class="self">self</span>.tx {
+            <span class="kw">let </span>msg = BusMessage { topic, payload };
+            <span class="kw">if let </span><span class="prelude-val">Err</span>(SendError(e)) = tx.send(msg) {
+                <span class="macro">eprintln!</span>(<span class="string">&quot;Error publishing external message: {e}&quot;</span>);
+            }
+        } <span class="kw">else </span>{
+            <span class="macro">eprintln!</span>(<span class="string">&quot;Error publishing external message: no tx channel&quot;</span>);
         }
     }
 
-    <span class="kw">fn </span>handle_messages(
-        _trader_id: <span class="kw-2">&amp;</span>str,
-        _config: HashMap&lt;String, Value&gt;,
-        rx: Receiver&lt;BusMessage&gt;,
-    ) {
+    <span class="kw">fn </span>handle_messages(trader_id: <span class="kw-2">&amp;</span>str, config: HashMap&lt;String, Value&gt;, rx: Receiver&lt;BusMessage&gt;) {
+        <span class="kw">let </span>redis_url = get_redis_url(config);
+        <span class="kw">let </span>client = redis::Client::open(redis_url).unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>conn = client.get_connection().unwrap();
+
         <span class="comment">// Continue to receive and handle bus messages until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = rx.recv() {
-            <span class="macro">println!</span>(<span class="string">&quot;{msg}&quot;</span>);
-        }
+            <span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;(), redis::RedisError&gt; =
+                conn.publish(<span class="macro">format!</span>(<span class="string">&quot;{trader_id}:{}&quot;</span>, msg.topic), msg.payload);
 
-        <span class="comment">// TODO: WIP
-    </span>}
+            <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = result {
+                <span class="macro">eprintln!</span>(<span class="string">&quot;Error publishing message: {e}&quot;</span>);
+            }
+        }
+    }
+}
+
+<span class="kw">pub fn </span>get_redis_url(config: HashMap&lt;String, Value&gt;) -&gt; String {
+    <span class="kw">let </span>host_default = Value::String(<span class="string">&quot;127.0.0.1&quot;</span>.to_string());
+    <span class="kw">let </span>port_default = Value::String(<span class="string">&quot;6379&quot;</span>.to_string());
+    <span class="kw">let </span>host = config.get(<span class="string">&quot;host&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>host_default);
+    <span class="kw">let </span>port = config.get(<span class="string">&quot;port&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>port_default);
+    <span class="kw">let </span>username = config
+        .get(<span class="string">&quot;username&quot;</span>)
+        .map(|v| v.as_str().unwrap_or_default());
+    <span class="kw">let </span>password = config
+        .get(<span class="string">&quot;password&quot;</span>)
+        .map(|v| v.as_str().unwrap_or_default());
+    <span class="kw">let </span>use_ssl = config.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>Value::Bool(<span class="bool-val">false</span>));
+
+    <span class="macro">format!</span>(
+        <span class="string">&quot;redis{}://{}:{}@{}:{}&quot;</span>,
+        <span class="kw">if </span>use_ssl.as_bool().unwrap_or(<span class="bool-val">false</span>) {
+            <span class="string">&quot;s&quot;
+        </span>} <span class="kw">else </span>{
+            <span class="string">&quot;&quot;
+        </span>},
+        username.unwrap_or(<span class="string">&quot;&quot;</span>),
+        password.unwrap_or(<span class="string">&quot;&quot;</span>),
+        host.as_str().unwrap(),
+        port.as_str().unwrap(),
+    )
 }
 
 <span class="doccomment">/// Match a topic and a string pattern
