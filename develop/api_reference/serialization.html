@@ -556,8 +556,8 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="model/currency.html">
-                 Currency
+                <a class="md-nav__link" href="model/book.html">
+                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -583,11 +583,6 @@
                <li class="md-nav__item">
                 <a class="md-nav__link" href="model/objects.html">
                  Objects
-                </a>
-               </li>
-               <li class="md-nav__item">
-                <a class="md-nav__link" href="model/orderbook.html">
-                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -709,19 +704,10 @@
            </span>
            <ul class="submenu">
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.register_arrow">
+             <a class="md-nav__link" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer">
               <code class="docutils literal notranslate">
                <span class="pre">
-                register_arrow()
-               </span>
-              </code>
-             </a>
-            </li>
-            <li class="md-nav__item">
-             <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer">
-              <code class="docutils literal notranslate">
-               <span class="pre">
-                ArrowSerializer
+                MsgSpecSerializer
                </span>
               </code>
              </a>
@@ -731,19 +717,37 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.serialize_batch">
+               <a class="md-nav__link" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer.deserialize">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  ArrowSerializer.serialize_batch()
+                  MsgSpecSerializer.deserialize()
                  </span>
                 </code>
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.deserialize">
+               <a class="md-nav__link" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer.serialize">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  ArrowSerializer.deserialize()
+                  MsgSpecSerializer.serialize()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer.timestamps_as_iso8601">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  MsgSpecSerializer.timestamps_as_iso8601
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer.timestamps_as_str">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  MsgSpecSerializer.timestamps_as_str
                  </span>
                 </code>
                </a>
@@ -822,13 +826,20 @@ implementations.
          Base classes are defined which can allow for other serialization implementations beside
 the built-in specification serializers.
         </p>
-        <span class="target" id="module-nautilus_trader.serialization.arrow.serializer">
+        <span class="target" id="module-nautilus_trader.serialization.serializer">
         </span>
-        <dl class="py function">
-         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.register_arrow">
+        <dl class="py class">
+         <dt class="sig sig-object py" id="nautilus_trader.serialization.serializer.MsgSpecSerializer">
+          <em class="property">
+           <span class="pre">
+            class
+           </span>
+           <span class="w">
+           </span>
+          </em>
           <span class="sig-name descname">
            <span class="pre">
-            register_arrow
+            MsgSpecSerializer
            </span>
           </span>
           <span class="sig-paren">
@@ -837,19 +848,7 @@ the built-in specification serializers.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             data_cls
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             type
+             encoding
             </span>
            </span>
           </em>
@@ -857,31 +856,10 @@ the built-in specification serializers.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             schema
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             pyarrow.lib.Schema
-            </span>
-            <span class="w">
-            </span>
-            <span class="p">
-             <span class="pre">
-              |
-             </span>
-            </span>
-            <span class="w">
+             bool
             </span>
             <span class="pre">
-             None
+             timestamps_as_str=False
             </span>
            </span>
           </em>
@@ -889,114 +867,33 @@ the built-in specification serializers.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             serializer
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             collections.abc.Callable
-            </span>
-            <span class="w">
-            </span>
-            <span class="p">
-             <span class="pre">
-              |
-             </span>
-            </span>
-            <span class="w">
+             bool
             </span>
             <span class="pre">
-             None
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             deserializer
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <span class="pre">
-             collections.abc.Callable
-            </span>
-            <span class="w">
-            </span>
-            <span class="p">
-             <span class="pre">
-              |
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="pre">
-             None
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
+             timestamps_as_iso8601=False
             </span>
            </span>
           </em>
           <span class="sig-paren">
            )
           </span>
-          <span class="sig-return">
-           <span class="sig-return-icon">
-            →
-           </span>
-           <span class="sig-return-typehint">
-            <span class="pre">
-             None
-            </span>
-           </span>
-          </span>
-          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.register_arrow" title="Permalink to this definition">
+          <a class="headerlink" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer" title="Permalink to this definition">
            ¶
           </a>
          </dt>
          <dd>
           <p>
-           Register a new class for serialization to parquet.
+           Bases:
+           <a class="reference internal" href="#nautilus_trader.serialization.base.Serializer" title="nautilus_trader.serialization.base.Serializer">
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              Serializer
+             </span>
+            </code>
+           </a>
+          </p>
+          <p>
+           Provides a serializer for either the ‘MessagePack’ or ‘JSON’ specifications.
           </p>
           <dl class="field-list simple">
            <dt class="field-odd">
@@ -1010,154 +907,77 @@ the built-in specification serializers.
              <li>
               <p>
                <strong>
-                data_cls
-               </strong>
-               (
-               <em>
-                type
-               </em>
-               ) – The data type to register serialization for.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                serializer
+                encoding
                </strong>
                (
                <em>
                 Callable
                </em>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – The callable to serialize instances of type
-               <cite>
-                cls_type
-               </cite>
-               to something
-parquet can write.
+               ) – The msgspec encoding type.
               </p>
              </li>
              <li>
               <p>
                <strong>
-                deserializer
+                timestamps_as_str
                </strong>
                (
                <em>
-                Callable
+                bool
                </em>
                <em>
                 ,
                </em>
                <em>
-                optional
+                default False
                </em>
-               ) – The callable to deserialize rows from parquet into
+               ) – If the serializer converts
                <cite>
-                cls_type
+                uint64_t
                </cite>
-               .
+               timestamps to integer strings on serialization,
+and back to
+               <cite>
+                uint64_t
+               </cite>
+               on deserialization.
               </p>
              </li>
              <li>
               <p>
                <strong>
-                schema
+                timestamps_as_iso8601
                </strong>
                (
                <em>
-                pa.Schema
+                bool
                </em>
                <em>
                 ,
                </em>
                <em>
-                optional
+                default False
                </em>
-               ) – If the schema cannot be correctly inferred from a subset of the data
-(i.e. if certain values may be missing in the first chunk).
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                table
-               </strong>
-               (
-               <em>
-                type
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
-               ) – An optional table override for
+               ) – If the serializer converts
                <cite>
-                cls
+                uint64_t
                </cite>
-               . Used if
+               timestamps to ISO 8601 strings on serialization,
+and back to
                <cite>
-                cls
+                uint64_t
                </cite>
-               is going to be
-transformed and stored in a table other than
-its own.
+               on deserialization.
               </p>
              </li>
             </ul>
            </dd>
           </dl>
-         </dd>
-        </dl>
-        <dl class="py class">
-         <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.ArrowSerializer">
-          <em class="property">
-           <span class="pre">
-            class
-           </span>
-           <span class="w">
-           </span>
-          </em>
-          <span class="sig-name descname">
-           <span class="pre">
-            ArrowSerializer
-           </span>
-          </span>
-          <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer" title="Permalink to this definition">
-           ¶
-          </a>
-         </dt>
-         <dd>
-          <p>
-           Bases:
-           <code class="xref py py-class docutils literal notranslate">
-            <span class="pre">
-             object
-            </span>
-           </code>
-          </p>
-          <p>
-           Serialize Nautilus objects to arrow RecordBatches.
-          </p>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.ArrowSerializer.serialize_batch">
-            <em class="property">
-             <span class="pre">
-              static
-             </span>
-             <span class="w">
-             </span>
-            </em>
+           <dt class="sig sig-object py" id="nautilus_trader.serialization.serializer.MsgSpecSerializer.deserialize">
             <span class="sig-name descname">
              <span class="pre">
-              serialize_batch
+              deserialize
              </span>
             </span>
             <span class="sig-paren">
@@ -1166,46 +986,7 @@ its own.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               data
-              </span>
-             </span>
-             <span class="p">
-              <span class="pre">
-               :
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="n">
-              <span class="pre">
-               list
-              </span>
-              <span class="p">
-               <span class="pre">
-                [
-               </span>
-              </span>
-              <span class="pre">
-               nautilus_trader.core.data.Data
-              </span>
-              <span class="w">
-              </span>
-              <span class="p">
-               <span class="pre">
-                |
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <a class="reference internal" href="core.html#nautilus_trader.core.message.Event" title="nautilus_trader.core.message.Event">
-               <span class="pre">
-                nautilus_trader.core.message.Event
-               </span>
-              </a>
-              <span class="p">
-               <span class="pre">
-                ]
-               </span>
+               self
               </span>
              </span>
             </em>
@@ -1213,46 +994,103 @@ its own.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               data_cls
+               bytes
+              </span>
+              <span class="pre">
+               obj_bytes
               </span>
              </span>
-             <span class="p">
-              <span class="pre">
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <a class="headerlink" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer.deserialize" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Deserialize the given
+             <cite>
+              MessagePack
+             </cite>
+             specification bytes to an object.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
                :
               </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                obj_bytes
+               </strong>
+               (
+               <em>
+                bytes
+               </em>
+               ) – The object bytes to deserialize.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Instrument
+               </em>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                RuntimeError
+               </strong>
+               – If
+               <cite>
+                obj_bytes
+               </cite>
+               cannot be deserialized.
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.serialization.serializer.MsgSpecSerializer.serialize">
+            <span class="sig-name descname">
+             <span class="pre">
+              serialize
              </span>
-             <span class="w">
-             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
              <span class="n">
               <span class="pre">
-               type
+               self
               </span>
-              <span class="p">
-               <span class="pre">
-                [
-               </span>
-              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
               <span class="pre">
-               nautilus_trader.core.data.Data
-              </span>
-              <span class="w">
-              </span>
-              <span class="p">
-               <span class="pre">
-                |
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <a class="reference internal" href="core.html#nautilus_trader.core.message.Event" title="nautilus_trader.core.message.Event">
-               <span class="pre">
-                nautilus_trader.core.message.Event
-               </span>
-              </a>
-              <span class="p">
-               <span class="pre">
-                ]
-               </span>
+               obj
               </span>
              </span>
             </em>
@@ -1265,19 +1103,19 @@ its own.
              </span>
              <span class="sig-return-typehint">
               <span class="pre">
-               Table
+               bytes
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.serialize_batch" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer.serialize" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Serialize the given instrument to
+             Serialize the given object to
              <cite>
-              Parquet
+              MessagePack
              </cite>
              specification bytes.
             </p>
@@ -1289,41 +1127,16 @@ its own.
               </span>
              </dt>
              <dd class="field-odd">
-              <ul class="simple">
-               <li>
-                <p>
-                 <strong>
-                  data
-                 </strong>
-                 (
-                 <em>
-                  list
-                 </em>
-                 <em>
-                  [
-                 </em>
-                 <em>
-                  Any
-                 </em>
-                 <em>
-                  ]
-                 </em>
-                 ) – The object to serialize.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  data_cls
-                 </strong>
-                 (
-                 <em>
-                  type
-                 </em>
-                 ) – The data type for the serialization.
-                </p>
-               </li>
-              </ul>
+              <p>
+               <strong>
+                obj
+               </strong>
+               (
+               <em>
+                object
+               </em>
+               ) – The object to serialize.
+              </p>
              </dd>
              <dt class="field-even">
               Returns
@@ -1347,7 +1160,7 @@ its own.
              <dd class="field-odd">
               <p>
                <strong>
-                TypeError
+                RuntimeError
                </strong>
                – If
                <cite>
@@ -1359,169 +1172,73 @@ its own.
             </dl>
            </dd>
           </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.serialization.arrow.serializer.ArrowSerializer.deserialize">
-            <em class="property">
-             <span class="pre">
-              static
-             </span>
-             <span class="w">
-             </span>
-            </em>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.serialization.serializer.MsgSpecSerializer.timestamps_as_iso8601">
             <span class="sig-name descname">
              <span class="pre">
-              deserialize
+              timestamps_as_iso8601
              </span>
             </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               data_cls
-              </span>
-             </span>
-             <span class="p">
-              <span class="pre">
-               :
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="n">
-              <span class="pre">
-               type
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               batch
-              </span>
-             </span>
-             <span class="p">
-              <span class="pre">
-               :
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="n">
-              <span class="pre">
-               pyarrow.lib.RecordBatch
-              </span>
-              <span class="w">
-              </span>
-              <span class="p">
-               <span class="pre">
-                |
-               </span>
-              </span>
-              <span class="w">
-              </span>
-              <span class="pre">
-               pyarrow.lib.Table
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               Data
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.deserialize" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer.timestamps_as_iso8601" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Deserialize the given
+             If the serializer converts timestamp
              <cite>
-              Parquet
+              int64_t
              </cite>
-             specification bytes to an object.
+             to ISO 8601 strings.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
-              Parameters
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <ul class="simple">
-               <li>
-                <p>
-                 <strong>
-                  data_cls
-                 </strong>
-                 (
-                 <em>
-                  type
-                 </em>
-                 ) – The data type to deserialize to.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  batch
-                 </strong>
-                 (
-                 <em>
-                  pyarrow.RecordBatch
-                 </em>
-                 <em>
-                  or
-                 </em>
-                 <em>
-                  pyarrow.Table
-                 </em>
-                 ) – The RecordBatch to deserialize.
-                </p>
-               </li>
-              </ul>
-             </dd>
-             <dt class="field-even">
               Returns
               <span class="colon">
                :
               </span>
              </dt>
-             <dd class="field-even">
+             <dd class="field-odd">
               <p>
-               <em>
-                object
-               </em>
+               <cite>
+                bool
+               </cite>
               </p>
              </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.serialization.serializer.MsgSpecSerializer.timestamps_as_str">
+            <span class="sig-name descname">
+             <span class="pre">
+              timestamps_as_str
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.serialization.serializer.MsgSpecSerializer.timestamps_as_str" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             If the serializer converts timestamp
+             <cite>
+              int64_t
+             </cite>
+             to integer strings.
+            </p>
+            <dl class="field-list simple">
              <dt class="field-odd">
-              Raises
+              Returns
               <span class="colon">
                :
               </span>
              </dt>
              <dd class="field-odd">
               <p>
-               <strong>
-                TypeError
-               </strong>
-               – If
                <cite>
-                chunk
+                bool
                </cite>
-               cannot be deserialized.
               </p>
              </dd>
             </dl>

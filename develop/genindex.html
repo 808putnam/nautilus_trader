@@ -548,8 +548,8 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="api_reference/model/currency.html">
-                 Currency
+                <a class="md-nav__link" href="api_reference/model/book.html">
+                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -575,11 +575,6 @@
                <li class="md-nav__item">
                 <a class="md-nav__link" href="api_reference/model/objects.html">
                  Objects
-                </a>
-               </li>
-               <li class="md-nav__item">
-                <a class="md-nav__link" href="api_reference/model/orderbook.html">
-                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -1186,13 +1181,6 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.action">
              action (BSPOrderBookDelta attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.action">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.crypto_future.CryptoFuture.activation_ns">
@@ -1363,11 +1351,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.add">
-               (OrderBook method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/infrastructure.html#nautilus_trader.infrastructure.cache.RedisCacheDatabase.add">
                (RedisCacheDatabase method)
               </a>
@@ -1511,6 +1494,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.engine.BacktestEngine.add_exec_algorithm">
              add_exec_algorithm() (BacktestEngine method)
@@ -1535,10 +1522,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/live.html#nautilus_trader.live.node.TradingNode.add_exec_client_factory">
              add_exec_client_factory() (TradingNode method)
@@ -1784,21 +1767,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.aggregation">
-             aggregation (BarSpecification attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarType.aggregation_source">
-             aggregation_source (BarType attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.aggressor_side">
-             aggressor_side (TradeTick attribute)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.engine.ExecutionEngine.allow_cash_positions">
              allow_cash_positions (ExecutionEngine attribute)
             </a>
@@ -1883,11 +1851,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.apply">
-               (OrderBook method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/position.html#nautilus_trader.model.position.Position.apply">
                (Position method)
               </a>
@@ -1913,21 +1876,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.apply_delta">
-             apply_delta() (OrderBook method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.apply_deltas">
-             apply_deltas() (OrderBook method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/serialization.html#nautilus_trader.serialization.arrow.serializer.ArrowSerializer">
-             ArrowSerializer (class in nautilus_trader.serialization.arrow.serializer)
-            </a>
            </li>
            <li>
             <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Money.as_decimal">
@@ -1981,21 +1929,6 @@
            <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.ask">
              ask (MatchingCore attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.ask_price">
-             ask_price (QuoteTick attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.ask_size">
-             ask_size (QuoteTick attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.asks">
-             asks() (OrderBook method)
             </a>
            </li>
            <li>
@@ -2403,11 +2336,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar">
-             Bar (class in nautilus_trader.model.data.bar)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.bar">
              bar() (Cache method)
             </a>
@@ -2442,15 +2370,10 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.bar_type">
-             bar_type (Bar attribute)
+            <a href="api_reference/data.html#nautilus_trader.data.aggregation.BarAggregator.bar_type">
+             bar_type (BarAggregator attribute)
             </a>
             <ul>
-             <li>
-              <a href="api_reference/data.html#nautilus_trader.data.aggregation.BarAggregator.bar_type">
-               (BarAggregator attribute)
-              </a>
-             </li>
              <li>
               <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.bar_type">
                (BinanceBar attribute)
@@ -2504,16 +2427,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification">
-             BarSpecification (class in nautilus_trader.model.data.bar)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarType">
-             BarType (class in nautilus_trader.model.data.bar)
-            </a>
            </li>
            <li>
             <a href="api_reference/model/events.html#nautilus_trader.model.events.account.AccountState.base_currency">
@@ -2686,6 +2599,10 @@
              basis_points_as_percentage() (in module nautilus_trader.core.stats)
             </a>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.execution_client.BacktestExecClient.batch_cancel_orders">
              batch_cancel_orders() (BacktestExecClient method)
@@ -2723,47 +2640,19 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.messages.BatchCancelOrders">
              BatchCancelOrders (class in nautilus_trader.execution.messages)
             </a>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.best_ask_price">
-             best_ask_price() (OrderBook method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.best_ask_price">
-               (SimulatedExchange method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.best_ask_size">
-             best_ask_size() (OrderBook method)
+            <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.best_ask_price">
+             best_ask_price() (SimulatedExchange method)
             </a>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.best_bid_price">
-             best_bid_price() (OrderBook method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.best_bid_price">
-               (SimulatedExchange method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.best_bid_size">
-             best_bid_size() (OrderBook method)
+            <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.best_bid_price">
+             best_bid_price() (SimulatedExchange method)
             </a>
            </li>
            <li>
@@ -2854,21 +2743,6 @@
            <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.bid">
              bid (MatchingCore attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.bid_price">
-             bid_price (QuoteTick attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.bid_size">
-             bid_size (QuoteTick attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.bids">
-             bids() (OrderBook method)
             </a>
            </li>
            <li>
@@ -3092,16 +2966,9 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.book_type">
-             book_type (OrderBook attribute)
+            <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.book_type">
+             book_type (SimulatedExchange attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.exchange.SimulatedExchange.book_type">
-               (SimulatedExchange attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.book_update_count">
@@ -3114,11 +2981,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder">
-             BookOrder (class in nautilus_trader.model.data.book)
-            </a>
            </li>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.factories.OrderFactory.bracket">
@@ -4090,28 +3952,6 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.capsule_from_list">
              capsule_from_list() (BSPOrderBookDelta static method)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.capsule_from_list">
-               (OrderBookDelta static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.capsule_from_list">
-               (QuoteTick static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.capsule_from_list">
-               (TradeTick static method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.base.capsule_to_list">
-             capsule_to_list() (in module nautilus_trader.model.data.base)
-            </a>
            </li>
            <li>
             <a href="api_reference/accounting.html#nautilus_trader.accounting.accounts.cash.CashAccount">
@@ -4208,11 +4048,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.check_information_aggregated">
-             check_information_aggregated() (BarSpecification static method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.check_integrity">
              check_integrity() (Cache method)
             </a>
@@ -4225,11 +4060,6 @@
              <li>
               <a href="api_reference/live.html#nautilus_trader.live.execution_engine.LiveExecutionEngine.check_integrity">
                (LiveExecutionEngine method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.check_integrity">
-               (OrderBook method)
               </a>
              </li>
             </ul>
@@ -4257,16 +4087,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.check_threshold_aggregated">
-             check_threshold_aggregated() (BarSpecification static method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.check_time_aggregated">
-             check_time_aggregated() (BarSpecification static method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/persistence.html#nautilus_trader.persistence.catalog.parquet.FeatherFile.class_name">
              class_name (FeatherFile attribute)
             </a>
@@ -4275,18 +4095,6 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.clear">
              clear() (BSPOrderBookDelta static method)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.clear">
-               (OrderBook method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.clear">
-               (OrderBookDelta static method)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.engine.BacktestEngine.clear_actors">
@@ -4301,18 +4109,8 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.clear_asks">
-             clear_asks() (OrderBook method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/accounting.html#nautilus_trader.accounting.accounts.cash.CashAccount.clear_balance_locked">
              clear_balance_locked() (CashAccount method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.clear_bids">
-             clear_bids() (OrderBook method)
             </a>
            </li>
            <li>
@@ -4737,16 +4535,9 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.close">
-             close (Bar attribute)
+            <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.close">
+             close (BinanceBar attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.close">
-               (BinanceBar attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/persistence.html#nautilus_trader.persistence.writer.StreamingFeatherWriter.close">
@@ -4761,16 +4552,6 @@
            <li>
             <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.close_position">
              close_position() (Strategy method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentClose.close_price">
-             close_price (InstrumentClose attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentClose.close_type">
-             close_type (InstrumentClose attribute)
             </a>
            </li>
            <li>
@@ -4870,7 +4651,7 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.code">
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.code">
              code (Currency attribute)
             </a>
            </li>
@@ -5299,11 +5080,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.count">
-               (OrderBook attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/common.html#nautilus_trader.common.generators.OrderListIdGenerator.count">
                (OrderListIdGenerator attribute)
               </a>
@@ -5559,8 +5335,8 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency">
-             Currency (class in nautilus_trader.model.currency)
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency">
+             Currency (class in nautilus_trader.model.objects)
             </a>
            </li>
            <li>
@@ -5628,7 +5404,7 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.currency_type">
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.currency_type">
              currency_type (Currency attribute)
             </a>
            </li>
@@ -5661,11 +5437,6 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.messages.DataResponse.data">
                (DataResponse attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.base.GenericData.data">
-               (GenericData attribute)
               </a>
              </li>
             </ul>
@@ -5705,11 +5476,6 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.messages.DataResponse.data_type">
                (DataResponse attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.base.GenericData.data_type">
-               (GenericData attribute)
               </a>
              </li>
              <li>
@@ -5762,11 +5528,6 @@
            <li>
             <a href="api_reference/data.html#nautilus_trader.data.messages.DataResponse">
              DataResponse (class in nautilus_trader.data.messages)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.base.DataType">
-             DataType (class in nautilus_trader.model.data.base)
             </a>
            </li>
            <li>
@@ -6008,11 +5769,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.delete">
-             delete() (OrderBook method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.delete_actor">
              delete_actor() (Cache method)
             </a>
@@ -6054,11 +5810,6 @@
            <li>
             <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.common.DeltaNeutralContract">
              DeltaNeutralContract (class in nautilus_trader.adapters.interactive_brokers.common)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.deltas">
-             deltas (OrderBookDeltas attribute)
             </a>
            </li>
            <li>
@@ -6141,8 +5892,8 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/serialization.html#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.deserialize">
-             deserialize() (ArrowSerializer static method)
+            <a href="api_reference/serialization.html#nautilus_trader.serialization.serializer.MsgSpecSerializer.deserialize">
+             deserialize() (MsgSpecSerializer method)
             </a>
             <ul>
              <li>
@@ -7573,30 +7324,8 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder.exposure">
-             exposure() (BookOrder method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.Level.exposure">
-               (Level method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
             <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.external_order_claims">
              external_order_claims (Strategy attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.extract_price">
-             extract_price() (QuoteTick method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.extract_volume">
-             extract_volume() (QuoteTick method)
             </a>
            </li>
           </ul>
@@ -7937,13 +7666,6 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.flags">
              flags (BSPOrderBookDelta attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.flags">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.database.CacheDatabase.flush">
@@ -8020,11 +7742,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.from_dict">
-               (Bar static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.messages.BatchCancelOrders.from_dict">
                (BatchCancelOrders static method)
               </a>
@@ -8052,11 +7769,6 @@
              <li>
               <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceTicker.from_dict">
                (BinanceTicker static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder.from_dict">
-               (BookOrder static method)
               </a>
              </li>
              <li>
@@ -8100,16 +7812,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentClose.from_dict">
-               (InstrumentClose static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus.from_dict">
-               (InstrumentStatus static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/objects.html#nautilus_trader.model.objects.MarginBalance.from_dict">
                (MarginBalance static method)
               </a>
@@ -8127,16 +7829,6 @@
              <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderAccepted.from_dict">
                (OrderAccepted static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.from_dict">
-               (OrderBookDelta static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.from_dict">
-               (OrderBookDeltas static method)
               </a>
              </li>
              <li>
@@ -8235,11 +7927,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.from_dict">
-               (QuoteTick static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrder.from_dict">
                (SubmitOrder static method)
               </a>
@@ -8252,21 +7939,6 @@
              <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.from_dict">
                (SyntheticInstrument static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.ticker.Ticker.from_dict">
-               (Ticker static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.from_dict">
-               (TradeTick static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.VenueStatus.from_dict">
-               (VenueStatus static method)
               </a>
              </li>
             </ul>
@@ -8289,60 +7961,30 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.from_internal_map">
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.from_internal_map">
              from_internal_map() (Currency static method)
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.from_pyo3">
-             from_pyo3() (Bar static method)
+            <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.from_pyo3">
+             from_pyo3() (BinanceBar static method)
             </a>
             <ul>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.from_pyo3">
-               (BinanceBar static method)
-              </a>
-             </li>
              <li>
               <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_pyo3">
                (BSPOrderBookDelta static method)
               </a>
              </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.from_pyo3">
-               (OrderBookDelta static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.from_pyo3">
-               (QuoteTick static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.from_pyo3">
-               (TradeTick static method)
-              </a>
-             </li>
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder.from_raw">
-             from_raw() (BookOrder static method)
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_raw">
+             from_raw() (BSPOrderBookDelta static method)
             </a>
             <ul>
              <li>
-              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.from_raw">
-               (BSPOrderBookDelta static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Money.from_raw">
                (Money static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.from_raw">
-               (OrderBookDelta static method)
               </a>
              </li>
              <li>
@@ -8355,16 +7997,6 @@
                (Quantity static method)
               </a>
              </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.from_raw">
-               (QuoteTick static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.from_raw">
-               (TradeTick static method)
-              </a>
-             </li>
             </ul>
            </li>
           </ul>
@@ -8372,20 +8004,10 @@
          <td style="width: 33%; vertical-align: top;">
           <ul>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.from_str">
-             from_str() (BarSpecification static method)
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.from_str">
+             from_str() (Currency static method)
             </a>
             <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarType.from_str">
-               (BarType static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.from_str">
-               (Currency static method)
-              </a>
-             </li>
              <li>
               <a href="api_reference/model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId.from_str">
                (InstrumentId static method)
@@ -8407,11 +8029,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.from_timedelta">
-             from_timedelta() (BarSpecification static method)
-            </a>
            </li>
            <li>
             <a href="api_reference/persistence.html#nautilus_trader.persistence.catalog.parquet.ParquetDataCatalog.from_uri">
@@ -8471,11 +8088,6 @@
              <li>
               <a href="api_reference/config.html#nautilus_trader.config.backtest.BacktestVenueConfig.fully_qualified_name">
                (BacktestVenueConfig class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.fully_qualified_name">
-               (Bar class method)
               </a>
              </li>
              <li>
@@ -8694,11 +8306,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.base.GenericData.fully_qualified_name">
-               (GenericData class method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.common.IBContract.fully_qualified_name">
                (IBContract class method)
               </a>
@@ -8749,18 +8356,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentClose.fully_qualified_name">
-               (InstrumentClose class method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.InstrumentProviderConfig.fully_qualified_name">
                (InstrumentProviderConfig class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus.fully_qualified_name">
-               (InstrumentStatus class method)
               </a>
              </li>
              <li>
@@ -8909,21 +8506,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.fully_qualified_name">
-               (OrderBook class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.fully_qualified_name">
-               (OrderBookDelta class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.fully_qualified_name">
-               (OrderBookDeltas class method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.fully_qualified_name">
                (OrderEmulator class method)
               </a>
@@ -8941,11 +8523,6 @@
              <li>
               <a href="api_reference/analysis.html#nautilus_trader.analysis.statistics.profit_factor.ProfitFactor.fully_qualified_name">
                (ProfitFactor class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.fully_qualified_name">
-               (QuoteTick class method)
               </a>
              </li>
              <li>
@@ -9029,11 +8606,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.ticker.Ticker.fully_qualified_name">
-               (Ticker class method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.TracingConfig.fully_qualified_name">
                (TracingConfig class method)
               </a>
@@ -9044,18 +8616,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.fully_qualified_name">
-               (TradeTick class method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/config.html#nautilus_trader.config.live.TradingNodeConfig.fully_qualified_name">
                (TradingNodeConfig class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.VenueStatus.fully_qualified_name">
-               (VenueStatus class method)
               </a>
              </li>
              <li>
@@ -9664,6 +9226,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.generate_position_status_reports">
              generate_position_status_reports() (BetfairExecutionClient method)
@@ -9691,10 +9257,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/analysis.html#nautilus_trader.analysis.reporter.ReportProvider.generate_positions_report">
              generate_positions_report() (ReportProvider static method)
@@ -9738,11 +9300,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.base.GenericData">
-             GenericData (class in nautilus_trader.model.data.base)
-            </a>
            </li>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.get">
@@ -9824,11 +9381,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.get_avg_px_for_quantity">
-             get_avg_px_for_quantity() (OrderBook method)
-            </a>
            </li>
            <li>
             <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.betting.BettingInstrument.get_base_currency">
@@ -10098,11 +9650,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.get_quantity_for_price">
-             get_quantity_for_price() (OrderBook method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/accounting.html#nautilus_trader.accounting.calculators.ExchangeRateCalculator.get_rate">
              get_rate() (ExchangeRateCalculator method)
             </a>
@@ -10246,11 +9793,6 @@
         <tr>
          <td style="width: 33%; vertical-align: top;">
           <ul>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus.halt_reason">
-             halt_reason (InstrumentStatus attribute)
-            </a>
-           </li>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.clock.TimeEventHandler.handle">
              handle() (TimeEventHandler method)
@@ -11826,16 +11368,9 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.high">
-             high (Bar attribute)
+            <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.high">
+             high (BinanceBar attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.high">
-               (BinanceBar attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.swings.Swings.high_datetime">
@@ -12930,15 +12465,10 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarType.instrument_id">
-             instrument_id (BarType attribute)
+            <a href="api_reference/execution.html#nautilus_trader.execution.messages.BatchCancelOrders.instrument_id">
+             instrument_id (BatchCancelOrders attribute)
             </a>
             <ul>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.messages.BatchCancelOrders.instrument_id">
-               (BatchCancelOrders attribute)
-              </a>
-             </li>
              <li>
               <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BetfairTicker.instrument_id">
                (BetfairTicker attribute)
@@ -12962,16 +12492,6 @@
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.messages.CancelOrder.instrument_id">
                (CancelOrder attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentClose.instrument_id">
-               (InstrumentClose attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus.instrument_id">
-               (InstrumentStatus attribute)
               </a>
              </li>
              <li>
@@ -13022,21 +12542,6 @@
              <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderAccepted.instrument_id">
                (OrderAccepted attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.instrument_id">
-               (OrderBook attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.instrument_id">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.instrument_id">
-               (OrderBookDeltas attribute)
               </a>
              </li>
              <li>
@@ -13155,11 +12660,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.instrument_id">
-               (QuoteTick attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.spread_analyzer.SpreadAnalyzer.instrument_id">
                (SpreadAnalyzer attribute)
               </a>
@@ -13182,16 +12682,6 @@
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrderList.instrument_id">
                (SubmitOrderList attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.ticker.Ticker.instrument_id">
-               (Ticker attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.instrument_id">
-               (TradeTick attribute)
               </a>
              </li>
              <li>
@@ -13224,11 +12714,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentClose">
-             InstrumentClose (class in nautilus_trader.model.data.status)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId">
              InstrumentId (class in nautilus_trader.model.identifiers)
             </a>
@@ -13259,11 +12744,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus">
-             InstrumentStatus (class in nautilus_trader.model.data.status)
-            </a>
            </li>
            <li>
             <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.data.InteractiveBrokersDataClient">
@@ -13405,13 +12885,6 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.is_add">
              is_add (BSPOrderBookDelta attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.is_add">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.is_aggressive">
@@ -13669,13 +13142,6 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.is_clear">
              is_clear (BSPOrderBookDelta attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.is_clear">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.is_closed">
@@ -13903,7 +13369,7 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.is_crypto">
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.is_crypto">
              is_crypto() (Currency static method)
             </a>
            </li>
@@ -14082,13 +13548,6 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.is_delete">
              is_delete (BSPOrderBookDelta attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.is_delete">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.is_disposed">
@@ -14327,11 +13786,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarType.is_externally_aggregated">
-             is_externally_aggregated() (BarType method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.is_faulted">
              is_faulted (Actor attribute)
             </a>
@@ -14494,7 +13948,7 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.is_fiat">
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.is_fiat">
              is_fiat() (Currency static method)
             </a>
            </li>
@@ -14566,11 +14020,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.is_information_aggregated">
-             is_information_aggregated() (BarSpecification method)
-            </a>
            </li>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.is_initialized">
@@ -14733,11 +14182,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarType.is_internally_aggregated">
-             is_internally_aggregated() (BarType method)
-            </a>
            </li>
            <li>
             <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.betting.BettingInstrument.is_inverse">
@@ -15462,16 +14906,9 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.is_revision">
-             is_revision (Bar attribute)
+            <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.is_revision">
+             is_revision (BinanceBar attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.is_revision">
-               (BinanceBar attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.is_running">
@@ -15703,25 +15140,13 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.is_single_price">
-             is_single_price() (Bar method)
+            <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.is_single_price">
+             is_single_price() (BinanceBar method)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.is_single_price">
-               (BinanceBar method)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.models.FillModel.is_slipped">
              is_slipped() (FillModel method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.is_snapshot">
-             is_snapshot (OrderBookDeltas attribute)
             </a>
            </li>
            <li>
@@ -15971,16 +15396,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.is_threshold_aggregated">
-             is_threshold_aggregated() (BarSpecification method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.is_time_aggregated">
-             is_time_aggregated() (BarSpecification method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.matching_core.MatchingCore.is_touch_triggered">
              is_touch_triggered() (MatchingCore method)
             </a>
@@ -16028,16 +15443,9 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.is_update">
              is_update (BSPOrderBookDelta attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.is_update">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
-            <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.iso4217">
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.iso4217">
              iso4217 (Currency attribute)
             </a>
            </li>
@@ -16677,11 +16085,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.Level">
-             Level (class in nautilus_trader.model.orderbook.book)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/accounting.html#nautilus_trader.accounting.accounts.margin.MarginAccount.leverage">
              leverage() (MarginAccount method)
             </a>
@@ -16871,23 +16274,6 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.list_from_capsule">
              list_from_capsule() (BSPOrderBookDelta static method)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.list_from_capsule">
-               (OrderBookDelta static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.list_from_capsule">
-               (QuoteTick static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.list_from_capsule">
-               (TradeTick static method)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.client.BetfairHttpClient.list_market_catalogue">
@@ -17608,16 +16994,9 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.low">
-             low (Bar attribute)
+            <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.low">
+             low (BinanceBar attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.low">
-               (BinanceBar attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.swings.Swings.low_datetime">
@@ -18283,11 +17662,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.base.DataType.metadata">
-             metadata (DataType attribute)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.bollinger_bands.BollingerBands.middle">
              middle (BollingerBands attribute)
             </a>
@@ -18303,11 +17677,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.midpoint">
-             midpoint() (OrderBook method)
-            </a>
            </li>
            <li>
             <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.betting.BettingInstrument.min_notional">
@@ -19256,43 +18625,13 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/currency.html#module-nautilus_trader.model.currency">
-               nautilus_trader.model.currency
+              <a href="api_reference/model/book.html#module-nautilus_trader.model.book">
+               nautilus_trader.model.book
               </a>
              </li>
              <li>
               <a href="api_reference/model/data.html#module-nautilus_trader.model.data">
                nautilus_trader.model.data
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.bar">
-               nautilus_trader.model.data.bar
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.base">
-               nautilus_trader.model.data.base
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.book">
-               nautilus_trader.model.data.book
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.status">
-               nautilus_trader.model.data.status
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.tick">
-               nautilus_trader.model.data.tick
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.ticker">
-               nautilus_trader.model.data.ticker
               </a>
              </li>
              <li>
@@ -19373,16 +18712,6 @@
              <li>
               <a href="api_reference/model/objects.html#module-nautilus_trader.model.objects">
                nautilus_trader.model.objects
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/orderbook.html#module-nautilus_trader.model.orderbook">
-               nautilus_trader.model.orderbook
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/orderbook.html#module-nautilus_trader.model.orderbook.book">
-               nautilus_trader.model.orderbook.book
               </a>
              </li>
              <li>
@@ -19531,13 +18860,13 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/serialization.html#module-nautilus_trader.serialization.arrow.serializer">
-               nautilus_trader.serialization.arrow.serializer
+              <a href="api_reference/serialization.html#module-nautilus_trader.serialization.base">
+               nautilus_trader.serialization.base
               </a>
              </li>
              <li>
-              <a href="api_reference/serialization.html#module-nautilus_trader.serialization.base">
-               nautilus_trader.serialization.base
+              <a href="api_reference/serialization.html#module-nautilus_trader.serialization.serializer">
+               nautilus_trader.serialization.serializer
               </a>
              </li>
              <li>
@@ -19659,6 +18988,11 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/serialization.html#nautilus_trader.serialization.serializer.MsgSpecSerializer">
+             MsgSpecSerializer (class in nautilus_trader.serialization.serializer)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.betting.BettingInstrument.multiplier">
              multiplier (BettingInstrument attribute)
             </a>
@@ -19742,7 +19076,7 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.name">
+              <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.name">
                (Currency attribute)
               </a>
              </li>
@@ -20993,6 +20327,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             nautilus_trader.execution.algorithm
             <ul>
@@ -21033,10 +20371,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             nautilus_trader.execution.manager
             <ul>
@@ -21448,10 +20782,10 @@
             </ul>
            </li>
            <li>
-            nautilus_trader.model.currency
+            nautilus_trader.model.book
             <ul>
              <li>
-              <a href="api_reference/model/currency.html#module-nautilus_trader.model.currency">
+              <a href="api_reference/model/book.html#module-nautilus_trader.model.book">
                module
               </a>
              </li>
@@ -21462,66 +20796,6 @@
             <ul>
              <li>
               <a href="api_reference/model/data.html#module-nautilus_trader.model.data">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.data.bar
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.bar">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.data.base
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.base">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.data.book
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.book">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.data.status
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.status">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.data.tick
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.tick">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.data.ticker
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#module-nautilus_trader.model.data.ticker">
                module
               </a>
              </li>
@@ -21682,26 +20956,6 @@
             <ul>
              <li>
               <a href="api_reference/model/objects.html#module-nautilus_trader.model.objects">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.orderbook
-            <ul>
-             <li>
-              <a href="api_reference/model/orderbook.html#module-nautilus_trader.model.orderbook">
-               module
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            nautilus_trader.model.orderbook.book
-            <ul>
-             <li>
-              <a href="api_reference/model/orderbook.html#module-nautilus_trader.model.orderbook.book">
                module
               </a>
              </li>
@@ -21998,20 +21252,20 @@
             </ul>
            </li>
            <li>
-            nautilus_trader.serialization.arrow.serializer
+            nautilus_trader.serialization.base
             <ul>
              <li>
-              <a href="api_reference/serialization.html#module-nautilus_trader.serialization.arrow.serializer">
+              <a href="api_reference/serialization.html#module-nautilus_trader.serialization.base">
                module
               </a>
              </li>
             </ul>
            </li>
            <li>
-            nautilus_trader.serialization.base
+            nautilus_trader.serialization.serializer
             <ul>
              <li>
-              <a href="api_reference/serialization.html#module-nautilus_trader.serialization.base">
+              <a href="api_reference/serialization.html#module-nautilus_trader.serialization.serializer">
                module
               </a>
              </li>
@@ -23290,6 +22544,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.on_save">
              on_save() (Actor method)
@@ -23327,10 +22585,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.on_start">
              on_start() (Actor method)
@@ -23522,16 +22776,9 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.open">
-             open (Bar attribute)
+            <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.open">
+             open (BinanceBar attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.open">
-               (BinanceBar attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/model/position.html#nautilus_trader.model.position.Position.opening_order_id">
@@ -23633,16 +22880,9 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.order">
-             order (OrderBookDelta attribute)
+            <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrder.order">
+             order (SubmitOrder attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrder.order">
-               (SubmitOrder attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.order">
@@ -23688,11 +22928,6 @@
            <li>
             <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.order_factory">
              order_factory (Strategy attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder.order_id">
-             order_id (BookOrder attribute)
             </a>
            </li>
            <li>
@@ -23895,23 +23130,8 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook">
-             OrderBook (class in nautilus_trader.model.orderbook.book)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta">
-             OrderBookDelta (class in nautilus_trader.model.data.book)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.OrderBookDeltaDataWrangler">
              OrderBookDeltaDataWrangler (class in nautilus_trader.persistence.wranglers)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas">
-             OrderBookDeltas (class in nautilus_trader.model.data.book)
             </a>
            </li>
            <li>
@@ -24027,11 +23247,6 @@
              <li>
               <a href="api_reference/cache.html#nautilus_trader.cache.base.CacheFacade.orders">
                (CacheFacade method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.Level.orders">
-               (Level method)
               </a>
              </li>
             </ul>
@@ -25173,11 +24388,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.pprint">
-             pprint() (OrderBook method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.pre_process">
              pre_process() (FXRolloverInterestModule method)
             </a>
@@ -25190,7 +24400,7 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.precision">
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.precision">
              precision (Currency attribute)
             </a>
             <ul>
@@ -25227,25 +24437,15 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder.price">
-             price (BookOrder attribute)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Price">
              Price (class in nautilus_trader.model.objects)
             </a>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.Level.price">
-             price (Level attribute)
+            <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.price">
+             price (LimitIfTouchedOrder attribute)
             </a>
             <ul>
-             <li>
-              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.price">
-               (LimitIfTouchedOrder attribute)
-              </a>
-             </li>
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit.LimitOrder.price">
                (LimitOrder attribute)
@@ -25269,11 +24469,6 @@
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_limit.StopLimitOrder.price">
                (StopLimitOrder attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.price">
-               (TradeTick attribute)
               </a>
              </li>
              <li>
@@ -25419,11 +24614,6 @@
              price_type (AdaptiveMovingAverage attribute)
             </a>
             <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.price_type">
-               (BarSpecification attribute)
-              </a>
-             </li>
              <li>
               <a href="api_reference/indicators.html#nautilus_trader.indicators.average.ema.ExponentialMovingAverage.price_type">
                (ExponentialMovingAverage attribute)
@@ -26009,11 +25199,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick">
-             QuoteTick (class in nautilus_trader.model.data.tick)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.QuoteTickDataWrangler">
              QuoteTickDataWrangler (class in nautilus_trader.persistence.wranglers)
             </a>
@@ -26333,7 +25518,7 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/currency.html#nautilus_trader.model.currency.Currency.register">
+            <a href="api_reference/model/objects.html#nautilus_trader.model.objects.Currency.register">
              register() (Currency static method)
             </a>
             <ul>
@@ -26357,11 +25542,6 @@
            <li>
             <a href="api_reference/accounting.html#nautilus_trader.accounting.factory.AccountFactory.register_account_type">
              register_account_type() (AccountFactory static method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/serialization.html#nautilus_trader.serialization.arrow.serializer.register_arrow">
-             register_arrow() (in module nautilus_trader.serialization.arrow.serializer)
             </a>
            </li>
            <li>
@@ -27615,11 +26795,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.reset">
-               (OrderBook method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.reset">
                (OrderEmulator method)
               </a>
@@ -28254,33 +27429,18 @@
             <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.sequence">
              sequence (BSPOrderBookDelta attribute)
             </a>
+           </li>
+           <li>
+            <a href="api_reference/serialization.html#nautilus_trader.serialization.serializer.MsgSpecSerializer.serialize">
+             serialize() (MsgSpecSerializer method)
+            </a>
             <ul>
              <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.sequence">
-               (OrderBook attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.sequence">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.sequence">
-               (OrderBookDeltas attribute)
+              <a href="api_reference/serialization.html#nautilus_trader.serialization.base.Serializer.serialize">
+               (Serializer method)
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/serialization.html#nautilus_trader.serialization.base.Serializer.serialize">
-             serialize() (Serializer method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/serialization.html#nautilus_trader.serialization.arrow.serializer.ArrowSerializer.serialize_batch">
-             serialize_batch() (ArrowSerializer static method)
-            </a>
            </li>
            <li>
             <a href="api_reference/serialization.html#nautilus_trader.serialization.base.Serializer">
@@ -28615,15 +27775,10 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder.side">
-             side (BookOrder attribute)
+            <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.side">
+             side (LimitIfTouchedOrder attribute)
             </a>
             <ul>
-             <li>
-              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.side">
-               (LimitIfTouchedOrder attribute)
-              </a>
-             </li>
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit.LimitOrder.side">
                (LimitOrder attribute)
@@ -28843,18 +27998,8 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder.signed_size">
-             signed_size() (BookOrder method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.average.sma.SimpleMovingAverage">
              SimpleMovingAverage (class in nautilus_trader.indicators.average.sma)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.simulate_fills">
-             simulate_fills() (OrderBook method)
             </a>
            </li>
            <li>
@@ -28883,25 +28028,8 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder.size">
-             size (BookOrder attribute)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/indicators.html#nautilus_trader.indicators.fuzzy_candlesticks.FuzzyCandle.size">
-               (FuzzyCandle attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.size">
-               (TradeTick attribute)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.Level.size">
-             size() (Level method)
+            <a href="api_reference/indicators.html#nautilus_trader.indicators.fuzzy_candlesticks.FuzzyCandle.size">
+             size (FuzzyCandle attribute)
             </a>
            </li>
            <li>
@@ -29134,16 +28262,6 @@
            <li>
             <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.spawn_market_to_limit">
              spawn_market_to_limit() (ExecAlgorithm method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarType.spec">
-             spec (BarType attribute)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.spread">
-             spread() (OrderBook method)
             </a>
            </li>
            <li>
@@ -29559,15 +28677,10 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus.status">
-             status (InstrumentStatus attribute)
+            <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.status">
+             status (LimitIfTouchedOrder attribute)
             </a>
             <ul>
-             <li>
-              <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.status">
-               (LimitIfTouchedOrder attribute)
-              </a>
-             </li>
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit.LimitOrder.status">
                (LimitOrder attribute)
@@ -29611,11 +28724,6 @@
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_market.TrailingStopMarketOrder.status">
                (TrailingStopMarketOrder attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.VenueStatus.status">
-               (VenueStatus attribute)
               </a>
              </li>
             </ul>
@@ -29671,11 +28779,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.step">
-             step (BarSpecification attribute)
-            </a>
            </li>
            <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.stochastics.Stochastics">
@@ -32146,11 +31249,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.ticker.Ticker">
-             Ticker (class in nautilus_trader.model.data.ticker)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.ticker">
              ticker() (Cache method)
             </a>
@@ -32259,11 +31357,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.BarSpecification.timedelta">
-             timedelta (BarSpecification attribute)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/common.html#nautilus_trader.common.clock.TimeEvent">
              TimeEvent (class in nautilus_trader.common.clock)
             </a>
@@ -32359,6 +31452,16 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/serialization.html#nautilus_trader.serialization.serializer.MsgSpecSerializer.timestamps_as_iso8601">
+             timestamps_as_iso8601 (MsgSpecSerializer attribute)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/serialization.html#nautilus_trader.serialization.serializer.MsgSpecSerializer.timestamps_as_str">
+             timestamps_as_str (MsgSpecSerializer attribute)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.common.ContractId.to_bytes">
              to_bytes() (ContractId method)
             </a>
@@ -32371,11 +31474,6 @@
              <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.account.AccountState.to_dict">
                (AccountState static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.to_dict">
-               (Bar static method)
               </a>
              </li>
              <li>
@@ -32406,11 +31504,6 @@
              <li>
               <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceTicker.to_dict">
                (BinanceTicker static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.BookOrder.to_dict">
-               (BookOrder static method)
               </a>
              </li>
              <li>
@@ -32451,16 +31544,6 @@
              <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.futures_contract.FuturesContract.to_dict">
                (FuturesContract static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentClose.to_dict">
-               (InstrumentClose static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus.to_dict">
-               (InstrumentStatus static method)
               </a>
              </li>
              <li>
@@ -32511,16 +31594,6 @@
              <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderAccepted.to_dict">
                (OrderAccepted static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.to_dict">
-               (OrderBookDelta static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.to_dict">
-               (OrderBookDeltas static method)
               </a>
              </li>
              <li>
@@ -32624,11 +31697,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.to_dict">
-               (QuoteTick static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.stop_limit.StopLimitOrder.to_dict">
                (StopLimitOrder method)
               </a>
@@ -32654,16 +31722,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.ticker.Ticker.to_dict">
-               (Ticker static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.to_dict">
-               (TradeTick static method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_limit.TrailingStopLimitOrder.to_dict">
                (TrailingStopLimitOrder method)
               </a>
@@ -32671,11 +31729,6 @@
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.trailing_stop_market.TrailingStopMarketOrder.to_dict">
                (TrailingStopMarketOrder method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.VenueStatus.to_dict">
-               (VenueStatus static method)
               </a>
              </li>
             </ul>
@@ -32730,16 +31783,9 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.base.DataType.topic">
-             topic (DataType attribute)
+            <a href="api_reference/common.html#nautilus_trader.common.msgbus.Subscription.topic">
+             topic (Subscription attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/common.html#nautilus_trader.common.msgbus.Subscription.topic">
-               (Subscription attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.msgbus.MessageBus.topics">
@@ -32777,13 +31823,6 @@
             <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderFilled.trade_id">
              trade_id (OrderFilled attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.trade_id">
-               (TradeTick attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.trade_ids">
@@ -33322,18 +32361,8 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick">
-             TradeTick (class in nautilus_trader.model.data.tick)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/persistence.html#nautilus_trader.persistence.wranglers.TradeTickDataWrangler">
              TradeTickDataWrangler (class in nautilus_trader.persistence.wranglers)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus.trading_session">
-             trading_session (InstrumentStatus attribute)
             </a>
            </li>
            <li>
@@ -33610,11 +32639,6 @@
             </a>
             <ul>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.ts_event">
-               (Bar attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BetfairStartingPrice.ts_event">
                (BetfairStartingPrice property)
               </a>
@@ -33680,23 +32704,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.base.GenericData.ts_event">
-               (GenericData attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.ts_event">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentClose.ts_event">
-               (InstrumentClose attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus.ts_event">
-               (InstrumentStatus attribute)
               </a>
              </li>
              <li>
@@ -33712,21 +32721,6 @@
              <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderAccepted.ts_event">
                (OrderAccepted attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.ts_event">
-               (OrderBook attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.ts_event">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.ts_event">
-               (OrderBookDeltas attribute)
               </a>
              </li>
              <li>
@@ -33830,33 +32824,13 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.ts_event">
-               (QuoteTick attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.ts_event">
                (SyntheticInstrument attribute)
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.ticker.Ticker.ts_event">
-               (Ticker attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/common.html#nautilus_trader.common.clock.TimeEvent.ts_event">
                (TimeEvent attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.ts_event">
-               (TradeTick attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.VenueStatus.ts_event">
-               (VenueStatus attribute)
               </a>
              </li>
             </ul>
@@ -33866,11 +32840,6 @@
              ts_init (AccountState attribute)
             </a>
             <ul>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.ts_init">
-               (Bar attribute)
-              </a>
-             </li>
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.messages.BatchCancelOrders.ts_init">
                (BatchCancelOrders attribute)
@@ -33987,23 +32956,8 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.base.GenericData.ts_init">
-               (GenericData attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.base.Instrument.ts_init">
                (Instrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentClose.ts_init">
-               (InstrumentClose attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.InstrumentStatus.ts_init">
-               (InstrumentStatus attribute)
               </a>
              </li>
              <li>
@@ -34054,21 +33008,6 @@
              <li>
               <a href="api_reference/model/events.html#nautilus_trader.model.events.order.OrderAccepted.ts_init">
                (OrderAccepted attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.ts_init">
-               (OrderBook attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDelta.ts_init">
-               (OrderBookDelta attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.book.OrderBookDeltas.ts_init">
-               (OrderBookDeltas attribute)
               </a>
              </li>
              <li>
@@ -34197,11 +33136,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.QuoteTick.ts_init">
-               (QuoteTick attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/core.html#nautilus_trader.core.message.Request.ts_init">
                (Request attribute)
               </a>
@@ -34242,11 +33176,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.ticker.Ticker.ts_init">
-               (Ticker attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/common.html#nautilus_trader.common.clock.TimeEvent.ts_init">
                (TimeEvent attribute)
               </a>
@@ -34254,11 +33183,6 @@
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.reports.TradeReport.ts_init">
                (TradeReport attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.tick.TradeTick.ts_init">
-               (TradeTick attribute)
               </a>
              </li>
              <li>
@@ -34279,11 +33203,6 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.messages.Unsubscribe.ts_init">
                (Unsubscribe attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.VenueStatus.ts_init">
-               (VenueStatus attribute)
               </a>
              </li>
             </ul>
@@ -34321,11 +33240,6 @@
              <li>
               <a href="api_reference/model/orders.html#nautilus_trader.model.orders.base.Order.ts_last">
                (Order attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.ts_last">
-               (OrderBook attribute)
               </a>
              </li>
              <li>
@@ -34472,11 +33386,6 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.engine.DataEngine.type">
                (DataEngine attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.base.DataType.type">
-               (DataType attribute)
               </a>
              </li>
              <li>
@@ -35591,13 +34500,6 @@
             <a href="api_reference/data.html#nautilus_trader.data.aggregation.BarBuilder.update">
              update() (BarBuilder method)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.update">
-               (OrderBook method)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.update_account">
@@ -35749,16 +34651,9 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.update_quote_tick">
-             update_quote_tick() (OrderBook method)
+            <a href="api_reference/portfolio.html#nautilus_trader.portfolio.portfolio.Portfolio.update_quote_tick">
+             update_quote_tick() (Portfolio method)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/portfolio.html#nautilus_trader.portfolio.portfolio.Portfolio.update_quote_tick">
-               (Portfolio method)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.average.ama.AdaptiveMovingAverage.update_raw">
@@ -35925,11 +34820,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook.update_trade_tick">
-             update_trade_tick() (OrderBook method)
-            </a>
            </li>
            <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.bollinger_bands.BollingerBands.upper">
@@ -36472,6 +35362,10 @@
              vector (FuzzyCandlesticks attribute)
             </a>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestDataClient.venue">
              venue (BacktestDataClient attribute)
@@ -36524,10 +35418,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/model/identifiers.html#nautilus_trader.model.identifiers.Venue">
              Venue (class in nautilus_trader.model.identifiers)
@@ -36691,11 +35581,6 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.messages.Unsubscribe.venue">
                (Unsubscribe attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.status.VenueStatus.venue">
-               (VenueStatus attribute)
               </a>
              </li>
             </ul>
@@ -36927,26 +35812,14 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.status.VenueStatus">
-             VenueStatus (class in nautilus_trader.model.data.status)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/indicators.html#nautilus_trader.indicators.volatility_ratio.VolatilityRatio">
              VolatilityRatio (class in nautilus_trader.indicators.volatility_ratio)
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.bar.Bar.volume">
-             volume (Bar attribute)
+            <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.volume">
+             volume (BinanceBar attribute)
             </a>
-            <ul>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceBar.volume">
-               (BinanceBar attribute)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/data.html#nautilus_trader.data.aggregation.VolumeBarAggregator">
