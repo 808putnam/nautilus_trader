@@ -148,11 +148,6 @@
 <a href="#148" id="148">148</a>
 <a href="#149" id="149">149</a>
 <a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -170,26 +165,26 @@
 
 </span><span class="kw">use </span>std::collections::HashMap;
 
+<span class="kw">use </span>nautilus_core::time::AtomicTime;
 <span class="kw">use </span>nautilus_model::identifiers::{
     position_id::PositionId, strategy_id::StrategyId, trader_id::TraderId,
 };
 
 <span class="kw">use </span><span class="kw">super</span>::get_datetime_tag;
-<span class="kw">use </span><span class="kw">crate</span>::clock::Clock;
 
 <span class="attr">#[repr(C)]
-</span><span class="kw">pub struct </span>PositionIdGenerator&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>PositionIdGenerator {
     trader_id: TraderId,
-    clock: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Box&lt;<span class="kw">dyn </span>Clock&gt;,
+    time: AtomicTime,
     counts: HashMap&lt;StrategyId, usize&gt;,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; PositionIdGenerator&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl </span>PositionIdGenerator {
     <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(trader_id: TraderId, clock: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Box&lt;<span class="kw">dyn </span>Clock&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(trader_id: TraderId, time: AtomicTime) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             trader_id,
-            clock,
+            time,
             counts: HashMap::new(),
         }
     }
@@ -211,7 +206,7 @@
         <span class="kw">let </span>strategy = strategy_id;
         <span class="kw">let </span>next_count = <span class="self">self</span>.count(strategy_id) + <span class="number">1</span>;
         <span class="self">self</span>.set_count(next_count, strategy_id);
-        <span class="kw">let </span>datetime_tag = get_datetime_tag(<span class="self">self</span>.clock.timestamp_ms());
+        <span class="kw">let </span>datetime_tag = get_datetime_tag(<span class="self">self</span>.time.get_time_ms());
         <span class="kw">let </span>trader_tag = <span class="self">self</span>.trader_id.get_tag();
         <span class="kw">let </span>strategy_tag = strategy.get_tag();
         <span class="kw">let </span>flipped = <span class="kw">if </span>flipped { <span class="string">&quot;F&quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;&quot; </span>};
@@ -225,25 +220,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>nautilus_core::time::AtomicTime;
     <span class="kw">use </span>nautilus_model::identifiers::{
         position_id::PositionId, strategy_id::StrategyId, trader_id::TraderId,
     };
     <span class="kw">use </span>rstest::rstest;
 
     <span class="kw">use crate</span>::{
-        clock::{stubs::test_clock, Clock, TestClock},
+        clock::{stubs::test_clock, TestClock},
         generators::position_id::PositionIdGenerator,
     };
 
-    <span class="kw">fn </span>get_position_id_generator(clock: <span class="kw-2">&amp;mut </span>Box&lt;<span class="kw">dyn </span>Clock&gt;) -&gt; PositionIdGenerator {
+    <span class="kw">fn </span>get_position_id_generator(time: AtomicTime) -&gt; PositionIdGenerator {
         <span class="kw">let </span>trader_id = TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>);
-        PositionIdGenerator::new(trader_id, clock)
+        PositionIdGenerator::new(trader_id, time)
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_generate_position_id_one_strategy(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(<span class="kw-2">&amp;mut </span>test_clock);
+        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(test_clock.get_time_clone());
         <span class="kw">let </span>result1 = generator.generate(StrategyId::from(<span class="string">&quot;S-001&quot;</span>), <span class="bool-val">false</span>);
         <span class="kw">let </span>result2 = generator.generate(StrategyId::from(<span class="string">&quot;S-001&quot;</span>), <span class="bool-val">false</span>);
 
@@ -253,8 +248,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_generate_position_id_multiple_strategies(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(<span class="kw-2">&amp;mut </span>test_clock);
+        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(test_clock.get_time_clone());
         <span class="kw">let </span>result1 = generator.generate(StrategyId::from(<span class="string">&quot;S-001&quot;</span>), <span class="bool-val">false</span>);
         <span class="kw">let </span>result2 = generator.generate(StrategyId::from(<span class="string">&quot;S-002&quot;</span>), <span class="bool-val">false</span>);
         <span class="kw">let </span>result3 = generator.generate(StrategyId::from(<span class="string">&quot;S-002&quot;</span>), <span class="bool-val">false</span>);
@@ -266,8 +260,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_generate_position_id_with_flipped_appends_correctly(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(<span class="kw-2">&amp;mut </span>test_clock);
+        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(test_clock.get_time_clone());
         <span class="kw">let </span>result1 = generator.generate(StrategyId::from(<span class="string">&quot;S-001&quot;</span>), <span class="bool-val">false</span>);
         <span class="kw">let </span>result2 = generator.generate(StrategyId::from(<span class="string">&quot;S-002&quot;</span>), <span class="bool-val">true</span>);
         <span class="kw">let </span>result3 = generator.generate(StrategyId::from(<span class="string">&quot;S-001&quot;</span>), <span class="bool-val">true</span>);
@@ -279,8 +272,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_count_when_strategy_id_has_not_been_used(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span>generator = get_position_id_generator(<span class="kw-2">&amp;mut </span>test_clock);
+        <span class="kw">let </span>generator = get_position_id_generator(test_clock.get_time_clone());
         <span class="kw">let </span>result = generator.count(StrategyId::from(<span class="string">&quot;S-001&quot;</span>));
 
         <span class="macro">assert_eq!</span>(result, <span class="number">0</span>);
@@ -288,8 +280,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>set_count_with_valid_strategy(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(<span class="kw-2">&amp;mut </span>test_clock);
+        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(test_clock.get_time_clone());
         generator.set_count(<span class="number">7</span>, StrategyId::from(<span class="string">&quot;S-001&quot;</span>));
         <span class="kw">let </span>result = generator.count(StrategyId::from(<span class="string">&quot;S-001&quot;</span>));
 
@@ -298,8 +289,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_reset(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(<span class="kw-2">&amp;mut </span>test_clock);
+        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_position_id_generator(test_clock.get_time_clone());
         generator.generate(StrategyId::from(<span class="string">&quot;S-001&quot;</span>), <span class="bool-val">false</span>);
         generator.generate(StrategyId::from(<span class="string">&quot;S-001&quot;</span>), <span class="bool-val">false</span>);
         generator.reset();

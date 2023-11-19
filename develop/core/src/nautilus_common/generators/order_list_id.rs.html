@@ -163,10 +163,6 @@
 <a href="#163" id="163">163</a>
 <a href="#164" id="164">164</a>
 <a href="#165" id="165">165</a>
-<a href="#166" id="166">166</a>
-<a href="#167" id="167">167</a>
-<a href="#168" id="168">168</a>
-<a href="#169" id="169">169</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -182,33 +178,33 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>nautilus_model::identifiers::{
+</span><span class="kw">use </span>nautilus_core::time::AtomicTime;
+<span class="kw">use </span>nautilus_model::identifiers::{
     order_list_id::OrderListId, strategy_id::StrategyId, trader_id::TraderId,
 };
 
 <span class="kw">use </span><span class="kw">super</span>::get_datetime_tag;
-<span class="kw">use </span><span class="kw">crate</span>::clock::Clock;
 
 <span class="attr">#[repr(C)]
-</span><span class="kw">pub struct </span>OrderListIdGenerator&lt;<span class="lifetime">&#39;a</span>&gt; {
+</span><span class="kw">pub struct </span>OrderListIdGenerator {
     trader_id: TraderId,
     strategy_id: StrategyId,
-    clock: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Box&lt;<span class="kw">dyn </span>Clock&gt;,
+    time: AtomicTime,
     count: usize,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; OrderListIdGenerator&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl </span>OrderListIdGenerator {
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(
         trader_id: TraderId,
         strategy_id: StrategyId,
-        clock: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="kw-2">mut </span>Box&lt;<span class="kw">dyn </span>Clock&gt;,
+        time: AtomicTime,
         initial_count: usize,
     ) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             trader_id,
             strategy_id,
-            clock,
+            time,
             count: initial_count,
         }
     }
@@ -227,7 +223,7 @@
     }
 
     <span class="kw">pub fn </span>generate(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; OrderListId {
-        <span class="kw">let </span>datetime_tag = get_datetime_tag(<span class="self">self</span>.clock.timestamp_ms());
+        <span class="kw">let </span>datetime_tag = get_datetime_tag(<span class="self">self</span>.time.get_time_ms());
         <span class="kw">let </span>trader_tag = <span class="self">self</span>.trader_id.get_tag();
         <span class="kw">let </span>strategy_tag = <span class="self">self</span>.strategy_id.get_tag();
         <span class="self">self</span>.count += <span class="number">1</span>;
@@ -244,43 +240,41 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>nautilus_core::time::AtomicTime;
     <span class="kw">use </span>nautilus_model::identifiers::{
         order_list_id::OrderListId, strategy_id::StrategyId, trader_id::TraderId,
     };
     <span class="kw">use </span>rstest::rstest;
 
     <span class="kw">use crate</span>::{
-        clock::{stubs::test_clock, Clock, TestClock},
+        clock::{stubs::test_clock, TestClock},
         generators::order_list_id::OrderListIdGenerator,
     };
 
     <span class="kw">fn </span>get_order_list_id_generator(
-        clock: <span class="kw-2">&amp;mut </span>Box&lt;<span class="kw">dyn </span>Clock&gt;,
+        time: AtomicTime,
         initial_count: <span class="prelude-ty">Option</span>&lt;usize&gt;,
     ) -&gt; OrderListIdGenerator {
         <span class="kw">let </span>trader_id = TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>);
         <span class="kw">let </span>strategy_id = StrategyId::from(<span class="string">&quot;EMACross-001&quot;</span>);
-        OrderListIdGenerator::new(trader_id, strategy_id, clock, initial_count.unwrap_or(<span class="number">0</span>))
+        OrderListIdGenerator::new(trader_id, strategy_id, time, initial_count.unwrap_or(<span class="number">0</span>))
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_init(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span>generator = get_order_list_id_generator(<span class="kw-2">&amp;mut </span>test_clock, <span class="prelude-val">None</span>);
+        <span class="kw">let </span>generator = get_order_list_id_generator(test_clock.get_time_clone(), <span class="prelude-val">None</span>);
         <span class="macro">assert_eq!</span>(generator.count(), <span class="number">0</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_init_with_initial_count(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span>generator = get_order_list_id_generator(<span class="kw-2">&amp;mut </span>test_clock, <span class="prelude-val">Some</span>(<span class="number">7</span>));
+        <span class="kw">let </span>generator = get_order_list_id_generator(test_clock.get_time_clone(), <span class="prelude-val">Some</span>(<span class="number">7</span>));
         <span class="macro">assert_eq!</span>(generator.count(), <span class="number">7</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_generate_order_list_id_from_start(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_order_list_id_generator(<span class="kw-2">&amp;mut </span>test_clock, <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_order_list_id_generator(test_clock.get_time_clone(), <span class="prelude-val">None</span>);
         <span class="kw">let </span>result1 = generator.generate();
         <span class="kw">let </span>result2 = generator.generate();
         <span class="kw">let </span>result3 = generator.generate();
@@ -301,8 +295,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_generate_order_list_id_from_initial(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_order_list_id_generator(<span class="kw-2">&amp;mut </span>test_clock, <span class="prelude-val">Some</span>(<span class="number">5</span>));
+        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_order_list_id_generator(test_clock.get_time_clone(), <span class="prelude-val">Some</span>(<span class="number">5</span>));
         <span class="kw">let </span>result1 = generator.generate();
         <span class="kw">let </span>result2 = generator.generate();
         <span class="kw">let </span>result3 = generator.generate();
@@ -323,8 +316,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_reset(test_clock: TestClock) {
-        <span class="kw">let </span><span class="kw-2">mut </span>test_clock: Box&lt;<span class="kw">dyn </span>Clock&gt; = Box::new(test_clock);
-        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_order_list_id_generator(<span class="kw-2">&amp;mut </span>test_clock, <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>generator = get_order_list_id_generator(test_clock.get_time_clone(), <span class="prelude-val">None</span>);
         generator.generate();
         generator.generate();
         generator.reset();

@@ -388,28 +388,28 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_set_time(clock: <span class="kw-2">&amp;mut </span>TestClock_API, to_time_ns: u64) {
+</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_set_time(clock: <span class="kw-2">&amp;</span>TestClock_API, to_time_ns: u64) {
     clock.set_time(to_time_ns);
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_timestamp(clock: <span class="kw-2">&amp;mut </span>TestClock_API) -&gt; f64 {
-    clock.timestamp()
+</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_timestamp(clock: <span class="kw-2">&amp;</span>TestClock_API) -&gt; f64 {
+    clock.get_time()
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_timestamp_ms(clock: <span class="kw-2">&amp;mut </span>TestClock_API) -&gt; u64 {
-    clock.timestamp_ms()
+</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_timestamp_ms(clock: <span class="kw-2">&amp;</span>TestClock_API) -&gt; u64 {
+    clock.get_time_ms()
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_timestamp_us(clock: <span class="kw-2">&amp;mut </span>TestClock_API) -&gt; u64 {
-    clock.timestamp_us()
+</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_timestamp_us(clock: <span class="kw-2">&amp;</span>TestClock_API) -&gt; u64 {
+    clock.get_time_ms()
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_timestamp_ns(clock: <span class="kw-2">&amp;mut </span>TestClock_API) -&gt; u64 {
-    clock.timestamp_ns()
+</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>test_clock_timestamp_ns(clock: <span class="kw-2">&amp;</span>TestClock_API) -&gt; u64 {
+    clock.get_time_ns()
 }
 
 <span class="attr">#[no_mangle]
@@ -581,21 +581,21 @@
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>live_clock_timestamp(clock: <span class="kw-2">&amp;mut </span>LiveClock_API) -&gt; f64 {
-    clock.timestamp()
+    clock.get_time()
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>live_clock_timestamp_ms(clock: <span class="kw-2">&amp;mut </span>LiveClock_API) -&gt; u64 {
-    clock.timestamp_ms()
+    clock.get_time_ms()
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>live_clock_timestamp_us(clock: <span class="kw-2">&amp;mut </span>LiveClock_API) -&gt; u64 {
-    clock.timestamp_us()
+    clock.get_time_ms()
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>live_clock_timestamp_ns(clock: <span class="kw-2">&amp;mut </span>LiveClock_API) -&gt; u64 {
-    clock.timestamp_ns()
+    clock.get_time_ns()
 }
 </code></pre></div></section></main></body></html>
