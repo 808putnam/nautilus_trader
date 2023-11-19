@@ -110,6 +110,9 @@
 <a href="#110" id="110">110</a>
 <a href="#111" id="111">111</a>
 <a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -146,7 +149,7 @@
 
 <span class="kw">impl </span>CacheDatabase <span class="kw">for </span>RedisCacheDatabase {
     <span class="kw">fn </span>new(trader_id: TraderId, config: HashMap&lt;String, Value&gt;) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>redis_url = get_redis_url(config.clone());
+        <span class="kw">let </span>redis_url = get_redis_url(<span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>client = redis::Client::open(redis_url).unwrap();
         <span class="kw">let </span>read_conn = client.get_connection().unwrap();
 
@@ -182,7 +185,7 @@
         config: HashMap&lt;String, Value&gt;,
         rx: Receiver&lt;DatabaseOperation&gt;,
     ) {
-        <span class="kw">let </span>redis_url = get_redis_url(config);
+        <span class="kw">let </span>redis_url = get_redis_url(<span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>client = redis::Client::open(redis_url).unwrap();
         <span class="kw">let </span>_conn = client.get_connection().unwrap();
 
@@ -196,18 +199,21 @@
 }
 
 <span class="comment">// Consolidate this with the MessageBus version
-</span><span class="kw">pub fn </span>get_redis_url(config: HashMap&lt;String, Value&gt;) -&gt; String {
-    <span class="kw">let </span>host_default = Value::String(<span class="string">&quot;127.0.0.1&quot;</span>.to_string());
-    <span class="kw">let </span>port_default = Value::String(<span class="string">&quot;6379&quot;</span>.to_string());
-    <span class="kw">let </span>host = config.get(<span class="string">&quot;host&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>host_default);
-    <span class="kw">let </span>port = config.get(<span class="string">&quot;port&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>port_default);
-    <span class="kw">let </span>username = config
+</span><span class="kw">pub fn </span>get_redis_url(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
+    <span class="kw">let </span>empty = Value::Object(serde_json::Map::new());
+    <span class="kw">let </span>database = config.get(<span class="string">&quot;database&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>empty);
+
+    <span class="kw">let </span>host = database
+        .get(<span class="string">&quot;host&quot;</span>)
+        .map(|v| v.as_str().unwrap_or(<span class="string">&quot;127.0.0.1&quot;</span>));
+    <span class="kw">let </span>port = database.get(<span class="string">&quot;port&quot;</span>).map(|v| v.as_str().unwrap_or(<span class="string">&quot;6379&quot;</span>));
+    <span class="kw">let </span>username = database
         .get(<span class="string">&quot;username&quot;</span>)
         .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>password = config
+    <span class="kw">let </span>password = database
         .get(<span class="string">&quot;password&quot;</span>)
         .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>use_ssl = config.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>Value::Bool(<span class="bool-val">false</span>));
+    <span class="kw">let </span>use_ssl = database.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>Value::Bool(<span class="bool-val">false</span>));
 
     <span class="macro">format!</span>(
         <span class="string">&quot;redis{}://{}:{}@{}:{}&quot;</span>,
@@ -218,8 +224,8 @@
         </span>},
         username.unwrap_or(<span class="string">&quot;&quot;</span>),
         password.unwrap_or(<span class="string">&quot;&quot;</span>),
-        host.as_str().unwrap(),
-        port.as_str().unwrap(),
+        host.unwrap(),
+        port.unwrap(),
     )
 }
 </code></pre></div></section></main></body></html>

@@ -693,6 +693,24 @@
 <a href="#693" id="693">693</a>
 <a href="#694" id="694">694</a>
 <a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -867,7 +885,7 @@
         config: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, Value&gt;&gt;,
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>config = config.unwrap_or_default();
-        <span class="kw">let </span>has_backing = config.get(<span class="string">&quot;database&quot;</span>).is_some();
+        <span class="kw">let </span>has_backing = config.get(<span class="string">&quot;database&quot;</span>).map_or(<span class="bool-val">false</span>, |v| v != <span class="kw-2">&amp;</span>Value::Null);
         <span class="kw">let </span>tx = <span class="kw">if </span>has_backing {
             <span class="kw">let </span>(tx, rx) = channel::&lt;BusMessage&gt;();
             thread::spawn(<span class="kw">move </span>|| {
@@ -1093,14 +1111,16 @@
     }
 
     <span class="kw">fn </span>handle_messages(trader_id: <span class="kw-2">&amp;</span>str, config: HashMap&lt;String, Value&gt;, rx: Receiver&lt;BusMessage&gt;) {
-        <span class="kw">let </span>redis_url = get_redis_url(config);
+        <span class="kw">let </span>redis_url = get_redis_url(<span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>client = redis::Client::open(redis_url).unwrap();
+        <span class="kw">let </span>stream = get_stream_name(<span class="kw-2">&amp;</span>config);
         <span class="kw">let </span><span class="kw-2">mut </span>conn = client.get_connection().unwrap();
 
         <span class="comment">// Continue to receive and handle bus messages until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = rx.recv() {
-            <span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;(), redis::RedisError&gt; =
-                conn.publish(<span class="macro">format!</span>(<span class="string">&quot;{trader_id}:{}&quot;</span>, msg.topic), msg.payload);
+            <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;{stream}{trader_id}:{}&quot;</span>, <span class="kw-2">&amp;</span>msg.topic);
+            <span class="kw">let </span>items: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>Vec&lt;u8&gt;)&gt; = <span class="macro">vec!</span>[(<span class="string">&quot;payload&quot;</span>, <span class="kw-2">&amp;</span>msg.payload)];
+            <span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;(), redis::RedisError&gt; = conn.xadd(<span class="kw-2">&amp;</span>key, <span class="string">&quot;*&quot;</span>, <span class="kw-2">&amp;</span>items);
 
             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = result {
                 <span class="macro">eprintln!</span>(<span class="string">&quot;Error publishing message: {e}&quot;</span>);
@@ -1109,18 +1129,21 @@
     }
 }
 
-<span class="kw">pub fn </span>get_redis_url(config: HashMap&lt;String, Value&gt;) -&gt; String {
-    <span class="kw">let </span>host_default = Value::String(<span class="string">&quot;127.0.0.1&quot;</span>.to_string());
-    <span class="kw">let </span>port_default = Value::String(<span class="string">&quot;6379&quot;</span>.to_string());
-    <span class="kw">let </span>host = config.get(<span class="string">&quot;host&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>host_default);
-    <span class="kw">let </span>port = config.get(<span class="string">&quot;port&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>port_default);
-    <span class="kw">let </span>username = config
+<span class="kw">pub fn </span>get_redis_url(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
+    <span class="kw">let </span>empty = Value::Object(serde_json::Map::new());
+    <span class="kw">let </span>database = config.get(<span class="string">&quot;database&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>empty);
+
+    <span class="kw">let </span>host = database
+        .get(<span class="string">&quot;host&quot;</span>)
+        .map(|v| v.as_str().unwrap_or(<span class="string">&quot;127.0.0.1&quot;</span>));
+    <span class="kw">let </span>port = database.get(<span class="string">&quot;port&quot;</span>).map(|v| v.as_str().unwrap_or(<span class="string">&quot;6379&quot;</span>));
+    <span class="kw">let </span>username = database
         .get(<span class="string">&quot;username&quot;</span>)
         .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>password = config
+    <span class="kw">let </span>password = database
         .get(<span class="string">&quot;password&quot;</span>)
         .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>use_ssl = config.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>Value::Bool(<span class="bool-val">false</span>));
+    <span class="kw">let </span>use_ssl = database.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>Value::Bool(<span class="bool-val">false</span>));
 
     <span class="macro">format!</span>(
         <span class="string">&quot;redis{}://{}:{}@{}:{}&quot;</span>,
@@ -1131,9 +1154,22 @@
         </span>},
         username.unwrap_or(<span class="string">&quot;&quot;</span>),
         password.unwrap_or(<span class="string">&quot;&quot;</span>),
-        host.as_str().unwrap(),
-        port.as_str().unwrap(),
+        host.unwrap(),
+        port.unwrap(),
     )
+}
+
+<span class="kw">pub fn </span>get_stream_name(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
+    <span class="kw">match </span>config.get(<span class="string">&quot;stream&quot;</span>) {
+        <span class="prelude-val">Some</span>(Value::String(s)) =&gt; {
+            <span class="kw">if </span>!s.is_empty() {
+                <span class="macro">format!</span>(<span class="string">&quot;{}:&quot;</span>, s.trim_matches(<span class="string">&#39;&quot;&#39;</span>))
+            } <span class="kw">else </span>{
+                s.to_string()
+            }
+        }
+        <span class="kw">_ </span>=&gt; <span class="string">&quot;&quot;</span>.to_string(),
+    }
 }
 
 <span class="doccomment">/// Match a topic and a string pattern
