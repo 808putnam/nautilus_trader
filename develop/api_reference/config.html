@@ -5988,6 +5988,111 @@ If
              </span>
             </span>
            </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              types_filter
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              list
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              type
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="p">
+              <span class="pre">
+               |
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              autotrim_mins
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              int
+             </span>
+             <span class="w">
+             </span>
+             <span class="p">
+              <span class="pre">
+               |
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
            <span class="sig-paren">
             )
            </span>
@@ -6124,6 +6229,55 @@ If
                  False
                 </cite>
                 then will persit as UNIX nanoseconds.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 types_filter
+                </strong>
+                (
+                <em>
+                 list
+                </em>
+                <em>
+                 [
+                </em>
+                <em>
+                 type
+                </em>
+                <em>
+                 ]
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – A list of serializable types
+                <em>
+                 not
+                </em>
+                to publish externally.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 autotrim_mins
+                </strong>
+                (
+                <em>
+                 int
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The streams lookback window in minutes to be autotrimmed.
                </p>
               </li>
              </ul>
