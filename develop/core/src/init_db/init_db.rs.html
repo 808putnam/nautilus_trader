@@ -50,7 +50,7 @@
     <span class="comment">// load envs if exists
     </span>dotenv().ok();
     <span class="kw">let </span>db = Database::new(<span class="prelude-val">None</span>, <span class="prelude-val">None</span>).<span class="kw">await</span>;
-    <span class="kw">let </span>sql_schema_dir = <span class="string">&quot;../schema/sql&quot;</span>;
+    <span class="kw">let </span>sql_schema_dir = <span class="string">&quot;../schema&quot;</span>;
     init_db_schema(<span class="kw-2">&amp;</span>db, sql_schema_dir).<span class="kw">await</span><span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }

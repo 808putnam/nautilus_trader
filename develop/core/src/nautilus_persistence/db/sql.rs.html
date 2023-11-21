@@ -169,7 +169,7 @@
 
     <span class="kw">async fn </span>setup_sql_cache_database() -&gt; SqlCacheDatabase {
         <span class="kw">let </span>db = setup_test_database().<span class="kw">await</span>;
-        <span class="kw">let </span>schema_dir = <span class="string">&quot;../../schema/sql&quot;</span>;
+        <span class="kw">let </span>schema_dir = <span class="string">&quot;../../schema&quot;</span>;
         init_db_schema(<span class="kw-2">&amp;</span>db, schema_dir)
             .<span class="kw">await
             </span>.expect(<span class="string">&quot;Failed to init db schema&quot;</span>);
