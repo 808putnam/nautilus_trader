@@ -830,7 +830,7 @@
     handler: PyObject,
     headers: Vec&lt;(String, String)&gt;,
     heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
-    message: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    heartbeat_msg: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
 <span class="attr">#[pymethods]
@@ -841,14 +841,14 @@
         handler: PyObject,
         headers: Vec&lt;(String, String)&gt;,
         heartbeat: <span class="prelude-ty">Option</span>&lt;u64&gt;,
-        message: <span class="prelude-ty">Option</span>&lt;String&gt;,
+        heartbeat_msg: <span class="prelude-ty">Option</span>&lt;String&gt;,
     ) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             url,
             handler,
             headers,
             heartbeat,
-            message,
+            heartbeat_msg,
         }
     }
 }
@@ -883,7 +883,7 @@
             handler,
             heartbeat,
             headers,
-            message,
+            heartbeat_msg,
         } = <span class="kw-2">&amp;</span>config;
         <span class="kw">let </span>(writer, reader) = <span class="self">Self</span>::connect_with_server(url, headers.clone()).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let </span>writer = Arc::new(Mutex::new(writer));
@@ -892,7 +892,7 @@
         </span><span class="kw">let </span>read_task = <span class="self">Self</span>::spawn_read_task(reader, handler.clone());
 
         <span class="kw">let </span>heartbeat_task =
-            <span class="self">Self</span>::spawn_heartbeat_task(<span class="kw-2">*</span>heartbeat, message.clone(), writer.clone());
+            <span class="self">Self</span>::spawn_heartbeat_task(<span class="kw-2">*</span>heartbeat, heartbeat_msg.clone(), writer.clone());
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             config,
@@ -1032,7 +1032,7 @@
         <span class="self">self</span>.read_task = <span class="self">Self</span>::spawn_read_task(reader, <span class="self">self</span>.config.handler.clone());
         <span class="self">self</span>.heartbeat_task = <span class="self">Self</span>::spawn_heartbeat_task(
             <span class="self">self</span>.config.heartbeat,
-            <span class="self">self</span>.config.message.clone(),
+            <span class="self">self</span>.config.heartbeat_msg.clone(),
             <span class="self">self</span>.writer.clone(),
         );
 
