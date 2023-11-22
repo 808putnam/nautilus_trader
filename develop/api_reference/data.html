@@ -4534,7 +4534,13 @@ specification, then a bar is created and sent to the handler.
              bool
             </span>
             <span class="pre">
-             timestamp_on_close=True
+             timestamp_on_close=True,
+            </span>
+            <span class="pre">
+             unicode
+            </span>
+            <span class="pre">
+             interval_type=u'left-open'
             </span>
            </em>
            <span class="sig-paren">
@@ -4697,6 +4703,26 @@ a bar is created and sent to the handler.
                 </cite>
                 will be bar close.
 If False then timestamp will be bar open.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 interval_type
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default 'left-open'
+                </em>
+                ) – Determines the type of interval used for time aggregation.
+- ‘left-open’: start time is excluded and end time is included (default).
+- ‘right-open’: start time is included and end time is excluded.
                </p>
               </li>
              </ul>
