@@ -7472,6 +7472,40 @@ whether the instrument should be loaded
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              time_bars_interval_type
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              'left-open'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               validate_data_sequence
              </span>
             </span>
@@ -7611,6 +7645,26 @@ whether the instrument should be loaded
                 </cite>
                 on bar close.
 If False then will timestamp on bar open.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 time_bars_interval_type
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default 'left-open'
+                </em>
+                ) – Determines the type of interval used for time aggregation.
+- ‘left-open’: start time is excluded and end time is included (default).
+- ‘right-open’: start time is included and end time is excluded.
                </p>
               </li>
               <li>
@@ -21487,6 +21541,14 @@ client).
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              time_bars_interval_type='left-open'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               validate_data_sequence=False
              </span>
             </span>
@@ -23442,6 +23504,40 @@ A valid configuration must include at least one data config.
             <span class="default_value">
              <span class="pre">
               True
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              time_bars_interval_type
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              'left-open'
              </span>
             </span>
            </em>
@@ -27162,6 +27258,14 @@ are colocated with the venue (to avoid the potential for race conditions).
             <span class="n">
              <span class="pre">
               time_bars_timestamp_on_close=True
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              time_bars_interval_type='left-open'
              </span>
             </span>
            </em>
