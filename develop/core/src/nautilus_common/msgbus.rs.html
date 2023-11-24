@@ -715,6 +715,19 @@
 <a href="#715" id="715">715</a>
 <a href="#716" id="716">716</a>
 <a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -866,6 +879,8 @@
     </span>correlation_index: IndexMap&lt;UUID4, MessageHandler&gt;,
     <span class="doccomment">/// The trader ID associated with the message bus.
     </span><span class="kw">pub </span>trader_id: TraderId,
+    <span class="doccomment">/// The instance ID associated with the message bus.
+    </span><span class="kw">pub </span>instance_id: UUID4,
     <span class="doccomment">/// The name for the message bus.
     </span><span class="kw">pub </span>name: String,
     <span class="comment">// The count of messages sent through the bus.
@@ -885,6 +900,7 @@
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(
         trader_id: TraderId,
+        instance_id: UUID4,
         name: <span class="prelude-ty">Option</span>&lt;String&gt;,
         config: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, Value&gt;&gt;,
     ) -&gt; <span class="self">Self </span>{
@@ -893,7 +909,7 @@
         <span class="kw">let </span>tx = <span class="kw">if </span>has_backing {
             <span class="kw">let </span>(tx, rx) = channel::&lt;BusMessage&gt;();
             thread::spawn(<span class="kw">move </span>|| {
-                <span class="self">Self</span>::handle_messages(trader_id.value.as_ref(), config, rx);
+                <span class="self">Self</span>::handle_messages(trader_id.value.as_ref(), instance_id, config, rx);
             });
             <span class="prelude-val">Some</span>(tx)
         } <span class="kw">else </span>{
@@ -903,6 +919,7 @@
         <span class="self">Self </span>{
             tx,
             trader_id,
+            instance_id,
             name: name.unwrap_or_else(|| <span class="macro">stringify!</span>(MessageBus).to_owned()),
             sent_count: <span class="number">0</span>,
             req_count: <span class="number">0</span>,
@@ -1114,14 +1131,19 @@
         }
     }
 
-    <span class="kw">fn </span>handle_messages(trader_id: <span class="kw-2">&amp;</span>str, config: HashMap&lt;String, Value&gt;, rx: Receiver&lt;BusMessage&gt;) {
+    <span class="kw">fn </span>handle_messages(
+        trader_id: <span class="kw-2">&amp;</span>str,
+        instance_id: UUID4,
+        config: HashMap&lt;String, Value&gt;,
+        rx: Receiver&lt;BusMessage&gt;,
+    ) {
         <span class="kw">let </span>_autotrim_mins = config
             .get(<span class="string">&quot;autotrim_mins&quot;</span>)
             .and_then(|v| v.as_u64())
             .unwrap_or(<span class="number">0</span>) <span class="kw">as </span>usize;
         <span class="kw">let </span>redis_url = get_redis_url(<span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>client = redis::Client::open(redis_url).unwrap();
-        <span class="kw">let </span>stream = get_stream_name(<span class="kw-2">&amp;</span>config);
+        <span class="kw">let </span>stream = get_stream_name(<span class="kw-2">&amp;</span>config, instance_id);
         <span class="kw">let </span><span class="kw-2">mut </span>conn = client.get_connection().unwrap();
 
         <span class="comment">// Continue to receive and handle bus messages until channel is hung up
@@ -1167,17 +1189,21 @@
     )
 }
 
-<span class="kw">pub fn </span>get_stream_name(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
-    <span class="kw">match </span>config.get(<span class="string">&quot;stream&quot;</span>) {
-        <span class="prelude-val">Some</span>(Value::String(s)) =&gt; {
-            <span class="kw">if </span>!s.is_empty() {
-                <span class="macro">format!</span>(<span class="string">&quot;{}:&quot;</span>, s.trim_matches(<span class="string">&#39;&quot;&#39;</span>))
-            } <span class="kw">else </span>{
-                s.to_string()
-            }
+<span class="kw">pub fn </span>get_stream_name(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;, instance_id: UUID4) -&gt; String {
+    <span class="kw">let </span><span class="kw-2">mut </span>name = String::new();
+
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::String(s)) = config.get(<span class="string">&quot;stream&quot;</span>) {
+        <span class="kw">if </span>!s.is_empty() {
+            name.push_str(s.trim_matches(<span class="string">&#39;&quot;&#39;</span>));
+            name.push(<span class="string">&#39;:&#39;</span>);
         }
-        <span class="kw">_ </span>=&gt; <span class="string">&quot;&quot;</span>.to_string(),
     }
+
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::Bool(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_instance_id&quot;</span>) {
+        name.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{instance_id}:&quot;</span>));
+    }
+
+    name
 }
 
 <span class="doccomment">/// Match a topic and a string pattern
@@ -1219,14 +1245,14 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::rc::Rc;
 
-    <span class="kw">use </span>nautilus_core::message::Message;
+    <span class="kw">use </span>nautilus_core::{message::Message, uuid::UUID4};
     <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::handlers::MessageHandler;
 
     <span class="kw">fn </span>stub_msgbus() -&gt; MessageBus {
-        MessageBus::new(TraderId::from(<span class="string">&quot;trader-001&quot;</span>), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)
+        MessageBus::new(TraderId::from(<span class="string">&quot;trader-001&quot;</span>), UUID4::new(), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)
     }
 
     <span class="kw">fn </span>stub_rust_callback() -&gt; Rc&lt;<span class="kw">dyn </span>Fn(Message)&gt; {
@@ -1238,7 +1264,7 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new() {
         <span class="kw">let </span>trader_id = TraderId::from(<span class="string">&quot;trader-001&quot;</span>);
-        <span class="kw">let </span>msgbus = MessageBus::new(trader_id, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
+        <span class="kw">let </span>msgbus = MessageBus::new(trader_id, UUID4::new(), <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
 
         <span class="macro">assert_eq!</span>(msgbus.trader_id, trader_id);
         <span class="macro">assert_eq!</span>(msgbus.name, <span class="macro">stringify!</span>(MessageBus));
