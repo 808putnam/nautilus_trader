@@ -813,7 +813,7 @@
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
         <span class="macro">write!</span>(
             f,
-            <span class="string">&quot;OrderDenied(instrument_id={}, client_order_id={},reason={})&quot;</span>,
+            <span class="string">&quot;OrderDenied(instrument_id={}, client_order_id={}, reason={})&quot;</span>,
             <span class="self">self</span>.instrument_id, <span class="self">self</span>.client_order_id, <span class="self">self</span>.reason
         )
     }
@@ -1103,7 +1103,7 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_order_denied_display(order_denied_max_submitted_rate: OrderDenied) {
         <span class="kw">let </span>display = <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, order_denied_max_submitted_rate);
-        <span class="macro">assert_eq!</span>(display, <span class="string">&quot;OrderDenied(instrument_id=BTCUSDT.COINBASE, client_order_id=O-20200814-102234-001-001-1,reason=Exceeded MAX_ORDER_SUBMIT_RATE)&quot;</span>);
+        <span class="macro">assert_eq!</span>(display, <span class="string">&quot;OrderDenied(instrument_id=BTCUSDT.COINBASE, client_order_id=O-20200814-102234-001-001-1, reason=Exceeded MAX_ORDER_SUBMIT_RATE)&quot;</span>);
     }
 }
 </code></pre></div></section></main></body></html>
