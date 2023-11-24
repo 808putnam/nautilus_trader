@@ -406,7 +406,7 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>est_set_client_order_id_count(<span class="kw-2">mut </span>order_factory: OrderFactory) {
+    </span><span class="kw">fn </span>test_set_client_order_id_count(<span class="kw-2">mut </span>order_factory: OrderFactory) {
         order_factory.set_client_order_id_count(<span class="number">10</span>);
         <span class="kw">let </span>client_order_id = order_factory.generate_client_order_id();
         <span class="macro">assert_eq!</span>(
@@ -416,7 +416,7 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>est_set_order_list_id_count(<span class="kw-2">mut </span>order_factory: OrderFactory) {
+    </span><span class="kw">fn </span>test_set_order_list_id_count(<span class="kw-2">mut </span>order_factory: OrderFactory) {
         order_factory.set_order_list_id_count(<span class="number">10</span>);
         <span class="kw">let </span>order_list_id = order_factory.generate_order_list_id();
         <span class="macro">assert_eq!</span>(
