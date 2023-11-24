@@ -293,6 +293,9 @@
 <a href="#293" id="293">293</a>
 <a href="#294" id="294">294</a>
 <a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -320,6 +323,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::enums;
 
 <span class="kw">pub mod </span>data;
+<span class="kw">pub mod </span>events;
 <span class="kw">pub mod </span>identifiers;
 <span class="kw">pub mod </span>instruments;
 <span class="kw">pub mod </span>macros;
@@ -586,6 +590,8 @@
     m.add_class::&lt;<span class="kw">crate</span>::instruments::futures_contract::FuturesContract&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::options_contract::OptionsContract&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::synthetic::SyntheticInstrument&gt;()<span class="question-mark">?</span>;
+    <span class="comment">// events
+    </span>m.add_class::&lt;<span class="kw">crate</span>::events::order::OrderDenied&gt;()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>
