@@ -2194,7 +2194,7 @@ generates unique filenames for different data sets.
             </p>
             <p>
              Expects columns [‘open’, ‘high’, ‘low’, ‘close’, ‘volume’] with ‘timestamp’ index.
-Note: The ‘volume’ column is optional, will then use the
+Note: The ‘volume’ column is optional, if one does not exist then will use the
              <cite>
               default_volume
              </cite>
@@ -2833,6 +2833,46 @@ the data source and the Nautilus system. Cannot be negative.
                int
               </span>
               <span class="pre">
+               offset_interval_ms:
+              </span>
+              <span class="pre">
+               int
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               100
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               timestamp_is_close:
+              </span>
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               True
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               int
+              </span>
+              <span class="pre">
                random_seed:
               </span>
               <span class="pre">
@@ -2954,6 +2994,34 @@ the data source and the Nautilus system.
                <li>
                 <p>
                  <strong>
+                  offset_interval_ms
+                 </strong>
+                 (
+                 <em>
+                  int
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default 100
+                 </em>
+                 ) – The number of milliseconds to offset each tick for the bar timestamps.
+If
+                 <cite>
+                  timestamp_is_close
+                 </cite>
+                 then will use negative offsets,
+otherwise will use positive offsets (see also
+                 <cite>
+                  timestamp_is_close
+                 </cite>
+                 ).
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
                   random_seed
                  </strong>
                  (
@@ -2992,6 +3060,26 @@ data. If random_seed is
                   default False
                  </em>
                  ) – If the data is scaled to the Nautilus fixed precision.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  timestamp_is_close
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If bar timestamps are at the close.
+If True then open, high, low timestamps are offset before the close timestamp.
+If False then high, low, close timestamps are offset after the open timestamp.
                 </p>
                </li>
               </ul>
