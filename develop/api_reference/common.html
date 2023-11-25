@@ -3062,6 +3062,24 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.common.component.MessageBus.snapshot_orders">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    MessageBus.snapshot_orders
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.common.component.MessageBus.snapshot_positions">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    MessageBus.snapshot_positions
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.common.component.MessageBus.subscribe">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -24776,6 +24794,46 @@ then the component state will not change, and an error will be logged.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              snapshot_orders:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              snapshot_positions:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               config:
              </span>
              <span class="pre">
@@ -24997,6 +25055,42 @@ For example,
                  optional
                 </em>
                 ) – The serializer for database operations.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 snapshot_orders
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If order state snapshots should be published externally.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 snapshot_positions
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If position state snapshots should be published externally.
                </p>
               </li>
               <li>
@@ -26372,6 +26466,70 @@ If
                <p>
                 <cite>
                  Serializer
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.common.component.MessageBus.snapshot_orders">
+             <span class="sig-name descname">
+              <span class="pre">
+               snapshot_orders
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.common.component.MessageBus.snapshot_orders" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              If order state snapshots should be published externally.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 bool
+                </cite>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py attribute">
+            <dt class="sig sig-object py" id="nautilus_trader.common.component.MessageBus.snapshot_positions">
+             <span class="sig-name descname">
+              <span class="pre">
+               snapshot_positions
+              </span>
+             </span>
+             <a class="headerlink" href="#nautilus_trader.common.component.MessageBus.snapshot_positions" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              If position state snapshots should be published externally.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <cite>
+                 bool
                 </cite>
                </p>
               </dd>
