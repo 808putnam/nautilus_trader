@@ -173,11 +173,6 @@
 <a href="#173" id="173">173</a>
 <a href="#174" id="174">174</a>
 <a href="#175" id="175">175</a>
-<a href="#176" id="176">176</a>
-<a href="#177" id="177">177</a>
-<a href="#178" id="178">178</a>
-<a href="#179" id="179">179</a>
-<a href="#180" id="180">180</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -297,19 +292,14 @@
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     re_export_module_attributes(m, n)<span class="question-mark">?</span>;
 
-    <span class="comment">// TODO: Currently experiencing the following issue when trying to add `common`
-    // error[E0631]: type mismatch in closure arguments
-    // = note: expected closure signature `fn(pyo3::Python&lt;&#39;_&gt;) -&gt; _`
-    //         found closure signature `fn(pyo3::marker::Python&lt;&#39;_&gt;) -&gt; _`
+    <span class="comment">// Common
+    </span><span class="kw">let </span>n = <span class="string">&quot;common&quot;</span>;
+    <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_common::python::common);
+    m.add_wrapped(submodule)<span class="question-mark">?</span>;
+    sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    re_export_module_attributes(m, n)<span class="question-mark">?</span>;
 
-    // Common
-    // let n = &quot;common&quot;;
-    // let submodule = pyo3::wrap_pymodule!(nautilus_common::python::common);
-    // m.add_wrapped(submodule)?;
-    // sys_modules.set_item(format!(&quot;{module_name}.{n}&quot;), m.getattr(n)?)?;
-    // re_export_module_attributes(m, n)?;
-
-    // Model
+    <span class="comment">// Model
     </span><span class="kw">let </span>n = <span class="string">&quot;model&quot;</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_model::python::model);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;

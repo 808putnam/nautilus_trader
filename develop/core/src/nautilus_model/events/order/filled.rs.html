@@ -203,7 +203,6 @@
 <a href="#203" id="203">203</a>
 <a href="#204" id="204">204</a>
 <a href="#205" id="205">205</a>
-<a href="#206" id="206">206</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -219,7 +218,7 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::{fmt::Display, str::FromStr};
+</span><span class="kw">use </span>std::fmt::Display;
 
 <span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>derive_builder::{<span class="self">self</span>, Builder};
@@ -376,8 +375,7 @@
             <span class="self">self</span>.order_type,
             <span class="self">self</span>.last_qty,
             <span class="self">self</span>.last_px,
-            <span class="self">self</span>.commission
-                .unwrap_or(Money::from_str(<span class="string">&quot;0.0 USD&quot;</span>).unwrap()),
+            <span class="self">self</span>.commission.unwrap_or(Money::from(<span class="string">&quot;0.0 USD&quot;</span>)),
             <span class="self">self</span>.liquidity_side,
             <span class="self">self</span>.ts_event
         )

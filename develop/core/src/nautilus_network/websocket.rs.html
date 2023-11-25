@@ -783,6 +783,9 @@
 <a href="#783" id="783">783</a>
 <a href="#784" id="784">784</a>
 <a href="#785" id="785">785</a>
+<a href="#786" id="786">786</a>
+<a href="#787" id="787">787</a>
+<a href="#788" id="788">788</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -911,10 +914,13 @@
         <span class="kw">let </span><span class="kw-2">mut </span>request = url.into_client_request()<span class="question-mark">?</span>;
         <span class="kw">let </span>req_headers = request.headers_mut();
 
-        <span class="kw">for </span>(key, val) <span class="kw">in </span>headers {
+        <span class="comment">// Hacky solution to overcome the new `http` trait bounds
+        </span><span class="kw">for </span>(key, val) <span class="kw">in </span>headers {
             <span class="kw">let </span>header_value = HeaderValue::from_str(<span class="kw-2">&amp;</span>val).unwrap();
             <span class="kw">let </span>header_name = HeaderName::from_str(<span class="kw-2">&amp;</span>key).unwrap();
-            req_headers.insert(header_name, header_value);
+            <span class="kw">let </span>header_name_string = header_name.to_string();
+            <span class="kw">let </span>header_name_str: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = Box::leak(header_name_string.into_boxed_str());
+            req_headers.insert(header_name_str, header_value);
         }
 
         connect_async(request).<span class="kw">await</span>.map(|resp| resp.<span class="number">0</span>.split())

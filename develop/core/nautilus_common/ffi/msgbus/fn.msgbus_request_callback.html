@@ -2,7 +2,7 @@
 pub unsafe extern &quot;C&quot; fn msgbus_request_callback(
     bus: &amp;mut <a class="struct" href="struct.MessageBus_API.html" title="struct nautilus_common::ffi::msgbus::MessageBus_API">MessageBus_API</a>,
     endpoint_ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="https://doc.rust-lang.org/nightly/core/ffi/type.c_char.html" title="type core::ffi::c_char">c_char</a>,
-    request_id: <a class="struct" href="../../../nautilus_core/uuid/struct.UUID4.html" title="struct nautilus_core::uuid::UUID4">UUID4</a>,
+    request_id: UUID4,
     handler_id_ptr: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="https://doc.rust-lang.org/nightly/core/ffi/type.c_char.html" title="type core::ffi::c_char">c_char</a>
 ) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.pointer.html">*const </a><a class="type" href="https://doc.rust-lang.org/nightly/core/ffi/type.c_char.html" title="type core::ffi::c_char">c_char</a></code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="safety"><a href="#safety">Safety</a></h2>
 <ul>
