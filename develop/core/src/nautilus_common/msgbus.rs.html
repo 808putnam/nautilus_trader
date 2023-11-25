@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/msgbus.rs`."><title>msgbus.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (a1a37735c 2023-11-23)" data-channel="nightly" data-search-js="search-f4028ef4dd0903c7.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/msgbus.rs`."><title>msgbus.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (37b2813a7 2023-11-24)" data-channel="nightly" data-search-js="search-f4028ef4dd0903c7.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -724,6 +724,49 @@
 <a href="#724" id="724">724</a>
 <a href="#725" id="725">725</a>
 <a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
+<a href="#731" id="731">731</a>
+<a href="#732" id="732">732</a>
+<a href="#733" id="733">733</a>
+<a href="#734" id="734">734</a>
+<a href="#735" id="735">735</a>
+<a href="#736" id="736">736</a>
+<a href="#737" id="737">737</a>
+<a href="#738" id="738">738</a>
+<a href="#739" id="739">739</a>
+<a href="#740" id="740">740</a>
+<a href="#741" id="741">741</a>
+<a href="#742" id="742">742</a>
+<a href="#743" id="743">743</a>
+<a href="#744" id="744">744</a>
+<a href="#745" id="745">745</a>
+<a href="#746" id="746">746</a>
+<a href="#747" id="747">747</a>
+<a href="#748" id="748">748</a>
+<a href="#749" id="749">749</a>
+<a href="#750" id="750">750</a>
+<a href="#751" id="751">751</a>
+<a href="#752" id="752">752</a>
+<a href="#753" id="753">753</a>
+<a href="#754" id="754">754</a>
+<a href="#755" id="755">755</a>
+<a href="#756" id="756">756</a>
+<a href="#757" id="757">757</a>
+<a href="#758" id="758">758</a>
+<a href="#759" id="759">759</a>
+<a href="#760" id="760">760</a>
+<a href="#761" id="761">761</a>
+<a href="#762" id="762">762</a>
+<a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
+<a href="#767" id="767">767</a>
+<a href="#768" id="768">768</a>
+<a href="#769" id="769">769</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -745,10 +788,11 @@
     hash::{Hash, Hasher},
     sync::mpsc::{channel, Receiver, SendError, Sender},
     thread,
+    time::Duration,
 };
 
 <span class="kw">use </span>indexmap::IndexMap;
-<span class="kw">use </span>nautilus_core::uuid::UUID4;
+<span class="kw">use </span>nautilus_core::{time::duration_since_unix_epoch, uuid::UUID4};
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
 <span class="kw">use </span>redis::<span class="kw-2">*</span>;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
@@ -835,6 +879,10 @@
         )
     }
 }
+
+<span class="kw">const </span>_DELIMITER: char = <span class="string">&#39;:&#39;</span>;
+<span class="kw">const </span>_XTRIM: <span class="kw-2">&amp;</span>str = <span class="string">&quot;XTRIM&quot;</span>;
+<span class="kw">const </span>_MINID: <span class="kw-2">&amp;</span>str = <span class="string">&quot;MINID&quot;</span>;
 
 <span class="doccomment">/// Provides a generic message bus to facilitate various messaging patterns.
 ///
@@ -1135,17 +1183,47 @@
     ) {
         <span class="kw">let </span>redis_url = get_redis_url(<span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>client = redis::Client::open(redis_url).unwrap();
-        <span class="kw">let </span>stream = get_stream_name(<span class="kw-2">&amp;</span>config, instance_id);
+        <span class="kw">let </span>stream_name = get_stream_name(<span class="kw-2">&amp;</span>config, trader_id, instance_id);
+        <span class="kw">let </span>autotrim_mins = config
+            .get(<span class="string">&quot;autotrim_mins&quot;</span>)
+            .and_then(|v| v.as_u64())
+            .unwrap_or(<span class="number">0</span>) <span class="kw">as </span>usize;
+        <span class="kw">let </span>autotrim_duration = Duration::from_secs(autotrim_mins <span class="kw">as </span>u64 * <span class="number">60</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>last_trim_index: HashMap&lt;String, usize&gt; = HashMap::new();
         <span class="kw">let </span><span class="kw-2">mut </span>conn = client.get_connection().unwrap();
 
         <span class="comment">// Continue to receive and handle bus messages until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = rx.recv() {
-            <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;{stream}{trader_id}:{}&quot;</span>, <span class="kw-2">&amp;</span>msg.topic);
+            <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;{stream_name}{}&quot;</span>, <span class="kw-2">&amp;</span>msg.topic);
             <span class="kw">let </span>items: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>Vec&lt;u8&gt;)&gt; = <span class="macro">vec!</span>[(<span class="string">&quot;payload&quot;</span>, <span class="kw-2">&amp;</span>msg.payload)];
             <span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;(), redis::RedisError&gt; = conn.xadd(<span class="kw-2">&amp;</span>key, <span class="string">&quot;*&quot;</span>, <span class="kw-2">&amp;</span>items);
 
             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = result {
                 <span class="macro">eprintln!</span>(<span class="string">&quot;Error publishing message: {e}&quot;</span>);
+            }
+
+            <span class="kw">if </span>autotrim_mins == <span class="number">0 </span>{
+                <span class="kw">return</span>; <span class="comment">// Nothing else to do
+            </span>}
+
+            <span class="comment">// Autotrim stream
+            </span><span class="kw">let </span>last_trim_ms = last_trim_index.entry(key.clone()).or_insert(<span class="number">0</span>); <span class="comment">// Remove clone
+            </span><span class="kw">let </span>unix_duration_now = duration_since_unix_epoch();
+
+            <span class="comment">// Improve efficiency of this by batching
+            </span><span class="kw">if </span><span class="kw-2">*</span>last_trim_ms &lt; (unix_duration_now - Duration::from_secs(<span class="number">60</span>)).as_millis() <span class="kw">as </span>usize {
+                <span class="kw">let </span>min_timestamp_ms = (unix_duration_now - autotrim_duration).as_millis() <span class="kw">as </span>usize;
+                <span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;(), redis::RedisError&gt; = redis::cmd(_XTRIM)
+                    .arg(<span class="kw-2">&amp;</span>key)
+                    .arg(_MINID)
+                    .arg(min_timestamp_ms)
+                    .query(<span class="kw-2">&amp;mut </span>conn);
+
+                <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = result {
+                    <span class="macro">eprintln!</span>(<span class="string">&quot;Error trimming stream &#39;{key}&#39;: {e}&quot;</span>);
+                } <span class="kw">else </span>{
+                    last_trim_index.insert(key, unix_duration_now.as_millis() <span class="kw">as </span>usize);
+                }
             }
         }
     }
@@ -1181,21 +1259,29 @@
     )
 }
 
-<span class="kw">pub fn </span>get_stream_name(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;, instance_id: UUID4) -&gt; String {
-    <span class="kw">let </span><span class="kw-2">mut </span>name = String::new();
+<span class="kw">pub fn </span>get_stream_name(
+    config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;,
+    trader_id: <span class="kw-2">&amp;</span>str,
+    instance_id: UUID4,
+) -&gt; String {
+    <span class="kw">let </span><span class="kw-2">mut </span>stream_name = String::new();
 
     <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::String(s)) = config.get(<span class="string">&quot;stream&quot;</span>) {
         <span class="kw">if </span>!s.is_empty() {
-            name.push_str(s.trim_matches(<span class="string">&#39;&quot;&#39;</span>));
-            name.push(<span class="string">&#39;:&#39;</span>);
+            stream_name.push_str(s.trim_matches(<span class="string">&#39;&quot;&#39;</span>));
+            stream_name.push(_DELIMITER);
         }
     }
 
+    stream_name.push_str(trader_id);
+    stream_name.push(_DELIMITER);
+
     <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::Bool(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_instance_id&quot;</span>) {
-        name.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{instance_id}:&quot;</span>));
+        stream_name.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{instance_id}&quot;</span>));
+        stream_name.push(_DELIMITER);
     }
 
-    name
+    stream_name
 }
 
 <span class="doccomment">/// Match a topic and a string pattern
