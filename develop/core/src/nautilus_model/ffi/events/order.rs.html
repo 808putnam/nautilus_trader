@@ -339,6 +339,8 @@
 <a href="#339" id="339">339</a>
 <a href="#340" id="340">340</a>
 <a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -360,7 +362,9 @@
 
 <span class="kw">use crate</span>::{
     events::order::{
-        OrderAccepted, OrderDenied, OrderEmulated, OrderRejected, OrderReleased, OrderSubmitted,
+        order_accepted::OrderAccepted, order_denied::OrderDenied, order_emulated::OrderEmulated,
+        order_rejected::OrderRejected, order_released::OrderReleased,
+        order_submitted::OrderSubmitted,
     },
     identifiers::{
         account_id::AccountId, client_order_id::ClientOrderId, instrument_id::InstrumentId,
