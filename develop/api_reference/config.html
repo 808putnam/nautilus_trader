@@ -3491,121 +3491,6 @@
              </span>
             </span>
            </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              snapshot_orders
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              bool
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              snapshot_positions
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              bool
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              snapshot_positions_interval
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <span class="pre">
-              float
-             </span>
-             <span class="p">
-              <span class="pre">
-               ]
-              </span>
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              None
-             </span>
-            </span>
-           </em>
            <span class="sig-paren">
             )
            </span>
@@ -3676,73 +3561,6 @@
                  default 10_000
                 </em>
                 ) – The maximum length for internal bar dequeues.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 snapshot_orders
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default False
-                </em>
-                ) – If order state snapshot lists should be persisted.
-Snapshots will be taken at every order state update (when events are applied).
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 snapshot_positions
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default False
-                </em>
-                ) – If position state snapshot lists should be persisted.
-Snapshots will be taken at position opened, changed and closed (when events are applied).
-To include the unrealized PnL in the snapshot then quotes for the positions instrument must
-be available in the cache.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
-                 snapshot_positions_interval
-                </strong>
-                (
-                <em>
-                 PositiveFloat
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 optional
-                </em>
-                ) – The interval (seconds) at which additional position state snapshots are persisted.
-If
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  None
-                 </span>
-                </code>
-                then no additional snapshots will be taken.
-To include the unrealized PnL in the snapshot then quotes for the positions instrument must
-be available in the cache.
                </p>
               </li>
              </ul>
@@ -5462,6 +5280,12 @@ If
              </ul>
             </dd>
            </dl>
+           <p class="rubric">
+            Notes
+           </p>
+           <p>
+            Requires Redis version 6.2.0 and above for correct operation.
+           </p>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.config.common.DatabaseConfig.dict">
              <span class="sig-name descname">
@@ -6329,8 +6153,11 @@ If
                 <em>
                  optional
                 </em>
-                ) – The streams lookback window in minutes to be autotrimmed.
-Note: requires Redis version &gt;= 6.2.0 otherwise will result in a command syntax error.
+                ) – The lookback window in minutes for automatic stream trimming.
+The actual window may extend up to one minute beyond the specified value since streams are
+trimmed at most once every minute.
+Note that this feature requires Redis version 6.2.0 or higher; otherwise it will result
+in acommand syntax error.
                </p>
               </li>
              </ul>
@@ -17700,6 +17527,57 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              snapshot_orders:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              snapshot_positions:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              snapshot_positions_interval:
+             </span>
+             <span class="pre">
+              ~typing.Optional[float]
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               timeout_connection:
              </span>
              <span class="pre">
@@ -18176,6 +18054,113 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                  default False
                 </em>
                 ) – If the asyncio event loop should be in debug mode.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 logging
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.config.common.LoggingConfig" title="nautilus_trader.config.common.LoggingConfig">
+                 <em>
+                  LoggingConfig
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The logging config for the kernel.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 tracing
+                </strong>
+                (
+                <a class="reference internal" href="#nautilus_trader.config.common.TracingConfig" title="nautilus_trader.config.common.TracingConfig">
+                 <em>
+                  TracingConfig
+                 </em>
+                </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The tracing (core logging) config for the kernel.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 snapshot_orders
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If order state snapshot lists should be persisted.
+Snapshots will be taken at every order state update (when events are applied).
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 snapshot_positions
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If position state snapshot lists should be persisted.
+Snapshots will be taken at position opened, changed and closed (when events are applied).
+To include the unrealized PnL in the snapshot then quotes for the positions instrument must
+be available in the cache.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 snapshot_positions_interval
+                </strong>
+                (
+                <em>
+                 PositiveFloat
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The interval (seconds) at which additional position state snapshots are persisted.
+If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                then no additional snapshots will be taken.
+To include the unrealized PnL in the snapshot then quotes for the positions instrument must
+be available in the cache.
                </p>
               </li>
               <li>
@@ -21927,6 +21912,57 @@ client).
              </span>
              <span class="pre">
               None
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              snapshot_orders:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              snapshot_positions:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              snapshot_positions_interval:
+             </span>
+             <span class="pre">
+              ~typing.Optional[float]
              </span>
              <span class="pre">
               =
@@ -27723,6 +27759,57 @@ are colocated with the venue (to avoid the potential for race conditions).
              </span>
              <span class="pre">
               None
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              snapshot_orders:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              snapshot_positions:
+             </span>
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              snapshot_positions_interval:
+             </span>
+             <span class="pre">
+              ~typing.Optional[float]
              </span>
              <span class="pre">
               =

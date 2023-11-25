@@ -880,9 +880,9 @@
     }
 }
 
-<span class="kw">const </span>_DELIMITER: char = <span class="string">&#39;:&#39;</span>;
-<span class="kw">const </span>_XTRIM: <span class="kw-2">&amp;</span>str = <span class="string">&quot;XTRIM&quot;</span>;
-<span class="kw">const </span>_MINID: <span class="kw-2">&amp;</span>str = <span class="string">&quot;MINID&quot;</span>;
+<span class="kw">const </span>DELIMITER: char = <span class="string">&#39;:&#39;</span>;
+<span class="kw">const </span>XTRIM: <span class="kw-2">&amp;</span>str = <span class="string">&quot;XTRIM&quot;</span>;
+<span class="kw">const </span>MINID: <span class="kw-2">&amp;</span>str = <span class="string">&quot;MINID&quot;</span>;
 
 <span class="doccomment">/// Provides a generic message bus to facilitate various messaging patterns.
 ///
@@ -1213,9 +1213,9 @@
             <span class="comment">// Improve efficiency of this by batching
             </span><span class="kw">if </span><span class="kw-2">*</span>last_trim_ms &lt; (unix_duration_now - Duration::from_secs(<span class="number">60</span>)).as_millis() <span class="kw">as </span>usize {
                 <span class="kw">let </span>min_timestamp_ms = (unix_duration_now - autotrim_duration).as_millis() <span class="kw">as </span>usize;
-                <span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;(), redis::RedisError&gt; = redis::cmd(_XTRIM)
+                <span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;(), redis::RedisError&gt; = redis::cmd(XTRIM)
                     .arg(<span class="kw-2">&amp;</span>key)
-                    .arg(_MINID)
+                    .arg(MINID)
                     .arg(min_timestamp_ms)
                     .query(<span class="kw-2">&amp;mut </span>conn);
 
@@ -1269,16 +1269,16 @@
     <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::String(s)) = config.get(<span class="string">&quot;stream&quot;</span>) {
         <span class="kw">if </span>!s.is_empty() {
             stream_name.push_str(s.trim_matches(<span class="string">&#39;&quot;&#39;</span>));
-            stream_name.push(_DELIMITER);
+            stream_name.push(DELIMITER);
         }
     }
 
     stream_name.push_str(trader_id);
-    stream_name.push(_DELIMITER);
+    stream_name.push(DELIMITER);
 
     <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::Bool(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_instance_id&quot;</span>) {
         stream_name.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{instance_id}&quot;</span>));
-        stream_name.push(_DELIMITER);
+        stream_name.push(DELIMITER);
     }
 
     stream_name
