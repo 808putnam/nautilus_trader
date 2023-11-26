@@ -88,6 +88,32 @@
 <a href="#88" id="88">88</a>
 <a href="#89" id="89">89</a>
 <a href="#90" id="90">90</a>
+<a href="#91" id="91">91</a>
+<a href="#92" id="92">92</a>
+<a href="#93" id="93">93</a>
+<a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
+<a href="#99" id="99">99</a>
+<a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -103,7 +129,7 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::{fmt, rc::Rc};
+</span><span class="kw">use </span>std::{fmt, sync::Arc};
 
 <span class="kw">use </span>nautilus_core::message::Message;
 <span class="kw">use </span>pyo3::{ffi, prelude::<span class="kw-2">*</span>};
@@ -123,17 +149,39 @@
     c
 }
 
+<span class="attr">#[allow(dead_code)]
+#[derive(Clone)]
+</span><span class="kw">pub struct </span>SafeMessageCallback {
+    <span class="kw">pub </span>callback: Arc&lt;<span class="kw">dyn </span>Fn(Message) + Send&gt;,
+}
+
+<span class="kw">unsafe impl </span>Send <span class="kw">for </span>SafeMessageCallback {}
+<span class="kw">unsafe impl </span>Sync <span class="kw">for </span>SafeMessageCallback {}
+
+<span class="attr">#[allow(dead_code)]
+#[derive(Clone)]
+</span><span class="kw">pub struct </span>SafeTimeEventCallback {
+    <span class="kw">pub </span>callback: Arc&lt;<span class="kw">dyn </span>Fn(TimeEvent) + Send&gt;,
+}
+
+<span class="kw">unsafe impl </span>Send <span class="kw">for </span>SafeTimeEventCallback {}
+<span class="kw">unsafe impl </span>Sync <span class="kw">for </span>SafeTimeEventCallback {}
+
 <span class="comment">// TODO: Make this more generic
 </span><span class="attr">#[derive(Clone)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.common&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>MessageHandler {
     <span class="kw">pub </span>handler_id: Ustr,
-    _callback: <span class="prelude-ty">Option</span>&lt;Rc&lt;<span class="kw">dyn </span>Fn(Message)&gt;&gt;,
+    _callback: <span class="prelude-ty">Option</span>&lt;SafeMessageCallback&gt;,
 }
 
 <span class="kw">impl </span>MessageHandler {
     <span class="comment">// TODO: Validate exactly one of these is `Some`
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(handler_id: Ustr, callback: <span class="prelude-ty">Option</span>&lt;Rc&lt;<span class="kw">dyn </span>Fn(Message)&gt;&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(handler_id: Ustr, callback: <span class="prelude-ty">Option</span>&lt;SafeMessageCallback&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             handler_id,
             _callback: callback,
@@ -157,15 +205,19 @@
 
 <span class="comment">// TODO: Make this more generic
 </span><span class="attr">#[derive(Clone)]
+#[cfg_attr(
+    feature = <span class="string">&quot;python&quot;</span>,
+    pyo3::pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.common&quot;</span>)
+)]
 </span><span class="kw">pub struct </span>EventHandler {
     py_callback: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
-    _callback: <span class="prelude-ty">Option</span>&lt;Rc&lt;<span class="kw">dyn </span>Fn(TimeEvent)&gt;&gt;,
+    _callback: <span class="prelude-ty">Option</span>&lt;SafeTimeEventCallback&gt;,
 }
 
 <span class="kw">impl </span>EventHandler {
     <span class="comment">// TODO: Validate exactly one of these is `Some`
     </span><span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(py_callback: <span class="prelude-ty">Option</span>&lt;PyObject&gt;, callback: <span class="prelude-ty">Option</span>&lt;Rc&lt;<span class="kw">dyn </span>Fn(TimeEvent)&gt;&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(py_callback: <span class="prelude-ty">Option</span>&lt;PyObject&gt;, callback: <span class="prelude-ty">Option</span>&lt;SafeTimeEventCallback&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             py_callback,
             _callback: callback,

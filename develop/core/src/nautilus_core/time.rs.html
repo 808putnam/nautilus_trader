@@ -213,6 +213,8 @@
 <a href="#213" id="213">213</a>
 <a href="#214" id="214">214</a>
 <a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -230,8 +232,10 @@
 
 </span><span class="kw">use </span>std::{
     ops::Deref,
-    rc::Rc,
-    sync::atomic::{AtomicU64, Ordering},
+    sync::{
+        atomic::{AtomicU64, Ordering},
+        Arc,
+    },
     time::{Duration, SystemTime, UNIX_EPOCH},
 };
 
@@ -269,7 +273,7 @@
     <span class="doccomment">/// Atomic clock is operating in live or static mode
     </span>mode: ClockMode,
     <span class="doccomment">/// The last recorded time in nanoseconds for the clock
-    </span>timestamp_ns: Rc&lt;AtomicU64&gt;,
+    </span>timestamp_ns: Arc&lt;AtomicU64&gt;,
 }
 
 <span class="kw">impl </span>Deref <span class="kw">for </span>AtomicTime {
@@ -285,7 +289,7 @@
     </span><span class="kw">pub fn </span>new(mode: ClockMode, time: u64) -&gt; <span class="self">Self </span>{
         AtomicTime {
             mode,
-            timestamp_ns: Rc::new(AtomicU64::new(time)),
+            timestamp_ns: Arc::new(AtomicU64::new(time)),
         }
     }
 
