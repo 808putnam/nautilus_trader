@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["get_redis_url"],"struct":["RedisCacheDatabase"]};
+window.SIDEBAR_ITEMS = {"struct":["RedisCacheDatabase"]};

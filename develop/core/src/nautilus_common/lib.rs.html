@@ -30,6 +30,10 @@
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
 <a href="#32" id="32">32</a>
+<a href="#33" id="33">33</a>
+<a href="#34" id="34">34</a>
+<a href="#35" id="35">35</a>
+<a href="#36" id="36">36</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -47,19 +51,23 @@
 
 </span><span class="kw">pub mod </span>clock;
 <span class="kw">pub mod </span>enums;
-<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
-</span><span class="kw">pub mod </span>ffi;
+<span class="kw">pub mod </span>factories;
 <span class="kw">pub mod </span>generators;
 <span class="kw">pub mod </span>handlers;
 <span class="kw">pub mod </span>logging;
 <span class="kw">pub mod </span>msgbus;
-<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
-</span><span class="kw">pub mod </span>python;
 <span class="kw">pub mod </span>testing;
 <span class="kw">pub mod </span>timer;
 
-<span class="kw">pub mod </span>factories;
-
 <span class="attr">#[cfg(test)]
 </span><span class="kw">pub mod </span>stubs;
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+</span><span class="kw">pub mod </span>ffi;
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;python&quot;</span>)]
+</span><span class="kw">pub mod </span>python;
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;redis-msgbus&quot;</span>)]
+</span><span class="kw">pub mod </span>redis;
 </code></pre></div></section></main></body></html>
