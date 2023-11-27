@@ -145,6 +145,18 @@
 <a href="#145" id="145">145</a>
 <a href="#146" id="146">146</a>
 <a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -173,10 +185,9 @@
 <span class="kw">use </span>redis::{Commands, Connection};
 <span class="kw">use </span>serde_json::Value;
 
-<span class="kw">use </span><span class="kw">crate</span>::cache::{CacheDatabase, DatabaseOperation};
+<span class="kw">use </span><span class="kw">crate</span>::cache::{CacheDatabase, DatabaseCommand, DatabaseOperation};
 
 <span class="kw">const </span>DELIMITER: char = <span class="string">&#39;:&#39;</span>;
-<span class="kw">const </span>ADD_GENERIC: <span class="kw-2">&amp;</span>str = <span class="string">&quot;ADD_GENERIC&quot;</span>;
 
 <span class="attr">#[cfg_attr(
     feature = <span class="string">&quot;python&quot;</span>,
@@ -185,7 +196,7 @@
 </span><span class="kw">pub struct </span>RedisCacheDatabase {
     <span class="kw">pub </span>trader_id: TraderId,
     conn: Connection,
-    tx: Sender&lt;DatabaseOperation&gt;,
+    tx: Sender&lt;DatabaseCommand&gt;,
 }
 
 <span class="kw">impl </span>CacheDatabase <span class="kw">for </span>RedisCacheDatabase {
@@ -200,7 +211,7 @@
         <span class="kw">let </span>client = redis::Client::open(redis_url)<span class="question-mark">?</span>;
         <span class="kw">let </span>conn = client.get_connection().unwrap();
 
-        <span class="kw">let </span>(tx, rx) = channel::&lt;DatabaseOperation&gt;();
+        <span class="kw">let </span>(tx, rx) = channel::&lt;DatabaseCommand&gt;();
 
         thread::spawn(<span class="kw">move </span>|| {
             <span class="self">Self</span>::handle_ops(rx, trader_id, instance_id, config);
@@ -218,8 +229,13 @@
         <span class="prelude-val">Ok</span>(result)
     }
 
-    <span class="kw">fn </span>write(<span class="kw-2">&amp;mut </span><span class="self">self</span>, op_type: String, payload: Vec&lt;Vec&lt;u8&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
-        <span class="kw">let </span>op = DatabaseOperation::new(op_type, payload);
+    <span class="kw">fn </span>write(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        op_type: DatabaseOperation,
+        key: String,
+        payload: Vec&lt;Vec&lt;u8&gt;&gt;,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
+        <span class="kw">let </span>op = DatabaseCommand::new(op_type, key, <span class="prelude-val">Some</span>(payload));
         <span class="kw">match </span><span class="self">self</span>.tx.send(op) {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
             <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Failed to send to channel: {e}&quot;</span>).to_string()),
@@ -227,7 +243,7 @@
     }
 
     <span class="kw">fn </span>handle_ops(
-        rx: Receiver&lt;DatabaseOperation&gt;,
+        rx: Receiver&lt;DatabaseCommand&gt;,
         trader_id: TraderId,
         instance_id: UUID4,
         config: HashMap&lt;String, Value&gt;,
@@ -239,15 +255,23 @@
 
         <span class="comment">// Continue to receive and handle bus messages until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = rx.recv() {
-            <span class="kw">match </span>msg.op_type.as_str() {
-                ADD_GENERIC =&gt; add_generic(<span class="kw-2">&amp;mut </span>conn, <span class="kw-2">&amp;</span>trader_key, msg.payload[<span class="number">0</span>].clone()).unwrap(),
-                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unsupported `op_type` {}&quot;</span>, msg.op_type),
+            <span class="kw">match </span>msg.op_type {
+                DatabaseOperation::Insert =&gt; {
+                    add(<span class="kw-2">&amp;mut </span>conn, <span class="kw-2">&amp;</span>trader_key, <span class="kw-2">&amp;</span>msg.key, <span class="kw-2">&amp;</span>msg.payload.unwrap()).unwrap()
+                }
+                <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unsupported `op_type`&quot;</span>),
             }
         }
     }
 }
 
-<span class="kw">fn </span>add_generic(conn: <span class="kw-2">&amp;mut </span>Connection, key: <span class="kw-2">&amp;</span>str, value: Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
+<span class="kw">fn </span>add(
+    conn: <span class="kw-2">&amp;mut </span>Connection,
+    trader_key: <span class="kw-2">&amp;</span>str,
+    key: <span class="kw-2">&amp;</span>str,
+    value: <span class="kw-2">&amp;</span>Vec&lt;Vec&lt;u8&gt;&gt;,
+) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
+    <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;{trader_key}{DELIMITER}{key}&quot;</span>);
     conn.set(key, value)
         .map_err(|e| <span class="macro">format!</span>(<span class="string">&quot;Failed to set key-value in Redis: {e}&quot;</span>))
 }

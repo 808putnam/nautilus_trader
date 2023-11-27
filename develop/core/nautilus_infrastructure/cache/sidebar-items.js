@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["DatabaseOperation"],"trait":["CacheDatabase"]};
+window.SIDEBAR_ITEMS = {"enum":["DatabaseOperation"],"struct":["DatabaseCommand"],"trait":["CacheDatabase"]};
