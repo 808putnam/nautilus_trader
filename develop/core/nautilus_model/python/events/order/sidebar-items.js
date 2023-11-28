@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["denied","filled"]};
+window.SIDEBAR_ITEMS = {"mod":["denied","filled","initialized"]};
