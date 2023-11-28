@@ -117,7 +117,7 @@
         instance_id: UUID4,
         config: HashMap&lt;String, Value&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::DatabaseType&gt;;
-    <span class="kw">fn </span>read(<span class="kw-2">&amp;mut </span><span class="self">self</span>, op_type: String) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;;
+    <span class="kw">fn </span>read(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;;
     <span class="kw">fn </span>insert(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String, payload: Vec&lt;Vec&lt;u8&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt;;
     <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String, payload: Vec&lt;Vec&lt;u8&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt;;
     <span class="kw">fn </span>delete(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt;;

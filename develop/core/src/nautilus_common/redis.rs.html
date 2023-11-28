@@ -192,10 +192,10 @@
 }
 
 <span class="kw">pub fn </span>handle_messages_with_redis(
+    rx: Receiver&lt;BusMessage&gt;,
     trader_id: TraderId,
     instance_id: UUID4,
     config: HashMap&lt;String, Value&gt;,
-    rx: Receiver&lt;BusMessage&gt;,
 ) {
     <span class="kw">let </span>redis_url = get_redis_url(<span class="kw-2">&amp;</span>config);
     <span class="kw">let </span>client = redis::Client::open(redis_url).unwrap();

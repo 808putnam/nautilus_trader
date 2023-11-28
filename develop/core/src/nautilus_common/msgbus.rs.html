@@ -856,7 +856,7 @@
         <span class="kw">let </span>tx = <span class="kw">if </span>has_backing {
             <span class="kw">let </span>(tx, rx) = channel::&lt;BusMessage&gt;();
             thread::spawn(<span class="kw">move </span>|| {
-                <span class="self">Self</span>::handle_messages(trader_id, instance_id, config, rx);
+                <span class="self">Self</span>::handle_messages(rx, trader_id, instance_id, config);
             });
             <span class="prelude-val">Some</span>(tx)
         } <span class="kw">else </span>{
@@ -1079,10 +1079,10 @@
     }
 
     <span class="kw">fn </span>handle_messages(
+        rx: Receiver&lt;BusMessage&gt;,
         trader_id: TraderId,
         instance_id: UUID4,
         config: HashMap&lt;String, Value&gt;,
-        rx: Receiver&lt;BusMessage&gt;,
     ) {
         <span class="kw">let </span>database_config = config
             .get(<span class="string">&quot;database&quot;</span>)
@@ -1094,7 +1094,7 @@
             .expect(<span class="string">&quot;`MessageBusConfig` database `type` must be a valid string&quot;</span>);
 
         <span class="kw">match </span>backing_type {
-            <span class="string">&quot;redis&quot; </span>=&gt; handle_messages_with_redis(trader_id, instance_id, config, rx),
+            <span class="string">&quot;redis&quot; </span>=&gt; handle_messages_with_redis(rx, trader_id, instance_id, config),
             other =&gt; <span class="macro">panic!</span>(<span class="string">&quot;Unsupported message bus backing database type &#39;{other}&#39;&quot;</span>),
         }
     }
