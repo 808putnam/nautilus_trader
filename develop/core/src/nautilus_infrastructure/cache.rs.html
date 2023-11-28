@@ -63,9 +63,6 @@
 <a href="#63" id="63">63</a>
 <a href="#64" id="64">64</a>
 <a href="#65" id="65">65</a>
-<a href="#66" id="66">66</a>
-<a href="#67" id="67">67</a>
-<a href="#68" id="68">68</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -121,12 +118,9 @@
         config: HashMap&lt;String, Value&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>::DatabaseType&gt;;
     <span class="kw">fn </span>read(<span class="kw-2">&amp;mut </span><span class="self">self</span>, op_type: String) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;;
-    <span class="kw">fn </span>write(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        op_type: DatabaseOperation,
-        key: String,
-        payload: Vec&lt;Vec&lt;u8&gt;&gt;,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt;;
+    <span class="kw">fn </span>insert(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String, payload: Vec&lt;Vec&lt;u8&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt;;
+    <span class="kw">fn </span>update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String, payload: Vec&lt;Vec&lt;u8&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt;;
+    <span class="kw">fn </span>delete(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt;;
     <span class="kw">fn </span>handle_ops(
         rx: Receiver&lt;DatabaseCommand&gt;,
         trader_id: TraderId,

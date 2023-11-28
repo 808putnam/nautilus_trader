@@ -57,6 +57,19 @@
 <a href="#57" id="57">57</a>
 <a href="#58" id="58">58</a>
 <a href="#59" id="59">59</a>
+<a href="#60" id="60">60</a>
+<a href="#61" id="61">61</a>
+<a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -82,10 +95,7 @@
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, PyResult};
 <span class="kw">use </span>serde_json::Value;
 
-<span class="kw">use crate</span>::{
-    cache::{CacheDatabase, DatabaseOperation},
-    redis::RedisCacheDatabase,
-};
+<span class="kw">use crate</span>::{cache::CacheDatabase, redis::RedisCacheDatabase};
 
 <span class="attr">#[pymethods]
 </span><span class="kw">impl </span>RedisCacheDatabase {
@@ -110,7 +120,23 @@
 
     <span class="attr">#[pyo3(name = <span class="string">&quot;insert&quot;</span>)]
     </span><span class="kw">fn </span>py_insert(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String, payload: Vec&lt;Vec&lt;u8&gt;&gt;) -&gt; PyResult&lt;()&gt; {
-        <span class="kw">match </span><span class="self">self</span>.write(DatabaseOperation::Insert, key, payload) {
+        <span class="kw">match </span><span class="self">self</span>.insert(key, payload) {
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(to_pyvalue_err(e)),
+        }
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;update&quot;</span>)]
+    </span><span class="kw">fn </span>py_update(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String, payload: Vec&lt;Vec&lt;u8&gt;&gt;) -&gt; PyResult&lt;()&gt; {
+        <span class="kw">match </span><span class="self">self</span>.insert(key, payload) {
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(to_pyvalue_err(e)),
+        }
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">&quot;delete&quot;</span>)]
+    </span><span class="kw">fn </span>py_delete(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: String) -&gt; PyResult&lt;()&gt; {
+        <span class="kw">match </span><span class="self">self</span>.delete(key) {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
             <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(to_pyvalue_err(e)),
         }
