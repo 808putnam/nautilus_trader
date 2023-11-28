@@ -88,91 +88,6 @@
 <a href="#88" id="88">88</a>
 <a href="#89" id="89">89</a>
 <a href="#90" id="90">90</a>
-<a href="#91" id="91">91</a>
-<a href="#92" id="92">92</a>
-<a href="#93" id="93">93</a>
-<a href="#94" id="94">94</a>
-<a href="#95" id="95">95</a>
-<a href="#96" id="96">96</a>
-<a href="#97" id="97">97</a>
-<a href="#98" id="98">98</a>
-<a href="#99" id="99">99</a>
-<a href="#100" id="100">100</a>
-<a href="#101" id="101">101</a>
-<a href="#102" id="102">102</a>
-<a href="#103" id="103">103</a>
-<a href="#104" id="104">104</a>
-<a href="#105" id="105">105</a>
-<a href="#106" id="106">106</a>
-<a href="#107" id="107">107</a>
-<a href="#108" id="108">108</a>
-<a href="#109" id="109">109</a>
-<a href="#110" id="110">110</a>
-<a href="#111" id="111">111</a>
-<a href="#112" id="112">112</a>
-<a href="#113" id="113">113</a>
-<a href="#114" id="114">114</a>
-<a href="#115" id="115">115</a>
-<a href="#116" id="116">116</a>
-<a href="#117" id="117">117</a>
-<a href="#118" id="118">118</a>
-<a href="#119" id="119">119</a>
-<a href="#120" id="120">120</a>
-<a href="#121" id="121">121</a>
-<a href="#122" id="122">122</a>
-<a href="#123" id="123">123</a>
-<a href="#124" id="124">124</a>
-<a href="#125" id="125">125</a>
-<a href="#126" id="126">126</a>
-<a href="#127" id="127">127</a>
-<a href="#128" id="128">128</a>
-<a href="#129" id="129">129</a>
-<a href="#130" id="130">130</a>
-<a href="#131" id="131">131</a>
-<a href="#132" id="132">132</a>
-<a href="#133" id="133">133</a>
-<a href="#134" id="134">134</a>
-<a href="#135" id="135">135</a>
-<a href="#136" id="136">136</a>
-<a href="#137" id="137">137</a>
-<a href="#138" id="138">138</a>
-<a href="#139" id="139">139</a>
-<a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a>
-<a href="#157" id="157">157</a>
-<a href="#158" id="158">158</a>
-<a href="#159" id="159">159</a>
-<a href="#160" id="160">160</a>
-<a href="#161" id="161">161</a>
-<a href="#162" id="162">162</a>
-<a href="#163" id="163">163</a>
-<a href="#164" id="164">164</a>
-<a href="#165" id="165">165</a>
-<a href="#166" id="166">166</a>
-<a href="#167" id="167">167</a>
-<a href="#168" id="168">168</a>
-<a href="#169" id="169">169</a>
-<a href="#170" id="170">170</a>
-<a href="#171" id="171">171</a>
-<a href="#172" id="172">172</a>
-<a href="#173" id="173">173</a>
-<a href="#174" id="174">174</a>
-<a href="#175" id="175">175</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -188,85 +103,10 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::str::FromStr;
-
-<span class="kw">use </span>pyo3::{
+</span><span class="kw">use </span>pyo3::{
     prelude::<span class="kw-2">*</span>,
     types::{PyDict, PyString},
 };
-<span class="kw">use </span>tracing::Level;
-<span class="kw">use </span>tracing_appender::{
-    non_blocking::WorkerGuard,
-    rolling::{RollingFileAppender, Rotation},
-};
-<span class="kw">use </span>tracing_subscriber::{fmt::Layer, prelude::<span class="kw-2">*</span>, EnvFilter, Registry};
-
-<span class="doccomment">/// Guards the log collector and flushes it when dropped
-///
-/// This struct must be dropped when the application has completed operation
-/// it ensures that the any pending log lines are flushed before the application
-/// closes.
-</span><span class="attr">#[pyclass]
-</span><span class="kw">pub struct </span>LogGuard {
-    <span class="attr">#[allow(dead_code)]
-    </span>guards: Vec&lt;WorkerGuard&gt;,
-}
-
-<span class="doccomment">/// Sets the global log collector
-///
-/// stdout_level: Set the level for the stdout writer
-/// stderr_level: Set the level for the stderr writer
-/// file_level: Set the level, the directory and the prefix for the file writer
-///
-/// It also configures a top level filter based on module/component name.
-/// The format for the string is component1=info,component2=debug.
-/// For e.g. network=error,kernel=info
-///
-/// # Safety
-/// Should only be called once during an applications run, ideally at the
-/// beginning of the run.
-</span><span class="attr">#[pyfunction]
-#[must_use]
-</span><span class="kw">pub fn </span>set_global_log_collector(
-    stdout_level: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    stderr_level: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    file_level: <span class="prelude-ty">Option</span>&lt;(String, String, String)&gt;,
-) -&gt; LogGuard {
-    <span class="kw">let </span><span class="kw-2">mut </span>guards = Vec::new();
-    <span class="kw">let </span>stdout_sub_builder = stdout_level.map(|stdout_level| {
-        <span class="kw">let </span>stdout_level = Level::from_str(<span class="kw-2">&amp;</span>stdout_level).unwrap();
-        <span class="kw">let </span>(non_blocking, guard) = tracing_appender::non_blocking(std::io::stdout());
-        guards.push(guard);
-        Layer::default().with_writer(non_blocking.with_max_level(stdout_level))
-    });
-    <span class="kw">let </span>stderr_sub_builder = stderr_level.map(|stderr_level| {
-        <span class="kw">let </span>stderr_level = Level::from_str(<span class="kw-2">&amp;</span>stderr_level).unwrap();
-        <span class="kw">let </span>(non_blocking, guard) = tracing_appender::non_blocking(std::io::stdout());
-        guards.push(guard);
-        Layer::default().with_writer(non_blocking.with_max_level(stderr_level))
-    });
-    <span class="kw">let </span>file_sub_builder = file_level.map(|(dir_path, file_prefix, file_level)| {
-        <span class="kw">let </span>file_level = Level::from_str(<span class="kw-2">&amp;</span>file_level).unwrap();
-        <span class="kw">let </span>rolling_log = RollingFileAppender::new(Rotation::NEVER, dir_path, file_prefix);
-        <span class="kw">let </span>(non_blocking, guard) = tracing_appender::non_blocking(rolling_log);
-        guards.push(guard);
-        Layer::default()
-            .with_ansi(<span class="bool-val">false</span>) <span class="comment">// turn off unicode colors when writing to file
-            </span>.with_writer(non_blocking.with_max_level(file_level))
-    });
-
-    <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = Registry::default()
-        .with(stderr_sub_builder)
-        .with(stdout_sub_builder)
-        .with(file_sub_builder)
-        .with(EnvFilter::from_default_env())
-        .try_init()
-    {
-        <span class="macro">println!</span>(<span class="string">&quot;Failed to set global default dispatcher because of error: {e}&quot;</span>);
-    };
-
-    LogGuard { guards }
-}
 
 <span class="doccomment">/// Need to modify sys modules so that submodule can be loaded directly as
 /// import supermodule.submodule
@@ -282,53 +122,43 @@
     <span class="comment">// Set pyo3_nautilus to be recognized as a subpackage
     </span>sys_modules.set_item(module_name, m)<span class="question-mark">?</span>;
 
-    m.add_class::&lt;LogGuard&gt;()<span class="question-mark">?</span>;
-    m.add_function(<span class="macro">wrap_pyfunction!</span>(set_global_log_collector, m)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
-
-    <span class="comment">// Core
-    </span><span class="kw">let </span>n = <span class="string">&quot;core&quot;</span>;
+    <span class="kw">let </span>n = <span class="string">&quot;core&quot;</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_core::python::core);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     re_export_module_attributes(m, n)<span class="question-mark">?</span>;
 
-    <span class="comment">// Common
-    </span><span class="kw">let </span>n = <span class="string">&quot;common&quot;</span>;
+    <span class="kw">let </span>n = <span class="string">&quot;common&quot;</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_common::python::common);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     re_export_module_attributes(m, n)<span class="question-mark">?</span>;
 
-    <span class="comment">// Model
-    </span><span class="kw">let </span>n = <span class="string">&quot;model&quot;</span>;
+    <span class="kw">let </span>n = <span class="string">&quot;model&quot;</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_model::python::model);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     re_export_module_attributes(m, n)<span class="question-mark">?</span>;
 
-    <span class="comment">// Indicators
-    </span><span class="kw">let </span>n = <span class="string">&quot;indicators&quot;</span>;
+    <span class="kw">let </span>n = <span class="string">&quot;indicators&quot;</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_indicators::python::indicators);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     re_export_module_attributes(m, n)<span class="question-mark">?</span>;
 
-    <span class="comment">// Infrastructure
-    </span><span class="kw">let </span>n = <span class="string">&quot;infrastructure&quot;</span>;
+    <span class="kw">let </span>n = <span class="string">&quot;infrastructure&quot;</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_infrastructure::python::infrastructure);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     re_export_module_attributes(m, n)<span class="question-mark">?</span>;
 
-    <span class="comment">// Network
-    </span><span class="kw">let </span>n = <span class="string">&quot;network&quot;</span>;
+    <span class="kw">let </span>n = <span class="string">&quot;network&quot;</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_network::python::network);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     re_export_module_attributes(m, n)<span class="question-mark">?</span>;
 
-    <span class="comment">// Persistence
-    </span><span class="kw">let </span>n = <span class="string">&quot;persistence&quot;</span>;
+    <span class="kw">let </span>n = <span class="string">&quot;persistence&quot;</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_persistence::python::persistence);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">&quot;{module_name}.{n}&quot;</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;

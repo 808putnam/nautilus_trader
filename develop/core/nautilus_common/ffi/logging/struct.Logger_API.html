@@ -4,38 +4,38 @@ calls, enabling interaction with <code>Logger</code> in a C environment.</p>
 <p>It implements the <code>Deref</code> trait, allowing instances of <code>Logger_API</code> to be
 dereferenced to <code>Logger</code>, providing access to <code>Logger</code>’s methods without
 having to manually access the underlying <code>Logger</code> instance.</p>
-</div></details><h2 id="deref-methods-Logger" class="small-section-header"><span>Methods from <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">Deref</a>&lt;Target = <a class="struct" href="../../logging/struct.Logger.html" title="struct nautilus_common::logging::Logger">Logger</a>&gt;</span><a href="#deref-methods-Logger" class="anchor">§</a></h2><div id="deref-methods-Logger-1" class="impl-items"><section id="method.send" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#391-409">source</a><h4 class="code-header">pub fn <a href="#method.send" class="fn">send</a>(
+</div></details><h2 id="deref-methods-Logger" class="small-section-header"><span>Methods from <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html" title="trait core::ops::deref::Deref">Deref</a>&lt;Target = <a class="struct" href="../../logging/struct.Logger.html" title="struct nautilus_common::logging::Logger">Logger</a>&gt;</span><a href="#deref-methods-Logger" class="anchor">§</a></h2><div id="deref-methods-Logger-1" class="impl-items"><section id="method.send" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#466-484">source</a><h4 class="code-header">pub fn <a href="#method.send" class="fn">send</a>(
     &amp;mut self,
     timestamp: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     level: <a class="enum" href="../../enums/enum.LogLevel.html" title="enum nautilus_common::enums::LogLevel">LogLevel</a>,
     color: <a class="enum" href="../../enums/enum.LogColor.html" title="enum nautilus_common::enums::LogColor">LogColor</a>,
     component: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
     message: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>
-)</h4></section><section id="method.debug" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#411-413">source</a><h4 class="code-header">pub fn <a href="#method.debug" class="fn">debug</a>(
+)</h4></section><section id="method.debug" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#486-488">source</a><h4 class="code-header">pub fn <a href="#method.debug" class="fn">debug</a>(
     &amp;mut self,
     timestamp: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     color: <a class="enum" href="../../enums/enum.LogColor.html" title="enum nautilus_common::enums::LogColor">LogColor</a>,
     component: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
     message: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>
-)</h4></section><section id="method.info" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#415-417">source</a><h4 class="code-header">pub fn <a href="#method.info" class="fn">info</a>(
+)</h4></section><section id="method.info" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#490-492">source</a><h4 class="code-header">pub fn <a href="#method.info" class="fn">info</a>(
     &amp;mut self,
     timestamp: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     color: <a class="enum" href="../../enums/enum.LogColor.html" title="enum nautilus_common::enums::LogColor">LogColor</a>,
     component: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
     message: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>
-)</h4></section><section id="method.warn" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#419-421">source</a><h4 class="code-header">pub fn <a href="#method.warn" class="fn">warn</a>(
+)</h4></section><section id="method.warn" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#494-496">source</a><h4 class="code-header">pub fn <a href="#method.warn" class="fn">warn</a>(
     &amp;mut self,
     timestamp: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     color: <a class="enum" href="../../enums/enum.LogColor.html" title="enum nautilus_common::enums::LogColor">LogColor</a>,
     component: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
     message: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>
-)</h4></section><section id="method.error" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#423-425">source</a><h4 class="code-header">pub fn <a href="#method.error" class="fn">error</a>(
+)</h4></section><section id="method.error" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#498-500">source</a><h4 class="code-header">pub fn <a href="#method.error" class="fn">error</a>(
     &amp;mut self,
     timestamp: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     color: <a class="enum" href="../../enums/enum.LogColor.html" title="enum nautilus_common::enums::LogColor">LogColor</a>,
     component: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
     message: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>
-)</h4></section><section id="method.critical" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#427-435">source</a><h4 class="code-header">pub fn <a href="#method.critical" class="fn">critical</a>(
+)</h4></section><section id="method.critical" class="method"><a class="src rightside" href="../../../src/nautilus_common/logging.rs.html#502-510">source</a><h4 class="code-header">pub fn <a href="#method.critical" class="fn">critical</a>(
     &amp;mut self,
     timestamp: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
     color: <a class="enum" href="../../enums/enum.LogColor.html" title="enum nautilus_common::enums::LogColor">LogColor</a>,
