@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["AccountBalance"]};
+window.SIDEBAR_ITEMS = {"struct":["AccountBalance","MarginBalance"]};
