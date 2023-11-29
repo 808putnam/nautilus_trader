@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["order_denied_max_submitted_rate","order_filled","order_initialized_buy_limit"],"struct":["order_denied_max_submitted_rate","order_filled","order_initialized_buy_limit"]};
+window.SIDEBAR_ITEMS = {"fn":["order_denied_max_submitted_rate","order_filled","order_initialized_buy_limit","order_rejected_insufficient_margin"],"struct":["order_denied_max_submitted_rate","order_filled","order_initialized_buy_limit","order_rejected_insufficient_margin"]};
