@@ -142,6 +142,13 @@
 <a href="#142" id="142">142</a>
 <a href="#143" id="143">143</a>
 <a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -157,7 +164,8 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>rstest::fixture;
+</span><span class="kw">use </span>nautilus_core::uuid::UUID4;
+<span class="kw">use </span>rstest::fixture;
 
 <span class="kw">use </span><span class="kw">crate</span>::identifiers::{
     account_id::AccountId, client_id::ClientId, client_order_id::ClientOrderId,
@@ -285,5 +293,11 @@
 </span><span class="attr">#[fixture]
 </span><span class="kw">pub fn </span>venue_order_id() -&gt; VenueOrderId {
     VenueOrderId::from(<span class="string">&quot;001&quot;</span>)
+}
+
+<span class="comment">// ---- UUID ----
+</span><span class="attr">#[fixture]
+</span><span class="kw">pub fn </span>uuid4() -&gt; UUID4 {
+    UUID4::from(<span class="string">&quot;16578139-a945-4b65-b46c-bc131a15d8e7&quot;</span>)
 }
 </code></pre></div></section></main></body></html>
