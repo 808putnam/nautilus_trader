@@ -104,14 +104,6 @@
 <a href="#104" id="104">104</a>
 <a href="#105" id="105">105</a>
 <a href="#106" id="106">106</a>
-<a href="#107" id="107">107</a>
-<a href="#108" id="108">108</a>
-<a href="#109" id="109">109</a>
-<a href="#110" id="110">110</a>
-<a href="#111" id="111">111</a>
-<a href="#112" id="112">112</a>
-<a href="#113" id="113">113</a>
-<a href="#114" id="114">114</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -214,16 +206,8 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_order_rejected_display(order_rejected_insufficient_margin: OrderRejected) {
         <span class="kw">let </span>display = <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, order_rejected_insufficient_margin);
-        <span class="macro">assert_eq!</span>(
-            display,
-            <span class="macro">format!</span>(
-                <span class="string">&quot;OrderRejected(instrument_id={}, client_order_id={}, reason={}, ts_event={})&quot;</span>,
-                order_rejected_insufficient_margin.instrument_id,
-                order_rejected_insufficient_margin.client_order_id,
-                order_rejected_insufficient_margin.reason,
-                order_rejected_insufficient_margin.ts_event
-            )
-        );
+        <span class="macro">assert_eq!</span>(display, <span class="string">&quot;OrderRejected(instrument_id=BTCUSDT.COINBASE, client_order_id=O-20200814-102234-001-001-1, \
+        reason=INSUFFICIENT_MARGIN, ts_event=0)&quot;</span>);
     }
 }
 </code></pre></div></section></main></body></html>
