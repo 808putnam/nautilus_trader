@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["dummy_callable"],"struct":["EventHandler","MessageHandler","PyCallableWrapper","SafeMessageCallback","SafeTimeEventCallback"]};
