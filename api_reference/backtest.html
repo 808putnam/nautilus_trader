@@ -357,6 +357,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/message_bus.html">
+               Message Bus
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/advanced/index.html">
                Advanced
               </a>
@@ -437,6 +442,11 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../integrations/binance.html">
                Binance
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../integrations/databento.html">
+               Databento
               </a>
              </li>
              <li class="md-nav__item">
@@ -551,8 +561,8 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="model/currency.html">
-                 Currency
+                <a class="md-nav__link" href="model/book.html">
+                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -581,11 +591,6 @@
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="model/orderbook.html">
-                 Order Book
-                </a>
-               </li>
-               <li class="md-nav__item">
                 <a class="md-nav__link" href="model/orders.html">
                  Orders
                 </a>
@@ -601,11 +606,6 @@
                 </a>
                </li>
               </ul>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="msgbus.html">
-               Message Bus
-              </a>
              </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="persistence.html">
@@ -5430,7 +5430,7 @@
                 msgbus
                </strong>
                (
-               <a class="reference internal" href="msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+               <a class="reference internal" href="common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                 <em>
                  MessageBus
                 </em>
@@ -6916,7 +6916,7 @@ then the component state will not change, and an error will be logged.
                 msgbus
                </strong>
                (
-               <a class="reference internal" href="msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+               <a class="reference internal" href="common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                 <em>
                  MessageBus
                 </em>
@@ -7692,11 +7692,9 @@ then the component state will not change, and an error will be logged.
                   data_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                  <em>
-                   DataType
-                  </em>
-                 </a>
+                 <em>
+                  DataType
+                 </em>
                  ) – The data type for the subscription.
                 </p>
                </li>
@@ -8542,11 +8540,9 @@ then the component state will not change, and an error will be logged.
                 data_type
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                <em>
-                 DataType
-                </em>
-               </a>
+               <em>
+                DataType
+               </em>
                ) – The data type for the subscription.
               </p>
              </dd>
@@ -9867,11 +9863,9 @@ then the component state will not change, and an error will be logged.
                 data_type
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                <em>
-                 DataType
-                </em>
-               </a>
+               <em>
+                DataType
+               </em>
                ) – The data type for the subscription.
               </p>
              </dd>
@@ -11824,7 +11818,7 @@ generate new position IDs.
                   base_currency
                  </strong>
                  (
-                 <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                 <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                   <em>
                    Currency
                   </em>
@@ -14209,7 +14203,7 @@ following the run iterations.
                 base_currency
                </strong>
                (
-               <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -14276,7 +14270,7 @@ following the run iterations.
                 msgbus
                </strong>
                (
-               <a class="reference internal" href="msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+               <a class="reference internal" href="common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                 <em>
                  MessageBus
                 </em>
@@ -15339,11 +15333,9 @@ If False then its expected the strategy will be managing any contingent orders.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook" title="nautilus_trader.model.orderbook.book.OrderBook">
-               <span class="pre">
-                OrderBook
-               </span>
-              </a>
+              <span class="pre">
+               OrderBook
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.backtest.exchange.SimulatedExchange.get_book" title="Permalink to this definition">
@@ -16304,11 +16296,9 @@ If False then its expected the strategy will be managing any contingent orders.
                 bar
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-                <em>
-                 Bar
-                </em>
-               </a>
+               <em>
+                Bar
+               </em>
                ) – The bar to process.
               </p>
              </dd>
@@ -16377,11 +16367,9 @@ If False then its expected the strategy will be managing any contingent orders.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
-                <em>
-                 VenueStatus
-                </em>
-               </a>
+               <em>
+                VenueStatus
+               </em>
                ) – The status update to process.
               </p>
              </dd>
@@ -16450,11 +16438,9 @@ If False then its expected the strategy will be managing any contingent orders.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDelta" title="nautilus_trader.model.data.book.OrderBookDelta">
-                <em>
-                 OrderBookDelta
-                </em>
-               </a>
+               <em>
+                OrderBookDelta
+               </em>
                ) – The order book delta to process.
               </p>
              </dd>
@@ -16523,11 +16509,9 @@ If False then its expected the strategy will be managing any contingent orders.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
-                <em>
-                 OrderBookDeltas
-                </em>
-               </a>
+               <em>
+                OrderBookDeltas
+               </em>
                ) – The order book deltas to process.
               </p>
              </dd>
@@ -16599,11 +16583,9 @@ If False then its expected the strategy will be managing any contingent orders.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-                <em>
-                 QuoteTick
-                </em>
-               </a>
+               <em>
+                QuoteTick
+               </em>
                ) – The tick to process.
               </p>
              </dd>
@@ -16675,11 +16657,9 @@ If False then its expected the strategy will be managing any contingent orders.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-                <em>
-                 TradeTick
-                </em>
-               </a>
+               <em>
+                TradeTick
+               </em>
                ) – The tick to process.
               </p>
              </dd>
@@ -16748,11 +16728,9 @@ If False then its expected the strategy will be managing any contingent orders.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
-                <em>
-                 VenueStatus
-                </em>
-               </a>
+               <em>
+                VenueStatus
+               </em>
                ) – The status update to process.
               </p>
              </dd>
@@ -17473,7 +17451,7 @@ If False then its expected the strategy will be managing any contingent orders.
                 msgbus
                </strong>
                (
-               <a class="reference internal" href="msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+               <a class="reference internal" href="common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                 <em>
                  MessageBus
                 </em>
@@ -19336,7 +19314,7 @@ position ID resolution.
                   quote_currency
                  </strong>
                  (
-                 <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                 <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                   <em>
                    Currency
                   </em>
@@ -23694,11 +23672,9 @@ then the component state will not change, and an error will be logged.
                 bar
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-                <em>
-                 Bar
-                </em>
-               </a>
+               <em>
+                Bar
+               </em>
                ) – The bar received.
               </p>
              </dd>
@@ -23781,11 +23757,9 @@ then the component state will not change, and an error will be logged.
                <em>
                 [
                </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-                <em>
-                 Bar
-                </em>
-               </a>
+               <em>
+                Bar
+               </em>
                <em>
                 ]
                </em>
@@ -24237,11 +24211,9 @@ then the component state will not change, and an error will be logged.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
-                <em>
-                 InstrumentClose
-                </em>
-               </a>
+               <em>
+                InstrumentClose
+               </em>
                ) – The update received.
               </p>
              </dd>
@@ -24331,11 +24303,9 @@ then the component state will not change, and an error will be logged.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
-                <em>
-                 InstrumentStatus
-                </em>
-               </a>
+               <em>
+                InstrumentStatus
+               </em>
                ) – The status update received.
               </p>
              </dd>
@@ -24515,11 +24485,9 @@ then the component state will not change, and an error will be logged.
                 order_book
                </strong>
                (
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook" title="nautilus_trader.model.orderbook.book.OrderBook">
-                <em>
-                 OrderBook
-                </em>
-               </a>
+               <em>
+                OrderBook
+               </em>
                ) – The order book received.
               </p>
              </dd>
@@ -24609,11 +24577,9 @@ then the component state will not change, and an error will be logged.
                 deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
-                <em>
-                 OrderBookDeltas
-                </em>
-               </a>
+               <em>
+                OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -24703,11 +24669,9 @@ then the component state will not change, and an error will be logged.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-                <em>
-                 QuoteTick
-                </em>
-               </a>
+               <em>
+                QuoteTick
+               </em>
                ) – The tick received.
               </p>
              </dd>
@@ -24790,11 +24754,9 @@ then the component state will not change, and an error will be logged.
                <em>
                 [
                </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-                <em>
-                 QuoteTick
-                </em>
-               </a>
+               <em>
+                QuoteTick
+               </em>
                <em>
                 ]
                </em>
@@ -24887,11 +24849,9 @@ then the component state will not change, and an error will be logged.
                 ticker
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.ticker.Ticker" title="nautilus_trader.model.data.ticker.Ticker">
-                <em>
-                 Ticker
-                </em>
-               </a>
+               <em>
+                Ticker
+               </em>
                ) – The ticker received.
               </p>
              </dd>
@@ -24981,11 +24941,9 @@ then the component state will not change, and an error will be logged.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-                <em>
-                 TradeTick
-                </em>
-               </a>
+               <em>
+                TradeTick
+               </em>
                ) – The tick received.
               </p>
              </dd>
@@ -25068,11 +25026,9 @@ then the component state will not change, and an error will be logged.
                <em>
                 [
                </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-                <em>
-                 TradeTick
-                </em>
-               </a>
+               <em>
+                TradeTick
+               </em>
                <em>
                 ]
                </em>
@@ -25165,11 +25121,9 @@ then the component state will not change, and an error will be logged.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
-                <em>
-                 VenueStatus
-                </em>
-               </a>
+               <em>
+                VenueStatus
+               </em>
                ) – The status update received.
               </p>
              </dd>
@@ -26220,11 +26174,9 @@ then the component state will not change, and an error will be logged.
                 bar
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-                <em>
-                 Bar
-                </em>
-               </a>
+               <em>
+                Bar
+               </em>
                ) – The bar received.
               </p>
              </dd>
@@ -26778,11 +26730,9 @@ update.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
-                <em>
-                 InstrumentClose
-                </em>
-               </a>
+               <em>
+                InstrumentClose
+               </em>
                ) – The instrument close received.
               </p>
              </dd>
@@ -26860,11 +26810,9 @@ update.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
-                <em>
-                 InstrumentStatus
-                </em>
-               </a>
+               <em>
+                InstrumentStatus
+               </em>
                ) – The instrument status update received.
               </p>
              </dd>
@@ -27003,11 +26951,9 @@ update.
                 order_book
                </strong>
                (
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook" title="nautilus_trader.model.orderbook.book.OrderBook">
-                <em>
-                 OrderBook
-                </em>
-               </a>
+               <em>
+                OrderBook
+               </em>
                ) – The order book received.
               </p>
              </dd>
@@ -27084,11 +27030,9 @@ update.
                 deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
-                <em>
-                 OrderBookDeltas
-                </em>
-               </a>
+               <em>
+                OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -27165,11 +27109,9 @@ update.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-                <em>
-                 QuoteTick
-                </em>
-               </a>
+               <em>
+                QuoteTick
+               </em>
                ) – The tick received.
               </p>
              </dd>
@@ -27524,11 +27466,9 @@ initially starting.
                 ticker
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.ticker.Ticker" title="nautilus_trader.model.data.ticker.Ticker">
-                <em>
-                 Ticker
-                </em>
-               </a>
+               <em>
+                Ticker
+               </em>
                ) – The ticker received.
               </p>
              </dd>
@@ -27605,11 +27545,9 @@ initially starting.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-                <em>
-                 TradeTick
-                </em>
-               </a>
+               <em>
+                TradeTick
+               </em>
                ) – The tick received.
               </p>
              </dd>
@@ -27686,11 +27624,9 @@ initially starting.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
-                <em>
-                 VenueStatus
-                </em>
-               </a>
+               <em>
+                VenueStatus
+               </em>
                ) – The venue status update received.
               </p>
              </dd>
@@ -27957,11 +27893,9 @@ initially starting.
                   data_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                  <em>
-                   DataType
-                  </em>
-                 </a>
+                 <em>
+                  DataType
+                 </em>
                  ) – The data type being published.
                 </p>
                </li>
@@ -28423,7 +28357,7 @@ and so the results of
                   msgbus
                  </strong>
                  (
-                 <a class="reference internal" href="msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+                 <a class="reference internal" href="common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                   <em>
                    MessageBus
                   </em>
@@ -28703,11 +28637,9 @@ given bar type.
                   bar_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                  <em>
-                   BarType
-                  </em>
-                 </a>
+                 <em>
+                  BarType
+                 </em>
                  ) – The bar type for bar updates.
                 </p>
                </li>
@@ -29225,11 +29157,9 @@ data for the given instrument ID.
                   bar_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                  <em>
-                   BarType
-                  </em>
-                 </a>
+                 <em>
+                  BarType
+                 </em>
                  ) – The bar type for the request.
                 </p>
                </li>
@@ -29500,11 +29430,9 @@ completed processing.
                   data_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                  <em>
-                   DataType
-                  </em>
-                 </a>
+                 <em>
+                  DataType
+                 </em>
                  ) – The data type for the request.
                 </p>
                </li>
@@ -31268,11 +31196,9 @@ then the component state will not change, and an error will be logged.
                   bar_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                  <em>
-                   BarType
-                  </em>
-                 </a>
+                 <em>
+                  BarType
+                 </em>
                  ) – The bar type to subscribe to.
                 </p>
                </li>
@@ -31402,11 +31328,9 @@ to activaely aggregating new bars.
                   data_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                  <em>
-                   DataType
-                  </em>
-                 </a>
+                 <em>
+                  DataType
+                 </em>
                  ) – The data type to subscribe to.
                 </p>
                </li>
@@ -33071,11 +32995,9 @@ If
                   bar_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                  <em>
-                   BarType
-                  </em>
-                 </a>
+                 <em>
+                  BarType
+                 </em>
                  ) – The bar type to unsubscribe from.
                 </p>
                </li>
@@ -33186,11 +33108,9 @@ If
                   data_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                  <em>
-                   DataType
-                  </em>
-                 </a>
+                 <em>
+                  DataType
+                 </em>
                  ) – The data type to unsubscribe from.
                 </p>
                </li>
@@ -35280,11 +35200,9 @@ then the component state will not change, and an error will be logged.
                 bar
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-                <em>
-                 Bar
-                </em>
-               </a>
+               <em>
+                Bar
+               </em>
                ) – The bar received.
               </p>
              </dd>
@@ -35367,11 +35285,9 @@ then the component state will not change, and an error will be logged.
                <em>
                 [
                </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-                <em>
-                 Bar
-                </em>
-               </a>
+               <em>
+                Bar
+               </em>
                <em>
                 ]
                </em>
@@ -35823,11 +35739,9 @@ then the component state will not change, and an error will be logged.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
-                <em>
-                 InstrumentClose
-                </em>
-               </a>
+               <em>
+                InstrumentClose
+               </em>
                ) – The update received.
               </p>
              </dd>
@@ -35917,11 +35831,9 @@ then the component state will not change, and an error will be logged.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
-                <em>
-                 InstrumentStatus
-                </em>
-               </a>
+               <em>
+                InstrumentStatus
+               </em>
                ) – The status update received.
               </p>
              </dd>
@@ -36101,11 +36013,9 @@ then the component state will not change, and an error will be logged.
                 order_book
                </strong>
                (
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook" title="nautilus_trader.model.orderbook.book.OrderBook">
-                <em>
-                 OrderBook
-                </em>
-               </a>
+               <em>
+                OrderBook
+               </em>
                ) – The order book received.
               </p>
              </dd>
@@ -36195,11 +36105,9 @@ then the component state will not change, and an error will be logged.
                 deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
-                <em>
-                 OrderBookDeltas
-                </em>
-               </a>
+               <em>
+                OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -36289,11 +36197,9 @@ then the component state will not change, and an error will be logged.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-                <em>
-                 QuoteTick
-                </em>
-               </a>
+               <em>
+                QuoteTick
+               </em>
                ) – The tick received.
               </p>
              </dd>
@@ -36376,11 +36282,9 @@ then the component state will not change, and an error will be logged.
                <em>
                 [
                </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-                <em>
-                 QuoteTick
-                </em>
-               </a>
+               <em>
+                QuoteTick
+               </em>
                <em>
                 ]
                </em>
@@ -36473,11 +36377,9 @@ then the component state will not change, and an error will be logged.
                 ticker
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.ticker.Ticker" title="nautilus_trader.model.data.ticker.Ticker">
-                <em>
-                 Ticker
-                </em>
-               </a>
+               <em>
+                Ticker
+               </em>
                ) – The ticker received.
               </p>
              </dd>
@@ -36567,11 +36469,9 @@ then the component state will not change, and an error will be logged.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-                <em>
-                 TradeTick
-                </em>
-               </a>
+               <em>
+                TradeTick
+               </em>
                ) – The tick received.
               </p>
              </dd>
@@ -36654,11 +36554,9 @@ then the component state will not change, and an error will be logged.
                <em>
                 [
                </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-                <em>
-                 TradeTick
-                </em>
-               </a>
+               <em>
+                TradeTick
+               </em>
                <em>
                 ]
                </em>
@@ -36751,11 +36649,9 @@ then the component state will not change, and an error will be logged.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
-                <em>
-                 VenueStatus
-                </em>
-               </a>
+               <em>
+                VenueStatus
+               </em>
                ) – The status update received.
               </p>
              </dd>
@@ -37780,11 +37676,9 @@ then the component state will not change, and an error will be logged.
                 bar
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-                <em>
-                 Bar
-                </em>
-               </a>
+               <em>
+                Bar
+               </em>
                ) – The bar received.
               </p>
              </dd>
@@ -38338,11 +38232,9 @@ update.
                 update
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentClose" title="nautilus_trader.model.data.status.InstrumentClose">
-                <em>
-                 InstrumentClose
-                </em>
-               </a>
+               <em>
+                InstrumentClose
+               </em>
                ) – The instrument close received.
               </p>
              </dd>
@@ -38420,11 +38312,9 @@ update.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.InstrumentStatus" title="nautilus_trader.model.data.status.InstrumentStatus">
-                <em>
-                 InstrumentStatus
-                </em>
-               </a>
+               <em>
+                InstrumentStatus
+               </em>
                ) – The instrument status update received.
               </p>
              </dd>
@@ -38563,11 +38453,9 @@ update.
                 order_book
                </strong>
                (
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook" title="nautilus_trader.model.orderbook.book.OrderBook">
-                <em>
-                 OrderBook
-                </em>
-               </a>
+               <em>
+                OrderBook
+               </em>
                ) – The order book received.
               </p>
              </dd>
@@ -38644,11 +38532,9 @@ update.
                 deltas
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.book.OrderBookDeltas" title="nautilus_trader.model.data.book.OrderBookDeltas">
-                <em>
-                 OrderBookDeltas
-                </em>
-               </a>
+               <em>
+                OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -38725,11 +38611,9 @@ update.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-                <em>
-                 QuoteTick
-                </em>
-               </a>
+               <em>
+                QuoteTick
+               </em>
                ) – The tick received.
               </p>
              </dd>
@@ -39084,11 +38968,9 @@ initially starting.
                 ticker
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.ticker.Ticker" title="nautilus_trader.model.data.ticker.Ticker">
-                <em>
-                 Ticker
-                </em>
-               </a>
+               <em>
+                Ticker
+               </em>
                ) – The ticker received.
               </p>
              </dd>
@@ -39165,11 +39047,9 @@ initially starting.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-                <em>
-                 TradeTick
-                </em>
-               </a>
+               <em>
+                TradeTick
+               </em>
                ) – The tick received.
               </p>
              </dd>
@@ -39246,11 +39126,9 @@ initially starting.
                 data
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.status.VenueStatus" title="nautilus_trader.model.data.status.VenueStatus">
-                <em>
-                 VenueStatus
-                </em>
-               </a>
+               <em>
+                VenueStatus
+               </em>
                ) – The venue status update received.
               </p>
              </dd>
@@ -39497,11 +39375,9 @@ initially starting.
                   data_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                  <em>
-                   DataType
-                  </em>
-                 </a>
+                 <em>
+                  DataType
+                 </em>
                  ) – The data type being published.
                 </p>
                </li>
@@ -39963,7 +39839,7 @@ and so the results of
                   msgbus
                  </strong>
                  (
-                 <a class="reference internal" href="msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+                 <a class="reference internal" href="common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                   <em>
                    MessageBus
                   </em>
@@ -40243,11 +40119,9 @@ given bar type.
                   bar_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                  <em>
-                   BarType
-                  </em>
-                 </a>
+                 <em>
+                  BarType
+                 </em>
                  ) – The bar type for bar updates.
                 </p>
                </li>
@@ -40765,11 +40639,9 @@ data for the given instrument ID.
                   bar_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                  <em>
-                   BarType
-                  </em>
-                 </a>
+                 <em>
+                  BarType
+                 </em>
                  ) – The bar type for the request.
                 </p>
                </li>
@@ -41040,11 +40912,9 @@ completed processing.
                   data_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                  <em>
-                   DataType
-                  </em>
-                 </a>
+                 <em>
+                  DataType
+                 </em>
                  ) – The data type for the request.
                 </p>
                </li>
@@ -42811,11 +42681,9 @@ then the component state will not change, and an error will be logged.
                   bar_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                  <em>
-                   BarType
-                  </em>
-                 </a>
+                 <em>
+                  BarType
+                 </em>
                  ) – The bar type to subscribe to.
                 </p>
                </li>
@@ -42945,11 +42813,9 @@ to activaely aggregating new bars.
                   data_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                  <em>
-                   DataType
-                  </em>
-                 </a>
+                 <em>
+                  DataType
+                 </em>
                  ) – The data type to subscribe to.
                 </p>
                </li>
@@ -44614,11 +44480,9 @@ If
                   bar_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                  <em>
-                   BarType
-                  </em>
-                 </a>
+                 <em>
+                  BarType
+                 </em>
                  ) – The bar type to unsubscribe from.
                 </p>
                </li>
@@ -44729,11 +44593,9 @@ If
                   data_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                  <em>
-                   DataType
-                  </em>
-                 </a>
+                 <em>
+                  DataType
+                 </em>
                  ) – The data type to unsubscribe from.
                 </p>
                </li>

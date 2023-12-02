@@ -95,7 +95,7 @@
   <link href="../genindex.html" rel="index" title="Index"/>
   <link href="../search.html" rel="search" title="Search"/>
   <link href="../api_reference/index.html" rel="next" title="Python API"/>
-  <link href="binance.html" rel="prev" title="Binance"/>
+  <link href="databento.html" rel="prev" title="Databento"/>
   <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
  </head>
  <body data-md-color-accent="#282f38" data-md-color-primary="#282f38" dir="ltr">
@@ -357,6 +357,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/message_bus.html">
+               Message Bus
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/advanced/index.html">
                Advanced
               </a>
@@ -437,6 +442,11 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="binance.html">
                Binance
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="databento.html">
+               Databento
               </a>
              </li>
              <li class="md-nav__item md-nav__link--active">
@@ -551,8 +561,8 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../api_reference/model/currency.html">
-                 Currency
+                <a class="md-nav__link" href="../api_reference/model/book.html">
+                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -581,11 +591,6 @@
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../api_reference/model/orderbook.html">
-                 Order Book
-                </a>
-               </li>
-               <li class="md-nav__item">
                 <a class="md-nav__link" href="../api_reference/model/orders.html">
                  Orders
                 </a>
@@ -601,11 +606,6 @@
                 </a>
                </li>
               </ul>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../api_reference/msgbus.html">
-               Message Bus
-              </a>
              </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../api_reference/persistence.html">
@@ -709,29 +709,33 @@
            </span>
            <ul class="submenu">
             <li class="md-nav__item">
+             <a class="md-nav__link" href="#installation">
+              Installation
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#getting-started">
+              Getting Started
+             </a>
+            </li>
+            <li class="md-nav__item">
              <a class="md-nav__link" href="#overview">
               Overview
              </a>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#instruments">
-              Instruments
+             <a class="md-nav__link" href="#instruments-contracts">
+              Instruments &amp; Contracts
              </a>
-             <span class="arrow">
-              <i class="fa-solid fa-chevron-right">
-              </i>
-             </span>
-             <ul class="submenu">
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#examples-queries">
-                Examples queries
-               </a>
-              </li>
-             </ul>
             </li>
             <li class="md-nav__item">
-             <a class="md-nav__link" href="#configuration">
-              Configuration
+             <a class="md-nav__link" href="#historical-data-backtesting">
+              Historical Data &amp; Backtesting
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#live-trading">
+              Live Trading
              </a>
              <span class="arrow">
               <i class="fa-solid fa-chevron-right">
@@ -739,8 +743,23 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#api-credentials">
-                API credentials
+               <a class="md-nav__link" href="#instrumentprovider">
+                InstrumentProvider
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#data-client">
+                Data Client
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#execution-client">
+                Execution Client
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#full-configuration">
+                Full Configuration
                </a>
               </li>
              </ul>
@@ -762,55 +781,184 @@
          </a>
         </h1>
         <p>
-         NautilusTrader offers an adapter for integrating with the Interactive Brokers Gateway via
+         Interactive Brokers (IB) is a trading platform that allows trading in a wide range of financial instruments, including stocks, options, futures, currencies, bonds, funds, and cryptocurrencies. NautilusTrader offers an adapter to integrate with IB using their
+         <a class="reference external" href="https://interactivebrokers.github.io/tws-api/index.html">
+          Trader Workstation (TWS) API
+         </a>
+         through their Python library,
          <a class="reference external" href="https://github.com/nautechsystems/ibapi">
           ibapi
          </a>
          .
         </p>
         <p>
+         The TWS API serves as an interface to IB’s standalone trading applications: TWS and IB Gateway. Both can be downloaded from the IB website. If you haven’t installed TWS or IB Gateway yet, refer to the
+         <a class="reference external" href="https://interactivebrokers.github.io/tws-api/initial_setup.html">
+          Initial Setup
+         </a>
+         guide. In NautilusTrader, you’ll establish a connection to one of these applications via the
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           InteractiveBrokersClient
+          </span>
+         </code>
+         .
+        </p>
+        <p>
+         Alternatively, you can start with a
+         <a class="reference external" href="https://github.com/gnzsnz/ib-gateway-docker">
+          dockerized version
+         </a>
+         of the IB Gateway, particularly useful when deploying trading strategies on a hosted cloud platform. This requires having
+         <a class="reference external" href="https://www.docker.com/">
+          Docker
+         </a>
+         installed on your machine, along with the
+         <a class="reference external" href="https://pypi.org/project/docker/">
+          docker
+         </a>
+         Python package, which NautilusTrader conveniently includes as an extra package.
+        </p>
+        <p>
          <strong>
           Note
          </strong>
-         : If you are planning on using the built-in docker TWS Gateway when using the Interactive Brokers adapter,
-you must ensure the
-         <code class="docutils literal notranslate">
-          <span class="pre">
-           docker
-          </span>
-         </code>
-         package is installed. Run
-         <code class="docutils literal notranslate">
-          <span class="pre">
-           poetry
-          </span>
-          <span class="pre">
-           install
-          </span>
-          <span class="pre">
-           --extras
-          </span>
-          <span class="pre">
-           "ib
-          </span>
-          <span class="pre">
-           docker"
-          </span>
-         </code>
-         or
-         <code class="docutils literal notranslate">
-          <span class="pre">
-           poetry
-          </span>
-          <span class="pre">
-           install
-          </span>
-          <span class="pre">
-           --all-extras
-          </span>
-         </code>
-         inside your environment to ensure the necessary packages are installed.
+         : The standalone TWS and IB Gateway applications necessitate manual input of username, password, and trading mode (live or paper) at startup. The dockerized version of the IB Gateway handles these steps programmatically.
         </p>
+        <section id="installation">
+         <h2 id="installation">
+          Installation
+          <a class="headerlink" href="#installation" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          To install the latest nautilus-trader package along with the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            ibapi
+           </span>
+          </code>
+          and optional
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            docker
+           </span>
+          </code>
+          dependencies using pip, execute:
+         </p>
+         <div class="highlight-default notranslate">
+          <div class="highlight">
+           <pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="s2">"nautilus_trader[ib,docker]"</span>
+</pre>
+          </div>
+         </div>
+         <p>
+          For installation via poetry, use:
+         </p>
+         <div class="highlight-default notranslate">
+          <div class="highlight">
+           <pre><span></span><span class="n">poetry</span> <span class="n">add</span> <span class="s2">"nautilus_trader[ib,docker]"</span>
+</pre>
+          </div>
+         </div>
+         <p>
+          <strong>
+           Note
+          </strong>
+          : Because IB does not provide wheels for
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            ibapi
+           </span>
+          </code>
+          , NautilusTrader
+          <a class="reference external" href="https://pypi.org/project/nautilus-ibapi/">
+           repackages
+          </a>
+          it for release on PyPI.
+         </p>
+        </section>
+        <section id="getting-started">
+         <h2 id="getting-started">
+          Getting Started
+          <a class="headerlink" href="#getting-started" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          Before deploying strategies, ensure that TWS / IB Gateway is running. Launch one of the standalone applications and log in with your credentials, or start the dockerized IB Gateway using
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            InteractiveBrokersGateway
+           </span>
+          </code>
+          :
+         </p>
+         <div class="highlight-python notranslate">
+          <div class="highlight">
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.gateway</span> <span class="kn">import</span> <span class="n">InteractiveBrokersGateway</span>
+
+
+<span class="n">gateway_config</span> <span class="o">=</span> <span class="n">InteractiveBrokersGatewayConfig</span><span class="p">(</span>
+    <span class="n">username</span><span class="o">=</span><span class="s2">"test"</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s2">"test"</span><span class="p">,</span>
+    <span class="n">trading_mode</span><span class="o">=</span><span class="s2">"paper"</span><span class="p">,</span>
+    <span class="n">start</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># This may take a short while to start up, especially the first time</span>
+<span class="n">gateway</span> <span class="o">=</span> <span class="n">InteractiveBrokersGateway</span><span class="p">(</span>
+    <span class="n">config</span><span class="o">=</span><span class="n">gateway_config</span>
+<span class="p">)</span>
+
+<span class="c1"># Confirm you are logged in</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gateway</span><span class="o">.</span><span class="n">is_logged_in</span><span class="p">(</span><span class="n">gateway</span><span class="o">.</span><span class="n">container</span><span class="p">))</span>
+
+<span class="c1"># Inspect the logs</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gateway</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">logs</span><span class="p">())</span>
+</pre>
+          </div>
+         </div>
+         <p>
+          <strong>
+           Note
+          </strong>
+          : To supply credentials to the Interactive Brokers Gateway, either pass the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            username
+           </span>
+          </code>
+          and
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            password
+           </span>
+          </code>
+          to the config dictionaries, or set the following environment variables:
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              TWS_USERNAME
+             </span>
+            </code>
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              TWS_PASSWORD
+             </span>
+            </code>
+           </p>
+          </li>
+         </ul>
+        </section>
         <section id="overview">
          <h2 id="overview">
           Overview
@@ -819,9 +967,35 @@ you must ensure the
           </a>
          </h2>
          <p>
-          The following integration classes are available:
+          The adapter includes several major components:
          </p>
          <ul class="simple">
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              InteractiveBrokersClient
+             </span>
+            </code>
+            : Executes TWS API requests using
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              ibapi
+             </span>
+            </code>
+            .
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              HistoricInteractiveBrokersClient
+             </span>
+            </code>
+            : Provides methods for retrieving instruments and historical data, useful for backtesting.
+           </p>
+          </li>
           <li>
            <p>
             <code class="docutils literal notranslate">
@@ -829,7 +1003,7 @@ you must ensure the
               InteractiveBrokersInstrumentProvider
              </span>
             </code>
-            which allows querying Interactive Brokers for instruments.
+            : Retrieves or queries instruments for trading.
            </p>
           </li>
           <li>
@@ -839,13 +1013,7 @@ you must ensure the
               InteractiveBrokersDataClient
              </span>
             </code>
-            which connects to the
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              Gateway
-             </span>
-            </code>
-            and streams market data.
+            : Connects to the Gateway for streaming market data.
            </p>
           </li>
           <li>
@@ -855,399 +1023,446 @@ you must ensure the
               InteractiveBrokersExecutionClient
              </span>
             </code>
-            which allows the retrieval of account information and execution of orders.
+            : Handles account information and executes trades.
            </p>
           </li>
          </ul>
         </section>
-        <section id="instruments">
-         <h2 id="instruments">
-          Instruments
-          <a class="headerlink" href="#instruments" title="Permalink to this heading">
+        <section id="instruments-contracts">
+         <h2 id="instruments-contracts">
+          Instruments &amp; Contracts
+          <a class="headerlink" href="#instruments-contracts" title="Permalink to this heading">
            ¶
           </a>
          </h2>
          <p>
-          Interactive Brokers allows searching for instruments via the
+          In IB, a NautilusTrader
           <code class="docutils literal notranslate">
            <span class="pre">
-            qualifyContracts
+            Instrument
            </span>
           </code>
-          API, which, if given enough information
-can usually resolve a filter into an actual contract(s). A node can request instruments to be loaded by passing
-configuration to the
+          is equivalent to a
+          <a class="reference external" href="https://interactivebrokers.github.io/tws-api/contracts.html">
+           Contract
+          </a>
+          . Contracts can be either a
+          <a class="reference external" href="https://interactivebrokers.github.io/tws-api/classIBApi_1_1Contract.html">
+           basic contract
+          </a>
+          or a more
+          <a class="reference external" href="https://interactivebrokers.github.io/tws-api/classIBApi_1_1ContractDetails.html">
+           detailed
+          </a>
+          version (ContractDetails). The adapter models these using
           <code class="docutils literal notranslate">
            <span class="pre">
-            InstrumentProviderConfig
+            IBContract
            </span>
           </code>
-          when initialising a
+          and
           <code class="docutils literal notranslate">
            <span class="pre">
-            TradingNodeConfig
+            IBContractDetails
            </span>
           </code>
-          (note that while
+          classes. The latter includes critical data like order types and trading hours, which are absent in the basic contract. As a result,
           <code class="docutils literal notranslate">
            <span class="pre">
-            filters
+            IBContractDetails
            </span>
           </code>
-          is a dict, it must be converted to a tuple when passed to
+          can be converted to an
           <code class="docutils literal notranslate">
            <span class="pre">
-            InstrumentProviderConfig
+            Instrument
            </span>
           </code>
-          ).
+          while
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            IBContract
+           </span>
+          </code>
+          cannot.
          </p>
          <p>
-          At a minimum, you must specify the
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            secType
-           </span>
-          </code>
-          (security type) and
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            symbol
-           </span>
-          </code>
-          (equities etc) or
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            pair
-           </span>
-          </code>
-          (FX). See examples
-queries below for common use cases
+          To search for contract information, use the
+          <a class="reference external" href="https://pennies.interactivebrokers.com/cstools/contract_info/">
+           IB Contract Information Center
+          </a>
+          .
          </p>
          <p>
-          Example config:
+          Examples of
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            IBContracts
+           </span>
+          </code>
+          :
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.common</span> <span class="kn">import</span> <span class="n">IBContract</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">InteractiveBrokersDataClientConfig</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">InteractiveBrokersInstrumentProviderConfig</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">TradingNodeConfig</span>
 
-<span class="n">config_node</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
-    <span class="n">data_clients</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">"IB"</span><span class="p">:</span> <span class="n">InteractiveBrokersDataClientConfig</span><span class="p">(</span>
-            <span class="n">instrument_provider</span><span class="o">=</span><span class="n">InteractiveBrokersInstrumentProviderConfig</span><span class="p">(</span>
-                <span class="n">load_ids</span><span class="o">=</span><span class="p">{</span><span class="s2">"EUR/USD.IDEALPRO"</span><span class="p">,</span> <span class="s2">"AAPL.NASDAQ"</span><span class="p">},</span>
-                <span class="n">load_contracts</span><span class="o">=</span><span class="p">{</span><span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s2">"CONTFUT"</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="s2">"CME"</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s2">"MES"</span><span class="p">)},</span>
-            <span class="p">)</span>
-    <span class="p">),</span>
-    <span class="o">...</span>
-<span class="p">)</span>
+<span class="c1"># Stock</span>
+<span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s1">'STK'</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="s1">'SMART'</span><span class="p">,</span> <span class="n">primaryExchange</span><span class="o">=</span><span class="s1">'ARCA'</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s1">'SPY'</span><span class="p">)</span>
+
+<span class="c1"># Bond</span>
+<span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s1">'BOND'</span><span class="p">,</span> <span class="n">secIdType</span><span class="o">=</span><span class="s1">'ISIN'</span><span class="p">,</span> <span class="n">secId</span><span class="o">=</span><span class="s1">'US03076KAA60'</span><span class="p">)</span>
+
+<span class="c1"># Option</span>
+<span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s1">'STK'</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="s1">'SMART'</span><span class="p">,</span> <span class="n">primaryExchange</span><span class="o">=</span><span class="s1">'ARCA'</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s1">'SPY'</span><span class="p">,</span> <span class="n">lastTradeDateOrContractMonth</span><span class="o">=</span><span class="s1">'20251219'</span><span class="p">,</span> <span class="n">build_options_chain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># CFD</span>
+<span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s1">'CFD'</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s1">'IBUS30'</span><span class="p">)</span>
+
+<span class="c1"># Future</span>
+<span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s1">'CONTFUT'</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="s1">'CME'</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s1">'ES'</span><span class="p">,</span> <span class="n">build_futures_chain</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Forex</span>
+<span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s1">'CASH'</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="s1">'IDEALPRO'</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s1">'EUR'</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="s1">'GBP'</span><span class="p">)</span>
+
+<span class="c1"># Crypto</span>
+<span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s1">'CRYPTO'</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s1">'ETH'</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="s1">'PAXOS'</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="s1">'USD'</span><span class="p">)</span>
 </pre>
           </div>
          </div>
-         <section id="examples-queries">
-          <h3 id="examples-queries">
-           Examples queries
-           <a class="headerlink" href="#examples-queries" title="Permalink to this heading">
-            ¶
-           </a>
-          </h3>
-          <ul class="simple">
-           <li>
-            <p>
-             Stock:
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               IBContract(secType='STK',
-              </span>
-              <span class="pre">
-               exchange='SMART',
-              </span>
-              <span class="pre">
-               symbol='AMD',
-              </span>
-              <span class="pre">
-               currency='USD')
-              </span>
-             </code>
-            </p>
-           </li>
-           <li>
-            <p>
-             Stock:
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               IBContract(secType='STK',
-              </span>
-              <span class="pre">
-               exchange='SMART',
-              </span>
-              <span class="pre">
-               primaryExchange='NASDAQ',
-              </span>
-              <span class="pre">
-               symbol='INTC')
-              </span>
-             </code>
-            </p>
-           </li>
-           <li>
-            <p>
-             Forex:
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               InstrumentId('EUR/USD.IDEALPRO')
-              </span>
-             </code>
-             ,
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               InstrumentId('USD/JPY.IDEALPRO')
-              </span>
-             </code>
-            </p>
-           </li>
-           <li>
-            <p>
-             CFD:
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               IBContract(secType='CFD',
-              </span>
-              <span class="pre">
-               symbol='IBUS30')
-              </span>
-             </code>
-            </p>
-           </li>
-           <li>
-            <p>
-             Future:
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               InstrumentId("YMH24.CBOT")
-              </span>
-             </code>
-             ,
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               InstrumentId("CLZ27.NYMEX")
-              </span>
-             </code>
-             ,
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               InstrumentId("ESZ27.CME")
-              </span>
-             </code>
-             ,
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               InstrumentId('ES.CME')
-              </span>
-             </code>
-             ,
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               IBContract(secType='CONTFUT',
-              </span>
-              <span class="pre">
-               exchange='CME',
-              </span>
-              <span class="pre">
-               symbol='ES',
-              </span>
-              <span class="pre">
-               build_futures_chain=True)
-              </span>
-             </code>
-            </p>
-           </li>
-           <li>
-            <p>
-             Option:
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               InstrumentId('SPY251219C00395000.SMART')
-              </span>
-             </code>
-             ,
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               IBContract(secType='STK',
-              </span>
-              <span class="pre">
-               exchange='SMART',
-              </span>
-              <span class="pre">
-               primaryExchange='ARCA',
-              </span>
-              <span class="pre">
-               symbol='SPY',
-              </span>
-              <span class="pre">
-               lastTradeDateOrContractMonth='20251219',
-              </span>
-              <span class="pre">
-               build_options_chain=True)
-              </span>
-             </code>
-            </p>
-           </li>
-           <li>
-            <p>
-             Bond:
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               IBContract(secType='BOND',
-              </span>
-              <span class="pre">
-               secIdType='ISIN',
-              </span>
-              <span class="pre">
-               secId='US03076KAA60')
-              </span>
-             </code>
-            </p>
-           </li>
-           <li>
-            <p>
-             Crypto:
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               InstrumentId('BTC/USD.PAXOS')
-              </span>
-             </code>
-            </p>
-           </li>
-          </ul>
-         </section>
         </section>
-        <section id="configuration">
-         <h2 id="configuration">
-          Configuration
-          <a class="headerlink" href="#configuration" title="Permalink to this heading">
+        <section id="historical-data-backtesting">
+         <h2 id="historical-data-backtesting">
+          Historical Data &amp; Backtesting
+          <a class="headerlink" href="#historical-data-backtesting" title="Permalink to this heading">
            ¶
           </a>
          </h2>
          <p>
-          The most common use case is to configure a live
+          When developing strategies with the IB adapter, the first step usually involves acquiring historical data for backtesting. The
           <code class="docutils literal notranslate">
            <span class="pre">
-            TradingNode
+            HistoricInteractiveBrokersClient
            </span>
           </code>
-          to include Interactive Brokers
-data and execution clients. To achieve this, add an
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            IB
-           </span>
-          </code>
-          section to your client
-configuration(s) and set the environment variables to your TWS (Traders Workstation) credentials:
+          offers methods to request and save this data.
          </p>
-         <div class="highlight-python notranslate">
-          <div class="highlight">
-           <pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">InteractiveBrokersExecClientConfig</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">TradingNodeConfig</span>
-
-
-<span class="n">config</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
-    <span class="n">data_clients</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">"IB"</span><span class="p">:</span> <span class="n">InteractiveBrokersDataClientConfig</span><span class="p">(</span>
-            <span class="n">username</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"TWS_USERNAME"</span><span class="p">),</span>
-            <span class="n">password</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"TWS_PASSWORD"</span><span class="p">),</span>
-            <span class="o">...</span>  <span class="c1"># Omitted</span>
-    <span class="p">},</span>
-    <span class="n">exec_clients</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"IB"</span><span class="p">:</span> <span class="n">InteractiveBrokersExecClientConfig</span><span class="p">(</span>
-            <span class="n">username</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"TWS_USERNAME"</span><span class="p">),</span>
-            <span class="n">password</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"TWS_PASSWORD"</span><span class="p">),</span>
-            <span class="o">...</span>  <span class="c1"># Omitted</span>
-    <span class="p">},</span>
-    <span class="o">...</span>  <span class="c1"># Omitted</span>
-<span class="p">)</span>
-</pre>
-          </div>
-         </div>
          <p>
-          Then, create a
+          Here’s an example of retrieving and saving instrument and bar data. A more comprehensive example is available
+          <a class="reference external" href="https://github.com/nautechsystems/nautilus_trader/blob/master/examples/live/interactive_brokers/historic_download.py">
+           here
+          </a>
+          .
+         </p>
+         <div class="highlight-python notranslate">
+          <div class="highlight">
+           <pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.common</span> <span class="kn">import</span> <span class="n">IBContract</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.historic</span> <span class="kn">import</span> <span class="n">HistoricInteractiveBrokersClient</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.persistence.catalog</span> <span class="kn">import</span> <span class="n">ParquetDataCatalog</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">contract</span> <span class="o">=</span> <span class="n">IBContract</span><span class="p">(</span>
+        <span class="n">secType</span><span class="o">=</span><span class="s2">"STK"</span><span class="p">,</span>
+        <span class="n">symbol</span><span class="o">=</span><span class="s2">"AAPL"</span><span class="p">,</span>
+        <span class="n">exchange</span><span class="o">=</span><span class="s2">"SMART"</span><span class="p">,</span>
+        <span class="n">primaryExchange</span><span class="o">=</span><span class="s2">"NASDAQ"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">HistoricInteractiveBrokersClient</span><span class="p">()</span>
+
+    <span class="n">instruments</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">request_instruments</span><span class="p">(</span>
+        <span class="n">contracts</span><span class="o">=</span><span class="p">[</span><span class="n">contract</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">bars</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">request_bars</span><span class="p">(</span>
+        <span class="n">bar_specifications</span><span class="o">=</span><span class="p">[</span><span class="s2">"1-HOUR-LAST"</span><span class="p">,</span> <span class="s2">"30-MINUTE-MID"</span><span class="p">],</span>
+        <span class="n">end_date_time</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2023</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+        <span class="n">tz_name</span><span class="o">=</span><span class="s2">"America/New_York"</span><span class="p">,</span>
+        <span class="n">duration</span><span class="o">=</span><span class="s2">"1 D"</span><span class="p">,</span>
+        <span class="n">contracts</span><span class="o">=</span><span class="p">[</span><span class="n">contract</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">catalog</span> <span class="o">=</span> <span class="n">ParquetDataCatalog</span><span class="p">(</span><span class="s2">"./catalog"</span><span class="p">)</span>
+    <span class="n">catalog</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">instruments</span><span class="p">)</span>
+    <span class="n">catalog</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">bars</span><span class="p">)</span>
+</pre>
+          </div>
+         </div>
+        </section>
+        <section id="live-trading">
+         <h2 id="live-trading">
+          Live Trading
+          <a class="headerlink" href="#live-trading" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          Engaging in live or paper trading requires constructing and running a
           <code class="docutils literal notranslate">
            <span class="pre">
             TradingNode
            </span>
           </code>
-          and add the client factories:
+          . This node incorporates both
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            InteractiveBrokersDataClient
+           </span>
+          </code>
+          and
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            InteractiveBrokersExecutionClient
+           </span>
+          </code>
+          , which depend on the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            InteractiveBrokersInstrumentProvider
+           </span>
+          </code>
+          to operate.
          </p>
-         <div class="highlight-python notranslate">
-          <div class="highlight">
-           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.factories</span> <span class="kn">import</span> <span class="n">InteractiveBrokersLiveDataClientFactory</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.factories</span> <span class="kn">import</span> <span class="n">InteractiveBrokersLiveExecClientFactory</span>
-
-<span class="c1"># Instantiate the live trading node with a configuration</span>
-<span class="n">node</span> <span class="o">=</span> <span class="n">TradingNode</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
-
-<span class="c1"># Register the client factories with the node</span>
-<span class="n">node</span><span class="o">.</span><span class="n">add_data_client_factory</span><span class="p">(</span><span class="s2">"IB"</span><span class="p">,</span> <span class="n">InteractiveBrokersLiveDataClientFactory</span><span class="p">)</span>
-<span class="n">node</span><span class="o">.</span><span class="n">add_exec_client_factory</span><span class="p">(</span><span class="s2">"IB"</span><span class="p">,</span> <span class="n">InteractiveBrokersLiveExecClientFactory</span><span class="p">)</span>
-
-<span class="c1"># Finally build the node</span>
-<span class="n">node</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
-</pre>
-          </div>
-         </div>
-         <section id="api-credentials">
-          <h3 id="api-credentials">
-           API credentials
-           <a class="headerlink" href="#api-credentials" title="Permalink to this heading">
+         <section id="instrumentprovider">
+          <h3 id="instrumentprovider">
+           InstrumentProvider
+           <a class="headerlink" href="#instrumentprovider" title="Permalink to this heading">
             ¶
            </a>
           </h3>
           <p>
-           There are two options for supplying your credentials to the Interactive Brokers clients.
-Either pass the corresponding
+           The
            <code class="docutils literal notranslate">
             <span class="pre">
-             username
+             InteractiveBrokersInstrumentProvider
+            </span>
+           </code>
+           class functions as a bridge for accessing financial instrument data from IB. Configurable through
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             InteractiveBrokersInstrumentProviderConfig
+            </span>
+           </code>
+           , it allows for the customization of various instrument type parameters. Additionally, this provider offers specialized methods to build and retrieve the entire futures and options chains.
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">InteractiveBrokersInstrumentProviderConfig</span>
+
+
+<span class="n">instrument_provider_config</span> <span class="o">=</span> <span class="n">InteractiveBrokersInstrumentProviderConfig</span><span class="p">(</span>
+    <span class="n">build_futures_chain</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Set to True if fetching futures</span>
+    <span class="n">build_options_chain</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Set to True if fetching options</span>
+    <span class="n">min_expiry_days</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>         <span class="c1"># Relevant for futures/options with expiration</span>
+    <span class="n">max_expiry_days</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>         <span class="c1"># Relevant for futures/options with expiration</span>
+    <span class="n">load_ids</span><span class="o">=</span><span class="nb">frozenset</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="s2">"EUR/USD.IDEALPRO"</span><span class="p">,</span>
+            <span class="s2">"BTC/USD.PAXOS"</span><span class="p">,</span>
+            <span class="s2">"SPY.ARCA"</span><span class="p">,</span>
+            <span class="s2">"V.NYSE"</span><span class="p">,</span>
+            <span class="s2">"YMH24.CBOT"</span><span class="p">,</span>
+            <span class="s2">"CLZ27.NYMEX"</span><span class="p">,</span>
+            <span class="s2">"ESZ27.CME"</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">),</span>
+    <span class="n">load_contracts</span><span class="o">=</span><span class="nb">frozenset</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s1">'STK'</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s1">'SPY'</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="s1">'SMART'</span><span class="p">,</span> <span class="n">primaryExchange</span><span class="o">=</span><span class="s1">'ARCA'</span><span class="p">),</span>
+            <span class="n">IBContract</span><span class="p">(</span><span class="n">secType</span><span class="o">=</span><span class="s1">'STK'</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="s1">'AAPL'</span><span class="p">,</span> <span class="n">exchange</span><span class="o">=</span><span class="s1">'SMART'</span><span class="p">,</span> <span class="n">primaryExchange</span><span class="o">=</span><span class="s1">'NASDAQ'</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+</pre>
+           </div>
+          </div>
+         </section>
+         <section id="data-client">
+          <h3 id="data-client">
+           Data Client
+           <a class="headerlink" href="#data-client" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             InteractiveBrokersDataClient
+            </span>
+           </code>
+           interfaces with IB for streaming and retrieving market data. Upon connection, it configures the
+           <a class="reference external" href="https://interactivebrokers.github.io/tws-api/market_data_type.html">
+            market data type
+           </a>
+           and loads instruments based on the settings in
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             InteractiveBrokersInstrumentProviderConfig
+            </span>
+           </code>
+           . This client can subscribe to and unsubscribe from various market data types, including quote ticks, trade ticks, and bars.
+          </p>
+          <p>
+           Configurable through
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             InteractiveBrokersDataClientConfig
+            </span>
+           </code>
+           , it allows adjustments for handling revised bars, trading hours preferences, and market data types (e.g.,
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             IBMarketDataTypeEnum.REALTIME
+            </span>
+           </code>
+           or
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             IBMarketDataTypeEnum.DELAYED_FROZEN
+            </span>
+           </code>
+           ).
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">IBMarketDataTypeEnum</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">InteractiveBrokersDataClientConfig</span>
+
+
+<span class="n">data_client_config</span> <span class="o">=</span> <span class="n">InteractiveBrokersDataClientConfig</span><span class="p">(</span>
+    <span class="n">ibg_port</span><span class="o">=</span><span class="mi">4002</span><span class="p">,</span>
+    <span class="n">handle_revised_bars</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">use_regular_trading_hours</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">market_data_type</span><span class="o">=</span><span class="n">IBMarketDataTypeEnum</span><span class="o">.</span><span class="n">DELAYED_FROZEN</span><span class="p">,</span>  <span class="c1"># Default is REALTIME if not set</span>
+    <span class="n">instrument_provider</span><span class="o">=</span><span class="n">instrument_provider_config</span><span class="p">,</span>
+    <span class="n">gateway</span><span class="o">=</span><span class="n">gateway_config</span><span class="p">,</span>
+<span class="p">)</span>
+</pre>
+           </div>
+          </div>
+         </section>
+         <section id="execution-client">
+          <h3 id="execution-client">
+           Execution Client
+           <a class="headerlink" href="#execution-client" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           The
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             InteractiveBrokersExecutionClient
+            </span>
+           </code>
+           facilitates executing trades, accessing account information, and processing order and trade-related details. It encompasses a range of methods for order management, including reporting order statuses, placing new orders, and modifying or canceling existing ones. Additionally, it generates position reports, although trade reports are not yet implemented.
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.config</span> <span class="kn">import</span> <span class="n">InteractiveBrokersExecClientConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">RoutingConfig</span>
+
+
+<span class="n">exec_client_config</span> <span class="o">=</span> <span class="n">InteractiveBrokersExecClientConfig</span><span class="p">(</span>
+    <span class="n">ibg_port</span><span class="o">=</span><span class="mi">4002</span><span class="p">,</span>
+    <span class="n">account_id</span><span class="o">=</span><span class="s2">"DU123456"</span><span class="p">,</span>  <span class="c1"># Must match the connected IB Gateway/TWS</span>
+    <span class="n">gateway</span><span class="o">=</span><span class="n">gateway_config</span><span class="p">,</span>
+    <span class="n">instrument_provider</span><span class="o">=</span><span class="n">instrument_provider_config</span><span class="p">,</span>
+    <span class="n">routing</span><span class="o">=</span><span class="n">RoutingConfig</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre>
+           </div>
+          </div>
+         </section>
+         <section id="full-configuration">
+          <h3 id="full-configuration">
+           Full Configuration
+           <a class="headerlink" href="#full-configuration" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Setting up a complete trading environment typically involves configuring a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             TradingNodeConfig
+            </span>
+           </code>
+           , which includes data and execution client configurations. Additional configurations are specified in
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             LiveDataEngineConfig
+            </span>
+           </code>
+           to accommodate IB-specific requirements. A
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             TradingNode
+            </span>
+           </code>
+           is then instantiated from these configurations, and factories for creating
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             InteractiveBrokersDataClient
             </span>
            </code>
            and
            <code class="docutils literal notranslate">
             <span class="pre">
-             password
+             InteractiveBrokersExecutionClient
             </span>
            </code>
-           values to the config dictionaries, or
-set the following environment variables:
+           are added. Finally, the node is built and run.
           </p>
-          <ul class="simple">
-           <li>
-            <p>
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               TWS_USERNAME
-              </span>
-             </code>
-            </p>
-           </li>
-           <li>
-            <p>
-             <code class="docutils literal notranslate">
-              <span class="pre">
-               TWS_PASSWORD
-              </span>
-             </code>
-            </p>
-           </li>
-          </ul>
           <p>
-           When starting the trading node, you’ll receive immediate confirmation of whether your
-credentials are valid and have trading permissions.
+           For a comprehensive example, refer to this
+           <a class="reference external" href="https://github.com/nautechsystems/nautilus_trader/blob/master/examples/live/interactive_brokers/interactive_brokers_example.py">
+            script
+           </a>
+           .
           </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.common</span> <span class="kn">import</span> <span class="n">IB_VENUE</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.factories</span> <span class="kn">import</span> <span class="n">InteractiveBrokersLiveDataClientFactory</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.adapters.interactive_brokers.factories</span> <span class="kn">import</span> <span class="n">InteractiveBrokersLiveExecClientFactory</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">LiveDataEngineConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">LoggingConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">TradingNodeConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.live.node</span> <span class="kn">import</span> <span class="n">TradingNode</span>
+
+
+<span class="c1"># ... [continuing from prior example code] ...</span>
+
+<span class="c1"># Configure the trading node</span>
+<span class="n">config_node</span> <span class="o">=</span> <span class="n">TradingNodeConfig</span><span class="p">(</span>
+    <span class="n">trader_id</span><span class="o">=</span><span class="s2">"TESTER-001"</span><span class="p">,</span>
+    <span class="n">logging</span><span class="o">=</span><span class="n">LoggingConfig</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">),</span>
+    <span class="n">data_clients</span><span class="o">=</span><span class="p">{</span><span class="s2">"IB"</span><span class="p">:</span> <span class="n">data_client_config</span><span class="p">},</span>
+    <span class="n">exec_clients</span><span class="o">=</span><span class="p">{</span><span class="s2">"IB"</span><span class="p">:</span> <span class="n">exec_client_config</span><span class="p">},</span>
+    <span class="n">data_engine</span><span class="o">=</span><span class="n">LiveDataEngineConfig</span><span class="p">(</span>
+        <span class="n">time_bars_timestamp_on_close</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Use opening time as `ts_event`, as per IB standard</span>
+        <span class="n">validate_data_sequence</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>         <span class="c1"># Discards bars received out of sequence</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">node</span> <span class="o">=</span> <span class="n">TradingNode</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config_node</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">add_data_client_factory</span><span class="p">(</span><span class="s2">"IB"</span><span class="p">,</span> <span class="n">InteractiveBrokersLiveDataClientFactory</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">add_exec_client_factory</span><span class="p">(</span><span class="s2">"IB"</span><span class="p">,</span> <span class="n">InteractiveBrokersLiveExecClientFactory</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="n">node</span><span class="o">.</span><span class="n">portfolio</span><span class="o">.</span><span class="n">set_specific_venue</span><span class="p">(</span><span class="n">IB_VENUE</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Stop and dispose of the node with SIGINT/CTRL+C</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">dispose</span><span class="p">()</span>
+</pre>
+           </div>
+          </div>
          </section>
         </section>
        </section>
@@ -1259,7 +1474,7 @@ credentials are valid and have trading permissions.
   <footer class="md-footer">
    <div class="md-footer-nav">
     <nav class="md-footer-nav__inner md-grid">
-     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="binance.html" rel="prev" title="Binance">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="databento.html" rel="prev" title="Databento">
       <div class="md-flex__cell md-flex__cell--shrink">
        <i class="md-icon md-icon--arrow-back md-footer-nav__button">
        </i>
@@ -1269,7 +1484,7 @@ credentials are valid and have trading permissions.
         <span class="md-footer-nav__direction">
          Previous
         </span>
-        Binance
+        Databento
        </span>
       </div>
      </a>

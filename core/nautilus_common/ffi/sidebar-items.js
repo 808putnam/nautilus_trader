@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["clock","logging","timer"]};
+window.SIDEBAR_ITEMS = {"mod":["clock","enums","logging","msgbus","timer"]};

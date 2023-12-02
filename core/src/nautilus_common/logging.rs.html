@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging.rs`."><title>logging.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (a2f5f9691 2023-11-02)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging.rs`."><title>logging.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (8c2b57721 2023-12-01)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -697,6 +697,94 @@
 <a href="#697" id="697">697</a>
 <a href="#698" id="698">698</a>
 <a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
+<a href="#731" id="731">731</a>
+<a href="#732" id="732">732</a>
+<a href="#733" id="733">733</a>
+<a href="#734" id="734">734</a>
+<a href="#735" id="735">735</a>
+<a href="#736" id="736">736</a>
+<a href="#737" id="737">737</a>
+<a href="#738" id="738">738</a>
+<a href="#739" id="739">739</a>
+<a href="#740" id="740">740</a>
+<a href="#741" id="741">741</a>
+<a href="#742" id="742">742</a>
+<a href="#743" id="743">743</a>
+<a href="#744" id="744">744</a>
+<a href="#745" id="745">745</a>
+<a href="#746" id="746">746</a>
+<a href="#747" id="747">747</a>
+<a href="#748" id="748">748</a>
+<a href="#749" id="749">749</a>
+<a href="#750" id="750">750</a>
+<a href="#751" id="751">751</a>
+<a href="#752" id="752">752</a>
+<a href="#753" id="753">753</a>
+<a href="#754" id="754">754</a>
+<a href="#755" id="755">755</a>
+<a href="#756" id="756">756</a>
+<a href="#757" id="757">757</a>
+<a href="#758" id="758">758</a>
+<a href="#759" id="759">759</a>
+<a href="#760" id="760">760</a>
+<a href="#761" id="761">761</a>
+<a href="#762" id="762">762</a>
+<a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
+<a href="#767" id="767">767</a>
+<a href="#768" id="768">768</a>
+<a href="#769" id="769">769</a>
+<a href="#770" id="770">770</a>
+<a href="#771" id="771">771</a>
+<a href="#772" id="772">772</a>
+<a href="#773" id="773">773</a>
+<a href="#774" id="774">774</a>
+<a href="#775" id="775">775</a>
+<a href="#776" id="776">776</a>
+<a href="#777" id="777">777</a>
+<a href="#778" id="778">778</a>
+<a href="#779" id="779">779</a>
+<a href="#780" id="780">780</a>
+<a href="#781" id="781">781</a>
+<a href="#782" id="782">782</a>
+<a href="#783" id="783">783</a>
+<a href="#784" id="784">784</a>
+<a href="#785" id="785">785</a>
+<a href="#786" id="786">786</a>
+<a href="#787" id="787">787</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -718,6 +806,7 @@
     fs::{create_dir_all, File},
     io::{<span class="self">self</span>, BufWriter, Stderr, Stdout, Write},
     path::{Path, PathBuf},
+    str::FromStr,
     sync::mpsc::{channel, Receiver, SendError, Sender},
     thread,
 };
@@ -725,10 +814,84 @@
 <span class="kw">use </span>chrono::{prelude::<span class="kw-2">*</span>, Utc};
 <span class="kw">use </span>nautilus_core::{datetime::unix_nanos_to_iso8601, time::UnixNanos, uuid::UUID4};
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
+<span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>serde_json::Value;
+<span class="kw">use </span>tracing::Level;
+<span class="kw">use </span>tracing_appender::{
+    non_blocking::WorkerGuard,
+    rolling::{RollingFileAppender, Rotation},
+};
+<span class="kw">use </span>tracing_subscriber::{fmt::Layer, prelude::<span class="kw-2">*</span>, EnvFilter, Registry};
 
 <span class="kw">use </span><span class="kw">crate</span>::enums::{LogColor, LogLevel};
+
+<span class="doccomment">/// Guards the log collector and flushes it when dropped
+///
+/// This struct must be dropped when the application has completed operation
+/// it ensures that the any pending log lines are flushed before the application
+/// closes.
+</span><span class="attr">#[pyclass]
+</span><span class="kw">pub struct </span>LogGuard {
+    <span class="attr">#[allow(dead_code)]
+    </span>guards: Vec&lt;WorkerGuard&gt;,
+}
+
+<span class="doccomment">/// Sets the global log collector
+///
+/// stdout_level: Set the level for the stdout writer
+/// stderr_level: Set the level for the stderr writer
+/// file_level: Set the level, the directory and the prefix for the file writer
+///
+/// It also configures a top level filter based on module/component name.
+/// The format for the string is component1=info,component2=debug.
+/// For e.g. network=error,kernel=info
+///
+/// # Safety
+/// Should only be called once during an applications run, ideally at the
+/// beginning of the run.
+</span><span class="attr">#[pyfunction]
+#[must_use]
+</span><span class="kw">pub fn </span>set_global_log_collector(
+    stdout_level: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    stderr_level: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    file_level: <span class="prelude-ty">Option</span>&lt;(String, String, String)&gt;,
+) -&gt; LogGuard {
+    <span class="kw">let </span><span class="kw-2">mut </span>guards = Vec::new();
+    <span class="kw">let </span>stdout_sub_builder = stdout_level.map(|stdout_level| {
+        <span class="kw">let </span>stdout_level = Level::from_str(<span class="kw-2">&amp;</span>stdout_level).unwrap();
+        <span class="kw">let </span>(non_blocking, guard) = tracing_appender::non_blocking(std::io::stdout());
+        guards.push(guard);
+        Layer::default().with_writer(non_blocking.with_max_level(stdout_level))
+    });
+    <span class="kw">let </span>stderr_sub_builder = stderr_level.map(|stderr_level| {
+        <span class="kw">let </span>stderr_level = Level::from_str(<span class="kw-2">&amp;</span>stderr_level).unwrap();
+        <span class="kw">let </span>(non_blocking, guard) = tracing_appender::non_blocking(std::io::stdout());
+        guards.push(guard);
+        Layer::default().with_writer(non_blocking.with_max_level(stderr_level))
+    });
+    <span class="kw">let </span>file_sub_builder = file_level.map(|(dir_path, file_prefix, file_level)| {
+        <span class="kw">let </span>file_level = Level::from_str(<span class="kw-2">&amp;</span>file_level).unwrap();
+        <span class="kw">let </span>rolling_log = RollingFileAppender::new(Rotation::NEVER, dir_path, file_prefix);
+        <span class="kw">let </span>(non_blocking, guard) = tracing_appender::non_blocking(rolling_log);
+        guards.push(guard);
+        Layer::default()
+            .with_ansi(<span class="bool-val">false</span>) <span class="comment">// turn off unicode colors when writing to file
+            </span>.with_writer(non_blocking.with_max_level(file_level))
+    });
+
+    <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = Registry::default()
+        .with(stderr_sub_builder)
+        .with(stdout_sub_builder)
+        .with(file_sub_builder)
+        .with(EnvFilter::from_default_env())
+        .try_init()
+    {
+        <span class="macro">println!</span>(<span class="string">&quot;Failed to set global default dispatcher because of error: {e}&quot;</span>);
+    };
+
+    LogGuard { guards }
+}
 
 <span class="doccomment">/// Provides a high-performance logger utilizing a MPSC channel under the hood.
 ///
@@ -746,6 +909,8 @@
     </span><span class="kw">pub </span>level_stdout: LogLevel,
     <span class="doccomment">/// The minimum log level to write to a log file.
     </span><span class="kw">pub </span>level_file: <span class="prelude-ty">Option</span>&lt;LogLevel&gt;,
+    <span class="doccomment">/// If logger is using ANSI color codes.
+    </span><span class="kw">pub </span>is_colored: bool,
     <span class="doccomment">/// If logging is bypassed.
     </span><span class="kw">pub </span>is_bypassed: bool,
 }
@@ -788,6 +953,7 @@
         file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
         file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
         component_levels: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, Value&gt;&gt;,
+        is_colored: bool,
         is_bypassed: bool,
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>(tx, rx) = channel::&lt;LogEvent&gt;();
@@ -820,6 +986,7 @@
                 file_name,
                 file_format,
                 level_filters,
+                is_colored,
                 rx,
             );
         });
@@ -831,11 +998,13 @@
             instance_id,
             level_stdout,
             level_file,
+            is_colored,
             is_bypassed,
         }
     }
 
-    <span class="kw">fn </span>handle_messages(
+    <span class="attr">#[allow(clippy::useless_format)] </span><span class="comment">// Format is not actually useless as we escape braces
+    </span><span class="kw">fn </span>handle_messages(
         trader_id: <span class="kw-2">&amp;</span>str,
         instance_id: <span class="kw-2">&amp;</span>str,
         level_stdout: LogLevel,
@@ -844,6 +1013,7 @@
         file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
         file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
         level_filters: HashMap&lt;String, LogLevel&gt;,
+        is_colored: bool,
         rx: Receiver&lt;LogEvent&gt;,
     ) {
         <span class="comment">// Setup std I/O buffers
@@ -886,9 +1056,11 @@
         <span class="kw">let </span><span class="kw-2">mut </span>file_buf = file.map(BufWriter::new);
 
         <span class="comment">// Setup templates for formatting
-        </span><span class="kw">let </span>template_console = String::from(
-            <span class="string">&quot;\x1b[1m{ts}\x1b[0m {color}[{level}] {trader_id}.{component}: {message}\x1b[0m\n&quot;</span>,
-        );
+        </span><span class="kw">let </span>template_console = <span class="kw">match </span>is_colored {
+            <span class="bool-val">true </span>=&gt; <span class="macro">format!</span>(<span class="string">&quot;\x1b[1m{{ts}}\x1b[0m {{color}}[{{level}}] {{trader_id}}.{{component}}: {{message}}\x1b[0m\n&quot;</span>),
+            <span class="bool-val">false </span>=&gt; <span class="macro">format!</span>(<span class="string">&quot;{{ts}} [{{level}}] {{trader_id}}.{{component}}: {{message}}\n&quot;</span>)
+        };
+
         <span class="kw">let </span>template_file = String::from(<span class="string">&quot;{ts} [{level}] {trader_id}.{component}: {message}\n&quot;</span>);
 
         <span class="comment">// Continue to receive and handle log events until channel is hung up
@@ -1148,6 +1320,7 @@
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
+            <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
         )
     }
@@ -1249,6 +1422,7 @@
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
+            <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
         );
 
@@ -1309,6 +1483,7 @@
                 String::from(<span class="string">&quot;RiskEngine&quot;</span>),
                 Value::from(<span class="string">&quot;ERROR&quot;</span>), <span class="comment">// &lt;-- This should be filtered
             </span>)))),
+            <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
         );
 
@@ -1360,6 +1535,7 @@
             <span class="prelude-val">None</span>,
             <span class="prelude-val">Some</span>(<span class="string">&quot;json&quot;</span>.to_string()),
             <span class="prelude-val">None</span>,
+            <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
         );
 

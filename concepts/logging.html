@@ -94,7 +94,7 @@
   <link href="../_static/favicon-32x32.png" rel="shortcut icon"/>
   <link href="../genindex.html" rel="index" title="Index"/>
   <link href="../search.html" rel="search" title="Search"/>
-  <link href="advanced/index.html" rel="next" title="Advanced"/>
+  <link href="message_bus.html" rel="next" title="Message Bus"/>
   <link href="adapters.html" rel="prev" title="Adapters"/>
   <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
  </head>
@@ -357,6 +357,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="message_bus.html">
+               Message Bus
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="advanced/index.html">
                Advanced
               </a>
@@ -437,6 +442,11 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../integrations/binance.html">
                Binance
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../integrations/databento.html">
+               Databento
               </a>
              </li>
              <li class="md-nav__item">
@@ -551,8 +561,8 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../api_reference/model/currency.html">
-                 Currency
+                <a class="md-nav__link" href="../api_reference/model/book.html">
+                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -581,11 +591,6 @@
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../api_reference/model/orderbook.html">
-                 Order Book
-                </a>
-               </li>
-               <li class="md-nav__item">
                 <a class="md-nav__link" href="../api_reference/model/orders.html">
                  Orders
                 </a>
@@ -601,11 +606,6 @@
                 </a>
                </li>
               </ul>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../api_reference/msgbus.html">
-               Message Bus
-              </a>
              </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../api_reference/persistence.html">
@@ -730,6 +730,11 @@
               <li class="md-nav__item">
                <a class="md-nav__link" href="#component-filtering">
                 Component filtering
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#log-colors">
+                Log Colors
                </a>
               </li>
              </ul>
@@ -1053,6 +1058,43 @@ The input value should be a dictionary of component ID strings to log level stri
            , as the same options are available.
           </p>
          </section>
+         <section id="log-colors">
+          <h3 id="log-colors">
+           Log Colors
+           <a class="headerlink" href="#log-colors" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           ANSI color codes are utilized to enhance the readability of logs when viewed in a terminal.
+These color codes can make it easier to distinguish different parts of log messages.
+However, in environments that do not support ANSI color rendering (such as some cloud environments or text editors),
+these color codes may not be appropriate as they can appear as raw text.
+          </p>
+          <p>
+           To accommodate for such scenarios, the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             LoggingConfig.log_colors
+            </span>
+           </code>
+           option can be set to
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             false
+            </span>
+           </code>
+           .
+Disabling
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             log_colors
+            </span>
+           </code>
+           will prevent the addition of ANSI color codes to the log messages, ensuring
+compatibility across different environments where color rendering is not supported.
+          </p>
+         </section>
         </section>
        </section>
       </article>
@@ -1077,13 +1119,13 @@ The input value should be a dictionary of component ID strings to log level stri
        </span>
       </div>
      </a>
-     <a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="advanced/index.html" rel="next" title="Advanced">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--next" href="message_bus.html" rel="next" title="Message Bus">
       <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
        <span class="md-flex__ellipsis">
         <span class="md-footer-nav__direction">
          Next
         </span>
-        Advanced
+        Message Bus
        </span>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">

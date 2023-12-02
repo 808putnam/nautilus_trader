@@ -357,6 +357,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/message_bus.html">
+               Message Bus
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/advanced/index.html">
                Advanced
               </a>
@@ -437,6 +442,11 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../integrations/binance.html">
                Binance
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../integrations/databento.html">
+               Databento
               </a>
              </li>
              <li class="md-nav__item">
@@ -551,8 +561,8 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="model/currency.html">
-                 Currency
+                <a class="md-nav__link" href="model/book.html">
+                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -581,11 +591,6 @@
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="model/orderbook.html">
-                 Order Book
-                </a>
-               </li>
-               <li class="md-nav__item">
                 <a class="md-nav__link" href="model/orders.html">
                  Orders
                 </a>
@@ -601,11 +606,6 @@
                 </a>
                </li>
               </ul>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="msgbus.html">
-               Message Bus
-              </a>
              </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="persistence.html">
@@ -1041,6 +1041,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   Cache.cache_synthetics()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.cache.cache.Cache.calculate_unrealized_pnl">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Cache.calculate_unrealized_pnl()
                  </span>
                 </code>
                </a>
@@ -3247,6 +3256,46 @@ accessed by many components.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             snapshot_orders:
+            </span>
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             =
+            </span>
+            <span class="pre">
+             False
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             snapshot_positions:
+            </span>
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             =
+            </span>
+            <span class="pre">
+             False
+            </span>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
              config:
             </span>
             <span class="pre">
@@ -3348,6 +3397,42 @@ accessed by many components.
                 optional
                </em>
                ) – The cache configuration.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                snapshot_orders
+               </strong>
+               (
+               <em>
+                bool
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default False
+               </em>
+               ) – If order state snapshots should be persisted.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                snapshot_positions
+               </strong>
+               (
+               <em>
+                bool
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default False
+               </em>
+               ) – If position state snapshots should be persisted.
               </p>
              </li>
             </ul>
@@ -4007,11 +4092,9 @@ be serialized), offering maximum flexibility.
                 bar
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-                <em>
-                 Bar
-                </em>
-               </a>
+               <em>
+                Bar
+               </em>
                ) – The bar to add.
               </p>
              </dd>
@@ -4086,11 +4169,9 @@ be serialized), offering maximum flexibility.
                <em>
                 [
                </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-                <em>
-                 Bar
-                </em>
-               </a>
+               <em>
+                Bar
+               </em>
                <em>
                 ]
                </em>
@@ -4162,7 +4243,7 @@ be serialized), offering maximum flexibility.
                 currency
                </strong>
                (
-               <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -4497,11 +4578,9 @@ being released and transformed into another type.
                 order_book
                </strong>
                (
-               <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook" title="nautilus_trader.model.orderbook.book.OrderBook">
-                <em>
-                 OrderBook
-                </em>
-               </a>
+               <em>
+                OrderBook
+               </em>
                ) – The order book to add.
               </p>
              </dd>
@@ -4941,11 +5020,9 @@ being released and transformed into another type.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-                <em>
-                 QuoteTick
-                </em>
-               </a>
+               <em>
+                QuoteTick
+               </em>
                ) – The tick to add.
               </p>
              </dd>
@@ -5020,11 +5097,9 @@ being released and transformed into another type.
                <em>
                 [
                </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-                <em>
-                 QuoteTick
-                </em>
-               </a>
+               <em>
+                QuoteTick
+               </em>
                <em>
                 ]
                </em>
@@ -5169,11 +5244,9 @@ being released and transformed into another type.
                 ticker
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.ticker.Ticker" title="nautilus_trader.model.data.ticker.Ticker">
-                <em>
-                 Ticker
-                </em>
-               </a>
+               <em>
+                Ticker
+               </em>
                ) – The ticker to add.
               </p>
              </dd>
@@ -5242,11 +5315,9 @@ being released and transformed into another type.
                 tick
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-                <em>
-                 TradeTick
-                </em>
-               </a>
+               <em>
+                TradeTick
+               </em>
                ) – The tick to add.
               </p>
              </dd>
@@ -5321,11 +5392,9 @@ being released and transformed into another type.
                <em>
                 [
                </em>
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-                <em>
-                 TradeTick
-                </em>
-               </a>
+               <em>
+                TradeTick
+               </em>
                <em>
                 ]
                </em>
@@ -5382,11 +5451,9 @@ being released and transformed into another type.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-               <span class="pre">
-                Bar
-               </span>
-              </a>
+              <span class="pre">
+               Bar
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.bar" title="Permalink to this definition">
@@ -5415,11 +5482,9 @@ being released and transformed into another type.
                   bar_type
                  </strong>
                  (
-                 <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                  <em>
-                   BarType
-                  </em>
-                 </a>
+                 <em>
+                  BarType
+                 </em>
                  ) – The bar type to get.
                 </p>
                </li>
@@ -5569,11 +5634,9 @@ being released and transformed into another type.
                 bar_type
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                <em>
-                 BarType
-                </em>
-               </a>
+               <em>
+                BarType
+               </em>
                ) – The bar type to count.
               </p>
              </dd>
@@ -5655,11 +5718,9 @@ being released and transformed into another type.
                 bar_type
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                <em>
-                 BarType
-                </em>
-               </a>
+               <em>
+                BarType
+               </em>
                ) – The bar type for bars to get.
               </p>
              </dd>
@@ -6132,6 +6193,56 @@ database.
              Clear the current synthetic instruments cache and load synthetic instruments from the cache
 database.
             </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.cache.cache.Cache.calculate_unrealized_pnl">
+            <span class="sig-name descname">
+             <span class="pre">
+              calculate_unrealized_pnl
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Position
+              </span>
+              <span class="pre">
+               position
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Money" title="nautilus_trader.model.objects.Money">
+               <span class="pre">
+                Money
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.calculate_unrealized_pnl" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
            </dd>
           </dl>
           <dl class="py method">
@@ -8158,7 +8269,7 @@ be serialized), offering maximum flexibility.
                   from_currency
                  </strong>
                  (
-                 <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                 <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                   <em>
                    Currency
                   </em>
@@ -8172,7 +8283,7 @@ be serialized), offering maximum flexibility.
                   to_currency
                  </strong>
                  (
-                 <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                 <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                   <em>
                    Currency
                   </em>
@@ -8297,11 +8408,9 @@ type.
                 bar_type
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                <em>
-                 BarType
-                </em>
-               </a>
+               <em>
+                BarType
+               </em>
                ) – The bar type for the bars.
               </p>
              </dd>
@@ -10351,11 +10460,9 @@ and is open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook" title="nautilus_trader.model.orderbook.book.OrderBook">
-               <span class="pre">
-                OrderBook
-               </span>
-              </a>
+              <span class="pre">
+               OrderBook
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.order_book" title="Permalink to this definition">
@@ -15221,11 +15328,9 @@ and is open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-               <span class="pre">
-                QuoteTick
-               </span>
-              </a>
+              <span class="pre">
+               QuoteTick
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.quote_tick" title="Permalink to this definition">
@@ -15622,7 +15727,7 @@ and is open.
            </dt>
            <dd>
             <p>
-             If order state snapshots should be taken.
+             If order state snapshots should be persisted.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -15867,7 +15972,7 @@ where a position is snapshot when no longer open.
            </dt>
            <dd>
             <p>
-             If position state snapshots should be taken.
+             If position state snapshots should be persisted.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -16421,11 +16526,9 @@ where a position is snapshot when no longer open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/data.html#nautilus_trader.model.data.ticker.Ticker" title="nautilus_trader.model.data.ticker.Ticker">
-               <span class="pre">
-                Ticker
-               </span>
-              </a>
+              <span class="pre">
+               Ticker
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.ticker" title="Permalink to this definition">
@@ -16733,11 +16836,9 @@ where a position is snapshot when no longer open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-               <span class="pre">
-                TradeTick
-               </span>
-              </a>
+              <span class="pre">
+               TradeTick
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.cache.Cache.trade_tick" title="Permalink to this definition">
@@ -18583,7 +18684,7 @@ where a position is snapshot when no longer open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -19864,11 +19965,9 @@ where a position is snapshot when no longer open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.Bar" title="nautilus_trader.model.data.bar.Bar">
-               <span class="pre">
-                Bar
-               </span>
-              </a>
+              <span class="pre">
+               Bar
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.bar" title="Permalink to this definition">
@@ -21728,11 +21827,9 @@ where a position is snapshot when no longer open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/orderbook.html#nautilus_trader.model.orderbook.book.OrderBook" title="nautilus_trader.model.orderbook.book.OrderBook">
-               <span class="pre">
-                OrderBook
-               </span>
-              </a>
+              <span class="pre">
+               OrderBook
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.order_book" title="Permalink to this definition">
@@ -24156,11 +24253,9 @@ where a position is snapshot when no longer open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.QuoteTick" title="nautilus_trader.model.data.tick.QuoteTick">
-               <span class="pre">
-                QuoteTick
-               </span>
-              </a>
+              <span class="pre">
+               QuoteTick
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.quote_tick" title="Permalink to this definition">
@@ -24601,11 +24696,9 @@ where a position is snapshot when no longer open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/data.html#nautilus_trader.model.data.ticker.Ticker" title="nautilus_trader.model.data.ticker.Ticker">
-               <span class="pre">
-                Ticker
-               </span>
-              </a>
+              <span class="pre">
+               Ticker
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.ticker" title="Permalink to this definition">
@@ -24767,11 +24860,9 @@ where a position is snapshot when no longer open.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="model/data.html#nautilus_trader.model.data.tick.TradeTick" title="nautilus_trader.model.data.tick.TradeTick">
-               <span class="pre">
-                TradeTick
-               </span>
-              </a>
+              <span class="pre">
+               TradeTick
+              </span>
              </span>
             </span>
             <a class="headerlink" href="#nautilus_trader.cache.base.CacheFacade.trade_tick" title="Permalink to this definition">

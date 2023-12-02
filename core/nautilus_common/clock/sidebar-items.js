@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["LiveClock","MonotonicClock","TestClock"],"trait":["Clock"]};
+window.SIDEBAR_ITEMS = {"struct":["LiveClock","TestClock"],"trait":["Clock"]};

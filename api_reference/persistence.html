@@ -95,7 +95,7 @@
   <link href="../genindex.html" rel="index" title="Index"/>
   <link href="../search.html" rel="search" title="Search"/>
   <link href="portfolio.html" rel="next" title="Portfolio"/>
-  <link href="msgbus.html" rel="prev" title="Message Bus"/>
+  <link href="model/tick_scheme.html" rel="prev" title="Tick Scheme"/>
   <link href="../_static/images/apple-icon-152x152.png" rel="apple-touch-icon"/>
  </head>
  <body data-md-color-accent="#282f38" data-md-color-primary="#282f38" dir="ltr">
@@ -357,6 +357,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="../concepts/message_bus.html">
+               Message Bus
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="../concepts/advanced/index.html">
                Advanced
               </a>
@@ -437,6 +442,11 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../integrations/binance.html">
                Binance
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../integrations/databento.html">
+               Databento
               </a>
              </li>
              <li class="md-nav__item">
@@ -551,8 +561,8 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="model/currency.html">
-                 Currency
+                <a class="md-nav__link" href="model/book.html">
+                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -581,11 +591,6 @@
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="model/orderbook.html">
-                 Order Book
-                </a>
-               </li>
-               <li class="md-nav__item">
                 <a class="md-nav__link" href="model/orders.html">
                  Orders
                 </a>
@@ -601,11 +606,6 @@
                 </a>
                </li>
               </ul>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="msgbus.html">
-               Message Bus
-              </a>
              </li>
              <li class="md-nav__item md-nav__link--active">
               <a class="md-nav__link" href="#">
@@ -2091,11 +2091,9 @@ generates unique filenames for different data sets.
                 bar_type
                </strong>
                (
-               <a class="reference internal" href="model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                <em>
-                 BarType
-                </em>
-               </a>
+               <em>
+                BarType
+               </em>
                ) – The bar type for the wrangler.
               </p>
              </li>
@@ -2201,7 +2199,7 @@ generates unique filenames for different data sets.
             </p>
             <p>
              Expects columns [‘open’, ‘high’, ‘low’, ‘close’, ‘volume’] with ‘timestamp’ index.
-Note: The ‘volume’ column is optional, will then use the
+Note: The ‘volume’ column is optional, if one does not exist then will use the
              <cite>
               default_volume
              </cite>
@@ -2840,6 +2838,46 @@ the data source and the Nautilus system. Cannot be negative.
                int
               </span>
               <span class="pre">
+               offset_interval_ms:
+              </span>
+              <span class="pre">
+               int
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               100
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               timestamp_is_close:
+              </span>
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               =
+              </span>
+              <span class="pre">
+               True
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               int
+              </span>
+              <span class="pre">
                random_seed:
               </span>
               <span class="pre">
@@ -2961,6 +2999,34 @@ the data source and the Nautilus system.
                <li>
                 <p>
                  <strong>
+                  offset_interval_ms
+                 </strong>
+                 (
+                 <em>
+                  int
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default 100
+                 </em>
+                 ) – The number of milliseconds to offset each tick for the bar timestamps.
+If
+                 <cite>
+                  timestamp_is_close
+                 </cite>
+                 then will use negative offsets,
+otherwise will use positive offsets (see also
+                 <cite>
+                  timestamp_is_close
+                 </cite>
+                 ).
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
                   random_seed
                  </strong>
                  (
@@ -2999,6 +3065,26 @@ data. If random_seed is
                   default False
                  </em>
                  ) – If the data is scaled to the Nautilus fixed precision.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  timestamp_is_close
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If bar timestamps are at the close.
+If True then open, high, low timestamps are offset before the close timestamp.
+If False then high, low, close timestamps are offset after the open timestamp.
                 </p>
                </li>
               </ul>
@@ -3977,7 +4063,7 @@ the data source and the Nautilus system.
   <footer class="md-footer">
    <div class="md-footer-nav">
     <nav class="md-footer-nav__inner md-grid">
-     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="msgbus.html" rel="prev" title="Message Bus">
+     <a class="md-flex md-footer-nav__link md-footer-nav__link--prev" href="model/tick_scheme.html" rel="prev" title="Tick Scheme">
       <div class="md-flex__cell md-flex__cell--shrink">
        <i class="md-icon md-icon--arrow-back md-footer-nav__button">
        </i>
@@ -3987,7 +4073,7 @@ the data source and the Nautilus system.
         <span class="md-footer-nav__direction">
          Previous
         </span>
-        Message Bus
+        Tick Scheme
        </span>
       </div>
      </a>

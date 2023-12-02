@@ -362,6 +362,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/message_bus.html">
+               Message Bus
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/advanced/index.html">
                Advanced
               </a>
@@ -442,6 +447,11 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../../integrations/binance.html">
                Binance
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../integrations/databento.html">
+               Databento
               </a>
              </li>
              <li class="md-nav__item">
@@ -556,8 +566,8 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../model/currency.html">
-                 Currency
+                <a class="md-nav__link" href="../model/book.html">
+                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -586,11 +596,6 @@
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="../model/orderbook.html">
-                 Order Book
-                </a>
-               </li>
-               <li class="md-nav__item">
                 <a class="md-nav__link" href="../model/orders.html">
                  Orders
                 </a>
@@ -606,11 +611,6 @@
                 </a>
                </li>
               </ul>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../msgbus.html">
-               Message Bus
-              </a>
              </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../persistence.html">
@@ -5439,7 +5439,7 @@ options/futures.
               <li>
                <p>
                 <strong>
-                 localSymbol
+                 symbol
                 </strong>
                 (
                 <em>
@@ -8594,6 +8594,126 @@ encoding/decoding.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              host
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+             <span class="w">
+             </span>
+             <span class="p">
+              <span class="pre">
+               |
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              None
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              '127.0.0.1'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              port
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              Optional
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="pre">
+              Literal
+             </span>
+             <span class="p">
+              <span class="pre">
+               [
+              </span>
+             </span>
+             <span class="m">
+              <span class="pre">
+               4001
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ,
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="m">
+              <span class="pre">
+               4002
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+             <span class="p">
+              <span class="pre">
+               ]
+              </span>
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               trading_mode
              </span>
             </span>
@@ -8843,6 +8963,42 @@ If
                  TWS_PASSWORD
                 </cite>
                 .
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 host
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The hostname or ip address for the IB Gateway or TWS.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 port
+                </strong>
+                (
+                <em>
+                 int
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The port for the gateway server (“paper” 4002, or “live” 4001).
                </p>
               </li>
               <li>
@@ -10629,6 +10785,22 @@ Example: value set to 1, InstrumentProvider will make fresh pull every day even 
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              host='127.0.0.1'
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              port=None
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               trading_mode='paper'
              </span>
             </span>
@@ -10690,7 +10862,7 @@ Example: value set to 1, InstrumentProvider will make fresh pull every day even 
               at
              </span>
              <span class="pre">
-              0x7f9e56b9c210&gt;
+              0x7f08a828ce50&gt;
              </span>
              <span class="pre">
               =
@@ -11473,6 +11645,12 @@ Configure
               password=None,
              </span>
              <span class="pre">
+              host='127.0.0.1',
+             </span>
+             <span class="pre">
+              port=None,
+             </span>
+             <span class="pre">
               trading_mode='paper',
              </span>
              <span class="pre">
@@ -11595,19 +11773,7 @@ Configure
                 <em>
                  int
                 </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default for "paper" 4002
-                </em>
-                <em>
-                 , or
-                </em>
-                <em>
-                 "live" 4001
-                </em>
-                ) – The port for the gateway server.
+                ) – The port for the gateway server (“paper” 4002, or “live” 4001).
                </p>
               </li>
               <li>
@@ -12083,7 +12249,7 @@ If
             <span class="w">
             </span>
             <span class="n">
-             <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+             <a class="reference internal" href="../common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
               <span class="pre">
                MessageBus
               </span>
@@ -12239,7 +12405,12 @@ If
             </a>
            </p>
            <p>
-            Provides a data client for the InteractiveBrokers exchange.
+            Provides a data client for the InteractiveBrokers exchange by using the
+            <cite>
+             Gateway
+            </cite>
+            to
+stream market data.
            </p>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.adapters.interactive_brokers.data.InteractiveBrokersDataClient.connect">
@@ -13312,11 +13483,9 @@ then the component state will not change, and an error will be logged.
                    data_type
                   </strong>
                   (
-                  <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                   <em>
-                    DataType
-                   </em>
-                  </a>
+                  <em>
+                   DataType
+                  </em>
                   ) – The data type for the subscription.
                  </p>
                 </li>
@@ -13451,11 +13620,9 @@ then the component state will not change, and an error will be logged.
                    bar_type
                   </strong>
                   (
-                  <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                   <em>
-                    BarType
-                   </em>
-                  </a>
+                  <em>
+                   BarType
+                  </em>
                   ) – The bar type for the request.
                  </p>
                 </li>
@@ -14623,11 +14790,9 @@ then the component state will not change, and an error will be logged.
                  data_type
                 </strong>
                 (
-                <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                 <em>
-                  DataType
-                 </em>
-                </a>
+                <em>
+                 DataType
+                </em>
                 ) – The data type for the subscription.
                </p>
               </dd>
@@ -14700,11 +14865,9 @@ then the component state will not change, and an error will be logged.
                  bar_type
                 </strong>
                 (
-                <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                 <em>
-                  BarType
-                 </em>
-                </a>
+                <em>
+                 BarType
+                </em>
                 ) – The bar type to subscribe to.
                </p>
               </dd>
@@ -16361,11 +16524,9 @@ then the component state will not change, and an error will be logged.
                  data_type
                 </strong>
                 (
-                <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.base.DataType" title="nautilus_trader.model.data.base.DataType">
-                 <em>
-                  DataType
-                 </em>
-                </a>
+                <em>
+                 DataType
+                </em>
                 ) – The data type for the subscription.
                </p>
               </dd>
@@ -16438,11 +16599,9 @@ then the component state will not change, and an error will be logged.
                  bar_type
                 </strong>
                 (
-                <a class="reference internal" href="../model/data.html#nautilus_trader.model.data.bar.BarType" title="nautilus_trader.model.data.bar.BarType">
-                 <em>
-                  BarType
-                 </em>
-                </a>
+                <em>
+                 BarType
+                </em>
                 ) – The bar type to unsubscribe from.
                </p>
               </dd>
@@ -17329,7 +17488,7 @@ then the component state will not change, and an error will be logged.
             <span class="w">
             </span>
             <span class="n">
-             <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+             <a class="reference internal" href="../common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
               <span class="pre">
                MessageBus
               </span>
@@ -17463,7 +17622,8 @@ then the component state will not change, and an error will be logged.
             </a>
            </p>
            <p>
-            Provides an execution client for Interactive Brokers TWS API.
+            Provides an execution client for Interactive Brokers TWS API, allowing for the
+retrieval of account information and execution of orders.
            </p>
            <dl class="field-list simple">
             <dt class="field-odd">
@@ -17518,7 +17678,7 @@ then the component state will not change, and an error will be logged.
                  msgbus
                 </strong>
                 (
-                <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+                <a class="reference internal" href="../common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                  <em>
                   MessageBus
                  </em>
@@ -21209,7 +21369,7 @@ position ID resolution.
                    quote_currency
                   </strong>
                   (
-                  <a class="reference internal" href="../model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                  <a class="reference internal" href="../model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                    <em>
                     Currency
                    </em>
@@ -23631,7 +23791,7 @@ then the component state will not change, and an error will be logged.
             <span class="w">
             </span>
             <span class="n">
-             <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+             <a class="reference internal" href="../common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
               <span class="pre">
                MessageBus
               </span>
@@ -23856,6 +24016,12 @@ then the component state will not change, and an error will be logged.
               password=None,
              </span>
              <span class="pre">
+              host='127.0.0.1',
+             </span>
+             <span class="pre">
+              port=None,
+             </span>
+             <span class="pre">
               trading_mode='paper',
              </span>
              <span class="pre">
@@ -23924,7 +24090,7 @@ cached client will be returned.
                  msgbus
                 </strong>
                 (
-                <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+                <a class="reference internal" href="../common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                  <em>
                   MessageBus
                  </em>
@@ -24365,7 +24531,7 @@ cached client will be returned.
               <span class="w">
               </span>
               <span class="n">
-               <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+               <a class="reference internal" href="../common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                 <span class="pre">
                  MessageBus
                 </span>
@@ -24512,7 +24678,7 @@ cached client will be returned.
                    msgbus
                   </strong>
                   (
-                  <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+                  <a class="reference internal" href="../common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                    <em>
                     MessageBus
                    </em>
@@ -24709,7 +24875,7 @@ cached client will be returned.
               <span class="w">
               </span>
               <span class="n">
-               <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+               <a class="reference internal" href="../common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                 <span class="pre">
                  MessageBus
                 </span>
@@ -24871,7 +25037,7 @@ cached client will be returned.
                    msgbus
                   </strong>
                   (
-                  <a class="reference internal" href="../msgbus.html#nautilus_trader.msgbus.bus.MessageBus" title="nautilus_trader.msgbus.bus.MessageBus">
+                  <a class="reference internal" href="../common.html#nautilus_trader.common.component.MessageBus" title="nautilus_trader.common.component.MessageBus">
                    <em>
                     MessageBus
                    </em>
@@ -25692,7 +25858,7 @@ the Contract shall have enough parameters so only one match is returned.
               <span class="w">
               </span>
               <span class="n">
-               <a class="reference internal" href="../model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="../model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <span class="pre">
                  Currency
                 </span>
@@ -25733,7 +25899,7 @@ the Contract shall have enough parameters so only one match is returned.
                  currency
                 </strong>
                 (
-                <a class="reference internal" href="../model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+                <a class="reference internal" href="../model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                  <em>
                   Currency
                  </em>
@@ -25831,9 +25997,9 @@ the Contract shall have enough parameters so only one match is returned.
                </span>
                <span class="w">
                </span>
-               <a class="reference internal" href="../model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="../model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <span class="pre">
-                 nautilus_trader.model.currency.Currency
+                 nautilus_trader.model.objects.Currency
                 </span>
                </a>
                <span class="p">
@@ -25905,9 +26071,9 @@ the Contract shall have enough parameters so only one match is returned.
                →
               </span>
               <span class="sig-return-typehint">
-               <a class="reference internal" href="../model/currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="../model/objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <span class="pre">
-                 nautilus_trader.model.currency.Currency
+                 nautilus_trader.model.objects.Currency
                 </span>
                </a>
                <span class="w">

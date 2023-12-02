@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["data","events","identifiers","orderbook","types"]};
+window.SIDEBAR_ITEMS = {"mod":["data","enums","events","identifiers","orderbook","types"]};

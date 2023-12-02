@@ -362,6 +362,11 @@
               </a>
              </li>
              <li class="md-nav__item">
+              <a class="md-nav__link" href="../../concepts/message_bus.html">
+               Message Bus
+              </a>
+             </li>
+             <li class="md-nav__item">
               <a class="md-nav__link" href="../../concepts/advanced/index.html">
                Advanced
               </a>
@@ -442,6 +447,11 @@
              <li class="md-nav__item">
               <a class="md-nav__link" href="../../integrations/binance.html">
                Binance
+              </a>
+             </li>
+             <li class="md-nav__item">
+              <a class="md-nav__link" href="../../integrations/databento.html">
+               Databento
               </a>
              </li>
              <li class="md-nav__item">
@@ -556,8 +566,8 @@
               </span>
               <ul class="submenu">
                <li class="md-nav__item">
-                <a class="md-nav__link" href="currency.html">
-                 Currency
+                <a class="md-nav__link" href="book.html">
+                 Order Book
                 </a>
                </li>
                <li class="md-nav__item">
@@ -586,11 +596,6 @@
                 </a>
                </li>
                <li class="md-nav__item">
-                <a class="md-nav__link" href="orderbook.html">
-                 Order Book
-                </a>
-               </li>
-               <li class="md-nav__item">
                 <a class="md-nav__link" href="orders.html">
                  Orders
                 </a>
@@ -606,11 +611,6 @@
                 </a>
                </li>
               </ul>
-             </li>
-             <li class="md-nav__item">
-              <a class="md-nav__link" href="../msgbus.html">
-               Message Bus
-              </a>
              </li>
              <li class="md-nav__item">
               <a class="md-nav__link" href="../persistence.html">
@@ -1102,6 +1102,15 @@
               <code class="docutils literal notranslate">
                <span class="pre">
                 make_symbol()
+               </span>
+              </code>
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#nautilus_trader.model.instruments.betting.null_handicap">
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                null_handicap()
                </span>
               </code>
              </a>
@@ -4152,7 +4161,7 @@ asset class and asset type.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             unicode
+             int
             </span>
             <span class="pre">
              event_type_id
@@ -4174,7 +4183,7 @@ asset class and asset type.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             unicode
+             int
             </span>
             <span class="pre">
              competition_id
@@ -4196,7 +4205,7 @@ asset class and asset type.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             unicode
+             int
             </span>
             <span class="pre">
              event_id
@@ -4295,7 +4304,7 @@ asset class and asset type.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             unicode
+             int
             </span>
             <span class="pre">
              selection_id
@@ -4328,7 +4337,7 @@ asset class and asset type.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             unicode
+             float
             </span>
             <span class="pre">
              selection_handicap
@@ -4372,10 +4381,10 @@ asset class and asset type.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             int
+             int8_t
             </span>
             <span class="pre">
-             price_precision=7
+             price_precision=2
             </span>
            </span>
           </em>
@@ -4408,7 +4417,7 @@ asset class and asset type.
              dict
             </span>
             <span class="pre">
-             info={}
+             info=None
             </span>
            </span>
           </em>
@@ -4972,7 +4981,7 @@ asset class and asset type.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -5032,7 +5041,7 @@ asset class and asset type.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -6618,32 +6627,44 @@ precision.
            (
           </span>
           <em class="sig-param">
-           <span class="pre">
-            unicode
+           <span class="n">
+            <span class="pre">
+             unicode
+            </span>
+            <span class="pre">
+             market_id:
+            </span>
+            <span class="pre">
+             str
+            </span>
            </span>
-           <span class="pre">
-            market_id:
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             int
+            </span>
+            <span class="pre">
+             selection_id:
+            </span>
+            <span class="pre">
+             int
+            </span>
            </span>
-           <span class="pre">
-            str,
-           </span>
-           <span class="pre">
-            unicode
-           </span>
-           <span class="pre">
-            selection_id:
-           </span>
-           <span class="pre">
-            str,
-           </span>
-           <span class="pre">
-            unicode
-           </span>
-           <span class="pre">
-            selection_handicap:
-           </span>
-           <span class="pre">
-            Optional[str]
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             double
+            </span>
+            <span class="pre">
+             selection_handicap:
+            </span>
+            <span class="pre">
+             float
+            </span>
            </span>
           </em>
           <span class="sig-paren">
@@ -6671,11 +6692,41 @@ precision.
           </p>
           <div class="doctest highlight-default notranslate">
            <div class="highlight">
-            <pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make_symbol</span><span class="p">(</span><span class="n">market_id</span><span class="o">=</span><span class="s2">"1.201070830"</span><span class="p">,</span> <span class="n">selection_id</span><span class="o">=</span><span class="s2">"123456"</span><span class="p">,</span> <span class="n">selection_handicap</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make_symbol</span><span class="p">(</span><span class="n">market_id</span><span class="o">=</span><span class="s2">"1.201070830"</span><span class="p">,</span> <span class="n">selection_id</span><span class="o">=</span><span class="mi">123456</span><span class="p">,</span> <span class="n">selection_handicap</span><span class="o">=</span><span class="n">null_handicap</span><span class="p">())</span>
 <span class="go">Symbol('1.201070830-123456-None')</span>
 </pre>
            </div>
           </div>
+         </dd>
+        </dl>
+        <dl class="py function">
+         <dt class="sig sig-object py" id="nautilus_trader.model.instruments.betting.null_handicap">
+          <span class="sig-name descname">
+           <span class="pre">
+            null_handicap
+           </span>
+          </span>
+          <span class="sig-paren">
+           (
+          </span>
+          <span class="sig-paren">
+           )
+          </span>
+          <span class="sig-return">
+           <span class="sig-return-icon">
+            →
+           </span>
+           <span class="sig-return-typehint">
+            <span class="pre">
+             double
+            </span>
+           </span>
+          </span>
+          <a class="headerlink" href="#nautilus_trader.model.instruments.betting.null_handicap" title="Permalink to this definition">
+           ¶
+          </a>
+         </dt>
+         <dd>
          </dd>
         </dl>
         <span class="target" id="module-nautilus_trader.model.instruments.crypto_perpetual">
@@ -7076,7 +7127,7 @@ Swap
                 base_currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -7096,7 +7147,7 @@ Swap
                 quote_currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -7110,7 +7161,7 @@ Swap
                 settlement_currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -7124,7 +7175,7 @@ Swap
                 is_inverse
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -8149,7 +8200,7 @@ Swap
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -8206,7 +8257,7 @@ Swap
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -10338,7 +10389,7 @@ as underlying and for settlement.
                 underlying
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -10352,7 +10403,7 @@ as underlying and for settlement.
                 quote_currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -11527,7 +11578,7 @@ as underlying and for settlement.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -11584,7 +11635,7 @@ as underlying and for settlement.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -13696,7 +13747,7 @@ currency for inverse instruments.
                 base_currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -13710,7 +13761,7 @@ currency for inverse instruments.
                 quote_currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -14785,7 +14836,7 @@ currency for inverse instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -14842,7 +14893,7 @@ currency for inverse instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -16769,7 +16820,7 @@ currency for inverse instruments.
                 currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -17574,7 +17625,7 @@ currency for inverse instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -17634,7 +17685,7 @@ currency for inverse instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -19529,7 +19580,7 @@ currency for inverse instruments.
                 currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -20440,7 +20491,7 @@ currency for inverse instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -20500,7 +20551,7 @@ currency for inverse instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -22440,7 +22491,7 @@ currency for inverse instruments.
                <em>
                 AssetClass
                </em>
-               ) – The futures contract asset class.
+               ) – The options contract asset class.
               </p>
              </li>
              <li>
@@ -22449,12 +22500,12 @@ currency for inverse instruments.
                 currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
                </a>
-               ) – The futures contract currency.
+               ) – The options contract currency.
               </p>
              </li>
              <li>
@@ -23376,7 +23427,7 @@ currency for inverse instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -23436,7 +23487,7 @@ currency for inverse instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -26738,7 +26789,7 @@ define an instrument, or act as a parent class for more specific instruments.
                 quote_currency
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -26752,7 +26803,7 @@ define an instrument, or act as a parent class for more specific instruments.
                 is_inverse
                </strong>
                (
-               <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+               <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                 <em>
                  Currency
                 </em>
@@ -27725,7 +27776,7 @@ define an instrument, or act as a parent class for more specific instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
@@ -27785,7 +27836,7 @@ define an instrument, or act as a parent class for more specific instruments.
               →
              </span>
              <span class="sig-return-typehint">
-              <a class="reference internal" href="currency.html#nautilus_trader.model.currency.Currency" title="nautilus_trader.model.currency.Currency">
+              <a class="reference internal" href="objects.html#nautilus_trader.model.objects.Currency" title="nautilus_trader.model.objects.Currency">
                <span class="pre">
                 Currency
                </span>
