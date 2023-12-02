@@ -770,6 +770,16 @@
                </ul>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#encoding">
+                Encoding
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#timestamp-formatting">
+                Timestamp formatting
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#types-filtering">
                 Types filtering
                </a>
@@ -956,7 +966,16 @@ time-consuming operations involved in interacting with a database or client.
            </a>
           </h3>
           <p>
-           Most built in objects are serializable, as well as primitives such as
+           Most Nautilus built-in objects are serializable, dictionaries
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             dict[str,
+            </span>
+            <span class="pre">
+             Any]
+            </span>
+           </code>
+           containing serializable primitives, as well as primitive types themselves such as
            <code class="docutils literal notranslate">
             <span class="pre">
              str
@@ -1002,22 +1021,42 @@ Additional custom types can be registered by calling the following registration 
     <span class="n">to_dict</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">],</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
     <span class="n">from_dict</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">Any</span><span class="p">],</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Register the given object with the global serialization object maps.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    obj : object</span>
-<span class="sd">        The object to register.</span>
-<span class="sd">    to_dict : Callable[[Any], dict[str, Any]]</span>
-<span class="sd">        The delegate to instantiate a dict of primitive types from the object.</span>
-<span class="sd">    from_dict : Callable[[dict[str, Any]], Any]</span>
-<span class="sd">        The delegate to instantiate the object from a dict of primitive types.</span>
-<span class="sd">    """</span>
     <span class="o">...</span>
 </pre>
            </div>
           </div>
+          <ul class="simple">
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               obj
+              </span>
+             </code>
+             The object to register
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               to_dict
+              </span>
+             </code>
+             The delegate to instantiate a dict of primitive types from the object
+            </p>
+           </li>
+           <li>
+            <p>
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               from_dict
+              </span>
+             </code>
+             The delegate to instantiate the object from a dict of primitive types
+            </p>
+           </li>
+          </ul>
          </section>
         </section>
         <section id="configuration">
@@ -1028,7 +1067,7 @@ Additional custom types can be registered by calling the following registration 
           </a>
          </h2>
          <p>
-          The message bus backing can be configured by importing the
+          The message bus external backing technology can be configured by importing the
           <code class="docutils literal notranslate">
            <span class="pre">
             MessageBusConfig
@@ -1056,48 +1095,6 @@ your
     <span class="n">autotrim_mins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="o">...</span>
-</pre>
-          </div>
-         </div>
-         <div class="highlight-python notranslate">
-          <div class="highlight">
-           <pre><span></span>
-<span class="k">class</span> <span class="nc">MessageBusConfig</span><span class="p">(</span><span class="n">NautilusConfig</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Configuration for ``MessageBus`` instances.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    database : DatabaseConfig, optional</span>
-<span class="sd">        The configuration for the message bus backing database.</span>
-<span class="sd">    stream : str, optional</span>
-<span class="sd">        The additional prefix for externally published stream names (must have a `database` config).</span>
-<span class="sd">    use_instance_id : bool, default False</span>
-<span class="sd">        If the traders instance ID should be used in stream names.</span>
-<span class="sd">    encoding : str, {'msgpack', 'json'}, default 'msgpack'</span>
-<span class="sd">        The encoding for database operations, controls the type of serializer used.</span>
-<span class="sd">    timestamps_as_iso8601, default False</span>
-<span class="sd">        If timestamps should be persisted as ISO 8601 strings.</span>
-<span class="sd">        If `False` then will persit as UNIX nanoseconds.</span>
-<span class="sd">    types_filter : list[type], optional</span>
-<span class="sd">        A list of serializable types *not* to publish externally.</span>
-<span class="sd">    autotrim_mins : int, optional</span>
-<span class="sd">        The lookback window in minutes for automatic stream trimming.</span>
-<span class="sd">        The actual window may extend up to one minute beyond the specified value since streams are</span>
-<span class="sd">        trimmed at most once every minute.</span>
-<span class="sd">        Note that this feature requires Redis version 6.2.0 or higher; otherwise it will result</span>
-<span class="sd">        in acommand syntax error.</span>
-
-<span class="sd">    """</span>
-
-    <span class="n">database</span><span class="p">:</span> <span class="n">DatabaseConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">stream</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">use_instance_id</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"msgpack"</span>
-    <span class="n">timestamps_as_iso8601</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">types_filter</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">autotrim_mins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-
 </pre>
           </div>
          </div>
@@ -1194,6 +1191,107 @@ are distributed across multiple streams. You can include the instance ID in the 
 This is particularly useful when you need to track and identify traders across various streams in a multi-node trading system.
            </p>
           </section>
+         </section>
+         <section id="encoding">
+          <h3 id="encoding">
+           Encoding
+           <a class="headerlink" href="#encoding" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Two encodings are currently supported by the built-in
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             Serializer
+            </span>
+           </code>
+           used by the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             MessageBus
+            </span>
+           </code>
+           :
+          </p>
+          <ul class="simple">
+           <li>
+            <p>
+             JSON (
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               json
+              </span>
+             </code>
+             )
+            </p>
+           </li>
+           <li>
+            <p>
+             MessagePack (
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               msgpack
+              </span>
+             </code>
+             )
+            </p>
+           </li>
+          </ul>
+          <p>
+           Use the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             encoding
+            </span>
+           </code>
+           config option to control the message writing encoding.
+          </p>
+          <div class="admonition tip">
+           <p class="admonition-title">
+            Tip
+           </p>
+           <p>
+            The
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              msgpack
+             </span>
+            </code>
+            encoding is used by default as it offers the most optimal serialization and memory performance.
+It’s recommended to use
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              json
+             </span>
+            </code>
+            encoding for human readability when performance is not a primary concern.
+           </p>
+          </div>
+         </section>
+         <section id="timestamp-formatting">
+          <h3 id="timestamp-formatting">
+           Timestamp formatting
+           <a class="headerlink" href="#timestamp-formatting" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           By default timestamps are formatted as UNIX epoch nanosecond integers. Alternatively you can
+configure ISO 8601 string formatting by setting the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             timestamps_as_iso8601
+            </span>
+           </code>
+           to
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             True
+            </span>
+           </code>
+           .
+          </p>
          </section>
          <section id="types-filtering">
           <h3 id="types-filtering">
