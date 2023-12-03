@@ -133,6 +133,30 @@
 <a href="#133" id="133">133</a>
 <a href="#134" id="134">134</a>
 <a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
+<a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -153,43 +177,13 @@
 <span class="kw">use </span>nautilus_core::{time::duration_since_unix_epoch, uuid::UUID4};
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
 <span class="kw">use </span>redis::<span class="kw-2">*</span>;
-<span class="kw">use </span>serde_json::Value;
+<span class="kw">use </span>serde_json::{json, Value};
 
 <span class="kw">use </span><span class="kw">crate</span>::msgbus::BusMessage;
 
 <span class="kw">const </span>DELIMITER: char = <span class="string">&#39;:&#39;</span>;
 <span class="kw">const </span>XTRIM: <span class="kw-2">&amp;</span>str = <span class="string">&quot;XTRIM&quot;</span>;
 <span class="kw">const </span>MINID: <span class="kw-2">&amp;</span>str = <span class="string">&quot;MINID&quot;</span>;
-
-<span class="kw">pub fn </span>get_redis_url(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
-    <span class="kw">let </span>empty = Value::Object(serde_json::Map::new());
-    <span class="kw">let </span>database = config.get(<span class="string">&quot;database&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>empty);
-
-    <span class="kw">let </span>host = database
-        .get(<span class="string">&quot;host&quot;</span>)
-        .map(|v| v.as_str().unwrap_or(<span class="string">&quot;127.0.0.1&quot;</span>));
-    <span class="kw">let </span>port = database.get(<span class="string">&quot;port&quot;</span>).map(|v| v.as_str().unwrap_or(<span class="string">&quot;6379&quot;</span>));
-    <span class="kw">let </span>username = database
-        .get(<span class="string">&quot;username&quot;</span>)
-        .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>password = database
-        .get(<span class="string">&quot;password&quot;</span>)
-        .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>use_ssl = database.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>Value::Bool(<span class="bool-val">false</span>));
-
-    <span class="macro">format!</span>(
-        <span class="string">&quot;redis{}://{}:{}@{}:{}&quot;</span>,
-        <span class="kw">if </span>use_ssl.as_bool().unwrap_or(<span class="bool-val">false</span>) {
-            <span class="string">&quot;s&quot;
-        </span>} <span class="kw">else </span>{
-            <span class="string">&quot;&quot;
-        </span>},
-        username.unwrap_or(<span class="string">&quot;&quot;</span>),
-        password.unwrap_or(<span class="string">&quot;&quot;</span>),
-        host.unwrap(),
-        port.unwrap(),
-    )
-}
 
 <span class="kw">pub fn </span>handle_messages_with_redis(
     rx: Receiver&lt;BusMessage&gt;,
@@ -199,7 +193,7 @@
 ) {
     <span class="kw">let </span>redis_url = get_redis_url(<span class="kw-2">&amp;</span>config);
     <span class="kw">let </span>client = redis::Client::open(redis_url).unwrap();
-    <span class="kw">let </span>stream_name = get_stream_name(<span class="kw-2">&amp;</span>config, trader_id, instance_id);
+    <span class="kw">let </span>stream_name = get_stream_name(trader_id, instance_id, <span class="kw-2">&amp;</span>config);
     <span class="kw">let </span>autotrim_mins = config
         .get(<span class="string">&quot;autotrim_mins&quot;</span>)
         .and_then(|v| v.as_u64())
@@ -244,10 +238,40 @@
     }
 }
 
+<span class="kw">pub fn </span>get_redis_url(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
+    <span class="kw">let </span>empty = Value::Object(serde_json::Map::new());
+    <span class="kw">let </span>database = config.get(<span class="string">&quot;database&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>empty);
+
+    <span class="kw">let </span>host = database
+        .get(<span class="string">&quot;host&quot;</span>)
+        .map(|v| v.as_str().unwrap_or(<span class="string">&quot;127.0.0.1&quot;</span>));
+    <span class="kw">let </span>port = database.get(<span class="string">&quot;port&quot;</span>).map(|v| v.as_str().unwrap_or(<span class="string">&quot;6379&quot;</span>));
+    <span class="kw">let </span>username = database
+        .get(<span class="string">&quot;username&quot;</span>)
+        .map(|v| v.as_str().unwrap_or_default());
+    <span class="kw">let </span>password = database
+        .get(<span class="string">&quot;password&quot;</span>)
+        .map(|v| v.as_str().unwrap_or_default());
+    <span class="kw">let </span>use_ssl = database.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span><span class="macro">json!</span>(<span class="bool-val">false</span>));
+
+    <span class="macro">format!</span>(
+        <span class="string">&quot;redis{}://{}:{}@{}:{}&quot;</span>,
+        <span class="kw">if </span>use_ssl.as_bool().unwrap_or(<span class="bool-val">false</span>) {
+            <span class="string">&quot;s&quot;
+        </span>} <span class="kw">else </span>{
+            <span class="string">&quot;&quot;
+        </span>},
+        username.unwrap_or(<span class="string">&quot;&quot;</span>),
+        password.unwrap_or(<span class="string">&quot;&quot;</span>),
+        host.unwrap(),
+        port.unwrap(),
+    )
+}
+
 <span class="kw">fn </span>get_stream_name(
-    config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;,
     trader_id: TraderId,
     instance_id: UUID4,
+    config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;,
 ) -&gt; String {
     <span class="kw">let </span><span class="kw-2">mut </span>stream_name = String::new();
 
@@ -261,11 +285,35 @@
     stream_name.push_str(trader_id.value.as_str());
     stream_name.push(DELIMITER);
 
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::Bool(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_instance_id&quot;</span>) {
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="macro">json!</span>(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_instance_id&quot;</span>) {
         stream_name.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{instance_id}&quot;</span>));
         stream_name.push(DELIMITER);
     }
 
     stream_name
+}
+
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>std::collections::HashMap;
+
+    <span class="kw">use </span>rstest::rstest;
+    <span class="kw">use </span>serde_json::json;
+
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_stream_name_with_stream_prefix_and_instance_id() {
+        <span class="kw">let </span>trader_id = TraderId::from(<span class="string">&quot;tester-123&quot;</span>);
+        <span class="kw">let </span>instance_id = UUID4::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>config = HashMap::new();
+        config.insert(<span class="string">&quot;stream&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;quoters&quot;</span>));
+        config.insert(<span class="string">&quot;use_instance_id&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
+
+        <span class="kw">let </span>key = get_stream_name(trader_id, instance_id, <span class="kw-2">&amp;</span>config);
+        <span class="kw">let </span>expected_suffix = <span class="macro">format!</span>(<span class="string">&quot;{instance_id}:&quot;</span>);
+        <span class="macro">assert!</span>(key.starts_with(<span class="string">&quot;quoters:tester-123:&quot;</span>));
+        <span class="macro">assert!</span>(key.ends_with(<span class="kw-2">&amp;</span>expected_suffix));
+    }
 }
 </code></pre></div></section></main></body></html>

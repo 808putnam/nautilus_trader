@@ -445,6 +445,74 @@
 <a href="#445" id="445">445</a>
 <a href="#446" id="446">446</a>
 <a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a>
+<a href="#466" id="466">466</a>
+<a href="#467" id="467">467</a>
+<a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
+<a href="#472" id="472">472</a>
+<a href="#473" id="473">473</a>
+<a href="#474" id="474">474</a>
+<a href="#475" id="475">475</a>
+<a href="#476" id="476">476</a>
+<a href="#477" id="477">477</a>
+<a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
+<a href="#480" id="480">480</a>
+<a href="#481" id="481">481</a>
+<a href="#482" id="482">482</a>
+<a href="#483" id="483">483</a>
+<a href="#484" id="484">484</a>
+<a href="#485" id="485">485</a>
+<a href="#486" id="486">486</a>
+<a href="#487" id="487">487</a>
+<a href="#488" id="488">488</a>
+<a href="#489" id="489">489</a>
+<a href="#490" id="490">490</a>
+<a href="#491" id="491">491</a>
+<a href="#492" id="492">492</a>
+<a href="#493" id="493">493</a>
+<a href="#494" id="494">494</a>
+<a href="#495" id="495">495</a>
+<a href="#496" id="496">496</a>
+<a href="#497" id="497">497</a>
+<a href="#498" id="498">498</a>
+<a href="#499" id="499">499</a>
+<a href="#500" id="500">500</a>
+<a href="#501" id="501">501</a>
+<a href="#502" id="502">502</a>
+<a href="#503" id="503">503</a>
+<a href="#504" id="504">504</a>
+<a href="#505" id="505">505</a>
+<a href="#506" id="506">506</a>
+<a href="#507" id="507">507</a>
+<a href="#508" id="508">508</a>
+<a href="#509" id="509">509</a>
+<a href="#510" id="510">510</a>
+<a href="#511" id="511">511</a>
+<a href="#512" id="512">512</a>
+<a href="#513" id="513">513</a>
+<a href="#514" id="514">514</a>
+<a href="#515" id="515">515</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -471,7 +539,7 @@
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>redis::{Commands, Connection};
-<span class="kw">use </span>serde_json::Value;
+<span class="kw">use </span>serde_json::{json, Value};
 
 <span class="kw">use </span><span class="kw">crate</span>::cache::{CacheDatabase, DatabaseCommand, DatabaseOperation};
 
@@ -533,7 +601,6 @@
         <span class="kw">let </span>conn = client.get_connection().unwrap();
 
         <span class="kw">let </span>(tx, rx) = channel::&lt;DatabaseCommand&gt;();
-        <span class="kw">let </span>_encoding = get_encoding(<span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>trader_key = get_trader_key(trader_id, instance_id, <span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>trader_key_clone = trader_key.clone();
 
@@ -564,7 +631,7 @@
     }
 
     <span class="kw">fn </span>read(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt; {
-        <span class="kw">let </span>collection = get_collection_key(key);
+        <span class="kw">let </span>collection = get_collection_key(key)<span class="question-mark">?</span>;
         <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;{}{DELIMITER}{}&quot;</span>, <span class="self">self</span>.trader_key, key);
 
         <span class="kw">match </span>collection {
@@ -617,23 +684,30 @@
 
         <span class="comment">// Continue to receive and handle bus messages until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(msg) = rx.recv() {
-            <span class="kw">let </span>collection = get_collection_key(<span class="kw-2">&amp;</span>msg.key);
+            <span class="kw">let </span>collection = <span class="kw">match </span>get_collection_key(<span class="kw-2">&amp;</span>msg.key) {
+                <span class="prelude-val">Ok</span>(collection) =&gt; collection,
+                <span class="prelude-val">Err</span>(e) =&gt; {
+                    <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
+                    <span class="kw">continue</span>; <span class="comment">// Continue to next message
+                </span>}
+            };
+
             <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;{trader_key}{DELIMITER}{}&quot;</span>, msg.key);
 
             <span class="kw">match </span>msg.op_type {
                 DatabaseOperation::Insert =&gt; {
                     <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = insert(<span class="kw-2">&amp;mut </span>conn, collection, <span class="kw-2">&amp;</span>key, msg.payload) {
-                        <span class="macro">eprintln!</span>(<span class="string">&quot;{}&quot;</span>, e);
+                        <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
                     }
                 }
                 DatabaseOperation::Update =&gt; {
                     <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = update(<span class="kw-2">&amp;mut </span>conn, collection, <span class="kw-2">&amp;</span>key, msg.payload) {
-                        <span class="macro">eprintln!</span>(<span class="string">&quot;{}&quot;</span>, e);
+                        <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
                     }
                 }
                 DatabaseOperation::Delete =&gt; {
                     <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = delete(<span class="kw-2">&amp;mut </span>conn, collection, <span class="kw-2">&amp;</span>key, msg.payload) {
-                        <span class="macro">eprintln!</span>(<span class="string">&quot;{}&quot;</span>, e);
+                        <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
                     }
                 }
             }
@@ -743,7 +817,7 @@
 
 <span class="kw">fn </span>insert_hset(conn: <span class="kw-2">&amp;mut </span>Connection, key: <span class="kw-2">&amp;</span>str, name: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;, value: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     conn.hset(key, name, value)
-        .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to sadd &#39;{key}&#39; in Redis: {e}&quot;</span>))
+        .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to hset &#39;{key}&#39; in Redis: {e}&quot;</span>))
 }
 
 <span class="kw">fn </span>insert_list(conn: <span class="kw-2">&amp;mut </span>Connection, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
@@ -785,7 +859,7 @@
         INDEX =&gt; remove_index(conn, key, value),
         ACTORS =&gt; delete_string(conn, key),
         STRATEGIES =&gt; delete_string(conn, key),
-        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Collection &#39;{collection}&#39; not recognized for `delete`&quot;</span>),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unsupported operation: `delete` for collection &#39;{collection}&#39;&quot;</span>),
     }
 }
 
@@ -811,7 +885,7 @@
 
 <span class="kw">fn </span>delete_string(conn: <span class="kw-2">&amp;mut </span>Connection, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     conn.del(key)
-        .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to delete &#39;{key}&#39; in Redis: {e}&quot;</span>))
+        .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to del &#39;{key}&#39; in Redis: {e}&quot;</span>))
 }
 
 <span class="kw">fn </span>get_redis_url(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
@@ -825,7 +899,7 @@
     <span class="kw">let </span>password = config
         .get(<span class="string">&quot;password&quot;</span>)
         .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>use_ssl = config.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>Value::Bool(<span class="bool-val">false</span>));
+    <span class="kw">let </span>use_ssl = config.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span><span class="macro">json!</span>(<span class="bool-val">false</span>));
 
     <span class="macro">format!</span>(
         <span class="string">&quot;redis{}://{}:{}@{}:{}&quot;</span>,
@@ -848,13 +922,13 @@
 ) -&gt; String {
     <span class="kw">let </span><span class="kw-2">mut </span>key = String::new();
 
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::Bool(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_trader_prefix&quot;</span>) {
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="macro">json!</span>(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_trader_prefix&quot;</span>) {
         key.push_str(<span class="string">&quot;trader-&quot;</span>);
     }
 
     key.push_str(trader_id.value.as_str());
 
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::Bool(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_instance_id&quot;</span>) {
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="macro">json!</span>(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_instance_id&quot;</span>) {
         key.push(DELIMITER);
         key.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{instance_id}&quot;</span>));
     }
@@ -862,19 +936,21 @@
     key
 }
 
-<span class="kw">fn </span>get_collection_key(key: <span class="kw-2">&amp;</span>str) -&gt; <span class="kw-2">&amp;</span>str {
+<span class="kw">fn </span>get_collection_key(key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
     key.split_once(DELIMITER)
-        .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">&quot;Invalid `key` &#39;{}&#39;&quot;</span>, key))
-        .<span class="number">0
-</span>}
-
-<span class="kw">fn </span>get_index_key(key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
-    key.split_once(<span class="string">&#39;:&#39;</span>)
-        .map(|(<span class="kw">_</span>, index_key)| index_key)
-        .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Invalid key, missing &#39;:&#39; delimiter, was {}&quot;</span>, key))
+        .map(|(collection, <span class="kw">_</span>)| collection)
+        .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Invalid `key`, missing a &#39;{DELIMITER}&#39; delimiter, was {key}&quot;</span>))
 }
 
-<span class="kw">fn </span>get_encoding(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
+<span class="kw">fn </span>get_index_key(key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+    key.split_once(DELIMITER)
+        .map(|(<span class="kw">_</span>, index_key)| index_key)
+        .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Invalid `key`, missing a &#39;{DELIMITER}&#39; delimiter, was {key}&quot;</span>))
+}
+
+<span class="comment">// This function can be used when we handle cache serialization in Rust
+</span><span class="attr">#[allow(dead_code)]
+</span><span class="kw">fn </span>get_encoding(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
     config
         .get(<span class="string">&quot;encoding&quot;</span>)
         .and_then(|v| v.as_str())
@@ -882,14 +958,74 @@
         .to_string()
 }
 
-<span class="attr">#[allow(dead_code)]
-</span><span class="kw">fn </span>deserialize_payload(encoding: <span class="kw-2">&amp;</span>str, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;String, Value&gt;, String&gt; {
+<span class="comment">// This function can be used when we handle cache serialization in Rust
+</span><span class="attr">#[allow(dead_code)]
+</span><span class="kw">fn </span>deserialize_payload(encoding: <span class="kw-2">&amp;</span>str, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;String, Value&gt;&gt; {
     <span class="kw">match </span>encoding {
         <span class="string">&quot;msgpack&quot; </span>=&gt; rmp_serde::from_slice(payload)
-            .map_err(|e| <span class="macro">format!</span>(<span class="string">&quot;Failed to deserialize msgpack `payload`: {e}&quot;</span>)),
+            .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to deserialize msgpack `payload`: {e}&quot;</span>)),
         <span class="string">&quot;json&quot; </span>=&gt; serde_json::from_slice(payload)
-            .map_err(|e| <span class="macro">format!</span>(<span class="string">&quot;Failed to deserialize json `payload`: {e}&quot;</span>)),
-        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Unsupported encoding: {encoding}&quot;</span>)),
+            .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to deserialize json `payload`: {e}&quot;</span>)),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;Unsupported encoding: {encoding}&quot;</span>)),
+    }
+}
+
+<span class="attr">#[cfg(test)]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use </span>std::collections::HashMap;
+
+    <span class="kw">use </span>rstest::rstest;
+    <span class="kw">use </span>serde_json::json;
+
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_redis_url() {
+        <span class="kw">let </span><span class="kw-2">mut </span>config = HashMap::new();
+        config.insert(<span class="string">&quot;host&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;localhost&quot;</span>));
+        config.insert(<span class="string">&quot;port&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;1234&quot;</span>));
+        config.insert(<span class="string">&quot;username&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;user&quot;</span>));
+        config.insert(<span class="string">&quot;password&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;pass&quot;</span>));
+        config.insert(<span class="string">&quot;ssl&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
+
+        <span class="macro">assert_eq!</span>(get_redis_url(<span class="kw-2">&amp;</span>config), <span class="string">&quot;rediss://user:pass@localhost:1234&quot;</span>);
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_trader_key_with_prefix_and_instance_id() {
+        <span class="kw">let </span>trader_id = TraderId::from(<span class="string">&quot;tester-123&quot;</span>);
+        <span class="kw">let </span>instance_id = UUID4::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>config = HashMap::new();
+        config.insert(<span class="string">&quot;use_trader_prefix&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
+        config.insert(<span class="string">&quot;use_instance_id&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
+
+        <span class="kw">let </span>key = get_trader_key(trader_id, instance_id, <span class="kw-2">&amp;</span>config);
+        <span class="macro">assert!</span>(key.starts_with(<span class="string">&quot;trader-tester-123:&quot;</span>));
+        <span class="macro">assert!</span>(key.ends_with(<span class="kw-2">&amp;</span>instance_id.to_string()));
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_collection_key_valid() {
+        <span class="kw">let </span>key = <span class="string">&quot;collection:123&quot;</span>;
+        <span class="macro">assert_eq!</span>(get_collection_key(key).unwrap(), <span class="string">&quot;collection&quot;</span>);
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_collection_key_invalid() {
+        <span class="kw">let </span>key = <span class="string">&quot;no_delimiter&quot;</span>;
+        <span class="macro">assert!</span>(get_collection_key(key).is_err());
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_index_key_valid() {
+        <span class="kw">let </span>key = <span class="string">&quot;index:123&quot;</span>;
+        <span class="macro">assert_eq!</span>(get_index_key(key).unwrap(), <span class="string">&quot;123&quot;</span>);
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_index_key_invalid() {
+        <span class="kw">let </span>key = <span class="string">&quot;no_delimiter&quot;</span>;
+        <span class="macro">assert!</span>(get_index_key(key).is_err());
     }
 }
 </code></pre></div></section></main></body></html>
