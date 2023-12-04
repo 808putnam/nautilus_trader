@@ -226,6 +226,9 @@
 <a href="#226" id="226">226</a>
 <a href="#227" id="227">227</a>
 <a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -269,6 +272,7 @@
     <span class="kw">pub </span>base_currency: Currency,
     <span class="kw">pub </span>quote_currency: Currency,
     <span class="kw">pub </span>settlement_currency: Currency,
+    <span class="kw">pub </span>is_inverse: bool,
     <span class="kw">pub </span>price_precision: u8,
     <span class="kw">pub </span>size_precision: u8,
     <span class="kw">pub </span>price_increment: Price,
@@ -294,6 +298,7 @@
         base_currency: Currency,
         quote_currency: Currency,
         settlement_currency: Currency,
+        is_inverse: bool,
         price_precision: u8,
         size_precision: u8,
         price_increment: Price,
@@ -316,6 +321,7 @@
             base_currency,
             quote_currency,
             settlement_currency,
+            is_inverse,
             price_precision,
             size_precision,
             price_increment,
@@ -371,16 +377,16 @@
     }
 
     <span class="kw">fn </span>base_currency(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Currency&gt; {
-        <span class="prelude-val">None
-    </span>}
+        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.base_currency)
+    }
 
     <span class="kw">fn </span>settlement_currency(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Currency {
         <span class="kw-2">&amp;</span><span class="self">self</span>.settlement_currency
     }
 
     <span class="kw">fn </span>is_inverse(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="bool-val">false
-    </span>}
+        <span class="self">self</span>.is_inverse
+    }
 
     <span class="kw">fn </span>price_precision(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u8 {
         <span class="self">self</span>.price_precision
