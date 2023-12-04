@@ -641,6 +641,22 @@
 <a href="#641" id="641">641</a>
 <a href="#642" id="642">642</a>
 <a href="#643" id="643">643</a>
+<a href="#644" id="644">644</a>
+<a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
+<a href="#652" id="652">652</a>
+<a href="#653" id="653">653</a>
+<a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
+<a href="#657" id="657">657</a>
+<a href="#658" id="658">658</a>
+<a href="#659" id="659">659</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1167,8 +1183,8 @@
 <span class="kw">fn </span>get_buffer_interval(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; Duration {
     <span class="kw">let </span>buffer_interval_ms = config
         .get(<span class="string">&quot;buffer_interval_ms&quot;</span>)
-        .map(|v| v.as_u64().unwrap_or(<span class="number">10</span>));
-    Duration::from_millis(buffer_interval_ms.unwrap())
+        .map(|v| v.as_u64().unwrap_or(<span class="number">0</span>));
+    Duration::from_millis(buffer_interval_ms.unwrap_or(<span class="number">0</span>))
 }
 
 <span class="kw">fn </span>get_trader_key(
@@ -1258,6 +1274,22 @@
         <span class="kw">let </span>key = get_trader_key(trader_id, instance_id, <span class="kw-2">&amp;</span>config);
         <span class="macro">assert!</span>(key.starts_with(<span class="string">&quot;trader-tester-123:&quot;</span>));
         <span class="macro">assert!</span>(key.ends_with(<span class="kw-2">&amp;</span>instance_id.to_string()));
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_buffer_interval_default() {
+        <span class="kw">let </span>config = HashMap::new();
+        <span class="kw">let </span>buffer_interval = get_buffer_interval(<span class="kw-2">&amp;</span>config);
+        <span class="macro">assert_eq!</span>(buffer_interval, Duration::from_millis(<span class="number">0</span>));
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_get_buffer_interval() {
+        <span class="kw">let </span><span class="kw-2">mut </span>config = HashMap::new();
+        config.insert(<span class="string">&quot;buffer_interval_ms&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="number">100</span>));
+
+        <span class="kw">let </span>buffer_interval = get_buffer_interval(<span class="kw-2">&amp;</span>config);
+        <span class="macro">assert_eq!</span>(buffer_interval, Duration::from_millis(<span class="number">100</span>));
     }
 
     <span class="attr">#[rstest]
