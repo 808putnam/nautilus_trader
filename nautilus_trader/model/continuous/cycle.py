@@ -14,12 +14,12 @@ class RollCycle:
         current_id = ContractMonth.from_month_year(timestamp.year, timestamp.month)
 
         letter_month = current_id.letter_month
-        
+
         if letter_month not in self.value:
             current_id = self.next_month(current_id)
 
         return current_id
-    
+
     def next_month(self, current: ContractMonth) -> ContractMonth:
         year = current.year
         letter_month = current.letter_month
@@ -57,9 +57,8 @@ class RollCycle:
 
         year = str(year).zfill(2)
         return ContractMonth(f"{month}{year[-2]}{year[-1]}")
-    
-    def _closest_previous(self, current: ContractMonth) -> ContractMonth:
 
+    def _closest_previous(self, current: ContractMonth) -> ContractMonth:
         year = current.year
         letter_month = current.letter_month
 
@@ -72,7 +71,7 @@ class RollCycle:
         year -= 1
         year = str(year)
         return ContractMonth(f"{self.value[-1]}{year[-2]}{year[-1]}")
-    
+
     def _closest_next(self, current: ContractMonth) -> ContractMonth:
         year = current.year
         letter_month = current.letter_month
@@ -96,10 +95,10 @@ class RollCycle:
 
     def __eq__(self, other):
         return self.value == other.value
-    
+
     def __str__(self) -> str:
         return self.value
-    
+
     def __contains__(self, month: str | int) -> bool:
         if isinstance(month, int):
             month: str = int_to_letter_month(month)
