@@ -4,9 +4,10 @@ import pyarrow as pa
 
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.data import Data
-from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.continuous.contract_month import ContractMonth
+from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.objects import Price
+
 
 class ContinuousPrice(Data):
     def __init__(
@@ -32,35 +33,35 @@ class ContinuousPrice(Data):
         self._carry_month = carry_month
         self._ts_event = ts_event
         self._ts_init = ts_init
-    
+
     @property
     def instrument_id(self) -> int:
         return self._instrument_id
-    
+
     @property
     def current_price(self) -> Price:
         return self._current_price
-    
+
     @property
     def current_month(self) -> ContractMonth:
         return self._current_month
-    
+
     @property
     def forward_price(self) -> Price:
         return self._forward_price
-    
+
     @property
     def forward_month(self) -> ContractMonth:
         return self._forward_month
-    
+
     @property
     def carry_price(self) -> Price:
         return self._carry_price
-    
+
     @property
     def carry_month(self) -> ContractMonth:
         return self._carry_month
-    
+
     @property
     def ts_event(self) -> int:
         return self._ts_event
@@ -134,15 +135,17 @@ class ContinuousPrice(Data):
             current_price=Price.from_str(values["current_price"]),
             current_month=ContractMonth(values["current_month"]),
             forward_price=Price.from_str(values["forward_price"])
-                if values.get("forward_price") is not None else None,
+            if values.get("forward_price") is not None
+            else None,
             forward_month=ContractMonth(values["forward_month"]),
             carry_price=Price.from_str(values["carry_price"])
-                if values.get("carry_price") is not None else None,
+            if values.get("carry_price") is not None
+            else None,
             carry_month=ContractMonth(values["carry_month"]),
             ts_event=values["ts_event"],
             ts_init=values["ts_init"],
         )
-        
+
     def __getstate__(self):
         return (
             self.instrument_id.value,
