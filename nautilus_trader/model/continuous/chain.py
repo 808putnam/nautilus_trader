@@ -1,81 +1,66 @@
-
 import pandas as pd
 
 from nautilus_trader.model.continuous.contract_month import ContractMonth
-from nautilus_trader.model.continuous.parameters import RollParameters
-from nautilus_trader.model.instruments.futures_contract import FuturesContract
+from nautilus_trader.model.continuous.cycle import RollCycle
+from nautilus_trader.model.continuous.config import FuturesChainConfig
+
 
 class FuturesChain:
-    
     def __init__(
         self,
-        parameters: RollParameters,
+        config: FuturesChainConfig,
     ):
-        
-        super().__init__()
-        
-        self._parameters = parameters
-        self._cycle = self._parameters.hold_cycle
-    
-    def calculate_roll_date(self, timestamp: pd.Timestamp) -> pd.Timestamp:
+        self.hold_cycle = RollCycle(config.hold_cycle)
+        self.priced_cycle = RollCycle(config.priced_cycle)
+        self.roll_offset = config.roll_offset
+        self.approximate_expiry_offset = config.approximate_expiry_offset
+        self.carry_offset = config.carry_offset
+
+        assert self.roll_offset <= 0
+        assert self.approximate_expiry_offset >= 0
+        assert self.carry_offset == 1 or self.carry_offset == -1
+
+    def approximate_expiry_date(self, month: ContractMonth) -> pd.Timestamp:
         """
-        return the date the roll should occur at the current timestamp
+        Return the approximate expiry date of the month.
         """
-        expiry_date = timestamp + pd.Timedelta(days=self._parameters.expiry_offset)
-        roll_date = expiry_date + pd.Timedelta(days=self._parameters.roll_offset)
-        return roll_date
-    
-    def current_contract(self, timestamp: pd.Timestamp) -> FuturesContract:
+        return month.timestamp + pd.Timedelta(days=self.approximate_expiry_offset)
+
+    def roll_date(self, month: ContractMonth) -> pd.Timestamp:
         """
-        TODO: implement: return the current contract that should be held at the current timestamp
+        Return the date the roll should occur at the month.
         """
-        
-    def forward_contract(self, timestamp: pd.Timestamp) -> FuturesContract:
+        return self.approximate_expiry_date(month) + pd.Timedelta(days=self.roll_offset)
+
+    def is_valid_roll_date(self, month: ContractMonth, timestamp: pd.Timestamp) -> bool:
         """
-        TODO: implement: return the forward contract at the current timestamp
+        Return the date the roll should occur at the month.
         """
-        
-    def carry_contract(self, timestamp: pd.Timestamp) -> FuturesContract:
-        """
-        TODO: implement: return the carry contract at the current timestamp
-        """
-        
+        expiry_date = self.approximate_expiry_date(month)
+        roll_date = self.roll_date(month)
+        timestamp = month.timestamp
+        in_window = timestamp >= roll_date and timestamp < expiry_date
+
+        return in_window
+
     def current_month(self, timestamp: pd.Timestamp) -> ContractMonth:
-        
-        month = self._current_month(timestamp)
-
-        return month
-
-    def forward_month(self, timestamp: pd.Timestamp) -> ContractMonth:
-        
-        month = self._current_month(timestamp)
-        month = self._cycle.next_month(month)
-        
-        return month
-
-    def carry_month(self, timestamp: pd.Timestamp) -> ContractMonth:
-        
-        month = self._current_month(timestamp)
-        if self._parameters.carry_offset == 1:
-            month = self._cycle.next_month(month)
-        elif self._parameters.carry_offset == -1:
-            month = self._cycle.previous_month(month)
-        
-        return month
-
-    def _current_month(self, timestamp: pd.Timestamp) -> ContractMonth:
-        
-        current = self._cycle.current_month(timestamp)
+        current = self.hold_cycle.current_month(timestamp)
 
         while True:
-            
             roll_date = self.roll_date(current.timestamp)
 
             if roll_date > timestamp:
                 break
 
-            current = self._cycle.next_month(current)
+            current = self.hold_cycle.next_month(current)
 
         return current
-    
-    
+
+    def forward_month(self, month: ContractMonth) -> ContractMonth:
+        return self.hold_cycle.next_month(month)
+
+    def carry_month(self, month: ContractMonth) -> ContractMonth:
+        if self.carry_offset == 1:
+            return self.priced_cycle.next_month(month)
+        elif self.carry_offset == -1:
+            return self.priced_cycle.previous_month(month)
