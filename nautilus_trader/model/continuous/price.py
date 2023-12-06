@@ -35,7 +35,7 @@ class ContinuousPrice(Data):
         self._ts_init = ts_init
 
     @property
-    def instrument_id(self) -> int:
+    def instrument_id(self) -> InstrumentId:
         return self._instrument_id
 
     @property
@@ -70,7 +70,9 @@ class ContinuousPrice(Data):
     def ts_init(self) -> int:
         return self._ts_init
 
-    def __eq__(self, other: ContinuousPrice) -> bool:
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, ContinuousPrice):
+            return False
         return (
             self._instrument_id == other.instrument_id
             and self._current_price == other._current_price

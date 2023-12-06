@@ -3,11 +3,12 @@ import pickle
 from nautilus_trader.model.continuous.contract_month import ContractMonth
 from nautilus_trader.model.continuous.price import ContinuousPrice
 from nautilus_trader.model.objects import Price
-from nautilus_trader.test_kit.stubs.identifiers import TestIdStubs
 from nautilus_trader.serialization.arrow.serializer import ArrowSerializer
 from nautilus_trader.serialization.arrow.serializer import make_dict_deserializer
 from nautilus_trader.serialization.arrow.serializer import make_dict_serializer
 from nautilus_trader.serialization.arrow.serializer import register_arrow
+from nautilus_trader.test_kit.stubs.identifiers import TestIdStubs
+
 
 class TestContinuousPrice:
     def test_continuous_price_equality(self):
@@ -56,11 +57,11 @@ class TestContinuousPrice:
         # Act, Assert
         assert (
             str(price)
-            == "ContinuousPrice(instrument_id=GBP/USD.SIM, current_price=1.1, current_month=X21, forward_price=1.0, forward_month=Z21, carry_price=1.0, carry_month=Z21, ts_event=0, ts_init=0)"
+            == "ContinuousPrice(instrument_id=GBP/USD.SIM, current_price=1.1, current_month=X21, forward_price=1.0, forward_month=Z21, carry_price=1.0, carry_month=Z21, ts_event=0, ts_init=0)"  # noqa
         )
         assert (
             repr(price)
-            == "ContinuousPrice(instrument_id=GBP/USD.SIM, current_price=1.1, current_month=X21, forward_price=1.0, forward_month=Z21, carry_price=1.0, carry_month=Z21, ts_event=0, ts_init=0)"
+            == "ContinuousPrice(instrument_id=GBP/USD.SIM, current_price=1.1, current_month=X21, forward_price=1.0, forward_month=Z21, carry_price=1.0, carry_month=Z21, ts_event=0, ts_init=0)"  # noqa
         )
 
     def test_to_dict(self):
@@ -133,9 +134,8 @@ class TestContinuousPrice:
 
         # Assert
         assert unpickled == price
-        
+
     def test_continuous_price_serialize_roundtrip(self):
-        
         # Arrange
         register_arrow(
             data_cls=ContinuousPrice,
@@ -155,10 +155,10 @@ class TestContinuousPrice:
             ts_event=0,
             ts_init=0,
         )
-        
+
         # Act
         serialized = ArrowSerializer.serialize(price, data_cls=ContinuousPrice)
         deserialized = ArrowSerializer.deserialize(data_cls=ContinuousPrice, batch=serialized)
-        
+
         # Assert
         assert deserialized[0] == price

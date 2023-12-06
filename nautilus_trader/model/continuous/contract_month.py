@@ -41,7 +41,7 @@ class ContractMonth:
         return cls(f"{letter_month}{str(year)[2:]}")
 
     @classmethod
-    def from_int(cls, value: int) -> int:
+    def from_int(cls, value: int) -> ContractMonth:
         return cls.from_month_year(
             year=int(str(value)[:4]),
             month=int(str(value)[4:6]),

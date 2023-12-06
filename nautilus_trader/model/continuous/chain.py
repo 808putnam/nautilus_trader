@@ -1,11 +1,12 @@
+from dataclasses import dataclass
+
 import pandas as pd
 
+from nautilus_trader.model.continuous.config import FuturesChainConfig
 from nautilus_trader.model.continuous.contract_month import ContractMonth
 from nautilus_trader.model.continuous.cycle import RollCycle
-from nautilus_trader.model.continuous.config import FuturesChainConfig
-
-from dataclasses import dataclass
 from nautilus_trader.model.identifiers import InstrumentId
+
 
 @dataclass
 class ContractId:
@@ -13,7 +14,8 @@ class ContractId:
     month: ContractMonth
     approximate_expiry_date_utc: pd.Timestamp
     roll_date_utc: pd.Timestamp
-    
+
+
 class FuturesChain:
     def __init__(
         self,
@@ -29,7 +31,7 @@ class FuturesChain:
         assert self.roll_offset <= 0
         assert self.approximate_expiry_offset >= 0
         assert self.carry_offset == 1 or self.carry_offset == -1
-    
+
     def approximate_expiry_date(self, month: ContractMonth) -> pd.Timestamp:
         """
         Return the approximate expiry date of the month.
@@ -41,16 +43,16 @@ class FuturesChain:
         Return the date the roll should occur at the month.
         """
         return self.approximate_expiry_date(month) + pd.Timedelta(days=self.roll_offset)
-    
+
     def carry_id(self, current: ContractId) -> ContractId:
         return self._make_id(self.carry_month(current.month))
-        
+
     def forward_id(self, current: ContractId) -> ContractId:
         return self._make_id(self.forward_month(current.month))
-        
+
     def current_id(self, timestamp: pd.Timestamp) -> ContractId:
         return self._make_id(self.current_month(timestamp))
-        
+
     def current_month(self, timestamp: pd.Timestamp) -> ContractMonth:
         current = self.hold_cycle.current_month(timestamp)
 
@@ -72,20 +74,22 @@ class FuturesChain:
             return self.priced_cycle.next_month(month)
         elif self.carry_offset == -1:
             return self.priced_cycle.previous_month(month)
-    
+        else:
+            raise ValueError("carry offset must be 1 or -1")
+
     def _make_id(self, month: ContractMonth) -> ContractId:
         return ContractId(
-                instrument_id=self._fmt_instrument_id(self.instrument_id, month),
-                month=month,
-                approximate_expiry_date_utc=self.approximate_expiry_date(month),
-                roll_date_utc=self.roll_date(month),
+            instrument_id=self._fmt_instrument_id(self.instrument_id, month),
+            month=month,
+            approximate_expiry_date_utc=self.approximate_expiry_date(month),
+            roll_date_utc=self.roll_date(month),
         )
-        
+
     @staticmethod
     def _fmt_instrument_id(base: InstrumentId, month: ContractMonth) -> InstrumentId:
         """
         Return the InstrumentId of a specific month.
         """
         return InstrumentId.from_str(
-            f"{base.symbol.value}={month}.{base.venue.value}"
+            f"{base.symbol.value}={month}.{base.venue.value}",
         )

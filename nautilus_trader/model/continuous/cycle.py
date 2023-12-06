@@ -1,7 +1,6 @@
 import pandas as pd
 
 from nautilus_trader.model.continuous.contract_month import ContractMonth
-from nautilus_trader.model.continuous.contract_month import int_to_letter_month
 
 
 class RollCycle:
@@ -36,8 +35,8 @@ class RollCycle:
         else:
             month = self.value[self.value.index(letter_month) + 1]
 
-        year = str(year).zfill(2)
-        return ContractMonth(f"{month}{year[-2]}{year[-1]}")
+        year_str = str(year).zfill(2)
+        return ContractMonth(f"{month}{year_str[-2]}{year_str[-1]}")
 
     def previous_month(self, current: ContractMonth) -> ContractMonth:
         year = current.year
@@ -55,8 +54,8 @@ class RollCycle:
         else:
             month = self.value[self.value.index(letter_month) - 1]
 
-        year = str(year).zfill(2)
-        return ContractMonth(f"{month}{year[-2]}{year[-1]}")
+        year_str = str(year).zfill(2)
+        return ContractMonth(f"{month}{year_str[-2]}{year_str[-1]}")
 
     def _closest_previous(self, current: ContractMonth) -> ContractMonth:
         year = current.year
@@ -65,12 +64,12 @@ class RollCycle:
         assert letter_month not in self.value
         for char in self.value[::-1]:
             if char < letter_month:
-                year = str(year)
-                return ContractMonth(f"{char}{year[-2]}{year[-1]}")
+                year_str = str(year)
+                return ContractMonth(f"{char}{year_str[-2]}{year_str[-1]}")
 
         year -= 1
-        year = str(year)
-        return ContractMonth(f"{self.value[-1]}{year[-2]}{year[-1]}")
+        year_str = str(year)
+        return ContractMonth(f"{self.value[-1]}{year_str[-2]}{year_str[-1]}")
 
     def _closest_next(self, current: ContractMonth) -> ContractMonth:
         year = current.year
@@ -80,12 +79,12 @@ class RollCycle:
 
         for char in self.value:
             if char > letter_month:
-                year = str(year)
-                return ContractMonth(f"{char}{year[-2]}{year[-1]}")
+                year_str = str(year)
+                return ContractMonth(f"{char}{year_str[-2]}{year_str[-1]}")
 
         year += 1
-        year = str(year)
-        return ContractMonth(f"{self.value[0]}{year[-2]}{year[-1]}")
+        year_str = str(year)
+        return ContractMonth(f"{self.value[0]}{year_str[-2]}{year_str[-1]}")
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.value})"
@@ -99,7 +98,5 @@ class RollCycle:
     def __str__(self) -> str:
         return self.value
 
-    def __contains__(self, month: str | int) -> bool:
-        if isinstance(month, int):
-            month: str = int_to_letter_month(month)
+    def __contains__(self, month: str) -> bool:
         return month in self.value
