@@ -133,8 +133,6 @@ class ContinuousData(Actor):
         current_timestamp = unix_nanos_to_dt(current_bar.ts_event)
         forward_timestamp = unix_nanos_to_dt(forward_bar.ts_event)
 
-        # expiry_date = self._chain.approximate_expiry_date(self._current_id.month)
-        # roll_date = self._chain.roll_date(self._current_id.month)
         expiry_date = self._current_id.approximate_expiry_date_utc
         if current_timestamp >= expiry_date:
             # TODO: special handling
