@@ -8,7 +8,7 @@ class TestRollConfig:
             hold_cycle="FGHJKMNQUVXZ",
             priced_cycle="FGHJKMNQUVXZ",
             roll_offset=-45,
-            expiry_offset=14,
+            approximate_expiry_offset=14,
             carry_offset=1,
         )
 
@@ -42,5 +42,5 @@ class TestRollConfig:
         assert parameters.hold_cycle == RollCycle("FGHJKMNQUVXZ")
         assert parameters.priced_cycle == RollCycle("FGHJKMNQUVXZ")
         assert parameters.roll_offset == -45
-        assert parameters.expiry_offset == 14
+        assert parameters.approximate_expiry_offset == 14
         assert parameters.carry_offset == 1
