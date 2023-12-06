@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/quote.rs`."><title>quote.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/quote.rs`."><title>quote.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -300,12 +300,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -337,10 +337,10 @@
 <span class="doccomment">/// Represents a single quote tick in a financial market.
 </span><span class="attr">#[repr(C)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
-#[serde(tag = <span class="string">&quot;type&quot;</span>)]
+#[serde(tag = <span class="string">"type"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>)
 )]
 </span><span class="kw">pub struct </span>QuoteTick {
     <span class="doccomment">/// The quotes instrument ID.
@@ -372,14 +372,14 @@
         check_u8_equal(
             bid_price.precision,
             ask_price.precision,
-            <span class="string">&quot;bid_price.precision&quot;</span>,
-            <span class="string">&quot;ask_price.precision&quot;</span>,
+            <span class="string">"bid_price.precision"</span>,
+            <span class="string">"ask_price.precision"</span>,
         )<span class="question-mark">?</span>;
         check_u8_equal(
             bid_size.precision,
             ask_size.precision,
-            <span class="string">&quot;bid_size.precision&quot;</span>,
-            <span class="string">&quot;ask_size.precision&quot;</span>,
+            <span class="string">"bid_size.precision"</span>,
+            <span class="string">"ask_size.precision"</span>,
         )<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             instrument_id,
@@ -399,52 +399,52 @@
         size_precision: u8,
     ) -&gt; HashMap&lt;String, String&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>metadata = HashMap::new();
-        metadata.insert(<span class="string">&quot;instrument_id&quot;</span>.to_string(), instrument_id.to_string());
-        metadata.insert(<span class="string">&quot;price_precision&quot;</span>.to_string(), price_precision.to_string());
-        metadata.insert(<span class="string">&quot;size_precision&quot;</span>.to_string(), size_precision.to_string());
+        metadata.insert(<span class="string">"instrument_id"</span>.to_string(), instrument_id.to_string());
+        metadata.insert(<span class="string">"price_precision"</span>.to_string(), price_precision.to_string());
+        metadata.insert(<span class="string">"size_precision"</span>.to_string(), size_precision.to_string());
         metadata
     }
 
     <span class="doccomment">/// Returns the field map for the type, for use with Arrow schemas.
     </span><span class="kw">pub fn </span>get_fields() -&gt; IndexMap&lt;String, String&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>metadata = IndexMap::new();
-        metadata.insert(<span class="string">&quot;bid_price&quot;</span>.to_string(), <span class="string">&quot;Int64&quot;</span>.to_string());
-        metadata.insert(<span class="string">&quot;ask_price&quot;</span>.to_string(), <span class="string">&quot;Int64&quot;</span>.to_string());
-        metadata.insert(<span class="string">&quot;bid_size&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
-        metadata.insert(<span class="string">&quot;ask_size&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
-        metadata.insert(<span class="string">&quot;ts_event&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
-        metadata.insert(<span class="string">&quot;ts_init&quot;</span>.to_string(), <span class="string">&quot;UInt64&quot;</span>.to_string());
+        metadata.insert(<span class="string">"bid_price"</span>.to_string(), <span class="string">"Int64"</span>.to_string());
+        metadata.insert(<span class="string">"ask_price"</span>.to_string(), <span class="string">"Int64"</span>.to_string());
+        metadata.insert(<span class="string">"bid_size"</span>.to_string(), <span class="string">"UInt64"</span>.to_string());
+        metadata.insert(<span class="string">"ask_size"</span>.to_string(), <span class="string">"UInt64"</span>.to_string());
+        metadata.insert(<span class="string">"ts_event"</span>.to_string(), <span class="string">"UInt64"</span>.to_string());
+        metadata.insert(<span class="string">"ts_init"</span>.to_string(), <span class="string">"UInt64"</span>.to_string());
         metadata
     }
 
     <span class="doccomment">/// Create a new [`QuoteTick`] extracted from the given [`PyAny`].
     </span><span class="kw">pub fn </span>from_pyobject(obj: <span class="kw-2">&amp;</span>PyAny) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        <span class="kw">let </span>instrument_id_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;instrument_id&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>instrument_id_str = instrument_id_obj.getattr(<span class="string">&quot;value&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>instrument_id_obj: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">"instrument_id"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>instrument_id_str = instrument_id_obj.getattr(<span class="string">"value"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>instrument_id = InstrumentId::from_str(instrument_id_str).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>bid_price_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;bid_price&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>bid_price_raw: i64 = bid_price_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>bid_price_prec: u8 = bid_price_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>bid_price_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">"bid_price"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>bid_price_raw: i64 = bid_price_py.getattr(<span class="string">"raw"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>bid_price_prec: u8 = bid_price_py.getattr(<span class="string">"precision"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>bid_price = Price::from_raw(bid_price_raw, bid_price_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>ask_price_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;ask_price&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>ask_price_raw: i64 = ask_price_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>ask_price_prec: u8 = ask_price_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>ask_price_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">"ask_price"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>ask_price_raw: i64 = ask_price_py.getattr(<span class="string">"raw"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>ask_price_prec: u8 = ask_price_py.getattr(<span class="string">"precision"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>ask_price = Price::from_raw(ask_price_raw, ask_price_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>bid_size_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;bid_size&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>bid_size_raw: u64 = bid_size_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>bid_size_prec: u8 = bid_size_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>bid_size_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">"bid_size"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>bid_size_raw: u64 = bid_size_py.getattr(<span class="string">"raw"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>bid_size_prec: u8 = bid_size_py.getattr(<span class="string">"precision"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>bid_size = Quantity::from_raw(bid_size_raw, bid_size_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>ask_size_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">&quot;ask_size&quot;</span>)<span class="question-mark">?</span>;
-        <span class="kw">let </span>ask_size_raw: u64 = ask_size_py.getattr(<span class="string">&quot;raw&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>ask_size_prec: u8 = ask_size_py.getattr(<span class="string">&quot;precision&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>ask_size_py: <span class="kw-2">&amp;</span>PyAny = obj.getattr(<span class="string">"ask_size"</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>ask_size_raw: u64 = ask_size_py.getattr(<span class="string">"raw"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>ask_size_prec: u8 = ask_size_py.getattr(<span class="string">"precision"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
         <span class="kw">let </span>ask_size = Quantity::from_raw(ask_size_raw, ask_size_prec).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
-        <span class="kw">let </span>ts_event: UnixNanos = obj.getattr(<span class="string">&quot;ts_event&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
-        <span class="kw">let </span>ts_init: UnixNanos = obj.getattr(<span class="string">&quot;ts_init&quot;</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>ts_event: UnixNanos = obj.getattr(<span class="string">"ts_event"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
+        <span class="kw">let </span>ts_init: UnixNanos = obj.getattr(<span class="string">"ts_init"</span>)<span class="question-mark">?</span>.extract()<span class="question-mark">?</span>;
 
         <span class="self">Self</span>::new(
             instrument_id,
@@ -468,7 +468,7 @@
                 cmp::min(<span class="self">self</span>.bid_price.precision + <span class="number">1</span>, FIXED_PRECISION),
             )
             .unwrap(), <span class="comment">// Already a valid `Price`
-            </span><span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Cannot extract with price type {price_type}&quot;</span>),
+            </span><span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Cannot extract with price type {price_type}"</span>),
         }
     }
 
@@ -482,7 +482,7 @@
                 cmp::min(<span class="self">self</span>.bid_size.precision + <span class="number">1</span>, FIXED_PRECISION),
             )
             .unwrap(), <span class="comment">// Already a valid `Quantity`
-            </span><span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Cannot extract with price type {price_type}&quot;</span>),
+            </span><span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Cannot extract with price type {price_type}"</span>),
         }
     }
 }
@@ -490,10 +490,10 @@
 <span class="kw">impl </span>Serializable <span class="kw">for </span>QuoteTick {}
 
 <span class="kw">impl </span>Display <span class="kw">for </span>QuoteTick {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="macro">write!</span>(
             f,
-            <span class="string">&quot;{},{},{},{},{},{}&quot;</span>,
+            <span class="string">"{},{},{},{},{},{}"</span>,
             <span class="self">self</span>.instrument_id,
             <span class="self">self</span>.bid_price,
             <span class="self">self</span>.ask_price,
@@ -520,11 +520,11 @@
     <span class="attr">#[fixture]
     </span><span class="kw">pub fn </span>quote_tick_ethusdt_binance() -&gt; QuoteTick {
         QuoteTick {
-            instrument_id: InstrumentId::from(<span class="string">&quot;ETHUSDT-PERP.BINANCE&quot;</span>),
-            bid_price: Price::from(<span class="string">&quot;10000.0000&quot;</span>),
-            ask_price: Price::from(<span class="string">&quot;10001.0000&quot;</span>),
-            bid_size: Quantity::from(<span class="string">&quot;1.00000000&quot;</span>),
-            ask_size: Quantity::from(<span class="string">&quot;1.00000000&quot;</span>),
+            instrument_id: InstrumentId::from(<span class="string">"ETHUSDT-PERP.BINANCE"</span>),
+            bid_price: Price::from(<span class="string">"10000.0000"</span>),
+            ask_price: Price::from(<span class="string">"10001.0000"</span>),
+            bid_size: Quantity::from(<span class="string">"1.00000000"</span>),
+            ask_size: Quantity::from(<span class="string">"1.00000000"</span>),
             ts_event: <span class="number">0</span>,
             ts_init: <span class="number">1</span>,
         }
@@ -548,7 +548,7 @@
         <span class="kw">let </span>tick = quote_tick_ethusdt_binance;
         <span class="macro">assert_eq!</span>(
             tick.to_string(),
-            <span class="string">&quot;ETHUSDT-PERP.BINANCE,10000.0000,10001.0000,1.00000000,1.00000000,0&quot;
+            <span class="string">"ETHUSDT-PERP.BINANCE,10000.0000,10001.0000,1.00000000,1.00000000,0"
         </span>);
     }
 

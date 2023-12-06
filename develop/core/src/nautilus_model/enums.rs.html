@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/enums.rs`."><title>enums.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/enums.rs`."><title>enums.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1192,12 +1192,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -1237,20 +1237,20 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>AccountType {
     <span class="doccomment">/// An account with unleveraged cash assets only.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CASH&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"CASH"</span>)]
     </span>Cash = <span class="number">1</span>,
     <span class="doccomment">/// An account which facilitates trading on margin, using account assets as collateral.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MARGIN&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MARGIN"</span>)]
     </span>Margin = <span class="number">2</span>,
     <span class="doccomment">/// An account specific to betting markets.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;BETTING&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"BETTING"</span>)]
     </span>Betting = <span class="number">3</span>,
 }
 
@@ -1272,17 +1272,17 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>AggregationSource {
     <span class="doccomment">/// The data is externally aggregated (outside the Nautilus system boundary).
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;EXTERNAL&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"EXTERNAL"</span>)]
     </span>External = <span class="number">1</span>,
     <span class="doccomment">/// The data is internally aggregated (inside the Nautilus system boundary).
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;INTERNAL&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"INTERNAL"</span>)]
     </span>Internal = <span class="number">2</span>,
 }
 
@@ -1304,19 +1304,19 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>AggressorSide {
     <span class="doccomment">/// There was no specific aggressor for the trade.
     </span>NoAggressor = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
     </span><span class="doccomment">/// The BUY order was the aggressor for the trade.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;BUYER&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"BUYER"</span>)]
     </span>Buyer = <span class="number">1</span>,
     <span class="doccomment">/// The SELL order was the aggressor for the trade.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;SELLER&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"SELLER"</span>)]
     </span>Seller = <span class="number">2</span>,
 }
 
@@ -1349,38 +1349,38 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 #[allow(non_camel_case_types)]
 </span><span class="kw">pub enum </span>AssetClass {
     <span class="doccomment">/// Foreign exchange (FOREX) assets.
     </span>FX = <span class="number">1</span>,
     <span class="doccomment">/// Equity / stock assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;EQUITY&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"EQUITY"</span>)]
     </span>Equity = <span class="number">2</span>,
     <span class="doccomment">/// Commodity assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;COMMODITY&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"COMMODITY"</span>)]
     </span>Commodity = <span class="number">3</span>,
     <span class="doccomment">/// Metal commodity assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;METAL&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"METAL"</span>)]
     </span>Metal = <span class="number">4</span>,
     <span class="doccomment">/// Energy commodity assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;ENERGY&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"ENERGY"</span>)]
     </span>Energy = <span class="number">5</span>,
     <span class="doccomment">/// Fixed income bond assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;BOND&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"BOND"</span>)]
     </span>Bond = <span class="number">6</span>,
     <span class="doccomment">/// Index based assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;INDEX&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"INDEX"</span>)]
     </span>Index = <span class="number">7</span>,
     <span class="doccomment">/// Cryptocurrency or crypto token assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CRYPTO_CURRENCY&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"CRYPTO_CURRENCY"</span>)]
     </span>Cryptocurrency = <span class="number">8</span>,
     <span class="doccomment">/// Sports betting instruments.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;SPORTS_BETTING&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"SPORTS_BETTING"</span>)]
     </span>SportsBetting = <span class="number">9</span>,
 }
 
@@ -1402,32 +1402,32 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>AssetType {
     <span class="doccomment">/// A spot market asset type. The current market price of an asset that is bought or sold for immediate delivery and payment.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;SPOT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"SPOT"</span>)]
     </span>Spot = <span class="number">1</span>,
     <span class="doccomment">/// A swap asset type. A derivative contract through which two parties exchange the cash flows or liabilities from two different financial instruments.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;SWAP&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"SWAP"</span>)]
     </span>Swap = <span class="number">2</span>,
     <span class="doccomment">/// A futures contract asset type. A legal agreement to buy or sell an asset at a predetermined price at a specified time in the future.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;FUTURE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"FUTURE"</span>)]
     </span>Future = <span class="number">3</span>,
     <span class="doccomment">/// A forward derivative asset type. A customized contract between two parties to buy or sell an asset at a specified price on a future date.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;FORWARD&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"FORWARD"</span>)]
     </span>Forward = <span class="number">4</span>,
     <span class="doccomment">/// A contract-for-difference (CFD) asset type. A contract between an investor and a CFD broker to exchange the difference in the value of a financial product between the time the contract opens and closes.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CFD&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"CFD"</span>)]
     </span>Cfd = <span class="number">5</span>,
     <span class="doccomment">/// An options contract asset type. A type of derivative that gives the holder the right, but not the obligation, to buy or sell an underlying asset at a predetermined price before or at a certain future date.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;OPTION&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"OPTION"</span>)]
     </span><span class="prelude-ty">Option </span>= <span class="number">6</span>,
     <span class="doccomment">/// A warrant asset type. A derivative that gives the holder the right, but not the obligation, to buy or sell a security—most commonly an equity—at a certain price before expiration.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;WARRANT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"WARRANT"</span>)]
     </span>Warrant = <span class="number">7</span>,
 }
 
@@ -1449,59 +1449,59 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>BarAggregation {
     <span class="doccomment">/// Based on a number of ticks.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;TICK&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"TICK"</span>)]
     </span>Tick = <span class="number">1</span>,
     <span class="doccomment">/// Based on the buy/sell imbalance of ticks.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;TICK_IMBALANCE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"TICK_IMBALANCE"</span>)]
     </span>TickImbalance = <span class="number">2</span>,
     <span class="doccomment">/// Based on sequential buy/sell runs of ticks.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;TICK_RUNS&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"TICK_RUNS"</span>)]
     </span>TickRuns = <span class="number">3</span>,
     <span class="doccomment">/// Based on trading volume.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;VOLUME&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"VOLUME"</span>)]
     </span>Volume = <span class="number">4</span>,
     <span class="doccomment">/// Based on the buy/sell imbalance of trading volume.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;VOLUME_IMBALANCE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"VOLUME_IMBALANCE"</span>)]
     </span>VolumeImbalance = <span class="number">5</span>,
     <span class="doccomment">/// Based on sequential runs of buy/sell trading volume.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;VOLUME_RUNS&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"VOLUME_RUNS"</span>)]
     </span>VolumeRuns = <span class="number">6</span>,
-    <span class="doccomment">/// Based on the &#39;notional&#39; value of the instrument.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;VALUE&quot;</span>)]
+    <span class="doccomment">/// Based on the 'notional' value of the instrument.
+    </span><span class="attr">#[pyo3(name = <span class="string">"VALUE"</span>)]
     </span>Value = <span class="number">7</span>,
-    <span class="doccomment">/// Based on the buy/sell imbalance of trading by &#39;notional&#39; value.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;VALUE_IMBALANCE&quot;</span>)]
+    <span class="doccomment">/// Based on the buy/sell imbalance of trading by 'notional' value.
+    </span><span class="attr">#[pyo3(name = <span class="string">"VALUE_IMBALANCE"</span>)]
     </span>ValueImbalance = <span class="number">8</span>,
-    <span class="doccomment">/// Based on sequential buy/sell runs of trading by &#39;notional&#39; value.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;VALUE_RUNS&quot;</span>)]
+    <span class="doccomment">/// Based on sequential buy/sell runs of trading by 'notional' value.
+    </span><span class="attr">#[pyo3(name = <span class="string">"VALUE_RUNS"</span>)]
     </span>ValueRuns = <span class="number">9</span>,
     <span class="doccomment">/// Based on time intervals with millisecond granularity.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MILLISECOND&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MILLISECOND"</span>)]
     </span>Millisecond = <span class="number">10</span>,
     <span class="doccomment">/// Based on time intervals with second granularity.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;SECOND&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"SECOND"</span>)]
     </span>Second = <span class="number">11</span>,
     <span class="doccomment">/// Based on time intervals with minute granularity.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MINUTE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MINUTE"</span>)]
     </span>Minute = <span class="number">12</span>,
     <span class="doccomment">/// Based on time intervals with hour granularity.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;HOUR&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"HOUR"</span>)]
     </span>Hour = <span class="number">13</span>,
     <span class="doccomment">/// Based on time intervals with day granularity.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;DAY&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"DAY"</span>)]
     </span>Day = <span class="number">14</span>,
     <span class="doccomment">/// Based on time intervals with week granularity.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;WEEK&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"WEEK"</span>)]
     </span>Week = <span class="number">15</span>,
     <span class="doccomment">/// Based on time intervals with month granularity.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MONTH&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MONTH"</span>)]
     </span>Month = <span class="number">16</span>,
 }
 
@@ -1523,23 +1523,23 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>BookAction {
     <span class="doccomment">/// An order is added to the book.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;ADD&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"ADD"</span>)]
     </span>Add = <span class="number">1</span>,
     <span class="doccomment">/// An existing order in the book is updated/modified.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;UPDATE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"UPDATE"</span>)]
     </span>Update = <span class="number">2</span>,
     <span class="doccomment">/// An existing order in the book is deleted/canceled.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;DELETE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"DELETE"</span>)]
     </span>Delete = <span class="number">3</span>,
     <span class="doccomment">/// The state of the order book is cleared.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CLEAR&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"CLEAR"</span>)]
     </span>Clear = <span class="number">4</span>,
 }
 
@@ -1573,11 +1573,11 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[allow(non_camel_case_types)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>BookType {
     <span class="doccomment">/// Top-of-book best bid/ask, one level per side.
@@ -1619,22 +1619,22 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>ContingencyType {
     <span class="doccomment">/// Not a contingent order.
     </span>NoContingency = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
     </span><span class="doccomment">/// One-Cancels-the-Other.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;OCO&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"OCO"</span>)]
     </span>Oco = <span class="number">1</span>,
     <span class="doccomment">/// One-Triggers-the-Other.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;OTO&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"OTO"</span>)]
     </span>Oto = <span class="number">2</span>,
     <span class="doccomment">/// One-Updates-the-Other (by proportional quantity).
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;OUO&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"OUO"</span>)]
     </span>Ouo = <span class="number">3</span>,
 }
 
@@ -1656,20 +1656,20 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>CurrencyType {
     <span class="doccomment">/// A type of cryptocurrency or crypto token.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CRYPTO&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"CRYPTO"</span>)]
     </span>Crypto = <span class="number">1</span>,
     <span class="doccomment">/// A type of currency issued by governments which is not backed by a commodity.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;FIAT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"FIAT"</span>)]
     </span>Fiat = <span class="number">2</span>,
     <span class="doccomment">/// A type of currency that is based on the value of an underlying commodity.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;COMMODITY_BACKED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"COMMODITY_BACKED"</span>)]
     </span>CommodityBacked = <span class="number">3</span>,
 }
 
@@ -1691,17 +1691,17 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>InstrumentCloseType {
     <span class="doccomment">/// When the market session ended.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;END_OF_SESSION&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"END_OF_SESSION"</span>)]
     </span>EndOfSession = <span class="number">1</span>,
     <span class="doccomment">/// When the instrument expiration was reached.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CONTRACT_EXPIRED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"CONTRACT_EXPIRED"</span>)]
     </span>ContractExpired = <span class="number">2</span>,
 }
 
@@ -1723,20 +1723,20 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 #[allow(clippy::enum_variant_names)]
 </span><span class="kw">pub enum </span>LiquiditySide {
     <span class="doccomment">/// No specific liqudity side.
     </span>NoLiquiditySide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
     </span><span class="doccomment">/// The order passively provided liqudity to the market to complete the trade (made a market).
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MAKER&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MAKER"</span>)]
     </span>Maker = <span class="number">1</span>,
     <span class="doccomment">/// The order aggressively took liqudity from the market to complete the trade.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;TAKER&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"TAKER"</span>)]
     </span>Taker = <span class="number">2</span>,
 }
 
@@ -1758,32 +1758,32 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>MarketStatus {
     <span class="doccomment">/// The market session is in the pre-open.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;PRE_OPEN&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"PRE_OPEN"</span>)]
     </span>PreOpen = <span class="number">1</span>,
     <span class="doccomment">/// The market session is open.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;OPEN&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"OPEN"</span>)]
     </span>Open = <span class="number">2</span>,
     <span class="doccomment">/// The market session is paused.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;PAUSE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"PAUSE"</span>)]
     </span>Pause = <span class="number">3</span>,
     <span class="doccomment">/// The market session is halted.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;HALT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"HALT"</span>)]
     </span>Halt = <span class="number">4</span>,
     <span class="doccomment">/// The market session has reopened after a pause or halt.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;REOPEN&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"REOPEN"</span>)]
     </span>Reopen = <span class="number">5</span>,
     <span class="doccomment">/// The market session is in the pre-close.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;PRE_CLOSE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"PRE_CLOSE"</span>)]
     </span>PreClose = <span class="number">6</span>,
     <span class="doccomment">/// The market session is closed.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CLOSED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"CLOSED"</span>)]
     </span>Closed = <span class="number">7</span>,
 }
 
@@ -1805,20 +1805,20 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>HaltReason {
     <span class="doccomment">/// The venue or market session is not halted.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;NOT_HALTED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"NOT_HALTED"</span>)]
     </span>NotHalted = <span class="number">1</span>,
     <span class="doccomment">/// Trading halt is imposed for purely regulatory reasons with/without volatility halt.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;GENERAL&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"GENERAL"</span>)]
     </span>General = <span class="number">2</span>,
     <span class="doccomment">/// Trading halt is imposed by the venue to protect against extreme volatility.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;VOLATILITY&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"VOLATILITY"</span>)]
     </span>Volatility = <span class="number">3</span>,
 }
 
@@ -1840,21 +1840,21 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>OmsType {
     <span class="doccomment">/// There is no specific type of order management specified (will defer to the venue).
     </span>Unspecified = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
     </span><span class="doccomment">/// The netting type where there is one position per instrument.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;NETTING&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"NETTING"</span>)]
     </span>Netting = <span class="number">1</span>,
     <span class="doccomment">/// The hedging type where there can be multiple positions per instrument.
     /// This can be in LONG/SHORT directions, by position/ticket ID, or tracked virtually by
     /// Nautilus.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;HEDGING&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"HEDGING"</span>)]
     </span>Hedging = <span class="number">2</span>,
 }
 
@@ -1876,17 +1876,17 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>OptionKind {
     <span class="doccomment">/// A Call option gives the holder the right, but not the obligation, to buy an underlying asset at a specified strike price within a specified period of time.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CALL&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"CALL"</span>)]
     </span>Call = <span class="number">1</span>,
     <span class="doccomment">/// A Put option gives the holder the right, but not the obligation, to sell an underlying asset at a specified strike price within a specified period of time.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;PUT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"PUT"</span>)]
     </span>Put = <span class="number">2</span>,
 }
 
@@ -1908,20 +1908,20 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[allow(clippy::enum_variant_names)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>OrderSide {
     <span class="doccomment">/// No order side is specified (only valid in the context of a filter for actions involving orders).
     </span>NoOrderSide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
     </span><span class="doccomment">/// The order is a BUY.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;BUY&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"BUY"</span>)]
     </span>Buy = <span class="number">1</span>,
     <span class="doccomment">/// The order is a SELL.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;SELL&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"SELL"</span>)]
     </span>Sell = <span class="number">2</span>,
 }
 
@@ -1974,53 +1974,53 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>OrderStatus {
     <span class="doccomment">/// The order is initialized (instantiated) within the Nautilus system.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;INITIALIZED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"INITIALIZED"</span>)]
     </span>Initialized = <span class="number">1</span>,
     <span class="doccomment">/// The order was denied by the Nautilus system, either for being invalid, unprocessable or exceeding a risk limit.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;DENIED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"DENIED"</span>)]
     </span>Denied = <span class="number">2</span>,
     <span class="doccomment">/// The order became emulated by the Nautilus system in the `OrderEmulator` component.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;EMULATED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"EMULATED"</span>)]
     </span>Emulated = <span class="number">3</span>,
     <span class="doccomment">/// The order was released by the Nautilus system from the `OrderEmulator` component.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;RELEASED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"RELEASED"</span>)]
     </span>Released = <span class="number">4</span>,
     <span class="doccomment">/// The order was submitted by the Nautilus system to the external service or trading venue (awaiting acknowledgement).
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;SUBMITTED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"SUBMITTED"</span>)]
     </span>Submitted = <span class="number">5</span>,
     <span class="doccomment">/// The order was acknowledged by the trading venue as being received and valid (may now be working).
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;ACCEPTED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"ACCEPTED"</span>)]
     </span>Accepted = <span class="number">6</span>,
     <span class="doccomment">/// The order was rejected by the trading venue.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;REJECTED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"REJECTED"</span>)]
     </span>Rejected = <span class="number">7</span>,
     <span class="doccomment">/// The order was canceled (closed/done).
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;CANCELED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"CANCELED"</span>)]
     </span>Canceled = <span class="number">8</span>,
     <span class="doccomment">/// The order reached a GTD expiration (closed/done).
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;EXPIRED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"EXPIRED"</span>)]
     </span>Expired = <span class="number">9</span>,
     <span class="doccomment">/// The order STOP price was triggered on a trading venue.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;TRIGGERED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"TRIGGERED"</span>)]
     </span>Triggered = <span class="number">10</span>,
     <span class="doccomment">/// The order is currently pending a request to modify on a trading venue.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;PENDING_UPDATE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"PENDING_UPDATE"</span>)]
     </span>PendingUpdate = <span class="number">11</span>,
     <span class="doccomment">/// The order is currently pending a request to cancel on a trading venue.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;PENDING_CANCEL&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"PENDING_CANCEL"</span>)]
     </span>PendingCancel = <span class="number">12</span>,
     <span class="doccomment">/// The order has been partially filled on a trading venue.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;PARTIALLY_FILLED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"PARTIALLY_FILLED"</span>)]
     </span>PartiallyFilled = <span class="number">13</span>,
     <span class="doccomment">/// The order has been completely filled on a trading venue (closed/done).
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;FILLED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"FILLED"</span>)]
     </span>Filled = <span class="number">14</span>,
 }
 
@@ -2042,38 +2042,38 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>OrderType {
     <span class="doccomment">/// A market order to buy or sell at the best available price in the current market.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MARKET&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MARKET"</span>)]
     </span>Market = <span class="number">1</span>,
     <span class="doccomment">/// A limit order to buy or sell at a specific price or better.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;LIMIT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"LIMIT"</span>)]
     </span>Limit = <span class="number">2</span>,
     <span class="doccomment">/// A stop market order to buy or sell once the price reaches the specified stop/trigger price. When the stop price is reached, the order effectively becomes a market order.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;STOP_MARKET&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"STOP_MARKET"</span>)]
     </span>StopMarket = <span class="number">3</span>,
     <span class="doccomment">/// A stop limit order to buy or sell which combines the features of a stop order and a limit order. Once the stop/trigger price is reached, a stop-limit order effectively becomes a limit order.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;STOP_LIMIT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"STOP_LIMIT"</span>)]
     </span>StopLimit = <span class="number">4</span>,
     <span class="doccomment">/// A market-to-limit order is a market order that is to be executed as a limit order at the current best market price after reaching the market.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MARKET_TO_LIMIT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MARKET_TO_LIMIT"</span>)]
     </span>MarketToLimit = <span class="number">5</span>,
     <span class="doccomment">/// A market-if-touched order effectively becomes a market order when the specified trigger price is reached.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MARKET_IF_TOUCHED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MARKET_IF_TOUCHED"</span>)]
     </span>MarketIfTouched = <span class="number">6</span>,
     <span class="doccomment">/// A limit-if-touched order effectively becomes a limit order when the specified trigger price is reached.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;LIMIT_IF_TOUCHED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"LIMIT_IF_TOUCHED"</span>)]
     </span>LimitIfTouched = <span class="number">7</span>,
-    <span class="doccomment">/// A trailing stop market order sets the stop/trigger price at a fixed &quot;trailing offset&quot; amount from the market.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;TRAILING_STOP_MARKET&quot;</span>)]
+    <span class="doccomment">/// A trailing stop market order sets the stop/trigger price at a fixed "trailing offset" amount from the market.
+    </span><span class="attr">#[pyo3(name = <span class="string">"TRAILING_STOP_MARKET"</span>)]
     </span>TrailingStopMarket = <span class="number">8</span>,
     <span class="doccomment">/// A trailing stop limit order combines the features of a trailing stop order with those of a limit order.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;TRAILING_STOP_LIMIT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"TRAILING_STOP_LIMIT"</span>)]
     </span>TrailingStopLimit = <span class="number">9</span>,
 }
 
@@ -2095,23 +2095,23 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[allow(clippy::enum_variant_names)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>PositionSide {
     <span class="doccomment">/// No position side is specified (only valid in the context of a filter for actions involving positions).
     </span>NoPositionSide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
     </span><span class="doccomment">/// A neural/flat position, where no position is currently held in the market.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;FLAT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"FLAT"</span>)]
     </span>Flat = <span class="number">1</span>,
     <span class="doccomment">/// A long position in the market, typically acquired through one or many BUY orders.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;LONG&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"LONG"</span>)]
     </span>Long = <span class="number">2</span>,
     <span class="doccomment">/// A short position in the market, typically acquired through one or many SELL orders.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;SHORT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"SHORT"</span>)]
     </span>Short = <span class="number">3</span>,
 }
 
@@ -2133,27 +2133,27 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>PriceType {
     <span class="doccomment">/// A quoted order price where a buyer is willing to buy a quantity of an instrument.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;BID&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"BID"</span>)]
     </span>Bid = <span class="number">1</span>,
     <span class="doccomment">/// A quoted order price where a seller is willing to sell a quantity of an instrument.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;ASK&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"ASK"</span>)]
     </span>Ask = <span class="number">2</span>,
     <span class="doccomment">/// The midpoint between the bid and ask prices.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MID&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MID"</span>)]
     </span>Mid = <span class="number">3</span>,
     <span class="doccomment">/// The last price at which a trade was made for an instrument.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;LAST&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"LAST"</span>)]
     </span>Last = <span class="number">4</span>,
 }
 
-<span class="doccomment">/// The &#39;Time in Force&#39; instruction for an order in the financial market.
+<span class="doccomment">/// The 'Time in Force' instruction for an order in the financial market.
 </span><span class="attr">#[repr(C)]
 #[derive(
     Copy,
@@ -2171,32 +2171,32 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>TimeInForce {
     <span class="doccomment">/// Good Till Canceled (GTC) - the order remains active until canceled.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;GTC&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"GTC"</span>)]
     </span>Gtc = <span class="number">1</span>,
     <span class="doccomment">/// Immediate or Cancel (IOC) - the order is filled as much as possible, the rest is canceled.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;IOC&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"IOC"</span>)]
     </span>Ioc = <span class="number">2</span>,
     <span class="doccomment">/// Fill or Kill (FOK) - the order must be executed in full immediately, or it is canceled.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;FOK&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"FOK"</span>)]
     </span>Fok = <span class="number">3</span>,
     <span class="doccomment">/// Good Till Date/Time (GTD) - the order is active until a specified date or time.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;GTD&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"GTD"</span>)]
     </span>Gtd = <span class="number">4</span>,
     <span class="doccomment">/// Day - the order is active until the end of the current trading session.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;DAY&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"DAY"</span>)]
     </span>Day = <span class="number">5</span>,
-    <span class="doccomment">/// At the Opening (ATO) - the order is scheduled to be executed at the market&#39;s opening.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;AT_THE_OPEN&quot;</span>)]
+    <span class="doccomment">/// At the Opening (ATO) - the order is scheduled to be executed at the market's opening.
+    </span><span class="attr">#[pyo3(name = <span class="string">"AT_THE_OPEN"</span>)]
     </span>AtTheOpen = <span class="number">6</span>,
-    <span class="doccomment">/// At the Closing (ATC) - the order is scheduled to be executed at the market&#39;s closing.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;AT_THE_CLOSE&quot;</span>)]
+    <span class="doccomment">/// At the Closing (ATC) - the order is scheduled to be executed at the market's closing.
+    </span><span class="attr">#[pyo3(name = <span class="string">"AT_THE_CLOSE"</span>)]
     </span>AtTheClose = <span class="number">7</span>,
 }
 
@@ -2218,20 +2218,20 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>TradingState {
     <span class="doccomment">/// Normal trading operations.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;ACTIVE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"ACTIVE"</span>)]
     </span>Active = <span class="number">1</span>,
     <span class="doccomment">/// Trading is completely halted, no new order commands will be emitted.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;HALTED&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"HALTED"</span>)]
     </span>Halted = <span class="number">2</span>,
     <span class="doccomment">/// Only order commands which would cancel order, or reduce position sizes are permitted.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;REDUCING&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"REDUCING"</span>)]
     </span>Reducing = <span class="number">3</span>,
 }
 
@@ -2253,25 +2253,25 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>TrailingOffsetType {
     <span class="doccomment">/// No trailing offset type is specified (invalid for trailing type orders).
     </span>NoTrailingOffset = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
     </span><span class="doccomment">/// The trailing offset is based on a market price.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;PRICE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"PRICE"</span>)]
     </span>Price = <span class="number">1</span>,
     <span class="doccomment">/// The trailing offset is based on a percentage represented in basis points, of a market price.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;BASIS_POINTS&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"BASIS_POINTS"</span>)]
     </span>BasisPoints = <span class="number">2</span>,
     <span class="doccomment">/// The trailing offset is based on the number of ticks from a market price.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;TICKS&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"TICKS"</span>)]
     </span>Ticks = <span class="number">3</span>,
     <span class="doccomment">/// The trailing offset is based on a price tier set by a specific trading venue.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;PRICE_TIER&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"PRICE_TIER"</span>)]
     </span>PriceTier = <span class="number">4</span>,
 }
 
@@ -2293,40 +2293,40 @@
     EnumString,
 )]
 #[strum(ascii_case_insensitive)]
-#[strum(serialize_all = <span class="string">&quot;SCREAMING_SNAKE_CASE&quot;</span>)]
+#[strum(serialize_all = <span class="string">"SCREAMING_SNAKE_CASE"</span>)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model.enums&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>TriggerType {
     <span class="doccomment">/// No trigger type is specified (invalid for orders with a trigger).
     </span>NoTrigger = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
     </span><span class="doccomment">/// The default trigger type set by the trading venue.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;DEFAULT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"DEFAULT"</span>)]
     </span>Default = <span class="number">1</span>,
     <span class="doccomment">/// Based on the top-of-book quoted prices for the instrument.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;BID_ASK&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"BID_ASK"</span>)]
     </span>BidAsk = <span class="number">2</span>,
     <span class="doccomment">/// Based on the last traded price for the instrument.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;LAST_TRADE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"LAST_TRADE"</span>)]
     </span>LastTrade = <span class="number">3</span>,
-    <span class="doccomment">/// Based on a &#39;double match&#39; of the last traded price for the instrument
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;DOUBLE_LAST&quot;</span>)]
+    <span class="doccomment">/// Based on a 'double match' of the last traded price for the instrument
+    </span><span class="attr">#[pyo3(name = <span class="string">"DOUBLE_LAST"</span>)]
     </span>DoubleLast = <span class="number">4</span>,
-    <span class="doccomment">/// Based on a &#39;double match&#39; of the bid/ask price for the instrument
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;DOUBLE_BID_ASK&quot;</span>)]
+    <span class="doccomment">/// Based on a 'double match' of the bid/ask price for the instrument
+    </span><span class="attr">#[pyo3(name = <span class="string">"DOUBLE_BID_ASK"</span>)]
     </span>DoubleBidAsk = <span class="number">5</span>,
     <span class="doccomment">/// Based on both the [`TriggerType::LastTrade`] and [`TriggerType::BidAsk`].
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;LAST_OR_BID_ASK&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"LAST_OR_BID_ASK"</span>)]
     </span>LastOrBidAsk = <span class="number">6</span>,
     <span class="doccomment">/// Based on the mid-point of the [`TriggerType::BidAsk`].
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MID_POINT&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MID_POINT"</span>)]
     </span>MidPoint = <span class="number">7</span>,
     <span class="doccomment">/// Based on the mark price for the instrument.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;MARK_PRICE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"MARK_PRICE"</span>)]
     </span>MarkPrice = <span class="number">8</span>,
     <span class="doccomment">/// Based on the index price for the instrument.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;INDEX_PRICE&quot;</span>)]
+    </span><span class="attr">#[pyo3(name = <span class="string">"INDEX_PRICE"</span>)]
     </span>IndexPrice = <span class="number">9</span>,
 }
 

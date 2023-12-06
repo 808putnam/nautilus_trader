@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/orderbook/ladder.rs`."><title>ladder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/orderbook/ladder.rs`."><title>ladder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -690,12 +690,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -746,14 +746,14 @@
         <span class="kw">match </span><span class="self">self</span>.side {
             OrderSide::Buy =&gt; other.value.cmp(<span class="kw-2">&amp;</span><span class="self">self</span>.value),
             OrderSide::Sell =&gt; <span class="self">self</span>.value.cmp(<span class="kw-2">&amp;</span>other.value),
-            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, BookIntegrityError::NoOrderSide),
+            <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"{}"</span>, BookIntegrityError::NoOrderSide),
         }
     }
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>BookPrice {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.value)
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">"{}"</span>, <span class="self">self</span>.value)
     }
 }
 
@@ -914,10 +914,10 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_book_price_bid_sorting() {
         <span class="kw">let </span><span class="kw-2">mut </span>bid_prices = [
-            BookPrice::new(Price::from(<span class="string">&quot;2.0&quot;</span>), OrderSide::Buy),
-            BookPrice::new(Price::from(<span class="string">&quot;4.0&quot;</span>), OrderSide::Buy),
-            BookPrice::new(Price::from(<span class="string">&quot;1.0&quot;</span>), OrderSide::Buy),
-            BookPrice::new(Price::from(<span class="string">&quot;3.0&quot;</span>), OrderSide::Buy),
+            BookPrice::new(Price::from(<span class="string">"2.0"</span>), OrderSide::Buy),
+            BookPrice::new(Price::from(<span class="string">"4.0"</span>), OrderSide::Buy),
+            BookPrice::new(Price::from(<span class="string">"1.0"</span>), OrderSide::Buy),
+            BookPrice::new(Price::from(<span class="string">"3.0"</span>), OrderSide::Buy),
         ];
         bid_prices.sort();
         <span class="macro">assert_eq!</span>(bid_prices[<span class="number">0</span>].value.as_f64(), <span class="number">4.0</span>);
@@ -926,10 +926,10 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_book_price_ask_sorting() {
         <span class="kw">let </span><span class="kw-2">mut </span>ask_prices = [
-            BookPrice::new(Price::from(<span class="string">&quot;2.0&quot;</span>), OrderSide::Sell),
-            BookPrice::new(Price::from(<span class="string">&quot;4.0&quot;</span>), OrderSide::Sell),
-            BookPrice::new(Price::from(<span class="string">&quot;1.0&quot;</span>), OrderSide::Sell),
-            BookPrice::new(Price::from(<span class="string">&quot;3.0&quot;</span>), OrderSide::Sell),
+            BookPrice::new(Price::from(<span class="string">"2.0"</span>), OrderSide::Sell),
+            BookPrice::new(Price::from(<span class="string">"4.0"</span>), OrderSide::Sell),
+            BookPrice::new(Price::from(<span class="string">"1.0"</span>), OrderSide::Sell),
+            BookPrice::new(Price::from(<span class="string">"3.0"</span>), OrderSide::Sell),
         ];
 
         ask_prices.sort();
@@ -939,7 +939,7 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_add_single_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"10.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
 
         ladder.add(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -951,10 +951,10 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_add_multiple_buy_orders() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">1</span>);
-        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">50</span>), <span class="number">2</span>);
-        <span class="kw">let </span>order4 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;8.00&quot;</span>), Quantity::from(<span class="number">200</span>), <span class="number">3</span>);
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"10.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"9.00"</span>), Quantity::from(<span class="number">30</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"9.00"</span>), Quantity::from(<span class="number">50</span>), <span class="number">2</span>);
+        <span class="kw">let </span>order4 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"8.00"</span>), Quantity::from(<span class="number">200</span>), <span class="number">3</span>);
 
         ladder.add_bulk(<span class="macro">vec!</span>[order1, order2, order3, order4]);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">3</span>);
@@ -966,12 +966,12 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_add_multiple_sell_orders() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;12.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">1</span>);
-        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;12.00&quot;</span>), Quantity::from(<span class="number">50</span>), <span class="number">2</span>);
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"11.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">0</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"12.00"</span>), Quantity::from(<span class="number">30</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order3 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"12.00"</span>), Quantity::from(<span class="number">50</span>), <span class="number">2</span>);
         <span class="kw">let </span>order4 = BookOrder::new(
             OrderSide::Sell,
-            Price::from(<span class="string">&quot;13.00&quot;</span>),
+            Price::from(<span class="string">"13.00"</span>),
             Quantity::from(<span class="number">200</span>),
             <span class="number">0</span>,
         );
@@ -986,8 +986,8 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_add_to_same_price_level() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">2</span>);
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"10.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"10.00"</span>), Quantity::from(<span class="number">30</span>), <span class="number">2</span>);
 
         ladder.add(order1);
         ladder.add(order2);
@@ -1000,34 +1000,34 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_add_descending_buy_orders() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;8.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">2</span>);
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"9.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"8.00"</span>), Quantity::from(<span class="number">30</span>), <span class="number">2</span>);
 
         ladder.add(order1);
         ladder.add(order2);
 
-        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value, Price::from(<span class="string">&quot;9.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value, Price::from(<span class="string">"9.00"</span>));
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_add_ascending_sell_orders() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
-        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;8.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
-        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;9.00&quot;</span>), Quantity::from(<span class="number">30</span>), <span class="number">2</span>);
+        <span class="kw">let </span>order1 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"8.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order2 = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"9.00"</span>), Quantity::from(<span class="number">30</span>), <span class="number">2</span>);
 
         ladder.add(order1);
         ladder.add(order2);
 
-        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value, Price::from(<span class="string">&quot;8.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value, Price::from(<span class="string">"8.00"</span>));
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_update_buy_order_price() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"11.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.10&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"11.10"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -1039,11 +1039,11 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_update_sell_order_price() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"11.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.10&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"11.10"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -1055,11 +1055,11 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_update_buy_order_size() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"11.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"11.00"</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -1071,11 +1071,11 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_update_sell_order_size() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"11.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"11.00"</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.update(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
@@ -1087,7 +1087,7 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_delete_non_existing_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"10.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.delete(order);
 
@@ -1097,11 +1097,11 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_delete_buy_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"11.00"</span>), Quantity::from(<span class="number">20</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">&quot;11.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Buy, Price::from(<span class="string">"11.00"</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.delete(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">0</span>);
@@ -1113,11 +1113,11 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_delete_sell_order() {
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Sell);
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"10.00"</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.add(order);
 
-        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">&quot;10.00&quot;</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
+        <span class="kw">let </span>order = BookOrder::new(OrderSide::Sell, Price::from(<span class="string">"10.00"</span>), Quantity::from(<span class="number">10</span>), <span class="number">1</span>);
 
         ladder.delete(order);
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">0</span>);
@@ -1158,8 +1158,8 @@
     }
 
     <span class="attr">#[rstest]
-    #[case(OrderSide::Buy, OrderSide::Sell, Price::from(<span class="string">&quot;60.0&quot;</span>))]
-    #[case(OrderSide::Sell, OrderSide::Buy, Price::from(<span class="string">&quot;40.0&quot;</span>))]
+    #[case(OrderSide::Buy, OrderSide::Sell, Price::from(<span class="string">"60.0"</span>))]
+    #[case(OrderSide::Sell, OrderSide::Buy, Price::from(<span class="string">"40.0"</span>))]
     </span><span class="kw">fn </span>test_simulate_order_fills_buy_when_far_from_market(
         <span class="attr">#[case] </span>order_side: OrderSide,
         <span class="attr">#[case] </span>ladder_side: OrderSide,
@@ -1175,7 +1175,7 @@
         });
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::from(<span class="string">&quot;50.00&quot;</span>),
+            price: Price::from(<span class="string">"50.00"</span>),
             size: Quantity::from(<span class="number">500</span>),
             side: order_side,
             order_id: <span class="number">2</span>,
@@ -1191,14 +1191,14 @@
         <span class="kw">let </span><span class="kw-2">mut </span>ladder = Ladder::new(OrderSide::Buy);
 
         ladder.add(BookOrder {
-            price: Price::from(<span class="string">&quot;100.00&quot;</span>),
+            price: Price::from(<span class="string">"100.00"</span>),
             size: Quantity::from(<span class="number">100</span>),
             side: OrderSide::Buy,
             order_id: <span class="number">1</span>,
         });
 
         <span class="kw">let </span>order = BookOrder {
-            price: Price::from(<span class="string">&quot;150.00&quot;</span>), <span class="comment">// &lt;-- Simulate a MARKET order
+            price: Price::from(<span class="string">"150.00"</span>), <span class="comment">// &lt;-- Simulate a MARKET order
             </span>size: Quantity::from(<span class="number">500</span>),
             side: OrderSide::Buy,
             order_id: <span class="number">2</span>,
@@ -1215,19 +1215,19 @@
 
         ladder.add_bulk(<span class="macro">vec!</span>[
             BookOrder {
-                price: Price::from(<span class="string">&quot;100.00&quot;</span>),
+                price: Price::from(<span class="string">"100.00"</span>),
                 size: Quantity::from(<span class="number">100</span>),
                 side: OrderSide::Sell,
                 order_id: <span class="number">1</span>,
             },
             BookOrder {
-                price: Price::from(<span class="string">&quot;101.00&quot;</span>),
+                price: Price::from(<span class="string">"101.00"</span>),
                 size: Quantity::from(<span class="number">200</span>),
                 side: OrderSide::Sell,
                 order_id: <span class="number">2</span>,
             },
             BookOrder {
-                price: Price::from(<span class="string">&quot;102.00&quot;</span>),
+                price: Price::from(<span class="string">"102.00"</span>),
                 size: Quantity::from(<span class="number">400</span>),
                 side: OrderSide::Sell,
                 order_id: <span class="number">3</span>,
@@ -1246,15 +1246,15 @@
         <span class="macro">assert_eq!</span>(fills.len(), <span class="number">3</span>);
 
         <span class="kw">let </span>(price1, size1) = fills[<span class="number">0</span>];
-        <span class="macro">assert_eq!</span>(price1, Price::from(<span class="string">&quot;100.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(price1, Price::from(<span class="string">"100.00"</span>));
         <span class="macro">assert_eq!</span>(size1, Quantity::from(<span class="number">100</span>));
 
         <span class="kw">let </span>(price2, size2) = fills[<span class="number">1</span>];
-        <span class="macro">assert_eq!</span>(price2, Price::from(<span class="string">&quot;101.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(price2, Price::from(<span class="string">"101.00"</span>));
         <span class="macro">assert_eq!</span>(size2, Quantity::from(<span class="number">200</span>));
 
         <span class="kw">let </span>(price3, size3) = fills[<span class="number">2</span>];
-        <span class="macro">assert_eq!</span>(price3, Price::from(<span class="string">&quot;102.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(price3, Price::from(<span class="string">"102.00"</span>));
         <span class="macro">assert_eq!</span>(size3, Quantity::from(<span class="number">200</span>));
     }
 
@@ -1264,19 +1264,19 @@
 
         ladder.add_bulk(<span class="macro">vec!</span>[
             BookOrder {
-                price: Price::from(<span class="string">&quot;102.00&quot;</span>),
+                price: Price::from(<span class="string">"102.00"</span>),
                 size: Quantity::from(<span class="number">100</span>),
                 side: OrderSide::Buy,
                 order_id: <span class="number">1</span>,
             },
             BookOrder {
-                price: Price::from(<span class="string">&quot;101.00&quot;</span>),
+                price: Price::from(<span class="string">"101.00"</span>),
                 size: Quantity::from(<span class="number">200</span>),
                 side: OrderSide::Buy,
                 order_id: <span class="number">2</span>,
             },
             BookOrder {
-                price: Price::from(<span class="string">&quot;100.00&quot;</span>),
+                price: Price::from(<span class="string">"100.00"</span>),
                 size: Quantity::from(<span class="number">400</span>),
                 side: OrderSide::Buy,
                 order_id: <span class="number">3</span>,
@@ -1295,15 +1295,15 @@
         <span class="macro">assert_eq!</span>(fills.len(), <span class="number">3</span>);
 
         <span class="kw">let </span>(price1, size1) = fills[<span class="number">0</span>];
-        <span class="macro">assert_eq!</span>(price1, Price::from(<span class="string">&quot;102.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(price1, Price::from(<span class="string">"102.00"</span>));
         <span class="macro">assert_eq!</span>(size1, Quantity::from(<span class="number">100</span>));
 
         <span class="kw">let </span>(price2, size2) = fills[<span class="number">1</span>];
-        <span class="macro">assert_eq!</span>(price2, Price::from(<span class="string">&quot;101.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(price2, Price::from(<span class="string">"101.00"</span>));
         <span class="macro">assert_eq!</span>(size2, Quantity::from(<span class="number">200</span>));
 
         <span class="kw">let </span>(price3, size3) = fills[<span class="number">2</span>];
-        <span class="macro">assert_eq!</span>(price3, Price::from(<span class="string">&quot;100.00&quot;</span>));
+        <span class="macro">assert_eq!</span>(price3, Price::from(<span class="string">"100.00"</span>));
         <span class="macro">assert_eq!</span>(size3, Quantity::from(<span class="number">200</span>));
     }
 
@@ -1313,20 +1313,20 @@
 
         ladder.add_bulk(<span class="macro">vec!</span>[
             BookOrder {
-                price: Price::from(<span class="string">&quot;102.00&quot;</span>),
-                size: Quantity::from(<span class="string">&quot;100.000000000&quot;</span>),
+                price: Price::from(<span class="string">"102.00"</span>),
+                size: Quantity::from(<span class="string">"100.000000000"</span>),
                 side: OrderSide::Buy,
                 order_id: <span class="number">1</span>,
             },
             BookOrder {
-                price: Price::from(<span class="string">&quot;101.00&quot;</span>),
-                size: Quantity::from(<span class="string">&quot;200.000000000&quot;</span>),
+                price: Price::from(<span class="string">"101.00"</span>),
+                size: Quantity::from(<span class="string">"200.000000000"</span>),
                 side: OrderSide::Buy,
                 order_id: <span class="number">2</span>,
             },
             BookOrder {
-                price: Price::from(<span class="string">&quot;100.00&quot;</span>),
-                size: Quantity::from(<span class="string">&quot;400.000000000&quot;</span>),
+                price: Price::from(<span class="string">"100.00"</span>),
+                size: Quantity::from(<span class="string">"400.000000000"</span>),
                 side: OrderSide::Buy,
                 order_id: <span class="number">3</span>,
             },
@@ -1334,7 +1334,7 @@
 
         <span class="kw">let </span>order = BookOrder {
             price: Price::min(<span class="number">2</span>),                  <span class="comment">// &lt;-- Simulate a MARKET order
-            </span>size: Quantity::from(<span class="string">&quot;699.999999999&quot;</span>), <span class="comment">// &lt;-- Size slightly less than total size in ladder
+            </span>size: Quantity::from(<span class="string">"699.999999999"</span>), <span class="comment">// &lt;-- Size slightly less than total size in ladder
             </span>side: OrderSide::Sell,
             order_id: <span class="number">4</span>,
         };
@@ -1344,16 +1344,16 @@
         <span class="macro">assert_eq!</span>(fills.len(), <span class="number">3</span>);
 
         <span class="kw">let </span>(price1, size1) = fills[<span class="number">0</span>];
-        <span class="macro">assert_eq!</span>(price1, Price::from(<span class="string">&quot;102.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size1, Quantity::from(<span class="string">&quot;100.000000000&quot;</span>));
+        <span class="macro">assert_eq!</span>(price1, Price::from(<span class="string">"102.00"</span>));
+        <span class="macro">assert_eq!</span>(size1, Quantity::from(<span class="string">"100.000000000"</span>));
 
         <span class="kw">let </span>(price2, size2) = fills[<span class="number">1</span>];
-        <span class="macro">assert_eq!</span>(price2, Price::from(<span class="string">&quot;101.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size2, Quantity::from(<span class="string">&quot;200.000000000&quot;</span>));
+        <span class="macro">assert_eq!</span>(price2, Price::from(<span class="string">"101.00"</span>));
+        <span class="macro">assert_eq!</span>(size2, Quantity::from(<span class="string">"200.000000000"</span>));
 
         <span class="kw">let </span>(price3, size3) = fills[<span class="number">2</span>];
-        <span class="macro">assert_eq!</span>(price3, Price::from(<span class="string">&quot;100.00&quot;</span>));
-        <span class="macro">assert_eq!</span>(size3, Quantity::from(<span class="string">&quot;399.999999999&quot;</span>));
+        <span class="macro">assert_eq!</span>(price3, Price::from(<span class="string">"100.00"</span>));
+        <span class="macro">assert_eq!</span>(size3, Quantity::from(<span class="string">"399.999999999"</span>));
     }
 
     <span class="attr">#[rstest]

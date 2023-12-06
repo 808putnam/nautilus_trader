@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/redis.rs`."><title>redis.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/redis.rs`."><title>redis.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -243,12 +243,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -268,9 +268,9 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::msgbus::BusMessage;
 
-<span class="kw">const </span>DELIMITER: char = <span class="string">&#39;:&#39;</span>;
-<span class="kw">const </span>XTRIM: <span class="kw-2">&amp;</span>str = <span class="string">&quot;XTRIM&quot;</span>;
-<span class="kw">const </span>MINID: <span class="kw-2">&amp;</span>str = <span class="string">&quot;MINID&quot;</span>;
+<span class="kw">const </span>DELIMITER: char = <span class="string">':'</span>;
+<span class="kw">const </span>XTRIM: <span class="kw-2">&amp;</span>str = <span class="string">"XTRIM"</span>;
+<span class="kw">const </span>MINID: <span class="kw-2">&amp;</span>str = <span class="string">"MINID"</span>;
 
 <span class="kw">pub fn </span>handle_messages_with_redis(
     rx: Receiver&lt;BusMessage&gt;,
@@ -285,7 +285,7 @@
 
     <span class="comment">// Autotrimming
     </span><span class="kw">let </span>autotrim_mins = config
-        .get(<span class="string">&quot;autotrim_mins&quot;</span>)
+        .get(<span class="string">"autotrim_mins"</span>)
         .and_then(|v| v.as_u64())
         .unwrap_or(<span class="number">0</span>) <span class="kw">as </span>usize;
     <span class="kw">let </span>autotrim_duration = <span class="kw">if </span>autotrim_mins &gt; <span class="number">0 </span>{
@@ -344,9 +344,9 @@
     pipe.atomic();
 
     <span class="kw">for </span>msg <span class="kw">in </span>buffer.drain(..) {
-        <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;{stream_name}{}&quot;</span>, <span class="kw-2">&amp;</span>msg.topic);
-        <span class="kw">let </span>items: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>Vec&lt;u8&gt;)&gt; = <span class="macro">vec!</span>[(<span class="string">&quot;payload&quot;</span>, <span class="kw-2">&amp;</span>msg.payload)];
-        pipe.xadd(<span class="kw-2">&amp;</span>key, <span class="string">&quot;*&quot;</span>, <span class="kw-2">&amp;</span>items);
+        <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">"{stream_name}{}"</span>, <span class="kw-2">&amp;</span>msg.topic);
+        <span class="kw">let </span>items: Vec&lt;(<span class="kw-2">&amp;</span>str, <span class="kw-2">&amp;</span>Vec&lt;u8&gt;)&gt; = <span class="macro">vec!</span>[(<span class="string">"payload"</span>, <span class="kw-2">&amp;</span>msg.payload)];
+        pipe.xadd(<span class="kw-2">&amp;</span>key, <span class="string">"*"</span>, <span class="kw-2">&amp;</span>items);
 
         <span class="kw">if </span>autotrim_duration.is_none() {
             <span class="kw">continue</span>; <span class="comment">// Nothing else to do
@@ -367,7 +367,7 @@
                 .query(conn);
 
             <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = result {
-                <span class="macro">eprintln!</span>(<span class="string">&quot;Error trimming stream &#39;{key}&#39;: {e}&quot;</span>);
+                <span class="macro">eprintln!</span>(<span class="string">"Error trimming stream '{key}': {e}"</span>);
             } <span class="kw">else </span>{
                 last_trim_index.insert(key, unix_duration_now.as_millis() <span class="kw">as </span>usize);
             }
@@ -375,35 +375,35 @@
     }
 
     <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = pipe.query::&lt;()&gt;(conn) {
-        <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
+        <span class="macro">eprintln!</span>(<span class="string">"{e}"</span>);
     }
 }
 
 <span class="kw">pub fn </span>get_redis_url(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
     <span class="kw">let </span>empty = Value::Object(serde_json::Map::new());
-    <span class="kw">let </span>database = config.get(<span class="string">&quot;database&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span>empty);
+    <span class="kw">let </span>database = config.get(<span class="string">"database"</span>).unwrap_or(<span class="kw-2">&amp;</span>empty);
 
     <span class="kw">let </span>host = database
-        .get(<span class="string">&quot;host&quot;</span>)
-        .map(|v| v.as_str().unwrap_or(<span class="string">&quot;127.0.0.1&quot;</span>));
-    <span class="kw">let </span>port = database.get(<span class="string">&quot;port&quot;</span>).map(|v| v.as_str().unwrap_or(<span class="string">&quot;6379&quot;</span>));
+        .get(<span class="string">"host"</span>)
+        .map(|v| v.as_str().unwrap_or(<span class="string">"127.0.0.1"</span>));
+    <span class="kw">let </span>port = database.get(<span class="string">"port"</span>).map(|v| v.as_str().unwrap_or(<span class="string">"6379"</span>));
     <span class="kw">let </span>username = database
-        .get(<span class="string">&quot;username&quot;</span>)
+        .get(<span class="string">"username"</span>)
         .map(|v| v.as_str().unwrap_or_default());
     <span class="kw">let </span>password = database
-        .get(<span class="string">&quot;password&quot;</span>)
+        .get(<span class="string">"password"</span>)
         .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>use_ssl = database.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span><span class="macro">json!</span>(<span class="bool-val">false</span>));
+    <span class="kw">let </span>use_ssl = database.get(<span class="string">"ssl"</span>).unwrap_or(<span class="kw-2">&amp;</span><span class="macro">json!</span>(<span class="bool-val">false</span>));
 
     <span class="macro">format!</span>(
-        <span class="string">&quot;redis{}://{}:{}@{}:{}&quot;</span>,
+        <span class="string">"redis{}://{}:{}@{}:{}"</span>,
         <span class="kw">if </span>use_ssl.as_bool().unwrap_or(<span class="bool-val">false</span>) {
-            <span class="string">&quot;s&quot;
+            <span class="string">"s"
         </span>} <span class="kw">else </span>{
-            <span class="string">&quot;&quot;
+            <span class="string">""
         </span>},
-        username.unwrap_or(<span class="string">&quot;&quot;</span>),
-        password.unwrap_or(<span class="string">&quot;&quot;</span>),
+        username.unwrap_or(<span class="string">""</span>),
+        password.unwrap_or(<span class="string">""</span>),
         host.unwrap(),
         port.unwrap(),
     )
@@ -411,7 +411,7 @@
 
 <span class="kw">pub fn </span>get_buffer_interval(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; Duration {
     <span class="kw">let </span>buffer_interval_ms = config
-        .get(<span class="string">&quot;buffer_interval_ms&quot;</span>)
+        .get(<span class="string">"buffer_interval_ms"</span>)
         .map(|v| v.as_u64().unwrap_or(<span class="number">0</span>));
     Duration::from_millis(buffer_interval_ms.unwrap_or(<span class="number">0</span>))
 }
@@ -423,9 +423,9 @@
 ) -&gt; String {
     <span class="kw">let </span><span class="kw-2">mut </span>stream_name = String::new();
 
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::String(s)) = config.get(<span class="string">&quot;stream&quot;</span>) {
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(Value::String(s)) = config.get(<span class="string">"stream"</span>) {
         <span class="kw">if </span>!s.is_empty() {
-            stream_name.push_str(s.trim_matches(<span class="string">&#39;&quot;&#39;</span>));
+            stream_name.push_str(s.trim_matches(<span class="string">'"'</span>));
             stream_name.push(DELIMITER);
         }
     }
@@ -433,8 +433,8 @@
     stream_name.push_str(trader_id.value.as_str());
     stream_name.push(DELIMITER);
 
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="macro">json!</span>(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_instance_id&quot;</span>) {
-        stream_name.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{instance_id}&quot;</span>));
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="macro">json!</span>(<span class="bool-val">true</span>)) = config.get(<span class="string">"use_instance_id"</span>) {
+        stream_name.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{instance_id}"</span>));
         stream_name.push(DELIMITER);
     }
 
@@ -452,15 +452,15 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_stream_name_with_stream_prefix_and_instance_id() {
-        <span class="kw">let </span>trader_id = TraderId::from(<span class="string">&quot;tester-123&quot;</span>);
+        <span class="kw">let </span>trader_id = TraderId::from(<span class="string">"tester-123"</span>);
         <span class="kw">let </span>instance_id = UUID4::new();
         <span class="kw">let </span><span class="kw-2">mut </span>config = HashMap::new();
-        config.insert(<span class="string">&quot;stream&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;quoters&quot;</span>));
-        config.insert(<span class="string">&quot;use_instance_id&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
+        config.insert(<span class="string">"stream"</span>.to_string(), <span class="macro">json!</span>(<span class="string">"quoters"</span>));
+        config.insert(<span class="string">"use_instance_id"</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
 
         <span class="kw">let </span>key = get_stream_name(trader_id, instance_id, <span class="kw-2">&amp;</span>config);
-        <span class="kw">let </span>expected_suffix = <span class="macro">format!</span>(<span class="string">&quot;{instance_id}:&quot;</span>);
-        <span class="macro">assert!</span>(key.starts_with(<span class="string">&quot;quoters:tester-123:&quot;</span>));
+        <span class="kw">let </span>expected_suffix = <span class="macro">format!</span>(<span class="string">"{instance_id}:"</span>);
+        <span class="macro">assert!</span>(key.starts_with(<span class="string">"quoters:tester-123:"</span>));
         <span class="macro">assert!</span>(key.ends_with(<span class="kw-2">&amp;</span>expected_suffix));
     }
 
@@ -474,7 +474,7 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_buffer_interval() {
         <span class="kw">let </span><span class="kw-2">mut </span>config = HashMap::new();
-        config.insert(<span class="string">&quot;buffer_interval_ms&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="number">100</span>));
+        config.insert(<span class="string">"buffer_interval_ms"</span>.to_string(), <span class="macro">json!</span>(<span class="number">100</span>));
 
         <span class="kw">let </span>buffer_interval = get_buffer_interval(<span class="kw-2">&amp;</span>config);
         <span class="macro">assert_eq!</span>(buffer_interval, Duration::from_millis(<span class="number">100</span>));

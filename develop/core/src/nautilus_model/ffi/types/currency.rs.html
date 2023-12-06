@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/ffi/types/currency.rs`."><title>currency.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/ffi/types/currency.rs`."><title>currency.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -180,12 +180,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -204,7 +204,7 @@
 /// - Assumes `code_ptr` is a valid C string pointer.
 /// - Assumes `name_ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
-</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_from_py(
+</span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>currency_from_py(
     code_ptr: <span class="kw-2">*const </span>c_char,
     precision: u8,
     iso4217: u16,
@@ -222,27 +222,27 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_to_cstr(currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="kw-2">*const </span>c_char {
-    str_to_cstr(<span class="macro">format!</span>(<span class="string">&quot;{currency:?}&quot;</span>).as_str())
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>currency_to_cstr(currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="kw-2">*const </span>c_char {
+    str_to_cstr(<span class="macro">format!</span>(<span class="string">"{currency:?}"</span>).as_str())
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_code_to_cstr(currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="kw-2">*const </span>c_char {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>currency_code_to_cstr(currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(<span class="kw-2">&amp;</span>currency.code)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_name_to_cstr(currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="kw-2">*const </span>c_char {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>currency_name_to_cstr(currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="kw-2">*const </span>c_char {
     str_to_cstr(<span class="kw-2">&amp;</span>currency.name)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_hash(currency: <span class="kw-2">&amp;</span>Currency) -&gt; u64 {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>currency_hash(currency: <span class="kw-2">&amp;</span>Currency) -&gt; u64 {
     currency.code.precomputed_hash()
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_register(currency: Currency) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>currency_register(currency: Currency) {
     CURRENCY_MAP
         .lock()
         .unwrap()
@@ -253,7 +253,7 @@
 ///
 /// - Assumes `code_ptr` is borrowed from a valid Python UTF-8 `str`.
 </span><span class="attr">#[no_mangle]
-</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_exists(code_ptr: <span class="kw-2">*const </span>c_char) -&gt; u8 {
+</span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>currency_exists(code_ptr: <span class="kw-2">*const </span>c_char) -&gt; u8 {
     <span class="kw">let </span>code = cstr_to_string(code_ptr);
     u8::from(CURRENCY_MAP.lock().unwrap().contains_key(<span class="kw-2">&amp;</span>code))
 }
@@ -262,7 +262,7 @@
 ///
 /// - Assumes `code_ptr` is borrowed from a valid Python UTF-8 `str`.
 </span><span class="attr">#[no_mangle]
-</span><span class="kw">pub unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>currency_from_cstr(code_ptr: <span class="kw-2">*const </span>c_char) -&gt; Currency {
+</span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>currency_from_cstr(code_ptr: <span class="kw-2">*const </span>c_char) -&gt; Currency {
     <span class="kw">let </span>code = cstr_to_string(code_ptr);
     Currency::from_str(<span class="kw-2">&amp;</span>code).unwrap()
 }
@@ -281,22 +281,22 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_registration() {
-        <span class="kw">let </span>currency = Currency::new(<span class="string">&quot;MYC&quot;</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="string">&quot;My Currency&quot;</span>, CurrencyType::Crypto).unwrap();
+        <span class="kw">let </span>currency = Currency::new(<span class="string">"MYC"</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="string">"My Currency"</span>, CurrencyType::Crypto).unwrap();
         currency_register(currency);
         <span class="kw">unsafe </span>{
-            <span class="macro">assert_eq!</span>(currency_exists(str_to_cstr(<span class="string">&quot;MYC&quot;</span>)), <span class="number">1</span>);
+            <span class="macro">assert_eq!</span>(currency_exists(str_to_cstr(<span class="string">"MYC"</span>)), <span class="number">1</span>);
         }
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_currency_from_py() {
-        <span class="kw">let </span>code = CString::new(<span class="string">&quot;MYC&quot;</span>).unwrap();
-        <span class="kw">let </span>name = CString::new(<span class="string">&quot;My Currency&quot;</span>).unwrap();
+        <span class="kw">let </span>code = CString::new(<span class="string">"MYC"</span>).unwrap();
+        <span class="kw">let </span>name = CString::new(<span class="string">"My Currency"</span>).unwrap();
         <span class="kw">let </span>currency = <span class="kw">unsafe </span>{
             <span class="kw">super</span>::currency_from_py(code.as_ptr(), <span class="number">4</span>, <span class="number">0</span>, name.as_ptr(), CurrencyType::Crypto)
         };
-        <span class="macro">assert_eq!</span>(currency.code.as_str(), <span class="string">&quot;MYC&quot;</span>);
-        <span class="macro">assert_eq!</span>(currency.name.as_str(), <span class="string">&quot;My Currency&quot;</span>);
+        <span class="macro">assert_eq!</span>(currency.code.as_str(), <span class="string">"MYC"</span>);
+        <span class="macro">assert_eq!</span>(currency.name.as_str(), <span class="string">"My Currency"</span>);
         <span class="macro">assert_eq!</span>(currency.currency_type, CurrencyType::Crypto);
     }
 
@@ -304,7 +304,7 @@
     </span><span class="kw">fn </span>test_currency_to_cstr() {
         <span class="kw">let </span>currency = Currency::USD();
         <span class="kw">let </span>cstr = <span class="kw">unsafe </span>{ CStr::from_ptr(currency_to_cstr(<span class="kw-2">&amp;</span>currency)) };
-        <span class="kw">let </span>expected_output = <span class="macro">format!</span>(<span class="string">&quot;{:?}&quot;</span>, currency);
+        <span class="kw">let </span>expected_output = <span class="macro">format!</span>(<span class="string">"{:?}"</span>, currency);
         <span class="macro">assert_eq!</span>(cstr.to_str().unwrap(), expected_output);
     }
 
@@ -312,14 +312,14 @@
     </span><span class="kw">fn </span>test_currency_code_to_cstr() {
         <span class="kw">let </span>currency = Currency::USD();
         <span class="kw">let </span>cstr = <span class="kw">unsafe </span>{ CStr::from_ptr(currency_code_to_cstr(<span class="kw-2">&amp;</span>currency)) };
-        <span class="macro">assert_eq!</span>(cstr.to_str().unwrap(), <span class="string">&quot;USD&quot;</span>);
+        <span class="macro">assert_eq!</span>(cstr.to_str().unwrap(), <span class="string">"USD"</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_currency_name_to_cstr() {
         <span class="kw">let </span>currency = Currency::USD();
         <span class="kw">let </span>cstr = <span class="kw">unsafe </span>{ CStr::from_ptr(currency_name_to_cstr(<span class="kw-2">&amp;</span>currency)) };
-        <span class="macro">assert_eq!</span>(cstr.to_str().unwrap(), <span class="string">&quot;United States dollar&quot;</span>);
+        <span class="macro">assert_eq!</span>(cstr.to_str().unwrap(), <span class="string">"United States dollar"</span>);
     }
 
     <span class="attr">#[rstest]
@@ -331,24 +331,24 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_currency_from_cstr() {
-        <span class="kw">let </span>code = CString::new(<span class="string">&quot;USD&quot;</span>).unwrap();
+        <span class="kw">let </span>code = CString::new(<span class="string">"USD"</span>).unwrap();
         <span class="kw">let </span>currency = <span class="kw">unsafe </span>{ currency_from_cstr(code.as_ptr()) };
         <span class="macro">assert_eq!</span>(currency, Currency::USD());
     }
 
     <span class="attr">#[rstest]
-    #[should_panic(expected = <span class="string">&quot;`ptr` was NULL&quot;</span>)]
+    #[should_panic(expected = <span class="string">"`ptr` was NULL"</span>)]
     </span><span class="kw">fn </span>test_currency_from_py_null_code_ptr() {
-        <span class="kw">let </span>name = CString::new(<span class="string">&quot;My Currency&quot;</span>).unwrap();
+        <span class="kw">let </span>name = CString::new(<span class="string">"My Currency"</span>).unwrap();
         <span class="kw">let _ </span>= <span class="kw">unsafe </span>{
             currency_from_py(std::ptr::null(), <span class="number">4</span>, <span class="number">0</span>, name.as_ptr(), CurrencyType::Crypto)
         };
     }
 
     <span class="attr">#[rstest]
-    #[should_panic(expected = <span class="string">&quot;`ptr` was NULL&quot;</span>)]
+    #[should_panic(expected = <span class="string">"`ptr` was NULL"</span>)]
     </span><span class="kw">fn </span>test_currency_from_py_null_name_ptr() {
-        <span class="kw">let </span>code = CString::new(<span class="string">&quot;MYC&quot;</span>).unwrap();
+        <span class="kw">let </span>code = CString::new(<span class="string">"MYC"</span>).unwrap();
         <span class="kw">let _ </span>= <span class="kw">unsafe </span>{
             currency_from_py(code.as_ptr(), <span class="number">4</span>, <span class="number">0</span>, std::ptr::null(), CurrencyType::Crypto)
         };

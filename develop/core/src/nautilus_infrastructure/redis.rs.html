@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `infrastructure/src/redis.rs`."><title>redis.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_infrastructure" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `infrastructure/src/redis.rs`."><title>redis.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_infrastructure" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -601,55 +601,16 @@
 <a href="#601" id="601">601</a>
 <a href="#602" id="602">602</a>
 <a href="#603" id="603">603</a>
-<a href="#604" id="604">604</a>
-<a href="#605" id="605">605</a>
-<a href="#606" id="606">606</a>
-<a href="#607" id="607">607</a>
-<a href="#608" id="608">608</a>
-<a href="#609" id="609">609</a>
-<a href="#610" id="610">610</a>
-<a href="#611" id="611">611</a>
-<a href="#612" id="612">612</a>
-<a href="#613" id="613">613</a>
-<a href="#614" id="614">614</a>
-<a href="#615" id="615">615</a>
-<a href="#616" id="616">616</a>
-<a href="#617" id="617">617</a>
-<a href="#618" id="618">618</a>
-<a href="#619" id="619">619</a>
-<a href="#620" id="620">620</a>
-<a href="#621" id="621">621</a>
-<a href="#622" id="622">622</a>
-<a href="#623" id="623">623</a>
-<a href="#624" id="624">624</a>
-<a href="#625" id="625">625</a>
-<a href="#626" id="626">626</a>
-<a href="#627" id="627">627</a>
-<a href="#628" id="628">628</a>
-<a href="#629" id="629">629</a>
-<a href="#630" id="630">630</a>
-<a href="#631" id="631">631</a>
-<a href="#632" id="632">632</a>
-<a href="#633" id="633">633</a>
-<a href="#634" id="634">634</a>
-<a href="#635" id="635">635</a>
-<a href="#636" id="636">636</a>
-<a href="#637" id="637">637</a>
-<a href="#638" id="638">638</a>
-<a href="#639" id="639">639</a>
-<a href="#640" id="640">640</a>
-<a href="#641" id="641">641</a>
-<a href="#642" id="642">642</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -663,7 +624,7 @@
 };
 
 <span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
-<span class="kw">use </span>nautilus_common::redis::get_buffer_interval;
+<span class="kw">use </span>nautilus_common::redis::{get_buffer_interval, get_redis_url};
 <span class="kw">use </span>nautilus_core::uuid::UUID4;
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
@@ -673,42 +634,42 @@
 <span class="kw">use </span><span class="kw">crate</span>::cache::{CacheDatabase, DatabaseCommand, DatabaseOperation};
 
 <span class="comment">// Error constants
-</span><span class="kw">const </span>CHANNEL_TX_FAILED: <span class="kw-2">&amp;</span>str = <span class="string">&quot;Failed to send to channel&quot;</span>;
+</span><span class="kw">const </span>CHANNEL_TX_FAILED: <span class="kw-2">&amp;</span>str = <span class="string">"Failed to send to channel"</span>;
 
 <span class="comment">// Redis constants
-</span><span class="kw">const </span>FLUSHDB: <span class="kw-2">&amp;</span>str = <span class="string">&quot;FLUSHDB&quot;</span>;
-<span class="kw">const </span>DELIMITER: char = <span class="string">&#39;:&#39;</span>;
+</span><span class="kw">const </span>FLUSHDB: <span class="kw-2">&amp;</span>str = <span class="string">"FLUSHDB"</span>;
+<span class="kw">const </span>DELIMITER: char = <span class="string">':'</span>;
 
 <span class="comment">// Collection keys
-</span><span class="kw">const </span>INDEX: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index&quot;</span>;
-<span class="kw">const </span>GENERAL: <span class="kw-2">&amp;</span>str = <span class="string">&quot;general&quot;</span>;
-<span class="kw">const </span>CURRENCIES: <span class="kw-2">&amp;</span>str = <span class="string">&quot;currencies&quot;</span>;
-<span class="kw">const </span>INSTRUMENTS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;instruments&quot;</span>;
-<span class="kw">const </span>SYNTHETICS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;synthetics&quot;</span>;
-<span class="kw">const </span>ACCOUNTS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;accounts&quot;</span>;
-<span class="kw">const </span>ORDERS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;orders&quot;</span>;
-<span class="kw">const </span>POSITIONS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;positions&quot;</span>;
-<span class="kw">const </span>ACTORS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;actors&quot;</span>;
-<span class="kw">const </span>STRATEGIES: <span class="kw-2">&amp;</span>str = <span class="string">&quot;strategies&quot;</span>;
-<span class="kw">const </span>SNAPSHOTS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;snapshots&quot;</span>;
-<span class="kw">const </span>HEALTH: <span class="kw-2">&amp;</span>str = <span class="string">&quot;health&quot;</span>;
+</span><span class="kw">const </span>INDEX: <span class="kw-2">&amp;</span>str = <span class="string">"index"</span>;
+<span class="kw">const </span>GENERAL: <span class="kw-2">&amp;</span>str = <span class="string">"general"</span>;
+<span class="kw">const </span>CURRENCIES: <span class="kw-2">&amp;</span>str = <span class="string">"currencies"</span>;
+<span class="kw">const </span>INSTRUMENTS: <span class="kw-2">&amp;</span>str = <span class="string">"instruments"</span>;
+<span class="kw">const </span>SYNTHETICS: <span class="kw-2">&amp;</span>str = <span class="string">"synthetics"</span>;
+<span class="kw">const </span>ACCOUNTS: <span class="kw-2">&amp;</span>str = <span class="string">"accounts"</span>;
+<span class="kw">const </span>ORDERS: <span class="kw-2">&amp;</span>str = <span class="string">"orders"</span>;
+<span class="kw">const </span>POSITIONS: <span class="kw-2">&amp;</span>str = <span class="string">"positions"</span>;
+<span class="kw">const </span>ACTORS: <span class="kw-2">&amp;</span>str = <span class="string">"actors"</span>;
+<span class="kw">const </span>STRATEGIES: <span class="kw-2">&amp;</span>str = <span class="string">"strategies"</span>;
+<span class="kw">const </span>SNAPSHOTS: <span class="kw-2">&amp;</span>str = <span class="string">"snapshots"</span>;
+<span class="kw">const </span>HEALTH: <span class="kw-2">&amp;</span>str = <span class="string">"health"</span>;
 
 <span class="comment">// Index keys
-</span><span class="kw">const </span>INDEX_ORDER_IDS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:order_ids&quot;</span>;
-<span class="kw">const </span>INDEX_ORDER_POSITION: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:order_position&quot;</span>;
-<span class="kw">const </span>INDEX_ORDER_CLIENT: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:order_client&quot;</span>;
-<span class="kw">const </span>INDEX_ORDERS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:orders&quot;</span>;
-<span class="kw">const </span>INDEX_ORDERS_OPEN: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:orders_open&quot;</span>;
-<span class="kw">const </span>INDEX_ORDERS_CLOSED: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:orders_closed&quot;</span>;
-<span class="kw">const </span>INDEX_ORDERS_EMULATED: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:orders_emulated&quot;</span>;
-<span class="kw">const </span>INDEX_ORDERS_INFLIGHT: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:orders_inflight&quot;</span>;
-<span class="kw">const </span>INDEX_POSITIONS: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:positions&quot;</span>;
-<span class="kw">const </span>INDEX_POSITIONS_OPEN: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:positions_open&quot;</span>;
-<span class="kw">const </span>INDEX_POSITIONS_CLOSED: <span class="kw-2">&amp;</span>str = <span class="string">&quot;index:positions_closed&quot;</span>;
+</span><span class="kw">const </span>INDEX_ORDER_IDS: <span class="kw-2">&amp;</span>str = <span class="string">"index:order_ids"</span>;
+<span class="kw">const </span>INDEX_ORDER_POSITION: <span class="kw-2">&amp;</span>str = <span class="string">"index:order_position"</span>;
+<span class="kw">const </span>INDEX_ORDER_CLIENT: <span class="kw-2">&amp;</span>str = <span class="string">"index:order_client"</span>;
+<span class="kw">const </span>INDEX_ORDERS: <span class="kw-2">&amp;</span>str = <span class="string">"index:orders"</span>;
+<span class="kw">const </span>INDEX_ORDERS_OPEN: <span class="kw-2">&amp;</span>str = <span class="string">"index:orders_open"</span>;
+<span class="kw">const </span>INDEX_ORDERS_CLOSED: <span class="kw-2">&amp;</span>str = <span class="string">"index:orders_closed"</span>;
+<span class="kw">const </span>INDEX_ORDERS_EMULATED: <span class="kw-2">&amp;</span>str = <span class="string">"index:orders_emulated"</span>;
+<span class="kw">const </span>INDEX_ORDERS_INFLIGHT: <span class="kw-2">&amp;</span>str = <span class="string">"index:orders_inflight"</span>;
+<span class="kw">const </span>INDEX_POSITIONS: <span class="kw-2">&amp;</span>str = <span class="string">"index:positions"</span>;
+<span class="kw">const </span>INDEX_POSITIONS_OPEN: <span class="kw-2">&amp;</span>str = <span class="string">"index:positions_open"</span>;
+<span class="kw">const </span>INDEX_POSITIONS_CLOSED: <span class="kw-2">&amp;</span>str = <span class="string">"index:positions_closed"</span>;
 
 <span class="attr">#[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.infrastructure&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.infrastructure"</span>)
 )]
 </span><span class="kw">pub struct </span>RedisCacheDatabase {
     <span class="kw">pub </span>trader_id: TraderId,
@@ -761,7 +722,7 @@
 
     <span class="kw">fn </span>read(<span class="kw-2">&amp;mut </span><span class="self">self</span>, key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt; {
         <span class="kw">let </span>collection = get_collection_key(key)<span class="question-mark">?</span>;
-        <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;{}{DELIMITER}{}&quot;</span>, <span class="self">self</span>.trader_key, key);
+        <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">"{}{DELIMITER}{}"</span>, <span class="self">self</span>.trader_key, key);
 
         <span class="kw">match </span>collection {
             INDEX =&gt; read_index(<span class="kw-2">&amp;mut </span><span class="self">self</span>.conn, <span class="kw-2">&amp;</span>key),
@@ -774,7 +735,7 @@
             POSITIONS =&gt; read_list(<span class="kw-2">&amp;mut </span><span class="self">self</span>.conn, <span class="kw-2">&amp;</span>key),
             ACTORS =&gt; read_string(<span class="kw-2">&amp;mut </span><span class="self">self</span>.conn, <span class="kw-2">&amp;</span>key),
             STRATEGIES =&gt; read_string(<span class="kw-2">&amp;mut </span><span class="self">self</span>.conn, <span class="kw-2">&amp;</span>key),
-            <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unsupported operation: `read` for collection &#39;{collection}&#39;&quot;</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported operation: `read` for collection '{collection}'"</span>),
         }
     }
 
@@ -782,7 +743,7 @@
         <span class="kw">let </span>op = DatabaseCommand::new(DatabaseOperation::Insert, key, payload);
         <span class="kw">match </span><span class="self">self</span>.tx.send(op) {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">bail!</span>(<span class="string">&quot;{CHANNEL_TX_FAILED}: {e}&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">bail!</span>(<span class="string">"{CHANNEL_TX_FAILED}: {e}"</span>),
         }
     }
 
@@ -790,7 +751,7 @@
         <span class="kw">let </span>op = DatabaseCommand::new(DatabaseOperation::Update, key, payload);
         <span class="kw">match </span><span class="self">self</span>.tx.send(op) {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">bail!</span>(<span class="string">&quot;{CHANNEL_TX_FAILED}: {e}&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">bail!</span>(<span class="string">"{CHANNEL_TX_FAILED}: {e}"</span>),
         }
     }
 
@@ -798,7 +759,7 @@
         <span class="kw">let </span>op = DatabaseCommand::new(DatabaseOperation::Delete, key, payload);
         <span class="kw">match </span><span class="self">self</span>.tx.send(op) {
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">bail!</span>(<span class="string">&quot;{CHANNEL_TX_FAILED}: {e}&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">bail!</span>(<span class="string">"{CHANNEL_TX_FAILED}: {e}"</span>),
         }
     }
 
@@ -846,34 +807,34 @@
         <span class="kw">let </span>collection = <span class="kw">match </span>get_collection_key(<span class="kw-2">&amp;</span>msg.key) {
             <span class="prelude-val">Ok</span>(collection) =&gt; collection,
             <span class="prelude-val">Err</span>(e) =&gt; {
-                <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
+                <span class="macro">eprintln!</span>(<span class="string">"{e}"</span>);
                 <span class="kw">continue</span>; <span class="comment">// Continue to next message
             </span>}
         };
 
-        <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">&quot;{trader_key}{DELIMITER}{}&quot;</span>, msg.key);
+        <span class="kw">let </span>key = <span class="macro">format!</span>(<span class="string">"{trader_key}{DELIMITER}{}"</span>, msg.key);
 
         <span class="kw">match </span>msg.op_type {
             DatabaseOperation::Insert =&gt; {
                 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = insert(<span class="kw-2">&amp;mut </span>pipe, collection, <span class="kw-2">&amp;</span>key, msg.payload) {
-                    <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
+                    <span class="macro">eprintln!</span>(<span class="string">"{e}"</span>);
                 }
             }
             DatabaseOperation::Update =&gt; {
                 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = update(<span class="kw-2">&amp;mut </span>pipe, collection, <span class="kw-2">&amp;</span>key, msg.payload) {
-                    <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
+                    <span class="macro">eprintln!</span>(<span class="string">"{e}"</span>);
                 }
             }
             DatabaseOperation::Delete =&gt; {
                 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = delete(<span class="kw-2">&amp;mut </span>pipe, collection, <span class="kw-2">&amp;</span>key, msg.payload) {
-                    <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
+                    <span class="macro">eprintln!</span>(<span class="string">"{e}"</span>);
                 }
             }
         }
     }
 
     <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = pipe.query::&lt;()&gt;(conn) {
-        <span class="macro">eprintln!</span>(<span class="string">&quot;{e}&quot;</span>);
+        <span class="macro">eprintln!</span>(<span class="string">"{e}"</span>);
     }
 }
 
@@ -891,7 +852,7 @@
         INDEX_POSITIONS =&gt; read_set(conn, key),
         INDEX_POSITIONS_OPEN =&gt; read_set(conn, key),
         INDEX_POSITIONS_CLOSED =&gt; read_set(conn, key),
-        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Index unknown &#39;{index_key}&#39; on read&quot;</span>),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Index unknown '{index_key}' on read"</span>),
     }
 }
 
@@ -927,9 +888,9 @@
     key: <span class="kw-2">&amp;</span>str,
     value: <span class="prelude-ty">Option</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-    <span class="kw">let </span>value = value.ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Null `payload` for `insert`&quot;</span>))<span class="question-mark">?</span>;
+    <span class="kw">let </span>value = value.ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">"Null `payload` for `insert`"</span>))<span class="question-mark">?</span>;
     <span class="kw">if </span>value.is_empty() {
-        <span class="macro">bail!</span>(<span class="string">&quot;Empty `payload` for `insert`&quot;</span>)
+        <span class="macro">bail!</span>(<span class="string">"Empty `payload` for `insert`"</span>)
     }
 
     <span class="kw">match </span>collection {
@@ -978,7 +939,7 @@
             insert_string(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
-        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unsupported operation: `insert` for collection &#39;{collection}&#39;&quot;</span>),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported operation: `insert` for collection '{collection}'"</span>),
     }
 }
 
@@ -1029,7 +990,7 @@
             insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
-        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Index unknown &#39;{index_key}&#39; on insert&quot;</span>),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Index unknown '{index_key}' on insert"</span>),
     }
 }
 
@@ -1055,9 +1016,9 @@
     key: <span class="kw-2">&amp;</span>str,
     value: <span class="prelude-ty">Option</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-    <span class="kw">let </span>value = value.ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Null `payload` for `update`&quot;</span>))<span class="question-mark">?</span>;
+    <span class="kw">let </span>value = value.ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">"Null `payload` for `update`"</span>))<span class="question-mark">?</span>;
     <span class="kw">if </span>value.is_empty() {
-        <span class="macro">bail!</span>(<span class="string">&quot;Empty `payload` for `update`&quot;</span>)
+        <span class="macro">bail!</span>(<span class="string">"Empty `payload` for `update`"</span>)
     }
 
     <span class="kw">match </span>collection {
@@ -1073,7 +1034,7 @@
             update_list(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
-        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unsupported operation: `update` for collection &#39;{collection}&#39;&quot;</span>),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported operation: `update` for collection '{collection}'"</span>),
     }
 }
 
@@ -1097,12 +1058,12 @@
             delete_string(pipe, key);
             <span class="prelude-val">Ok</span>(())
         }
-        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unsupported operation: `delete` for collection &#39;{collection}&#39;&quot;</span>),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported operation: `delete` for collection '{collection}'"</span>),
     }
 }
 
 <span class="kw">fn </span>remove_index(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="prelude-ty">Option</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-    <span class="kw">let </span>value = value.ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Empty `payload` for `delete` &#39;{key}&#39;&quot;</span>))<span class="question-mark">?</span>;
+    <span class="kw">let </span>value = value.ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">"Empty `payload` for `delete` '{key}'"</span>))<span class="question-mark">?</span>;
     <span class="kw">let </span>index_key = get_index_key(key)<span class="question-mark">?</span>;
 
     <span class="kw">match </span>index_key {
@@ -1130,7 +1091,7 @@
             remove_from_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
-        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unsupported index operation: remove from &#39;{index_key}&#39;&quot;</span>),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported index operation: remove from '{index_key}'"</span>),
     }
 }
 
@@ -1142,33 +1103,6 @@
     pipe.del(key);
 }
 
-<span class="kw">fn </span>get_redis_url(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
-    <span class="kw">let </span>host = config
-        .get(<span class="string">&quot;host&quot;</span>)
-        .map(|v| v.as_str().unwrap_or(<span class="string">&quot;127.0.0.1&quot;</span>));
-    <span class="kw">let </span>port = config.get(<span class="string">&quot;port&quot;</span>).map(|v| v.as_str().unwrap_or(<span class="string">&quot;6379&quot;</span>));
-    <span class="kw">let </span>username = config
-        .get(<span class="string">&quot;username&quot;</span>)
-        .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>password = config
-        .get(<span class="string">&quot;password&quot;</span>)
-        .map(|v| v.as_str().unwrap_or_default());
-    <span class="kw">let </span>use_ssl = config.get(<span class="string">&quot;ssl&quot;</span>).unwrap_or(<span class="kw-2">&amp;</span><span class="macro">json!</span>(<span class="bool-val">false</span>));
-
-    <span class="macro">format!</span>(
-        <span class="string">&quot;redis{}://{}:{}@{}:{}&quot;</span>,
-        <span class="kw">if </span>use_ssl.as_bool().unwrap_or(<span class="bool-val">false</span>) {
-            <span class="string">&quot;s&quot;
-        </span>} <span class="kw">else </span>{
-            <span class="string">&quot;&quot;
-        </span>},
-        username.unwrap_or(<span class="string">&quot;&quot;</span>),
-        password.unwrap_or(<span class="string">&quot;&quot;</span>),
-        host.unwrap(),
-        port.unwrap(),
-    )
-}
-
 <span class="kw">fn </span>get_trader_key(
     trader_id: TraderId,
     instance_id: UUID4,
@@ -1176,15 +1110,15 @@
 ) -&gt; String {
     <span class="kw">let </span><span class="kw-2">mut </span>key = String::new();
 
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="macro">json!</span>(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_trader_prefix&quot;</span>) {
-        key.push_str(<span class="string">&quot;trader-&quot;</span>);
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="macro">json!</span>(<span class="bool-val">true</span>)) = config.get(<span class="string">"use_trader_prefix"</span>) {
+        key.push_str(<span class="string">"trader-"</span>);
     }
 
     key.push_str(trader_id.value.as_str());
 
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="macro">json!</span>(<span class="bool-val">true</span>)) = config.get(<span class="string">&quot;use_instance_id&quot;</span>) {
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="macro">json!</span>(<span class="bool-val">true</span>)) = config.get(<span class="string">"use_instance_id"</span>) {
         key.push(DELIMITER);
-        key.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{instance_id}&quot;</span>));
+        key.push_str(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">"{instance_id}"</span>));
     }
 
     key
@@ -1193,22 +1127,22 @@
 <span class="kw">fn </span>get_collection_key(key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
     key.split_once(DELIMITER)
         .map(|(collection, <span class="kw">_</span>)| collection)
-        .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Invalid `key`, missing a &#39;{DELIMITER}&#39; delimiter, was {key}&quot;</span>))
+        .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">"Invalid `key`, missing a '{DELIMITER}' delimiter, was {key}"</span>))
 }
 
 <span class="kw">fn </span>get_index_key(key: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
     key.split_once(DELIMITER)
         .map(|(<span class="kw">_</span>, index_key)| index_key)
-        .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">&quot;Invalid `key`, missing a &#39;{DELIMITER}&#39; delimiter, was {key}&quot;</span>))
+        .ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">"Invalid `key`, missing a '{DELIMITER}' delimiter, was {key}"</span>))
 }
 
 <span class="comment">// This function can be used when we handle cache serialization in Rust
 </span><span class="attr">#[allow(dead_code)]
 </span><span class="kw">fn </span>get_encoding(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
     config
-        .get(<span class="string">&quot;encoding&quot;</span>)
+        .get(<span class="string">"encoding"</span>)
         .and_then(|v| v.as_str())
-        .unwrap_or(<span class="string">&quot;msgpack&quot;</span>)
+        .unwrap_or(<span class="string">"msgpack"</span>)
         .to_string()
 }
 
@@ -1216,11 +1150,11 @@
 </span><span class="attr">#[allow(dead_code)]
 </span><span class="kw">fn </span>deserialize_payload(encoding: <span class="kw-2">&amp;</span>str, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;String, Value&gt;&gt; {
     <span class="kw">match </span>encoding {
-        <span class="string">&quot;msgpack&quot; </span>=&gt; rmp_serde::from_slice(payload)
-            .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to deserialize msgpack `payload`: {e}&quot;</span>)),
-        <span class="string">&quot;json&quot; </span>=&gt; serde_json::from_slice(payload)
-            .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">&quot;Failed to deserialize json `payload`: {e}&quot;</span>)),
-        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;Unsupported encoding: {encoding}&quot;</span>)),
+        <span class="string">"msgpack" </span>=&gt; rmp_serde::from_slice(payload)
+            .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">"Failed to deserialize msgpack `payload`: {e}"</span>)),
+        <span class="string">"json" </span>=&gt; serde_json::from_slice(payload)
+            .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">"Failed to deserialize json `payload`: {e}"</span>)),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">"Unsupported encoding: {encoding}"</span>)),
     }
 }
 
@@ -1234,51 +1168,39 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_get_redis_url() {
-        <span class="kw">let </span><span class="kw-2">mut </span>config = HashMap::new();
-        config.insert(<span class="string">&quot;host&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;localhost&quot;</span>));
-        config.insert(<span class="string">&quot;port&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;1234&quot;</span>));
-        config.insert(<span class="string">&quot;username&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;user&quot;</span>));
-        config.insert(<span class="string">&quot;password&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="string">&quot;pass&quot;</span>));
-        config.insert(<span class="string">&quot;ssl&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
-
-        <span class="macro">assert_eq!</span>(get_redis_url(<span class="kw-2">&amp;</span>config), <span class="string">&quot;rediss://user:pass@localhost:1234&quot;</span>);
-    }
-
-    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_trader_key_with_prefix_and_instance_id() {
-        <span class="kw">let </span>trader_id = TraderId::from(<span class="string">&quot;tester-123&quot;</span>);
+        <span class="kw">let </span>trader_id = TraderId::from(<span class="string">"tester-123"</span>);
         <span class="kw">let </span>instance_id = UUID4::new();
         <span class="kw">let </span><span class="kw-2">mut </span>config = HashMap::new();
-        config.insert(<span class="string">&quot;use_trader_prefix&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
-        config.insert(<span class="string">&quot;use_instance_id&quot;</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
+        config.insert(<span class="string">"use_trader_prefix"</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
+        config.insert(<span class="string">"use_instance_id"</span>.to_string(), <span class="macro">json!</span>(<span class="bool-val">true</span>));
 
         <span class="kw">let </span>key = get_trader_key(trader_id, instance_id, <span class="kw-2">&amp;</span>config);
-        <span class="macro">assert!</span>(key.starts_with(<span class="string">&quot;trader-tester-123:&quot;</span>));
+        <span class="macro">assert!</span>(key.starts_with(<span class="string">"trader-tester-123:"</span>));
         <span class="macro">assert!</span>(key.ends_with(<span class="kw-2">&amp;</span>instance_id.to_string()));
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_collection_key_valid() {
-        <span class="kw">let </span>key = <span class="string">&quot;collection:123&quot;</span>;
-        <span class="macro">assert_eq!</span>(get_collection_key(key).unwrap(), <span class="string">&quot;collection&quot;</span>);
+        <span class="kw">let </span>key = <span class="string">"collection:123"</span>;
+        <span class="macro">assert_eq!</span>(get_collection_key(key).unwrap(), <span class="string">"collection"</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_collection_key_invalid() {
-        <span class="kw">let </span>key = <span class="string">&quot;no_delimiter&quot;</span>;
+        <span class="kw">let </span>key = <span class="string">"no_delimiter"</span>;
         <span class="macro">assert!</span>(get_collection_key(key).is_err());
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_index_key_valid() {
-        <span class="kw">let </span>key = <span class="string">&quot;index:123&quot;</span>;
-        <span class="macro">assert_eq!</span>(get_index_key(key).unwrap(), <span class="string">&quot;123&quot;</span>);
+        <span class="kw">let </span>key = <span class="string">"index:123"</span>;
+        <span class="macro">assert_eq!</span>(get_index_key(key).unwrap(), <span class="string">"123"</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_index_key_invalid() {
-        <span class="kw">let </span>key = <span class="string">&quot;no_delimiter&quot;</span>;
+        <span class="kw">let </span>key = <span class="string">"no_delimiter"</span>;
         <span class="macro">assert!</span>(get_index_key(key).is_err());
     }
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/types/quantity.rs`."><title>quantity.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/types/quantity.rs`."><title>quantity.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -503,12 +503,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -538,8 +538,8 @@
 <span class="attr">#[repr(C)]
 #[derive(Copy, Clone, Eq, Default)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>)
 )]
 </span><span class="kw">pub struct </span>Quantity {
     <span class="kw">pub </span>raw: u64,
@@ -548,7 +548,7 @@
 
 <span class="kw">impl </span>Quantity {
     <span class="kw">pub fn </span>new(value: f64, precision: u8) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        check_f64_in_range_inclusive(value, QUANTITY_MIN, QUANTITY_MAX, <span class="string">&quot;`Quantity` value&quot;</span>)<span class="question-mark">?</span>;
+        check_f64_in_range_inclusive(value, QUANTITY_MIN, QUANTITY_MAX, <span class="string">"`Quantity` value"</span>)<span class="question-mark">?</span>;
         check_fixed_precision(precision)<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
@@ -592,7 +592,7 @@
 
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>to_formatted_string(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="macro">format!</span>(<span class="string">&quot;{self}&quot;</span>).separate_with_underscores()
+        <span class="macro">format!</span>(<span class="string">"{self}"</span>).separate_with_underscores()
     }
 }
 
@@ -614,7 +614,7 @@
     <span class="kw">fn </span>from_str(input: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
         <span class="kw">let </span>float_from_input = input
             .parse::&lt;f64&gt;()
-            .map_err(|e| <span class="macro">format!</span>(<span class="string">&quot;Cannot parse `input` string &#39;{input}&#39; as f64: {e}&quot;</span>))<span class="question-mark">?</span>;
+            .map_err(|e| <span class="macro">format!</span>(<span class="string">"Cannot parse `input` string '{input}' as f64: {e}"</span>))<span class="question-mark">?</span>;
 
         <span class="self">Self</span>::new(float_from_input, precision_from_str(input))
             .map_err(|e: anyhow::Error| e.to_string())
@@ -749,14 +749,14 @@
 }
 
 <span class="kw">impl </span>Debug <span class="kw">for </span>Quantity {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;{:.*}&quot;</span>, <span class="self">self</span>.precision <span class="kw">as </span>usize, <span class="self">self</span>.as_f64())
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">"{:.*}"</span>, <span class="self">self</span>.precision <span class="kw">as </span>usize, <span class="self">self</span>.as_f64())
     }
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>Quantity {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
-        <span class="macro">write!</span>(f, <span class="string">&quot;{:.*}&quot;</span>, <span class="self">self</span>.precision <span class="kw">as </span>usize, <span class="self">self</span>.as_f64())
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
+        <span class="macro">write!</span>(f, <span class="string">"{:.*}"</span>, <span class="self">self</span>.precision <span class="kw">as </span>usize, <span class="self">self</span>.as_f64())
     }
 }
 
@@ -769,10 +769,10 @@
     }
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;de</span>&gt; Deserialize&lt;<span class="lifetime">&#39;de</span>&gt; <span class="kw">for </span>Quantity {
+<span class="kw">impl</span>&lt;<span class="lifetime">'de</span>&gt; Deserialize&lt;<span class="lifetime">'de</span>&gt; <span class="kw">for </span>Quantity {
     <span class="kw">fn </span>deserialize&lt;D&gt;(_deserializer: D) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, D::Error&gt;
     <span class="kw">where
-        </span>D: Deserializer&lt;<span class="lifetime">&#39;de</span>&gt;,
+        </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span>qty_str: <span class="kw-2">&amp;</span>str = Deserialize::deserialize(_deserializer)<span class="question-mark">?</span>;
         <span class="kw">let </span>qty: Quantity = qty_str.into();
@@ -782,7 +782,7 @@
 
 <span class="kw">pub fn </span>check_quantity_positive(value: Quantity) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>!value.is_positive() {
-        <span class="macro">bail!</span>(<span class="string">&quot;Condition failed: invalid `Quantity`, should be positive and was {value}&quot;</span>)
+        <span class="macro">bail!</span>(<span class="string">"Condition failed: invalid `Quantity`, should be positive and was {value}"</span>)
     }
     <span class="prelude-val">Ok</span>(())
 }
@@ -801,28 +801,28 @@
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
 
     <span class="attr">#[rstest]
-    #[should_panic(expected = <span class="string">&quot;Condition failed: invalid `Quantity`, should be positive and was 0&quot;</span>)]
+    #[should_panic(expected = <span class="string">"Condition failed: invalid `Quantity`, should be positive and was 0"</span>)]
     </span><span class="kw">fn </span>test_check_quantity_positive() {
         <span class="kw">let </span>qty = Quantity::new(<span class="number">0.0</span>, <span class="number">0</span>).unwrap();
         check_quantity_positive(qty).unwrap();
     }
 
     <span class="attr">#[rstest]
-    #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
+    #[should_panic(expected = <span class="string">"Condition failed: `precision` was greater than the maximum "</span>)]
     </span><span class="kw">fn </span>test_invalid_precision_new() {
         <span class="comment">// Precision out of range for fixed
         </span><span class="kw">let _ </span>= Quantity::new(<span class="number">1.0</span>, <span class="number">10</span>).unwrap();
     }
 
     <span class="attr">#[rstest]
-    #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
+    #[should_panic(expected = <span class="string">"Condition failed: `precision` was greater than the maximum "</span>)]
     </span><span class="kw">fn </span>test_invalid_precision_from_raw() {
         <span class="comment">// Precision out of range for fixed
         </span><span class="kw">let _ </span>= Quantity::from_raw(<span class="number">1</span>, <span class="number">10</span>).unwrap();
     }
 
     <span class="attr">#[rstest]
-    #[should_panic(expected = <span class="string">&quot;Condition failed: `precision` was greater than the maximum &quot;</span>)]
+    #[should_panic(expected = <span class="string">"Condition failed: `precision` was greater than the maximum "</span>)]
     </span><span class="kw">fn </span>test_invalid_precision_zero() {
         <span class="comment">// Precision out of range for fixed
         </span><span class="kw">let _ </span>= Quantity::zero(<span class="number">10</span>);
@@ -835,7 +835,7 @@
         <span class="macro">assert_eq!</span>(qty.raw, <span class="number">8_120_000</span>);
         <span class="macro">assert_eq!</span>(qty.precision, <span class="number">8</span>);
         <span class="macro">assert_eq!</span>(qty.as_f64(), <span class="number">0.00812</span>);
-        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">&quot;0.00812000&quot;</span>);
+        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">"0.00812000"</span>);
         <span class="macro">assert!</span>(!qty.is_zero());
         <span class="macro">assert!</span>(qty.is_positive());
         <span class="macro">assert_eq!</span>(qty.as_decimal(), <span class="macro">dec!</span>(<span class="number">0.00812000</span>));
@@ -863,21 +863,21 @@
     </span><span class="kw">fn </span>test_with_maximum_value() {
         <span class="kw">let </span>qty = Quantity::new(QUANTITY_MAX, <span class="number">0</span>).unwrap();
         <span class="macro">assert_eq!</span>(qty.raw, <span class="number">18_446_744_073_000_000_000</span>);
-        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">&quot;18446744073&quot;</span>);
+        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">"18446744073"</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_with_minimum_positive_value() {
         <span class="kw">let </span>qty = Quantity::new(<span class="number">0.000000001</span>, <span class="number">9</span>).unwrap();
         <span class="macro">assert_eq!</span>(qty.raw, <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">&quot;0.000000001&quot;</span>);
+        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">"0.000000001"</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_with_minimum_value() {
         <span class="kw">let </span>qty = Quantity::new(QUANTITY_MIN, <span class="number">9</span>).unwrap();
         <span class="macro">assert_eq!</span>(qty.raw, <span class="number">0</span>);
-        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">&quot;0.000000000&quot;</span>);
+        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">"0.000000000"</span>);
     }
 
     <span class="attr">#[rstest]
@@ -887,7 +887,7 @@
         <span class="macro">assert_eq!</span>(qty.raw, <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(qty.precision, <span class="number">8</span>);
         <span class="macro">assert_eq!</span>(qty.as_f64(), <span class="number">0.0</span>);
-        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">&quot;0.00000000&quot;</span>);
+        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">"0.00000000"</span>);
         <span class="macro">assert!</span>(qty.is_zero());
     }
 
@@ -895,23 +895,23 @@
     </span><span class="kw">fn </span>test_precision() {
         <span class="kw">let </span>qty = Quantity::new(<span class="number">1.001</span>, <span class="number">2</span>).unwrap();
         <span class="macro">assert_eq!</span>(qty.raw, <span class="number">1_000_000_000</span>);
-        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">&quot;1.00&quot;</span>);
+        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">"1.00"</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new_from_str() {
-        <span class="kw">let </span>qty = Quantity::from_str(<span class="string">&quot;0.00812000&quot;</span>).unwrap();
+        <span class="kw">let </span>qty = Quantity::from_str(<span class="string">"0.00812000"</span>).unwrap();
         <span class="macro">assert_eq!</span>(qty, qty);
         <span class="macro">assert_eq!</span>(qty.raw, <span class="number">8_120_000</span>);
         <span class="macro">assert_eq!</span>(qty.precision, <span class="number">8</span>);
         <span class="macro">assert_eq!</span>(qty.as_f64(), <span class="number">0.00812</span>);
-        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">&quot;0.00812000&quot;</span>);
+        <span class="macro">assert_eq!</span>(qty.to_string(), <span class="string">"0.00812000"</span>);
     }
 
     <span class="attr">#[rstest]
-    #[case(<span class="string">&quot;0&quot;</span>, <span class="number">0</span>)]
-    #[case(<span class="string">&quot;1.1&quot;</span>, <span class="number">1</span>)]
-    #[case(<span class="string">&quot;1.123456789&quot;</span>, <span class="number">9</span>)]
+    #[case(<span class="string">"0"</span>, <span class="number">0</span>)]
+    #[case(<span class="string">"1.1"</span>, <span class="number">1</span>)]
+    #[case(<span class="string">"1.123456789"</span>, <span class="number">9</span>)]
     </span><span class="kw">fn </span>test_from_str_valid_input(<span class="attr">#[case] </span>input: <span class="kw-2">&amp;</span>str, <span class="attr">#[case] </span>expected_prec: u8) {
         <span class="kw">let </span>qty = Quantity::from_str(input).unwrap();
         <span class="macro">assert_eq!</span>(qty.precision, expected_prec);
@@ -920,7 +920,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_from_str_invalid_input() {
-        <span class="kw">let </span>input = <span class="string">&quot;invalid&quot;</span>;
+        <span class="kw">let </span>input = <span class="string">"invalid"</span>;
         <span class="kw">let </span>result = Quantity::from_str(input);
         <span class="macro">assert!</span>(result.is_err());
     }
@@ -992,10 +992,10 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_display() {
         <span class="kw">use </span>std::fmt::Write <span class="kw">as </span>FmtWrite;
-        <span class="kw">let </span>input_string = <span class="string">&quot;44.12&quot;</span>;
+        <span class="kw">let </span>input_string = <span class="string">"44.12"</span>;
         <span class="kw">let </span>qty = Quantity::from_str(input_string).unwrap();
         <span class="kw">let </span><span class="kw-2">mut </span>res = String::new();
-        <span class="macro">write!</span>(<span class="kw-2">&amp;mut </span>res, <span class="string">&quot;{qty}&quot;</span>).unwrap();
+        <span class="macro">write!</span>(<span class="kw-2">&amp;mut </span>res, <span class="string">"{qty}"</span>).unwrap();
         <span class="macro">assert_eq!</span>(res, input_string);
         <span class="macro">assert_eq!</span>(qty.to_string(), input_string);
     }

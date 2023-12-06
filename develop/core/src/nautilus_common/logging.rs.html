@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging.rs`."><title>logging.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging.rs`."><title>logging.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -789,12 +789,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -887,7 +887,7 @@
         .with(EnvFilter::from_default_env())
         .try_init()
     {
-        <span class="macro">println!</span>(<span class="string">&quot;Failed to set global default dispatcher because of error: {e}&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">"Failed to set global default dispatcher because of error: {e}"</span>);
     };
 
     LogGuard { guards }
@@ -931,10 +931,10 @@
 }
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>LogEvent {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; std::fmt::Result {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="macro">write!</span>(
             f,
-            <span class="string">&quot;{} [{}] {}: {}&quot;</span>,
+            <span class="string">"{} [{}] {}: {}"</span>,
             <span class="self">self</span>.timestamp, <span class="self">self</span>.level, <span class="self">self</span>.component, <span class="self">self</span>.message
         )
     }
@@ -967,7 +967,7 @@
                     }
                     <span class="prelude-val">Err</span>(e) =&gt; {
                         <span class="comment">// Handle the error, e.g. log a warning or ignore the entry
-                        </span><span class="macro">eprintln!</span>(<span class="string">&quot;Error parsing log level: {e:?}&quot;</span>);
+                        </span><span class="macro">eprintln!</span>(<span class="string">"Error parsing log level: {e:?}"</span>);
                     }
                 }
             }
@@ -1022,11 +1022,11 @@
 
         <span class="comment">// Setup log file
         </span><span class="kw">let </span>is_json_format = <span class="kw">match </span>file_format.as_ref().map(|s| s.to_lowercase()) {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>format) <span class="kw">if </span>format == <span class="string">&quot;json&quot; </span>=&gt; <span class="bool-val">true</span>,
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>format) <span class="kw">if </span>format == <span class="string">"json" </span>=&gt; <span class="bool-val">true</span>,
             <span class="prelude-val">None </span>=&gt; <span class="bool-val">false</span>,
             <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>unrecognized) =&gt; {
                 <span class="macro">eprintln!</span>(
-                    <span class="string">&quot;Unrecognized log file format: {unrecognized}. Using plain text format as default.&quot;
+                    <span class="string">"Unrecognized log file format: {unrecognized}. Using plain text format as default."
                 </span>);
                 <span class="bool-val">false
             </span>}
@@ -1047,7 +1047,7 @@
                     .create(<span class="bool-val">true</span>)
                     .append(<span class="bool-val">true</span>)
                     .open(file_path)
-                    .expect(<span class="string">&quot;Error creating log file&quot;</span>),
+                    .expect(<span class="string">"Error creating log file"</span>),
             )
         } <span class="kw">else </span>{
             <span class="prelude-val">None
@@ -1057,11 +1057,11 @@
 
         <span class="comment">// Setup templates for formatting
         </span><span class="kw">let </span>template_console = <span class="kw">match </span>is_colored {
-            <span class="bool-val">true </span>=&gt; <span class="macro">format!</span>(<span class="string">&quot;\x1b[1m{{ts}}\x1b[0m {{color}}[{{level}}] {{trader_id}}.{{component}}: {{message}}\x1b[0m\n&quot;</span>),
-            <span class="bool-val">false </span>=&gt; <span class="macro">format!</span>(<span class="string">&quot;{{ts}} [{{level}}] {{trader_id}}.{{component}}: {{message}}\n&quot;</span>)
+            <span class="bool-val">true </span>=&gt; <span class="macro">format!</span>(<span class="string">"\x1b[1m{{ts}}\x1b[0m {{color}}[{{level}}] {{trader_id}}.{{component}}: {{message}}\x1b[0m\n"</span>),
+            <span class="bool-val">false </span>=&gt; <span class="macro">format!</span>(<span class="string">"{{ts}} [{{level}}] {{trader_id}}.{{component}}: {{message}}\n"</span>)
         };
 
-        <span class="kw">let </span>template_file = String::from(<span class="string">&quot;{ts} [{level}] {trader_id}.{component}: {message}\n&quot;</span>);
+        <span class="kw">let </span>template_file = String::from(<span class="string">"{ts} [{level}] {trader_id}.{component}: {message}\n"</span>);
 
         <span class="comment">// Continue to receive and handle log events until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(event) = rx.recv() {
@@ -1103,7 +1103,7 @@
                         .create(<span class="bool-val">true</span>)
                         .append(<span class="bool-val">true</span>)
                         .open(file_path)
-                        .expect(<span class="string">&quot;Error creating log file&quot;</span>);
+                        .expect(<span class="string">"Error creating log file"</span>);
 
                     file_buf = <span class="prelude-val">Some</span>(BufWriter::new(file));
                 }
@@ -1133,10 +1133,10 @@
             <span class="kw">let </span>current_date_utc = Utc::now().date_naive();
             <span class="kw">let </span>metadata = file_path
                 .metadata()
-                .expect(<span class="string">&quot;Failed to read log file metadata&quot;</span>);
+                .expect(<span class="string">"Failed to read log file metadata"</span>);
             <span class="kw">let </span>creation_time = metadata
                 .created()
-                .expect(<span class="string">&quot;Failed to get log file creation time&quot;</span>);
+                .expect(<span class="string">"Failed to get log file creation time"</span>);
 
             <span class="kw">let </span>creation_time_utc: DateTime&lt;Utc&gt; = creation_time.into();
             <span class="kw">let </span>creation_date_utc = creation_time_utc.date_naive();
@@ -1148,8 +1148,8 @@
     }
 
     <span class="kw">fn </span>default_log_file_basename(trader_id: <span class="kw-2">&amp;</span>str, instance_id: <span class="kw-2">&amp;</span>str) -&gt; String {
-        <span class="kw">let </span>current_date_utc = Utc::now().format(<span class="string">&quot;%Y-%m-%d&quot;</span>);
-        <span class="macro">format!</span>(<span class="string">&quot;{trader_id}_{current_date_utc}_{instance_id}&quot;</span>)
+        <span class="kw">let </span>current_date_utc = Utc::now().format(<span class="string">"%Y-%m-%d"</span>);
+        <span class="macro">format!</span>(<span class="string">"{trader_id}_{current_date_utc}_{instance_id}"</span>)
     }
 
     <span class="kw">fn </span>create_log_file_path(
@@ -1165,12 +1165,12 @@
             <span class="self">Self</span>::default_log_file_basename(trader_id, instance_id)
         };
 
-        <span class="kw">let </span>suffix = <span class="kw">if </span>is_json_format { <span class="string">&quot;json&quot; </span>} <span class="kw">else </span>{ <span class="string">&quot;log&quot; </span>};
+        <span class="kw">let </span>suffix = <span class="kw">if </span>is_json_format { <span class="string">"json" </span>} <span class="kw">else </span>{ <span class="string">"log" </span>};
         <span class="kw">let </span><span class="kw-2">mut </span>file_path = PathBuf::new();
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(directory) = directory {
             file_path.push(directory);
-            create_dir_all(<span class="kw-2">&amp;</span>file_path).expect(<span class="string">&quot;Failed to create directories for log file&quot;</span>);
+            create_dir_all(<span class="kw-2">&amp;</span>file_path).expect(<span class="string">"Failed to create directories for log file"</span>);
         }
 
         file_path.push(basename);
@@ -1180,12 +1180,12 @@
 
     <span class="kw">fn </span>format_log_line_console(event: <span class="kw-2">&amp;</span>LogEvent, trader_id: <span class="kw-2">&amp;</span>str, template: <span class="kw-2">&amp;</span>str) -&gt; String {
         template
-            .replace(<span class="string">&quot;{ts}&quot;</span>, <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(event.timestamp))
-            .replace(<span class="string">&quot;{color}&quot;</span>, <span class="kw-2">&amp;</span>event.color.to_string())
-            .replace(<span class="string">&quot;{level}&quot;</span>, <span class="kw-2">&amp;</span>event.level.to_string())
-            .replace(<span class="string">&quot;{trader_id}&quot;</span>, trader_id)
-            .replace(<span class="string">&quot;{component}&quot;</span>, <span class="kw-2">&amp;</span>event.component)
-            .replace(<span class="string">&quot;{message}&quot;</span>, <span class="kw-2">&amp;</span>event.message)
+            .replace(<span class="string">"{ts}"</span>, <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(event.timestamp))
+            .replace(<span class="string">"{color}"</span>, <span class="kw-2">&amp;</span>event.color.to_string())
+            .replace(<span class="string">"{level}"</span>, <span class="kw-2">&amp;</span>event.level.to_string())
+            .replace(<span class="string">"{trader_id}"</span>, trader_id)
+            .replace(<span class="string">"{component}"</span>, <span class="kw-2">&amp;</span>event.component)
+            .replace(<span class="string">"{message}"</span>, <span class="kw-2">&amp;</span>event.message)
     }
 
     <span class="kw">fn </span>format_log_line_file(
@@ -1196,57 +1196,57 @@
     ) -&gt; String {
         <span class="kw">if </span>is_json_format {
             <span class="kw">let </span>json_string =
-                serde_json::to_string(event).expect(<span class="string">&quot;Error serializing log event to string&quot;</span>);
-            <span class="macro">format!</span>(<span class="string">&quot;{json_string}\n&quot;</span>)
+                serde_json::to_string(event).expect(<span class="string">"Error serializing log event to string"</span>);
+            <span class="macro">format!</span>(<span class="string">"{json_string}\n"</span>)
         } <span class="kw">else </span>{
             template
-                .replace(<span class="string">&quot;{ts}&quot;</span>, <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(event.timestamp))
-                .replace(<span class="string">&quot;{level}&quot;</span>, <span class="kw-2">&amp;</span>event.level.to_string())
-                .replace(<span class="string">&quot;{trader_id}&quot;</span>, trader_id)
-                .replace(<span class="string">&quot;{component}&quot;</span>, <span class="kw-2">&amp;</span>event.component)
-                .replace(<span class="string">&quot;{message}&quot;</span>, <span class="kw-2">&amp;</span>event.message)
+                .replace(<span class="string">"{ts}"</span>, <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(event.timestamp))
+                .replace(<span class="string">"{level}"</span>, <span class="kw-2">&amp;</span>event.level.to_string())
+                .replace(<span class="string">"{trader_id}"</span>, trader_id)
+                .replace(<span class="string">"{component}"</span>, <span class="kw-2">&amp;</span>event.component)
+                .replace(<span class="string">"{message}"</span>, <span class="kw-2">&amp;</span>event.message)
         }
     }
 
     <span class="kw">fn </span>write_stdout(out_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;Stdout&gt;, line: <span class="kw-2">&amp;</span>str) {
         <span class="kw">match </span>out_buf.write_all(line.as_bytes()) {
             <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">&quot;Error writing to stdout: {e:?}&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error writing to stdout: {e:?}"</span>),
         }
     }
 
     <span class="kw">fn </span>flush_stdout(out_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;Stdout&gt;) {
         <span class="kw">match </span>out_buf.flush() {
             <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">&quot;Error flushing stdout: {e:?}&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error flushing stdout: {e:?}"</span>),
         }
     }
 
     <span class="kw">fn </span>write_stderr(err_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;Stderr&gt;, line: <span class="kw-2">&amp;</span>str) {
         <span class="kw">match </span>err_buf.write_all(line.as_bytes()) {
             <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">&quot;Error writing to stderr: {e:?}&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error writing to stderr: {e:?}"</span>),
         }
     }
 
     <span class="kw">fn </span>flush_stderr(err_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;Stderr&gt;) {
         <span class="kw">match </span>err_buf.flush() {
             <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">&quot;Error flushing stderr: {e:?}&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error flushing stderr: {e:?}"</span>),
         }
     }
 
     <span class="kw">fn </span>write_file(file_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;File&gt;, line: <span class="kw-2">&amp;</span>str) {
         <span class="kw">match </span>file_buf.write_all(line.as_bytes()) {
             <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">&quot;Error writing to file: {e:?}&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error writing to file: {e:?}"</span>),
         }
     }
 
     <span class="kw">fn </span>flush_file(file_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;File&gt;) {
         <span class="kw">match </span>file_buf.flush() {
             <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">&quot;Error writing to file: {e:?}&quot;</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error writing to file: {e:?}"</span>),
         }
     }
 
@@ -1266,7 +1266,7 @@
             message,
         };
         <span class="kw">if let </span><span class="prelude-val">Err</span>(SendError(e)) = <span class="self">self</span>.tx.send(event) {
-            <span class="macro">eprintln!</span>(<span class="string">&quot;Error sending log event: {e}&quot;</span>);
+            <span class="macro">eprintln!</span>(<span class="string">"Error sending log event: {e}"</span>);
         }
     }
 
@@ -1311,8 +1311,8 @@
     <span class="attr">#[fixture]
     </span><span class="kw">pub fn </span>logger() -&gt; Logger {
         Logger::new(
-            TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>),
-            String::from(<span class="string">&quot;user-01&quot;</span>),
+            TraderId::from(<span class="string">"TRADER-001"</span>),
+            String::from(<span class="string">"user-01"</span>),
             UUID4::new(),
             LogLevel::Info,
             <span class="prelude-val">None</span>,
@@ -1347,22 +1347,22 @@
             timestamp: <span class="number">1_000_000_000</span>,
             level: LogLevel::Info,
             color: LogColor::Normal,
-            component: <span class="string">&quot;Portfolio&quot;</span>.to_string(),
-            message: <span class="string">&quot;This is a log message&quot;</span>.to_string(),
+            component: <span class="string">"Portfolio"</span>.to_string(),
+            message: <span class="string">"This is a log message"</span>.to_string(),
         };
 
         <span class="kw">let </span>serialized_json = serde_json::to_string(<span class="kw-2">&amp;</span>log_message).unwrap();
         <span class="kw">let </span>deserialized_value: Value = serde_json::from_str(<span class="kw-2">&amp;</span>serialized_json).unwrap();
 
-        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">&quot;timestamp&quot;</span>], <span class="number">1_000_000_000</span>);
-        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">&quot;level&quot;</span>], <span class="string">&quot;INFO&quot;</span>);
-        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">&quot;component&quot;</span>], <span class="string">&quot;Portfolio&quot;</span>);
-        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">&quot;message&quot;</span>], <span class="string">&quot;This is a log message&quot;</span>);
+        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"timestamp"</span>], <span class="number">1_000_000_000</span>);
+        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"level"</span>], <span class="string">"INFO"</span>);
+        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"component"</span>], <span class="string">"Portfolio"</span>);
+        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"message"</span>], <span class="string">"This is a log message"</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new_logger(logger: Logger) {
-        <span class="macro">assert_eq!</span>(logger.trader_id, TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>));
+        <span class="macro">assert_eq!</span>(logger.trader_id, TraderId::from(<span class="string">"TRADER-001"</span>));
         <span class="macro">assert_eq!</span>(logger.level_stdout, LogLevel::Info);
         <span class="macro">assert_eq!</span>(logger.level_file, <span class="prelude-val">None</span>);
         <span class="macro">assert!</span>(!logger.is_bypassed);
@@ -1373,8 +1373,8 @@
         logger.debug(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
-            String::from(<span class="string">&quot;RiskEngine&quot;</span>),
-            String::from(<span class="string">&quot;This is a test debug message.&quot;</span>),
+            String::from(<span class="string">"RiskEngine"</span>),
+            String::from(<span class="string">"This is a test debug message."</span>),
         );
     }
 
@@ -1383,8 +1383,8 @@
         logger.info(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
-            String::from(<span class="string">&quot;RiskEngine&quot;</span>),
-            String::from(<span class="string">&quot;This is a test info message.&quot;</span>),
+            String::from(<span class="string">"RiskEngine"</span>),
+            String::from(<span class="string">"This is a test info message."</span>),
         );
     }
 
@@ -1393,8 +1393,8 @@
         logger.error(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
-            String::from(<span class="string">&quot;RiskEngine&quot;</span>),
-            String::from(<span class="string">&quot;This is a test error message.&quot;</span>),
+            String::from(<span class="string">"RiskEngine"</span>),
+            String::from(<span class="string">"This is a test error message."</span>),
         );
     }
 
@@ -1403,18 +1403,18 @@
         logger.critical(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
-            String::from(<span class="string">&quot;RiskEngine&quot;</span>),
-            String::from(<span class="string">&quot;This is a test critical message.&quot;</span>),
+            String::from(<span class="string">"RiskEngine"</span>),
+            String::from(<span class="string">"This is a test critical message."</span>),
         );
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_logging_to_file() {
-        <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">&quot;Failed to create temporary directory&quot;</span>);
+        <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">"Failed to create temporary directory"</span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>logger = Logger::new(
-            TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>),
-            String::from(<span class="string">&quot;user-01&quot;</span>),
+            TraderId::from(<span class="string">"TRADER-001"</span>),
+            String::from(<span class="string">"user-01"</span>),
             UUID4::new(),
             LogLevel::Info,
             <span class="prelude-val">Some</span>(LogLevel::Debug),
@@ -1429,8 +1429,8 @@
         logger.info(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
-            String::from(<span class="string">&quot;RiskEngine&quot;</span>),
-            String::from(<span class="string">&quot;This is a test.&quot;</span>),
+            String::from(<span class="string">"RiskEngine"</span>),
+            String::from(<span class="string">"This is a test."</span>),
         );
 
         <span class="kw">let </span><span class="kw-2">mut </span>log_contents = String::new();
@@ -1438,7 +1438,7 @@
         wait_until(
             || {
                 std::fs::read_dir(<span class="kw-2">&amp;</span>temp_dir)
-                    .expect(<span class="string">&quot;Failed to read directory&quot;</span>)
+                    .expect(<span class="string">"Failed to read directory"</span>)
                     .filter_map(Result::ok)
                     .any(|entry| entry.path().is_file())
             },
@@ -1448,13 +1448,13 @@
         wait_until(
             || {
                 <span class="kw">let </span>log_file_path = std::fs::read_dir(<span class="kw-2">&amp;</span>temp_dir)
-                    .expect(<span class="string">&quot;Failed to read directory&quot;</span>)
+                    .expect(<span class="string">"Failed to read directory"</span>)
                     .filter_map(Result::ok)
                     .find(|entry| entry.path().is_file())
-                    .expect(<span class="string">&quot;No files found in directory&quot;</span>)
+                    .expect(<span class="string">"No files found in directory"</span>)
                     .path();
                 log_contents =
-                    std::fs::read_to_string(log_file_path).expect(<span class="string">&quot;Error while reading log file&quot;</span>);
+                    std::fs::read_to_string(log_file_path).expect(<span class="string">"Error while reading log file"</span>);
                 !log_contents.is_empty()
             },
             Duration::from_secs(<span class="number">2</span>),
@@ -1462,17 +1462,17 @@
 
         <span class="macro">assert_eq!</span>(
             log_contents,
-            <span class="string">&quot;1970-01-20T02:20:00.000000000Z [INF] TRADER-001.RiskEngine: This is a test.\n&quot;
+            <span class="string">"1970-01-20T02:20:00.000000000Z [INF] TRADER-001.RiskEngine: This is a test.\n"
         </span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_log_component_level_filtering() {
-        <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">&quot;Failed to create temporary directory&quot;</span>);
+        <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">"Failed to create temporary directory"</span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>logger = Logger::new(
-            TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>),
-            String::from(<span class="string">&quot;user-01&quot;</span>),
+            TraderId::from(<span class="string">"TRADER-001"</span>),
+            String::from(<span class="string">"user-01"</span>),
             UUID4::new(),
             LogLevel::Info,
             <span class="prelude-val">Some</span>(LogLevel::Debug),
@@ -1480,8 +1480,8 @@
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
             <span class="prelude-val">Some</span>(HashMap::from_iter(std::iter::once((
-                String::from(<span class="string">&quot;RiskEngine&quot;</span>),
-                Value::from(<span class="string">&quot;ERROR&quot;</span>), <span class="comment">// &lt;-- This should be filtered
+                String::from(<span class="string">"RiskEngine"</span>),
+                Value::from(<span class="string">"ERROR"</span>), <span class="comment">// &lt;-- This should be filtered
             </span>)))),
             <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
@@ -1490,21 +1490,21 @@
         logger.info(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
-            String::from(<span class="string">&quot;RiskEngine&quot;</span>),
-            String::from(<span class="string">&quot;This is a test.&quot;</span>),
+            String::from(<span class="string">"RiskEngine"</span>),
+            String::from(<span class="string">"This is a test."</span>),
         );
 
         wait_until(
             || {
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(log_file) = std::fs::read_dir(<span class="kw-2">&amp;</span>temp_dir)
-                    .expect(<span class="string">&quot;Failed to read directory&quot;</span>)
+                    .expect(<span class="string">"Failed to read directory"</span>)
                     .filter_map(Result::ok)
                     .find(|entry| entry.path().is_file())
                 {
                     <span class="kw">let </span>log_file_path = log_file.path();
                     <span class="kw">let </span>log_contents = std::fs::read_to_string(log_file_path)
-                        .expect(<span class="string">&quot;Error while reading log file&quot;</span>);
-                    !log_contents.contains(<span class="string">&quot;RiskEngine&quot;</span>)
+                        .expect(<span class="string">"Error while reading log file"</span>);
+                    !log_contents.contains(<span class="string">"RiskEngine"</span>)
                 } <span class="kw">else </span>{
                     <span class="bool-val">false
                 </span>}
@@ -1514,26 +1514,26 @@
 
         <span class="macro">assert!</span>(
             std::fs::read_dir(<span class="kw-2">&amp;</span>temp_dir)
-                .expect(<span class="string">&quot;Failed to read directory&quot;</span>)
+                .expect(<span class="string">"Failed to read directory"</span>)
                 .filter_map(Result::ok)
                 .any(|entry| entry.path().is_file()),
-            <span class="string">&quot;Log file exists&quot;
+            <span class="string">"Log file exists"
         </span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_logging_to_file_in_json_format() {
-        <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">&quot;Failed to create temporary directory&quot;</span>);
+        <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">"Failed to create temporary directory"</span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>logger = Logger::new(
-            TraderId::from(<span class="string">&quot;TRADER-001&quot;</span>),
-            String::from(<span class="string">&quot;user-01&quot;</span>),
+            TraderId::from(<span class="string">"TRADER-001"</span>),
+            String::from(<span class="string">"user-01"</span>),
             UUID4::new(),
             LogLevel::Info,
             <span class="prelude-val">Some</span>(LogLevel::Debug),
             <span class="prelude-val">Some</span>(temp_dir.path().to_str().unwrap().to_string()),
             <span class="prelude-val">None</span>,
-            <span class="prelude-val">Some</span>(<span class="string">&quot;json&quot;</span>.to_string()),
+            <span class="prelude-val">Some</span>(<span class="string">"json"</span>.to_string()),
             <span class="prelude-val">None</span>,
             <span class="bool-val">true</span>,
             <span class="bool-val">false</span>,
@@ -1542,8 +1542,8 @@
         logger.info(
             <span class="number">1_650_000_000_000_000</span>,
             LogColor::Normal,
-            String::from(<span class="string">&quot;RiskEngine&quot;</span>),
-            String::from(<span class="string">&quot;This is a test.&quot;</span>),
+            String::from(<span class="string">"RiskEngine"</span>),
+            String::from(<span class="string">"This is a test."</span>),
         );
 
         <span class="kw">let </span><span class="kw-2">mut </span>log_contents = String::new();
@@ -1551,13 +1551,13 @@
         wait_until(
             || {
                 <span class="kw">if let </span><span class="prelude-val">Some</span>(log_file) = std::fs::read_dir(<span class="kw-2">&amp;</span>temp_dir)
-                    .expect(<span class="string">&quot;Failed to read directory&quot;</span>)
+                    .expect(<span class="string">"Failed to read directory"</span>)
                     .filter_map(Result::ok)
                     .find(|entry| entry.path().is_file())
                 {
                     <span class="kw">let </span>log_file_path = log_file.path();
                     log_contents = std::fs::read_to_string(log_file_path)
-                        .expect(<span class="string">&quot;Error while reading log file&quot;</span>);
+                        .expect(<span class="string">"Error while reading log file"</span>);
                     !log_contents.is_empty()
                 } <span class="kw">else </span>{
                     <span class="bool-val">false
@@ -1568,7 +1568,7 @@
 
         <span class="macro">assert_eq!</span>(
         log_contents,
-        <span class="string">&quot;{\&quot;timestamp\&quot;:1650000000000000,\&quot;level\&quot;:\&quot;INFO\&quot;,\&quot;color\&quot;:\&quot;Normal\&quot;,\&quot;component\&quot;:\&quot;RiskEngine\&quot;,\&quot;message\&quot;:\&quot;This is a test.\&quot;}\n&quot;
+        <span class="string">"{\"timestamp\":1650000000000000,\"level\":\"INFO\",\"color\":\"Normal\",\"component\":\"RiskEngine\",\"message\":\"This is a test.\"}\n"
     </span>);
     }
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/data/delta.rs`."><title>delta.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/data/delta.rs`."><title>delta.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -239,12 +239,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -292,7 +292,7 @@
         )
     }
 
-    <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
+    <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
         <span class="kw">match </span>op {
             CompareOp::Eq =&gt; <span class="self">self</span>.eq(other).into_py(py),
             CompareOp::Ne =&gt; <span class="self">self</span>.ne(other).into_py(py),
@@ -311,7 +311,7 @@
     }
 
     <span class="kw">fn </span>__repr__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="macro">format!</span>(<span class="string">&quot;{self:?}&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"{self:?}"</span>)
     }
 
     <span class="attr">#[getter]
@@ -350,32 +350,32 @@
     }
 
     <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;fully_qualified_name&quot;</span>)]
+    #[pyo3(name = <span class="string">"fully_qualified_name"</span>)]
     </span><span class="kw">fn </span>py_fully_qualified_name() -&gt; String {
-        <span class="macro">format!</span>(<span class="string">&quot;{}:{}&quot;</span>, PY_MODULE_MODEL, <span class="macro">stringify!</span>(OrderBookDelta))
+        <span class="macro">format!</span>(<span class="string">"{}:{}"</span>, PY_MODULE_MODEL, <span class="macro">stringify!</span>(OrderBookDelta))
     }
 
     <span class="doccomment">/// Return a dictionary representation of the object.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;as_dict&quot;</span>)]
-    </span><span class="kw">fn </span>py_as_dict(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {
+    </span><span class="attr">#[pyo3(name = <span class="string">"as_dict"</span>)]
+    </span><span class="kw">fn </span>py_as_dict(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {
         <span class="comment">// Serialize object to JSON bytes
         </span><span class="kw">let </span>json_str = serde_json::to_string(<span class="self">self</span>).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
         <span class="comment">// Parse JSON into a Python dictionary
-        </span><span class="kw">let </span>py_dict: Py&lt;PyDict&gt; = PyModule::import(py, <span class="string">&quot;json&quot;</span>)<span class="question-mark">?
-            </span>.call_method(<span class="string">&quot;loads&quot;</span>, (json_str,), <span class="prelude-val">None</span>)<span class="question-mark">?
+        </span><span class="kw">let </span>py_dict: Py&lt;PyDict&gt; = PyModule::import(py, <span class="string">"json"</span>)<span class="question-mark">?
+            </span>.call_method(<span class="string">"loads"</span>, (json_str,), <span class="prelude-val">None</span>)<span class="question-mark">?
             </span>.extract()<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(py_dict)
     }
 
     <span class="doccomment">/// Return a new object from the given dictionary representation.
     </span><span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;from_dict&quot;</span>)]
-    </span><span class="kw">fn </span>py_from_dict(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, values: Py&lt;PyDict&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+    #[pyo3(name = <span class="string">"from_dict"</span>)]
+    </span><span class="kw">fn </span>py_from_dict(py: Python&lt;<span class="lifetime">'_</span>&gt;, values: Py&lt;PyDict&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         from_dict_pyo3(py, values)
     }
 
     <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;get_metadata&quot;</span>)]
+    #[pyo3(name = <span class="string">"get_metadata"</span>)]
     </span><span class="kw">fn </span>py_get_metadata(
         instrument_id: <span class="kw-2">&amp;</span>InstrumentId,
         price_precision: u8,
@@ -389,8 +389,8 @@
     }
 
     <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;get_fields&quot;</span>)]
-    </span><span class="kw">fn </span>py_get_fields(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span>PyDict&gt; {
+    #[pyo3(name = <span class="string">"get_fields"</span>)]
+    </span><span class="kw">fn </span>py_get_fields(py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span>PyDict&gt; {
         <span class="kw">let </span>py_dict = PyDict::new(py);
         <span class="kw">for </span>(k, v) <span class="kw">in </span><span class="self">Self</span>::get_fields() {
             py_dict.set_item(k, v)<span class="question-mark">?</span>;
@@ -400,27 +400,27 @@
     }
 
     <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;from_json&quot;</span>)]
+    #[pyo3(name = <span class="string">"from_json"</span>)]
     </span><span class="kw">fn </span>py_from_json(data: Vec&lt;u8&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="self">Self</span>::from_json_bytes(data).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;from_msgpack&quot;</span>)]
+    #[pyo3(name = <span class="string">"from_msgpack"</span>)]
     </span><span class="kw">fn </span>py_from_msgpack(data: Vec&lt;u8&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         <span class="self">Self</span>::from_msgpack_bytes(data).map_err(to_pyvalue_err)
     }
 
     <span class="doccomment">/// Return JSON encoded bytes representation of the object.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;as_json&quot;</span>)]
-    </span><span class="kw">fn </span>py_as_json(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
+    </span><span class="attr">#[pyo3(name = <span class="string">"as_json"</span>)]
+    </span><span class="kw">fn </span>py_as_json(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
         <span class="comment">// Unwrapping is safe when serializing a valid object
         </span><span class="self">self</span>.as_json_bytes().unwrap().into_py(py)
     }
 
     <span class="doccomment">/// Return MsgPack encoded bytes representation of the object.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;as_msgpack&quot;</span>)]
-    </span><span class="kw">fn </span>py_as_msgpack(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
+    </span><span class="attr">#[pyo3(name = <span class="string">"as_msgpack"</span>)]
+    </span><span class="kw">fn </span>py_as_msgpack(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
         <span class="comment">// Unwrapping is safe when serializing a valid object
         </span><span class="self">self</span>.as_msgpack_bytes().unwrap().into_py(py)
     }
@@ -443,7 +443,7 @@
 
         Python::with_gil(|py| {
             <span class="kw">let </span>dict_string = delta.py_as_dict(py).unwrap().to_string();
-            <span class="kw">let </span>expected_string = <span class="string">r#&quot;{&#39;type&#39;: &#39;OrderBookDelta&#39;, &#39;instrument_id&#39;: &#39;AAPL.NASDAQ&#39;, &#39;action&#39;: &#39;ADD&#39;, &#39;order&#39;: {&#39;side&#39;: &#39;BUY&#39;, &#39;price&#39;: &#39;100.00&#39;, &#39;size&#39;: &#39;10&#39;, &#39;order_id&#39;: 123456}, &#39;flags&#39;: 0, &#39;sequence&#39;: 1, &#39;ts_event&#39;: 1, &#39;ts_init&#39;: 2}&quot;#</span>;
+            <span class="kw">let </span>expected_string = <span class="string">r#"{'type': 'OrderBookDelta', 'instrument_id': 'AAPL.NASDAQ', 'action': 'ADD', 'order': {'side': 'BUY', 'price': '100.00', 'size': '10', 'order_id': 123456}, 'flags': 0, 'sequence': 1, 'ts_event': 1, 'ts_init': 2}"#</span>;
             <span class="macro">assert_eq!</span>(dict_string, expected_string);
         });
     }

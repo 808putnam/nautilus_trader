@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/ffi/orderbook/book.rs`."><title>book.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (0e2dac837 2023-12-04)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/ffi/orderbook/book.rs`."><title>book.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (e9013ac0e 2023-12-05)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -270,12 +270,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -303,7 +303,7 @@
 /// calls, enabling interaction with `OrderBook` in a C environment.
 ///
 /// It implements the `Deref` trait, allowing instances of `OrderBook_API` to be
-/// dereferenced to `OrderBook`, providing access to `OrderBook`&#39;s methods without
+/// dereferenced to `OrderBook`, providing access to `OrderBook`'s methods without
 /// having to manually access the underlying `OrderBook` instance.
 </span><span class="attr">#[repr(C)]
 #[allow(non_camel_case_types)]
@@ -324,47 +324,47 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_new(instrument_id: InstrumentId, book_type: BookType) -&gt; OrderBook_API {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_new(instrument_id: InstrumentId, book_type: BookType) -&gt; OrderBook_API {
     OrderBook_API(Box::new(OrderBook::new(instrument_id, book_type)))
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_drop(book: OrderBook_API) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_drop(book: OrderBook_API) {
     drop(book); <span class="comment">// Memory freed here
 </span>}
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_reset(book: <span class="kw-2">&amp;mut </span>OrderBook_API) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_reset(book: <span class="kw-2">&amp;mut </span>OrderBook_API) {
     book.reset()
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_instrument_id(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; InstrumentId {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_instrument_id(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; InstrumentId {
     book.instrument_id
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_book_type(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; BookType {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_book_type(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; BookType {
     book.book_type
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_sequence(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; u64 {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_sequence(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; u64 {
     book.sequence
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_ts_last(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; u64 {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_ts_last(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; u64 {
     book.ts_last
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_count(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; u64 {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_count(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; u64 {
     book.count
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_add(
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_add(
     book: <span class="kw-2">&amp;mut </span>OrderBook_API,
     order: BookOrder,
     ts_event: u64,
@@ -374,7 +374,7 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_update(
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_update(
     book: <span class="kw-2">&amp;mut </span>OrderBook_API,
     order: BookOrder,
     ts_event: u64,
@@ -384,7 +384,7 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_delete(
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_delete(
     book: <span class="kw-2">&amp;mut </span>OrderBook_API,
     order: BookOrder,
     ts_event: u64,
@@ -394,27 +394,27 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_clear(book: <span class="kw-2">&amp;mut </span>OrderBook_API, ts_event: u64, sequence: u64) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_clear(book: <span class="kw-2">&amp;mut </span>OrderBook_API, ts_event: u64, sequence: u64) {
     book.clear(ts_event, sequence)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_clear_bids(book: <span class="kw-2">&amp;mut </span>OrderBook_API, ts_event: u64, sequence: u64) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_clear_bids(book: <span class="kw-2">&amp;mut </span>OrderBook_API, ts_event: u64, sequence: u64) {
     book.clear_bids(ts_event, sequence)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_clear_asks(book: <span class="kw-2">&amp;mut </span>OrderBook_API, ts_event: u64, sequence: u64) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_clear_asks(book: <span class="kw-2">&amp;mut </span>OrderBook_API, ts_event: u64, sequence: u64) {
     book.clear_asks(ts_event, sequence)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_apply_delta(book: <span class="kw-2">&amp;mut </span>OrderBook_API, delta: OrderBookDelta) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_apply_delta(book: <span class="kw-2">&amp;mut </span>OrderBook_API, delta: OrderBookDelta) {
     book.apply_delta(delta)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_bids(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; CVec {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_bids(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; CVec {
     book.bids()
         .iter()
         .map(|l| Level_API::new(l.to_owned().clone()))
@@ -423,7 +423,7 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_asks(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; CVec {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_asks(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; CVec {
     book.asks()
         .iter()
         .map(|l| Level_API::new(l.to_owned().clone()))
@@ -432,53 +432,53 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_has_bid(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; u8 {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_has_bid(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; u8 {
     book.has_bid() <span class="kw">as </span>u8
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_has_ask(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; u8 {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_has_ask(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; u8 {
     book.has_ask() <span class="kw">as </span>u8
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_best_bid_price(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; Price {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_best_bid_price(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; Price {
     book.best_bid_price()
-        .expect(<span class="string">&quot;Error: No bid orders for best bid price&quot;</span>)
+        .expect(<span class="string">"Error: No bid orders for best bid price"</span>)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_best_ask_price(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; Price {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_best_ask_price(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; Price {
     book.best_ask_price()
-        .expect(<span class="string">&quot;Error: No ask orders for best ask price&quot;</span>)
+        .expect(<span class="string">"Error: No ask orders for best ask price"</span>)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_best_bid_size(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; Quantity {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_best_bid_size(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; Quantity {
     book.best_bid_size()
-        .expect(<span class="string">&quot;Error: No bid orders for best bid size&quot;</span>)
+        .expect(<span class="string">"Error: No bid orders for best bid size"</span>)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_best_ask_size(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; Quantity {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_best_ask_size(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; Quantity {
     book.best_ask_size()
-        .expect(<span class="string">&quot;Error: No ask orders for best ask size&quot;</span>)
+        .expect(<span class="string">"Error: No ask orders for best ask size"</span>)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_spread(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; f64 {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_spread(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; f64 {
     book.spread()
-        .expect(<span class="string">&quot;Error: Unable to calculate `spread` (no bid or ask)&quot;</span>)
+        .expect(<span class="string">"Error: Unable to calculate `spread` (no bid or ask)"</span>)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_midpoint(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; f64 {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_midpoint(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; f64 {
     book.midpoint()
-        .expect(<span class="string">&quot;Error: Unable to calculate `midpoint` (no bid or ask)&quot;</span>)
+        .expect(<span class="string">"Error: Unable to calculate `midpoint` (no bid or ask)"</span>)
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_get_avg_px_for_quantity(
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_get_avg_px_for_quantity(
     book: <span class="kw-2">&amp;mut </span>OrderBook_API,
     qty: Quantity,
     order_side: OrderSide,
@@ -487,7 +487,7 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_get_quantity_for_price(
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_get_quantity_for_price(
     book: <span class="kw-2">&amp;mut </span>OrderBook_API,
     price: Price,
     order_side: OrderSide,
@@ -496,22 +496,22 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_update_quote_tick(book: <span class="kw-2">&amp;mut </span>OrderBook_API, tick: <span class="kw-2">&amp;</span>QuoteTick) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_update_quote_tick(book: <span class="kw-2">&amp;mut </span>OrderBook_API, tick: <span class="kw-2">&amp;</span>QuoteTick) {
     book.update_quote_tick(tick);
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_update_trade_tick(book: <span class="kw-2">&amp;mut </span>OrderBook_API, tick: <span class="kw-2">&amp;</span>TradeTick) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_update_trade_tick(book: <span class="kw-2">&amp;mut </span>OrderBook_API, tick: <span class="kw-2">&amp;</span>TradeTick) {
     book.update_trade_tick(tick);
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_simulate_fills(book: <span class="kw-2">&amp;</span>OrderBook_API, order: BookOrder) -&gt; CVec {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_simulate_fills(book: <span class="kw-2">&amp;</span>OrderBook_API, order: BookOrder) -&gt; CVec {
     book.simulate_fills(<span class="kw-2">&amp;</span>order).into()
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_check_integrity(book: <span class="kw-2">&amp;</span>OrderBook_API) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_check_integrity(book: <span class="kw-2">&amp;</span>OrderBook_API) {
     book.check_integrity().unwrap()
 }
 
@@ -519,7 +519,7 @@
 // TODO: Skip clippy check for now since it requires large modification
 </span><span class="attr">#[allow(clippy::drop_non_drop)]
 #[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>vec_fills_drop(v: CVec) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>vec_fills_drop(v: CVec) {
     <span class="kw">let </span>CVec { ptr, len, cap } = v;
     <span class="kw">let </span>data: Vec&lt;(Price, Quantity)&gt; =
         <span class="kw">unsafe </span>{ Vec::from_raw_parts(ptr <span class="kw">as </span><span class="kw-2">*mut </span>(Price, Quantity), len, cap) };
@@ -528,7 +528,7 @@
 
 <span class="doccomment">/// Returns a pretty printed [`OrderBook`] number of levels per side, as a C string pointer.
 </span><span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>orderbook_pprint_to_cstr(
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_pprint_to_cstr(
     book: <span class="kw-2">&amp;</span>OrderBook_API,
     num_levels: usize,
 ) -&gt; <span class="kw-2">*const </span>c_char {
