@@ -4,7 +4,10 @@ from nautilus_trader.model.continuous.contract_month import ContractMonth
 from nautilus_trader.model.continuous.price import ContinuousPrice
 from nautilus_trader.model.objects import Price
 from nautilus_trader.test_kit.stubs.identifiers import TestIdStubs
-
+from nautilus_trader.serialization.arrow.serializer import ArrowSerializer
+from nautilus_trader.serialization.arrow.serializer import make_dict_deserializer
+from nautilus_trader.serialization.arrow.serializer import make_dict_serializer
+from nautilus_trader.serialization.arrow.serializer import register_arrow
 
 class TestContinuousPrice:
     def test_continuous_price_equality(self):
@@ -130,3 +133,32 @@ class TestContinuousPrice:
 
         # Assert
         assert unpickled == price
+        
+    def test_continuous_price_serialize_roundtrip(self):
+        
+        # Arrange
+        register_arrow(
+            data_cls=ContinuousPrice,
+            schema=ContinuousPrice.schema(),
+            serializer=make_dict_serializer(schema=ContinuousPrice.schema()),
+            deserializer=make_dict_deserializer(data_cls=ContinuousPrice),
+        )
+
+        price = price = ContinuousPrice(
+            instrument_id=TestIdStubs.gbpusd_id(),
+            current_price=Price.from_str("1.1"),
+            current_month=ContractMonth("X21"),
+            forward_price=Price.from_str("1.0"),
+            forward_month=ContractMonth("Z21"),
+            carry_price=Price.from_str("1.0"),
+            carry_month=ContractMonth("Z21"),
+            ts_event=0,
+            ts_init=0,
+        )
+        
+        # Act
+        serialized = ArrowSerializer.serialize(price, data_cls=ContinuousPrice)
+        deserialized = ArrowSerializer.deserialize(data_cls=ContinuousPrice, batch=serialized)
+        
+        # Assert
+        assert deserialized[0] == price
