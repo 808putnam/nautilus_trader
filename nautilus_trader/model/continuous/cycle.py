@@ -98,5 +98,5 @@ class RollCycle:
     def __str__(self) -> str:
         return self.value
 
-    def __contains__(self, month: str) -> bool:
-        return month in self.value
+    def __contains__(self, month: ContractMonth) -> bool:
+        return month.letter_month in self.value
