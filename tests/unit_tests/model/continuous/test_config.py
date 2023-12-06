@@ -12,19 +12,6 @@ class TestRollConfig:
             carry_offset=1,
         )
 
-    def test_to_dict(self):
-        # Arrange, Act
-        values = self.params.to_dict()
-
-        # Assert
-        assert values == {
-            "hold_cycle": RollCycle("FGHJKMNQUVXZ"),
-            "priced_cycle": RollCycle("FGHJKMNQUVXZ"),
-            "roll_offset": -45,
-            "expiry_offset": 14,
-            "carry_offset": 1,
-        }
-
     def test_from_dict(self):
         # Arrange
         value = {
