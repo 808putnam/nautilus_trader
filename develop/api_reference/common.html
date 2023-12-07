@@ -4486,9 +4486,30 @@ fully “wired” into the platform. Exceptions will be raised if an
            <p class="admonition-title">
             Warning
            </p>
-           <p>
-            This class should not be used directly, but through a concrete subclass.
-           </p>
+           <ul class="simple">
+            <li>
+             <p>
+              This class should not be used directly, but through a concrete subclass.
+             </p>
+            </li>
+            <li>
+             <p>
+              Do not call components such as
+              <cite>
+               clock
+              </cite>
+              and
+              <cite>
+               logger
+              </cite>
+              in the
+              <cite>
+               __init__
+              </cite>
+              prior to registration.
+             </p>
+            </li>
+           </ul>
           </div>
           <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.common.actor.Actor.active_task_ids">
