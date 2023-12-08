@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["denied","emulated","filled","initialized","pending_update","rejected","released","submitted","triggered","updated"]};
+window.SIDEBAR_ITEMS = {"mod":["denied","emulated","filled","initialized","pending_cancel","pending_update","rejected","released","submitted","triggered","updated"]};
