@@ -2548,6 +2548,42 @@
                </span>
                <ul class="submenu">
                 <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.backtest.BacktestDataConfig.data_type">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BacktestDataConfig.data_type
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.backtest.BacktestDataConfig.query">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BacktestDataConfig.query
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.backtest.BacktestDataConfig.start_time_nanos">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BacktestDataConfig.start_time_nanos
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#nautilus_trader.config.backtest.BacktestDataConfig.end_time_nanos">
+                  <code class="docutils literal notranslate">
+                   <span class="pre">
+                    BacktestDataConfig.end_time_nanos
+                   </span>
+                  </code>
+                 </a>
+                </li>
+                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.config.backtest.BacktestDataConfig.dict">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -21741,9 +21777,11 @@ client).
             <span class="w">
             </span>
             <span class="n">
-             <span class="pre">
-              str
-             </span>
+             <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
+              <span class="pre">
+               nautilus_trader.model.identifiers.InstrumentId
+              </span>
+             </a>
              <span class="w">
              </span>
              <span class="p">
@@ -22139,6 +22177,255 @@ client).
            <p>
             Represents the data configuration for one specific backtest run.
            </p>
+           <dl class="py property">
+            <dt class="sig sig-object py" id="nautilus_trader.config.backtest.BacktestDataConfig.data_type">
+             <em class="property">
+              <span class="pre">
+               property
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               data_type
+              </span>
+             </span>
+             <em class="property">
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="pre">
+               type
+              </span>
+             </em>
+             <a class="headerlink" href="#nautilus_trader.config.backtest.BacktestDataConfig.data_type" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a
+              <cite>
+               type
+              </cite>
+              for the specified
+              <cite>
+               data_cls
+              </cite>
+              for the configuration.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 type
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py property">
+            <dt class="sig sig-object py" id="nautilus_trader.config.backtest.BacktestDataConfig.query">
+             <em class="property">
+              <span class="pre">
+               property
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               query
+              </span>
+             </span>
+             <em class="property">
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="pre">
+               dict
+              </span>
+              <span class="p">
+               <span class="pre">
+                [
+               </span>
+              </span>
+              <span class="pre">
+               str
+              </span>
+              <span class="p">
+               <span class="pre">
+                ,
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="pre">
+               Any
+              </span>
+              <span class="p">
+               <span class="pre">
+                ]
+               </span>
+              </span>
+             </em>
+             <a class="headerlink" href="#nautilus_trader.config.backtest.BacktestDataConfig.query" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return a catalog query object for the configuration.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 dict[str, Any]
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py property">
+            <dt class="sig sig-object py" id="nautilus_trader.config.backtest.BacktestDataConfig.start_time_nanos">
+             <em class="property">
+              <span class="pre">
+               property
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               start_time_nanos
+              </span>
+             </span>
+             <em class="property">
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="pre">
+               int
+              </span>
+             </em>
+             <a class="headerlink" href="#nautilus_trader.config.backtest.BacktestDataConfig.start_time_nanos" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the data configuration start time in UNIX nanoseconds.
+             </p>
+             <p>
+              Will be zero if no
+              <cite>
+               start_time
+              </cite>
+              was specified.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 int
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
+           <dl class="py property">
+            <dt class="sig sig-object py" id="nautilus_trader.config.backtest.BacktestDataConfig.end_time_nanos">
+             <em class="property">
+              <span class="pre">
+               property
+              </span>
+              <span class="w">
+              </span>
+             </em>
+             <span class="sig-name descname">
+              <span class="pre">
+               end_time_nanos
+              </span>
+             </span>
+             <em class="property">
+              <span class="p">
+               <span class="pre">
+                :
+               </span>
+              </span>
+              <span class="w">
+              </span>
+              <span class="pre">
+               int
+              </span>
+             </em>
+             <a class="headerlink" href="#nautilus_trader.config.backtest.BacktestDataConfig.end_time_nanos" title="Permalink to this definition">
+              ¶
+             </a>
+            </dt>
+            <dd>
+             <p>
+              Return the data configuration end time in UNIX nanoseconds.
+             </p>
+             <p>
+              Will be sys.maxsize if no
+              <cite>
+               end_time
+              </cite>
+              was specified.
+             </p>
+             <dl class="field-list simple">
+              <dt class="field-odd">
+               Returns
+               <span class="colon">
+                :
+               </span>
+              </dt>
+              <dd class="field-odd">
+               <p>
+                <em>
+                 int
+                </em>
+               </p>
+              </dd>
+             </dl>
+            </dd>
+           </dl>
            <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.config.backtest.BacktestDataConfig.dict">
              <span class="sig-name descname">
