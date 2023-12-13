@@ -5959,7 +5959,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             The clients venue ID (if not a routing client).
+             The clients venue ID (if applicable).
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -6082,28 +6082,6 @@ then the component state will not change, and an error will be logged.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             instrument_provider
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-             <span class="pre">
-              InstrumentProvider
-             </span>
-            </a>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              msgbus
             </span>
            </span>
@@ -6186,6 +6164,54 @@ then the component state will not change, and an error will be logged.
               Logger
              </span>
             </a>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             instrument_provider
+            </span>
+           </span>
+           <span class="p">
+            <span class="pre">
+             :
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="n">
+            <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
+             <span class="pre">
+              nautilus_trader.common.providers.InstrumentProvider
+             </span>
+            </a>
+            <span class="w">
+            </span>
+            <span class="p">
+             <span class="pre">
+              |
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="pre">
+             None
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="o">
+            <span class="pre">
+             =
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="default_value">
+            <span class="pre">
+             None
+            </span>
            </span>
           </em>
           ,
@@ -6336,20 +6362,6 @@ then the component state will not change, and an error will be logged.
              <li>
               <p>
                <strong>
-                instrument_provider
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
-                <em>
-                 InstrumentProvider
-                </em>
-               </a>
-               ) – The instrument provider for the client.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
                 msgbus
                </strong>
                (
@@ -6401,6 +6413,26 @@ then the component state will not change, and an error will be logged.
                 </em>
                </a>
                ) – The logger for the client.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                instrument_provider
+               </strong>
+               (
+               <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
+                <em>
+                 InstrumentProvider
+                </em>
+               </a>
+               <em>
+                ,
+               </em>
+               <em>
+                optional
+               </em>
+               ) – The instrument provider for the client.
               </p>
              </li>
              <li>
@@ -11393,7 +11425,7 @@ then the component state will not change, and an error will be logged.
            </dt>
            <dd>
             <p>
-             The clients venue ID (if not a routing client).
+             The clients venue ID (if applicable).
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
