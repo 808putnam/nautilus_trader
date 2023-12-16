@@ -875,6 +875,7 @@
 <a href="#874" id="874">874</a>
 <a href="#875" id="875">875</a>
 <a href="#876" id="876">876</a>
+<a href="#877" id="877">877</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1235,7 +1236,8 @@
             <span class="kw">return </span><span class="prelude-val">Ok</span>(());
         }
 
-        <span class="kw">let </span>best_bid = top_bid_level.unwrap().price;
+        <span class="comment">// SAFETY: Levels were already checked for None
+        </span><span class="kw">let </span>best_bid = top_bid_level.unwrap().price;
         <span class="kw">let </span>best_ask = top_ask_level.unwrap().price;
 
         <span class="kw">if </span>best_bid &gt;= best_ask {

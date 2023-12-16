@@ -61,6 +61,7 @@
 <a href="#60" id="60">60</a>
 <a href="#61" id="61">61</a>
 <a href="#62" id="62">62</a>
+<a href="#63" id="63">63</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -121,6 +122,7 @@
     m.add_function(<span class="macro">wrap_pyfunction!</span>(datetime::py_nanos_to_millis, m)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     m.add_function(<span class="macro">wrap_pyfunction!</span>(datetime::py_nanos_to_micros, m)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     m.add_function(<span class="macro">wrap_pyfunction!</span>(datetime::py_unix_nanos_to_iso8601, m)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    m.add_function(<span class="macro">wrap_pyfunction!</span>(datetime::py_last_weekday_nanos, m)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>
