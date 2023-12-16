@@ -1,4 +1,4 @@
-const srcIndex = new Map(JSON.parse('[\
+var srcIndex = new Map(JSON.parse('[\
 ["drop_db",["",[],["drop_db.rs"]]],\
 ["init_db",["",[],["init_db.rs"]]],\
 ["nautilus_backtest",["",[],["engine.rs","lib.rs"]]],\
