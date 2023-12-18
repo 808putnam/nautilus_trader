@@ -368,11 +368,11 @@
     <span class="kw">let </span>current_weekday = date.weekday().number_from_monday();
 
     <span class="comment">// Calculate the offset in days for closest weekday (Mon-Fri)
-    </span><span class="kw">let </span>offset = <span class="kw">match </span>current_weekday {
+    </span><span class="kw">let </span>offset = i64::from(<span class="kw">match </span>current_weekday {
         <span class="number">1</span>..=<span class="number">5 </span>=&gt; <span class="number">0</span>, <span class="comment">// Monday to Friday, no adjustment needed
         </span><span class="number">6 </span>=&gt; <span class="number">1</span>,     <span class="comment">// Saturday, adjust to previous Friday
         </span><span class="kw">_ </span>=&gt; <span class="number">2</span>,     <span class="comment">// Sunday, adjust to previous Friday
-    </span>} <span class="kw">as </span>i64;
+    </span>});
 
     <span class="comment">// Calculate last closest weekday
     </span><span class="kw">let </span>last_closest = date - chrono::Duration::days(offset);

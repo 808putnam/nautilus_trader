@@ -99,6 +99,8 @@
 <a href="#98" id="98">98</a>
 <a href="#99" id="99">99</a>
 <a href="#100" id="100">100</a>
+<a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -125,30 +127,32 @@
 }
 
 <span class="kw">impl </span>SqlCacheDatabase {
-    <span class="kw">pub fn </span>new(trader_id: TraderId, database: Database) -&gt; <span class="self">Self </span>{
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>new(trader_id: TraderId, database: Database) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             trader_id,
             db: database,
         }
     }
-    <span class="kw">pub fn </span>key_trader(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>key_trader(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="macro">format!</span>(<span class="string">"trader-{}"</span>, <span class="self">self</span>.trader_id)
     }
 
-    <span class="kw">pub fn </span>key_general(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>key_general(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="macro">format!</span>(<span class="string">"{}:general:"</span>, <span class="self">self</span>.key_trader())
     }
 
     <span class="kw">pub async fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, key: String, value: String) -&gt; <span class="prelude-ty">Result</span>&lt;u64, Error&gt; {
         <span class="kw">let </span>query = <span class="macro">format!</span>(
-            <span class="string">"INSERT INTO general (key, value) VALUES ('{}', '{}') ON CONFLICT (key) DO NOTHING;"</span>,
-            key, value
-        );
+            <span class="string">"INSERT INTO general (key, value) VALUES ('{key}', '{value}') ON CONFLICT (key) DO NOTHING;"
+        </span>);
         <span class="self">self</span>.db.execute(query.as_str()).<span class="kw">await
     </span>}
 
     <span class="kw">pub async fn </span>get(<span class="kw-2">&amp;</span><span class="self">self</span>, key: String) -&gt; Vec&lt;GeneralItem&gt; {
-        <span class="kw">let </span>query = <span class="macro">format!</span>(<span class="string">"SELECT * FROM general WHERE key = '{}'"</span>, key);
+        <span class="kw">let </span>query = <span class="macro">format!</span>(<span class="string">"SELECT * FROM general WHERE key = '{key}'"</span>);
         <span class="self">self</span>.db
             .fetch_all::&lt;GeneralItem&gt;(query.as_str())
             .<span class="kw">await
@@ -194,7 +198,7 @@
             </span>.expect(<span class="string">"Failed to add key"</span>);
         <span class="kw">let </span>value = cache.get(String::from(<span class="string">"key1"</span>)).<span class="kw">await</span>;
         <span class="macro">assert_eq!</span>(value.len(), <span class="number">1</span>);
-        <span class="kw">let </span>item = value.get(<span class="number">0</span>).unwrap();
+        <span class="kw">let </span>item = value.first().unwrap();
         <span class="macro">assert_eq!</span>(item.key, <span class="string">"key1"</span>);
         <span class="macro">assert_eq!</span>(item.value, <span class="string">"value1"</span>);
     }

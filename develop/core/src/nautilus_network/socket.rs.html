@@ -684,6 +684,7 @@
 <a href="#683" id="683">683</a>
 <a href="#684" id="684">684</a>
 <a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -699,7 +700,7 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::{io, sync::Arc, time::Duration};
+</span><span class="kw">use </span>std::{sync::Arc, time::Duration};
 
 <span class="kw">use </span>nautilus_core::python::to_pyruntime_err;
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, PyObject, Python};
@@ -712,7 +713,7 @@
 };
 <span class="kw">use </span>tokio_tungstenite::{
     tls::tcp_tls,
-    tungstenite::{client::IntoClientRequest, stream::Mode},
+    tungstenite::{client::IntoClientRequest, stream::Mode, Error},
     MaybeTlsStream,
 };
 <span class="kw">use </span>tracing::{debug, error};
@@ -788,7 +789,7 @@
 }
 
 <span class="kw">impl </span>SocketClientInner {
-    <span class="kw">pub async fn </span>connect_url(config: SocketConfig) -&gt; io::Result&lt;<span class="self">Self</span>&gt; {
+    <span class="kw">pub async fn </span>connect_url(config: SocketConfig) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
         <span class="kw">let </span>SocketConfig {
             url,
             mode,
@@ -796,7 +797,7 @@
             suffix,
             handler,
         } = <span class="kw-2">&amp;</span>config;
-        <span class="kw">let </span>(reader, writer) = <span class="self">Self</span>::tls_connect_with_server(url, <span class="kw-2">*</span>mode).<span class="kw">await</span>;
+        <span class="kw">let </span>(reader, writer) = <span class="self">Self</span>::tls_connect_with_server(url, <span class="kw-2">*</span>mode).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let </span>shared_writer = Arc::new(Mutex::new(writer));
 
         <span class="comment">// Keep receiving messages from socket pass them as arguments to handler
@@ -814,16 +815,15 @@
         })
     }
 
-    <span class="comment">// TODO: handle unwraps properly
-    </span><span class="kw">pub async fn </span>tls_connect_with_server(url: <span class="kw-2">&amp;</span>str, mode: Mode) -&gt; (TcpReader, TcpWriter) {
+    <span class="kw">pub async fn </span>tls_connect_with_server(
+        url: <span class="kw-2">&amp;</span>str,
+        mode: Mode,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;(TcpReader, TcpWriter), Error&gt; {
         <span class="macro">debug!</span>(<span class="string">"Connecting to server"</span>);
-        <span class="kw">let </span>stream = TcpStream::connect(url).<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>stream = TcpStream::connect(url).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="macro">debug!</span>(<span class="string">"Making TLS connection"</span>);
-        <span class="kw">let </span>request = url.into_client_request().unwrap();
-        tcp_tls(<span class="kw-2">&amp;</span>request, mode, stream, <span class="prelude-val">None</span>)
-            .<span class="kw">await
-            </span>.map(split)
-            .unwrap()
+        <span class="kw">let </span>request = url.into_client_request()<span class="question-mark">?</span>;
+        tcp_tls(<span class="kw-2">&amp;</span>request, mode, stream, <span class="prelude-val">None</span>).<span class="kw">await</span>.map(split)
     }
 
     <span class="attr">#[must_use]
@@ -903,7 +903,7 @@
     /// the connection might still be alive for some time before terminating.
     /// Closing the connection is an async call which cannot be done by the
     /// drop method so it must be done explicitly.
-    </span><span class="kw">pub async fn </span>shutdown(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+    </span><span class="kw">pub async fn </span>shutdown(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), std::io::Error&gt; {
         <span class="macro">debug!</span>(<span class="string">"Abort read task"</span>);
         <span class="kw">if </span>!<span class="self">self</span>.read_task.is_finished() {
             <span class="self">self</span>.read_task.abort();
@@ -919,9 +919,8 @@
 
         <span class="macro">debug!</span>(<span class="string">"Shutdown writer"</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>writer = <span class="self">self</span>.writer.lock().<span class="kw">await</span>;
-        writer.shutdown().<span class="kw">await</span>.unwrap();
-        <span class="macro">debug!</span>(<span class="string">"Closed connection"</span>);
-    }
+        writer.shutdown().<span class="kw">await
+    </span>}
 
     <span class="doccomment">/// Reconnect with server.
     ///
@@ -929,7 +928,7 @@
     /// to update the shared writer and the read and heartbeat tasks.
     ///
     /// TODO: fix error type
-    </span><span class="kw">pub async fn </span>reconnect(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
+    </span><span class="kw">pub async fn </span>reconnect(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
         <span class="kw">let </span>SocketConfig {
             url,
             mode,
@@ -938,7 +937,7 @@
             handler,
         } = <span class="kw-2">&amp;</span><span class="self">self</span>.config;
         <span class="macro">debug!</span>(<span class="string">"Reconnecting client"</span>);
-        <span class="kw">let </span>(reader, new_writer) = <span class="self">Self</span>::tls_connect_with_server(url, <span class="kw-2">*</span>mode).<span class="kw">await</span>;
+        <span class="kw">let </span>(reader, new_writer) = <span class="self">Self</span>::tls_connect_with_server(url, <span class="kw-2">*</span>mode).<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="macro">debug!</span>(<span class="string">"Use new writer end"</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>guard = <span class="self">self</span>.writer.lock().<span class="kw">await</span>;
@@ -997,7 +996,7 @@
         post_connection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_reconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_disconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
-    ) -&gt; io::Result&lt;<span class="self">Self</span>&gt; {
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, Error&gt; {
         <span class="kw">let </span>suffix = config.suffix.clone();
         <span class="kw">let </span>inner = SocketClientInner::connect_url(config).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let </span>writer = inner.writer.clone();
@@ -1032,12 +1031,11 @@
         <span class="kw-2">*</span><span class="self">self</span>.disconnect_mode.lock().<span class="kw">await </span>= <span class="bool-val">true</span>;
     }
 
-    <span class="comment">// TODO: fix error type
-    </span><span class="kw">pub async fn </span>send_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>, data: <span class="kw-2">&amp;</span>[u8]) {
+    <span class="kw">pub async fn </span>send_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>, data: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;(), std::io::Error&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>writer = <span class="self">self</span>.writer.lock().<span class="kw">await</span>;
-        writer.write_all(data).<span class="kw">await</span>.unwrap();
-        writer.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.suffix).<span class="kw">await</span>.unwrap();
-    }
+        writer.write_all(data).<span class="kw">await</span><span class="question-mark">?</span>;
+        writer.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.suffix).<span class="kw">await
+    </span>}
 
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>is_disconnected(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -1080,7 +1078,11 @@
                     },
                     (<span class="bool-val">true</span>, <span class="bool-val">true</span>) =&gt; {
                         <span class="macro">debug!</span>(<span class="string">"Shutting down inner client"</span>);
-                        inner.shutdown().<span class="kw">await</span>;
+                        <span class="kw">match </span>inner.shutdown().<span class="kw">await </span>{
+                            <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">debug!</span>(<span class="string">"Closed connection"</span>),
+                            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">"Error on `shutdown`: {e}"</span>),
+                        }
+
                         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>handler) = post_disconnection {
                             Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
                                 <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">"Called `post_disconnection` handler"</span>),
@@ -1318,7 +1320,7 @@ counter = Counter()"</span>,
 
         <span class="comment">// Send messages that increment the count
         </span><span class="kw">for _ in </span><span class="number">0</span>..N {
-            client.send_bytes(<span class="string">b"ping"</span>.as_slice()).<span class="kw">await</span>;
+            <span class="kw">let _ </span>= client.send_bytes(<span class="string">b"ping"</span>.as_slice()).<span class="kw">await</span>;
         }
 
         sleep(Duration::from_secs(<span class="number">1</span>)).<span class="kw">await</span>;
@@ -1341,11 +1343,11 @@ counter = Counter()"</span>,
 
         // close the connection and wait
         // client should reconnect automatically
-        </span>client.send_bytes(<span class="string">b"close"</span>.as_slice()).<span class="kw">await</span>;
+        </span><span class="kw">let _ </span>= client.send_bytes(<span class="string">b"close"</span>.as_slice()).<span class="kw">await</span>;
         sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
 
         <span class="kw">for _ in </span><span class="number">0</span>..N {
-            client.send_bytes(<span class="string">b"ping"</span>.as_slice()).<span class="kw">await</span>;
+            <span class="kw">let _ </span>= client.send_bytes(<span class="string">b"ping"</span>.as_slice()).<span class="kw">await</span>;
         }
 
         <span class="comment">// Check count is same as number messages sent

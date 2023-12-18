@@ -299,7 +299,7 @@
             <span class="comment">// Note: as_ptr returns a borrowed pointer. It is valid as long
             // as the object is in scope. In this case `callback_ptr` is valid
             // as long as `py_append` is in scope.
-            </span><span class="kw">let </span>callback_ptr = py_append.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span>pyo3::ffi::PyObject;
+            </span><span class="kw">let </span>callback_ptr = py_append.as_ptr().cast::&lt;pyo3::ffi::PyObject&gt;();
 
             <span class="kw">let </span>handler1 = TimeEventHandler {
                 event: time_event1.clone(),
@@ -316,9 +316,9 @@
                 callback_ptr,
             };
 
-            accumulator.event_handlers.push(handler1.clone());
-            accumulator.event_handlers.push(handler2.clone());
-            accumulator.event_handlers.push(handler3.clone());
+            accumulator.event_handlers.push(handler1);
+            accumulator.event_handlers.push(handler2);
+            accumulator.event_handlers.push(handler3);
 
             <span class="kw">let </span>drained_handlers = accumulator.drain();
 

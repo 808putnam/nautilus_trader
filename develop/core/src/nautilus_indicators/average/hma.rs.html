@@ -364,7 +364,7 @@
         <span class="kw">let </span>_ma2 = WeightedMovingAverage::new(period, w2, price_type)<span class="question-mark">?</span>;
         <span class="kw">let </span>_ma3 = WeightedMovingAverage::new(period_sqrt, w3, price_type)<span class="question-mark">?</span>;
 
-        <span class="prelude-val">Ok</span>(HullMovingAverage {
+        <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             period,
             price_type: price_type.unwrap_or(PriceType::Last),
             value: <span class="number">0.0</span>,

@@ -216,6 +216,13 @@
 <a href="#215" id="215">215</a>
 <a href="#216" id="216">216</a>
 <a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -263,17 +270,17 @@
     STATIC,
 }
 
-<span class="doccomment">/// Atomic clock stores the last recorded time in nanoseconds
+<span class="doccomment">/// Atomic clock stores the last recorded time in nanoseconds.
 ///
-/// It uses AtomicU64 to atomically update the value using only immutable
+/// It uses `AtomicU64` to atomically update the value using only immutable
 /// references.
 ///
-/// AtomicClock can act as a live clock and static clock based on its mode.
+/// `AtomicClock` can act as a live clock and static clock based on its mode.
 </span><span class="attr">#[derive(Debug, Clone)]
 </span><span class="kw">pub struct </span>AtomicTime {
-    <span class="doccomment">/// Atomic clock is operating in live or static mode
+    <span class="doccomment">/// Atomic clock is operating in live or static mode.
     </span>mode: ClockMode,
-    <span class="doccomment">/// The last recorded time in nanoseconds for the clock
+    <span class="doccomment">/// The last recorded time in nanoseconds for the clock.
     </span>timestamp_ns: Arc&lt;AtomicU64&gt;,
 }
 
@@ -286,9 +293,10 @@
 }
 
 <span class="kw">impl </span>AtomicTime {
-    <span class="doccomment">/// New atomic clock set with the given time
+    <span class="doccomment">/// New atomic clock set with the given time.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(mode: ClockMode, time: u64) -&gt; <span class="self">Self </span>{
-        AtomicTime {
+        <span class="self">Self </span>{
             mode,
             timestamp_ns: Arc::new(AtomicU64::new(time)),
         }
@@ -298,6 +306,7 @@
     ///
     /// * Live mode returns current wall clock time since UNIX epoch (unique and monotonic)
     /// * Static mode returns currently stored time.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>get_time_ns(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
         <span class="kw">match </span><span class="self">self</span>.mode {
             ClockMode::LIVE =&gt; <span class="self">self</span>.time_since_epoch(),
@@ -305,34 +314,39 @@
         }
     }
 
-    <span class="doccomment">/// Get time as microseconds
+    <span class="doccomment">/// Get time as microseconds.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>get_time_us(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
         <span class="self">self</span>.get_time_ns() / NANOSECONDS_IN_MICROSECOND
     }
 
-    <span class="doccomment">/// Get time as milliseconds
+    <span class="doccomment">/// Get time as milliseconds.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>get_time_ms(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
         <span class="self">self</span>.get_time_ns() / NANOSECONDS_IN_MILLISECOND
     }
 
-    <span class="doccomment">/// Get time as seconds
+    <span class="doccomment">/// Get time as seconds.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>get_time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.get_time_ns() <span class="kw">as </span>f64 / (NANOSECONDS_IN_SECOND <span class="kw">as </span>f64)
     }
 
-    <span class="doccomment">/// Sets new time for the clock
+    <span class="doccomment">/// Sets new time for the clock.
     </span><span class="kw">pub fn </span>set_time(<span class="kw-2">&amp;</span><span class="self">self</span>, time: u64) {
-        <span class="self">self</span>.store(time, Ordering::Relaxed)
+        <span class="self">self</span>.store(time, Ordering::Relaxed);
     }
 
-    <span class="doccomment">/// Increments current time with a delta and returns the updated time
+    <span class="doccomment">/// Increments current time with a delta and returns the updated time.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>increment_time(<span class="kw-2">&amp;</span><span class="self">self</span>, delta: u64) -&gt; u64 {
         <span class="self">self</span>.fetch_add(delta, Ordering::Relaxed) + delta
     }
 
-    <span class="doccomment">/// Stores and returns current time
+    <span class="doccomment">/// Stores and returns current time.
+    </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>time_since_epoch(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
-        <span class="comment">// increment by 1 nanosecond to keep increasing time
+        <span class="comment">// Increment by 1 nanosecond to keep increasing time
         </span><span class="kw">let </span>now = duration_since_unix_epoch().as_nanos() <span class="kw">as </span>u64 + <span class="number">1</span>;
         <span class="kw">let </span>last = <span class="self">self</span>.load(Ordering::SeqCst) + <span class="number">1</span>;
         <span class="kw">let </span>new = now.max(last);

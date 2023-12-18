@@ -338,9 +338,9 @@
     </span><span class="kw">let </span><span class="kw-2">mut </span>sql_files =
         std::fs::read_dir(schema_dir)<span class="question-mark">?</span>.collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw">_</span>&gt;, std::io::Error&gt;&gt;()<span class="question-mark">?</span>;
 
-    <span class="kw">for </span>file <span class="kw">in </span>sql_files.iter_mut() {
+    <span class="kw">for </span>file <span class="kw">in </span><span class="kw-2">&amp;mut </span>sql_files {
         <span class="kw">let </span>file_name = file.file_name();
-        <span class="macro">println!</span>(<span class="string">"Executing SQL file: {:?}"</span>, file_name);
+        <span class="macro">println!</span>(<span class="string">"Executing SQL file: {file_name:?}"</span>);
         <span class="kw">let </span>file_path = file.path();
         <span class="kw">let </span>sql_content = std::fs::read_to_string(file_path.clone())<span class="question-mark">?</span>;
         <span class="kw">for </span>sql_statement <span class="kw">in </span>sql_content.split(<span class="string">';'</span>).filter(|s| !s.trim().is_empty()) {
