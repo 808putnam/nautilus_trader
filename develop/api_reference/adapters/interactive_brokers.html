@@ -11302,7 +11302,7 @@ Example: value set to 1, InstrumentProvider will make fresh pull every day even 
               at
              </span>
              <span class="pre">
-              0x7fae56f5fb50&gt;
+              0x7f9706ab90d0&gt;
              </span>
              <span class="pre">
               =
@@ -14209,7 +14209,7 @@ then the component state will not change, and an error will be logged.
                   <em>
                    optional
                   </em>
-                  ) – The specified from datetime for the data.
+                  ) – The start datetime (UTC) of request time range (inclusive).
                  </p>
                 </li>
                 <li>
@@ -14227,14 +14227,8 @@ then the component state will not change, and an error will be logged.
                   <em>
                    optional
                   </em>
-                  ) – The specified to datetime for the data. If
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    None
-                   </span>
-                  </code>
-                  then will default
-to the current datetime.
+                  ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                  </p>
                 </li>
                </ul>
@@ -14278,6 +14272,28 @@ to the current datetime.
                </span>
                <span class="pre">
                 correlation_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                datetime
+               </span>
+               <span class="pre">
+                start=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                datetime
+               </span>
+               <span class="pre">
+                end=None
                </span>
               </span>
              </em>
@@ -14343,6 +14359,43 @@ to the current datetime.
                   ) – The correlation ID for the request.
                  </p>
                 </li>
+                <li>
+                 <p>
+                  <strong>
+                   start
+                  </strong>
+                  (
+                  <em>
+                   datetime
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The start datetime (UTC) of request time range (inclusive).
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   end
+                  </strong>
+                  (
+                  <em>
+                   datetime
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
+                 </p>
+                </li>
                </ul>
               </dd>
              </dl>
@@ -14384,6 +14437,28 @@ to the current datetime.
                </span>
                <span class="pre">
                 correlation_id
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                datetime
+               </span>
+               <span class="pre">
+                start=None
+               </span>
+              </span>
+             </em>
+             ,
+             <em class="sig-param">
+              <span class="n">
+               <span class="pre">
+                datetime
+               </span>
+               <span class="pre">
+                end=None
                </span>
               </span>
              </em>
@@ -14447,6 +14522,43 @@ to the current datetime.
                    </em>
                   </a>
                   ) – The correlation ID for the request.
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   start
+                  </strong>
+                  (
+                  <em>
+                   datetime
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The start datetime (UTC) of request time range (inclusive).
+                 </p>
+                </li>
+                <li>
+                 <p>
+                  <strong>
+                   end
+                  </strong>
+                  (
+                  <em>
+                   datetime
+                  </em>
+                  <em>
+                   ,
+                  </em>
+                  <em>
+                   optional
+                  </em>
+                  ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                  </p>
                 </li>
                </ul>
@@ -14615,7 +14727,7 @@ to the current datetime.
                   <em>
                    optional
                   </em>
-                  ) – The specified from datetime for the data.
+                  ) – The start datetime (UTC) of request time range (inclusive).
                  </p>
                 </li>
                 <li>
@@ -14633,14 +14745,8 @@ to the current datetime.
                   <em>
                    optional
                   </em>
-                  ) – The specified to datetime for the data. If
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    None
-                   </span>
-                  </code>
-                  then will default
-to the current datetime.
+                  ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                  </p>
                 </li>
                </ul>
@@ -14809,7 +14915,7 @@ to the current datetime.
                   <em>
                    optional
                   </em>
-                  ) – The specified from datetime for the data.
+                  ) – The start datetime (UTC) of request time range (inclusive).
                  </p>
                 </li>
                 <li>
@@ -14827,14 +14933,8 @@ to the current datetime.
                   <em>
                    optional
                   </em>
-                  ) – The specified to datetime for the data. If
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    None
-                   </span>
-                  </code>
-                  then will default
-to the current datetime.
+                  ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                  </p>
                 </li>
                </ul>
@@ -18868,7 +18968,7 @@ returned list may be empty if no orders match the given parameters.
                   <em>
                    optional
                   </em>
-                  ) – The start datetime query filter.
+                  ) – The start datetime (UTC) query filter.
                  </p>
                 </li>
                 <li>
@@ -18886,7 +18986,7 @@ returned list may be empty if no orders match the given parameters.
                   <em>
                    optional
                   </em>
-                  ) – The end datetime query filter.
+                  ) – The end datetime (UTC) query filter.
                  </p>
                 </li>
                 <li>
@@ -19236,7 +19336,7 @@ may be empty if no trades match the given parameters.
                   <em>
                    optional
                   </em>
-                  ) – The start datetime query filter.
+                  ) – The start datetime (UTC) query filter.
                  </p>
                 </li>
                 <li>
@@ -19254,7 +19354,7 @@ may be empty if no trades match the given parameters.
                   <em>
                    optional
                   </em>
-                  ) – The end datetime query filter.
+                  ) – The end datetime (UTC) query filter.
                  </p>
                 </li>
                </ul>
@@ -19518,7 +19618,7 @@ returned list may be empty if no positions match the given parameters.
                   <em>
                    optional
                   </em>
-                  ) – The start datetime query filter.
+                  ) – The start datetime (UTC) query filter.
                  </p>
                 </li>
                 <li>
@@ -19536,7 +19636,7 @@ returned list may be empty if no positions match the given parameters.
                   <em>
                    optional
                   </em>
-                  ) – The end datetime query filter.
+                  ) – The end datetime (UTC) query filter.
                  </p>
                 </li>
                </ul>

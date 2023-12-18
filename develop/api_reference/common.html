@@ -10564,14 +10564,8 @@ data for the given instrument ID.
                  <em>
                   optional
                  </em>
-                 ) – The end datetime (UTC) of request time range (inclusive).
-If
-                 <code class="docutils literal notranslate">
-                  <span class="pre">
-                   None
-                  </span>
-                 </code>
-                 then will default to the current datetime (UTC).
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                 </p>
                </li>
                <li>
@@ -10680,7 +10674,19 @@ completed processing.
                  <cite>
                   start
                  </cite>
-                 is not less than
+                 and
+                 <cite>
+                  end
+                 </cite>
+                 are not
+                 <cite>
+                  None
+                 </cite>
+                 and
+                 <cite>
+                  start
+                 </cite>
+                 is &gt;=
                  <cite>
                   end
                  </cite>
@@ -10930,6 +10936,18 @@ completed processing.
               instrument_id,
              </span>
              <span class="pre">
+              datetime
+             </span>
+             <span class="pre">
+              start=None,
+             </span>
+             <span class="pre">
+              datetime
+             </span>
+             <span class="pre">
+              end=None,
+             </span>
+             <span class="pre">
               ClientId
              </span>
              <span class="pre">
@@ -10984,6 +11002,19 @@ completed processing.
              </cite>
              data for the given instrument ID.
             </p>
+            <p>
+             If
+             <cite>
+              end
+             </cite>
+             is
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               None
+              </span>
+             </code>
+             then will request up to the most recent data.
+            </p>
             <dl class="field-list simple">
              <dt class="field-odd">
               Parameters
@@ -11005,6 +11036,43 @@ completed processing.
                   </em>
                  </a>
                  ) – The instrument ID for the request.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  start
+                 </strong>
+                 (
+                 <em>
+                  datetime
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The start datetime (UTC) of request time range (inclusive).
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  end
+                 </strong>
+                 (
+                 <em>
+                  datetime
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                 </p>
                </li>
                <li>
@@ -11103,24 +11171,56 @@ completed processing.
               </span>
              </dt>
              <dd class="field-odd">
-              <p>
-               <strong>
-                TypeError
-               </strong>
-               – If
-               <cite>
-                callback
-               </cite>
-               is not
-               <cite>
-                None
-               </cite>
-               and not of type
-               <cite>
-                Callable
-               </cite>
-               .
-              </p>
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  ValueError
+                 </strong>
+                 – If
+                 <cite>
+                  start
+                 </cite>
+                 and
+                 <cite>
+                  end
+                 </cite>
+                 are not
+                 <cite>
+                  None
+                 </cite>
+                 and
+                 <cite>
+                  start
+                 </cite>
+                 is &gt;=
+                 <cite>
+                  end
+                 </cite>
+                 .
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  TypeError
+                 </strong>
+                 – If
+                 <cite>
+                  callback
+                 </cite>
+                 is not
+                 <cite>
+                  None
+                 </cite>
+                 and not of type
+                 <cite>
+                  Callable
+                 </cite>
+                 .
+                </p>
+               </li>
+              </ul>
              </dd>
             </dl>
            </dd>
@@ -11144,6 +11244,18 @@ completed processing.
              </span>
              <span class="pre">
               venue,
+             </span>
+             <span class="pre">
+              datetime
+             </span>
+             <span class="pre">
+              start=None,
+             </span>
+             <span class="pre">
+              datetime
+             </span>
+             <span class="pre">
+              end=None,
              </span>
              <span class="pre">
               ClientId
@@ -11200,6 +11312,19 @@ completed processing.
              </cite>
              data for the given venue.
             </p>
+            <p>
+             If
+             <cite>
+              end
+             </cite>
+             is
+             <code class="docutils literal notranslate">
+              <span class="pre">
+               None
+              </span>
+             </code>
+             then will request up to the most recent data.
+            </p>
             <dl class="field-list simple">
              <dt class="field-odd">
               Parameters
@@ -11221,6 +11346,43 @@ completed processing.
                   </em>
                  </a>
                  ) – The venue for the request.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  start
+                 </strong>
+                 (
+                 <em>
+                  datetime
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The start datetime (UTC) of request time range (inclusive).
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  end
+                 </strong>
+                 (
+                 <em>
+                  datetime
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                 </p>
                </li>
                <li>
@@ -11319,24 +11481,56 @@ completed processing.
               </span>
              </dt>
              <dd class="field-odd">
-              <p>
-               <strong>
-                TypeError
-               </strong>
-               – If
-               <cite>
-                callback
-               </cite>
-               is not
-               <cite>
-                None
-               </cite>
-               and not of type
-               <cite>
-                Callable
-               </cite>
-               .
-              </p>
+              <ul class="simple">
+               <li>
+                <p>
+                 <strong>
+                  ValueError
+                 </strong>
+                 – If
+                 <cite>
+                  start
+                 </cite>
+                 and
+                 <cite>
+                  end
+                 </cite>
+                 are not
+                 <cite>
+                  None
+                 </cite>
+                 and
+                 <cite>
+                  start
+                 </cite>
+                 is &gt;=
+                 <cite>
+                  end
+                 </cite>
+                 .
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  TypeError
+                 </strong>
+                 – If
+                 <cite>
+                  callback
+                 </cite>
+                 is not
+                 <cite>
+                  None
+                 </cite>
+                 and not of type
+                 <cite>
+                  Callable
+                 </cite>
+                 .
+                </p>
+               </li>
+              </ul>
              </dd>
             </dl>
            </dd>
@@ -11497,14 +11691,8 @@ completed processing.
                  <em>
                   optional
                  </em>
-                 ) – The end datetime (UTC) of request time range (inclusive).
-If
-                 <code class="docutils literal notranslate">
-                  <span class="pre">
-                   None
-                  </span>
-                 </code>
-                 then will default to the current datetime (UTC).
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                 </p>
                </li>
                <li>
@@ -11613,7 +11801,19 @@ completed processing.
                  <cite>
                   start
                  </cite>
-                 is not less than
+                 and
+                 <cite>
+                  end
+                 </cite>
+                 are not
+                 <cite>
+                  None
+                 </cite>
+                 and
+                 <cite>
+                  start
+                 </cite>
+                 is &gt;=
                  <cite>
                   end
                  </cite>
@@ -11801,14 +12001,8 @@ completed processing.
                  <em>
                   optional
                  </em>
-                 ) – The end datetime (UTC) of request time range (inclusive).
-If
-                 <code class="docutils literal notranslate">
-                  <span class="pre">
-                   None
-                  </span>
-                 </code>
-                 then will default to the current datetime (UTC).
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                 </p>
                </li>
                <li>
@@ -11917,7 +12111,19 @@ completed processing.
                  <cite>
                   start
                  </cite>
-                 is not less than
+                 and
+                 <cite>
+                  end
+                 </cite>
+                 are not
+                 <cite>
+                  None
+                 </cite>
+                 and
+                 <cite>
+                  start
+                 </cite>
+                 is &gt;=
                  <cite>
                   end
                  </cite>

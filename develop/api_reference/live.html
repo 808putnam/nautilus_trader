@@ -8875,6 +8875,28 @@ done.
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               datetime
+              </span>
+              <span class="pre">
+               start=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               datetime
+              </span>
+              <span class="pre">
+               end=None
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -8937,6 +8959,43 @@ done.
                  ) – The correlation ID for the request.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  start
+                 </strong>
+                 (
+                 <em>
+                  datetime
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The start datetime (UTC) of request time range (inclusive).
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  end
+                 </strong>
+                 (
+                 <em>
+                  datetime
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
+                </p>
+               </li>
               </ul>
              </dd>
             </dl>
@@ -8978,6 +9037,28 @@ done.
               </span>
               <span class="pre">
                correlation_id
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               datetime
+              </span>
+              <span class="pre">
+               start=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               datetime
+              </span>
+              <span class="pre">
+               end=None
               </span>
              </span>
             </em>
@@ -9041,6 +9122,43 @@ done.
                   </em>
                  </a>
                  ) – The correlation ID for the request.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  start
+                 </strong>
+                 (
+                 <em>
+                  datetime
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The start datetime (UTC) of request time range (inclusive).
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  end
+                 </strong>
+                 (
+                 <em>
+                  datetime
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  optional
+                 </em>
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                 </p>
                </li>
               </ul>
@@ -9209,7 +9327,7 @@ done.
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
@@ -9227,14 +9345,8 @@ done.
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
-                 <code class="docutils literal notranslate">
-                  <span class="pre">
-                   None
-                  </span>
-                 </code>
-                 then will default
-to the current datetime.
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                 </p>
                </li>
               </ul>
@@ -9403,7 +9515,7 @@ to the current datetime.
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
@@ -9421,14 +9533,8 @@ to the current datetime.
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
-                 <code class="docutils literal notranslate">
-                  <span class="pre">
-                   None
-                  </span>
-                 </code>
-                 then will default
-to the current datetime.
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                 </p>
                </li>
               </ul>
@@ -9595,7 +9701,7 @@ to the current datetime.
                  <em>
                   optional
                  </em>
-                 ) – The specified from datetime for the data.
+                 ) – The start datetime (UTC) of request time range (inclusive).
                 </p>
                </li>
                <li>
@@ -9613,14 +9719,8 @@ to the current datetime.
                  <em>
                   optional
                  </em>
-                 ) – The specified to datetime for the data. If
-                 <code class="docutils literal notranslate">
-                  <span class="pre">
-                   None
-                  </span>
-                 </code>
-                 then will default
-to the current datetime.
+                 ) – The end datetime (UTC) of request time range.
+The inclusiveness depends on individual data client implementation.
                 </p>
                </li>
               </ul>
@@ -17288,7 +17388,7 @@ done.
                  <em>
                   optional
                  </em>
-                 ) – The start datetime query filter.
+                 ) – The start datetime (UTC) query filter.
                 </p>
                </li>
                <li>
@@ -17306,7 +17406,7 @@ done.
                  <em>
                   optional
                  </em>
-                 ) – The end datetime query filter.
+                 ) – The end datetime (UTC) query filter.
                 </p>
                </li>
                <li>
@@ -17658,7 +17758,7 @@ done.
                  <em>
                   optional
                  </em>
-                 ) – The start datetime query filter.
+                 ) – The start datetime (UTC) query filter.
                 </p>
                </li>
                <li>
@@ -17676,7 +17776,7 @@ done.
                  <em>
                   optional
                  </em>
-                 ) – The end datetime query filter.
+                 ) – The end datetime (UTC) query filter.
                 </p>
                </li>
               </ul>
@@ -17942,7 +18042,7 @@ done.
                  <em>
                   optional
                  </em>
-                 ) – The start datetime query filter.
+                 ) – The start datetime (UTC) query filter.
                 </p>
                </li>
                <li>
@@ -17960,7 +18060,7 @@ done.
                  <em>
                   optional
                  </em>
-                 ) – The end datetime query filter.
+                 ) – The end datetime (UTC) query filter.
                 </p>
                </li>
               </ul>
