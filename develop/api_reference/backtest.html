@@ -32597,7 +32597,7 @@ as per the last subscription request (this will also affect all subscribers).
                  <em>
                   int
                  </em>
-                 ) – The order book snapshot interval in milliseconds.
+                 ) – The order book snapshot interval in milliseconds (not less than 20 milliseconds).
                 </p>
                </li>
                <li>
@@ -32676,12 +32676,20 @@ If
                  <cite>
                   interval_ms
                  </cite>
-                 is not positive (&gt; 0).
+                 is less than the minimum of 20.
                 </p>
                </li>
               </ul>
              </dd>
             </dl>
+            <div class="admonition warning">
+             <p class="admonition-title">
+              Warning
+             </p>
+             <p>
+              Consider subscribing to order book deltas if you need intervals less than 20 milliseconds.
+             </p>
+            </div>
            </dd>
           </dl>
           <dl class="py method">
@@ -44292,7 +44300,7 @@ as per the last subscription request (this will also affect all subscribers).
                  <em>
                   int
                  </em>
-                 ) – The order book snapshot interval in milliseconds.
+                 ) – The order book snapshot interval in milliseconds (not less than 20 milliseconds).
                 </p>
                </li>
                <li>
@@ -44371,12 +44379,20 @@ If
                  <cite>
                   interval_ms
                  </cite>
-                 is not positive (&gt; 0).
+                 is less than the minimum of 20.
                 </p>
                </li>
               </ul>
              </dd>
             </dl>
+            <div class="admonition warning">
+             <p class="admonition-title">
+              Warning
+             </p>
+             <p>
+              Consider subscribing to order book deltas if you need intervals less than 20 milliseconds.
+             </p>
+            </div>
            </dd>
           </dl>
           <dl class="py method">
