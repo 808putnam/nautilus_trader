@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `network/src/websocket.rs`."><title>websocket.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_network" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (8c2b57721 2023-12-01)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `network/src/websocket.rs`."><title>websocket.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_network" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -790,12 +791,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -825,8 +826,8 @@
 
 <span class="attr">#[derive(Debug, Clone)]
 #[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.network"</span>)
 )]
 </span><span class="kw">pub struct </span>WebSocketConfig {
     url: String,
@@ -869,7 +870,7 @@
 /// data to the server from multiple scopes/tasks.
 ///
 /// The client also maintains a heartbeat if given a duration in seconds.
-/// It&#39;s preferable to set the duration slightly lower - heartbeat more
+/// It's preferable to set the duration slightly lower - heartbeat more
 /// frequently - than the required amount.
 </span><span class="kw">struct </span>WebSocketClientInner {
     config: WebSocketConfig,
@@ -919,7 +920,7 @@
             <span class="kw">let </span>header_value = HeaderValue::from_str(<span class="kw-2">&amp;</span>val).unwrap();
             <span class="kw">let </span>header_name = HeaderName::from_str(<span class="kw-2">&amp;</span>key).unwrap();
             <span class="kw">let </span>header_name_string = header_name.to_string();
-            <span class="kw">let </span>header_name_str: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str = Box::leak(header_name_string.into_boxed_str());
+            <span class="kw">let </span>header_name_str: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str = Box::leak(header_name_string.into_boxed_str());
             req_headers.insert(header_name_str, header_value);
         }
 
@@ -937,15 +938,15 @@
                 <span class="kw">let </span>duration = Duration::from_secs(duration);
                 <span class="kw">loop </span>{
                     sleep(duration).<span class="kw">await</span>;
-                    <span class="macro">debug!</span>(<span class="string">&quot;Sending heartbeat&quot;</span>);
+                    <span class="macro">debug!</span>(<span class="string">"Sending heartbeat"</span>);
                     <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
                     <span class="kw">let </span>guard_send_response = <span class="kw">match </span>message.clone() {
                         <span class="prelude-val">Some</span>(msg) =&gt; guard.send(Message::Text(msg)).<span class="kw">await</span>,
                         <span class="prelude-val">None </span>=&gt; guard.send(Message::Ping(<span class="macro">vec!</span>[])).<span class="kw">await</span>,
                     };
                     <span class="kw">match </span>guard_send_response {
-                        <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Sent heartbeat&quot;</span>),
-                        <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Failed to send heartbeat: {e}&quot;</span>),
+                        <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">debug!</span>(<span class="string">"Sent heartbeat"</span>),
+                        <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">"Failed to send heartbeat: {e}"</span>),
                     }
                 }
             })
@@ -956,39 +957,39 @@
     </span><span class="kw">pub fn </span>spawn_read_task(<span class="kw-2">mut </span>reader: MessageReader, handler: PyObject) -&gt; task::JoinHandle&lt;()&gt; {
         task::spawn(<span class="kw">async move </span>{
             <span class="kw">loop </span>{
-                <span class="macro">debug!</span>(<span class="string">&quot;Receiving message&quot;</span>);
+                <span class="macro">debug!</span>(<span class="string">"Receiving message"</span>);
                 <span class="kw">match </span>reader.next().<span class="kw">await </span>{
                     <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(Message::Binary(data))) =&gt; {
-                        <span class="macro">debug!</span>(<span class="string">&quot;Received binary message&quot;</span>);
+                        <span class="macro">debug!</span>(<span class="string">"Received binary message"</span>);
                         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) =
                             Python::with_gil(|py| handler.call1(py, (PyBytes::new(py, <span class="kw-2">&amp;</span>data),)))
                         {
-                            <span class="macro">error!</span>(<span class="string">&quot;Call to handler failed: {e}&quot;</span>);
+                            <span class="macro">error!</span>(<span class="string">"Call to handler failed: {e}"</span>);
                             <span class="kw">break</span>;
                         }
                     }
                     <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(Message::Text(data))) =&gt; {
-                        <span class="macro">debug!</span>(<span class="string">&quot;Received text message&quot;</span>);
+                        <span class="macro">debug!</span>(<span class="string">"Received text message"</span>);
                         <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = Python::with_gil(|py| {
                             handler.call1(py, (PyBytes::new(py, data.as_bytes()),))
                         }) {
-                            <span class="macro">error!</span>(<span class="string">&quot;Call to handler failed: {e}&quot;</span>);
+                            <span class="macro">error!</span>(<span class="string">"Call to handler failed: {e}"</span>);
                             <span class="kw">break</span>;
                         }
                     }
                     <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(Message::Close(<span class="kw">_</span>))) =&gt; {
-                        <span class="macro">error!</span>(<span class="string">&quot;Received close message. Terminating.&quot;</span>);
+                        <span class="macro">error!</span>(<span class="string">"Received close message. Terminating."</span>);
                         <span class="kw">break</span>;
                     }
                     <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="kw">_</span>)) =&gt; (),
                     <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)) =&gt; {
-                        <span class="macro">error!</span>(<span class="string">&quot;Received error message. Terminating. {e}&quot;</span>);
+                        <span class="macro">error!</span>(<span class="string">"Received error message. Terminating. {e}"</span>);
                         <span class="kw">break</span>;
                     }
                     <span class="comment">// Internally tungstenite considers the connection closed when polling
                     // for the next message in the stream returns None.
                     </span><span class="prelude-val">None </span>=&gt; {
-                        <span class="macro">error!</span>(<span class="string">&quot;No next message received. Terminating&quot;</span>);
+                        <span class="macro">error!</span>(<span class="string">"No next message received. Terminating"</span>);
                         <span class="kw">break</span>;
                     }
                 }
@@ -1003,25 +1004,25 @@
     /// Closing the connection is an async call which cannot be done by the
     /// drop method so it must be done explicitly.
     </span><span class="kw">pub async fn </span>shutdown(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="macro">debug!</span>(<span class="string">&quot;Closing connection&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"Closing connection"</span>);
 
         <span class="kw">if </span>!<span class="self">self</span>.read_task.is_finished() {
             <span class="self">self</span>.read_task.abort();
-            <span class="macro">debug!</span>(<span class="string">&quot;Aborted message read task&quot;</span>);
+            <span class="macro">debug!</span>(<span class="string">"Aborted message read task"</span>);
         }
 
         <span class="comment">// Cancel heart beat task
         </span><span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>handle) = <span class="self">self</span>.heartbeat_task.take() {
             <span class="kw">if </span>!handle.is_finished() {
-                <span class="macro">debug!</span>(<span class="string">&quot;Aborting heart beat task&quot;</span>);
+                <span class="macro">debug!</span>(<span class="string">"Aborting heart beat task"</span>);
                 handle.abort();
             }
         }
 
-        <span class="macro">debug!</span>(<span class="string">&quot;Closing writer&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"Closing writer"</span>);
         <span class="kw">let </span><span class="kw-2">mut </span>write_half = <span class="self">self</span>.writer.lock().<span class="kw">await</span>;
         write_half.close().<span class="kw">await</span>.unwrap();
-        <span class="macro">debug!</span>(<span class="string">&quot;Closed connection&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"Closed connection"</span>);
     }
 
     <span class="doccomment">/// Reconnect with server
@@ -1073,8 +1074,8 @@
 }
 
 <span class="attr">#[cfg_attr(
-    feature = <span class="string">&quot;python&quot;</span>,
-    pyclass(module = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.network&quot;</span>)
+    feature = <span class="string">"python"</span>,
+    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.network"</span>)
 )]
 </span><span class="kw">pub struct </span>WebSocketClient {
     writer: SharedMessageWriter,
@@ -1105,8 +1106,8 @@
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(handler) = post_connection {
             Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
-                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_connection handler&quot;</span>),
-                <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Error calling post_connection handler: {e}&quot;</span>),
+                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">"Called post_connection handler"</span>),
+                <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">"Error calling post_connection handler: {e}"</span>),
             });
         };
 
@@ -1138,8 +1139,8 @@
     <span class="kw">pub async fn </span>send_close_message(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">let </span><span class="kw-2">mut </span>guard = <span class="self">self</span>.writer.lock().<span class="kw">await</span>;
         <span class="kw">match </span>guard.send(Message::Close(<span class="prelude-val">None</span>)).<span class="kw">await </span>{
-            <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Sent close message&quot;</span>),
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">&quot;Failed to send message: {e}&quot;</span>),
+            <span class="prelude-val">Ok</span>(()) =&gt; <span class="macro">debug!</span>(<span class="string">"Sent close message"</span>),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">error!</span>(<span class="string">"Failed to send message: {e}"</span>),
         }
     }
 
@@ -1162,29 +1163,29 @@
                 <span class="kw">match </span>(disconnect_flag, inner.is_alive()) {
                     (<span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="kw">match </span>inner.reconnect().<span class="kw">await </span>{
                         <span class="prelude-val">Ok</span>(()) =&gt; {
-                            <span class="macro">debug!</span>(<span class="string">&quot;Reconnected successfully&quot;</span>);
+                            <span class="macro">debug!</span>(<span class="string">"Reconnected successfully"</span>);
                             <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>handler) = post_reconnection {
                                 Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
-                                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_reconnection handler&quot;</span>),
+                                    <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">"Called post_reconnection handler"</span>),
                                     <span class="prelude-val">Err</span>(e) =&gt; {
-                                        <span class="macro">error!</span>(<span class="string">&quot;Error calling post_reconnection handler: {e}&quot;</span>);
+                                        <span class="macro">error!</span>(<span class="string">"Error calling post_reconnection handler: {e}"</span>);
                                     }
                                 });
                             }
                         }
                         <span class="prelude-val">Err</span>(e) =&gt; {
-                            <span class="macro">error!</span>(<span class="string">&quot;Reconnect failed {e}&quot;</span>);
+                            <span class="macro">error!</span>(<span class="string">"Reconnect failed {e}"</span>);
                             <span class="kw">break</span>;
                         }
                     },
                     (<span class="bool-val">true</span>, <span class="bool-val">true</span>) =&gt; {
-                        <span class="macro">debug!</span>(<span class="string">&quot;Shutting down inner client&quot;</span>);
+                        <span class="macro">debug!</span>(<span class="string">"Shutting down inner client"</span>);
                         inner.shutdown().<span class="kw">await</span>;
                         <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref </span>handler) = post_disconnection {
                             Python::with_gil(|py| <span class="kw">match </span>handler.call0(py) {
-                                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">&quot;Called post_reconnection handler&quot;</span>),
+                                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">debug!</span>(<span class="string">"Called post_reconnection handler"</span>),
                                 <span class="prelude-val">Err</span>(e) =&gt; {
-                                    <span class="macro">error!</span>(<span class="string">&quot;Error calling post_reconnection handler: {e}&quot;</span>);
+                                    <span class="macro">error!</span>(<span class="string">"Error calling post_reconnection handler: {e}"</span>);
                                 }
                             });
                         }
@@ -1211,7 +1212,7 @@
     /// and reconnecting. In such cases the send can be retried after some
     /// delay.
     </span><span class="attr">#[getter]
-    </span><span class="kw">fn </span>is_alive(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; bool {
+    </span><span class="kw">fn </span>is_alive(slf: PyRef&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt;) -&gt; bool {
         !slf.controller_task.is_finished()
     }
 
@@ -1221,13 +1222,13 @@
     ///
     /// - Throws an Exception if it is unable to make websocket connection
     </span><span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;connect&quot;</span>)]
+    #[pyo3(name = <span class="string">"connect"</span>)]
     </span><span class="kw">fn </span>py_connect(
         config: WebSocketConfig,
         post_connection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_reconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
         post_disconnection: <span class="prelude-ty">Option</span>&lt;PyObject&gt;,
-        py: Python&lt;<span class="lifetime">&#39;_</span>&gt;,
+        py: Python&lt;<span class="lifetime">'_</span>&gt;,
     ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span>PyAny&gt; {
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
             <span class="self">Self</span>::connect(
@@ -1239,7 +1240,7 @@
             .<span class="kw">await
             </span>.map_err(|e| {
                 PyException::new_err(<span class="macro">format!</span>(
-                    <span class="string">&quot;Unable to make websocket connection because of error: {e}&quot;</span>,
+                    <span class="string">"Unable to make websocket connection because of error: {e}"</span>,
                 ))
             })
         })
@@ -1254,10 +1255,10 @@
     ///
     /// - The client should not be used after closing it
     /// - Any auto-reconnect job should be aborted before closing the client
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;disconnect&quot;</span>)]
-    </span><span class="kw">fn </span>py_disconnect&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+    </span><span class="attr">#[pyo3(name = <span class="string">"disconnect"</span>)]
+    </span><span class="kw">fn </span>py_disconnect&lt;<span class="lifetime">'py</span>&gt;(slf: PyRef&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt;, py: Python&lt;<span class="lifetime">'py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
         <span class="kw">let </span>disconnect_mode = slf.disconnect_mode.clone();
-        <span class="macro">debug!</span>(<span class="string">&quot;Setting disconnect mode to true&quot;</span>);
+        <span class="macro">debug!</span>(<span class="string">"Setting disconnect mode to true"</span>);
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
             <span class="kw-2">*</span>disconnect_mode.lock().<span class="kw">await </span>= <span class="bool-val">true</span>;
             <span class="prelude-val">Ok</span>(())
@@ -1269,12 +1270,12 @@
     /// # Safety
     ///
     /// - Raises PyRuntimeError if not able to send data.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;send_text&quot;</span>)]
-    </span><span class="kw">fn </span>py_send_text&lt;<span class="lifetime">&#39;py</span>&gt;(
-        slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;,
+    </span><span class="attr">#[pyo3(name = <span class="string">"send_text"</span>)]
+    </span><span class="kw">fn </span>py_send_text&lt;<span class="lifetime">'py</span>&gt;(
+        slf: PyRef&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt;,
         data: String,
-        py: Python&lt;<span class="lifetime">&#39;py</span>&gt;,
-    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+        py: Python&lt;<span class="lifetime">'py</span>&gt;,
+    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
         <span class="kw">let </span>writer = slf.writer.clone();
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
@@ -1290,8 +1291,8 @@
     /// # Safety
     ///
     /// - Raises PyRuntimeError if not able to send data.
-    </span><span class="attr">#[pyo3(name = <span class="string">&quot;send&quot;</span>)]
-    </span><span class="kw">fn </span>py_send&lt;<span class="lifetime">&#39;py</span>&gt;(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;, data: Vec&lt;u8&gt;, py: Python&lt;<span class="lifetime">&#39;py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;py </span>PyAny&gt; {
+    </span><span class="attr">#[pyo3(name = <span class="string">"send"</span>)]
+    </span><span class="kw">fn </span>py_send&lt;<span class="lifetime">'py</span>&gt;(slf: PyRef&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt;, data: Vec&lt;u8&gt;, py: Python&lt;<span class="lifetime">'py</span>&gt;) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
         <span class="kw">let </span>writer = slf.writer.clone();
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>guard = writer.lock().<span class="kw">await</span>;
@@ -1355,7 +1356,7 @@
 
     <span class="kw">impl </span>TestServer {
         <span class="kw">async fn </span>setup(key: String, value: String) -&gt; <span class="self">Self </span>{
-            <span class="kw">let </span>server = TcpListener::bind(<span class="string">&quot;127.0.0.1:0&quot;</span>).<span class="kw">await</span>.unwrap();
+            <span class="kw">let </span>server = TcpListener::bind(<span class="string">"127.0.0.1:0"</span>).<span class="kw">await</span>.unwrap();
             <span class="kw">let </span>port = TcpListener::local_addr(<span class="kw-2">&amp;</span>server).unwrap().port();
 
             <span class="kw">let </span>test_call_back = TestCallback {
@@ -1380,7 +1381,7 @@
                                 websocket.send(msg).<span class="kw">await</span>.unwrap();
                             } <span class="kw">else if </span>msg.is_close() {
                                 <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = websocket.close(<span class="prelude-val">None</span>).<span class="kw">await </span>{
-                                    <span class="macro">debug!</span>(<span class="string">&quot;Connection already closed {e}&quot;</span>);
+                                    <span class="macro">debug!</span>(<span class="string">"Connection already closed {e}"</span>);
                                 };
                                 <span class="kw">break</span>;
                             }
@@ -1406,8 +1407,8 @@
 
         <span class="kw">const </span>N: usize = <span class="number">10</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>success_count = <span class="number">0</span>;
-        <span class="kw">let </span>header_key = <span class="string">&quot;hello-custom-key&quot;</span>.to_string();
-        <span class="kw">let </span>header_value = <span class="string">&quot;hello-custom-value&quot;</span>.to_string();
+        <span class="kw">let </span>header_key = <span class="string">"hello-custom-key"</span>.to_string();
+        <span class="kw">let </span>header_value = <span class="string">"hello-custom-value"</span>.to_string();
 
         <span class="comment">// Initialize test server
         </span><span class="kw">let </span>server = TestServer::setup(header_key.clone(), header_value.clone()).<span class="kw">await</span>;
@@ -1416,32 +1417,32 @@
         </span><span class="kw">let </span>(counter, handler) = Python::with_gil(|py| {
             <span class="kw">let </span>pymod = PyModule::from_code(
                 py,
-                <span class="string">r&quot;
+                <span class="string">r"
 class Counter:
     def __init__(self):
         self.count = 0
 
     def handler(self, bytes):
-        if bytes.decode() == &#39;ping&#39;:
+        if bytes.decode() == 'ping':
             self.count = self.count + 1
 
     def get_count(self):
         return self.count
 
-counter = Counter()&quot;</span>,
-                <span class="string">&quot;&quot;</span>,
-                <span class="string">&quot;&quot;</span>,
+counter = Counter()"</span>,
+                <span class="string">""</span>,
+                <span class="string">""</span>,
             )
             .unwrap();
 
-            <span class="kw">let </span>counter = pymod.getattr(<span class="string">&quot;counter&quot;</span>).unwrap().into_py(py);
-            <span class="kw">let </span>handler = counter.getattr(py, <span class="string">&quot;handler&quot;</span>).unwrap().into_py(py);
+            <span class="kw">let </span>counter = pymod.getattr(<span class="string">"counter"</span>).unwrap().into_py(py);
+            <span class="kw">let </span>handler = counter.getattr(py, <span class="string">"handler"</span>).unwrap().into_py(py);
 
             (counter, handler)
         });
 
         <span class="kw">let </span>config = WebSocketConfig::py_new(
-            <span class="macro">format!</span>(<span class="string">&quot;ws://127.0.0.1:{}&quot;</span>, server.port),
+            <span class="macro">format!</span>(<span class="string">"ws://127.0.0.1:{}"</span>, server.port),
             handler.clone(),
             <span class="macro">vec!</span>[(header_key, header_value)],
             <span class="prelude-val">None</span>,
@@ -1453,7 +1454,7 @@ counter = Counter()&quot;</span>,
 
         <span class="comment">// Send messages that increment the count
         </span><span class="kw">for _ in </span><span class="number">0</span>..N {
-            <span class="kw">if </span>client.send_bytes(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
+            <span class="kw">if </span>client.send_bytes(<span class="string">b"ping"</span>.to_vec()).<span class="kw">await</span>.is_ok() {
                 success_count += <span class="number">1</span>;
             };
         }
@@ -1462,7 +1463,7 @@ counter = Counter()&quot;</span>,
         </span>sleep(Duration::from_secs(<span class="number">1</span>)).<span class="kw">await</span>;
         <span class="kw">let </span>count_value: usize = Python::with_gil(|py| {
             counter
-                .getattr(py, <span class="string">&quot;get_count&quot;</span>)
+                .getattr(py, <span class="string">"get_count"</span>)
                 .unwrap()
                 .call0(py)
                 .unwrap()
@@ -1482,7 +1483,7 @@ counter = Counter()&quot;</span>,
         <span class="comment">// Send messages that increment the count
         </span>sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
         <span class="kw">for _ in </span><span class="number">0</span>..N {
-            <span class="kw">if </span>client.send_bytes(<span class="string">b&quot;ping&quot;</span>.to_vec()).<span class="kw">await</span>.is_ok() {
+            <span class="kw">if </span>client.send_bytes(<span class="string">b"ping"</span>.to_vec()).<span class="kw">await</span>.is_ok() {
                 success_count += <span class="number">1</span>;
             };
         }
@@ -1491,7 +1492,7 @@ counter = Counter()&quot;</span>,
         </span>sleep(Duration::from_secs(<span class="number">1</span>)).<span class="kw">await</span>;
         <span class="kw">let </span>count_value: usize = Python::with_gil(|py| {
             counter
-                .getattr(py, <span class="string">&quot;get_count&quot;</span>)
+                .getattr(py, <span class="string">"get_count"</span>)
                 .unwrap()
                 .call0(py)
                 .unwrap()
@@ -1512,32 +1513,32 @@ counter = Counter()&quot;</span>,
     </span><span class="kw">async fn </span>message_ping_test() {
         prepare_freethreaded_python();
 
-        <span class="kw">let </span>header_key = <span class="string">&quot;hello-custom-key&quot;</span>.to_string();
-        <span class="kw">let </span>header_value = <span class="string">&quot;hello-custom-value&quot;</span>.to_string();
+        <span class="kw">let </span>header_key = <span class="string">"hello-custom-key"</span>.to_string();
+        <span class="kw">let </span>header_value = <span class="string">"hello-custom-value"</span>.to_string();
 
         <span class="kw">let </span>(checker, handler) = Python::with_gil(|py| {
             <span class="kw">let </span>pymod = PyModule::from_code(
                 py,
-                <span class="string">r&quot;
+                <span class="string">r"
 class Checker:
     def __init__(self):
         self.check = False
 
     def handler(self, bytes):
-        if bytes.decode() == &#39;heartbeat message&#39;:
+        if bytes.decode() == 'heartbeat message':
             self.check = True
 
     def get_check(self):
         return self.check
 
-checker = Checker()&quot;</span>,
-                <span class="string">&quot;&quot;</span>,
-                <span class="string">&quot;&quot;</span>,
+checker = Checker()"</span>,
+                <span class="string">""</span>,
+                <span class="string">""</span>,
             )
             .unwrap();
 
-            <span class="kw">let </span>checker = pymod.getattr(<span class="string">&quot;checker&quot;</span>).unwrap().into_py(py);
-            <span class="kw">let </span>handler = checker.getattr(py, <span class="string">&quot;handler&quot;</span>).unwrap().into_py(py);
+            <span class="kw">let </span>checker = pymod.getattr(<span class="string">"checker"</span>).unwrap().into_py(py);
+            <span class="kw">let </span>handler = checker.getattr(py, <span class="string">"handler"</span>).unwrap().into_py(py);
 
             (checker, handler)
         });
@@ -1545,11 +1546,11 @@ checker = Checker()&quot;</span>,
         <span class="comment">// Initialize test server and config
         </span><span class="kw">let </span>server = TestServer::setup(header_key.clone(), header_value.clone()).<span class="kw">await</span>;
         <span class="kw">let </span>config = WebSocketConfig::py_new(
-            <span class="macro">format!</span>(<span class="string">&quot;ws://127.0.0.1:{}&quot;</span>, server.port),
+            <span class="macro">format!</span>(<span class="string">"ws://127.0.0.1:{}"</span>, server.port),
             handler.clone(),
             <span class="macro">vec!</span>[(header_key, header_value)],
             <span class="prelude-val">Some</span>(<span class="number">1</span>),
-            <span class="prelude-val">Some</span>(<span class="string">&quot;heartbeat message&quot;</span>.to_string()),
+            <span class="prelude-val">Some</span>(<span class="string">"heartbeat message"</span>.to_string()),
         );
         <span class="kw">let </span>client = WebSocketClient::connect(config, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>)
             .<span class="kw">await
@@ -1559,7 +1560,7 @@ checker = Checker()&quot;</span>,
         </span>sleep(Duration::from_secs(<span class="number">2</span>)).<span class="kw">await</span>;
         <span class="kw">let </span>check_value: bool = Python::with_gil(|py| {
             checker
-                .getattr(py, <span class="string">&quot;get_check&quot;</span>)
+                .getattr(py, <span class="string">"get_check"</span>)
                 .unwrap()
                 .call0(py)
                 .unwrap()

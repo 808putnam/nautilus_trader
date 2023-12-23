@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/events/order/filled.rs`."><title>filled.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (8c2b57721 2023-12-01)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/events/order/filled.rs`."><title>filled.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -234,12 +235,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -316,14 +317,14 @@
     <span class="kw">fn </span>__repr__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="kw">let </span>position_id_str = <span class="kw">match </span><span class="self">self</span>.position_id {
             <span class="prelude-val">Some</span>(position_id) =&gt; position_id.to_string(),
-            <span class="prelude-val">None </span>=&gt; <span class="string">&quot;None&quot;</span>.to_string(),
+            <span class="prelude-val">None </span>=&gt; <span class="string">"None"</span>.to_string(),
         };
         <span class="kw">let </span>commission_str = <span class="kw">match </span><span class="self">self</span>.commission {
             <span class="prelude-val">Some</span>(commission) =&gt; commission.to_string(),
-            <span class="prelude-val">None </span>=&gt; <span class="string">&quot;None&quot;</span>.to_string(),
+            <span class="prelude-val">None </span>=&gt; <span class="string">"None"</span>.to_string(),
         };
         <span class="macro">format!</span>(
-            <span class="string">&quot;{}(\
+            <span class="string">"{}(\
             trader_id={}, \
             strategy_id={}, \
             instrument_id={}, \
@@ -340,7 +341,7 @@
             liquidity_side={}, \
             event_id={}, \
             ts_event={}, \
-            ts_init={})&quot;</span>,
+            ts_init={})"</span>,
             <span class="macro">stringify!</span>(OrderFilled),
             <span class="self">self</span>.trader_id,
             <span class="self">self</span>.strategy_id,
@@ -366,14 +367,14 @@
     <span class="kw">fn </span>__str__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="kw">let </span>position_id_str = <span class="kw">match </span><span class="self">self</span>.position_id {
             <span class="prelude-val">Some</span>(position_id) =&gt; position_id.to_string(),
-            <span class="prelude-val">None </span>=&gt; <span class="string">&quot;None&quot;</span>.to_string(),
+            <span class="prelude-val">None </span>=&gt; <span class="string">"None"</span>.to_string(),
         };
         <span class="kw">let </span>commission_str = <span class="kw">match </span><span class="self">self</span>.commission {
             <span class="prelude-val">Some</span>(commission) =&gt; commission.to_string(),
-            <span class="prelude-val">None </span>=&gt; <span class="string">&quot;None&quot;</span>.to_string(),
+            <span class="prelude-val">None </span>=&gt; <span class="string">"None"</span>.to_string(),
         };
         <span class="macro">format!</span>(
-            <span class="string">&quot;{}(\
+            <span class="string">"{}(\
             instrument_id={}, \
             client_order_id={}, \
             venue_order_id={}, \
@@ -386,7 +387,7 @@
             last_px={} {}, \
             commission={}, \
             liquidity_side={}, \
-            ts_event={})&quot;</span>,
+            ts_event={})"</span>,
             <span class="macro">stringify!</span>(OrderFilled),
             <span class="self">self</span>.instrument_id,
             <span class="self">self</span>.client_order_id,
@@ -406,18 +407,18 @@
     }
 
     <span class="attr">#[getter]
-    #[pyo3(name = <span class="string">&quot;is_buy&quot;</span>)]
+    #[pyo3(name = <span class="string">"is_buy"</span>)]
     </span><span class="kw">fn </span>py_is_buy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.is_buy()
     }
 
     <span class="attr">#[getter]
-    #[pyo3(name = <span class="string">&quot;is_sell&quot;</span>)]
+    #[pyo3(name = <span class="string">"is_sell"</span>)]
     </span><span class="kw">fn </span>py_is_sell(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.is_sell()
     }
 
-    <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
+    <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
         <span class="kw">match </span>op {
             CompareOp::Eq =&gt; <span class="self">self</span>.eq(other).into_py(py),
             CompareOp::Ne =&gt; <span class="self">self</span>.ne(other).into_py(py),
@@ -426,38 +427,38 @@
     }
 
     <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;from_dict&quot;</span>)]
-    </span><span class="kw">fn </span>py_from_dict(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, values: Py&lt;PyDict&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+    #[pyo3(name = <span class="string">"from_dict"</span>)]
+    </span><span class="kw">fn </span>py_from_dict(py: Python&lt;<span class="lifetime">'_</span>&gt;, values: Py&lt;PyDict&gt;) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
         from_dict_pyo3(py, values)
     }
 
-    <span class="attr">#[pyo3(name = <span class="string">&quot;to_dict&quot;</span>)]
-    </span><span class="kw">fn </span>py_to_dict(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; PyResult&lt;PyObject&gt; {
+    <span class="attr">#[pyo3(name = <span class="string">"to_dict"</span>)]
+    </span><span class="kw">fn </span>py_to_dict(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; PyResult&lt;PyObject&gt; {
         <span class="kw">let </span>dict = PyDict::new(py);
-        dict.set_item(<span class="string">&quot;trader_id&quot;</span>, <span class="self">self</span>.trader_id.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;strategy_id&quot;</span>, <span class="self">self</span>.strategy_id.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;instrument_id&quot;</span>, <span class="self">self</span>.instrument_id.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;client_order_id&quot;</span>, <span class="self">self</span>.client_order_id.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;venue_order_id&quot;</span>, <span class="self">self</span>.venue_order_id.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;account_id&quot;</span>, <span class="self">self</span>.account_id.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;trade_id&quot;</span>, <span class="self">self</span>.trade_id.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;order_side&quot;</span>, <span class="self">self</span>.order_side.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;order_type&quot;</span>, <span class="self">self</span>.order_type.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;last_qty&quot;</span>, <span class="self">self</span>.last_qty.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;last_px&quot;</span>, <span class="self">self</span>.last_px.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;currency&quot;</span>, <span class="self">self</span>.currency.code.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;liquidity_side&quot;</span>, <span class="self">self</span>.liquidity_side.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;event_id&quot;</span>, <span class="self">self</span>.event_id.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;ts_event&quot;</span>, <span class="self">self</span>.ts_event.to_u64())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;ts_init&quot;</span>, <span class="self">self</span>.ts_init.to_u64())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">&quot;reconciliation&quot;</span>, <span class="self">self</span>.reconciliation)<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"trader_id"</span>, <span class="self">self</span>.trader_id.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"strategy_id"</span>, <span class="self">self</span>.strategy_id.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"instrument_id"</span>, <span class="self">self</span>.instrument_id.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"client_order_id"</span>, <span class="self">self</span>.client_order_id.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"venue_order_id"</span>, <span class="self">self</span>.venue_order_id.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"account_id"</span>, <span class="self">self</span>.account_id.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"trade_id"</span>, <span class="self">self</span>.trade_id.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"order_side"</span>, <span class="self">self</span>.order_side.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"order_type"</span>, <span class="self">self</span>.order_type.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"last_qty"</span>, <span class="self">self</span>.last_qty.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"last_px"</span>, <span class="self">self</span>.last_px.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"currency"</span>, <span class="self">self</span>.currency.code.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"liquidity_side"</span>, <span class="self">self</span>.liquidity_side.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"event_id"</span>, <span class="self">self</span>.event_id.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"ts_event"</span>, <span class="self">self</span>.ts_event.to_u64())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"ts_init"</span>, <span class="self">self</span>.ts_init.to_u64())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"reconciliation"</span>, <span class="self">self</span>.reconciliation)<span class="question-mark">?</span>;
         <span class="kw">match </span><span class="self">self</span>.position_id {
-            <span class="prelude-val">Some</span>(position_id) =&gt; dict.set_item(<span class="string">&quot;position_id&quot;</span>, position_id.to_string())<span class="question-mark">?</span>,
-            <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">&quot;position_id&quot;</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
+            <span class="prelude-val">Some</span>(position_id) =&gt; dict.set_item(<span class="string">"position_id"</span>, position_id.to_string())<span class="question-mark">?</span>,
+            <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"position_id"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
         }
         <span class="kw">match </span><span class="self">self</span>.commission {
-            <span class="prelude-val">Some</span>(commission) =&gt; dict.set_item(<span class="string">&quot;commission&quot;</span>, commission.to_string())<span class="question-mark">?</span>,
-            <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">&quot;commission&quot;</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
+            <span class="prelude-val">Some</span>(commission) =&gt; dict.set_item(<span class="string">"commission"</span>, commission.to_string())<span class="question-mark">?</span>,
+            <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"commission"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
         }
         <span class="prelude-val">Ok</span>(dict.into())
     }

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (8c2b57721 2023-12-01)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -301,16 +302,26 @@
 <a href="#301" id="301">301</a>
 <a href="#302" id="302">302</a>
 <a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -335,28 +346,28 @@
 <span class="kw">pub mod </span>orders;
 <span class="kw">pub mod </span>types;
 
-<span class="kw">pub const </span>PY_MODULE_MODEL: <span class="kw-2">&amp;</span>str = <span class="string">&quot;nautilus_trader.core.nautilus_pyo3.model&quot;</span>;
+<span class="kw">pub const </span>PY_MODULE_MODEL: <span class="kw-2">&amp;</span>str = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>;
 
 <span class="doccomment">/// Python iterator over the variants of an enum.
 </span><span class="attr">#[pyclass]
 </span><span class="kw">pub struct </span>EnumIterator {
-    <span class="comment">// Type erasure for code reuse. Generic types can&#39;t be exposed to Python.
+    <span class="comment">// Type erasure for code reuse. Generic types can't be exposed to Python.
     </span>iter: Box&lt;<span class="kw">dyn </span>Iterator&lt;Item = PyObject&gt; + Send&gt;,
 }
 
 <span class="attr">#[pymethods]
 </span><span class="kw">impl </span>EnumIterator {
-    <span class="kw">fn </span>__iter__(slf: PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; PyRef&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt; {
+    <span class="kw">fn </span>__iter__(slf: PyRef&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt;) -&gt; PyRef&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt; {
         slf
     }
 
-    <span class="kw">fn </span>__next__(<span class="kw-2">mut </span>slf: PyRefMut&lt;<span class="lifetime">&#39;_</span>, <span class="self">Self</span>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;PyObject&gt; {
+    <span class="kw">fn </span>__next__(<span class="kw-2">mut </span>slf: PyRefMut&lt;<span class="lifetime">'_</span>, <span class="self">Self</span>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;PyObject&gt; {
         slf.iter.next()
     }
 }
 
 <span class="kw">impl </span>EnumIterator {
-    <span class="kw">pub fn </span>new&lt;E&gt;(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; <span class="self">Self
+    <span class="kw">pub fn </span>new&lt;E&gt;(py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>E: strum::IntoEnumIterator + IntoPy&lt;Py&lt;PyAny&gt;&gt;,
         &lt;E <span class="kw">as </span>IntoEnumIterator&gt;::Iterator: Send,
@@ -365,7 +376,7 @@
             iter: Box::new(
                 E::iter()
                     .map(|var| var.into_py(py))
-                    <span class="comment">// Force eager evaluation because `py` isn&#39;t `Send`
+                    <span class="comment">// Force eager evaluation because `py` isn't `Send`
                     </span>.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
                     .into_iter(),
             ),
@@ -373,7 +384,7 @@
     }
 }
 
-<span class="kw">pub fn </span>value_to_pydict(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, val: <span class="kw-2">&amp;</span>Value) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {
+<span class="kw">pub fn </span>value_to_pydict(py: Python&lt;<span class="lifetime">'_</span>&gt;, val: <span class="kw-2">&amp;</span>Value) -&gt; PyResult&lt;Py&lt;PyDict&gt;&gt; {
     <span class="kw">let </span>dict = PyDict::new(py);
 
     <span class="kw">match </span>val {
@@ -383,14 +394,14 @@
                 dict.set_item(key, py_value)<span class="question-mark">?</span>;
             }
         }
-        <span class="comment">// This shouldn&#39;t be reached in this function, but we include it for completeness
-        </span><span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(PyValueError::new_err(<span class="string">&quot;Expected JSON object&quot;</span>)),
+        <span class="comment">// This shouldn't be reached in this function, but we include it for completeness
+        </span><span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(PyValueError::new_err(<span class="string">"Expected JSON object"</span>)),
     }
 
     <span class="prelude-val">Ok</span>(dict.into_py(py))
 }
 
-<span class="kw">pub fn </span>value_to_pyobject(py: Python&lt;<span class="lifetime">&#39;_</span>&gt;, val: <span class="kw-2">&amp;</span>Value) -&gt; PyResult&lt;PyObject&gt; {
+<span class="kw">pub fn </span>value_to_pyobject(py: Python&lt;<span class="lifetime">'_</span>&gt;, val: <span class="kw-2">&amp;</span>Value) -&gt; PyResult&lt;PyObject&gt; {
     <span class="kw">match </span>val {
         Value::Null =&gt; <span class="prelude-val">Ok</span>(py.<span class="prelude-val">None</span>()),
         Value::Bool(b) =&gt; <span class="prelude-val">Ok</span>(b.into_py(py)),
@@ -401,7 +412,7 @@
             } <span class="kw">else if </span>n.is_f64() {
                 <span class="prelude-val">Ok</span>(n.as_f64().unwrap().into_py(py))
             } <span class="kw">else </span>{
-                <span class="prelude-val">Err</span>(PyValueError::new_err(<span class="string">&quot;Unsupported JSON number type&quot;</span>))
+                <span class="prelude-val">Err</span>(PyValueError::new_err(<span class="string">"Unsupported JSON number type"</span>))
             }
         }
         Value::Array(arr) =&gt; {
@@ -433,13 +444,13 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_value_to_pydict() {
         Python::with_gil(|py| {
-            <span class="kw">let </span>json_str = <span class="string">r#&quot;
+            <span class="kw">let </span>json_str = <span class="string">r#"
         {
-            &quot;type&quot;: &quot;OrderAccepted&quot;,
-            &quot;ts_event&quot;: 42,
-            &quot;is_reconciliation&quot;: false
+            "type": "OrderAccepted",
+            "ts_event": 42,
+            "is_reconciliation": false
         }
-        &quot;#</span>;
+        "#</span>;
 
             <span class="kw">let </span>val: Value = serde_json::from_str(json_str).unwrap();
             <span class="kw">let </span>py_dict_ref = value_to_pydict(py, <span class="kw-2">&amp;</span>val).unwrap();
@@ -447,18 +458,18 @@
 
             <span class="macro">assert_eq!</span>(
                 py_dict
-                    .get_item(<span class="string">&quot;type&quot;</span>)
+                    .get_item(<span class="string">"type"</span>)
                     .unwrap()
                     .unwrap()
                     .downcast::&lt;PyString&gt;()
                     .unwrap()
                     .to_str()
                     .unwrap(),
-                <span class="string">&quot;OrderAccepted&quot;
+                <span class="string">"OrderAccepted"
             </span>);
             <span class="macro">assert_eq!</span>(
                 py_dict
-                    .get_item(<span class="string">&quot;ts_event&quot;</span>)
+                    .get_item(<span class="string">"ts_event"</span>)
                     .unwrap()
                     .unwrap()
                     .downcast::&lt;PyInt&gt;()
@@ -469,7 +480,7 @@
             </span>);
             <span class="macro">assert_eq!</span>(
                 py_dict
-                    .get_item(<span class="string">&quot;is_reconciliation&quot;</span>)
+                    .get_item(<span class="string">"is_reconciliation"</span>)
                     .unwrap()
                     .unwrap()
                     .downcast::&lt;PyBool&gt;()
@@ -483,10 +494,10 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_value_to_pyobject_string() {
         Python::with_gil(|py| {
-            <span class="kw">let </span>val = Value::String(<span class="string">&quot;Hello, world!&quot;</span>.to_string());
+            <span class="kw">let </span>val = Value::String(<span class="string">"Hello, world!"</span>.to_string());
             <span class="kw">let </span>py_obj = value_to_pyobject(py, <span class="kw-2">&amp;</span>val).unwrap();
 
-            <span class="macro">assert_eq!</span>(py_obj.extract::&lt;<span class="kw-2">&amp;</span>str&gt;(py).unwrap(), <span class="string">&quot;Hello, world!&quot;</span>);
+            <span class="macro">assert_eq!</span>(py_obj.extract::&lt;<span class="kw-2">&amp;</span>str&gt;(py).unwrap(), <span class="string">"Hello, world!"</span>);
         });
     }
 
@@ -504,8 +515,8 @@
     </span><span class="kw">fn </span>test_value_to_pyobject_array() {
         Python::with_gil(|py| {
             <span class="kw">let </span>val = Value::Array(<span class="macro">vec!</span>[
-                Value::String(<span class="string">&quot;item1&quot;</span>.to_string()),
-                Value::String(<span class="string">&quot;item2&quot;</span>.to_string()),
+                Value::String(<span class="string">"item1"</span>.to_string()),
+                Value::String(<span class="string">"item2"</span>.to_string()),
             ]);
             <span class="kw">let </span>binding = value_to_pyobject(py, <span class="kw-2">&amp;</span>val).unwrap();
             <span class="kw">let </span>py_list = binding.downcast::&lt;PyList&gt;(py).unwrap();
@@ -513,11 +524,11 @@
             <span class="macro">assert_eq!</span>(py_list.len(), <span class="number">2</span>);
             <span class="macro">assert_eq!</span>(
                 py_list.get_item(<span class="number">0</span>).unwrap().extract::&lt;<span class="kw-2">&amp;</span>str&gt;().unwrap(),
-                <span class="string">&quot;item1&quot;
+                <span class="string">"item1"
             </span>);
             <span class="macro">assert_eq!</span>(
                 py_list.get_item(<span class="number">1</span>).unwrap().extract::&lt;<span class="kw-2">&amp;</span>str&gt;().unwrap(),
-                <span class="string">&quot;item2&quot;
+                <span class="string">"item2"
             </span>);
         });
     }
@@ -525,7 +536,7 @@
 
 <span class="doccomment">/// Loaded as nautilus_pyo3.model
 </span><span class="attr">#[pymodule]
-</span><span class="kw">pub fn </span>model(<span class="kw">_</span>: Python&lt;<span class="lifetime">&#39;_</span>&gt;, m: <span class="kw-2">&amp;</span>PyModule) -&gt; PyResult&lt;()&gt; {
+</span><span class="kw">pub fn </span>model(<span class="kw">_</span>: Python&lt;<span class="lifetime">'_</span>&gt;, m: <span class="kw-2">&amp;</span>PyModule) -&gt; PyResult&lt;()&gt; {
     <span class="comment">// data
     </span>m.add_class::&lt;<span class="kw">crate</span>::data::bar::BarSpecification&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::bar::BarType&gt;()<span class="question-mark">?</span>;
@@ -602,6 +613,16 @@
     m.add_class::&lt;<span class="kw">crate</span>::events::order::rejected::OrderRejected&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::events::order::triggered::OrderTriggered&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::events::order::submitted::OrderSubmitted&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::emulated::OrderEmulated&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::released::OrderReleased&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::updated::OrderUpdated&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::pending_update::OrderPendingUpdate&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::pending_cancel::OrderPendingCancel&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::modify_rejected::OrderModifyRejected&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::accepted::OrderAccepted&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::cancel_rejected::OrderCancelRejected&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::canceled::OrderCanceled&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::events::order::expired::OrderExpired&gt;()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>

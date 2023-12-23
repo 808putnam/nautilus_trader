@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"enum":["ClockMode"],"fn":["duration_since_unix_epoch"],"struct":["AtomicTime"],"type":["TimedeltaNanos","UnixNanos"]};

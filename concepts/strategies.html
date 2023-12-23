@@ -1024,6 +1024,33 @@ a constructor where you can handle initialization. Minimally the base/super clas
 </pre>
           </div>
          </div>
+         <div class="admonition warning">
+          <p class="admonition-title">
+           Warning
+          </p>
+          <p>
+           Do not call components such as
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             clock
+            </span>
+           </code>
+           and
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             logger
+            </span>
+           </code>
+           in the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             __init__
+            </span>
+           </code>
+           constructor (which is prior to registration).
+This is because the systems clock and MPSC channel thread for logging have not yet been setup on initialization.
+          </p>
+         </div>
          <p>
           From here, you can implement handlers as necessary to perform actions based on state transitions
 and events.

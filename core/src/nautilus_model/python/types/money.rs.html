@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/types/money.rs`."><title>money.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (8c2b57721 2023-12-01)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/types/money.rs`."><title>money.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -373,12 +374,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -422,7 +423,7 @@
     }
 
     <span class="kw">fn </span>__reduce__(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python) -&gt; PyResult&lt;PyObject&gt; {
-        <span class="kw">let </span>safe_constructor = py.get_type::&lt;<span class="self">Self</span>&gt;().getattr(<span class="string">&quot;_safe_constructor&quot;</span>)<span class="question-mark">?</span>;
+        <span class="kw">let </span>safe_constructor = py.get_type::&lt;<span class="self">Self</span>&gt;().getattr(<span class="string">"_safe_constructor"</span>)<span class="question-mark">?</span>;
         <span class="kw">let </span>state = <span class="self">self</span>.__getstate__(py)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>((safe_constructor, PyTuple::empty(py), state).to_object(py))
     }
@@ -443,7 +444,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __add__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __add__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -459,7 +460,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __radd__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __radd__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -475,7 +476,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __sub__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __sub__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -491,7 +492,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __rsub__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __rsub__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -507,7 +508,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __mul__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __mul__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -523,7 +524,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __rmul__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __rmul__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -539,7 +540,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __truediv__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __truediv__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -555,7 +556,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __rtruediv__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __rtruediv__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -573,7 +574,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __floordiv__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __floordiv__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -591,7 +592,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __rfloordiv__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __rfloordiv__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -607,7 +608,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __mod__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __mod__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -623,7 +624,7 @@
         } <span class="kw">else </span>{
             <span class="kw">let </span>pytype_name = get_pytype_name(<span class="kw-2">&amp;</span>other, py)<span class="question-mark">?</span>;
             <span class="prelude-val">Err</span>(to_pytype_err(<span class="macro">format!</span>(
-                <span class="string">&quot;Unsupported type for __rmod__, was `{pytype_name}`&quot;
+                <span class="string">"Unsupported type for __rmod__, was `{pytype_name}`"
             </span>)))
         }
     }
@@ -654,11 +655,11 @@
             .round_dp_with_strategy(ndigits.unwrap_or(<span class="number">0</span>), RoundingStrategy::MidpointNearestEven)
     }
 
-    <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: PyObject, op: CompareOp, py: Python&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; PyResult&lt;Py&lt;PyAny&gt;&gt; {
+    <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: PyObject, op: CompareOp, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; PyResult&lt;Py&lt;PyAny&gt;&gt; {
         <span class="kw">if let </span><span class="prelude-val">Ok</span>(other_money) = other.extract::&lt;Money&gt;(py) {
             <span class="kw">if </span><span class="self">self</span>.currency != other_money.currency {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(PyErr::new::&lt;PyValueError, <span class="kw">_</span>&gt;(
-                    <span class="string">&quot;Cannot compare `Money` with different currencies&quot;</span>,
+                    <span class="string">"Cannot compare `Money` with different currencies"</span>,
                 ));
             }
 
@@ -687,9 +688,9 @@
     }
 
     <span class="kw">fn </span>__repr__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="kw">let </span>amount_str = <span class="macro">format!</span>(<span class="string">&quot;{:.*}&quot;</span>, <span class="self">self</span>.currency.precision <span class="kw">as </span>usize, <span class="self">self</span>.as_f64());
+        <span class="kw">let </span>amount_str = <span class="macro">format!</span>(<span class="string">"{:.*}"</span>, <span class="self">self</span>.currency.precision <span class="kw">as </span>usize, <span class="self">self</span>.as_f64());
         <span class="kw">let </span>code = <span class="self">self</span>.currency.code.as_str();
-        <span class="macro">format!</span>(<span class="string">&quot;Money(&#39;{amount_str}&#39;, {code})&quot;</span>)
+        <span class="macro">format!</span>(<span class="string">"Money('{amount_str}', {code})"</span>)
     }
 
     <span class="attr">#[getter]
@@ -703,39 +704,39 @@
     }
 
     <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;zero&quot;</span>)]
+    #[pyo3(name = <span class="string">"zero"</span>)]
     </span><span class="kw">fn </span>py_zero(currency: Currency) -&gt; PyResult&lt;Money&gt; {
         Money::new(<span class="number">0.0</span>, currency).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;from_raw&quot;</span>)]
+    #[pyo3(name = <span class="string">"from_raw"</span>)]
     </span><span class="kw">fn </span>py_from_raw(raw: i64, currency: Currency) -&gt; PyResult&lt;Money&gt; {
         <span class="prelude-val">Ok</span>(Money::from_raw(raw, currency))
     }
 
     <span class="attr">#[staticmethod]
-    #[pyo3(name = <span class="string">&quot;from_str&quot;</span>)]
+    #[pyo3(name = <span class="string">"from_str"</span>)]
     </span><span class="kw">fn </span>py_from_str(value: <span class="kw-2">&amp;</span>str) -&gt; PyResult&lt;Money&gt; {
         Money::from_str(value).map_err(to_pyvalue_err)
     }
 
-    <span class="attr">#[pyo3(name = <span class="string">&quot;is_zero&quot;</span>)]
+    <span class="attr">#[pyo3(name = <span class="string">"is_zero"</span>)]
     </span><span class="kw">fn </span>py_is_zero(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.is_zero()
     }
 
-    <span class="attr">#[pyo3(name = <span class="string">&quot;as_decimal&quot;</span>)]
+    <span class="attr">#[pyo3(name = <span class="string">"as_decimal"</span>)]
     </span><span class="kw">fn </span>py_as_decimal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
         <span class="self">self</span>.as_decimal()
     }
 
-    <span class="attr">#[pyo3(name = <span class="string">&quot;as_double&quot;</span>)]
+    <span class="attr">#[pyo3(name = <span class="string">"as_double"</span>)]
     </span><span class="kw">fn </span>py_as_double(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.as_f64()
     }
 
-    <span class="attr">#[pyo3(name = <span class="string">&quot;to_formatted_str&quot;</span>)]
+    <span class="attr">#[pyo3(name = <span class="string">"to_formatted_str"</span>)]
     </span><span class="kw">fn </span>py_to_formatted_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
         <span class="self">self</span>.to_formatted_string()
     }

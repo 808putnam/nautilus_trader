@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/currencies.rs`."><title>currencies.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (8c2b57721 2023-12-01)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/currencies.rs`."><title>currencies.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -1057,12 +1058,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -1163,10 +1164,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>AUD() -&gt; Currency {
         <span class="kw-2">*</span>AUD_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;AUD&quot;</span>),
+            code: Ustr::from(<span class="string">"AUD"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">36</span>,
-            name: Ustr::from(<span class="string">&quot;Australian dollar&quot;</span>),
+            name: Ustr::from(<span class="string">"Australian dollar"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1174,10 +1175,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>BRL() -&gt; Currency {
         <span class="kw-2">*</span>BRL_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;BRL&quot;</span>),
+            code: Ustr::from(<span class="string">"BRL"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">986</span>,
-            name: Ustr::from(<span class="string">&quot;Brazilian real&quot;</span>),
+            name: Ustr::from(<span class="string">"Brazilian real"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1186,10 +1187,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>CAD() -&gt; Currency {
         <span class="kw-2">*</span>CAD_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;CAD&quot;</span>),
+            code: Ustr::from(<span class="string">"CAD"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">124</span>,
-            name: Ustr::from(<span class="string">&quot;Canadian dollar&quot;</span>),
+            name: Ustr::from(<span class="string">"Canadian dollar"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1198,10 +1199,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>CHF() -&gt; Currency {
         <span class="kw-2">*</span>CHF_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;CHF&quot;</span>),
+            code: Ustr::from(<span class="string">"CHF"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">756</span>,
-            name: Ustr::from(<span class="string">&quot;Swiss franc&quot;</span>),
+            name: Ustr::from(<span class="string">"Swiss franc"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1210,10 +1211,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>CNY() -&gt; Currency {
         <span class="kw-2">*</span>CNY_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;CNY&quot;</span>),
+            code: Ustr::from(<span class="string">"CNY"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">156</span>,
-            name: Ustr::from(<span class="string">&quot;Chinese yuan&quot;</span>),
+            name: Ustr::from(<span class="string">"Chinese yuan"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1222,10 +1223,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>CNH() -&gt; Currency {
         <span class="kw-2">*</span>CNH_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;CNH&quot;</span>),
+            code: Ustr::from(<span class="string">"CNH"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Chinese yuan (offshore)&quot;</span>),
+            name: Ustr::from(<span class="string">"Chinese yuan (offshore)"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1234,10 +1235,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>CZK() -&gt; Currency {
         <span class="kw-2">*</span>CZK_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;CZK&quot;</span>),
+            code: Ustr::from(<span class="string">"CZK"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">203</span>,
-            name: Ustr::from(<span class="string">&quot;Czech koruna&quot;</span>),
+            name: Ustr::from(<span class="string">"Czech koruna"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1246,10 +1247,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>DKK() -&gt; Currency {
         <span class="kw-2">*</span>DKK_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;DKK&quot;</span>),
+            code: Ustr::from(<span class="string">"DKK"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">208</span>,
-            name: Ustr::from(<span class="string">&quot;Danish krone&quot;</span>),
+            name: Ustr::from(<span class="string">"Danish krone"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1258,10 +1259,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>EUR() -&gt; Currency {
         <span class="kw-2">*</span>EUR_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;EUR&quot;</span>),
+            code: Ustr::from(<span class="string">"EUR"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">978</span>,
-            name: Ustr::from(<span class="string">&quot;Euro&quot;</span>),
+            name: Ustr::from(<span class="string">"Euro"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1270,10 +1271,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>GBP() -&gt; Currency {
         <span class="kw-2">*</span>GBP_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;GBP&quot;</span>),
+            code: Ustr::from(<span class="string">"GBP"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">826</span>,
-            name: Ustr::from(<span class="string">&quot;British Pound&quot;</span>),
+            name: Ustr::from(<span class="string">"British Pound"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1282,10 +1283,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>HKD() -&gt; Currency {
         <span class="kw-2">*</span>HKD_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;HKD&quot;</span>),
+            code: Ustr::from(<span class="string">"HKD"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">344</span>,
-            name: Ustr::from(<span class="string">&quot;Hong Kong dollar&quot;</span>),
+            name: Ustr::from(<span class="string">"Hong Kong dollar"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1294,10 +1295,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>HUF() -&gt; Currency {
         <span class="kw-2">*</span>HUF_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;HUF&quot;</span>),
+            code: Ustr::from(<span class="string">"HUF"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">348</span>,
-            name: Ustr::from(<span class="string">&quot;Hungarian forint&quot;</span>),
+            name: Ustr::from(<span class="string">"Hungarian forint"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1306,10 +1307,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>ILS() -&gt; Currency {
         <span class="kw-2">*</span>ILS_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;ILS&quot;</span>),
+            code: Ustr::from(<span class="string">"ILS"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">376</span>,
-            name: Ustr::from(<span class="string">&quot;Israeli new shekel&quot;</span>),
+            name: Ustr::from(<span class="string">"Israeli new shekel"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1318,10 +1319,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>INR() -&gt; Currency {
         <span class="kw-2">*</span>INR_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;INR&quot;</span>),
+            code: Ustr::from(<span class="string">"INR"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">356</span>,
-            name: Ustr::from(<span class="string">&quot;Indian rupee&quot;</span>),
+            name: Ustr::from(<span class="string">"Indian rupee"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1330,10 +1331,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>JPY() -&gt; Currency {
         <span class="kw-2">*</span>JPY_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;JPY&quot;</span>),
+            code: Ustr::from(<span class="string">"JPY"</span>),
             precision: <span class="number">0</span>,
             iso4217: <span class="number">392</span>,
-            name: Ustr::from(<span class="string">&quot;Japanese yen&quot;</span>),
+            name: Ustr::from(<span class="string">"Japanese yen"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1341,10 +1342,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>KRW() -&gt; Currency {
         <span class="kw-2">*</span>KRW_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;KRW&quot;</span>),
+            code: Ustr::from(<span class="string">"KRW"</span>),
             precision: <span class="number">0</span>,
             iso4217: <span class="number">410</span>,
-            name: Ustr::from(<span class="string">&quot;South Korean won&quot;</span>),
+            name: Ustr::from(<span class="string">"South Korean won"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1353,10 +1354,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>MXN() -&gt; Currency {
         <span class="kw-2">*</span>MXN_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;MXN&quot;</span>),
+            code: Ustr::from(<span class="string">"MXN"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">484</span>,
-            name: Ustr::from(<span class="string">&quot;Mexican peso&quot;</span>),
+            name: Ustr::from(<span class="string">"Mexican peso"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1365,10 +1366,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>NOK() -&gt; Currency {
         <span class="kw-2">*</span>NOK_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;NOK&quot;</span>),
+            code: Ustr::from(<span class="string">"NOK"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">578</span>,
-            name: Ustr::from(<span class="string">&quot;Norwegian krone&quot;</span>),
+            name: Ustr::from(<span class="string">"Norwegian krone"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1377,10 +1378,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>NZD() -&gt; Currency {
         <span class="kw-2">*</span>NZD_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;NZD&quot;</span>),
+            code: Ustr::from(<span class="string">"NZD"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">554</span>,
-            name: Ustr::from(<span class="string">&quot;New Zealand dollar&quot;</span>),
+            name: Ustr::from(<span class="string">"New Zealand dollar"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1389,10 +1390,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>PLN() -&gt; Currency {
         <span class="kw-2">*</span>PLN_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;PLN&quot;</span>),
+            code: Ustr::from(<span class="string">"PLN"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">985</span>,
-            name: Ustr::from(<span class="string">&quot;Polish złoty&quot;</span>),
+            name: Ustr::from(<span class="string">"Polish złoty"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1401,10 +1402,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>RUB() -&gt; Currency {
         <span class="kw-2">*</span>RUB_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;RUB&quot;</span>),
+            code: Ustr::from(<span class="string">"RUB"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">643</span>,
-            name: Ustr::from(<span class="string">&quot;Russian ruble&quot;</span>),
+            name: Ustr::from(<span class="string">"Russian ruble"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1413,10 +1414,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>SAR() -&gt; Currency {
         <span class="kw-2">*</span>SAR_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;SAR&quot;</span>),
+            code: Ustr::from(<span class="string">"SAR"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">682</span>,
-            name: Ustr::from(<span class="string">&quot;Saudi riyal&quot;</span>),
+            name: Ustr::from(<span class="string">"Saudi riyal"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1425,10 +1426,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>SEK() -&gt; Currency {
         <span class="kw-2">*</span>SEK_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;SEK&quot;</span>),
+            code: Ustr::from(<span class="string">"SEK"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">752</span>,
-            name: Ustr::from(<span class="string">&quot;Swedish krona&quot;</span>),
+            name: Ustr::from(<span class="string">"Swedish krona"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1437,10 +1438,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>SGD() -&gt; Currency {
         <span class="kw-2">*</span>SGD_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;SGD&quot;</span>),
+            code: Ustr::from(<span class="string">"SGD"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">702</span>,
-            name: Ustr::from(<span class="string">&quot;Singapore dollar&quot;</span>),
+            name: Ustr::from(<span class="string">"Singapore dollar"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1449,10 +1450,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>THB() -&gt; Currency {
         <span class="kw-2">*</span>THB_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;THB&quot;</span>),
+            code: Ustr::from(<span class="string">"THB"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">764</span>,
-            name: Ustr::from(<span class="string">&quot;Thai baht&quot;</span>),
+            name: Ustr::from(<span class="string">"Thai baht"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1461,10 +1462,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>TRY() -&gt; Currency {
         <span class="kw-2">*</span>TRY_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;TRY&quot;</span>),
+            code: Ustr::from(<span class="string">"TRY"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">949</span>,
-            name: Ustr::from(<span class="string">&quot;Turkish lira&quot;</span>),
+            name: Ustr::from(<span class="string">"Turkish lira"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1473,10 +1474,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>TWD() -&gt; Currency {
         <span class="kw-2">*</span>TWD_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;TWD&quot;</span>),
+            code: Ustr::from(<span class="string">"TWD"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">901</span>,
-            name: Ustr::from(<span class="string">&quot;New Taiwan dollar&quot;</span>),
+            name: Ustr::from(<span class="string">"New Taiwan dollar"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1485,10 +1486,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>USD() -&gt; Currency {
         <span class="kw-2">*</span>USD_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;USD&quot;</span>),
+            code: Ustr::from(<span class="string">"USD"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">840</span>,
-            name: Ustr::from(<span class="string">&quot;United States dollar&quot;</span>),
+            name: Ustr::from(<span class="string">"United States dollar"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1496,10 +1497,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>ZAR() -&gt; Currency {
         <span class="kw-2">*</span>ZAR_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;ZAR&quot;</span>),
+            code: Ustr::from(<span class="string">"ZAR"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">710</span>,
-            name: Ustr::from(<span class="string">&quot;South African rand&quot;</span>),
+            name: Ustr::from(<span class="string">"South African rand"</span>),
             currency_type: CurrencyType::Fiat,
         })
     }
@@ -1508,10 +1509,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>XAG() -&gt; Currency {
         <span class="kw-2">*</span>XAG_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;XAG&quot;</span>),
+            code: Ustr::from(<span class="string">"XAG"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">961</span>,
-            name: Ustr::from(<span class="string">&quot;Silver (one troy ounce)&quot;</span>),
+            name: Ustr::from(<span class="string">"Silver (one troy ounce)"</span>),
             currency_type: CurrencyType::CommodityBacked,
         })
     }
@@ -1520,10 +1521,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>XAU() -&gt; Currency {
         <span class="kw-2">*</span>XAU_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;XAU&quot;</span>),
+            code: Ustr::from(<span class="string">"XAU"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">959</span>,
-            name: Ustr::from(<span class="string">&quot;Gold (one troy ounce)&quot;</span>),
+            name: Ustr::from(<span class="string">"Gold (one troy ounce)"</span>),
             currency_type: CurrencyType::CommodityBacked,
         })
     }
@@ -1532,10 +1533,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>XPT() -&gt; Currency {
         <span class="kw-2">*</span>XPT_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;XPT&quot;</span>),
+            code: Ustr::from(<span class="string">"XPT"</span>),
             precision: <span class="number">2</span>,
             iso4217: <span class="number">962</span>,
-            name: Ustr::from(<span class="string">&quot;Platinum (one troy ounce)&quot;</span>),
+            name: Ustr::from(<span class="string">"Platinum (one troy ounce)"</span>),
             currency_type: CurrencyType::CommodityBacked,
         })
     }
@@ -1544,10 +1545,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>ONEINCH() -&gt; Currency {
         <span class="kw-2">*</span>ONEINCH_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;1INCH&quot;</span>),
+            code: Ustr::from(<span class="string">"1INCH"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;1inch Network&quot;</span>),
+            name: Ustr::from(<span class="string">"1inch Network"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1556,10 +1557,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>AAVE() -&gt; Currency {
         <span class="kw-2">*</span>AAVE_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;AAVE&quot;</span>),
+            code: Ustr::from(<span class="string">"AAVE"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Aave&quot;</span>),
+            name: Ustr::from(<span class="string">"Aave"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1568,10 +1569,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>ACA() -&gt; Currency {
         <span class="kw-2">*</span>ACA_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;ACA&quot;</span>),
+            code: Ustr::from(<span class="string">"ACA"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Acala Token&quot;</span>),
+            name: Ustr::from(<span class="string">"Acala Token"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1580,10 +1581,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>ADA() -&gt; Currency {
         <span class="kw-2">*</span>ADA_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;ADA&quot;</span>),
+            code: Ustr::from(<span class="string">"ADA"</span>),
             precision: <span class="number">6</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Cardano&quot;</span>),
+            name: Ustr::from(<span class="string">"Cardano"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1592,10 +1593,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>AVAX() -&gt; Currency {
         <span class="kw-2">*</span>AVAX_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;AVAX&quot;</span>),
+            code: Ustr::from(<span class="string">"AVAX"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Avalanche&quot;</span>),
+            name: Ustr::from(<span class="string">"Avalanche"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1604,10 +1605,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>BCH() -&gt; Currency {
         <span class="kw-2">*</span>BCH_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;BCH&quot;</span>),
+            code: Ustr::from(<span class="string">"BCH"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Bitcoin Cash&quot;</span>),
+            name: Ustr::from(<span class="string">"Bitcoin Cash"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1616,10 +1617,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>BTC() -&gt; Currency {
         <span class="kw-2">*</span>BTC_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;BTC&quot;</span>),
+            code: Ustr::from(<span class="string">"BTC"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Bitcoin&quot;</span>),
+            name: Ustr::from(<span class="string">"Bitcoin"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1628,10 +1629,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>BTTC() -&gt; Currency {
         <span class="kw-2">*</span>BTTC_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;BTTC&quot;</span>),
+            code: Ustr::from(<span class="string">"BTTC"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;BitTorrent&quot;</span>),
+            name: Ustr::from(<span class="string">"BitTorrent"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1640,10 +1641,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>BNB() -&gt; Currency {
         <span class="kw-2">*</span>BNB_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;BNB&quot;</span>),
+            code: Ustr::from(<span class="string">"BNB"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Binance Coin&quot;</span>),
+            name: Ustr::from(<span class="string">"Binance Coin"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1652,10 +1653,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>BRZ() -&gt; Currency {
         <span class="kw-2">*</span>BRZ_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;BRZ&quot;</span>),
+            code: Ustr::from(<span class="string">"BRZ"</span>),
             precision: <span class="number">6</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Brazilian Digital Token&quot;</span>),
+            name: Ustr::from(<span class="string">"Brazilian Digital Token"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1664,10 +1665,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>BSV() -&gt; Currency {
         <span class="kw-2">*</span>BSV_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;BSV&quot;</span>),
+            code: Ustr::from(<span class="string">"BSV"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Bitcoin SV&quot;</span>),
+            name: Ustr::from(<span class="string">"Bitcoin SV"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1676,10 +1677,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>BUSD() -&gt; Currency {
         <span class="kw-2">*</span>BUSD_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;BUSD&quot;</span>),
+            code: Ustr::from(<span class="string">"BUSD"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Binance USD&quot;</span>),
+            name: Ustr::from(<span class="string">"Binance USD"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1688,10 +1689,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>CAKE() -&gt; Currency {
         <span class="kw-2">*</span>CAKE_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;CAKE&quot;</span>),
+            code: Ustr::from(<span class="string">"CAKE"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;PancakeSwap&quot;</span>),
+            name: Ustr::from(<span class="string">"PancakeSwap"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1700,10 +1701,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>DASH() -&gt; Currency {
         <span class="kw-2">*</span>DASH_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;DASH&quot;</span>),
+            code: Ustr::from(<span class="string">"DASH"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Dash&quot;</span>),
+            name: Ustr::from(<span class="string">"Dash"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1712,10 +1713,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>DOT() -&gt; Currency {
         <span class="kw-2">*</span>DOT_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;DOT&quot;</span>),
+            code: Ustr::from(<span class="string">"DOT"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Polkadot&quot;</span>),
+            name: Ustr::from(<span class="string">"Polkadot"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1724,10 +1725,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>DOGE() -&gt; Currency {
         <span class="kw-2">*</span>DOGE_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;DOGE&quot;</span>),
+            code: Ustr::from(<span class="string">"DOGE"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Dogecoin&quot;</span>),
+            name: Ustr::from(<span class="string">"Dogecoin"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1736,10 +1737,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>EOS() -&gt; Currency {
         <span class="kw-2">*</span>EOS_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;EOS&quot;</span>),
+            code: Ustr::from(<span class="string">"EOS"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;EOS&quot;</span>),
+            name: Ustr::from(<span class="string">"EOS"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1748,10 +1749,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>ETH() -&gt; Currency {
         <span class="kw-2">*</span>ETH_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;ETH&quot;</span>),
+            code: Ustr::from(<span class="string">"ETH"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Ethereum&quot;</span>),
+            name: Ustr::from(<span class="string">"Ethereum"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1760,10 +1761,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>ETHW() -&gt; Currency {
         <span class="kw-2">*</span>ETHW_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;ETHW&quot;</span>),
+            code: Ustr::from(<span class="string">"ETHW"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;EthereumPoW&quot;</span>),
+            name: Ustr::from(<span class="string">"EthereumPoW"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1772,10 +1773,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>JOE() -&gt; Currency {
         <span class="kw-2">*</span>JOE_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;JOE&quot;</span>),
+            code: Ustr::from(<span class="string">"JOE"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;JOE&quot;</span>),
+            name: Ustr::from(<span class="string">"JOE"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1784,10 +1785,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>LINK() -&gt; Currency {
         <span class="kw-2">*</span>LINK_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;LINK&quot;</span>),
+            code: Ustr::from(<span class="string">"LINK"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Chainlink&quot;</span>),
+            name: Ustr::from(<span class="string">"Chainlink"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1796,10 +1797,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>LTC() -&gt; Currency {
         <span class="kw-2">*</span>LTC_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;LTC&quot;</span>),
+            code: Ustr::from(<span class="string">"LTC"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Litecoin&quot;</span>),
+            name: Ustr::from(<span class="string">"Litecoin"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1808,10 +1809,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>LUNA() -&gt; Currency {
         <span class="kw-2">*</span>LUNA_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;LUNA&quot;</span>),
+            code: Ustr::from(<span class="string">"LUNA"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Terra&quot;</span>),
+            name: Ustr::from(<span class="string">"Terra"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1820,10 +1821,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>NBT() -&gt; Currency {
         <span class="kw-2">*</span>NBT_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;NBT&quot;</span>),
+            code: Ustr::from(<span class="string">"NBT"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;NanoByte Token&quot;</span>),
+            name: Ustr::from(<span class="string">"NanoByte Token"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1832,10 +1833,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>SOL() -&gt; Currency {
         <span class="kw-2">*</span>SOL_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;SOL&quot;</span>),
+            code: Ustr::from(<span class="string">"SOL"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Solana&quot;</span>),
+            name: Ustr::from(<span class="string">"Solana"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1844,10 +1845,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>SHIB() -&gt; Currency {
         <span class="kw-2">*</span>SHIB_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;SHIB&quot;</span>),
+            code: Ustr::from(<span class="string">"SHIB"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Shiba Inu&quot;</span>),
+            name: Ustr::from(<span class="string">"Shiba Inu"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1856,10 +1857,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>TRX() -&gt; Currency {
         <span class="kw-2">*</span>TRX_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;TRX&quot;</span>),
+            code: Ustr::from(<span class="string">"TRX"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;TRON&quot;</span>),
+            name: Ustr::from(<span class="string">"TRON"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1868,10 +1869,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>TRYB() -&gt; Currency {
         <span class="kw-2">*</span>TRYB_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;TRYB&quot;</span>),
+            code: Ustr::from(<span class="string">"TRYB"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;BiLibra&quot;</span>),
+            name: Ustr::from(<span class="string">"BiLibra"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1880,10 +1881,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>TUSD() -&gt; Currency {
         <span class="kw-2">*</span>TUSD_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;TUSD&quot;</span>),
+            code: Ustr::from(<span class="string">"TUSD"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;TrueUSD&quot;</span>),
+            name: Ustr::from(<span class="string">"TrueUSD"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1892,10 +1893,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>VTC() -&gt; Currency {
         <span class="kw-2">*</span>VTC_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;VTC&quot;</span>),
+            code: Ustr::from(<span class="string">"VTC"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Vertcoin&quot;</span>),
+            name: Ustr::from(<span class="string">"Vertcoin"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1904,10 +1905,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>WSB() -&gt; Currency {
         <span class="kw-2">*</span>WSB_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;WSB&quot;</span>),
+            code: Ustr::from(<span class="string">"WSB"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;WallStreetBets DApp&quot;</span>),
+            name: Ustr::from(<span class="string">"WallStreetBets DApp"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1916,10 +1917,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>XBT() -&gt; Currency {
         <span class="kw-2">*</span>XBT_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;XBT&quot;</span>),
+            code: Ustr::from(<span class="string">"XBT"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Bitcoin&quot;</span>),
+            name: Ustr::from(<span class="string">"Bitcoin"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1928,10 +1929,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>XEC() -&gt; Currency {
         <span class="kw-2">*</span>XEC_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;XEC&quot;</span>),
+            code: Ustr::from(<span class="string">"XEC"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;eCash&quot;</span>),
+            name: Ustr::from(<span class="string">"eCash"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1940,10 +1941,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>XLM() -&gt; Currency {
         <span class="kw-2">*</span>XLM_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;XLM&quot;</span>),
+            code: Ustr::from(<span class="string">"XLM"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Stellar Lumen&quot;</span>),
+            name: Ustr::from(<span class="string">"Stellar Lumen"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1952,10 +1953,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>XMR() -&gt; Currency {
         <span class="kw-2">*</span>XMR_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;XMR&quot;</span>),
+            code: Ustr::from(<span class="string">"XMR"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Monero&quot;</span>),
+            name: Ustr::from(<span class="string">"Monero"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1964,10 +1965,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>USDT() -&gt; Currency {
         <span class="kw-2">*</span>USDT_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;USDT&quot;</span>),
+            code: Ustr::from(<span class="string">"USDT"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Tether&quot;</span>),
+            name: Ustr::from(<span class="string">"Tether"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1976,10 +1977,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>XRP() -&gt; Currency {
         <span class="kw-2">*</span>XRP_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;XRP&quot;</span>),
+            code: Ustr::from(<span class="string">"XRP"</span>),
             precision: <span class="number">6</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;XRP&quot;</span>),
+            name: Ustr::from(<span class="string">"XRP"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -1988,10 +1989,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>XTZ() -&gt; Currency {
         <span class="kw-2">*</span>XTZ_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;XTZ&quot;</span>),
+            code: Ustr::from(<span class="string">"XTZ"</span>),
             precision: <span class="number">6</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Tezos&quot;</span>),
+            name: Ustr::from(<span class="string">"Tezos"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -2000,10 +2001,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>USDC() -&gt; Currency {
         <span class="kw-2">*</span>USDC_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;USDC&quot;</span>),
+            code: Ustr::from(<span class="string">"USDC"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;USD Coin&quot;</span>),
+            name: Ustr::from(<span class="string">"USD Coin"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -2012,10 +2013,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>USDP() -&gt; Currency {
         <span class="kw-2">*</span>USDP_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;USDP&quot;</span>),
+            code: Ustr::from(<span class="string">"USDP"</span>),
             precision: <span class="number">4</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Pax Dollar&quot;</span>),
+            name: Ustr::from(<span class="string">"Pax Dollar"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }
@@ -2024,10 +2025,10 @@
     #[must_use]
     </span><span class="kw">pub fn </span>ZEC() -&gt; Currency {
         <span class="kw-2">*</span>ZEC_LOCK.get_or_init(|| Currency {
-            code: Ustr::from(<span class="string">&quot;ZEC&quot;</span>),
+            code: Ustr::from(<span class="string">"ZEC"</span>),
             precision: <span class="number">8</span>,
             iso4217: <span class="number">0</span>,
-            name: Ustr::from(<span class="string">&quot;Zcash&quot;</span>),
+            name: Ustr::from(<span class="string">"Zcash"</span>),
             currency_type: CurrencyType::Crypto,
         })
     }

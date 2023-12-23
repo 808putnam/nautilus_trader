@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["ticker_new","ticker_to_cstr"]};

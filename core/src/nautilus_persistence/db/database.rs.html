@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/db/database.rs`."><title>database.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (8c2b57721 2023-12-01)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/db/database.rs`."><title>database.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -226,12 +227,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -258,9 +259,9 @@
 
 <span class="kw">fn </span>str_to_database_engine(engine_str: <span class="kw-2">&amp;</span>str) -&gt; DatabaseEngine {
     <span class="kw">match </span>engine_str {
-        <span class="string">&quot;POSTGRES&quot; </span>| <span class="string">&quot;postgres&quot; </span>=&gt; DatabaseEngine::POSTGRES,
-        <span class="string">&quot;SQLITE&quot; </span>| <span class="string">&quot;sqlite&quot; </span>=&gt; DatabaseEngine::SQLITE,
-        <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">&quot;Invalid database engine: {engine_str}&quot;</span>),
+        <span class="string">"POSTGRES" </span>| <span class="string">"postgres" </span>=&gt; DatabaseEngine::POSTGRES,
+        <span class="string">"SQLITE" </span>| <span class="string">"sqlite" </span>=&gt; DatabaseEngine::SQLITE,
+        <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Invalid database engine: {engine_str}"</span>),
     }
 }
 
@@ -275,7 +276,7 @@
         <span class="kw">match </span>db {
             <span class="prelude-val">Ok</span>(pool) =&gt; <span class="self">Self </span>{ pool },
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">panic!</span>(<span class="string">&quot;Failed to connect to database: {err}&quot;</span>)
+                <span class="macro">panic!</span>(<span class="string">"Failed to connect to database: {err}"</span>)
             }
         }
     }
@@ -287,25 +288,25 @@
     ) -&gt; AnyConnectOptions {
         <span class="kw">let </span>connection_string = <span class="kw">match </span>conn_string {
             <span class="prelude-val">Some</span>(conn_string) =&gt; <span class="prelude-val">Ok</span>(conn_string.to_string()),
-            <span class="prelude-val">None </span>=&gt; std::env::var(<span class="string">&quot;DATABASE_URL&quot;</span>),
+            <span class="prelude-val">None </span>=&gt; std::env::var(<span class="string">"DATABASE_URL"</span>),
         };
         <span class="kw">let </span>database_engine: DatabaseEngine = <span class="kw">match </span>engine {
             <span class="prelude-val">Some</span>(engine) =&gt; engine,
             <span class="prelude-val">None </span>=&gt; str_to_database_engine(
-                std::env::var(<span class="string">&quot;DATABASE_ENGINE&quot;</span>)
-                    .unwrap_or(<span class="string">&quot;SQLITE&quot;</span>.to_string())
+                std::env::var(<span class="string">"DATABASE_ENGINE"</span>)
+                    .unwrap_or(<span class="string">"SQLITE"</span>.to_string())
                     .as_str(),
             ),
         };
         <span class="kw">match </span>connection_string {
             <span class="prelude-val">Ok</span>(connection_string) =&gt; <span class="kw">match </span>database_engine {
                 DatabaseEngine::POSTGRES =&gt; AnyConnectOptions::from_str(connection_string.as_str())
-                    .expect(<span class="string">&quot;Invalid PostgresSQL connection string&quot;</span>),
+                    .expect(<span class="string">"Invalid PostgresSQL connection string"</span>),
                 DatabaseEngine::SQLITE =&gt; AnyConnectOptions::from_str(connection_string.as_str())
-                    .expect(<span class="string">&quot;Invalid SQLITE connection string&quot;</span>),
+                    .expect(<span class="string">"Invalid SQLITE connection string"</span>),
             },
             <span class="prelude-val">Err</span>(err) =&gt; {
-                <span class="macro">panic!</span>(<span class="string">&quot;Failed to connect to database: {err}&quot;</span>)
+                <span class="macro">panic!</span>(<span class="string">"Failed to connect to database: {err}"</span>)
             }
         }
     }
@@ -318,7 +319,7 @@
 
     <span class="kw">pub async fn </span>fetch_all&lt;T&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, query_str: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;T&gt;, Error&gt;
     <span class="kw">where
-        </span>T: <span class="kw">for</span>&lt;<span class="lifetime">&#39;r</span>&gt; sqlx::FromRow&lt;<span class="lifetime">&#39;r</span>, sqlx::any::AnyRow&gt; + Unpin,
+        </span>T: <span class="kw">for</span>&lt;<span class="lifetime">'r</span>&gt; sqlx::FromRow&lt;<span class="lifetime">'r</span>, sqlx::any::AnyRow&gt; + Unpin,
     {
         <span class="kw">let </span>rows = sqlx::query(query_str).fetch_all(<span class="kw-2">&amp;</span><span class="self">self</span>.pool).<span class="kw">await</span><span class="question-mark">?</span>;
 
@@ -337,15 +338,15 @@
     </span><span class="kw">let </span><span class="kw-2">mut </span>sql_files =
         std::fs::read_dir(schema_dir)<span class="question-mark">?</span>.collect::&lt;<span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw">_</span>&gt;, std::io::Error&gt;&gt;()<span class="question-mark">?</span>;
 
-    <span class="kw">for </span>file <span class="kw">in </span>sql_files.iter_mut() {
+    <span class="kw">for </span>file <span class="kw">in </span><span class="kw-2">&amp;mut </span>sql_files {
         <span class="kw">let </span>file_name = file.file_name();
-        <span class="macro">println!</span>(<span class="string">&quot;Executing SQL file: {:?}&quot;</span>, file_name);
+        <span class="macro">println!</span>(<span class="string">"Executing SQL file: {file_name:?}"</span>);
         <span class="kw">let </span>file_path = file.path();
         <span class="kw">let </span>sql_content = std::fs::read_to_string(file_path.clone())<span class="question-mark">?</span>;
-        <span class="kw">for </span>sql_statement <span class="kw">in </span>sql_content.split(<span class="string">&#39;;&#39;</span>).filter(|s| !s.trim().is_empty()) {
+        <span class="kw">for </span>sql_statement <span class="kw">in </span>sql_content.split(<span class="string">';'</span>).filter(|s| !s.trim().is_empty()) {
             db.execute(sql_statement).<span class="kw">await</span>.unwrap_or_else(|e| {
                 <span class="macro">panic!</span>(
-                    <span class="string">&quot;Failed to execute SQL statement: {} with reason {}&quot;</span>,
+                    <span class="string">"Failed to execute SQL statement: {} with reason {}"</span>,
                     file_path.display(),
                     e
                 )
@@ -357,7 +358,7 @@
 
 <span class="kw">pub async fn </span>setup_test_database() -&gt; Database {
     <span class="comment">// check if test_db.sqlite exists,if not, create it
-    </span><span class="kw">let </span>db_path = std::env::var(<span class="string">&quot;TEST_DB_PATH&quot;</span>).unwrap_or(<span class="string">&quot;test_db.sqlite&quot;</span>.to_string());
+    </span><span class="kw">let </span>db_path = std::env::var(<span class="string">"TEST_DB_PATH"</span>).unwrap_or(<span class="string">"test_db.sqlite"</span>.to_string());
     <span class="kw">let </span>db_file_path = Path::new(db_path.as_str());
     <span class="kw">let </span>exists = db_file_path.exists();
     <span class="kw">if </span>!exists {
@@ -367,9 +368,9 @@
                 .create_if_missing(<span class="bool-val">true</span>),
         )
         .<span class="kw">await
-        </span>.expect(<span class="string">&quot;Failed to create test_db.sqlite&quot;</span>);
+        </span>.expect(<span class="string">"Failed to create test_db.sqlite"</span>);
     }
-    Database::new(<span class="prelude-val">Some</span>(DatabaseEngine::SQLITE), <span class="prelude-val">Some</span>(<span class="string">&quot;sqlite:test_db.sqlite&quot;</span>)).<span class="kw">await
+    Database::new(<span class="prelude-val">Some</span>(DatabaseEngine::SQLITE), <span class="prelude-val">Some</span>(<span class="string">"sqlite:test_db.sqlite"</span>)).<span class="kw">await
 </span>}
 
 <span class="attr">#[cfg(test)]
@@ -381,22 +382,22 @@
 
     <span class="kw">async fn </span>init_item_table(database: <span class="kw-2">&amp;</span>Database) {
         database
-            .execute(<span class="string">&quot;CREATE TABLE IF NOT EXISTS items (key TEXT PRIMARY KEY, value TEXT)&quot;</span>)
+            .execute(<span class="string">"CREATE TABLE IF NOT EXISTS items (key TEXT PRIMARY KEY, value TEXT)"</span>)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Failed to create table item&quot;</span>);
+            </span>.expect(<span class="string">"Failed to create table item"</span>);
     }
 
     <span class="kw">async fn </span>drop_table(database: <span class="kw-2">&amp;</span>Database) {
         database
-            .execute(<span class="string">&quot;DROP TABLE items&quot;</span>)
+            .execute(<span class="string">"DROP TABLE items"</span>)
             .<span class="kw">await
-            </span>.expect(<span class="string">&quot;Failed to drop table items&quot;</span>);
+            </span>.expect(<span class="string">"Failed to drop table items"</span>);
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_database() {
         <span class="kw">let </span>db = setup_test_database().<span class="kw">await</span>;
-        <span class="kw">let </span>rows_affected = db.execute(<span class="string">&quot;SELECT 1&quot;</span>).<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>rows_affected = db.execute(<span class="string">"SELECT 1"</span>).<span class="kw">await</span>.unwrap();
         <span class="comment">// it will not fail and give 0 rows affected
         </span><span class="macro">assert_eq!</span>(rows_affected, <span class="number">0</span>);
     }
@@ -407,14 +408,14 @@
         <span class="kw">struct </span>SimpleValue {
             value: i32,
         }
-        <span class="kw">impl </span>FromRow&lt;<span class="lifetime">&#39;_</span>, sqlx::any::AnyRow&gt; <span class="kw">for </span>SimpleValue {
+        <span class="kw">impl </span>FromRow&lt;<span class="lifetime">'_</span>, sqlx::any::AnyRow&gt; <span class="kw">for </span>SimpleValue {
             <span class="kw">fn </span>from_row(row: <span class="kw-2">&amp;</span>sqlx::any::AnyRow) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, sqlx::Error&gt; {
                 <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
                     value: row.try_get(<span class="number">0</span>)<span class="question-mark">?</span>,
                 })
             }
         }
-        <span class="kw">let </span>result = db.fetch_all::&lt;SimpleValue&gt;(<span class="string">&quot;SELECT 3&quot;</span>).<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>result = db.fetch_all::&lt;SimpleValue&gt;(<span class="string">"SELECT 3"</span>).<span class="kw">await</span>.unwrap();
         <span class="macro">assert_eq!</span>(result[<span class="number">0</span>].value, <span class="number">3</span>);
     }
 
@@ -423,7 +424,7 @@
         <span class="kw">let </span>db = setup_test_database().<span class="kw">await</span>;
         init_item_table(<span class="kw-2">&amp;</span>db).<span class="kw">await</span>;
         <span class="comment">// insert some value
-        </span>db.execute(<span class="string">&quot;INSERT INTO items (key, value) VALUES (&#39;key1&#39;, &#39;value1&#39;)&quot;</span>)
+        </span>db.execute(<span class="string">"INSERT INTO items (key, value) VALUES ('key1', 'value1')"</span>)
             .<span class="kw">await
             </span>.unwrap();
         <span class="comment">// fetch item, impl Data struct
@@ -431,7 +432,7 @@
             key: String,
             value: String,
         }
-        <span class="kw">impl </span>FromRow&lt;<span class="lifetime">&#39;_</span>, sqlx::any::AnyRow&gt; <span class="kw">for </span>Item {
+        <span class="kw">impl </span>FromRow&lt;<span class="lifetime">'_</span>, sqlx::any::AnyRow&gt; <span class="kw">for </span>Item {
             <span class="kw">fn </span>from_row(row: <span class="kw-2">&amp;</span>sqlx::any::AnyRow) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, sqlx::Error&gt; {
                 <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
                     key: row.try_get(<span class="number">0</span>)<span class="question-mark">?</span>,
@@ -439,10 +440,10 @@
                 })
             }
         }
-        <span class="kw">let </span>result = db.fetch_all::&lt;Item&gt;(<span class="string">&quot;SELECT * FROM items&quot;</span>).<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>result = db.fetch_all::&lt;Item&gt;(<span class="string">"SELECT * FROM items"</span>).<span class="kw">await</span>.unwrap();
         <span class="macro">assert_eq!</span>(result.len(), <span class="number">1</span>);
-        <span class="macro">assert_eq!</span>(result[<span class="number">0</span>].key, <span class="string">&quot;key1&quot;</span>);
-        <span class="macro">assert_eq!</span>(result[<span class="number">0</span>].value, <span class="string">&quot;value1&quot;</span>);
+        <span class="macro">assert_eq!</span>(result[<span class="number">0</span>].key, <span class="string">"key1"</span>);
+        <span class="macro">assert_eq!</span>(result[<span class="number">0</span>].value, <span class="string">"value1"</span>);
         drop_table(<span class="kw-2">&amp;</span>db).<span class="kw">await</span>;
     }
 }

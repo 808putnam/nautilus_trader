@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `backtest/src/engine.rs`."><title>engine.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-c67e44d78ab2db17.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_backtest" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (8c2b57721 2023-12-01)" data-channel="nightly" data-search-js="search-5a66c239c06b3a66.js" data-settings-js="settings-fe03fdc259827cd2.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-77dede896d6ac08e.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `backtest/src/engine.rs`."><title>engine.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_backtest" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -167,12 +168,12 @@
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
-//  Licensed under the GNU Lesser General Public License Version 3.0 (the &quot;License&quot;);
+//  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 //  You may not use this file except in compliance with the License.
 //  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
 //
 //  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+//  distributed under the License is distributed on an "AS IS" BASIS,
 //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
@@ -226,7 +227,7 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // C API
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;ffi&quot;</span>)]
+</span><span class="attr">#[cfg(feature = <span class="string">"ffi"</span>)]
 #[repr(C)]
 </span><span class="kw">pub struct </span>TimeEventAccumulatorAPI(Box&lt;TimeEventAccumulator&gt;);
 
@@ -245,17 +246,17 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>time_event_accumulator_new() -&gt; TimeEventAccumulatorAPI {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>time_event_accumulator_new() -&gt; TimeEventAccumulatorAPI {
     TimeEventAccumulatorAPI(Box::new(TimeEventAccumulator::new()))
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>time_event_accumulator_drop(accumulator: TimeEventAccumulatorAPI) {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>time_event_accumulator_drop(accumulator: TimeEventAccumulatorAPI) {
     drop(accumulator); <span class="comment">// Memory freed here
 </span>}
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>time_event_accumulator_advance_clock(
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>time_event_accumulator_advance_clock(
     accumulator: <span class="kw-2">&amp;mut </span>TimeEventAccumulatorAPI,
     clock: <span class="kw-2">&amp;mut </span>TestClock_API,
     to_time_ns: UnixNanos,
@@ -265,7 +266,7 @@
 }
 
 <span class="attr">#[no_mangle]
-</span><span class="kw">pub extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>time_event_accumulator_drain(accumulator: <span class="kw-2">&amp;mut </span>TimeEventAccumulatorAPI) -&gt; CVec {
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>time_event_accumulator_drain(accumulator: <span class="kw-2">&amp;mut </span>TimeEventAccumulatorAPI) -&gt; CVec {
     accumulator.drain().into()
 }
 
@@ -287,18 +288,18 @@
 
         Python::with_gil(|py| {
             <span class="kw">let </span>py_list = PyList::empty(py);
-            <span class="kw">let </span>py_append = Py::from(py_list.getattr(<span class="string">&quot;append&quot;</span>).unwrap());
+            <span class="kw">let </span>py_append = Py::from(py_list.getattr(<span class="string">"append"</span>).unwrap());
 
             <span class="kw">let </span><span class="kw-2">mut </span>accumulator = TimeEventAccumulator::new();
 
-            <span class="kw">let </span>time_event1 = TimeEvent::new(<span class="string">&quot;TEST_EVENT_1&quot;</span>, UUID4::new(), <span class="number">100</span>, <span class="number">100</span>).unwrap();
-            <span class="kw">let </span>time_event2 = TimeEvent::new(<span class="string">&quot;TEST_EVENT_2&quot;</span>, UUID4::new(), <span class="number">300</span>, <span class="number">300</span>).unwrap();
-            <span class="kw">let </span>time_event3 = TimeEvent::new(<span class="string">&quot;TEST_EVENT_3&quot;</span>, UUID4::new(), <span class="number">200</span>, <span class="number">200</span>).unwrap();
+            <span class="kw">let </span>time_event1 = TimeEvent::new(<span class="string">"TEST_EVENT_1"</span>, UUID4::new(), <span class="number">100</span>, <span class="number">100</span>).unwrap();
+            <span class="kw">let </span>time_event2 = TimeEvent::new(<span class="string">"TEST_EVENT_2"</span>, UUID4::new(), <span class="number">300</span>, <span class="number">300</span>).unwrap();
+            <span class="kw">let </span>time_event3 = TimeEvent::new(<span class="string">"TEST_EVENT_3"</span>, UUID4::new(), <span class="number">200</span>, <span class="number">200</span>).unwrap();
 
             <span class="comment">// Note: as_ptr returns a borrowed pointer. It is valid as long
             // as the object is in scope. In this case `callback_ptr` is valid
             // as long as `py_append` is in scope.
-            </span><span class="kw">let </span>callback_ptr = py_append.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span>pyo3::ffi::PyObject;
+            </span><span class="kw">let </span>callback_ptr = py_append.as_ptr().cast::&lt;pyo3::ffi::PyObject&gt;();
 
             <span class="kw">let </span>handler1 = TimeEventHandler {
                 event: time_event1.clone(),
@@ -315,9 +316,9 @@
                 callback_ptr,
             };
 
-            accumulator.event_handlers.push(handler1.clone());
-            accumulator.event_handlers.push(handler2.clone());
-            accumulator.event_handlers.push(handler3.clone());
+            accumulator.event_handlers.push(handler1);
+            accumulator.event_handlers.push(handler2);
+            accumulator.event_handlers.push(handler3);
 
             <span class="kw">let </span>drained_handlers = accumulator.drain();
 

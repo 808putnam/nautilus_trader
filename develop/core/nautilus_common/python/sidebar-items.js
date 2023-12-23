@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["common"],"mod":["clock","timer"]};
