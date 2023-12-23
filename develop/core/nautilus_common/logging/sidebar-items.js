@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["set_global_log_collector"],"struct":["LogEvent","LogGuard","Logger"]};
