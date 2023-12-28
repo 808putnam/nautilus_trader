@@ -826,7 +826,7 @@ time, including
 <span class="sd">    Calculates the win rate from a realized PnLs series.</span>
 <span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="nf">calculate_from_realized_pnls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">realized_pnls</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">calculate_from_realized_pnls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">realized_pnls</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># Preconditions</span>
         <span class="k">if</span> <span class="n">realized_pnls</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">realized_pnls</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">0.0</span>

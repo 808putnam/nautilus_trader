@@ -4395,23 +4395,22 @@ fully “wired” into the platform. Exceptions will be raised if an
            <span class="w">
            </span>
            <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
             <a class="reference internal" href="config.html#nautilus_trader.config.common.ActorConfig" title="nautilus_trader.config.common.ActorConfig">
              <span class="pre">
               ActorConfig
              </span>
             </a>
+            <span class="w">
+            </span>
             <span class="p">
              <span class="pre">
-              ]
+              |
              </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="pre">
+             None
             </span>
            </span>
            <span class="w">
@@ -17131,10 +17130,16 @@ time event will be generated (rather than being invalid and failing a condition 
                callback:
               </span>
               <span class="pre">
-               Optional[Callable[[TimeEvent],
+               Callable[[TimeEvent],
               </span>
               <span class="pre">
-               None]]
+               None]
+              </span>
+              <span class="pre">
+               |
+              </span>
+              <span class="pre">
+               None
               </span>
               <span class="pre">
                =
@@ -17472,10 +17477,16 @@ then the default handler (if registered) will receive the
                callback:
               </span>
               <span class="pre">
-               Optional[Callable[[TimeEvent],
+               Callable[[TimeEvent],
               </span>
               <span class="pre">
-               None]]
+               None]
+              </span>
+              <span class="pre">
+               |
+              </span>
+              <span class="pre">
+               None
               </span>
               <span class="pre">
                =
@@ -18134,20 +18145,19 @@ then the default handler (if registered) will receive the
             </span>
             <span class="n">
              <span class="pre">
-              Optional
-             </span>
-             <span class="p">
-              <span class="pre">
-               [
-              </span>
-             </span>
-             <span class="pre">
               asyncio.AbstractEventLoop
              </span>
+             <span class="w">
+             </span>
              <span class="p">
               <span class="pre">
-               ]
+               |
               </span>
+             </span>
+             <span class="w">
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
             <span class="w">
@@ -18797,10 +18807,16 @@ time event will be generated (rather than being invalid and failing a condition 
                callback:
               </span>
               <span class="pre">
-               Optional[Callable[[TimeEvent],
+               Callable[[TimeEvent],
               </span>
               <span class="pre">
-               None]]
+               None]
+              </span>
+              <span class="pre">
+               |
+              </span>
+              <span class="pre">
+               None
               </span>
               <span class="pre">
                =
@@ -18871,10 +18887,16 @@ time event will be generated (rather than being invalid and failing a condition 
                callback:
               </span>
               <span class="pre">
-               Optional[Callable[[TimeEvent],
+               Callable[[TimeEvent],
               </span>
               <span class="pre">
-               None]]
+               None]
+              </span>
+              <span class="pre">
+               |
+              </span>
+              <span class="pre">
+               None
               </span>
               <span class="pre">
                =
@@ -19212,10 +19234,16 @@ then the default handler (if registered) will receive the
                callback:
               </span>
               <span class="pre">
-               Optional[Callable[[TimeEvent],
+               Callable[[TimeEvent],
               </span>
               <span class="pre">
-               None]]
+               None]
+              </span>
+              <span class="pre">
+               |
+              </span>
+              <span class="pre">
+               None
               </span>
               <span class="pre">
                =
@@ -21797,10 +21825,16 @@ time event will be generated (rather than being invalid and failing a condition 
                callback:
               </span>
               <span class="pre">
-               Optional[Callable[[TimeEvent],
+               Callable[[TimeEvent],
               </span>
               <span class="pre">
-               None]]
+               None]
+              </span>
+              <span class="pre">
+               |
+              </span>
+              <span class="pre">
+               None
               </span>
               <span class="pre">
                =
@@ -21871,10 +21905,16 @@ time event will be generated (rather than being invalid and failing a condition 
                callback:
               </span>
               <span class="pre">
-               Optional[Callable[[TimeEvent],
+               Callable[[TimeEvent],
               </span>
               <span class="pre">
-               None]]
+               None]
+              </span>
+              <span class="pre">
+               |
+              </span>
+              <span class="pre">
+               None
               </span>
               <span class="pre">
                =
@@ -22212,10 +22252,16 @@ then the default handler (if registered) will receive the
                callback:
               </span>
               <span class="pre">
-               Optional[Callable[[TimeEvent],
+               Callable[[TimeEvent],
               </span>
               <span class="pre">
-               None]]
+               None]
+              </span>
+              <span class="pre">
+               |
+              </span>
+              <span class="pre">
+               None
               </span>
               <span class="pre">
                =
@@ -23762,10 +23808,22 @@ then the default handler (if registered) will receive the
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              dict
+              config:
              </span>
              <span class="pre">
-              config=None
+              NautilusConfig
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>
@@ -23942,24 +24000,11 @@ taken from
                  config
                 </strong>
                 (
-                <em>
-                 dict
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 Any
-                </em>
-                <em>
-                 ]
-                </em>
+                <a class="reference internal" href="config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+                 <em>
+                  NautilusConfig
+                 </em>
+                </a>
                 <em>
                  ,
                 </em>
@@ -23978,16 +24023,36 @@ taken from
              </span>
             </dt>
             <dd class="field-even">
-             <p>
-              <strong>
-               ValueError
-              </strong>
-              – If
-              <cite>
-               component_name
-              </cite>
-              is not a valid string.
-             </p>
+             <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 ValueError
+                </strong>
+                – If
+                <cite>
+                 component_name
+                </cite>
+                is not a valid string.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 TypeError
+                </strong>
+                – If
+                <cite>
+                 config
+                </cite>
+                is not of type
+                <cite>
+                 NautilusConfig
+                </cite>
+                .
+               </p>
+              </li>
+             </ul>
             </dd>
            </dl>
            <div class="admonition warning">
@@ -27848,10 +27913,16 @@ priority is not considered (and could change).
              output_drop:
             </span>
             <span class="pre">
-             Optional[Callable[[Any],
+             Callable[[Any],
             </span>
             <span class="pre">
-             None]]
+             None]
+            </span>
+            <span class="pre">
+             |
+            </span>
+            <span class="pre">
+             None
             </span>
             <span class="pre">
              =
@@ -30076,7 +30147,13 @@ without executing those tasks.
               cache:
              </span>
              <span class="pre">
-              Optional[CacheFacade]
+              CacheFacade
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
              </span>
              <span class="pre">
               =

@@ -18989,23 +18989,22 @@ fully “wired” into the platform. Exceptions will be raised if a
            <span class="w">
            </span>
            <span class="n">
-            <span class="pre">
-             Optional
-            </span>
-            <span class="p">
-             <span class="pre">
-              [
-             </span>
-            </span>
             <a class="reference internal" href="config.html#nautilus_trader.config.common.StrategyConfig" title="nautilus_trader.config.common.StrategyConfig">
              <span class="pre">
               StrategyConfig
              </span>
             </a>
+            <span class="w">
+            </span>
             <span class="p">
              <span class="pre">
-              ]
+              |
              </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="pre">
+             None
             </span>
            </span>
            <span class="w">
@@ -34911,7 +34910,7 @@ instance of the platform.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             loop
+             has_controller
             </span>
            </span>
            <span class="p">
@@ -34923,19 +34922,7 @@ instance of the platform.
            </span>
            <span class="n">
             <span class="pre">
-             asyncio.events.AbstractEventLoop
-            </span>
-            <span class="w">
-            </span>
-            <span class="p">
-             <span class="pre">
-              |
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="pre">
-             None
+             bool
             </span>
            </span>
            <span class="w">
@@ -34949,7 +34936,7 @@ instance of the platform.
            </span>
            <span class="default_value">
             <span class="pre">
-             None
+             False
             </span>
            </span>
           </em>
@@ -34957,7 +34944,7 @@ instance of the platform.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             config
+             loop
             </span>
            </span>
            <span class="p">
@@ -34969,7 +34956,7 @@ instance of the platform.
            </span>
            <span class="n">
             <span class="pre">
-             dict
+             asyncio.events.AbstractEventLoop
             </span>
             <span class="w">
             </span>
@@ -35159,6 +35146,24 @@ strategies.
              <li>
               <p>
                <strong>
+                has_controller
+               </strong>
+               (
+               <em>
+                bool
+               </em>
+               <em>
+                ,
+               </em>
+               <em>
+                default False
+               </em>
+               ) – If the trader has a controller.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
                 loop
                </strong>
                (
@@ -35172,33 +35177,6 @@ strategies.
                 optional
                </em>
                ) – The event loop for the trader.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                config
-               </strong>
-               (
-               <em>
-                dict
-               </em>
-               <em>
-                [
-               </em>
-               <em>
-                str
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                Any
-               </em>
-               <em>
-                ]
-               </em>
-               ) – The configuration for the trader.
               </p>
              </li>
             </ul>

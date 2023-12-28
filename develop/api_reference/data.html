@@ -6361,7 +6361,13 @@ specification, then a bar is created and sent to the handler.
               venue:
              </span>
              <span class="pre">
-              Optional[Venue]
+              Venue
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
              </span>
              <span class="pre">
               =
@@ -6375,10 +6381,22 @@ specification, then a bar is created and sent to the handler.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              dict
+              config:
              </span>
              <span class="pre">
-              config=None
+              NautilusConfig
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>
@@ -6500,24 +6518,11 @@ specification, then a bar is created and sent to the handler.
                  config
                 </strong>
                 (
-                <em>
-                 dict
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 object
-                </em>
-                <em>
-                 ]
-                </em>
+                <a class="reference internal" href="config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+                 <em>
+                  NautilusConfig
+                 </em>
+                </a>
                 <em>
                  ,
                 </em>
@@ -7987,7 +7992,13 @@ then the component state will not change, and an error will be logged.
               venue:
              </span>
              <span class="pre">
-              Optional[Venue]
+              Venue
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
              </span>
              <span class="pre">
               =
@@ -8001,10 +8012,22 @@ then the component state will not change, and an error will be logged.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              dict
+              config:
              </span>
              <span class="pre">
-              config=None
+              NautilusConfig
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
+             <span class="pre">
+              =
+             </span>
+             <span class="pre">
+              None
              </span>
             </span>
            </em>
@@ -8140,24 +8163,11 @@ then the component state will not change, and an error will be logged.
                  config
                 </strong>
                 (
-                <em>
-                 dict
-                </em>
-                <em>
-                 [
-                </em>
-                <em>
-                 str
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 object
-                </em>
-                <em>
-                 ]
-                </em>
+                <a class="reference internal" href="config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+                 <em>
+                  NautilusConfig
+                 </em>
+                </a>
                 <em>
                  ,
                 </em>
@@ -12926,7 +12936,13 @@ just need to override the
               config:
              </span>
              <span class="pre">
-              Optional[DataEngineConfig]
+              DataEngineConfig
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
              </span>
              <span class="pre">
               =
@@ -13310,7 +13326,7 @@ just need to override the
             </dt>
             <dd>
              <p>
-              Optional[ClientId]
+              ClientId | None
              </p>
              <p>
               Return the default data client registered with the engine.
@@ -13324,9 +13340,12 @@ just need to override the
               </dt>
               <dd class="field-odd">
                <p>
-                <em>
-                 Optional[ClientId]
-                </em>
+                ClientId or
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
                </p>
               </dd>
               <dt class="field-even">
@@ -15897,41 +15916,75 @@ then the component state will not change, and an error will be logged.
             (
            </span>
            <em class="sig-param">
-            <span class="pre">
-             ClientId
+            <span class="n">
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              client_id:
+             </span>
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
             </span>
-            <span class="pre">
-             client_id:
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              Venue
+             </span>
+             <span class="pre">
+              venue:
+             </span>
+             <span class="pre">
+              Venue
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
             </span>
-            <span class="pre">
-             Optional[ClientId],
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              DataType
+             </span>
+             <span class="pre">
+              data_type
+             </span>
             </span>
-            <span class="pre">
-             Venue
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              UUID4
+             </span>
+             <span class="pre">
+              command_id
+             </span>
             </span>
-            <span class="pre">
-             venue:
-            </span>
-            <span class="pre">
-             Optional[Venue],
-            </span>
-            <span class="pre">
-             DataType
-            </span>
-            <span class="pre">
-             data_type,
-            </span>
-            <span class="pre">
-             UUID4
-            </span>
-            <span class="pre">
-             command_id,
-            </span>
-            <span class="pre">
-             uint64_t
-            </span>
-            <span class="pre">
-             ts_init
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              uint64_t
+             </span>
+             <span class="pre">
+              ts_init
+             </span>
             </span>
            </em>
            <span class="sig-paren">
@@ -16268,7 +16321,13 @@ then the component state will not change, and an error will be logged.
              client_id:
             </span>
             <span class="pre">
-             Optional[ClientId],
+             ClientId
+            </span>
+            <span class="pre">
+             |
+            </span>
+            <span class="pre">
+             None,
             </span>
             <span class="pre">
              Venue
@@ -16277,7 +16336,13 @@ then the component state will not change, and an error will be logged.
              venue:
             </span>
             <span class="pre">
-             Optional[Venue],
+             Venue
+            </span>
+            <span class="pre">
+             |
+            </span>
+            <span class="pre">
+             None,
             </span>
             <span class="pre">
              DataType
@@ -16691,50 +16756,94 @@ then the component state will not change, and an error will be logged.
             (
            </span>
            <em class="sig-param">
-            <span class="pre">
-             ClientId
+            <span class="n">
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              client_id:
+             </span>
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
             </span>
-            <span class="pre">
-             client_id:
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              Venue
+             </span>
+             <span class="pre">
+              venue:
+             </span>
+             <span class="pre">
+              Venue
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
             </span>
-            <span class="pre">
-             Optional[ClientId],
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              DataType
+             </span>
+             <span class="pre">
+              data_type
+             </span>
             </span>
-            <span class="pre">
-             Venue
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              data
+             </span>
             </span>
-            <span class="pre">
-             venue:
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              UUID4
+             </span>
+             <span class="pre">
+              correlation_id
+             </span>
             </span>
-            <span class="pre">
-             Optional[Venue],
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              UUID4
+             </span>
+             <span class="pre">
+              response_id
+             </span>
             </span>
-            <span class="pre">
-             DataType
-            </span>
-            <span class="pre">
-             data_type,
-            </span>
-            <span class="pre">
-             data,
-            </span>
-            <span class="pre">
-             UUID4
-            </span>
-            <span class="pre">
-             correlation_id,
-            </span>
-            <span class="pre">
-             UUID4
-            </span>
-            <span class="pre">
-             response_id,
-            </span>
-            <span class="pre">
-             uint64_t
-            </span>
-            <span class="pre">
-             ts_init
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              uint64_t
+             </span>
+             <span class="pre">
+              ts_init
+             </span>
             </span>
            </em>
            <span class="sig-paren">
@@ -17146,41 +17255,75 @@ then the component state will not change, and an error will be logged.
             (
            </span>
            <em class="sig-param">
-            <span class="pre">
-             ClientId
+            <span class="n">
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              client_id:
+             </span>
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
             </span>
-            <span class="pre">
-             client_id:
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              Venue
+             </span>
+             <span class="pre">
+              venue:
+             </span>
+             <span class="pre">
+              Venue
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
             </span>
-            <span class="pre">
-             Optional[ClientId],
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              DataType
+             </span>
+             <span class="pre">
+              data_type
+             </span>
             </span>
-            <span class="pre">
-             Venue
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              UUID4
+             </span>
+             <span class="pre">
+              command_id
+             </span>
             </span>
-            <span class="pre">
-             venue:
-            </span>
-            <span class="pre">
-             Optional[Venue],
-            </span>
-            <span class="pre">
-             DataType
-            </span>
-            <span class="pre">
-             data_type,
-            </span>
-            <span class="pre">
-             UUID4
-            </span>
-            <span class="pre">
-             command_id,
-            </span>
-            <span class="pre">
-             uint64_t
-            </span>
-            <span class="pre">
-             ts_init
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              uint64_t
+             </span>
+             <span class="pre">
+              ts_init
+             </span>
             </span>
            </em>
            <span class="sig-paren">
@@ -17502,41 +17645,75 @@ then the component state will not change, and an error will be logged.
             (
            </span>
            <em class="sig-param">
-            <span class="pre">
-             ClientId
+            <span class="n">
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              client_id:
+             </span>
+             <span class="pre">
+              ClientId
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
             </span>
-            <span class="pre">
-             client_id:
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              Venue
+             </span>
+             <span class="pre">
+              venue:
+             </span>
+             <span class="pre">
+              Venue
+             </span>
+             <span class="pre">
+              |
+             </span>
+             <span class="pre">
+              None
+             </span>
             </span>
-            <span class="pre">
-             Optional[ClientId],
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              DataType
+             </span>
+             <span class="pre">
+              data_type
+             </span>
             </span>
-            <span class="pre">
-             Venue
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              UUID4
+             </span>
+             <span class="pre">
+              command_id
+             </span>
             </span>
-            <span class="pre">
-             venue:
-            </span>
-            <span class="pre">
-             Optional[Venue],
-            </span>
-            <span class="pre">
-             DataType
-            </span>
-            <span class="pre">
-             data_type,
-            </span>
-            <span class="pre">
-             UUID4
-            </span>
-            <span class="pre">
-             command_id,
-            </span>
-            <span class="pre">
-             uint64_t
-            </span>
-            <span class="pre">
-             ts_init
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              uint64_t
+             </span>
+             <span class="pre">
+              ts_init
+             </span>
             </span>
            </em>
            <span class="sig-paren">

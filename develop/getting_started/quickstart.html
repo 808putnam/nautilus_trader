@@ -994,8 +994,7 @@ registering indicators to receive certain data types, however in this example we
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.core.message</span> <span class="kn">import</span> <span class="n">Event</span>
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.core.message</span> <span class="kn">import</span> <span class="n">Event</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.indicators.macd</span> <span class="kn">import</span> <span class="n">MovingAverageConvergenceDivergence</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">PriceType</span>
@@ -1029,7 +1028,7 @@ registering indicators to receive certain data types, however in this example we
         <span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span> <span class="o">=</span> <span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trade_size</span><span class="p">)</span>
 
         <span class="c1"># Convenience</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Position</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">:</span> <span class="n">Position</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subscribe_quote_ticks</span><span class="p">(</span><span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>

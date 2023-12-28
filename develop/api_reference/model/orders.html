@@ -37881,164 +37881,297 @@ in full.
            (
           </span>
           <em class="sig-param">
-           <span class="pre">
-            TraderId
+           <span class="n">
+            <span class="pre">
+             TraderId
+            </span>
+            <span class="pre">
+             trader_id
+            </span>
            </span>
-           <span class="pre">
-            trader_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             StrategyId
+            </span>
+            <span class="pre">
+             strategy_id
+            </span>
            </span>
-           <span class="pre">
-            StrategyId
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             InstrumentId
+            </span>
+            <span class="pre">
+             instrument_id
+            </span>
            </span>
-           <span class="pre">
-            strategy_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ClientOrderId
+            </span>
+            <span class="pre">
+             client_order_id
+            </span>
            </span>
-           <span class="pre">
-            InstrumentId
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             OrderSide
+            </span>
+            <span class="pre">
+             order_side
+            </span>
            </span>
-           <span class="pre">
-            instrument_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Quantity
+            </span>
+            <span class="pre">
+             quantity
+            </span>
            </span>
-           <span class="pre">
-            ClientOrderId
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Price
+            </span>
+            <span class="pre">
+             trigger_price:
+            </span>
+            <span class="pre">
+             Price
+            </span>
+            <span class="pre">
+             |
+            </span>
+            <span class="pre">
+             None
+            </span>
            </span>
-           <span class="pre">
-            client_order_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             TriggerType
+            </span>
+            <span class="pre">
+             trigger_type
+            </span>
            </span>
-           <span class="pre">
-            OrderSide
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             trailing_offset:
+            </span>
+            <span class="pre">
+             Decimal
+            </span>
            </span>
-           <span class="pre">
-            order_side,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             TrailingOffsetType
+            </span>
+            <span class="pre">
+             trailing_offset_type
+            </span>
            </span>
-           <span class="pre">
-            Quantity
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             UUID4
+            </span>
+            <span class="pre">
+             init_id
+            </span>
            </span>
-           <span class="pre">
-            quantity,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             uint64_t
+            </span>
+            <span class="pre">
+             ts_init
+            </span>
            </span>
-           <span class="pre">
-            Price
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             TimeInForce
+            </span>
+            <span class="pre">
+             time_in_force=TimeInForce.GTC
+            </span>
            </span>
-           <span class="pre">
-            trigger_price:
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             uint64_t
+            </span>
+            <span class="pre">
+             expire_time_ns=0
+            </span>
            </span>
-           <span class="pre">
-            Optional[Price],
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             reduce_only=False
+            </span>
            </span>
-           <span class="pre">
-            TriggerType
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             quote_quantity=False
+            </span>
            </span>
-           <span class="pre">
-            trigger_type,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             TriggerType
+            </span>
+            <span class="pre">
+             emulation_trigger=TriggerType.NO_TRIGGER
+            </span>
            </span>
-           <span class="pre">
-            trailing_offset:
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             InstrumentId
+            </span>
+            <span class="pre">
+             trigger_instrument_id=None
+            </span>
            </span>
-           <span class="pre">
-            Decimal,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ContingencyType
+            </span>
+            <span class="pre">
+             contingency_type=ContingencyType.NO_CONTINGENCY
+            </span>
            </span>
-           <span class="pre">
-            TrailingOffsetType
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             OrderListId
+            </span>
+            <span class="pre">
+             order_list_id=None
+            </span>
            </span>
-           <span class="pre">
-            trailing_offset_type,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             list
+            </span>
+            <span class="pre">
+             linked_order_ids=None
+            </span>
            </span>
-           <span class="pre">
-            UUID4
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ClientOrderId
+            </span>
+            <span class="pre">
+             parent_order_id=None
+            </span>
            </span>
-           <span class="pre">
-            init_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ExecAlgorithmId
+            </span>
+            <span class="pre">
+             exec_algorithm_id=None
+            </span>
            </span>
-           <span class="pre">
-            uint64_t
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             dict
+            </span>
+            <span class="pre">
+             exec_algorithm_params=None
+            </span>
            </span>
-           <span class="pre">
-            ts_init,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ClientOrderId
+            </span>
+            <span class="pre">
+             exec_spawn_id=None
+            </span>
            </span>
-           <span class="pre">
-            TimeInForce
-           </span>
-           <span class="pre">
-            time_in_force=TimeInForce.GTC,
-           </span>
-           <span class="pre">
-            uint64_t
-           </span>
-           <span class="pre">
-            expire_time_ns=0,
-           </span>
-           <span class="pre">
-            bool
-           </span>
-           <span class="pre">
-            reduce_only=False,
-           </span>
-           <span class="pre">
-            bool
-           </span>
-           <span class="pre">
-            quote_quantity=False,
-           </span>
-           <span class="pre">
-            TriggerType
-           </span>
-           <span class="pre">
-            emulation_trigger=TriggerType.NO_TRIGGER,
-           </span>
-           <span class="pre">
-            InstrumentId
-           </span>
-           <span class="pre">
-            trigger_instrument_id=None,
-           </span>
-           <span class="pre">
-            ContingencyType
-           </span>
-           <span class="pre">
-            contingency_type=ContingencyType.NO_CONTINGENCY,
-           </span>
-           <span class="pre">
-            OrderListId
-           </span>
-           <span class="pre">
-            order_list_id=None,
-           </span>
-           <span class="pre">
-            list
-           </span>
-           <span class="pre">
-            linked_order_ids=None,
-           </span>
-           <span class="pre">
-            ClientOrderId
-           </span>
-           <span class="pre">
-            parent_order_id=None,
-           </span>
-           <span class="pre">
-            ExecAlgorithmId
-           </span>
-           <span class="pre">
-            exec_algorithm_id=None,
-           </span>
-           <span class="pre">
-            dict
-           </span>
-           <span class="pre">
-            exec_algorithm_params=None,
-           </span>
-           <span class="pre">
-            ClientOrderId
-           </span>
-           <span class="pre">
-            exec_spawn_id=None,
-           </span>
-           <span class="pre">
-            unicode
-           </span>
-           <span class="pre">
-            tags=None
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             unicode
+            </span>
+            <span class="pre">
+             tags=None
+            </span>
            </span>
           </em>
           <span class="sig-paren">
@@ -42122,191 +42255,350 @@ in full.
            (
           </span>
           <em class="sig-param">
-           <span class="pre">
-            TraderId
+           <span class="n">
+            <span class="pre">
+             TraderId
+            </span>
+            <span class="pre">
+             trader_id
+            </span>
            </span>
-           <span class="pre">
-            trader_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             StrategyId
+            </span>
+            <span class="pre">
+             strategy_id
+            </span>
            </span>
-           <span class="pre">
-            StrategyId
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             InstrumentId
+            </span>
+            <span class="pre">
+             instrument_id
+            </span>
            </span>
-           <span class="pre">
-            strategy_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ClientOrderId
+            </span>
+            <span class="pre">
+             client_order_id
+            </span>
            </span>
-           <span class="pre">
-            InstrumentId
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             OrderSide
+            </span>
+            <span class="pre">
+             order_side
+            </span>
            </span>
-           <span class="pre">
-            instrument_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Quantity
+            </span>
+            <span class="pre">
+             quantity
+            </span>
            </span>
-           <span class="pre">
-            ClientOrderId
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Price
+            </span>
+            <span class="pre">
+             price:
+            </span>
+            <span class="pre">
+             Price
+            </span>
+            <span class="pre">
+             |
+            </span>
+            <span class="pre">
+             None
+            </span>
            </span>
-           <span class="pre">
-            client_order_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Price
+            </span>
+            <span class="pre">
+             trigger_price:
+            </span>
+            <span class="pre">
+             Price
+            </span>
+            <span class="pre">
+             |
+            </span>
+            <span class="pre">
+             None
+            </span>
            </span>
-           <span class="pre">
-            OrderSide
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             TriggerType
+            </span>
+            <span class="pre">
+             trigger_type
+            </span>
            </span>
-           <span class="pre">
-            order_side,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             limit_offset:
+            </span>
+            <span class="pre">
+             Decimal
+            </span>
            </span>
-           <span class="pre">
-            Quantity
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             trailing_offset:
+            </span>
+            <span class="pre">
+             Decimal
+            </span>
            </span>
-           <span class="pre">
-            quantity,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             TrailingOffsetType
+            </span>
+            <span class="pre">
+             trailing_offset_type
+            </span>
            </span>
-           <span class="pre">
-            Price
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             UUID4
+            </span>
+            <span class="pre">
+             init_id
+            </span>
            </span>
-           <span class="pre">
-            price:
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             uint64_t
+            </span>
+            <span class="pre">
+             ts_init
+            </span>
            </span>
-           <span class="pre">
-            Optional[Price],
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             TimeInForce
+            </span>
+            <span class="pre">
+             time_in_force=TimeInForce.GTC
+            </span>
            </span>
-           <span class="pre">
-            Price
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             uint64_t
+            </span>
+            <span class="pre">
+             expire_time_ns=0
+            </span>
            </span>
-           <span class="pre">
-            trigger_price:
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             post_only=False
+            </span>
            </span>
-           <span class="pre">
-            Optional[Price],
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             reduce_only=False
+            </span>
            </span>
-           <span class="pre">
-            TriggerType
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             bool
+            </span>
+            <span class="pre">
+             quote_quantity=False
+            </span>
            </span>
-           <span class="pre">
-            trigger_type,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             Quantity
+            </span>
+            <span class="pre">
+             display_qty=None
+            </span>
            </span>
-           <span class="pre">
-            limit_offset:
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             TriggerType
+            </span>
+            <span class="pre">
+             emulation_trigger=TriggerType.NO_TRIGGER
+            </span>
            </span>
-           <span class="pre">
-            Decimal,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             InstrumentId
+            </span>
+            <span class="pre">
+             trigger_instrument_id=None
+            </span>
            </span>
-           <span class="pre">
-            trailing_offset:
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ContingencyType
+            </span>
+            <span class="pre">
+             contingency_type=ContingencyType.NO_CONTINGENCY
+            </span>
            </span>
-           <span class="pre">
-            Decimal,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             OrderListId
+            </span>
+            <span class="pre">
+             order_list_id=None
+            </span>
            </span>
-           <span class="pre">
-            TrailingOffsetType
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             list
+            </span>
+            <span class="pre">
+             linked_order_ids=None
+            </span>
            </span>
-           <span class="pre">
-            trailing_offset_type,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ClientOrderId
+            </span>
+            <span class="pre">
+             parent_order_id=None
+            </span>
            </span>
-           <span class="pre">
-            UUID4
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ExecAlgorithmId
+            </span>
+            <span class="pre">
+             exec_algorithm_id=None
+            </span>
            </span>
-           <span class="pre">
-            init_id,
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             dict
+            </span>
+            <span class="pre">
+             exec_algorithm_params=None
+            </span>
            </span>
-           <span class="pre">
-            uint64_t
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             ClientOrderId
+            </span>
+            <span class="pre">
+             exec_spawn_id=None
+            </span>
            </span>
-           <span class="pre">
-            ts_init,
-           </span>
-           <span class="pre">
-            TimeInForce
-           </span>
-           <span class="pre">
-            time_in_force=TimeInForce.GTC,
-           </span>
-           <span class="pre">
-            uint64_t
-           </span>
-           <span class="pre">
-            expire_time_ns=0,
-           </span>
-           <span class="pre">
-            bool
-           </span>
-           <span class="pre">
-            post_only=False,
-           </span>
-           <span class="pre">
-            bool
-           </span>
-           <span class="pre">
-            reduce_only=False,
-           </span>
-           <span class="pre">
-            bool
-           </span>
-           <span class="pre">
-            quote_quantity=False,
-           </span>
-           <span class="pre">
-            Quantity
-           </span>
-           <span class="pre">
-            display_qty=None,
-           </span>
-           <span class="pre">
-            TriggerType
-           </span>
-           <span class="pre">
-            emulation_trigger=TriggerType.NO_TRIGGER,
-           </span>
-           <span class="pre">
-            InstrumentId
-           </span>
-           <span class="pre">
-            trigger_instrument_id=None,
-           </span>
-           <span class="pre">
-            ContingencyType
-           </span>
-           <span class="pre">
-            contingency_type=ContingencyType.NO_CONTINGENCY,
-           </span>
-           <span class="pre">
-            OrderListId
-           </span>
-           <span class="pre">
-            order_list_id=None,
-           </span>
-           <span class="pre">
-            list
-           </span>
-           <span class="pre">
-            linked_order_ids=None,
-           </span>
-           <span class="pre">
-            ClientOrderId
-           </span>
-           <span class="pre">
-            parent_order_id=None,
-           </span>
-           <span class="pre">
-            ExecAlgorithmId
-           </span>
-           <span class="pre">
-            exec_algorithm_id=None,
-           </span>
-           <span class="pre">
-            dict
-           </span>
-           <span class="pre">
-            exec_algorithm_params=None,
-           </span>
-           <span class="pre">
-            ClientOrderId
-           </span>
-           <span class="pre">
-            exec_spawn_id=None,
-           </span>
-           <span class="pre">
-            unicode
-           </span>
-           <span class="pre">
-            tags=None
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             unicode
+            </span>
+            <span class="pre">
+             tags=None
+            </span>
            </span>
           </em>
           <span class="sig-paren">
