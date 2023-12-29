@@ -115,6 +115,8 @@
 <a href="#114" id="114">114</a>
 <a href="#115" id="115">115</a>
 <a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -137,12 +139,12 @@
 <span class="kw">pub mod </span>futures_contract;
 <span class="kw">pub mod </span>options_contract;
 <span class="kw">pub mod </span>synthetic;
-<span class="kw">pub mod </span>synthetic_api;
 
 <span class="attr">#[cfg(feature = <span class="string">"stubs"</span>)]
 </span><span class="kw">pub mod </span>stubs;
 
 <span class="kw">use </span>anyhow::Result;
+<span class="kw">use </span>nautilus_core::time::UnixNanos;
 <span class="kw">use </span>rust_decimal::Decimal;
 
 <span class="kw">use crate</span>::{
@@ -180,6 +182,8 @@
     <span class="kw">fn </span>margin_maint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal;
     <span class="kw">fn </span>maker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal;
     <span class="kw">fn </span>taker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal;
+    <span class="kw">fn </span>ts_event(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos;
+    <span class="kw">fn </span>ts_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos;
 
     <span class="doccomment">/// Creates a new price from the given `value` with the correct price precision for the instrument.
     </span><span class="kw">fn </span>make_price(<span class="kw-2">&amp;</span><span class="self">self</span>, value: f64) -&gt; <span class="prelude-ty">Result</span>&lt;Price&gt; {

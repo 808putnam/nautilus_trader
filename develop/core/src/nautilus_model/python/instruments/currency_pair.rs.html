@@ -132,6 +132,15 @@
 <a href="#131" id="131">131</a>
 <a href="#132" id="132">132</a>
 <a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
+<a href="#142" id="142">142</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -152,7 +161,10 @@
     hash::{Hash, Hasher},
 };
 
-<span class="kw">use </span>nautilus_core::python::{serialization::from_dict_pyo3, to_pyvalue_err};
+<span class="kw">use </span>nautilus_core::{
+    python::{serialization::from_dict_pyo3, to_pyvalue_err},
+    time::UnixNanos,
+};
 <span class="kw">use </span>pyo3::{basic::CompareOp, prelude::<span class="kw-2">*</span>, types::PyDict};
 <span class="kw">use </span>rust_decimal::{prelude::ToPrimitive, Decimal};
 
@@ -179,6 +191,8 @@
         margin_maint: Decimal,
         maker_fee: Decimal,
         taker_fee: Decimal,
+        ts_event: UnixNanos,
+        ts_init: UnixNanos,
         lot_size: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
         max_quantity: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
         min_quantity: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
@@ -203,6 +217,8 @@
             min_quantity,
             max_price,
             min_price,
+            ts_event,
+            ts_init,
         )
         .map_err(to_pyvalue_err)
     }
@@ -242,6 +258,8 @@
         dict.set_item(<span class="string">"margin_maint"</span>, <span class="self">self</span>.margin_maint.to_f64())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"maker_fee"</span>, <span class="self">self</span>.margin_init.to_f64())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"taker_fee"</span>, <span class="self">self</span>.margin_init.to_f64())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"ts_event"</span>, <span class="self">self</span>.ts_event)<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"ts_init"</span>, <span class="self">self</span>.ts_init)<span class="question-mark">?</span>;
         <span class="kw">match </span><span class="self">self</span>.lot_size {
             <span class="prelude-val">Some</span>(value) =&gt; dict.set_item(<span class="string">"lot_size"</span>, value.to_string())<span class="question-mark">?</span>,
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"lot_size"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,

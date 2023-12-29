@@ -145,6 +145,12 @@
 <a href="#144" id="144">144</a>
 <a href="#145" id="145">145</a>
 <a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
+<a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -199,6 +205,8 @@
         margin_maint: Decimal,
         maker_fee: Decimal,
         taker_fee: Decimal,
+        ts_event: UnixNanos,
+        ts_init: UnixNanos,
         lot_size: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
         max_quantity: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
         min_quantity: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
@@ -226,6 +234,8 @@
             min_quantity,
             max_price,
             min_price,
+            ts_event,
+            ts_init,
         )
         .map_err(to_pyvalue_err)
     }
@@ -268,6 +278,8 @@
         dict.set_item(<span class="string">"margin_maint"</span>, <span class="self">self</span>.margin_maint.to_f64())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"maker_fee"</span>, <span class="self">self</span>.maker_fee.to_f64())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"taker_fee"</span>, <span class="self">self</span>.taker_fee.to_f64())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"ts_event"</span>, <span class="self">self</span>.ts_event)<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"ts_init"</span>, <span class="self">self</span>.ts_init)<span class="question-mark">?</span>;
         <span class="kw">match </span><span class="self">self</span>.lot_size {
             <span class="prelude-val">Some</span>(value) =&gt; dict.set_item(<span class="string">"lot_size"</span>, value.to_string())<span class="question-mark">?</span>,
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"lot_size"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,

@@ -242,6 +242,20 @@
 <a href="#241" id="241">241</a>
 <a href="#242" id="242">242</a>
 <a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -306,6 +320,8 @@
         <span class="prelude-val">Some</span>(Money::new(<span class="number">10.00</span>, Currency::from(<span class="string">"USDT"</span>)).unwrap()),
         <span class="prelude-val">Some</span>(Price::from(<span class="string">"1000000.00"</span>)),
         <span class="prelude-val">Some</span>(Price::from(<span class="string">"0.01"</span>)),
+        <span class="number">0</span>,
+        <span class="number">0</span>,
     )
     .unwrap()
 }
@@ -338,6 +354,8 @@
         <span class="prelude-val">Some</span>(Money::new(<span class="number">10.00</span>, Currency::from(<span class="string">"USDT"</span>)).unwrap()),
         <span class="prelude-val">Some</span>(Price::from(<span class="string">"15000.00"</span>)),
         <span class="prelude-val">Some</span>(Price::from(<span class="string">"1.0"</span>)),
+        <span class="number">0</span>,
+        <span class="number">0</span>,
     )
     .unwrap()
 }
@@ -366,6 +384,8 @@
         <span class="prelude-val">Some</span>(Money::from(<span class="string">"1 USD"</span>)),
         <span class="prelude-val">Some</span>(Price::from(<span class="string">"10000000"</span>)),
         <span class="prelude-val">Some</span>(Price::from(<span class="string">"0.01"</span>)),
+        <span class="number">0</span>,
+        <span class="number">0</span>,
     )
     .unwrap();
 }
@@ -394,6 +414,8 @@
         <span class="prelude-val">Some</span>(Quantity::from(<span class="string">"0.000001"</span>)),
         <span class="prelude-val">Some</span>(Price::from(<span class="string">"1000000"</span>)),
         <span class="prelude-val">Some</span>(Price::from(<span class="string">"0.01"</span>)),
+        <span class="number">0</span>,
+        <span class="number">0</span>,
     )
     .unwrap()
 }
@@ -407,7 +429,7 @@
     Equity::new(
         InstrumentId::from(<span class="string">"AAPL.NASDAQ"</span>),
         Symbol::from(<span class="string">"AAPL"</span>),
-        String::from(<span class="string">"US0378331005"</span>),
+        <span class="prelude-val">Some</span>(String::from(<span class="string">"US0378331005"</span>)),
         Currency::from(<span class="string">"USD"</span>),
         <span class="number">2</span>,
         Price::from(<span class="string">"0.01"</span>),
@@ -421,6 +443,8 @@
         <span class="prelude-val">None</span>,
         <span class="prelude-val">None</span>,
         <span class="prelude-val">None</span>,
+        <span class="number">0</span>,
+        <span class="number">0</span>,
     )
     .unwrap()
 }
@@ -449,6 +473,8 @@
         <span class="prelude-val">None</span>,
         <span class="prelude-val">None</span>,
         <span class="prelude-val">None</span>,
+        <span class="number">0</span>,
+        <span class="number">0</span>,
     )
     .unwrap()
 }
@@ -482,6 +508,8 @@
         <span class="prelude-val">None</span>,
         <span class="prelude-val">None</span>,
         <span class="prelude-val">None</span>,
+        <span class="number">0</span>,
+        <span class="number">0</span>,
     )
     .unwrap()
 }

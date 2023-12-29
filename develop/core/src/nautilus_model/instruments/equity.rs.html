@@ -216,6 +216,21 @@
 <a href="#215" id="215">215</a>
 <a href="#216" id="216">216</a>
 <a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -236,6 +251,7 @@
 </span><span class="kw">use </span>std::hash::{Hash, Hasher};
 
 <span class="kw">use </span>anyhow::Result;
+<span class="kw">use </span>nautilus_core::time::UnixNanos;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
@@ -257,7 +273,7 @@
     <span class="kw">pub </span>id: InstrumentId,
     <span class="kw">pub </span>raw_symbol: Symbol,
     <span class="doccomment">/// The instruments ISIN (International Securities Identification Number).
-    </span><span class="kw">pub </span>isin: String,
+    </span><span class="kw">pub </span>isin: <span class="prelude-ty">Option</span>&lt;String&gt;,
     <span class="kw">pub </span>currency: Currency,
     <span class="kw">pub </span>price_precision: u8,
     <span class="kw">pub </span>price_increment: Price,
@@ -271,6 +287,8 @@
     <span class="kw">pub </span>min_quantity: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
     <span class="kw">pub </span>max_price: <span class="prelude-ty">Option</span>&lt;Price&gt;,
     <span class="kw">pub </span>min_price: <span class="prelude-ty">Option</span>&lt;Price&gt;,
+    <span class="kw">pub </span>ts_event: UnixNanos,
+    <span class="kw">pub </span>ts_init: UnixNanos,
 }
 
 <span class="kw">impl </span>Equity {
@@ -278,7 +296,7 @@
     </span><span class="kw">pub fn </span>new(
         id: InstrumentId,
         raw_symbol: Symbol,
-        isin: String,
+        isin: <span class="prelude-ty">Option</span>&lt;String&gt;,
         currency: Currency,
         price_precision: u8,
         price_increment: Price,
@@ -292,6 +310,8 @@
         min_quantity: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
         max_price: <span class="prelude-ty">Option</span>&lt;Price&gt;,
         min_price: <span class="prelude-ty">Option</span>&lt;Price&gt;,
+        ts_event: UnixNanos,
+        ts_init: UnixNanos,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             id,
@@ -310,6 +330,8 @@
             min_quantity,
             max_price,
             min_price,
+            ts_event,
+            ts_init,
         })
     }
 }
@@ -415,6 +437,14 @@
 
     <span class="kw">fn </span>taker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
         <span class="self">self</span>.taker_fee
+    }
+
+    <span class="kw">fn </span>ts_event(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos {
+        <span class="self">self</span>.ts_event
+    }
+
+    <span class="kw">fn </span>ts_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos {
+        <span class="self">self</span>.ts_init
     }
 }
 
