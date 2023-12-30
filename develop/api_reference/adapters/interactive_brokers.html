@@ -2194,10 +2194,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_trade_reports">
+                 <a class="md-nav__link" href="#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_fill_reports">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    InteractiveBrokersExecutionClient.generate_trade_reports()
+                    InteractiveBrokersExecutionClient.generate_fill_reports()
                    </span>
                   </code>
                  </a>
@@ -11887,7 +11887,7 @@ types as values.
               at
              </span>
              <span class="pre">
-              0x7fd28b452010&gt;
+              0x7f7add992010&gt;
              </span>
              <span class="pre">
               =
@@ -19809,7 +19809,7 @@ returned list may be empty if no orders match the given parameters.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_trade_reports">
+            <dt class="sig sig-object py" id="nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_fill_reports">
              <em class="property">
               <span class="pre">
                async
@@ -19819,7 +19819,7 @@ returned list may be empty if no orders match the given parameters.
              </em>
              <span class="sig-name descname">
               <span class="pre">
-               generate_trade_reports
+               generate_fill_reports
               </span>
              </span>
              <span class="sig-paren">
@@ -20028,9 +20028,9 @@ returned list may be empty if no orders match the given parameters.
                  [
                 </span>
                </span>
-               <a class="reference internal" href="../execution.html#nautilus_trader.execution.reports.TradeReport" title="nautilus_trader.execution.reports.TradeReport">
+               <a class="reference internal" href="../execution.html#nautilus_trader.execution.reports.FillReport" title="nautilus_trader.execution.reports.FillReport">
                 <span class="pre">
-                 nautilus_trader.execution.reports.TradeReport
+                 nautilus_trader.execution.reports.FillReport
                 </span>
                </a>
                <span class="p">
@@ -20040,7 +20040,7 @@ returned list may be empty if no orders match the given parameters.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_trade_reports" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_fill_reports" title="Permalink to this definition">
               ¶
              </a>
             </dt>
@@ -20052,7 +20052,7 @@ returned list may be empty if no orders match the given parameters.
                 `
                </span>
               </a>
-              TradeReport`s with optional query filters. The returned list
+              FillReport`s with optional query filters. The returned list
 may be empty if no trades match the given parameters.
              </p>
              <dl class="field-list simple">
@@ -20151,7 +20151,7 @@ may be empty if no trades match the given parameters.
               <dd class="field-even">
                <p>
                 <em>
-                 list[TradeReport]
+                 list[FillReport]
                 </em>
                </p>
               </dd>

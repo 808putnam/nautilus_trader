@@ -1537,6 +1537,11 @@
             </ul>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.reports.ExecutionMassStatus.add_fill_reports">
+             add_fill_reports() (ExecutionMassStatus method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.engine.BacktestEngine.add_instrument">
              add_instrument() (BacktestEngine method)
             </a>
@@ -1716,11 +1721,6 @@
            <li>
             <a href="api_reference/analysis.html#nautilus_trader.analysis.analyzer.PortfolioAnalyzer.add_trade">
              add_trade() (PortfolioAnalyzer method)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/execution.html#nautilus_trader.execution.reports.ExecutionMassStatus.add_trade_reports">
-             add_trade_reports() (ExecutionMassStatus method)
             </a>
            </li>
            <li>
@@ -7800,6 +7800,11 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.reports.ExecutionMassStatus.fill_reports">
+             fill_reports() (ExecutionMassStatus method)
+            </a>
+           </li>
+           <li>
             <a href="api_reference/model/orders.html#nautilus_trader.model.orders.limit_if_touched.LimitIfTouchedOrder.filled_qty">
              filled_qty (LimitIfTouchedOrder attribute)
             </a>
@@ -7854,6 +7859,11 @@
            <li>
             <a href="api_reference/backtest.html#nautilus_trader.backtest.models.FillModel">
              FillModel (class in nautilus_trader.backtest.models)
+            </a>
+           </li>
+           <li>
+            <a href="api_reference/execution.html#nautilus_trader.execution.reports.FillReport">
+             FillReport (class in nautilus_trader.execution.reports)
             </a>
            </li>
            <li>
@@ -9145,6 +9155,33 @@
             </a>
            </li>
            <li>
+            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.generate_fill_reports">
+             generate_fill_reports() (BetfairExecutionClient method)
+            </a>
+            <ul>
+             <li>
+              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.futures.execution.BinanceFuturesExecutionClient.generate_fill_reports">
+               (BinanceFuturesExecutionClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.spot.execution.BinanceSpotExecutionClient.generate_fill_reports">
+               (BinanceSpotExecutionClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_fill_reports">
+               (InteractiveBrokersExecutionClient method)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/live.html#nautilus_trader.live.execution_client.LiveExecutionClient.generate_fill_reports">
+               (LiveExecutionClient method)
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li>
             <a href="api_reference/analysis.html#nautilus_trader.analysis.reporter.ReportProvider.generate_fills_report">
              generate_fills_report() (ReportProvider static method)
             </a>
@@ -9624,6 +9661,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/analysis.html#nautilus_trader.analysis.reporter.ReportProvider.generate_orders_report">
              generate_orders_report() (ReportProvider static method)
@@ -9663,10 +9704,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/analysis.html#nautilus_trader.analysis.reporter.ReportProvider.generate_positions_report">
              generate_positions_report() (ReportProvider static method)
@@ -9683,33 +9720,6 @@
             <a href="api_reference/persistence.html#nautilus_trader.persistence.writer.generate_signal_class">
              generate_signal_class() (in module nautilus_trader.persistence.writer)
             </a>
-           </li>
-           <li>
-            <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.execution.BetfairExecutionClient.generate_trade_reports">
-             generate_trade_reports() (BetfairExecutionClient method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.futures.execution.BinanceFuturesExecutionClient.generate_trade_reports">
-               (BinanceFuturesExecutionClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.spot.execution.BinanceSpotExecutionClient.generate_trade_reports">
-               (BinanceSpotExecutionClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.execution.InteractiveBrokersExecutionClient.generate_trade_reports">
-               (InteractiveBrokersExecutionClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/live.html#nautilus_trader.live.execution_client.LiveExecutionClient.generate_trade_reports">
-               (LiveExecutionClient method)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/model/data.html#nautilus_trader.model.data.GenericData">
@@ -12121,6 +12131,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.reports.FillReport.id">
+               (FillReport attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.futures_contract.FuturesContract.id">
                (FuturesContract attribute)
               </a>
@@ -12543,11 +12558,6 @@
              <li>
               <a href="api_reference/trading.html#nautilus_trader.trading.trader.Trader.id">
                (Trader attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.reports.TradeReport.id">
-               (TradeReport attribute)
               </a>
              </li>
              <li>
@@ -33177,11 +33187,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/execution.html#nautilus_trader.execution.reports.ExecutionMassStatus.trade_reports">
-             trade_reports() (ExecutionMassStatus method)
-            </a>
-           </li>
-           <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.trade_tick">
              trade_tick() (Cache method)
             </a>
@@ -33645,11 +33650,6 @@
          </td>
          <td style="width: 33%; vertical-align: top;">
           <ul>
-           <li>
-            <a href="api_reference/execution.html#nautilus_trader.execution.reports.TradeReport">
-             TradeReport (class in nautilus_trader.execution.reports)
-            </a>
-           </li>
            <li>
             <a href="api_reference/model/identifiers.html#nautilus_trader.model.identifiers.TraderId">
              TraderId (class in nautilus_trader.model.identifiers)
@@ -34316,6 +34316,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/execution.html#nautilus_trader.execution.reports.FillReport.ts_init">
+               (FillReport attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.futures_contract.FuturesContract.ts_init">
                (FuturesContract attribute)
               </a>
@@ -34583,11 +34588,6 @@
              <li>
               <a href="api_reference/common.html#nautilus_trader.common.clock.TimeEvent.ts_init">
                (TimeEvent attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.reports.TradeReport.ts_init">
-               (TradeReport attribute)
               </a>
              </li>
              <li>
