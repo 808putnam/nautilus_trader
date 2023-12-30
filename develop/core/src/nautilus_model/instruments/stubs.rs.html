@@ -277,6 +277,7 @@
 <span class="kw">use </span>nautilus_core::time::UnixNanos;
 <span class="kw">use </span>rstest::fixture;
 <span class="kw">use </span>rust_decimal::Decimal;
+<span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use crate</span>::{
     enums::{AssetClass, OptionKind},
@@ -429,11 +430,10 @@
     Equity::new(
         InstrumentId::from(<span class="string">"AAPL.NASDAQ"</span>),
         Symbol::from(<span class="string">"AAPL"</span>),
-        <span class="prelude-val">Some</span>(String::from(<span class="string">"US0378331005"</span>)),
+        <span class="prelude-val">Some</span>(Ustr::from(<span class="string">"US0378331005"</span>)),
         Currency::from(<span class="string">"USD"</span>),
         <span class="number">2</span>,
         Price::from(<span class="string">"0.01"</span>),
-        Quantity::from(<span class="number">1</span>),
         Decimal::from_str(<span class="string">"0.0"</span>).unwrap(),
         Decimal::from_str(<span class="string">"0.0"</span>).unwrap(),
         Decimal::from_str(<span class="string">"0.001"</span>).unwrap(),
@@ -457,7 +457,7 @@
         InstrumentId::new(Symbol::from(<span class="string">"ESZ21"</span>), Venue::from(<span class="string">"CME"</span>)),
         Symbol::from(<span class="string">"ESZ21"</span>),
         AssetClass::Index,
-        String::from(<span class="string">"ES"</span>),
+        Ustr::from(<span class="string">"ES"</span>),
         activation.timestamp_nanos_opt().unwrap() <span class="kw">as </span>UnixNanos,
         expiration.timestamp_nanos_opt().unwrap() <span class="kw">as </span>UnixNanos,
         Currency::USD(),

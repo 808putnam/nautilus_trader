@@ -139,8 +139,6 @@
 <a href="#138" id="138">138</a>
 <a href="#139" id="139">139</a>
 <a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -167,6 +165,7 @@
 };
 <span class="kw">use </span>pyo3::{basic::CompareOp, prelude::<span class="kw-2">*</span>, types::PyDict};
 <span class="kw">use </span>rust_decimal::{prelude::ToPrimitive, Decimal};
+<span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use crate</span>::{
     identifiers::{instrument_id::InstrumentId, symbol::Symbol},
@@ -184,7 +183,6 @@
         currency: Currency,
         price_precision: u8,
         price_increment: Price,
-        multiplier: Quantity,
         margin_init: Decimal,
         margin_maint: Decimal,
         maker_fee: Decimal,
@@ -201,11 +199,10 @@
         <span class="self">Self</span>::new(
             id,
             raw_symbol,
-            isin,
+            isin.map(|x| Ustr::from(<span class="kw-2">&amp;</span>x)),
             currency,
             price_precision,
             price_increment,
-            multiplier,
             margin_init,
             margin_maint,
             maker_fee,
@@ -249,7 +246,6 @@
         dict.set_item(<span class="string">"currency"</span>, <span class="self">self</span>.currency.code.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"price_precision"</span>, <span class="self">self</span>.price_precision)<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"price_increment"</span>, <span class="self">self</span>.price_increment.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">"multiplier"</span>, <span class="self">self</span>.multiplier.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"margin_init"</span>, <span class="self">self</span>.margin_init.to_f64())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"margin_maint"</span>, <span class="self">self</span>.margin_maint.to_f64())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"maker_fee"</span>, <span class="self">self</span>.maker_fee.to_f64())<span class="question-mark">?</span>;

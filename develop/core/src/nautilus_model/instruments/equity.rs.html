@@ -229,8 +229,6 @@
 <a href="#228" id="228">228</a>
 <a href="#229" id="229">229</a>
 <a href="#230" id="230">230</a>
-<a href="#231" id="231">231</a>
-<a href="#232" id="232">232</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -255,6 +253,7 @@
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use </span><span class="kw">super</span>::Instrument;
 <span class="kw">use crate</span>::{
@@ -264,7 +263,7 @@
 };
 
 <span class="attr">#[repr(C)]
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 #[cfg_attr(
     feature = <span class="string">"python"</span>,
     pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>)
@@ -273,11 +272,10 @@
     <span class="kw">pub </span>id: InstrumentId,
     <span class="kw">pub </span>raw_symbol: Symbol,
     <span class="doccomment">/// The instruments ISIN (International Securities Identification Number).
-    </span><span class="kw">pub </span>isin: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    </span><span class="kw">pub </span>isin: <span class="prelude-ty">Option</span>&lt;Ustr&gt;,
     <span class="kw">pub </span>currency: Currency,
     <span class="kw">pub </span>price_precision: u8,
     <span class="kw">pub </span>price_increment: Price,
-    <span class="kw">pub </span>multiplier: Quantity,
     <span class="kw">pub </span>margin_init: Decimal,
     <span class="kw">pub </span>margin_maint: Decimal,
     <span class="kw">pub </span>maker_fee: Decimal,
@@ -296,11 +294,10 @@
     </span><span class="kw">pub fn </span>new(
         id: InstrumentId,
         raw_symbol: Symbol,
-        isin: <span class="prelude-ty">Option</span>&lt;String&gt;,
+        isin: <span class="prelude-ty">Option</span>&lt;Ustr&gt;,
         currency: Currency,
         price_precision: u8,
         price_increment: Price,
-        multiplier: Quantity,
         margin_init: Decimal,
         margin_maint: Decimal,
         maker_fee: Decimal,
@@ -320,7 +317,6 @@
             currency,
             price_precision,
             price_increment,
-            multiplier,
             margin_init,
             margin_maint,
             maker_fee,
@@ -400,7 +396,7 @@
     }
 
     <span class="kw">fn </span>multiplier(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Quantity {
-        <span class="self">self</span>.multiplier
+        Quantity::from(<span class="number">1</span>)
     }
 
     <span class="kw">fn </span>lot_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Quantity&gt; {

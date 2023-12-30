@@ -277,7 +277,7 @@
     <span class="attr">#[pyo3(name = <span class="string">"to_dict"</span>)]
     </span><span class="kw">fn </span>py_to_dict(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; PyResult&lt;PyObject&gt; {
         <span class="kw">let </span>dict = PyDict::new(py);
-        dict.set_item(<span class="string">"type"</span>, <span class="macro">stringify!</span>(CryptoPerpetual))<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"type"</span>, <span class="macro">stringify!</span>(CryptoFuture))<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"id"</span>, <span class="self">self</span>.id.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"raw_symbol"</span>, <span class="self">self</span>.raw_symbol.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"underlying"</span>, <span class="self">self</span>.underlying.code.to_string())<span class="question-mark">?</span>;
