@@ -1008,7 +1008,7 @@ registering indicators to receive certain data types, however in this example we
 
 
 <span class="k">class</span> <span class="nc">MACDConfig</span><span class="p">(</span><span class="n">StrategyConfig</span><span class="p">):</span>
-    <span class="n">instrument_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">instrument_id</span><span class="p">:</span> <span class="n">InstrumentId</span>
     <span class="n">fast_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span>
     <span class="n">slow_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">26</span>
     <span class="n">trade_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1_000_000</span>
@@ -1020,11 +1020,13 @@ registering indicators to receive certain data types, however in this example we
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
         <span class="c1"># Our "trading signal"</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">macd</span> <span class="o">=</span> <span class="n">MovingAverageConvergenceDivergence</span><span class="p">(</span>
-            <span class="n">fast_period</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">fast_period</span><span class="p">,</span> <span class="n">slow_period</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">slow_period</span><span class="p">,</span> <span class="n">price_type</span><span class="o">=</span><span class="n">PriceType</span><span class="o">.</span><span class="n">MID</span>
+            <span class="n">fast_period</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">fast_period</span><span class="p">,</span>
+            <span class="n">slow_period</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">slow_period</span><span class="p">,</span>
+            <span class="n">price_type</span><span class="o">=</span><span class="n">PriceType</span><span class="o">.</span><span class="n">MID</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># We copy some config values onto the class to make them easier to reference later on</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">entry_threshold</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">entry_threshold</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span> <span class="o">=</span> <span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">instrument_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span> <span class="o">=</span> <span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trade_size</span><span class="p">)</span>
 
         <span class="c1"># Convenience</span>
@@ -1145,7 +1147,7 @@ following (minimal) aspects of the backtest:
               venues
              </span>
             </code>
-            - The simulated venues (exchanges or brokers) available in the backtest
+            - The simulated execution venues (exchanges or brokers) available in the backtest
            </p>
           </li>
           <li>
