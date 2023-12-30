@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/parsing.rs`."><title>parsing.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-452d19225583af2a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (fb5ed726f 2023-12-28)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-6902632119e002ca.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/parsing.rs`."><title>parsing.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-452d19225583af2a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (3cdd004e5 2023-12-29)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-6902632119e002ca.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -445,7 +445,7 @@
         trade::TradeTick,
     },
     enums::{
-        AggregationSource, AggressorSide, AssetClass, AssetType, BarAggregation, BookAction,
+        AggregationSource, AggressorSide, AssetClass, BarAggregation, BookAction, InstrumentClass,
         OptionKind, OrderSide, PriceType,
     },
     identifiers::{instrument_id::InstrumentId, trade_id::TradeId},
@@ -489,7 +489,7 @@
     }
 }
 
-<span class="kw">pub fn </span>parse_cfi_iso10926(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="prelude-ty">Option</span>&lt;AssetClass&gt;, <span class="prelude-ty">Option</span>&lt;AssetType&gt;)&gt; {
+<span class="kw">pub fn </span>parse_cfi_iso10926(value: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="prelude-ty">Option</span>&lt;AssetClass&gt;, <span class="prelude-ty">Option</span>&lt;InstrumentClass&gt;)&gt; {
     <span class="kw">let </span>chars: Vec&lt;char&gt; = value.chars().collect();
     <span class="kw">if </span>chars.len() &lt; <span class="number">3 </span>{
         <span class="macro">bail!</span>(<span class="string">"Value string is too short"</span>);
@@ -503,14 +503,14 @@
     // let cfi_attribute4 = value[5];
 
     </span><span class="kw">let </span><span class="kw-2">mut </span>asset_class = <span class="kw">match </span>cfi_category {
-        <span class="string">'D' </span>=&gt; <span class="prelude-val">Some</span>(AssetClass::Bond),
+        <span class="string">'D' </span>=&gt; <span class="prelude-val">Some</span>(AssetClass::Debt),
         <span class="string">'E' </span>=&gt; <span class="prelude-val">Some</span>(AssetClass::Equity),
         <span class="string">'S' </span>=&gt; <span class="prelude-val">None</span>,
         <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
     };
 
-    <span class="kw">let </span>asset_type = <span class="kw">match </span>cfi_group {
-        <span class="string">'I' </span>=&gt; <span class="prelude-val">Some</span>(AssetType::Future),
+    <span class="kw">let </span>instrument_class = <span class="kw">match </span>cfi_group {
+        <span class="string">'I' </span>=&gt; <span class="prelude-val">Some</span>(InstrumentClass::Future),
         <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
     };
 
@@ -518,7 +518,7 @@
         asset_class = <span class="prelude-val">Some</span>(AssetClass::Index);
     }
 
-    <span class="prelude-val">Ok</span>((asset_class, asset_type))
+    <span class="prelude-val">Ok</span>((asset_class, instrument_class))
 }
 
 <span class="kw">pub fn </span>parse_min_price_increment(value: i64, currency: Currency) -&gt; <span class="prelude-ty">Result</span>&lt;Price&gt; {

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/enums.rs`."><title>enums.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-452d19225583af2a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (fb5ed726f 2023-12-28)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-6902632119e002ca.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/enums.rs`."><title>enums.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-452d19225583af2a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (3cdd004e5 2023-12-29)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-6902632119e002ca.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
@@ -1189,6 +1189,7 @@
 <a href="#1188" id="1188">1188</a>
 <a href="#1189" id="1189">1189</a>
 <a href="#1190" id="1190">1190</a>
+<a href="#1191" id="1191">1191</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1358,6 +1359,7 @@
 #[allow(non_camel_case_types)]
 </span><span class="kw">pub enum </span>AssetClass {
     <span class="doccomment">/// Foreign exchange (FOREX) assets.
+    </span><span class="attr">#[pyo3(name = <span class="string">"FX"</span>)]
     </span>FX = <span class="number">1</span>,
     <span class="doccomment">/// Equity / stock assets.
     </span><span class="attr">#[pyo3(name = <span class="string">"EQUITY"</span>)]
@@ -1365,24 +1367,18 @@
     <span class="doccomment">/// Commodity assets.
     </span><span class="attr">#[pyo3(name = <span class="string">"COMMODITY"</span>)]
     </span>Commodity = <span class="number">3</span>,
-    <span class="doccomment">/// Metal commodity assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">"METAL"</span>)]
-    </span>Metal = <span class="number">4</span>,
-    <span class="doccomment">/// Energy commodity assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">"ENERGY"</span>)]
-    </span>Energy = <span class="number">5</span>,
-    <span class="doccomment">/// Fixed income bond assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">"BOND"</span>)]
-    </span>Bond = <span class="number">6</span>,
-    <span class="doccomment">/// Index based assets.
+    <span class="doccomment">/// Debt based assets.
+    </span><span class="attr">#[pyo3(name = <span class="string">"DEBT"</span>)]
+    </span>Debt = <span class="number">4</span>,
+    <span class="doccomment">/// Index based assets (baskets).
     </span><span class="attr">#[pyo3(name = <span class="string">"INDEX"</span>)]
-    </span>Index = <span class="number">7</span>,
+    </span>Index = <span class="number">5</span>,
     <span class="doccomment">/// Cryptocurrency or crypto token assets.
-    </span><span class="attr">#[pyo3(name = <span class="string">"CRYPTO_CURRENCY"</span>)]
-    </span>Cryptocurrency = <span class="number">8</span>,
-    <span class="doccomment">/// Sports betting instruments.
-    </span><span class="attr">#[pyo3(name = <span class="string">"SPORTS_BETTING"</span>)]
-    </span>SportsBetting = <span class="number">9</span>,
+    </span><span class="attr">#[pyo3(name = <span class="string">"CRYPTOCURRENCY"</span>)]
+    </span>Cryptocurrency = <span class="number">6</span>,
+    <span class="doccomment">/// Alternative assets.
+    </span><span class="attr">#[pyo3(name = <span class="string">"ALTERNATIVE"</span>)]
+    </span>Alternative = <span class="number">7</span>,
 }
 
 <span class="doccomment">/// The asset type for a financial market product.
@@ -1408,28 +1404,34 @@
     feature = <span class="string">"python"</span>,
     pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
-</span><span class="kw">pub enum </span>AssetType {
-    <span class="doccomment">/// A spot market asset type. The current market price of an asset that is bought or sold for immediate delivery and payment.
+</span><span class="kw">pub enum </span>InstrumentClass {
+    <span class="doccomment">/// A spot market instrument class. The current market price of an instrument that is bought or sold for immediate delivery and payment.
     </span><span class="attr">#[pyo3(name = <span class="string">"SPOT"</span>)]
     </span>Spot = <span class="number">1</span>,
-    <span class="doccomment">/// A swap asset type. A derivative contract through which two parties exchange the cash flows or liabilities from two different financial instruments.
+    <span class="doccomment">/// A swap instrument class. A derivative contract through which two parties exchange the cash flows or liabilities from two different financial instruments.
     </span><span class="attr">#[pyo3(name = <span class="string">"SWAP"</span>)]
     </span>Swap = <span class="number">2</span>,
-    <span class="doccomment">/// A futures contract asset type. A legal agreement to buy or sell an asset at a predetermined price at a specified time in the future.
+    <span class="doccomment">/// A futures contract instrument class. A legal agreement to buy or sell an asset at a predetermined price at a specified time in the future.
     </span><span class="attr">#[pyo3(name = <span class="string">"FUTURE"</span>)]
     </span>Future = <span class="number">3</span>,
-    <span class="doccomment">/// A forward derivative asset type. A customized contract between two parties to buy or sell an asset at a specified price on a future date.
+    <span class="doccomment">/// A forward derivative instrument class. A customized contract between two parties to buy or sell an asset at a specified price on a future date.
     </span><span class="attr">#[pyo3(name = <span class="string">"FORWARD"</span>)]
     </span>Forward = <span class="number">4</span>,
-    <span class="doccomment">/// A contract-for-difference (CFD) asset type. A contract between an investor and a CFD broker to exchange the difference in the value of a financial product between the time the contract opens and closes.
+    <span class="doccomment">/// A contract-for-difference (CFD) instrument class. A contract between an investor and a CFD broker to exchange the difference in the value of a financial product between the time the contract opens and closes.
     </span><span class="attr">#[pyo3(name = <span class="string">"CFD"</span>)]
     </span>Cfd = <span class="number">5</span>,
-    <span class="doccomment">/// An options contract asset type. A type of derivative that gives the holder the right, but not the obligation, to buy or sell an underlying asset at a predetermined price before or at a certain future date.
+    <span class="doccomment">/// A bond instrument class. A type of debt investment where an investor loans money to an entity (typically corporate or governmental) which borrows the funds for a defined period of time at a variable or fixed interest rate.
+    </span><span class="attr">#[pyo3(name = <span class="string">"BOND"</span>)]
+    </span>Bond = <span class="number">6</span>,
+    <span class="doccomment">/// An options contract instrument class. A type of derivative that gives the holder the right, but not the obligation, to buy or sell an underlying asset at a predetermined price before or at a certain future date.
     </span><span class="attr">#[pyo3(name = <span class="string">"OPTION"</span>)]
-    </span><span class="prelude-ty">Option </span>= <span class="number">6</span>,
-    <span class="doccomment">/// A warrant asset type. A derivative that gives the holder the right, but not the obligation, to buy or sell a security—most commonly an equity—at a certain price before expiration.
+    </span><span class="prelude-ty">Option </span>= <span class="number">7</span>,
+    <span class="doccomment">/// A warrant instrument class. A derivative that gives the holder the right, but not the obligation, to buy or sell a security—most commonly an equity—at a certain price before expiration.
     </span><span class="attr">#[pyo3(name = <span class="string">"WARRANT"</span>)]
-    </span>Warrant = <span class="number">7</span>,
+    </span>Warrant = <span class="number">8</span>,
+    <span class="doccomment">/// A warrant instrument class. A derivative that gives the holder the right, but not the obligation, to buy or sell a security—most commonly an equity—at a certain price before expiration.
+    </span><span class="attr">#[pyo3(name = <span class="string">"SPORTS_BETTING"</span>)]
+    </span>SportsBetting = <span class="number">9</span>,
 }
 
 <span class="doccomment">/// The aggregation method through which a bar is generated and closed.
@@ -2335,7 +2337,7 @@
 <span class="macro">enum_strum_serde!</span>(AggregationSource);
 <span class="macro">enum_strum_serde!</span>(AggressorSide);
 <span class="macro">enum_strum_serde!</span>(AssetClass);
-<span class="macro">enum_strum_serde!</span>(AssetType);
+<span class="macro">enum_strum_serde!</span>(InstrumentClass);
 <span class="macro">enum_strum_serde!</span>(BarAggregation);
 <span class="macro">enum_strum_serde!</span>(BookAction);
 <span class="macro">enum_strum_serde!</span>(BookType);
