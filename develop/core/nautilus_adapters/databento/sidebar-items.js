@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["parsing"]};
+window.SIDEBAR_ITEMS = {"mod":["common","parsing","types"]};

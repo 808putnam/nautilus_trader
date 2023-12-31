@@ -242,6 +242,7 @@
 <a href="#241" id="241">241</a>
 <a href="#242" id="242">242</a>
 <a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -266,6 +267,7 @@
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use </span><span class="kw">super</span>::Instrument;
 <span class="kw">use crate</span>::{
@@ -275,7 +277,7 @@
 };
 
 <span class="attr">#[repr(C)]
-#[derive(Clone, Debug, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 #[cfg_attr(
     feature = <span class="string">"python"</span>,
     pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>)
@@ -284,7 +286,7 @@
     <span class="kw">pub </span>id: InstrumentId,
     <span class="kw">pub </span>raw_symbol: Symbol,
     <span class="kw">pub </span>asset_class: AssetClass,
-    <span class="kw">pub </span>underlying: String,
+    <span class="kw">pub </span>underlying: Ustr,
     <span class="kw">pub </span>option_kind: OptionKind,
     <span class="kw">pub </span>activation_ns: UnixNanos,
     <span class="kw">pub </span>expiration_ns: UnixNanos,
@@ -311,7 +313,7 @@
         id: InstrumentId,
         raw_symbol: Symbol,
         asset_class: AssetClass,
-        underlying: String,
+        underlying: Ustr,
         option_kind: OptionKind,
         activation_ns: UnixNanos,
         expiration_ns: UnixNanos,
