@@ -448,6 +448,31 @@
 <a href="#447" id="447">447</a>
 <a href="#448" id="448">448</a>
 <a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a>
+<a href="#466" id="466">466</a>
+<a href="#467" id="467">467</a>
+<a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
+<a href="#472" id="472">472</a>
+<a href="#473" id="473">473</a>
+<a href="#474" id="474">474</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -482,6 +507,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>account_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AccountType {
@@ -498,6 +524,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>aggregation_source_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AggregationSource {
@@ -514,6 +541,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>aggressor_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AggressorSide {
@@ -530,6 +558,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>asset_class_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; AssetClass {
@@ -546,6 +575,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>instrument_class_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; InstrumentClass {
@@ -562,6 +592,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>bar_aggregation_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; BarAggregation {
@@ -578,6 +609,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>book_action_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; BookAction {
@@ -594,6 +626,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>book_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; BookType {
@@ -610,6 +643,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>contingency_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; ContingencyType {
@@ -626,6 +660,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>currency_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; CurrencyType {
@@ -637,6 +672,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>instrument_close_type_from_cstr(
@@ -661,6 +697,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>liquidity_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; LiquiditySide {
@@ -677,6 +714,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>market_status_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; MarketStatus {
@@ -693,6 +731,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>halt_reason_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; HaltReason {
@@ -709,6 +748,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>oms_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OmsType {
@@ -725,6 +765,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>option_kind_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OptionKind {
@@ -741,6 +782,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>order_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderSide {
@@ -757,6 +799,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>order_status_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderStatus {
@@ -773,6 +816,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>order_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; OrderType {
@@ -789,6 +833,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>position_side_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; PositionSide {
@@ -805,6 +850,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>price_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; PriceType {
@@ -821,6 +867,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>time_in_force_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TimeInForce {
@@ -837,6 +884,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>trading_state_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TradingState {
@@ -853,6 +901,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>trailing_offset_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TrailingOffsetType {
@@ -869,6 +918,7 @@
 <span class="doccomment">/// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 </span><span class="attr">#[no_mangle]
 </span><span class="kw">pub unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>trigger_type_from_cstr(ptr: <span class="kw-2">*const </span>c_char) -&gt; TriggerType {

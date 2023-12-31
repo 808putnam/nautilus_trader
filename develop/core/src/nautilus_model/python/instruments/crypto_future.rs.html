@@ -152,18 +152,6 @@
 <a href="#151" id="151">151</a>
 <a href="#152" id="152">152</a>
 <a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a>
-<a href="#157" id="157">157</a>
-<a href="#158" id="158">158</a>
-<a href="#159" id="159">159</a>
-<a href="#160" id="160">160</a>
-<a href="#161" id="161">161</a>
-<a href="#162" id="162">162</a>
-<a href="#163" id="163">163</a>
-<a href="#164" id="164">164</a>
-<a href="#165" id="165">165</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -189,7 +177,7 @@
     time::UnixNanos,
 };
 <span class="kw">use </span>pyo3::{basic::CompareOp, prelude::<span class="kw-2">*</span>, types::PyDict};
-<span class="kw">use </span>rust_decimal::{prelude::ToPrimitive, Decimal};
+<span class="kw">use </span>rust_decimal::prelude::ToPrimitive;
 
 <span class="kw">use crate</span>::{
     identifiers::{instrument_id::InstrumentId, symbol::Symbol},
@@ -213,10 +201,6 @@
         size_precision: u8,
         price_increment: Price,
         size_increment: Quantity,
-        margin_init: Decimal,
-        margin_maint: Decimal,
-        maker_fee: Decimal,
-        taker_fee: Decimal,
         ts_event: UnixNanos,
         ts_init: UnixNanos,
         lot_size: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
@@ -239,10 +223,6 @@
             size_precision,
             price_increment,
             size_increment,
-            margin_init,
-            margin_maint,
-            maker_fee,
-            taker_fee,
             lot_size,
             max_quantity,
             min_quantity,
@@ -292,10 +272,6 @@
         dict.set_item(<span class="string">"size_precision"</span>, <span class="self">self</span>.size_precision)<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"price_increment"</span>, <span class="self">self</span>.price_increment.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"size_increment"</span>, <span class="self">self</span>.size_increment.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">"margin_init"</span>, <span class="self">self</span>.margin_init.to_f64())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">"margin_maint"</span>, <span class="self">self</span>.margin_maint.to_f64())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">"maker_fee"</span>, <span class="self">self</span>.margin_init.to_f64())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">"taker_fee"</span>, <span class="self">self</span>.margin_init.to_f64())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"ts_event"</span>, <span class="self">self</span>.ts_event)<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"ts_init"</span>, <span class="self">self</span>.ts_init)<span class="question-mark">?</span>;
         <span class="kw">match </span><span class="self">self</span>.lot_size {

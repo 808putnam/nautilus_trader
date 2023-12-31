@@ -117,6 +117,18 @@
 <a href="#116" id="116">116</a>
 <a href="#117" id="117">117</a>
 <a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -146,6 +158,7 @@
 <span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_core::time::UnixNanos;
 <span class="kw">use </span>rust_decimal::Decimal;
+<span class="kw">use </span>rust_decimal_macros::dec;
 
 <span class="kw">use crate</span>::{
     enums::{AssetClass, InstrumentClass},
@@ -178,10 +191,21 @@
     <span class="kw">fn </span>min_quantity(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Quantity&gt;;
     <span class="kw">fn </span>max_price(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Price&gt;;
     <span class="kw">fn </span>min_price(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Price&gt;;
-    <span class="kw">fn </span>margin_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal;
-    <span class="kw">fn </span>margin_maint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal;
-    <span class="kw">fn </span>maker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal;
-    <span class="kw">fn </span>taker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal;
+    <span class="kw">fn </span>margin_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="macro">dec!</span>(<span class="number">0</span>) <span class="comment">// Temporary until separate fee models
+    </span>}
+
+    <span class="kw">fn </span>margin_maint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="macro">dec!</span>(<span class="number">0</span>) <span class="comment">// Temporary until separate fee models
+    </span>}
+
+    <span class="kw">fn </span>maker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="macro">dec!</span>(<span class="number">0</span>) <span class="comment">// Temporary until separate fee models
+    </span>}
+
+    <span class="kw">fn </span>taker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="macro">dec!</span>(<span class="number">0</span>) <span class="comment">// Temporary until separate fee models
+    </span>}
     <span class="kw">fn </span>ts_event(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos;
     <span class="kw">fn </span>ts_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos;
 

@@ -532,19 +532,6 @@
 <a href="#531" id="531">531</a>
 <a href="#532" id="532">532</a>
 <a href="#533" id="533">533</a>
-<a href="#534" id="534">534</a>
-<a href="#535" id="535">535</a>
-<a href="#536" id="536">536</a>
-<a href="#537" id="537">537</a>
-<a href="#538" id="538">538</a>
-<a href="#539" id="539">539</a>
-<a href="#540" id="540">540</a>
-<a href="#541" id="541">541</a>
-<a href="#542" id="542">542</a>
-<a href="#543" id="543">543</a>
-<a href="#544" id="544">544</a>
-<a href="#545" id="545">545</a>
-<a href="#546" id="546">546</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -590,7 +577,6 @@
     },
     types::{currency::Currency, price::Price, quantity::Quantity},
 };
-<span class="kw">use </span>rust_decimal_macros::dec;
 <span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use super</span>::{common::nautilus_instrument_id_from_databento, types::DatabentoPublisher};
@@ -701,11 +687,7 @@
         </span>currency,
         currency.precision,
         parse_min_price_increment(record.min_price_increment, currency)<span class="question-mark">?</span>,
-        <span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="prelude-val">Some</span>(Quantity::new(record.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
+        <span class="prelude-val">Some</span>(Quantity::new(record.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
         <span class="prelude-val">None</span>,           <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,           <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,           <span class="comment">// TBD
@@ -735,11 +717,7 @@
         currency,
         currency.precision,
         parse_min_price_increment(record.min_price_increment, currency)<span class="question-mark">?</span>,
-        <span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span>Quantity::new(record.contract_multiplier.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+        Quantity::new(record.contract_multiplier.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
         <span class="prelude-val">None</span>,           <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,           <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,           <span class="comment">// TBD
@@ -773,11 +751,7 @@
         currency,
         currency.precision,
         parse_min_price_increment(record.min_price_increment, currency)<span class="question-mark">?</span>,
-        <span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="macro">dec!</span>(<span class="number">0</span>), <span class="comment">// TBD
-        </span><span class="prelude-val">Some</span>(lot_size),
+        <span class="prelude-val">Some</span>(lot_size),
         <span class="prelude-val">None</span>,           <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,           <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,           <span class="comment">// TBD
