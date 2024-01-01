@@ -532,6 +532,56 @@
 <a href="#531" id="531">531</a>
 <a href="#532" id="532">532</a>
 <a href="#533" id="533">533</a>
+<a href="#534" id="534">534</a>
+<a href="#535" id="535">535</a>
+<a href="#536" id="536">536</a>
+<a href="#537" id="537">537</a>
+<a href="#538" id="538">538</a>
+<a href="#539" id="539">539</a>
+<a href="#540" id="540">540</a>
+<a href="#541" id="541">541</a>
+<a href="#542" id="542">542</a>
+<a href="#543" id="543">543</a>
+<a href="#544" id="544">544</a>
+<a href="#545" id="545">545</a>
+<a href="#546" id="546">546</a>
+<a href="#547" id="547">547</a>
+<a href="#548" id="548">548</a>
+<a href="#549" id="549">549</a>
+<a href="#550" id="550">550</a>
+<a href="#551" id="551">551</a>
+<a href="#552" id="552">552</a>
+<a href="#553" id="553">553</a>
+<a href="#554" id="554">554</a>
+<a href="#555" id="555">555</a>
+<a href="#556" id="556">556</a>
+<a href="#557" id="557">557</a>
+<a href="#558" id="558">558</a>
+<a href="#559" id="559">559</a>
+<a href="#560" id="560">560</a>
+<a href="#561" id="561">561</a>
+<a href="#562" id="562">562</a>
+<a href="#563" id="563">563</a>
+<a href="#564" id="564">564</a>
+<a href="#565" id="565">565</a>
+<a href="#566" id="566">566</a>
+<a href="#567" id="567">567</a>
+<a href="#568" id="568">568</a>
+<a href="#569" id="569">569</a>
+<a href="#570" id="570">570</a>
+<a href="#571" id="571">571</a>
+<a href="#572" id="572">572</a>
+<a href="#573" id="573">573</a>
+<a href="#574" id="574">574</a>
+<a href="#575" id="575">575</a>
+<a href="#576" id="576">576</a>
+<a href="#577" id="577">577</a>
+<a href="#578" id="578">578</a>
+<a href="#579" id="579">579</a>
+<a href="#580" id="580">580</a>
+<a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -557,7 +607,7 @@
 <span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>dbn;
 <span class="kw">use </span>itoa;
-<span class="kw">use </span>nautilus_core::{datetime::secs_to_nanos, time::UnixNanos};
+<span class="kw">use </span>nautilus_core::{datetime::NANOSECONDS_IN_SECOND, time::UnixNanos};
 <span class="kw">use </span>nautilus_model::{
     data::{
         bar::{Bar, BarSpecification, BarType},
@@ -565,6 +615,7 @@
         order::BookOrder,
         quote::QuoteTick,
         trade::TradeTick,
+        Data,
     },
     enums::{
         AggregationSource, AggressorSide, AssetClass, BarAggregation, BookAction, InstrumentClass,
@@ -580,6 +631,32 @@
 <span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use super</span>::{common::nautilus_instrument_id_from_databento, types::DatabentoPublisher};
+
+<span class="kw">const </span>BAR_SPEC_1S: BarSpecification = BarSpecification {
+    step: <span class="number">1</span>,
+    aggregation: BarAggregation::Second,
+    price_type: PriceType::Last,
+};
+<span class="kw">const </span>BAR_SPEC_1M: BarSpecification = BarSpecification {
+    step: <span class="number">1</span>,
+    aggregation: BarAggregation::Minute,
+    price_type: PriceType::Last,
+};
+<span class="kw">const </span>BAR_SPEC_1H: BarSpecification = BarSpecification {
+    step: <span class="number">1</span>,
+    aggregation: BarAggregation::Hour,
+    price_type: PriceType::Last,
+};
+<span class="kw">const </span>BAR_SPEC_1D: BarSpecification = BarSpecification {
+    step: <span class="number">1</span>,
+    aggregation: BarAggregation::Day,
+    price_type: PriceType::Last,
+};
+
+<span class="kw">const </span>BAR_CLOSE_ADJUSTMENT_1S: u64 = NANOSECONDS_IN_SECOND;
+<span class="kw">const </span>BAR_CLOSE_ADJUSTMENT_1M: u64 = NANOSECONDS_IN_SECOND * <span class="number">60</span>;
+<span class="kw">const </span>BAR_CLOSE_ADJUSTMENT_1H: u64 = NANOSECONDS_IN_SECOND * <span class="number">60 </span>* <span class="number">60</span>;
+<span class="kw">const </span>BAR_CLOSE_ADJUSTMENT_1D: u64 = NANOSECONDS_IN_SECOND * <span class="number">60 </span>* <span class="number">60 </span>* <span class="number">24</span>;
 
 <span class="kw">pub fn </span>parse_order_side(c: c_char) -&gt; OrderSide {
     <span class="kw">match </span>c <span class="kw">as </span>u8 <span class="kw">as </span>char {
@@ -674,7 +751,7 @@
 }
 
 <span class="kw">pub fn </span>parse_equity(
-    record: dbn::InstrumentDefMsg,
+    record: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;Equity&gt; {
@@ -698,7 +775,7 @@
 }
 
 <span class="kw">pub fn </span>parse_futures_contract(
-    record: dbn::InstrumentDefMsg,
+    record: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;FuturesContract&gt; {
@@ -729,7 +806,7 @@
 }
 
 <span class="kw">pub fn </span>parse_options_contract(
-    record: dbn::InstrumentDefMsg,
+    record: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;OptionsContract&gt; {
@@ -766,15 +843,24 @@
 </span>}
 
 <span class="kw">pub fn </span>parse_mbo_msg(
-    record: dbn::MboMsg,
+    record: <span class="kw-2">&amp;</span>dbn::MboMsg,
     instrument_id: InstrumentId,
     price_precision: u8,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;OrderBookDelta&gt;&gt; {
+) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="prelude-ty">Option</span>&lt;OrderBookDelta&gt;, <span class="prelude-ty">Option</span>&lt;TradeTick&gt;)&gt; {
     <span class="kw">let </span>side = parse_order_side(record.side);
     <span class="kw">if </span>is_trade_msg(side, record.action) {
-        <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
-    }
+        <span class="kw">let </span>trade = TradeTick::new(
+            instrument_id,
+            Price::from_raw(record.price, price_precision)<span class="question-mark">?</span>,
+            Quantity::from_raw(record.size.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+            parse_aggressor_side(record.side),
+            TradeId::new(itoa::Buffer::new().format(record.sequence))<span class="question-mark">?</span>,
+            record.ts_recv,
+            ts_init,
+        );
+        <span class="kw">return </span><span class="prelude-val">Ok</span>((<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(trade)));
+    };
 
     <span class="kw">let </span>order = BookOrder::new(
         side,
@@ -793,34 +879,11 @@
         ts_init,
     );
 
-    <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(delta))
-}
-
-<span class="kw">pub fn </span>parse_mbo_msg_trades(
-    record: dbn::MboMsg,
-    instrument_id: InstrumentId,
-    price_precision: u8,
-    ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;TradeTick&gt;&gt; {
-    <span class="kw">if </span>!is_trade_msg(parse_order_side(record.side), record.action) {
-        <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
-    }
-
-    <span class="kw">let </span>trade = TradeTick::new(
-        instrument_id,
-        Price::from_raw(record.price, price_precision)<span class="question-mark">?</span>,
-        Quantity::from_raw(record.size.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
-        parse_aggressor_side(record.side),
-        TradeId::new(itoa::Buffer::new().format(record.sequence))<span class="question-mark">?</span>,
-        record.ts_recv,
-        ts_init,
-    );
-
-    <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(trade))
+    <span class="prelude-val">Ok</span>((<span class="prelude-val">Some</span>(delta), <span class="prelude-val">None</span>))
 }
 
 <span class="kw">pub fn </span>parse_trade_msg(
-    record: dbn::TradeMsg,
+    record: <span class="kw-2">&amp;</span>dbn::TradeMsg,
     instrument_id: InstrumentId,
     price_precision: u8,
     ts_init: UnixNanos,
@@ -839,11 +902,11 @@
 }
 
 <span class="kw">pub fn </span>parse_mbp1_msg(
-    record: dbn::Mbp1Msg,
+    record: <span class="kw-2">&amp;</span>dbn::Mbp1Msg,
     instrument_id: InstrumentId,
     price_precision: u8,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;QuoteTick&gt;&gt; {
+) -&gt; <span class="prelude-ty">Result</span>&lt;(QuoteTick, <span class="prelude-ty">Option</span>&lt;TradeTick&gt;)&gt; {
     <span class="kw">let </span>top_level = <span class="kw-2">&amp;</span>record.levels[<span class="number">0</span>];
     <span class="kw">let </span>quote = QuoteTick::new(
         instrument_id,
@@ -855,34 +918,24 @@
         ts_init,
     )<span class="question-mark">?</span>;
 
-    <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(quote))
-}
+    <span class="kw">let </span>trade = <span class="kw">match </span>record.action <span class="kw">as </span>u8 <span class="kw">as </span>char {
+        <span class="string">'T' </span>=&gt; <span class="prelude-val">Some</span>(TradeTick::new(
+            instrument_id,
+            Price::from_raw(record.price, price_precision)<span class="question-mark">?</span>,
+            Quantity::from_raw(record.size.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+            parse_aggressor_side(record.side),
+            TradeId::new(itoa::Buffer::new().format(record.sequence))<span class="question-mark">?</span>,
+            record.ts_recv,
+            ts_init,
+        )),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
+    };
 
-<span class="kw">pub fn </span>parse_mbp1_msg_trades(
-    record: dbn::Mbp1Msg,
-    instrument_id: InstrumentId,
-    price_precision: u8,
-    ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;TradeTick&gt;&gt; {
-    <span class="kw">if </span>record.action <span class="kw">as </span>u8 <span class="kw">as </span>char != <span class="string">'T' </span>{
-        <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
-    }
-
-    <span class="kw">let </span>trade = TradeTick::new(
-        instrument_id,
-        Price::from_raw(record.price, price_precision)<span class="question-mark">?</span>,
-        Quantity::from_raw(record.size.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
-        parse_aggressor_side(record.side),
-        TradeId::new(itoa::Buffer::new().format(record.sequence))<span class="question-mark">?</span>,
-        record.ts_recv,
-        ts_init,
-    );
-
-    <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(trade))
+    <span class="prelude-val">Ok</span>((quote, trade))
 }
 
 <span class="kw">pub fn </span>parse_mbp10_msg(
-    record: dbn::Mbp1Msg,
+    record: <span class="kw-2">&amp;</span>dbn::Mbp10Msg,
     instrument_id: InstrumentId,
     price_precision: u8,
     ts_init: UnixNanos,
@@ -896,7 +949,7 @@
     );
     deltas.push(clear);
 
-    <span class="kw">for </span>level <span class="kw">in </span>record.levels {
+    <span class="kw">for </span>level <span class="kw">in </span><span class="kw-2">&amp;</span>record.levels {
         <span class="kw">let </span>bid_order = BookOrder::new(
             OrderSide::Buy,
             Price::from_raw(level.bid_px, price_precision)<span class="question-mark">?</span>,
@@ -937,71 +990,69 @@
     <span class="prelude-val">Ok</span>(deltas)
 }
 
-<span class="kw">pub fn </span>parse_bar_type(record: dbn::OhlcvMsg, instrument_id: InstrumentId) -&gt; <span class="prelude-ty">Result</span>&lt;BarType&gt; {
-    <span class="kw">match </span>record.hd.rtype {
+<span class="kw">pub fn </span>parse_bar_type(record: <span class="kw-2">&amp;</span>dbn::OhlcvMsg, instrument_id: InstrumentId) -&gt; <span class="prelude-ty">Result</span>&lt;BarType&gt; {
+    <span class="kw">let </span>bar_type = <span class="kw">match </span>record.hd.rtype {
         <span class="number">32 </span>=&gt; {
             <span class="comment">// ohlcv-1s
-            </span><span class="kw">let </span>bar_spec = BarSpecification::new(<span class="number">1</span>, BarAggregation::Second, PriceType::Last);
-            <span class="kw">let </span>bar_type = BarType::new(instrument_id, bar_spec, AggregationSource::External);
-            <span class="prelude-val">Ok</span>(bar_type)
+            </span>BarType::new(instrument_id, BAR_SPEC_1S, AggregationSource::External)
         }
         <span class="number">33 </span>=&gt; {
             <span class="comment">//  ohlcv-1m
-            </span><span class="kw">let </span>bar_spec = BarSpecification::new(<span class="number">1</span>, BarAggregation::Minute, PriceType::Last);
-            <span class="kw">let </span>bar_type = BarType::new(instrument_id, bar_spec, AggregationSource::External);
-            <span class="prelude-val">Ok</span>(bar_type)
+            </span>BarType::new(instrument_id, BAR_SPEC_1M, AggregationSource::External)
         }
         <span class="number">34 </span>=&gt; {
             <span class="comment">// ohlcv-1h
-            </span><span class="kw">let </span>bar_spec = BarSpecification::new(<span class="number">1</span>, BarAggregation::Hour, PriceType::Last);
-            <span class="kw">let </span>bar_type = BarType::new(instrument_id, bar_spec, AggregationSource::External);
-            <span class="prelude-val">Ok</span>(bar_type)
+            </span>BarType::new(instrument_id, BAR_SPEC_1H, AggregationSource::External)
         }
         <span class="number">35 </span>=&gt; {
             <span class="comment">// ohlcv-1d
-            </span><span class="kw">let </span>bar_spec = BarSpecification::new(<span class="number">1</span>, BarAggregation::Day, PriceType::Last);
-            <span class="kw">let </span>bar_type = BarType::new(instrument_id, bar_spec, AggregationSource::External);
-            <span class="prelude-val">Ok</span>(bar_type)
+            </span>BarType::new(instrument_id, BAR_SPEC_1D, AggregationSource::External)
         }
         <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(
             <span class="string">"`rtype` is not a supported bar aggregation, was {}"</span>,
             record.hd.rtype
         ),
-    }
+    };
+
+    <span class="prelude-val">Ok</span>(bar_type)
 }
 
-<span class="kw">pub fn </span>parse_ts_event_adjustment(record: dbn::OhlcvMsg) -&gt; <span class="prelude-ty">Result</span>&lt;UnixNanos&gt; {
-    <span class="kw">match </span>record.hd.rtype {
+<span class="kw">pub fn </span>parse_ts_event_adjustment(record: <span class="kw-2">&amp;</span>dbn::OhlcvMsg) -&gt; <span class="prelude-ty">Result</span>&lt;UnixNanos&gt; {
+    <span class="kw">let </span>adjustment = <span class="kw">match </span>record.hd.rtype {
         <span class="number">32 </span>=&gt; {
             <span class="comment">// ohlcv-1s
-            </span><span class="prelude-val">Ok</span>(secs_to_nanos(<span class="number">1.0</span>))
+            </span>BAR_CLOSE_ADJUSTMENT_1S
         }
         <span class="number">33 </span>=&gt; {
             <span class="comment">//  ohlcv-1m
-            </span><span class="prelude-val">Ok</span>(secs_to_nanos(<span class="number">60.0</span>))
+            </span>BAR_CLOSE_ADJUSTMENT_1M
         }
         <span class="number">34 </span>=&gt; {
             <span class="comment">//  ohlcv-1h
-            </span><span class="prelude-val">Ok</span>(secs_to_nanos(<span class="number">60.0 </span>* <span class="number">60.0</span>))
+            </span>BAR_CLOSE_ADJUSTMENT_1H
         }
         <span class="number">35 </span>=&gt; {
             <span class="comment">// ohlcv-1d
-            </span><span class="prelude-val">Ok</span>(secs_to_nanos(<span class="number">60.0 </span>* <span class="number">60.0 </span>* <span class="number">24.0</span>))
+            </span>BAR_CLOSE_ADJUSTMENT_1D
         }
         <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(
             <span class="string">"`rtype` is not a supported bar aggregation, was {}"</span>,
             record.hd.rtype
         ),
-    }
+    };
+
+    <span class="prelude-val">Ok</span>(adjustment)
 }
 
 <span class="kw">pub fn </span>parse_ohlcv_msg(
-    record: dbn::OhlcvMsg,
-    bar_type: BarType,
+    record: <span class="kw-2">&amp;</span>dbn::OhlcvMsg,
+    instrument_id: InstrumentId,
     price_precision: u8,
-    ts_event_adjustment: UnixNanos,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;Bar&gt; {
+    <span class="kw">let </span>bar_type = parse_bar_type(record, instrument_id)<span class="question-mark">?</span>;
+    <span class="kw">let </span>ts_event_adjustment = parse_ts_event_adjustment(record)<span class="question-mark">?</span>;
+
     <span class="comment">// Adjust `ts_event` from open to close of bar
     </span><span class="kw">let </span>ts_event = record.hd.ts_event + ts_event_adjustment;
     <span class="kw">let </span>ts_init = cmp::max(ts_init, ts_event);
@@ -1024,22 +1075,71 @@
 //     record: T,
 //     publishers: IndexMap&lt;PublisherId, DatabentoPublisher&gt;,
 //     ts_init: UnixNanos,
-// ) -&gt; Result&lt;Data&gt;
-// where
-//     T: dbn::Record,
-// {
+// ) -&gt; Result&lt;(Data, Option&lt;Data&gt;)&gt; {
 //     let publisher_id: PublisherId = record.header().publisher_id;
 //     let publisher = publishers
 //         .get(&amp;record.header().publisher_id)
 //         .ok_or_else(|| anyhow!("Publisher ID {publisher_id} not found in map"))?;
-//     match record.rtype() {
-//         dbn::RType::InstrumentDef =&gt; parse_instrument_def_msg(record, publisher, ts_init)?,
-//         _ =&gt; bail!("OOPS!"),
-//     }
+//
+//     let raw_symbol = unsafe { parse_raw_ptr_to_ustr(record.raw_symbol.as_ptr())? };
+//     let instrument_id = nautilus_instrument_id_from_databento(raw_symbol, publisher);
 // }
 
-</span><span class="kw">pub fn </span>parse_instrument_def_msg(
-    record: dbn::InstrumentDefMsg,
+</span><span class="kw">pub fn </span>parse_record&lt;T&gt;(
+    record: T,
+    instrument_id: InstrumentId,
+    ts_init: UnixNanos,
+) -&gt; <span class="prelude-ty">Result</span>&lt;(Data, <span class="prelude-ty">Option</span>&lt;Data&gt;)&gt;
+<span class="kw">where
+    </span>T: dbn::Record + dbn::HasRType,
+{
+    <span class="kw">let </span>record_ref = dbn::RecordRef::from(<span class="kw-2">&amp;</span>record);
+
+    <span class="kw">let </span>result = <span class="kw">match </span>record.rtype()<span class="question-mark">? </span>{
+        dbn::RType::Mbo =&gt; {
+            <span class="kw">let </span>msg = record_ref.get::&lt;dbn::MboMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
+            </span><span class="kw">let </span>result = parse_mbo_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            <span class="kw">match </span>result {
+                (<span class="prelude-val">Some</span>(delta), <span class="prelude-val">None</span>) =&gt; (Data::Delta(delta), <span class="prelude-val">None</span>),
+                (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(trade)) =&gt; (Data::Trade(trade), <span class="prelude-val">None</span>),
+                <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Invalid MboMsg parsing combination"</span>),
+            }
+        }
+        dbn::RType::Mbp0 =&gt; {
+            <span class="kw">let </span>msg = record_ref.get::&lt;dbn::TradeMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
+            </span><span class="kw">let </span>trade = parse_trade_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            (Data::Trade(trade), <span class="prelude-val">None</span>)
+        }
+        dbn::RType::Mbp1 =&gt; {
+            <span class="kw">let </span>msg = record_ref.get::&lt;dbn::Mbp1Msg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
+            </span><span class="kw">let </span>result = parse_mbp1_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            <span class="kw">match </span>result {
+                (quote, <span class="prelude-val">None</span>) =&gt; (Data::Quote(quote), <span class="prelude-val">None</span>),
+                (quote, <span class="prelude-val">Some</span>(trade)) =&gt; (Data::Quote(quote), <span class="prelude-val">Some</span>(Data::Trade(trade))),
+            }
+        }
+        dbn::RType::Ohlcv1S
+        | dbn::RType::Ohlcv1M
+        | dbn::RType::Ohlcv1H
+        | dbn::RType::Ohlcv1D
+        | dbn::RType::OhlcvEod =&gt; {
+            <span class="kw">let </span>msg = record_ref.get::&lt;dbn::OhlcvMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
+            </span><span class="kw">let </span>bar = parse_ohlcv_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            (Data::Bar(bar), <span class="prelude-val">None</span>)
+        }
+        <span class="comment">// dbn::RType::Mbp10 =&gt; {
+        //     let msg = record_ref.get::&lt;dbn::Mbp10Msg&gt;().unwrap(); // SAFETY: RType known
+        //     let trade = parse_mbp10_msg(msg, instrument_id, 2, ts_init)?;
+        //     (Data::OrderBookDeltas(trade), None)
+        // }
+        </span><span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"RType is currently unsupported by NautilusTrader"</span>),
+    };
+
+    <span class="prelude-val">Ok</span>(result)
+}
+
+<span class="kw">pub fn </span>parse_instrument_def_msg(
+    record: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     publisher: <span class="kw-2">&amp;</span>DatabentoPublisher,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;Box&lt;<span class="kw">dyn </span>Instrument&gt;&gt; {
