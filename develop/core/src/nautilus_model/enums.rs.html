@@ -1314,8 +1314,8 @@
 )]
 </span><span class="kw">pub enum </span>AggressorSide {
     <span class="doccomment">/// There was no specific aggressor for the trade.
-    </span>NoAggressor = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
-    </span><span class="doccomment">/// The BUY order was the aggressor for the trade.
+    </span>NoAggressor = <span class="number">0</span>,
+    <span class="doccomment">/// The BUY order was the aggressor for the trade.
     </span><span class="attr">#[pyo3(name = <span class="string">"BUYER"</span>)]
     </span>Buyer = <span class="number">1</span>,
     <span class="doccomment">/// The SELL order was the aggressor for the trade.
@@ -1919,9 +1919,9 @@
     pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model.enums"</span>)
 )]
 </span><span class="kw">pub enum </span>OrderSide {
-    <span class="doccomment">/// No order side is specified (only valid in the context of a filter for actions involving orders).
-    </span>NoOrderSide = <span class="number">0</span>, <span class="comment">// Will be replaced by `Option`
-    </span><span class="doccomment">/// The order is a BUY.
+    <span class="doccomment">/// No order side is specified.
+    </span>NoOrderSide = <span class="number">0</span>,
+    <span class="doccomment">/// The order is a BUY.
     </span><span class="attr">#[pyo3(name = <span class="string">"BUY"</span>)]
     </span>Buy = <span class="number">1</span>,
     <span class="doccomment">/// The order is a SELL.

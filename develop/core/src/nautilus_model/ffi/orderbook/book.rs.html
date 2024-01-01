@@ -268,6 +268,14 @@
 <a href="#266" id="266">266</a>
 <a href="#267" id="267">267</a>
 <a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -292,7 +300,10 @@
 
 <span class="kw">use </span><span class="kw">super</span>::level::Level_API;
 <span class="kw">use crate</span>::{
-    data::{delta::OrderBookDelta, order::BookOrder, quote::QuoteTick, trade::TradeTick},
+    data::{
+        delta::OrderBookDelta, depth::OrderBookDepth10, order::BookOrder, quote::QuoteTick,
+        trade::TradeTick,
+    },
     enums::{BookType, OrderSide},
     identifiers::instrument_id::InstrumentId,
     orderbook::book::OrderBook,
@@ -413,6 +424,11 @@
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_apply_delta(book: <span class="kw-2">&amp;mut </span>OrderBook_API, delta: OrderBookDelta) {
     book.apply_delta(delta)
+}
+
+<span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_apply_depth(book: <span class="kw-2">&amp;mut </span>OrderBook_API, depth: OrderBookDepth10) {
+    book.apply_depth(depth)
 }
 
 <span class="attr">#[no_mangle]

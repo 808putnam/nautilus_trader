@@ -342,7 +342,7 @@
 
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">10 </span>{
             <span class="kw">let </span>order = BookOrder::new(
-                OrderSide::Sell,
+                OrderSide::Buy,
                 Price::new(price, <span class="number">2</span>).unwrap(),
                 Quantity::new(quantity, <span class="number">0</span>).unwrap(),
                 order_id,
@@ -362,7 +362,7 @@
 
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">10 </span>{
             <span class="kw">let </span>order = BookOrder::new(
-                OrderSide::Buy,
+                OrderSide::Sell,
                 Price::new(price, <span class="number">2</span>).unwrap(),
                 Quantity::new(quantity, <span class="number">0</span>).unwrap(),
                 order_id,
