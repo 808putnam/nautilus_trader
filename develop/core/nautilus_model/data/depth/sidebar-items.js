@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["DEPTH_10_LEN"],"struct":["OrderBookDepth10"]};
+window.SIDEBAR_ITEMS = {"constant":["DEPTH10_LEN"],"struct":["OrderBookDepth10"]};

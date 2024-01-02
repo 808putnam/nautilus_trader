@@ -238,7 +238,7 @@
 <span class="kw">use </span><span class="kw">super</span>::order::BookOrder;
 <span class="kw">use </span><span class="kw">crate</span>::identifiers::instrument_id::InstrumentId;
 
-<span class="kw">pub const </span>DEPTH_10_LEN: usize = <span class="number">10</span>;
+<span class="kw">pub const </span>DEPTH10_LEN: usize = <span class="number">10</span>;
 
 <span class="doccomment">/// Represents a self-contained order book update with a fixed depth of 10 levels per side.
 ///
@@ -259,9 +259,9 @@
     <span class="doccomment">/// The instrument ID for the book.
     </span><span class="kw">pub </span>instrument_id: InstrumentId,
     <span class="doccomment">/// The bid orders for the depth update.
-    </span><span class="kw">pub </span>bids: [BookOrder; DEPTH_10_LEN],
+    </span><span class="kw">pub </span>bids: [BookOrder; DEPTH10_LEN],
     <span class="doccomment">/// The ask orders for the depth update.
-    </span><span class="kw">pub </span>asks: [BookOrder; DEPTH_10_LEN],
+    </span><span class="kw">pub </span>asks: [BookOrder; DEPTH10_LEN],
     <span class="doccomment">/// A combination of packet end with matching engine status.
     </span><span class="kw">pub </span>flags: u8,
     <span class="doccomment">/// The message sequence number assigned at the venue.
@@ -277,8 +277,8 @@
     #[must_use]
     </span><span class="kw">pub fn </span>new(
         instrument_id: InstrumentId,
-        bids: [BookOrder; DEPTH_10_LEN],
-        asks: [BookOrder; DEPTH_10_LEN],
+        bids: [BookOrder; DEPTH10_LEN],
+        asks: [BookOrder; DEPTH10_LEN],
         flags: u8,
         sequence: u64,
         ts_event: UnixNanos,
@@ -332,8 +332,8 @@
         <span class="kw">let </span>ts_event = <span class="number">1</span>;
         <span class="kw">let </span>ts_init = <span class="number">2</span>;
 
-        <span class="kw">let </span><span class="kw-2">mut </span>bids: [BookOrder; DEPTH_10_LEN] = [BookOrder::default(); DEPTH_10_LEN];
-        <span class="kw">let </span><span class="kw-2">mut </span>asks: [BookOrder; DEPTH_10_LEN] = [BookOrder::default(); DEPTH_10_LEN];
+        <span class="kw">let </span><span class="kw-2">mut </span>bids: [BookOrder; DEPTH10_LEN] = [BookOrder::default(); DEPTH10_LEN];
+        <span class="kw">let </span><span class="kw-2">mut </span>asks: [BookOrder; DEPTH10_LEN] = [BookOrder::default(); DEPTH10_LEN];
 
         <span class="comment">// Create bids
         </span><span class="kw">let </span><span class="kw-2">mut </span>price = <span class="number">99.00</span>;

@@ -602,7 +602,7 @@
     data::{
         bar::{Bar, BarSpecification, BarType},
         delta::OrderBookDelta,
-        depth::{OrderBookDepth10, DEPTH_10_LEN},
+        depth::{OrderBookDepth10, DEPTH10_LEN},
         order::BookOrder,
         quote::QuoteTick,
         trade::TradeTick,
@@ -931,8 +931,8 @@
     price_precision: u8,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;OrderBookDepth10&gt; {
-    <span class="kw">let </span><span class="kw-2">mut </span>bids = Vec::with_capacity(DEPTH_10_LEN);
-    <span class="kw">let </span><span class="kw-2">mut </span>asks = Vec::with_capacity(DEPTH_10_LEN);
+    <span class="kw">let </span><span class="kw-2">mut </span>bids = Vec::with_capacity(DEPTH10_LEN);
+    <span class="kw">let </span><span class="kw-2">mut </span>asks = Vec::with_capacity(DEPTH10_LEN);
 
     <span class="kw">for </span>level <span class="kw">in </span><span class="kw-2">&amp;</span>record.levels {
         <span class="kw">let </span>bid_order = BookOrder::new(
@@ -953,8 +953,8 @@
         asks.push(ask_order);
     }
 
-    <span class="kw">let </span>bids: [BookOrder; DEPTH_10_LEN] = bids.try_into().expect(<span class="string">"Bids `Vec` length mismatch"</span>);
-    <span class="kw">let </span>asks: [BookOrder; DEPTH_10_LEN] = asks.try_into().expect(<span class="string">"Asks `Vec` length mismatch"</span>);
+    <span class="kw">let </span>bids: [BookOrder; DEPTH10_LEN] = bids.try_into().expect(<span class="string">"Bids `Vec` length mismatch"</span>);
+    <span class="kw">let </span>asks: [BookOrder; DEPTH10_LEN] = asks.try_into().expect(<span class="string">"Asks `Vec` length mismatch"</span>);
 
     <span class="kw">let </span>depth = OrderBookDepth10::new(
         instrument_id,
@@ -1081,7 +1081,7 @@
             <span class="kw">match </span>result {
                 (<span class="prelude-val">Some</span>(delta), <span class="prelude-val">None</span>) =&gt; (Data::Delta(delta), <span class="prelude-val">None</span>),
                 (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(trade)) =&gt; (Data::Trade(trade), <span class="prelude-val">None</span>),
-                <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Invalid MboMsg parsing combination"</span>),
+                <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Invalid `MboMsg` parsing combination"</span>),
             }
         }
         dbn::RType::Mbp0 =&gt; {
@@ -1097,6 +1097,11 @@
                 (quote, <span class="prelude-val">Some</span>(trade)) =&gt; (Data::Quote(quote), <span class="prelude-val">Some</span>(Data::Trade(trade))),
             }
         }
+        dbn::RType::Mbp10 =&gt; {
+            <span class="kw">let </span>msg = record_ref.get::&lt;dbn::Mbp10Msg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
+            </span><span class="kw">let </span>depth = parse_mbp10_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            (Data::Depth10(depth), <span class="prelude-val">None</span>)
+        }
         dbn::RType::Ohlcv1S
         | dbn::RType::Ohlcv1M
         | dbn::RType::Ohlcv1H
@@ -1105,11 +1110,6 @@
             <span class="kw">let </span>msg = record_ref.get::&lt;dbn::OhlcvMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
             </span><span class="kw">let </span>bar = parse_ohlcv_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
             (Data::Bar(bar), <span class="prelude-val">None</span>)
-        }
-        dbn::RType::Mbp10 =&gt; {
-            <span class="kw">let </span>msg = record_ref.get::&lt;dbn::Mbp10Msg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>depth = parse_mbp10_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
-            (Data::Depth10(depth), <span class="prelude-val">None</span>)
         }
         <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"RType is currently unsupported by NautilusTrader"</span>),
     };

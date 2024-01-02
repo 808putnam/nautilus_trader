@@ -76,6 +76,16 @@
 <a href="#74" id="74">74</a>
 <a href="#75" id="75">75</a>
 <a href="#76" id="76">76</a>
+<a href="#77" id="77">77</a>
+<a href="#78" id="78">78</a>
+<a href="#79" id="79">79</a>
+<a href="#80" id="80">80</a>
+<a href="#81" id="81">81</a>
+<a href="#82" id="82">82</a>
+<a href="#83" id="83">83</a>
+<a href="#84" id="84">84</a>
+<a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -100,7 +110,7 @@
 
 <span class="kw">use crate</span>::{
     data::{
-        depth::{OrderBookDepth10, DEPTH_10_LEN},
+        depth::{OrderBookDepth10, DEPTH10_LEN},
         order::BookOrder,
     },
     identifiers::instrument_id::InstrumentId,
@@ -121,14 +131,14 @@
     ts_init: UnixNanos,
 ) -&gt; OrderBookDepth10 {
     <span class="comment">// Safety: Ensure that `bids_ptr` and `asks_ptr` are valid pointers.
-    // The caller must guarantee that they point to arrays of `BookOrder` of at least `DEPTH_10_LEN` length.
+    // The caller must guarantee that they point to arrays of `BookOrder` of at least `DEPTH10_LEN` length.
     </span><span class="macro">assert!</span>(!bids_ptr.is_null());
     <span class="macro">assert!</span>(!asks_ptr.is_null());
 
-    <span class="kw">let </span>bids_slice = std::slice::from_raw_parts(bids_ptr, DEPTH_10_LEN);
-    <span class="kw">let </span>asks_slice = std::slice::from_raw_parts(asks_ptr, DEPTH_10_LEN);
-    <span class="kw">let </span>bids: [BookOrder; DEPTH_10_LEN] = bids_slice.try_into().expect(<span class="string">"Slice length mismatch"</span>);
-    <span class="kw">let </span>asks: [BookOrder; DEPTH_10_LEN] = asks_slice.try_into().expect(<span class="string">"Slice length mismatch"</span>);
+    <span class="kw">let </span>bids_slice = std::slice::from_raw_parts(bids_ptr, DEPTH10_LEN);
+    <span class="kw">let </span>asks_slice = std::slice::from_raw_parts(asks_ptr, DEPTH10_LEN);
+    <span class="kw">let </span>bids: [BookOrder; DEPTH10_LEN] = bids_slice.try_into().expect(<span class="string">"Slice length mismatch"</span>);
+    <span class="kw">let </span>asks: [BookOrder; DEPTH10_LEN] = asks_slice.try_into().expect(<span class="string">"Slice length mismatch"</span>);
 
     OrderBookDepth10::new(
         instrument_id,
@@ -151,5 +161,15 @@
     <span class="kw">let </span><span class="kw-2">mut </span>hasher = DefaultHasher::new();
     delta.hash(<span class="kw-2">&amp;mut </span>hasher);
     hasher.finish()
+}
+
+<span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_depth10_bids_array(depth: <span class="kw-2">&amp;</span>OrderBookDepth10) -&gt; <span class="kw-2">*const </span>BookOrder {
+    depth.bids.as_ptr()
+}
+
+<span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_depth10_asks_array(depth: <span class="kw-2">&amp;</span>OrderBookDepth10) -&gt; <span class="kw-2">*const </span>BookOrder {
+    depth.asks.as_ptr()
 }
 </code></pre></div></section></main></body></html>
