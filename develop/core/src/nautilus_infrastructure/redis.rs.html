@@ -620,7 +620,7 @@
 
 </span><span class="kw">use </span>std::{
     collections::{HashMap, VecDeque},
-    sync::mpsc::{channel, Receiver, Sender, TryRecvError},
+    sync::mpsc::{sync_channel, Receiver, SyncSender, TryRecvError},
     thread,
     time::{Duration, Instant},
 };
@@ -677,7 +677,7 @@
     <span class="kw">pub </span>trader_id: TraderId,
     trader_key: String,
     conn: Connection,
-    tx: Sender&lt;DatabaseCommand&gt;,
+    tx: SyncSender&lt;DatabaseCommand&gt;,
 }
 
 <span class="kw">impl </span>CacheDatabase <span class="kw">for </span>RedisCacheDatabase {
@@ -692,7 +692,7 @@
         <span class="kw">let </span>client = redis::Client::open(redis_url)<span class="question-mark">?</span>;
         <span class="kw">let </span>conn = client.get_connection().unwrap();
 
-        <span class="kw">let </span>(tx, rx) = channel::&lt;DatabaseCommand&gt;();
+        <span class="kw">let </span>(tx, rx) = sync_channel::&lt;DatabaseCommand&gt;(<span class="number">0</span>);
         <span class="kw">let </span>trader_key = get_trader_key(trader_id, instance_id, <span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>trader_key_clone = trader_key.clone();
 
