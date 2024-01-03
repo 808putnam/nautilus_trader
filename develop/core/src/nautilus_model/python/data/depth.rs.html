@@ -115,6 +115,24 @@
 <a href="#113" id="113">113</a>
 <a href="#114" id="114">114</a>
 <a href="#115" id="115">115</a>
+<a href="#116" id="116">116</a>
+<a href="#117" id="117">117</a>
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+<a href="#133" id="133">133</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -139,18 +157,24 @@
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, pyclass::CompareOp};
 
 <span class="kw">use crate</span>::{
-    data::{depth::OrderBookDepth10, order::BookOrder},
+    data::{
+        depth::{OrderBookDepth10, DEPTH10_LEN},
+        order::BookOrder,
+    },
     identifiers::instrument_id::InstrumentId,
     python::PY_MODULE_MODEL,
 };
 
 <span class="attr">#[pymethods]
 </span><span class="kw">impl </span>OrderBookDepth10 {
-    <span class="attr">#[new]
+    <span class="attr">#[allow(clippy::too_many_arguments)]
+    #[new]
     </span><span class="kw">fn </span>py_new(
         instrument_id: InstrumentId,
-        bids: [BookOrder; <span class="number">10</span>],
-        asks: [BookOrder; <span class="number">10</span>],
+        bids: [BookOrder; DEPTH10_LEN],
+        asks: [BookOrder; DEPTH10_LEN],
+        bid_counts: [u32; DEPTH10_LEN],
+        ask_counts: [u32; DEPTH10_LEN],
         flags: u8,
         sequence: u64,
         ts_event: UnixNanos,
@@ -160,6 +184,8 @@
             instrument_id,
             bids,
             asks,
+            bid_counts,
+            ask_counts,
             flags,
             sequence,
             ts_event,
@@ -195,13 +221,23 @@
     }
 
     <span class="attr">#[getter]
-    </span><span class="kw">fn </span>bids(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; [BookOrder; <span class="number">10</span>] {
+    </span><span class="kw">fn </span>bids(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; [BookOrder; DEPTH10_LEN] {
         <span class="self">self</span>.bids
     }
 
     <span class="attr">#[getter]
-    </span><span class="kw">fn </span>asks(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; [BookOrder; <span class="number">10</span>] {
+    </span><span class="kw">fn </span>asks(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; [BookOrder; DEPTH10_LEN] {
         <span class="self">self</span>.asks
+    }
+
+    <span class="attr">#[getter]
+    </span><span class="kw">fn </span>bid_counts(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; [u32; DEPTH10_LEN] {
+        <span class="self">self</span>.bid_counts
+    }
+
+    <span class="attr">#[getter]
+    </span><span class="kw">fn </span>ask_counts(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; [u32; DEPTH10_LEN] {
+        <span class="self">self</span>.ask_counts
     }
 
     <span class="attr">#[getter]

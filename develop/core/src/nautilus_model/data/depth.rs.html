@@ -214,6 +214,21 @@
 <a href="#212" id="212">212</a>
 <a href="#213" id="213">213</a>
 <a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -262,6 +277,10 @@
     </span><span class="kw">pub </span>bids: [BookOrder; DEPTH10_LEN],
     <span class="doccomment">/// The ask orders for the depth update.
     </span><span class="kw">pub </span>asks: [BookOrder; DEPTH10_LEN],
+    <span class="doccomment">/// The count of bid orders per level for the depth update.
+    </span><span class="kw">pub </span>bid_counts: [u32; DEPTH10_LEN],
+    <span class="doccomment">/// The count of ask orders per level for the depth update.
+    </span><span class="kw">pub </span>ask_counts: [u32; DEPTH10_LEN],
     <span class="doccomment">/// A combination of packet end with matching engine status.
     </span><span class="kw">pub </span>flags: u8,
     <span class="doccomment">/// The message sequence number assigned at the venue.
@@ -279,6 +298,8 @@
         instrument_id: InstrumentId,
         bids: [BookOrder; DEPTH10_LEN],
         asks: [BookOrder; DEPTH10_LEN],
+        bid_counts: [u32; DEPTH10_LEN],
+        ask_counts: [u32; DEPTH10_LEN],
         flags: u8,
         sequence: u64,
         ts_event: UnixNanos,
@@ -288,6 +309,8 @@
             instrument_id,
             bids,
             asks,
+            bid_counts,
+            ask_counts,
             flags,
             sequence,
             ts_event,
@@ -375,10 +398,15 @@
             order_id += <span class="number">1</span>;
         }
 
+        <span class="kw">let </span>bid_counts: [u32; <span class="number">10</span>] = [<span class="number">1</span>; <span class="number">10</span>];
+        <span class="kw">let </span>ask_counts: [u32; <span class="number">10</span>] = [<span class="number">1</span>; <span class="number">10</span>];
+
         OrderBookDepth10::new(
             instrument_id,
             bids,
             asks,
+            bid_counts,
+            ask_counts,
             flags,
             sequence,
             ts_event,
@@ -412,6 +440,8 @@
         <span class="macro">assert_eq!</span>(depth.asks[<span class="number">0</span>].price.as_f64(), <span class="number">100.0</span>);
         <span class="macro">assert_eq!</span>(depth.bids[<span class="number">0</span>].price.as_f64(), <span class="number">99.0</span>);
         <span class="macro">assert_eq!</span>(depth.bids[<span class="number">9</span>].price.as_f64(), <span class="number">90.0</span>);
+        <span class="macro">assert_eq!</span>(depth.bid_counts.len(), <span class="number">10</span>);
+        <span class="macro">assert_eq!</span>(depth.ask_counts.len(), <span class="number">10</span>);
         <span class="macro">assert_eq!</span>(depth.flags, flags);
         <span class="macro">assert_eq!</span>(depth.sequence, sequence);
         <span class="macro">assert_eq!</span>(depth.ts_event, ts_event);

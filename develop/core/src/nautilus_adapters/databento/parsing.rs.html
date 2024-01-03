@@ -572,6 +572,14 @@
 <a href="#570" id="570">570</a>
 <a href="#571" id="571">571</a>
 <a href="#572" id="572">572</a>
+<a href="#573" id="573">573</a>
+<a href="#574" id="574">574</a>
+<a href="#575" id="575">575</a>
+<a href="#576" id="576">576</a>
+<a href="#577" id="577">577</a>
+<a href="#578" id="578">578</a>
+<a href="#579" id="579">579</a>
+<a href="#580" id="580">580</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -933,6 +941,8 @@
 ) -&gt; <span class="prelude-ty">Result</span>&lt;OrderBookDepth10&gt; {
     <span class="kw">let </span><span class="kw-2">mut </span>bids = Vec::with_capacity(DEPTH10_LEN);
     <span class="kw">let </span><span class="kw-2">mut </span>asks = Vec::with_capacity(DEPTH10_LEN);
+    <span class="kw">let </span><span class="kw-2">mut </span>bid_counts = Vec::with_capacity(DEPTH10_LEN);
+    <span class="kw">let </span><span class="kw-2">mut </span>ask_counts = Vec::with_capacity(DEPTH10_LEN);
 
     <span class="kw">for </span>level <span class="kw">in </span><span class="kw-2">&amp;</span>record.levels {
         <span class="kw">let </span>bid_order = BookOrder::new(
@@ -951,15 +961,21 @@
 
         bids.push(bid_order);
         asks.push(ask_order);
+        bid_counts.push(level.bid_ct);
+        ask_counts.push(level.ask_ct);
     }
 
-    <span class="kw">let </span>bids: [BookOrder; DEPTH10_LEN] = bids.try_into().expect(<span class="string">"Bids `Vec` length mismatch"</span>);
-    <span class="kw">let </span>asks: [BookOrder; DEPTH10_LEN] = asks.try_into().expect(<span class="string">"Asks `Vec` length mismatch"</span>);
+    <span class="kw">let </span>bids: [BookOrder; DEPTH10_LEN] = bids.try_into().expect(<span class="string">"`bids` length != 10"</span>);
+    <span class="kw">let </span>asks: [BookOrder; DEPTH10_LEN] = asks.try_into().expect(<span class="string">"`asks` length != 10"</span>);
+    <span class="kw">let </span>bid_counts: [u32; DEPTH10_LEN] = bid_counts.try_into().expect(<span class="string">"`bid_counts` length != 10"</span>);
+    <span class="kw">let </span>ask_counts: [u32; DEPTH10_LEN] = ask_counts.try_into().expect(<span class="string">"`ask_counts` length != 10"</span>);
 
     <span class="kw">let </span>depth = OrderBookDepth10::new(
         instrument_id,
         bids,
         asks,
+        bid_counts,
+        ask_counts,
         record.flags,
         record.sequence.into(),
         record.ts_recv,
