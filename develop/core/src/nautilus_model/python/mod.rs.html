@@ -540,7 +540,7 @@
 <span class="doccomment">/// Loaded as nautilus_pyo3.model
 </span><span class="attr">#[pymodule]
 </span><span class="kw">pub fn </span>model(<span class="kw">_</span>: Python&lt;<span class="lifetime">'_</span>&gt;, m: <span class="kw-2">&amp;</span>PyModule) -&gt; PyResult&lt;()&gt; {
-    <span class="comment">// data
+    <span class="comment">// Data
     </span>m.add_class::&lt;<span class="kw">crate</span>::data::bar::BarSpecification&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::bar::BarType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::bar::Bar&gt;()<span class="question-mark">?</span>;
@@ -550,7 +550,7 @@
     m.add_class::&lt;<span class="kw">crate</span>::data::depth::OrderBookDepth10&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::quote::QuoteTick&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::trade::TradeTick&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// enums
+    <span class="comment">// Enums
     </span>m.add_class::&lt;enums::AccountType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::AggregationSource&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::AggressorSide&gt;()<span class="question-mark">?</span>;
@@ -575,7 +575,7 @@
     m.add_class::&lt;enums::TradingState&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::TrailingOffsetType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::TriggerType&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// identifiers
+    <span class="comment">// Identifiers
     </span>m.add_class::&lt;<span class="kw">crate</span>::identifiers::account_id::AccountId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::client_id::ClientId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::client_order_id::ClientOrderId&gt;()<span class="question-mark">?</span>;
@@ -590,7 +590,7 @@
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::trader_id::TraderId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::venue::Venue&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::venue_order_id::VenueOrderId&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// orders
+    <span class="comment">// Orders
     </span>m.add_class::&lt;<span class="kw">crate</span>::orders::limit::LimitOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::orders::limit_if_touched::LimitIfTouchedOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::orders::market::MarketOrder&gt;()<span class="question-mark">?</span>;
@@ -603,7 +603,7 @@
     m.add_class::&lt;<span class="kw">crate</span>::types::money::Money&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::types::price::Price&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::types::quantity::Quantity&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// instruments
+    <span class="comment">// Instruments
     </span>m.add_class::&lt;<span class="kw">crate</span>::instruments::crypto_future::CryptoFuture&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::crypto_perpetual::CryptoPerpetual&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::currency_pair::CurrencyPair&gt;()<span class="question-mark">?</span>;
@@ -611,7 +611,7 @@
     m.add_class::&lt;<span class="kw">crate</span>::instruments::futures_contract::FuturesContract&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::options_contract::OptionsContract&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::synthetic::SyntheticInstrument&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// events
+    <span class="comment">// Events
     </span>m.add_class::&lt;<span class="kw">crate</span>::events::order::denied::OrderDenied&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::events::order::filled::OrderFilled&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::events::order::initialized::OrderInitialized&gt;()<span class="question-mark">?</span>;

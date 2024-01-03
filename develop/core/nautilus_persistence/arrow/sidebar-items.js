@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["DataStreamingError","EncodingError"],"fn":["extract_column"],"mod":["bar","delta","quote","trade"],"trait":["ArrowSchemaProvider","DecodeDataFromRecordBatch","DecodeFromRecordBatch","EncodeToRecordBatch","WriteStream"]};
+window.SIDEBAR_ITEMS = {"enum":["DataStreamingError","EncodingError"],"fn":["extract_column"],"mod":["bar","delta","depth","quote","trade"],"trait":["ArrowSchemaProvider","DecodeDataFromRecordBatch","DecodeFromRecordBatch","EncodeToRecordBatch","WriteStream"]};
