@@ -149,7 +149,7 @@
         ts_event: UnixNanos,
         ts_init: UnixNanos,
     ) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        <span class="self">Self</span>::new(name, event_id, ts_event, ts_init).map_err(to_pyvalue_err)
+        <span class="self">Self</span>::new(Ustr::from(name), event_id, ts_event, ts_init).map_err(to_pyvalue_err)
     }
 
     <span class="kw">fn </span>__setstate__(<span class="kw-2">&amp;mut </span><span class="self">self</span>, py: Python, state: PyObject) -&gt; PyResult&lt;()&gt; {
@@ -181,7 +181,7 @@
 
     <span class="attr">#[staticmethod]
     </span><span class="kw">fn </span>_safe_constructor() -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new(<span class="string">"NULL"</span>, UUID4::new(), <span class="number">0</span>, <span class="number">0</span>).unwrap()) <span class="comment">// Safe default
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>::new(Ustr::from(<span class="string">"NULL"</span>), UUID4::new(), <span class="number">0</span>, <span class="number">0</span>).unwrap()) <span class="comment">// Safe default
     </span>}
 
     <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>, op: CompareOp, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
@@ -197,7 +197,7 @@
     }
 
     <span class="kw">fn </span>__repr__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="macro">format!</span>(<span class="string">"{}('{}')"</span>, <span class="macro">stringify!</span>(UUID4), <span class="self">self</span>)
+        <span class="macro">format!</span>(<span class="string">"{}('{}')"</span>, <span class="macro">stringify!</span>(TimeEvent), <span class="self">self</span>)
     }
 
     <span class="attr">#[getter]

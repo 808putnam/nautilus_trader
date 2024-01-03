@@ -517,11 +517,6 @@
 <a href="#515" id="515">515</a>
 <a href="#516" id="516">516</a>
 <a href="#517" id="517">517</a>
-<a href="#518" id="518">518</a>
-<a href="#519" id="519">519</a>
-<a href="#520" id="520">520</a>
-<a href="#521" id="521">521</a>
-<a href="#522" id="522">522</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -543,6 +538,7 @@
     correctness::check_valid_string,
     time::{AtomicTime, ClockMode, UnixNanos},
 };
+<span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use crate</span>::{
     handlers::EventHandler,
@@ -568,7 +564,7 @@
     /// callback gets used to handle generated events.
     </span><span class="kw">fn </span>set_time_alert_ns(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        name: String,
+        name: <span class="kw-2">&amp;</span>str,
         alert_time_ns: UnixNanos,
         callback: <span class="prelude-ty">Option</span>&lt;EventHandler&gt;,
     );
@@ -578,7 +574,7 @@
     /// used to handle generated event.
     </span><span class="kw">fn </span>set_timer_ns(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        name: String,
+        name: <span class="kw-2">&amp;</span>str,
         interval_ns: u64,
         start_time_ns: UnixNanos,
         stop_time_ns: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
@@ -596,9 +592,9 @@
 )]
 </span><span class="kw">pub struct </span>TestClock {
     time: AtomicTime,
-    timers: HashMap&lt;String, TestTimer&gt;,
+    timers: HashMap&lt;Ustr, TestTimer&gt;,
     default_callback: <span class="prelude-ty">Option</span>&lt;EventHandler&gt;,
-    callbacks: HashMap&lt;String, EventHandler&gt;,
+    callbacks: HashMap&lt;Ustr, EventHandler&gt;,
 }
 
 <span class="kw">impl </span>TestClock {
@@ -617,7 +613,7 @@
     }
 
     <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>get_timers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;String, TestTimer&gt; {
+    </span><span class="kw">pub fn </span>get_timers(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>HashMap&lt;Ustr, TestTimer&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.timers
     }
 
@@ -649,15 +645,11 @@
         events
             .into_iter()
             .map(|event| {
-                <span class="kw">let </span>handler = <span class="self">self
-                    </span>.callbacks
-                    .get(event.name.as_str())
-                    .cloned()
-                    .unwrap_or_else(|| {
-                        <span class="comment">// If callback_py is None, use the default_callback_py
-                        // TODO: clone for now
-                        </span><span class="self">self</span>.default_callback.clone().unwrap()
-                    });
+                <span class="kw">let </span>handler = <span class="self">self</span>.callbacks.get(<span class="kw-2">&amp;</span>event.name).cloned().unwrap_or_else(|| {
+                    <span class="comment">// If callback_py is None, use the default_callback_py
+                    // TODO: clone for now
+                    </span><span class="self">self</span>.default_callback.clone().unwrap()
+                });
                 TimeEventHandler {
                     event,
                     callback_ptr: handler.as_ptr(),
@@ -703,58 +695,55 @@
 
     <span class="kw">fn </span>set_time_alert_ns(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        name: String,
+        name: <span class="kw-2">&amp;</span>str,
         alert_time_ns: UnixNanos,
         callback: <span class="prelude-ty">Option</span>&lt;EventHandler&gt;,
     ) {
-        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">"`Timer` name"</span>).unwrap();
+        check_valid_string(name, <span class="string">"`Timer` name"</span>).unwrap();
         <span class="macro">assert!</span>(
             callback.is_some() | <span class="self">self</span>.default_callback.is_some(),
             <span class="string">"All Python callbacks were `None`"
         </span>);
 
+        <span class="kw">let </span>name_ustr = Ustr::from(name);
         <span class="kw">match </span>callback {
-            <span class="prelude-val">Some</span>(callback_py) =&gt; <span class="self">self</span>.callbacks.insert(name.clone(), callback_py),
+            <span class="prelude-val">Some</span>(callback_py) =&gt; <span class="self">self</span>.callbacks.insert(name_ustr, callback_py),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
         };
 
         <span class="comment">// TODO: should the atomic clock be shared
         // currently share timestamp nanoseconds
         </span><span class="kw">let </span>time_ns = <span class="self">self</span>.time.get_time_ns();
-        <span class="kw">let </span>timer = TestTimer::new(
-            name.clone(),
-            alert_time_ns - time_ns,
-            time_ns,
-            <span class="prelude-val">Some</span>(alert_time_ns),
-        );
-        <span class="self">self</span>.timers.insert(name, timer);
+        <span class="kw">let </span>timer = TestTimer::new(name, alert_time_ns - time_ns, time_ns, <span class="prelude-val">Some</span>(alert_time_ns));
+        <span class="self">self</span>.timers.insert(name_ustr, timer);
     }
 
     <span class="kw">fn </span>set_timer_ns(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        name: String,
+        name: <span class="kw-2">&amp;</span>str,
         interval_ns: u64,
         start_time_ns: UnixNanos,
         stop_time_ns: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
         callback: <span class="prelude-ty">Option</span>&lt;EventHandler&gt;,
     ) {
-        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">"`Timer` name"</span>).unwrap();
+        check_valid_string(name, <span class="string">"`Timer` name"</span>).unwrap();
         <span class="macro">assert!</span>(
             callback.is_some() | <span class="self">self</span>.default_callback.is_some(),
             <span class="string">"All Python callbacks were `None`"
         </span>);
 
+        <span class="kw">let </span>name_ustr = Ustr::from(name);
         <span class="kw">match </span>callback {
-            <span class="prelude-val">Some</span>(callback_py) =&gt; <span class="self">self</span>.callbacks.insert(name.clone(), callback_py),
+            <span class="prelude-val">Some</span>(callback_py) =&gt; <span class="self">self</span>.callbacks.insert(name_ustr, callback_py),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
         };
 
-        <span class="kw">let </span>timer = TestTimer::new(name.clone(), interval_ns, start_time_ns, stop_time_ns);
-        <span class="self">self</span>.timers.insert(name, timer);
+        <span class="kw">let </span>timer = TestTimer::new(name, interval_ns, start_time_ns, stop_time_ns);
+        <span class="self">self</span>.timers.insert(name_ustr, timer);
     }
 
     <span class="kw">fn </span>next_time_ns(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; UnixNanos {
-        <span class="kw">let </span>timer = <span class="self">self</span>.timers.get(name);
+        <span class="kw">let </span>timer = <span class="self">self</span>.timers.get(<span class="kw-2">&amp;</span>Ustr::from(name));
         <span class="kw">match </span>timer {
             <span class="prelude-val">None </span>=&gt; <span class="number">0</span>,
             <span class="prelude-val">Some</span>(timer) =&gt; timer.next_time_ns,
@@ -762,7 +751,7 @@
     }
 
     <span class="kw">fn </span>cancel_timer(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">let </span>timer = <span class="self">self</span>.timers.remove(name);
+        <span class="kw">let </span>timer = <span class="self">self</span>.timers.remove(<span class="kw-2">&amp;</span>Ustr::from(name));
         <span class="kw">match </span>timer {
             <span class="prelude-val">None </span>=&gt; {}
             <span class="prelude-val">Some</span>(<span class="kw-2">mut </span>timer) =&gt; timer.cancel(),
@@ -783,9 +772,9 @@
 )]
 </span><span class="kw">pub struct </span>LiveClock {
     internal: AtomicTime,
-    timers: HashMap&lt;String, TestTimer&gt;,
+    timers: HashMap&lt;Ustr, TestTimer&gt;,
     default_callback: <span class="prelude-ty">Option</span>&lt;EventHandler&gt;,
-    callbacks: HashMap&lt;String, EventHandler&gt;,
+    callbacks: HashMap&lt;Ustr, EventHandler&gt;,
 }
 
 <span class="kw">impl </span>LiveClock {
@@ -836,57 +825,54 @@
 
     <span class="kw">fn </span>set_time_alert_ns(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        name: String,
+        name: <span class="kw-2">&amp;</span>str,
         <span class="kw-2">mut </span>alert_time_ns: UnixNanos,
         callback: <span class="prelude-ty">Option</span>&lt;EventHandler&gt;,
     ) {
-        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">"`Timer` name"</span>).unwrap();
+        check_valid_string(name, <span class="string">"`Timer` name"</span>).unwrap();
         <span class="macro">assert!</span>(
             callback.is_some() | <span class="self">self</span>.default_callback.is_some(),
             <span class="string">"All Python callbacks were `None`"
         </span>);
 
+        <span class="kw">let </span>name_ustr = Ustr::from(name);
         <span class="kw">match </span>callback {
-            <span class="prelude-val">Some</span>(callback_py) =&gt; <span class="self">self</span>.callbacks.insert(name.clone(), callback_py),
+            <span class="prelude-val">Some</span>(callback_py) =&gt; <span class="self">self</span>.callbacks.insert(name_ustr, callback_py),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
         };
 
         <span class="kw">let </span>ts_now = <span class="self">self</span>.get_time_ns();
         alert_time_ns = std::cmp::max(alert_time_ns, ts_now);
-        <span class="kw">let </span>timer = TestTimer::new(
-            name.clone(),
-            alert_time_ns - ts_now,
-            ts_now,
-            <span class="prelude-val">Some</span>(alert_time_ns),
-        );
-        <span class="self">self</span>.timers.insert(name, timer);
+        <span class="kw">let </span>timer = TestTimer::new(name, alert_time_ns - ts_now, ts_now, <span class="prelude-val">Some</span>(alert_time_ns));
+        <span class="self">self</span>.timers.insert(name_ustr, timer);
     }
 
     <span class="kw">fn </span>set_timer_ns(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        name: String,
+        name: <span class="kw-2">&amp;</span>str,
         interval_ns: u64,
         start_time_ns: UnixNanos,
         stop_time_ns: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
         callback: <span class="prelude-ty">Option</span>&lt;EventHandler&gt;,
     ) {
-        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">"`Timer` name"</span>).unwrap();
+        check_valid_string(name, <span class="string">"`Timer` name"</span>).unwrap();
         <span class="macro">assert!</span>(
             callback.is_some() | <span class="self">self</span>.default_callback.is_some(),
             <span class="string">"All Python callbacks were `None`"
         </span>);
 
+        <span class="kw">let </span>name_ustr = Ustr::from(name);
         <span class="kw">match </span>callback {
-            <span class="prelude-val">Some</span>(callback) =&gt; <span class="self">self</span>.callbacks.insert(name.clone(), callback),
+            <span class="prelude-val">Some</span>(callback) =&gt; <span class="self">self</span>.callbacks.insert(name_ustr, callback),
             <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
         };
 
-        <span class="kw">let </span>timer = TestTimer::new(name.clone(), interval_ns, start_time_ns, stop_time_ns);
-        <span class="self">self</span>.timers.insert(name, timer);
+        <span class="kw">let </span>timer = TestTimer::new(name, interval_ns, start_time_ns, stop_time_ns);
+        <span class="self">self</span>.timers.insert(name_ustr, timer);
     }
 
     <span class="kw">fn </span>next_time_ns(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; UnixNanos {
-        <span class="kw">let </span>timer = <span class="self">self</span>.timers.get(name);
+        <span class="kw">let </span>timer = <span class="self">self</span>.timers.get(<span class="kw-2">&amp;</span>Ustr::from(name));
         <span class="kw">match </span>timer {
             <span class="prelude-val">None </span>=&gt; <span class="number">0</span>,
             <span class="prelude-val">Some</span>(timer) =&gt; timer.next_time_ns,
@@ -894,7 +880,7 @@
     }
 
     <span class="kw">fn </span>cancel_timer(<span class="kw-2">&amp;mut </span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">let </span>timer = <span class="self">self</span>.timers.remove(name);
+        <span class="kw">let </span>timer = <span class="self">self</span>.timers.remove(<span class="kw-2">&amp;</span>Ustr::from(name));
         <span class="kw">match </span>timer {
             <span class="prelude-val">None </span>=&gt; {}
             <span class="prelude-val">Some</span>(<span class="kw-2">mut </span>timer) =&gt; timer.cancel(),
@@ -945,9 +931,10 @@
             <span class="kw">let </span>handler = EventHandler::new(<span class="prelude-val">Some</span>(py_append), <span class="prelude-val">None</span>);
             test_clock.register_default_handler(handler);
 
-            test_clock.set_timer_ns(String::from(<span class="string">"TEST_TIME1"</span>), <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
+            <span class="kw">let </span>timer_name = <span class="string">"TEST_TIME1"</span>;
+            test_clock.set_timer_ns(timer_name, <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
 
-            <span class="macro">assert_eq!</span>(test_clock.timer_names(), [<span class="string">"TEST_TIME1"</span>]);
+            <span class="macro">assert_eq!</span>(test_clock.timer_names(), [timer_name]);
             <span class="macro">assert_eq!</span>(test_clock.timer_count(), <span class="number">1</span>);
         });
     }
@@ -962,8 +949,9 @@
             <span class="kw">let </span>handler = EventHandler::new(<span class="prelude-val">Some</span>(py_append), <span class="prelude-val">None</span>);
             test_clock.register_default_handler(handler);
 
-            test_clock.set_timer_ns(String::from(<span class="string">"TEST_TIME1"</span>), <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
-            test_clock.cancel_timer(String::from(<span class="string">"TEST_TIME1"</span>).as_str());
+            <span class="kw">let </span>timer_name = <span class="string">"TEST_TIME1"</span>;
+            test_clock.set_timer_ns(timer_name, <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
+            test_clock.cancel_timer(timer_name);
 
             <span class="macro">assert!</span>(test_clock.timer_names().is_empty());
             <span class="macro">assert_eq!</span>(test_clock.timer_count(), <span class="number">0</span>);
@@ -980,7 +968,8 @@
             <span class="kw">let </span>handler = EventHandler::new(<span class="prelude-val">Some</span>(py_append), <span class="prelude-val">None</span>);
             test_clock.register_default_handler(handler);
 
-            test_clock.set_timer_ns(String::from(<span class="string">"TEST_TIME1"</span>), <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
+            <span class="kw">let </span>timer_name = <span class="string">"TEST_TIME1"</span>;
+            test_clock.set_timer_ns(timer_name, <span class="number">10</span>, <span class="number">0</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>);
             test_clock.cancel_timers();
 
             <span class="macro">assert!</span>(test_clock.timer_names().is_empty());
@@ -998,10 +987,11 @@
             <span class="kw">let </span>handler = EventHandler::new(<span class="prelude-val">Some</span>(py_append), <span class="prelude-val">None</span>);
             test_clock.register_default_handler(handler);
 
-            test_clock.set_timer_ns(String::from(<span class="string">"TEST_TIME1"</span>), <span class="number">1</span>, <span class="number">1</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
+            <span class="kw">let </span>timer_name = <span class="string">"TEST_TIME1"</span>;
+            test_clock.set_timer_ns(timer_name, <span class="number">1</span>, <span class="number">1</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
             test_clock.advance_time(<span class="number">2</span>, <span class="bool-val">true</span>);
 
-            <span class="macro">assert_eq!</span>(test_clock.timer_names(), [<span class="string">"TEST_TIME1"</span>]);
+            <span class="macro">assert_eq!</span>(test_clock.timer_names(), [timer_name]);
             <span class="macro">assert_eq!</span>(test_clock.timer_count(), <span class="number">1</span>);
         });
     }
@@ -1016,7 +1006,7 @@
             <span class="kw">let </span>handler = EventHandler::new(<span class="prelude-val">Some</span>(py_append), <span class="prelude-val">None</span>);
             test_clock.register_default_handler(handler);
 
-            test_clock.set_timer_ns(String::from(<span class="string">"TEST_TIME1"</span>), <span class="number">2</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
+            test_clock.set_timer_ns(<span class="string">"TEST_TIME1"</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
             test_clock.advance_time(<span class="number">3</span>, <span class="bool-val">true</span>);
 
             <span class="macro">assert_eq!</span>(test_clock.timer_names().len(), <span class="number">1</span>);
@@ -1035,7 +1025,7 @@
             <span class="kw">let </span>handler = EventHandler::new(<span class="prelude-val">Some</span>(py_append), <span class="prelude-val">None</span>);
             test_clock.register_default_handler(handler);
 
-            test_clock.set_timer_ns(String::from(<span class="string">"TEST_TIME1"</span>), <span class="number">2</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
+            test_clock.set_timer_ns(<span class="string">"TEST_TIME1"</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">3</span>), <span class="prelude-val">None</span>);
             test_clock.advance_time(<span class="number">3</span>, <span class="bool-val">false</span>);
 
             <span class="macro">assert_eq!</span>(test_clock.timer_names().len(), <span class="number">1</span>);

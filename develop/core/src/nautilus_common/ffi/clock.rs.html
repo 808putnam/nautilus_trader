@@ -452,7 +452,7 @@
     });
     <span class="kw">let </span>handler = EventHandler::new(callback_py.clone(), <span class="prelude-val">None</span>);
 
-    clock.set_time_alert_ns(name, alert_time_ns, callback_py.map(|<span class="kw">_</span>| handler));
+    clock.set_time_alert_ns(<span class="kw-2">&amp;</span>name, alert_time_ns, callback_py.map(|<span class="kw">_</span>| handler));
 }
 
 <span class="doccomment">/// # Safety
@@ -483,7 +483,7 @@
     <span class="kw">let </span>handler = EventHandler::new(callback_py.clone(), <span class="prelude-val">None</span>);
 
     clock.set_timer_ns(
-        name,
+        <span class="kw-2">&amp;</span>name,
         interval_ns,
         start_time_ns,
         stop_time_ns,

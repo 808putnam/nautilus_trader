@@ -266,14 +266,6 @@
 <a href="#264" id="264">264</a>
 <a href="#265" id="265">265</a>
 <a href="#266" id="266">266</a>
-<a href="#267" id="267">267</a>
-<a href="#268" id="268">268</a>
-<a href="#269" id="269">269</a>
-<a href="#270" id="270">270</a>
-<a href="#271" id="271">271</a>
-<a href="#272" id="272">272</a>
-<a href="#273" id="273">273</a>
-<a href="#274" id="274">274</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -324,15 +316,13 @@
 
 <span class="kw">impl </span>TimeEvent {
     <span class="kw">pub fn </span>new(
-        name: <span class="kw-2">&amp;</span>str,
+        name: Ustr,
         event_id: UUID4,
         ts_event: UnixNanos,
         ts_init: UnixNanos,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>&gt; {
-        check_valid_string(name, <span class="string">"`TimeEvent` name"</span>)<span class="question-mark">?</span>;
-
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
-            name: Ustr::from(name),
+            name,
             event_id,
             ts_event,
             ts_init,
@@ -388,7 +378,7 @@
 
 <span class="kw">pub trait </span>Timer {
     <span class="kw">fn </span>new(
-        name: String,
+        name: Ustr,
         interval_ns: TimedeltaNanos,
         start_time_ns: UnixNanos,
         stop_time_ns: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
@@ -398,9 +388,9 @@
     <span class="kw">fn </span>cancel(<span class="kw-2">&amp;mut </span><span class="self">self</span>);
 }
 
-<span class="attr">#[derive(Clone)]
+<span class="attr">#[derive(Clone, Copy)]
 </span><span class="kw">pub struct </span>TestTimer {
-    <span class="kw">pub </span>name: String,
+    <span class="kw">pub </span>name: Ustr,
     <span class="kw">pub </span>interval_ns: u64,
     <span class="kw">pub </span>start_time_ns: UnixNanos,
     <span class="kw">pub </span>stop_time_ns: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
@@ -411,15 +401,15 @@
 <span class="kw">impl </span>TestTimer {
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new(
-        name: String,
+        name: <span class="kw-2">&amp;</span>str,
         interval_ns: u64,
         start_time_ns: UnixNanos,
         stop_time_ns: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
     ) -&gt; <span class="self">Self </span>{
-        check_valid_string(<span class="kw-2">&amp;</span>name, <span class="string">"`TestTimer` name"</span>).unwrap();
+        check_valid_string(name, <span class="string">"`TestTimer` name"</span>).unwrap();
 
         <span class="self">Self </span>{
-            name,
+            name: Ustr::from(name),
             interval_ns,
             start_time_ns,
             stop_time_ns,
@@ -462,7 +452,7 @@
         </span>} <span class="kw">else </span>{
             <span class="kw">let </span>item = (
                 TimeEvent {
-                    name: Ustr::from(<span class="kw-2">&amp;</span><span class="self">self</span>.name),
+                    name: <span class="self">self</span>.name,
                     event_id: UUID4::new(),
                     ts_event: <span class="self">self</span>.next_time_ns,
                     ts_init: <span class="self">self</span>.next_time_ns,
@@ -495,8 +485,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_pop_event() {
-        <span class="kw">let </span>name = String::from(<span class="string">"test_timer"</span>);
-        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(name, <span class="number">0</span>, <span class="number">1</span>, <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(<span class="string">"test_timer"</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="prelude-val">None</span>);
 
         <span class="macro">assert!</span>(timer.next().is_some());
         <span class="macro">assert!</span>(timer.next().is_some());
@@ -506,8 +495,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_advance_within_next_time_ns() {
-        <span class="kw">let </span>name = String::from(<span class="string">"test_timer"</span>);
-        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(name, <span class="number">5</span>, <span class="number">0</span>, <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(<span class="string">"test_timer"</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="prelude-val">None</span>);
         <span class="kw">let _</span>: Vec&lt;TimeEvent&gt; = timer.advance(<span class="number">1</span>).collect();
         <span class="kw">let _</span>: Vec&lt;TimeEvent&gt; = timer.advance(<span class="number">2</span>).collect();
         <span class="kw">let _</span>: Vec&lt;TimeEvent&gt; = timer.advance(<span class="number">3</span>).collect();
@@ -518,32 +506,28 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_advance_up_to_next_time_ns() {
-        <span class="kw">let </span>name = String::from(<span class="string">"test_timer"</span>);
-        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(name, <span class="number">1</span>, <span class="number">0</span>, <span class="prelude-val">None</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(<span class="string">"test_timer"</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="prelude-val">None</span>);
         <span class="macro">assert_eq!</span>(timer.advance(<span class="number">1</span>).count(), <span class="number">1</span>);
         <span class="macro">assert!</span>(!timer.is_expired);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_advance_up_to_next_time_ns_with_stop_time() {
-        <span class="kw">let </span>name = String::from(<span class="string">"test_timer"</span>);
-        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(name, <span class="number">1</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">2</span>));
+        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(<span class="string">"test_timer"</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">2</span>));
         <span class="macro">assert_eq!</span>(timer.advance(<span class="number">2</span>).count(), <span class="number">2</span>);
         <span class="macro">assert!</span>(timer.is_expired);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_advance_beyond_next_time_ns() {
-        <span class="kw">let </span>name = String::from(<span class="string">"test_timer"</span>);
-        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(name, <span class="number">1</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">5</span>));
+        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(<span class="string">"test_timer"</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">5</span>));
         <span class="macro">assert_eq!</span>(timer.advance(<span class="number">5</span>).count(), <span class="number">5</span>);
         <span class="macro">assert!</span>(timer.is_expired);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_advance_beyond_stop_time() {
-        <span class="kw">let </span>name = String::from(<span class="string">"test_timer"</span>);
-        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(name, <span class="number">1</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">5</span>));
+        <span class="kw">let </span><span class="kw-2">mut </span>timer = TestTimer::new(<span class="string">"test_timer"</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="prelude-val">Some</span>(<span class="number">5</span>));
         <span class="macro">assert_eq!</span>(timer.advance(<span class="number">10</span>).count(), <span class="number">5</span>);
         <span class="macro">assert!</span>(timer.is_expired);
     }
