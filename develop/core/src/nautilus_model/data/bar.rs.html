@@ -955,7 +955,7 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Stubs
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[cfg(test)]
+</span><span class="attr">#[cfg(feature = <span class="string">"stubs"</span>)]
 </span><span class="kw">pub mod </span>stubs {
     <span class="kw">use </span>rstest::fixture;
 
@@ -967,7 +967,7 @@
     };
 
     <span class="attr">#[fixture]
-    </span><span class="kw">pub fn </span>bar_audusd_sim_minute_bid() -&gt; Bar {
+    </span><span class="kw">pub fn </span>stub_bar() -&gt; Bar {
         <span class="kw">let </span>instrument_id = InstrumentId {
             symbol: Symbol::new(<span class="string">"AUDUSD"</span>).unwrap(),
             venue: Venue::new(<span class="string">"SIM"</span>).unwrap(),
@@ -1219,16 +1219,16 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_json_serialization(bar_audusd_sim_minute_bid: Bar) {
-        <span class="kw">let </span>bar = bar_audusd_sim_minute_bid;
+    </span><span class="kw">fn </span>test_json_serialization(stub_bar: Bar) {
+        <span class="kw">let </span>bar = stub_bar;
         <span class="kw">let </span>serialized = bar.as_json_bytes().unwrap();
         <span class="kw">let </span>deserialized = Bar::from_json_bytes(serialized).unwrap();
         <span class="macro">assert_eq!</span>(deserialized, bar);
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_msgpack_serialization(bar_audusd_sim_minute_bid: Bar) {
-        <span class="kw">let </span>bar = bar_audusd_sim_minute_bid;
+    </span><span class="kw">fn </span>test_msgpack_serialization(stub_bar: Bar) {
+        <span class="kw">let </span>bar = stub_bar;
         <span class="kw">let </span>serialized = bar.as_msgpack_bytes().unwrap();
         <span class="kw">let </span>deserialized = Bar::from_msgpack_bytes(serialized).unwrap();
         <span class="macro">assert_eq!</span>(deserialized, bar);

@@ -464,7 +464,7 @@
         <span class="attr">#[case] </span>r: u64,
         <span class="attr">#[case] </span>desc: <span class="kw-2">&amp;</span>str,
     ) {
-        <span class="macro">assert!</span>(check_u64_in_range_inclusive(value, l, r, desc).is_err())
+        <span class="macro">assert!</span>(check_u64_in_range_inclusive(value, l, r, desc).is_err());
     }
 
     <span class="attr">#[rstest]

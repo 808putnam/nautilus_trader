@@ -31,6 +31,7 @@
 <a href="#29" id="29">29</a>
 <a href="#30" id="30">30</a>
 <a href="#31" id="31">31</a>
+<a href="#32" id="32">32</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -51,7 +52,8 @@
 
 <span class="kw">use </span><span class="kw">super</span>::types::DatabentoPublisher;
 
-<span class="kw">pub fn </span>nautilus_instrument_id_from_databento(
+<span class="attr">#[must_use]
+</span><span class="kw">pub fn </span>nautilus_instrument_id_from_databento(
     raw_symbol: Ustr,
     publisher: <span class="kw-2">&amp;</span>DatabentoPublisher,
 ) -&gt; InstrumentId {

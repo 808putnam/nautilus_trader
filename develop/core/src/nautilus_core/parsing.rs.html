@@ -196,8 +196,8 @@
     </span><span class="kw">fn </span>test_bytes_to_usize_valid() {
         <span class="kw">let </span>payload: Vec&lt;u8&gt; = <span class="macro">vec!</span>[<span class="number">0x01</span>, <span class="number">0x02</span>, <span class="number">0x03</span>, <span class="number">0x04</span>, <span class="number">0x05</span>, <span class="number">0x06</span>, <span class="number">0x07</span>, <span class="number">0x08</span>];
         <span class="kw">let </span>result = bytes_to_usize(<span class="kw-2">&amp;</span>payload).unwrap();
-        <span class="macro">assert_eq!</span>(result, <span class="number">0x0807060504030201</span>);
-        <span class="macro">assert_eq!</span>(result, <span class="number">578437695752307201</span>);
+        <span class="macro">assert_eq!</span>(result, <span class="number">0x0807_0605_0403_0201</span>);
+        <span class="macro">assert_eq!</span>(result, <span class="number">578_437_695_752_307_201</span>);
     }
 }
 </code></pre></div></section></main></body></html>

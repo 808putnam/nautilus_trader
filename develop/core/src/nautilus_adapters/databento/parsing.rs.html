@@ -580,6 +580,12 @@
 <a href="#578" id="578">578</a>
 <a href="#579" id="579">579</a>
 <a href="#580" id="580">580</a>
+<a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
+<a href="#585" id="585">585</a>
+<a href="#586" id="586">586</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -657,7 +663,8 @@
 <span class="kw">const </span>BAR_CLOSE_ADJUSTMENT_1H: u64 = NANOSECONDS_IN_SECOND * <span class="number">60 </span>* <span class="number">60</span>;
 <span class="kw">const </span>BAR_CLOSE_ADJUSTMENT_1D: u64 = NANOSECONDS_IN_SECOND * <span class="number">60 </span>* <span class="number">60 </span>* <span class="number">24</span>;
 
-<span class="kw">pub fn </span>parse_order_side(c: c_char) -&gt; OrderSide {
+<span class="attr">#[must_use]
+</span><span class="kw">pub fn </span>parse_order_side(c: c_char) -&gt; OrderSide {
     <span class="kw">match </span>c <span class="kw">as </span>u8 <span class="kw">as </span>char {
         <span class="string">'A' </span>=&gt; OrderSide::Sell,
         <span class="string">'B' </span>=&gt; OrderSide::Buy,
@@ -665,7 +672,8 @@
     }
 }
 
-<span class="kw">pub fn </span>parse_aggressor_side(c: c_char) -&gt; AggressorSide {
+<span class="attr">#[must_use]
+</span><span class="kw">pub fn </span>parse_aggressor_side(c: c_char) -&gt; AggressorSide {
     <span class="kw">match </span>c <span class="kw">as </span>u8 <span class="kw">as </span>char {
         <span class="string">'A' </span>=&gt; AggressorSide::Seller,
         <span class="string">'B' </span>=&gt; AggressorSide::Buyer,
@@ -726,7 +734,10 @@
 
 <span class="kw">pub fn </span>parse_min_price_increment(value: i64, currency: Currency) -&gt; <span class="prelude-ty">Result</span>&lt;Price&gt; {
     <span class="kw">match </span>value {
-        <span class="number">0 </span>| i64::MAX =&gt; Price::new(<span class="number">10f64</span>.powi(-(currency.precision <span class="kw">as </span>i32)), currency.precision),
+        <span class="number">0 </span>| i64::MAX =&gt; Price::new(
+            <span class="number">10f64</span>.powi(-i32::from(currency.precision)),
+            currency.precision,
+        ),
         <span class="kw">_ </span>=&gt; Price::from_raw(value, currency.precision),
     }
 }
@@ -837,7 +848,8 @@
     )
 }
 
-<span class="kw">pub fn </span>is_trade_msg(order_side: OrderSide, action: c_char) -&gt; bool {
+<span class="attr">#[must_use]
+</span><span class="kw">pub fn </span>is_trade_msg(order_side: OrderSide, action: c_char) -&gt; bool {
     order_side == OrderSide::NoOrderSide || action <span class="kw">as </span>u8 <span class="kw">as </span>char == <span class="string">'T'
 </span>}
 

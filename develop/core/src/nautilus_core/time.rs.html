@@ -412,11 +412,11 @@
     }
 
     <span class="kw">pub fn </span>make_realtime(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.realtime.store(<span class="bool-val">true</span>, Ordering::Relaxed)
+        <span class="self">self</span>.realtime.store(<span class="bool-val">true</span>, Ordering::Relaxed);
     }
 
     <span class="kw">pub fn </span>make_static(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.realtime.store(<span class="bool-val">false</span>, Ordering::Relaxed)
+        <span class="self">self</span>.realtime.store(<span class="bool-val">false</span>, Ordering::Relaxed);
     }
 }
 

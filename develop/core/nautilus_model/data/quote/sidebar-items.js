@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["QuoteTick"]};
+window.SIDEBAR_ITEMS = {"mod":["stubs"],"struct":["QuoteTick"]};

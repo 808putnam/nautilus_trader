@@ -581,9 +581,9 @@
     <span class="kw">use </span><span class="kw">crate</span>::data::trade::{stubs::<span class="kw-2">*</span>, TradeTick};
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_as_dict(trade_tick_ethusdt_buyer: TradeTick) {
+    </span><span class="kw">fn </span>test_as_dict(stub_trade_tick_ethusdt_buyer: TradeTick) {
         pyo3::prepare_freethreaded_python();
-        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
+        <span class="kw">let </span>tick = stub_trade_tick_ethusdt_buyer;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>dict_string = tick.py_as_dict(py).unwrap().to_string();
@@ -593,9 +593,9 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_from_dict(trade_tick_ethusdt_buyer: TradeTick) {
+    </span><span class="kw">fn </span>test_from_dict(stub_trade_tick_ethusdt_buyer: TradeTick) {
         pyo3::prepare_freethreaded_python();
-        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
+        <span class="kw">let </span>tick = stub_trade_tick_ethusdt_buyer;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>dict = tick.py_as_dict(py).unwrap();
@@ -605,9 +605,9 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_from_pyobject(trade_tick_ethusdt_buyer: TradeTick) {
+    </span><span class="kw">fn </span>test_from_pyobject(stub_trade_tick_ethusdt_buyer: TradeTick) {
         pyo3::prepare_freethreaded_python();
-        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
+        <span class="kw">let </span>tick = stub_trade_tick_ethusdt_buyer;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>tick_pyobject = tick.into_py(py);

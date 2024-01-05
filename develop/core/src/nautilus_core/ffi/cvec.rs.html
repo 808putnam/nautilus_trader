@@ -312,7 +312,7 @@
         <span class="macro">assert_eq!</span>(len, vec_len);
         <span class="macro">assert_eq!</span>(cap, vec_cap);
 
-        <span class="kw">let </span>data = ptr <span class="kw">as </span><span class="kw-2">*mut </span>u64;
+        <span class="kw">let </span>data = ptr.cast::&lt;u64&gt;();
         <span class="kw">unsafe </span>{
             <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>data, test_data[<span class="number">0</span>]);
             <span class="macro">assert_eq!</span>(<span class="kw-2">*</span>data.add(<span class="number">1</span>), test_data[<span class="number">1</span>]);
@@ -321,7 +321,7 @@
 
         <span class="kw">unsafe </span>{
             <span class="comment">// reconstruct the struct and drop the memory to deallocate
-            </span><span class="kw">let _ </span>= Vec::from_raw_parts(ptr <span class="kw">as </span><span class="kw-2">*mut </span>u64, len, cap);
+            </span><span class="kw">let _ </span>= Vec::from_raw_parts(ptr.cast::&lt;u64&gt;(), len, cap);
         }
     }
 
@@ -338,10 +338,10 @@
         };
 
         <span class="kw">let </span>CVec { ptr, len, cap } = cvec;
-        <span class="kw">let </span>data = ptr <span class="kw">as </span><span class="kw-2">*mut </span>u64;
+        <span class="kw">let </span>data = ptr.cast::&lt;u64&gt;();
 
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data: Vec&lt;u64&gt; = Vec::from_raw_parts(ptr <span class="kw">as </span><span class="kw-2">*mut </span>u64, len, cap);
+            <span class="kw">let </span>data: Vec&lt;u64&gt; = Vec::from_raw_parts(ptr.cast::&lt;u64&gt;(), len, cap);
             drop(data);
         }
 
@@ -357,7 +357,7 @@
     </span><span class="kw">fn </span>empty_vec_should_give_null_ptr() {
         <span class="kw">let </span>data: Vec&lt;u64&gt; = <span class="macro">vec!</span>[];
         <span class="kw">let </span>cvec: CVec = data.into();
-        <span class="macro">assert_eq!</span>(cvec.ptr <span class="kw">as </span><span class="kw-2">*mut </span>u64, null() <span class="kw">as </span><span class="kw-2">*const </span>u64 <span class="kw">as </span><span class="kw-2">*mut </span>u64);
+        <span class="macro">assert_eq!</span>(cvec.ptr.cast::&lt;u64&gt;(), null::&lt;u64&gt;().cast_mut());
     }
 }
 </code></pre></div></section></main></body></html>

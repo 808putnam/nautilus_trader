@@ -694,7 +694,7 @@
 
     <span class="kw">async fn </span>start_test_server() -&gt; <span class="prelude-ty">Result</span>&lt;SocketAddr, Box&lt;<span class="kw">dyn </span>std::error::Error + Send + Sync&gt;&gt; {
         <span class="kw">let </span>port = get_unique_port();
-        <span class="kw">let </span>listener = tokio::net::TcpListener::bind(<span class="macro">format!</span>(<span class="string">"127.0.0.1:{}"</span>, port))
+        <span class="kw">let </span>listener = tokio::net::TcpListener::bind(<span class="macro">format!</span>(<span class="string">"127.0.0.1:{port}"</span>))
             .<span class="kw">await
             </span>.unwrap();
         <span class="kw">let </span>addr = listener.local_addr().unwrap();
@@ -709,7 +709,7 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_get() {
         <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}"</span>, addr);
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
         <span class="kw">let </span>response = client
@@ -729,7 +729,7 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_post() {
         <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}"</span>, addr);
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
         <span class="kw">let </span>response = client
@@ -748,7 +748,7 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_post_with_body() {
         <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}"</span>, addr);
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
 
@@ -781,7 +781,7 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_patch() {
         <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}"</span>, addr);
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
         <span class="kw">let </span>response = client
@@ -800,7 +800,7 @@
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_delete() {
         <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}"</span>, addr);
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
         <span class="kw">let </span>response = client

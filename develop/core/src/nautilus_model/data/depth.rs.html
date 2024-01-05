@@ -316,6 +316,9 @@
 <a href="#314" id="314">314</a>
 <a href="#315" id="315">315</a>
 <a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -509,7 +512,8 @@
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Stubs
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[cfg(test)]
+</span><span class="attr">#[cfg(feature = <span class="string">"stubs"</span>)]
+#[allow(clippy::needless_range_loop)] </span><span class="comment">// False positive?
 </span><span class="kw">pub mod </span>stubs {
     <span class="kw">use </span>rstest::fixture;
 
@@ -537,7 +541,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>quantity = <span class="number">100.0</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>order_id = <span class="number">1</span>;
 
-        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">10 </span>{
+        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..DEPTH10_LEN {
             <span class="kw">let </span>order = BookOrder::new(
                 OrderSide::Buy,
                 Price::new(price, <span class="number">2</span>).unwrap(),
@@ -557,7 +561,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>quantity = <span class="number">100.0</span>;
         <span class="kw">let </span><span class="kw-2">mut </span>order_id = <span class="number">11</span>;
 
-        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">10 </span>{
+        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..DEPTH10_LEN {
             <span class="kw">let </span>order = BookOrder::new(
                 OrderSide::Sell,
                 Price::new(price, <span class="number">2</span>).unwrap(),
@@ -616,6 +620,8 @@
         <span class="macro">assert_eq!</span>(depth.bids[<span class="number">9</span>].price.as_f64(), <span class="number">90.0</span>);
         <span class="macro">assert_eq!</span>(depth.bid_counts.len(), <span class="number">10</span>);
         <span class="macro">assert_eq!</span>(depth.ask_counts.len(), <span class="number">10</span>);
+        <span class="macro">assert_eq!</span>(depth.bid_counts[<span class="number">0</span>], <span class="number">1</span>);
+        <span class="macro">assert_eq!</span>(depth.ask_counts[<span class="number">0</span>], <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(depth.flags, flags);
         <span class="macro">assert_eq!</span>(depth.sequence, sequence);
         <span class="macro">assert_eq!</span>(depth.ts_event, ts_event);
