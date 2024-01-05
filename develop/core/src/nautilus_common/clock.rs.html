@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/clock.rs`."><title>clock.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/clock.rs`."><title>clock.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (f688dd684 2024-01-04)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../nautilus_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -505,18 +505,6 @@
 <a href="#503" id="503">503</a>
 <a href="#504" id="504">504</a>
 <a href="#505" id="505">505</a>
-<a href="#506" id="506">506</a>
-<a href="#507" id="507">507</a>
-<a href="#508" id="508">508</a>
-<a href="#509" id="509">509</a>
-<a href="#510" id="510">510</a>
-<a href="#511" id="511">511</a>
-<a href="#512" id="512">512</a>
-<a href="#513" id="513">513</a>
-<a href="#514" id="514">514</a>
-<a href="#515" id="515">515</a>
-<a href="#516" id="516">516</a>
-<a href="#517" id="517">517</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -536,7 +524,7 @@
 
 <span class="kw">use </span>nautilus_core::{
     correctness::check_valid_string,
-    time::{AtomicTime, ClockMode, UnixNanos},
+    time::{get_atomic_clock_realtime, AtomicTime, UnixNanos},
 };
 <span class="kw">use </span>ustr::Ustr;
 
@@ -586,11 +574,7 @@
     <span class="kw">fn </span>cancel_timers(<span class="kw-2">&amp;mut </span><span class="self">self</span>);
 }
 
-<span class="attr">#[cfg_attr(
-    feature = <span class="string">"python"</span>,
-    pyo3::pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.common"</span>)
-)]
-</span><span class="kw">pub struct </span>TestClock {
+<span class="kw">pub struct </span>TestClock {
     time: AtomicTime,
     timers: HashMap&lt;Ustr, TestTimer&gt;,
     default_callback: <span class="prelude-ty">Option</span>&lt;EventHandler&gt;,
@@ -601,15 +585,11 @@
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            time: AtomicTime::new(ClockMode::STATIC, <span class="number">0</span>),
+            time: AtomicTime::new(<span class="bool-val">false</span>, <span class="number">0</span>),
             timers: HashMap::new(),
             default_callback: <span class="prelude-val">None</span>,
             callbacks: HashMap::new(),
         }
-    }
-
-    <span class="kw">pub fn </span>get_time_clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; AtomicTime {
-        <span class="self">self</span>.time.clone()
     }
 
     <span class="attr">#[must_use]
@@ -621,7 +601,7 @@
         <span class="comment">// Time should increase monotonically
         </span><span class="macro">assert!</span>(
             to_time_ns &gt;= <span class="self">self</span>.time.get_time_ns(),
-            <span class="string">"`to_time_ns` was &lt; `self._time_ns`"
+            <span class="string">"`to_time_ns` was &lt; `self.time.get_time_ns()`"
         </span>);
 
         <span class="kw">if </span>set_time {
@@ -766,12 +746,8 @@
     }
 }
 
-<span class="attr">#[cfg_attr(
-    feature = <span class="string">"python"</span>,
-    pyo3::pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.common"</span>)
-)]
-</span><span class="kw">pub struct </span>LiveClock {
-    internal: AtomicTime,
+<span class="kw">pub struct </span>LiveClock {
+    time: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>AtomicTime,
     timers: HashMap&lt;Ustr, TestTimer&gt;,
     default_callback: <span class="prelude-ty">Option</span>&lt;EventHandler&gt;,
     callbacks: HashMap&lt;Ustr, EventHandler&gt;,
@@ -781,7 +757,7 @@
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            internal: AtomicTime::new(ClockMode::LIVE, <span class="number">0</span>),
+            time: get_atomic_clock_realtime(),
             timers: HashMap::new(),
             default_callback: <span class="prelude-val">None</span>,
             callbacks: HashMap::new(),
@@ -799,7 +775,7 @@
     <span class="kw">type </span>Target = AtomicTime;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.internal
+        <span class="self">self</span>.time
     }
 }
 
