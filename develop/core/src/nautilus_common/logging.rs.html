@@ -856,9 +856,6 @@
 <a href="#854" id="854">854</a>
 <a href="#855" id="855">855</a>
 <a href="#856" id="856">856</a>
-<a href="#857" id="857">857</a>
-<a href="#858" id="858">858</a>
-<a href="#859" id="859">859</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1502,7 +1499,7 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::{collections::HashMap, time::Duration};
 
-    <span class="kw">use </span>log::{info, LevelFilter};
+    <span class="kw">use </span>log::{info, kv::ToValue, LevelFilter};
     <span class="kw">use </span>nautilus_core::uuid::UUID4;
     <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
     <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
@@ -1555,8 +1552,7 @@
         )
     }
 
-    <span class="attr">#[ignore] </span><span class="comment">// TODO: Ignore pre nextest setup
-    </span><span class="attr">#[rstest]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_logging_to_file() {
         <span class="kw">let </span>config = LoggerConfig {
             fileout_level: LevelFilter::Debug,
@@ -1577,7 +1573,7 @@
         );
 
         <span class="macro">info!</span>(
-            timestamp = <span class="string">"1650000000000000"</span>,
+            timestamp = <span class="number">1_650_000_000_000_000i64</span>.to_value(),
             component = <span class="string">"RiskEngine"</span>;
             <span class="string">"This is a test."
         </span>);
@@ -1616,8 +1612,7 @@
         </span>);
     }
 
-    <span class="attr">#[ignore] </span><span class="comment">// TODO: Ignore pre nextest setup
-    </span><span class="attr">#[rstest]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_log_component_level_filtering() {
         <span class="kw">let </span>config = LoggerConfig::from_spec(<span class="string">"stdout=Info;fileout=Debug;RiskEngine=Error"</span>);
 
@@ -1635,7 +1630,7 @@
         );
 
         <span class="macro">info!</span>(
-            timestamp = <span class="string">"1650000000000000"</span>,
+            timestamp = <span class="number">1_650_000_000_000_000i64</span>.to_value(),
             component = <span class="string">"RiskEngine"</span>;
             <span class="string">"This is a test."
         </span>);
@@ -1667,8 +1662,7 @@
         </span>);
     }
 
-    <span class="attr">#[ignore] </span><span class="comment">// TODO: Ignore pre nextest setup
-    </span><span class="attr">#[rstest]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_logging_to_file_in_json_format() {
         <span class="kw">let </span>config = LoggerConfig::from_spec(<span class="string">"stdout=Info;fileout=Debug;RiskEngine=Info"</span>);
 
@@ -1687,7 +1681,7 @@
         );
 
         <span class="macro">info!</span>(
-            timestamp = <span class="string">"1650000000000000"</span>,
+            timestamp = <span class="number">1_650_000_000_000_000i64</span>.to_value(),
             component = <span class="string">"RiskEngine"</span>;
             <span class="string">"This is a test."
         </span>);
