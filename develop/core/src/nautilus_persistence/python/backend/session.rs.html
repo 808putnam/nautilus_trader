@@ -106,6 +106,12 @@
 <a href="#104" id="104">104</a>
 <a href="#105" id="105">105</a>
 <a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -122,7 +128,9 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">use </span>nautilus_core::{ffi::cvec::CVec, python::to_pyruntime_err};
-<span class="kw">use </span>nautilus_model::data::{bar::Bar, delta::OrderBookDelta, quote::QuoteTick, trade::TradeTick};
+<span class="kw">use </span>nautilus_model::data::{
+    bar::Bar, delta::OrderBookDelta, depth::OrderBookDepth10, quote::QuoteTick, trade::TradeTick,
+};
 <span class="kw">use </span>pyo3::{prelude::<span class="kw-2">*</span>, types::PyCapsule};
 
 <span class="kw">use </span><span class="kw">crate</span>::backend::session::{DataBackendSession, DataQueryResult};
@@ -133,9 +141,10 @@
 </span><span class="kw">pub enum </span>NautilusDataType {
     <span class="comment">// Custom = 0,  # First slot reserved for custom data
     </span>OrderBookDelta = <span class="number">1</span>,
-    QuoteTick = <span class="number">2</span>,
-    TradeTick = <span class="number">3</span>,
-    Bar = <span class="number">4</span>,
+    OrderBookDepth10 = <span class="number">2</span>,
+    QuoteTick = <span class="number">3</span>,
+    TradeTick = <span class="number">4</span>,
+    Bar = <span class="number">5</span>,
 }
 
 <span class="attr">#[pymethods]
@@ -172,6 +181,9 @@
         <span class="kw">match </span>data_type {
             NautilusDataType::OrderBookDelta =&gt; slf
                 .add_file::&lt;OrderBookDelta&gt;(table_name, file_path, sql_query)
+                .map_err(to_pyruntime_err),
+            NautilusDataType::OrderBookDepth10 =&gt; slf
+                .add_file::&lt;OrderBookDepth10&gt;(table_name, file_path, sql_query)
                 .map_err(to_pyruntime_err),
             NautilusDataType::QuoteTick =&gt; slf
                 .add_file::&lt;QuoteTick&gt;(table_name, file_path, sql_query)
