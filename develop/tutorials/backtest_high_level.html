@@ -820,7 +820,6 @@ on a simulated FX ECN venue using historical quote tick data.
          <div class="highlight-python notranslate">
           <div class="highlight">
            <pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -990,12 +989,12 @@ We can then write the instrument and tick data to the catalog, it should only ta
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="n">CATALOG_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"/catalog"</span>
+           <pre><span></span><span class="n">CATALOG_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"catalog"</span>
 
 <span class="c1"># Clear if it already exists, then create fresh</span>
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">CATALOG_PATH</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
+<span class="n">CATALOG_PATH</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># Create a catalog instance</span>
 <span class="n">catalog</span> <span class="o">=</span> <span class="n">ParquetDataCatalog</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
