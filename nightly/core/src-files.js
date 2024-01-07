@@ -1,7 +1,7 @@
 var srcIndex = new Map(JSON.parse('[\
 ["drop_db",["",[],["drop_db.rs"]]],\
 ["init_db",["",[],["init_db.rs"]]],\
-["nautilus_adapters",["",[["databento",[],["common.rs","mod.rs","parsing.rs","types.rs"]],["python",[["databento",[],["mod.rs"]]],["mod.rs"]]],["lib.rs"]]],\
+["nautilus_adapters",["",[["databento",[],["common.rs","mod.rs","parsing.rs","types.rs"]],["python",[["databento",[],["mod.rs","parsing.rs"]]],["mod.rs"]]],["lib.rs"]]],\
 ["nautilus_backtest",["",[],["engine.rs","lib.rs"]]],\
 ["nautilus_common",["",[["ffi",[],["clock.rs","enums.rs","logging.rs","mod.rs","msgbus.rs","timer.rs"]],["generators",[],["client_order_id.rs","mod.rs","order_list_id.rs","position_id.rs"]],["python",[],["logging.rs","mod.rs","timer.rs"]]],["clock.rs","enums.rs","factories.rs","handlers.rs","lib.rs","logging.rs","msgbus.rs","redis.rs","testing.rs","timer.rs"]]],\
 ["nautilus_core",["",[["ffi",[],["cvec.rs","datetime.rs","mod.rs","parsing.rs","string.rs","uuid.rs"]],["python",[],["casing.rs","datetime.rs","mod.rs","serialization.rs","uuid.rs"]]],["correctness.rs","datetime.rs","lib.rs","message.rs","parsing.rs","serialization.rs","time.rs","uuid.rs"]]],\

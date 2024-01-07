@@ -38799,7 +38799,7 @@ will be appended with ‘F’.
               Clock
              </span>
              <span class="pre">
-              clock
+              clock=None
              </span>
             </span>
            </em>
@@ -38991,7 +38991,24 @@ will be appended with ‘F’.
                   Clock
                  </em>
                 </a>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
                 ) – The clock for the logger.
+If
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  None
+                 </span>
+                </code>
+                then will use a new
+                <cite>
+                 LiveClock
+                </cite>
+                .
                </p>
               </li>
               <li>
@@ -39270,7 +39287,7 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                 Clock
                </span>
                <span class="pre">
-                clock
+                clock=None
                </span>
               </span>
              </em>
@@ -39293,7 +39310,11 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </dt>
             <dd>
              <p>
-              Change the loggers internal clock to the given clock.
+              Change the loggers internal clock to the given clock or a new
+              <cite>
+               LiveClock
+              </cite>
+              .
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -39313,7 +39334,13 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                   Clock
                  </em>
                 </a>
-                ) –
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – The clock to change to.
                </p>
               </dd>
              </dl>
