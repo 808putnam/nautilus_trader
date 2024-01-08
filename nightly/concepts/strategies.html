@@ -377,7 +377,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="advanced/custom_data.html">
-                 Custom/Generic Data
+                 Custom Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -1161,12 +1161,10 @@ You can use these handlers to define actions upon receiving new market data.
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">InstrumentClose</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">InstrumentStatus</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">VenueStatus</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">Ticker</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.instruments</span> <span class="kn">import</span> <span class="n">Instrument</span>
 
 <span class="k">def</span> <span class="nf">on_order_book_deltas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deltas</span><span class="p">:</span> <span class="n">OrderBookDeltas</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_order_book</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_book</span><span class="p">:</span> <span class="n">OrderBook</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="k">def</span> <span class="nf">on_ticker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticker</span><span class="p">:</span> <span class="n">Ticker</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_quote_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">:</span> <span class="n">QuoteTick</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_trade_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">:</span> <span class="n">TradeTick</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bar</span><span class="p">:</span> <span class="n">Bar</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1175,7 +1173,7 @@ You can use these handlers to define actions upon receiving new market data.
 <span class="k">def</span> <span class="nf">on_instrument_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">InstrumentStatus</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_instrument_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">InstrumentClose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_historical_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Generic data passed to this handler</span>
+<span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Custom data passed to this handler</span>
 </pre>
             </div>
            </div>

@@ -377,7 +377,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
-                 Custom/Generic Data
+                 Custom Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -1372,10 +1372,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.DataClient.subscribed_generic_data">
+                 <a class="md-nav__link" href="#nautilus_trader.data.client.DataClient.subscribed_custom_data">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    DataClient.subscribed_generic_data()
+                    DataClient.subscribed_custom_data()
                    </span>
                   </code>
                  </a>
@@ -1720,15 +1720,6 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribe_ticker">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    MarketDataClient.subscribe_ticker()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
                  <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribe_trade_ticks">
                   <code class="docutils literal notranslate">
                    <span class="pre">
@@ -1756,10 +1747,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribed_generic_data">
+                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribed_custom_data">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    MarketDataClient.subscribed_generic_data()
+                    MarketDataClient.subscribed_custom_data()
                    </span>
                   </code>
                  </a>
@@ -1814,15 +1805,6 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     MarketDataClient.subscribed_quote_ticks()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.subscribed_tickers">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    MarketDataClient.subscribed_tickers()
                    </span>
                   </code>
                  </a>
@@ -1940,15 +1922,6 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     MarketDataClient.unsubscribe_quote_ticks()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_ticker">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    MarketDataClient.unsubscribe_ticker()
                    </span>
                   </code>
                  </a>
@@ -2340,10 +2313,10 @@
                  </a>
                 </li>
                 <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.subscribed_generic_data">
+                 <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.subscribed_custom_data">
                   <code class="docutils literal notranslate">
                    <span class="pre">
-                    DataEngine.subscribed_generic_data()
+                    DataEngine.subscribed_custom_data()
                    </span>
                   </code>
                  </a>
@@ -2416,15 +2389,6 @@
                   <code class="docutils literal notranslate">
                    <span class="pre">
                     DataEngine.subscribed_synthetic_trades()
-                   </span>
-                  </code>
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#nautilus_trader.data.engine.DataEngine.subscribed_tickers">
-                  <code class="docutils literal notranslate">
-                   <span class="pre">
-                    DataEngine.subscribed_tickers()
                    </span>
                   </code>
                  </a>
@@ -7680,10 +7644,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.DataClient.subscribed_generic_data">
+            <dt class="sig sig-object py" id="nautilus_trader.data.client.DataClient.subscribed_custom_data">
              <span class="sig-name descname">
               <span class="pre">
-               subscribed_generic_data
+               subscribed_custom_data
               </span>
              </span>
              <span class="sig-paren">
@@ -7709,13 +7673,13 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.DataClient.subscribed_generic_data" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.client.DataClient.subscribed_custom_data" title="Permalink to this definition">
               ¶
              </a>
             </dt>
             <dd>
              <p>
-              Return the generic data types subscribed to.
+              Return the custom data types subscribed to.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -10984,83 +10948,6 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribe_ticker">
-             <span class="sig-name descname">
-              <span class="pre">
-               subscribe_ticker
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                self
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                InstrumentId
-               </span>
-               <span class="pre">
-                instrument_id
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                void
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribe_ticker" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Subscribe to
-              <cite>
-               Ticker
-              </cite>
-              data for the given instrument ID.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Parameters
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <strong>
-                 instrument_id
-                </strong>
-                (
-                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
-                 <em>
-                  InstrumentId
-                 </em>
-                </a>
-                ) – The ticker instrument to subscribe to.
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
             <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribe_trade_ticks">
              <span class="sig-name descname">
               <span class="pre">
@@ -11270,10 +11157,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribed_generic_data">
+            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribed_custom_data">
              <span class="sig-name descname">
               <span class="pre">
-               subscribed_generic_data
+               subscribed_custom_data
               </span>
              </span>
              <span class="sig-paren">
@@ -11299,13 +11186,13 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribed_generic_data" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribed_custom_data" title="Permalink to this definition">
               ¶
              </a>
             </dt>
             <dd>
              <p>
-              Return the generic data types subscribed to.
+              Return the custom data types subscribed to.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -11636,61 +11523,6 @@ then the component state will not change, and an error will be logged.
             <dd>
              <p>
               Return the quote tick instruments subscribed to.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <em>
-                 list[InstrumentId]
-                </em>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.subscribed_tickers">
-             <span class="sig-name descname">
-              <span class="pre">
-               subscribed_tickers
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                self
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                list
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.subscribed_tickers" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Return the ticker instruments subscribed to.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -12534,83 +12366,6 @@ then the component state will not change, and an error will be logged.
                  </em>
                 </a>
                 ) – The tick instrument to unsubscribe from.
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.client.MarketDataClient.unsubscribe_ticker">
-             <span class="sig-name descname">
-              <span class="pre">
-               unsubscribe_ticker
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                self
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                InstrumentId
-               </span>
-               <span class="pre">
-                instrument_id
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                void
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.data.client.MarketDataClient.unsubscribe_ticker" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Unsubscribe from
-              <cite>
-               Ticker
-              </cite>
-              data for the given instrument ID.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Parameters
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <strong>
-                 instrument_id
-                </strong>
-                (
-                <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
-                 <em>
-                  InstrumentId
-                 </em>
-                </a>
-                ) – The ticker instrument to unsubscribe from.
                </p>
               </dd>
              </dl>
@@ -15218,10 +14973,10 @@ then the component state will not change, and an error will be logged.
             </dd>
            </dl>
            <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.subscribed_generic_data">
+            <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.subscribed_custom_data">
              <span class="sig-name descname">
               <span class="pre">
-               subscribed_generic_data
+               subscribed_custom_data
               </span>
              </span>
              <span class="sig-paren">
@@ -15247,13 +15002,13 @@ then the component state will not change, and an error will be logged.
                </span>
               </span>
              </span>
-             <a class="headerlink" href="#nautilus_trader.data.engine.DataEngine.subscribed_generic_data" title="Permalink to this definition">
+             <a class="headerlink" href="#nautilus_trader.data.engine.DataEngine.subscribed_custom_data" title="Permalink to this definition">
               ¶
              </a>
             </dt>
             <dd>
              <p>
-              Return the generic data types subscribed to.
+              Return the custom data types subscribed to.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">
@@ -15694,61 +15449,6 @@ then the component state will not change, and an error will be logged.
             <dd>
              <p>
               Return the synthetic instrument trade ticks subscribed to.
-             </p>
-             <dl class="field-list simple">
-              <dt class="field-odd">
-               Returns
-               <span class="colon">
-                :
-               </span>
-              </dt>
-              <dd class="field-odd">
-               <p>
-                <em>
-                 list[InstrumentId]
-                </em>
-               </p>
-              </dd>
-             </dl>
-            </dd>
-           </dl>
-           <dl class="py method">
-            <dt class="sig sig-object py" id="nautilus_trader.data.engine.DataEngine.subscribed_tickers">
-             <span class="sig-name descname">
-              <span class="pre">
-               subscribed_tickers
-              </span>
-             </span>
-             <span class="sig-paren">
-              (
-             </span>
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                self
-               </span>
-              </span>
-             </em>
-             <span class="sig-paren">
-              )
-             </span>
-             <span class="sig-return">
-              <span class="sig-return-icon">
-               →
-              </span>
-              <span class="sig-return-typehint">
-               <span class="pre">
-                list
-               </span>
-              </span>
-             </span>
-             <a class="headerlink" href="#nautilus_trader.data.engine.DataEngine.subscribed_tickers" title="Permalink to this definition">
-              ¶
-             </a>
-            </dt>
-            <dd>
-             <p>
-              Return the ticker instruments subscribed to.
              </p>
              <dl class="field-list simple">
               <dt class="field-odd">

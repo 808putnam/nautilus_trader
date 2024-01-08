@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/arrow/depth.rs`."><title>depth.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (b6a8c762e 2024-01-06)" data-channel="nightly" data-search-js="search-1cefe72944ee87e6.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/arrow/depth.rs`."><title>depth.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (75c68cfd2 2024-01-07)" data-channel="nightly" data-search-js="search-1cefe72944ee87e6.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_persistence/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -803,14 +803,6 @@
 <a href="#801" id="801">801</a>
 <a href="#802" id="802">802</a>
 <a href="#803" id="803">803</a>
-<a href="#804" id="804">804</a>
-<a href="#805" id="805">805</a>
-<a href="#806" id="806">806</a>
-<a href="#807" id="807">807</a>
-<a href="#808" id="808">808</a>
-<a href="#809" id="809">809</a>
-<a href="#810" id="810">810</a>
-<a href="#811" id="811">811</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -955,8 +947,7 @@
         metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;,
         data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;RecordBatch, ArrowError&gt; {
-        <span class="comment">// Create array builders
-        </span><span class="kw">let </span><span class="kw-2">mut </span>bid_price_builders = Vec::with_capacity(DEPTH10_LEN);
+        <span class="kw">let </span><span class="kw-2">mut </span>bid_price_builders = Vec::with_capacity(DEPTH10_LEN);
         <span class="kw">let </span><span class="kw-2">mut </span>ask_price_builders = Vec::with_capacity(DEPTH10_LEN);
         <span class="kw">let </span><span class="kw-2">mut </span>bid_size_builders = Vec::with_capacity(DEPTH10_LEN);
         <span class="kw">let </span><span class="kw-2">mut </span>ask_size_builders = Vec::with_capacity(DEPTH10_LEN);
@@ -977,8 +968,7 @@
         <span class="kw">let </span><span class="kw-2">mut </span>ts_event_builder = UInt64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ts_init_builder = UInt64Array::builder(data.len());
 
-        <span class="comment">// Iterate over data
-        </span><span class="kw">for </span>depth <span class="kw">in </span>data {
+        <span class="kw">for </span>depth <span class="kw">in </span>data {
             <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..DEPTH10_LEN {
                 bid_price_builders[i].append_value(depth.bids[i].price.raw);
                 ask_price_builders[i].append_value(depth.asks[i].price.raw);
@@ -994,8 +984,7 @@
             ts_init_builder.append_value(depth.ts_init);
         }
 
-        <span class="comment">// Build arrays
-        </span><span class="kw">let </span>bid_price_arrays = bid_price_builders
+        <span class="kw">let </span>bid_price_arrays = bid_price_builders
             .into_iter()
             .map(|<span class="kw-2">mut </span>b| Arc::new(b.finish()) <span class="kw">as </span>Arc&lt;<span class="kw">dyn </span>Array&gt;)
             .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
@@ -1025,8 +1014,7 @@
         <span class="kw">let </span>ts_event_array = Arc::new(ts_event_builder.finish());
         <span class="kw">let </span>ts_init_array = Arc::new(ts_init_builder.finish());
 
-        <span class="comment">// Build record batch
-        </span><span class="kw">let </span><span class="kw-2">mut </span>columns = Vec::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>columns = Vec::new();
         columns.extend_from_slice(<span class="kw-2">&amp;</span>bid_price_arrays);
         columns.extend_from_slice(<span class="kw-2">&amp;</span>ask_price_arrays);
         columns.extend_from_slice(<span class="kw-2">&amp;</span>bid_size_arrays);
@@ -1047,11 +1035,8 @@
         metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;,
         record_batch: RecordBatch,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="self">Self</span>&gt;, EncodingError&gt; {
-        <span class="comment">// Parse and validate metadata
-        </span><span class="kw">let </span>(instrument_id, price_precision, size_precision) = parse_metadata(metadata)<span class="question-mark">?</span>;
-
-        <span class="comment">// Extract field value arrays
-        </span><span class="kw">let </span>cols = record_batch.columns();
+        <span class="kw">let </span>(instrument_id, price_precision, size_precision) = parse_metadata(metadata)<span class="question-mark">?</span>;
+        <span class="kw">let </span>cols = record_batch.columns();
 
         <span class="kw">let </span>bid_price_col_names = [
             <span class="string">"bid_price_0"</span>,
@@ -1195,8 +1180,7 @@
                 <span class="kw">let </span><span class="kw-2">mut </span>ask_count_arr = [<span class="number">0u32</span>; DEPTH10_LEN];
 
                 <span class="kw">for </span>j <span class="kw">in </span><span class="number">0</span>..DEPTH10_LEN {
-                    <span class="comment">// Assuming Price and Quantity can be constructed from the raw values
-                    </span>bids[j] = BookOrder::new(
+                    bids[j] = BookOrder::new(
                         OrderSide::Buy,
                         Price::from_raw(bid_prices[j].value(i), price_precision).unwrap(),
                         Quantity::from_raw(bid_sizes[j].value(i), size_precision).unwrap(),

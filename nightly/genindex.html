@@ -369,7 +369,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="concepts/advanced/custom_data.html">
-                 Custom/Generic Data
+                 Custom Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -1712,11 +1712,6 @@
               </a>
              </li>
             </ul>
-           </li>
-           <li>
-            <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.add_ticker">
-             add_ticker() (Cache method)
-            </a>
            </li>
            <li>
             <a href="api_reference/analysis.html#nautilus_trader.analysis.analyzer.PortfolioAnalyzer.add_trade">
@@ -5640,6 +5635,11 @@
              current (SpreadAnalyzer attribute)
             </a>
            </li>
+           <li>
+            <a href="api_reference/model/data.html#nautilus_trader.model.data.CustomData">
+             CustomData (class in nautilus_trader.model.data)
+            </a>
+           </li>
           </ul>
          </td>
         </tr>
@@ -5657,13 +5657,13 @@
             </a>
             <ul>
              <li>
-              <a href="api_reference/data.html#nautilus_trader.data.messages.DataResponse.data">
-               (DataResponse attribute)
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.CustomData.data">
+               (CustomData attribute)
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.GenericData.data">
-               (GenericData attribute)
+              <a href="api_reference/data.html#nautilus_trader.data.messages.DataResponse.data">
+               (DataResponse attribute)
               </a>
              </li>
             </ul>
@@ -5696,6 +5696,11 @@
             </a>
             <ul>
              <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.CustomData.data_type">
+               (CustomData attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/data.html#nautilus_trader.data.messages.DataCommand.data_type">
                (DataCommand attribute)
               </a>
@@ -5708,11 +5713,6 @@
              <li>
               <a href="api_reference/data.html#nautilus_trader.data.messages.DataResponse.data_type">
                (DataResponse attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.GenericData.data_type">
-               (GenericData attribute)
               </a>
              </li>
              <li>
@@ -8047,11 +8047,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BetfairTicker.from_dict">
-               (BetfairTicker class method)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.betting.BettingInstrument.from_dict">
                (BettingInstrument static method)
               </a>
@@ -8274,11 +8269,6 @@
              <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.from_dict">
                (SyntheticInstrument static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.Ticker.from_dict">
-               (Ticker static method)
               </a>
              </li>
              <li>
@@ -8631,6 +8621,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.CustomData.fully_qualified_name">
+               (CustomData class method)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/config.html#nautilus_trader.config.common.DatabaseConfig.fully_qualified_name">
                (DatabaseConfig class method)
               </a>
@@ -8708,11 +8703,6 @@
              <li>
               <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.fully_qualified_name">
                (FXRolloverInterestModule class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.GenericData.fully_qualified_name">
-               (GenericData class method)
               </a>
              </li>
              <li>
@@ -9048,11 +9038,6 @@
              <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.fully_qualified_name">
                (SyntheticInstrument class method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.Ticker.fully_qualified_name">
-               (Ticker class method)
               </a>
              </li>
              <li>
@@ -9754,11 +9739,6 @@
            <li>
             <a href="api_reference/persistence.html#nautilus_trader.persistence.writer.generate_signal_class">
              generate_signal_class() (in module nautilus_trader.persistence.writer)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.GenericData">
-             GenericData (class in nautilus_trader.model.data)
             </a>
            </li>
            <li>
@@ -11032,6 +11012,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.handle_quote_ticks">
              handle_quote_ticks() (Actor method)
@@ -11064,47 +11048,6 @@
              </li>
              <li>
               <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.handle_quote_ticks">
-               (Strategy method)
-              </a>
-             </li>
-            </ul>
-           </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
-           <li>
-            <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.handle_ticker">
-             handle_ticker() (Actor method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/trading.html#nautilus_trader.trading.controller.Controller.handle_ticker">
-               (Controller method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.handle_ticker">
-               (ExecAlgorithm method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.handle_ticker">
-               (FXRolloverInterestModule method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.handle_ticker">
-               (OrderEmulator method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.SimulationModule.handle_ticker">
-               (SimulationModule method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.handle_ticker">
                (Strategy method)
               </a>
              </li>
@@ -11753,18 +11696,6 @@
             <a href="api_reference/common.html#nautilus_trader.common.component.MessageBus.has_subscribers">
              has_subscribers() (MessageBus method)
             </a>
-           </li>
-           <li>
-            <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.has_tickers">
-             has_tickers() (Cache method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/cache.html#nautilus_trader.cache.base.CacheFacade.has_tickers">
-               (CacheFacade method)
-              </a>
-             </li>
-            </ul>
            </li>
            <li>
             <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.has_trade_ticks">
@@ -13252,16 +13183,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BetfairTicker.instrument_id">
-               (BetfairTicker attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceTicker.instrument_id">
-               (BinanceTicker attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BSPOrderBookDelta.instrument_id">
                (BSPOrderBookDelta attribute)
               </a>
@@ -13499,11 +13420,6 @@
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.messages.SubmitOrderList.instrument_id">
                (SubmitOrderList attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.Ticker.instrument_id">
-               (Ticker attribute)
               </a>
              </li>
              <li>
@@ -23612,6 +23528,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.on_save">
              on_save() (Actor method)
@@ -23649,10 +23569,6 @@
              </li>
             </ul>
            </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.on_start">
              on_start() (Actor method)
@@ -23722,43 +23638,6 @@
              </li>
              <li>
               <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.on_stop">
-               (Strategy method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.on_ticker">
-             on_ticker() (Actor method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/trading.html#nautilus_trader.trading.controller.Controller.on_ticker">
-               (Controller method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.on_ticker">
-               (ExecAlgorithm method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.on_ticker">
-               (FXRolloverInterestModule method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.on_ticker">
-               (OrderEmulator method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.SimulationModule.on_ticker">
-               (SimulationModule method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.on_ticker">
                (Strategy method)
               </a>
              </li>
@@ -31391,78 +31270,6 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.subscribe_ticker">
-             subscribe_ticker() (Actor method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribe_ticker">
-               (BacktestMarketDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribe_ticker">
-               (BetfairDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribe_ticker">
-               (BinanceFuturesDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribe_ticker">
-               (BinanceSpotDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/trading.html#nautilus_trader.trading.controller.Controller.subscribe_ticker">
-               (Controller method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.subscribe_ticker">
-               (ExecAlgorithm method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.subscribe_ticker">
-               (FXRolloverInterestModule method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.data.InteractiveBrokersDataClient.subscribe_ticker">
-               (InteractiveBrokersDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/live.html#nautilus_trader.live.data_client.LiveMarketDataClient.subscribe_ticker">
-               (LiveMarketDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribe_ticker">
-               (MarketDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.subscribe_ticker">
-               (OrderEmulator method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.SimulationModule.subscribe_ticker">
-               (SimulationModule method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.subscribe_ticker">
-               (Strategy method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.subscribe_trade_ticks">
              subscribe_trade_ticks() (Actor method)
             </a>
@@ -31654,62 +31461,62 @@
             </ul>
            </li>
            <li>
-            <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestDataClient.subscribed_generic_data">
-             subscribed_generic_data() (BacktestDataClient method)
+            <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestDataClient.subscribed_custom_data">
+             subscribed_custom_data() (BacktestDataClient method)
             </a>
             <ul>
              <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_generic_data">
+              <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_custom_data">
                (BacktestMarketDataClient method)
               </a>
              </li>
              <li>
-              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_generic_data">
+              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_custom_data">
                (BetfairDataClient method)
               </a>
              </li>
              <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_generic_data">
+              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_custom_data">
                (BinanceFuturesDataClient method)
               </a>
              </li>
              <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_generic_data">
+              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_custom_data">
                (BinanceSpotDataClient method)
               </a>
              </li>
              <li>
-              <a href="api_reference/data.html#nautilus_trader.data.client.DataClient.subscribed_generic_data">
+              <a href="api_reference/data.html#nautilus_trader.data.client.DataClient.subscribed_custom_data">
                (DataClient method)
               </a>
              </li>
              <li>
-              <a href="api_reference/data.html#nautilus_trader.data.engine.DataEngine.subscribed_generic_data">
+              <a href="api_reference/data.html#nautilus_trader.data.engine.DataEngine.subscribed_custom_data">
                (DataEngine method)
               </a>
              </li>
              <li>
-              <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.data.InteractiveBrokersDataClient.subscribed_generic_data">
+              <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.data.InteractiveBrokersDataClient.subscribed_custom_data">
                (InteractiveBrokersDataClient method)
               </a>
              </li>
              <li>
-              <a href="api_reference/live.html#nautilus_trader.live.data_client.LiveDataClient.subscribed_generic_data">
+              <a href="api_reference/live.html#nautilus_trader.live.data_client.LiveDataClient.subscribed_custom_data">
                (LiveDataClient method)
               </a>
              </li>
              <li>
-              <a href="api_reference/live.html#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_generic_data">
+              <a href="api_reference/live.html#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_custom_data">
                (LiveDataEngine method)
               </a>
              </li>
              <li>
-              <a href="api_reference/live.html#nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_generic_data">
+              <a href="api_reference/live.html#nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_custom_data">
                (LiveMarketDataClient method)
               </a>
              </li>
              <li>
-              <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribed_generic_data">
+              <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribed_custom_data">
                (MarketDataClient method)
               </a>
              </li>
@@ -32022,53 +31829,6 @@
              <li>
               <a href="api_reference/live.html#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_synthetic_trades">
                (LiveDataEngine method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestMarketDataClient.subscribed_tickers">
-             subscribed_tickers() (BacktestMarketDataClient method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data.BetfairDataClient.subscribed_tickers">
-               (BetfairDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.subscribed_tickers">
-               (BinanceFuturesDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.subscribed_tickers">
-               (BinanceSpotDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/data.html#nautilus_trader.data.engine.DataEngine.subscribed_tickers">
-               (DataEngine method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.data.InteractiveBrokersDataClient.subscribed_tickers">
-               (InteractiveBrokersDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/live.html#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_tickers">
-               (LiveDataEngine method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/live.html#nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_tickers">
-               (LiveMarketDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.subscribed_tickers">
-               (MarketDataClient method)
               </a>
              </li>
             </ul>
@@ -32523,47 +32283,6 @@
             </a>
            </li>
            <li>
-            <a href="api_reference/model/data.html#nautilus_trader.model.data.Ticker">
-             Ticker (class in nautilus_trader.model.data)
-            </a>
-           </li>
-           <li>
-            <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.ticker">
-             ticker() (Cache method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/cache.html#nautilus_trader.cache.base.CacheFacade.ticker">
-               (CacheFacade method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.ticker_count">
-             ticker_count() (Cache method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/cache.html#nautilus_trader.cache.base.CacheFacade.ticker_count">
-               (CacheFacade method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
-            <a href="api_reference/cache.html#nautilus_trader.cache.cache.Cache.tickers">
-             tickers() (Cache method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/cache.html#nautilus_trader.cache.base.CacheFacade.tickers">
-               (CacheFacade method)
-              </a>
-             </li>
-            </ul>
-           </li>
-           <li>
             <a href="api_reference/model/tick_scheme.html#nautilus_trader.model.tick_scheme.base.TickScheme">
              TickScheme (class in nautilus_trader.model.tick_scheme.base)
             </a>
@@ -32775,11 +32494,6 @@
              <li>
               <a href="api_reference/execution.html#nautilus_trader.execution.messages.BatchCancelOrders.to_dict">
                (BatchCancelOrders static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BetfairTicker.to_dict">
-               (BetfairTicker static method)
               </a>
              </li>
              <li>
@@ -33050,11 +32764,6 @@
              <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.to_dict">
                (SyntheticInstrument static method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.Ticker.to_dict">
-               (Ticker static method)
               </a>
              </li>
              <li>
@@ -34037,7 +33746,7 @@
              </li>
              <li>
               <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BetfairTicker.ts_event">
-               (BetfairTicker attribute)
+               (BetfairTicker property)
               </a>
              </li>
              <li>
@@ -34057,7 +33766,7 @@
              </li>
              <li>
               <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceTicker.ts_event">
-               (BinanceTicker attribute)
+               (BinanceTicker property)
               </a>
              </li>
              <li>
@@ -34081,6 +33790,11 @@
               </a>
              </li>
              <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.CustomData.ts_event">
+               (CustomData attribute)
+              </a>
+             </li>
+             <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.equity.Equity.ts_event">
                (Equity attribute)
               </a>
@@ -34093,11 +33807,6 @@
              <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.futures_contract.FuturesContract.ts_event">
                (FuturesContract attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.GenericData.ts_event">
-               (GenericData attribute)
               </a>
              </li>
              <li>
@@ -34261,11 +33970,6 @@
               </a>
              </li>
              <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.Ticker.ts_event">
-               (Ticker attribute)
-              </a>
-             </li>
-             <li>
               <a href="api_reference/common.html#nautilus_trader.common.clock.TimeEvent.ts_event">
                (TimeEvent attribute)
               </a>
@@ -34304,7 +34008,7 @@
              </li>
              <li>
               <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data_types.BetfairTicker.ts_init">
-               (BetfairTicker attribute)
+               (BetfairTicker property)
               </a>
              </li>
              <li>
@@ -34324,7 +34028,7 @@
              </li>
              <li>
               <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.common.types.BinanceTicker.ts_init">
-               (BinanceTicker attribute)
+               (BinanceTicker property)
               </a>
              </li>
              <li>
@@ -34360,6 +34064,11 @@
              <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.currency_pair.CurrencyPair.ts_init">
                (CurrencyPair attribute)
+              </a>
+             </li>
+             <li>
+              <a href="api_reference/model/data.html#nautilus_trader.model.data.CustomData.ts_init">
+               (CustomData attribute)
               </a>
              </li>
              <li>
@@ -34410,11 +34119,6 @@
              <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.futures_contract.FuturesContract.ts_init">
                (FuturesContract attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.GenericData.ts_init">
-               (GenericData attribute)
               </a>
              </li>
              <li>
@@ -34670,11 +34374,6 @@
              <li>
               <a href="api_reference/model/instruments.html#nautilus_trader.model.instruments.synthetic.SyntheticInstrument.ts_init">
                (SyntheticInstrument attribute)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/model/data.html#nautilus_trader.model.data.Ticker.ts_init">
-               (Ticker attribute)
               </a>
              </li>
              <li>
@@ -35721,6 +35420,10 @@
              </li>
             </ul>
            </li>
+          </ul>
+         </td>
+         <td style="width: 33%; vertical-align: top;">
+          <ul>
            <li>
             <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.unsubscribe_quote_ticks">
              unsubscribe_quote_ticks() (Actor method)
@@ -35788,82 +35491,6 @@
              </li>
              <li>
               <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.unsubscribe_quote_ticks">
-               (Strategy method)
-              </a>
-             </li>
-            </ul>
-           </li>
-          </ul>
-         </td>
-         <td style="width: 33%; vertical-align: top;">
-          <ul>
-           <li>
-            <a href="api_reference/common.html#nautilus_trader.common.actor.Actor.unsubscribe_ticker">
-             unsubscribe_ticker() (Actor method)
-            </a>
-            <ul>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.data_client.BacktestMarketDataClient.unsubscribe_ticker">
-               (BacktestMarketDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/betfair.html#nautilus_trader.adapters.betfair.data.BetfairDataClient.unsubscribe_ticker">
-               (BetfairDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.futures.data.BinanceFuturesDataClient.unsubscribe_ticker">
-               (BinanceFuturesDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/binance.html#nautilus_trader.adapters.binance.spot.data.BinanceSpotDataClient.unsubscribe_ticker">
-               (BinanceSpotDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/trading.html#nautilus_trader.trading.controller.Controller.unsubscribe_ticker">
-               (Controller method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.algorithm.ExecAlgorithm.unsubscribe_ticker">
-               (ExecAlgorithm method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.FXRolloverInterestModule.unsubscribe_ticker">
-               (FXRolloverInterestModule method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/adapters/interactive_brokers.html#nautilus_trader.adapters.interactive_brokers.data.InteractiveBrokersDataClient.unsubscribe_ticker">
-               (InteractiveBrokersDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/live.html#nautilus_trader.live.data_client.LiveMarketDataClient.unsubscribe_ticker">
-               (LiveMarketDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/data.html#nautilus_trader.data.client.MarketDataClient.unsubscribe_ticker">
-               (MarketDataClient method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/execution.html#nautilus_trader.execution.emulator.OrderEmulator.unsubscribe_ticker">
-               (OrderEmulator method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/backtest.html#nautilus_trader.backtest.modules.SimulationModule.unsubscribe_ticker">
-               (SimulationModule method)
-              </a>
-             </li>
-             <li>
-              <a href="api_reference/trading.html#nautilus_trader.trading.strategy.Strategy.unsubscribe_ticker">
                (Strategy method)
               </a>
              </li>
