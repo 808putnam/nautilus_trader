@@ -5494,7 +5494,7 @@ with a good compromise being 100 milliseconds.
                 <em>
                  default True
                 </em>
-                ) – If a ‘trader-’ prefix is applied to keys.
+                ) – If a ‘trader-’ prefix is used for keys.
                </p>
               </li>
               <li>
@@ -5512,7 +5512,7 @@ with a good compromise being 100 milliseconds.
                 <em>
                  default False
                 </em>
-                ) – If the traders instance ID should be used for keys.
+                ) – If the traders instance ID is used for keys.
                </p>
               </li>
               <li>
@@ -6254,7 +6254,7 @@ types as values.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              stream
+              use_trader_prefix
              </span>
             </span>
             <span class="p">
@@ -6266,19 +6266,7 @@ types as values.
             </span>
             <span class="n">
              <span class="pre">
-              str
-             </span>
-             <span class="w">
-             </span>
-             <span class="p">
-              <span class="pre">
-               |
-              </span>
-             </span>
-             <span class="w">
-             </span>
-             <span class="pre">
-              None
+              bool
              </span>
             </span>
             <span class="w">
@@ -6292,7 +6280,41 @@ types as values.
             </span>
             <span class="default_value">
              <span class="pre">
-              None
+              True
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              use_trader_id
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              True
              </span>
             </span>
            </em>
@@ -6327,6 +6349,40 @@ types as values.
             <span class="default_value">
              <span class="pre">
               False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              streams_prefix
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              str
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              'streams'
              </span>
             </span>
            </em>
@@ -6550,23 +6606,37 @@ in a command syntax error.
               <li>
                <p>
                 <strong>
-                 stream
+                 use_trader_prefix
                 </strong>
                 (
                 <em>
-                 str
+                 bool
                 </em>
                 <em>
                  ,
                 </em>
                 <em>
-                 optional
+                 default True
                 </em>
-                ) – The additional prefix for externally published stream names (must have a
-                <cite>
-                 database
-                </cite>
-                config).
+                ) – If a ‘trader-’ prefix is used for stream names.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 use_trader_id
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default True
+                </em>
+                ) – If the traders ID is used for stream names.
                </p>
               </li>
               <li>
@@ -6584,7 +6654,43 @@ in a command syntax error.
                 <em>
                  default False
                 </em>
-                ) – If the traders instance ID should be used in stream names.
+                ) – If the traders instance ID is used for stream names.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 streams_prefix
+                </strong>
+                (
+                <em>
+                 str
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default 'streams'
+                </em>
+                ) – The prefix for externally published stream names (must have a
+                <cite>
+                 database
+                </cite>
+                config).
+If
+                <cite>
+                 use_trader_id
+                </cite>
+                and
+                <cite>
+                 use_instance_id
+                </cite>
+                are
+                <em>
+                 both
+                </em>
+                false, then it becomes possible for
+many traders to be configured to write to the same streams.
                </p>
               </li>
               <li>
