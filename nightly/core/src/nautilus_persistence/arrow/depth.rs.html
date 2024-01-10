@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/arrow/depth.rs`."><title>depth.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (ca663b06c 2024-01-08)" data-channel="nightly" data-search-js="search-1cefe72944ee87e6.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/arrow/depth.rs`."><title>depth.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (190f4c961 2024-01-09)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_persistence/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -803,6 +803,19 @@
 <a href="#801" id="801">801</a>
 <a href="#802" id="802">802</a>
 <a href="#803" id="803">803</a>
+<a href="#804" id="804">804</a>
+<a href="#805" id="805">805</a>
+<a href="#806" id="806">806</a>
+<a href="#807" id="807">807</a>
+<a href="#808" id="808">808</a>
+<a href="#809" id="809">809</a>
+<a href="#810" id="810">810</a>
+<a href="#811" id="811">811</a>
+<a href="#812" id="812">812</a>
+<a href="#813" id="813">813</a>
+<a href="#814" id="814">814</a>
+<a href="#815" id="815">815</a>
+<a href="#816" id="816">816</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1162,14 +1175,13 @@
             )<span class="question-mark">?</span>);
         }
 
-        <span class="kw">let </span>flags =
-            extract_column::&lt;UInt8Array&gt;(cols, <span class="string">"flags"</span>, <span class="number">4 </span>* DEPTH10_LEN + <span class="number">2</span>, DataType::UInt8)<span class="question-mark">?</span>;
+        <span class="kw">let </span>flags = extract_column::&lt;UInt8Array&gt;(cols, <span class="string">"flags"</span>, <span class="number">6 </span>* DEPTH10_LEN, DataType::UInt8)<span class="question-mark">?</span>;
         <span class="kw">let </span>sequence =
-            extract_column::&lt;UInt64Array&gt;(cols, <span class="string">"sequence"</span>, <span class="number">4 </span>* DEPTH10_LEN + <span class="number">3</span>, DataType::UInt64)<span class="question-mark">?</span>;
+            extract_column::&lt;UInt64Array&gt;(cols, <span class="string">"sequence"</span>, <span class="number">6 </span>* DEPTH10_LEN + <span class="number">1</span>, DataType::UInt64)<span class="question-mark">?</span>;
         <span class="kw">let </span>ts_event =
-            extract_column::&lt;UInt64Array&gt;(cols, <span class="string">"ts_event"</span>, <span class="number">4 </span>* DEPTH10_LEN + <span class="number">4</span>, DataType::UInt64)<span class="question-mark">?</span>;
+            extract_column::&lt;UInt64Array&gt;(cols, <span class="string">"ts_event"</span>, <span class="number">6 </span>* DEPTH10_LEN + <span class="number">2</span>, DataType::UInt64)<span class="question-mark">?</span>;
         <span class="kw">let </span>ts_init =
-            extract_column::&lt;UInt64Array&gt;(cols, <span class="string">"ts_init"</span>, <span class="number">4 </span>* DEPTH10_LEN + <span class="number">5</span>, DataType::UInt64)<span class="question-mark">?</span>;
+            extract_column::&lt;UInt64Array&gt;(cols, <span class="string">"ts_init"</span>, <span class="number">6 </span>* DEPTH10_LEN + <span class="number">3</span>, DataType::UInt64)<span class="question-mark">?</span>;
 
         <span class="comment">// Map record batch rows to vector of OrderBookDepth10
         </span><span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="self">Self</span>&gt;, EncodingError&gt; = (<span class="number">0</span>..record_batch.num_rows())
@@ -1310,10 +1322,12 @@
         ];
         <span class="kw">let </span>expected_schema = Schema::new_with_metadata(expected_fields, metadata);
         <span class="macro">assert_eq!</span>(schema, expected_schema);
+        <span class="macro">assert_eq!</span>(schema.metadata()[<span class="string">"instrument_id"</span>], <span class="string">"AAPL.XNAS"</span>);
+        <span class="macro">assert_eq!</span>(schema.metadata()[<span class="string">"price_precision"</span>], <span class="string">"2"</span>);
+        <span class="macro">assert_eq!</span>(schema.metadata()[<span class="string">"size_precision"</span>], <span class="string">"0"</span>);
     }
 
-    <span class="attr">#[ignore] </span><span class="comment">// WIP
-    </span><span class="attr">#[rstest]
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_schema_map() {
         <span class="kw">let </span>schema_map = OrderBookDepth10::get_schema_map();
         <span class="kw">let </span><span class="kw-2">mut </span>expected_map = HashMap::new();
@@ -1604,6 +1618,18 @@
 
         <span class="macro">assert_eq!</span>(ts_init_values.len(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(ts_init_values.value(<span class="number">0</span>), <span class="number">2</span>);
+    }
+
+    <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_decode_batch(stub_depth10: OrderBookDepth10) {
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.XNAS"</span>);
+        <span class="kw">let </span>metadata = OrderBookDepth10::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
+
+        <span class="kw">let </span>data = <span class="macro">vec!</span>[stub_depth10];
+        <span class="kw">let </span>record_batch = OrderBookDepth10::encode_batch(<span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>data).unwrap();
+        <span class="kw">let </span>decoded_data = OrderBookDepth10::decode_batch(<span class="kw-2">&amp;</span>metadata, record_batch).unwrap();
+
+        <span class="macro">assert_eq!</span>(decoded_data.len(), <span class="number">1</span>);
     }
 }
 </code></pre></div></section></main></body></html>
