@@ -5159,40 +5159,6 @@ types as values.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
-              flush_on_start
-             </span>
-            </span>
-            <span class="p">
-             <span class="pre">
-              :
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="n">
-             <span class="pre">
-              bool
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="o">
-             <span class="pre">
-              =
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="default_value">
-             <span class="pre">
-              False
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
               use_trader_prefix
              </span>
             </span>
@@ -5254,6 +5220,74 @@ types as values.
             <span class="default_value">
              <span class="pre">
               False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              flush_on_start
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              drop_instruments_on_reset
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              True
              </span>
             </span>
            </em>
@@ -5464,24 +5498,6 @@ with a good compromise being 100 milliseconds.
               <li>
                <p>
                 <strong>
-                 flush_on_start
-                </strong>
-                (
-                <em>
-                 bool
-                </em>
-                <em>
-                 ,
-                </em>
-                <em>
-                 default False
-                </em>
-                ) – If database should be flushed on start.
-               </p>
-              </li>
-              <li>
-               <p>
-                <strong>
                  use_trader_prefix
                 </strong>
                 (
@@ -5513,6 +5529,42 @@ with a good compromise being 100 milliseconds.
                  default False
                 </em>
                 ) – If the traders instance ID is used for keys.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 flush_on_start
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If database should be flushed on start.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 drop_instruments_on_reset
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default True
+                </em>
+                ) – If instruments data should be dropped from the caches memory on reset.
                </p>
               </li>
               <li>
