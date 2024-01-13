@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["state"]};
+window.SIDEBAR_ITEMS = {"mod":["state","stubs"]};

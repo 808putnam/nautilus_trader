@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["databento","python"]};
+window.SIDEBAR_ITEMS = {"mod":["databento"]};

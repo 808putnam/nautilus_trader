@@ -724,6 +724,11 @@
              </a>
             </li>
             <li class="md-nav__item">
+             <a class="md-nav__link" href="#the-interactive-brokers-client">
+              The Interactive Brokers Client
+             </a>
+            </li>
+            <li class="md-nav__item">
              <a class="md-nav__link" href="#instruments-contracts">
               Instruments &amp; Contracts
              </a>
@@ -781,7 +786,7 @@
          </a>
         </h1>
         <p>
-         Interactive Brokers (IB) is a trading platform that allows trading in a wide range of financial instruments, including stocks, options, futures, currencies, bonds, funds, and cryptocurrencies. NautilusTrader offers an adapter to integrate with IB using their
+         Interactive Brokers (IB) is a trading platform that allows trading across a wide range of financial instruments, including stocks, options, futures, currencies, bonds, funds, and cryptocurrencies. NautilusTrader offers an adapter to integrate with IB using their
          <a class="reference external" href="https://interactivebrokers.github.io/tws-api/index.html">
           Trader Workstation (TWS) API
          </a>
@@ -819,12 +824,14 @@
          </a>
          Python package, which NautilusTrader conveniently includes as an extra package.
         </p>
-        <p>
-         <strong>
+        <div class="admonition note">
+         <p class="admonition-title">
           Note
-         </strong>
-         : The standalone TWS and IB Gateway applications necessitate manual input of username, password, and trading mode (live or paper) at startup. The dockerized version of the IB Gateway handles these steps programmatically.
-        </p>
+         </p>
+         <p>
+          The standalone TWS and IB Gateway applications necessitate manual input of username, password, and trading mode (live or paper) at startup. The dockerized version of the IB Gateway handles these steps programmatically.
+         </p>
+        </div>
         <section id="installation">
          <h2 id="installation">
           Installation
@@ -862,22 +869,24 @@
 </pre>
           </div>
          </div>
-         <p>
-          <strong>
+         <div class="admonition note">
+          <p class="admonition-title">
            Note
-          </strong>
-          : Because IB does not provide wheels for
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            ibapi
-           </span>
-          </code>
-          , NautilusTrader
-          <a class="reference external" href="https://pypi.org/project/nautilus-ibapi/">
-           repackages
-          </a>
-          it for release on PyPI.
-         </p>
+          </p>
+          <p>
+           Because IB does not provide wheels for
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             ibapi
+            </span>
+           </code>
+           , NautilusTrader
+           <a class="reference external" href="https://pypi.org/project/nautilus-ibapi/">
+            repackages
+           </a>
+           it for release on PyPI.
+          </p>
+         </div>
         </section>
         <section id="getting-started">
          <h2 id="getting-started">
@@ -1027,6 +1036,108 @@
            </p>
           </li>
          </ul>
+        </section>
+        <section id="the-interactive-brokers-client">
+         <h2 id="the-interactive-brokers-client">
+          The Interactive Brokers Client
+          <a class="headerlink" href="#the-interactive-brokers-client" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            InteractiveBrokersClient
+           </span>
+          </code>
+          serves as the central component of the IB adapter, overseeing a range of critical functions. These include establishing and maintaining connections, handling API errors, executing trades, and gathering various types of data such as market data, contract/instrument data, and account details.
+         </p>
+         <p>
+          To ensure efficient management of these diverse responsibilities, the
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            InteractiveBrokersClient
+           </span>
+          </code>
+          is divided into several specialized mixin classes. This modular approach enhances manageability and clarity. The key subcomponents are:
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              InteractiveBrokersClientConnectionMixin
+             </span>
+            </code>
+            : This class is dedicated to managing the connection with TWS/Gateway.
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              InteractiveBrokersClientErrorMixin
+             </span>
+            </code>
+            : It focuses on addressing all encountered errors and warnings.
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              InteractiveBrokersClientAccountMixin
+             </span>
+            </code>
+            : Responsible for handling requests related to account information and positions.
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              InteractiveBrokersClientContractMixin
+             </span>
+            </code>
+            : Handles retrieving contracts (instruments) data
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              InteractiveBrokersClientMarketDataMixin
+             </span>
+            </code>
+            : Handles market data requests, subscriptions and data processing
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              InteractiveBrokersClientOrderMixin
+             </span>
+            </code>
+            : Oversees all aspects of order placement and management.
+           </p>
+          </li>
+         </ul>
+         <div class="admonition tip">
+          <p class="admonition-title">
+           Tip
+          </p>
+          <p>
+           To troubleshoot TWS API incoming message issues, consider starting at the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             InteractiveBrokersClient._process_message
+            </span>
+           </code>
+           method, which acts as the primary gateway for processing all messages received from the API.
+          </p>
+         </div>
         </section>
         <section id="instruments-contracts">
          <h2 id="instruments-contracts">
