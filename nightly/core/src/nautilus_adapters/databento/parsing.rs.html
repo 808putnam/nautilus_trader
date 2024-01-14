@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/parsing.rs`."><title>parsing.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (2319be8e2 2024-01-12)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/parsing.rs`."><title>parsing.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d78329b92 2024-01-13)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_adapters/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -568,6 +568,31 @@
 <a href="#566" id="566">566</a>
 <a href="#567" id="567">567</a>
 <a href="#568" id="568">568</a>
+<a href="#569" id="569">569</a>
+<a href="#570" id="570">570</a>
+<a href="#571" id="571">571</a>
+<a href="#572" id="572">572</a>
+<a href="#573" id="573">573</a>
+<a href="#574" id="574">574</a>
+<a href="#575" id="575">575</a>
+<a href="#576" id="576">576</a>
+<a href="#577" id="577">577</a>
+<a href="#578" id="578">578</a>
+<a href="#579" id="579">579</a>
+<a href="#580" id="580">580</a>
+<a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
+<a href="#585" id="585">585</a>
+<a href="#586" id="586">586</a>
+<a href="#587" id="587">587</a>
+<a href="#588" id="588">588</a>
+<a href="#589" id="589">589</a>
+<a href="#590" id="590">590</a>
+<a href="#591" id="591">591</a>
+<a href="#592" id="592">592</a>
+<a href="#593" id="593">593</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -592,7 +617,6 @@
 
 <span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>databento::dbn;
-<span class="kw">use </span>dbn::Record;
 <span class="kw">use </span>itoa;
 <span class="kw">use </span>nautilus_core::{datetime::NANOSECONDS_IN_SECOND, time::UnixNanos};
 <span class="kw">use </span>nautilus_model::{
@@ -614,7 +638,7 @@
         equity::Equity, futures_contract::FuturesContract, options_contract::OptionsContract,
         Instrument,
     },
-    types::{currency::Currency, price::Price, quantity::Quantity},
+    types::{currency::Currency, fixed::FIXED_SCALAR, price::Price, quantity::Quantity},
 };
 <span class="kw">use </span>ustr::Ustr;
 
@@ -744,7 +768,7 @@
 }
 
 <span class="kw">pub fn </span>parse_equity(
-    record: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
+    record: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;Equity&gt; {
@@ -768,7 +792,7 @@
 }
 
 <span class="kw">pub fn </span>parse_futures_contract(
-    record: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
+    record: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;FuturesContract&gt; {
@@ -799,7 +823,7 @@
 }
 
 <span class="kw">pub fn </span>parse_options_contract(
-    record: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
+    record: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;OptionsContract&gt; {
@@ -847,7 +871,7 @@
         <span class="kw">let </span>trade = TradeTick::new(
             instrument_id,
             Price::from_raw(record.price, price_precision)<span class="question-mark">?</span>,
-            Quantity::from_raw(record.size.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+            Quantity::from_raw(record.size <span class="kw">as </span>u64 * FIXED_SCALAR <span class="kw">as </span>u64, <span class="number">0</span>)<span class="question-mark">?</span>,
             parse_aggressor_side(record.side),
             TradeId::new(itoa::Buffer::new().format(record.sequence))<span class="question-mark">?</span>,
             record.ts_recv,
@@ -859,7 +883,7 @@
     <span class="kw">let </span>order = BookOrder::new(
         side,
         Price::from_raw(record.price, price_precision)<span class="question-mark">?</span>,
-        Quantity::from_raw(record.size.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+        Quantity::from_raw(record.size <span class="kw">as </span>u64 * FIXED_SCALAR <span class="kw">as </span>u64, <span class="number">0</span>)<span class="question-mark">?</span>,
         record.order_id,
     );
 
@@ -885,7 +909,7 @@
     <span class="kw">let </span>trade = TradeTick::new(
         instrument_id,
         Price::from_raw(record.price, price_precision)<span class="question-mark">?</span>,
-        Quantity::from_raw(record.size.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+        Quantity::from_raw(record.size <span class="kw">as </span>u64 * FIXED_SCALAR <span class="kw">as </span>u64, <span class="number">0</span>)<span class="question-mark">?</span>,
         parse_aggressor_side(record.side),
         TradeId::new(itoa::Buffer::new().format(record.sequence))<span class="question-mark">?</span>,
         record.ts_recv,
@@ -906,8 +930,8 @@
         instrument_id,
         Price::from_raw(top_level.bid_px, price_precision)<span class="question-mark">?</span>,
         Price::from_raw(top_level.ask_px, price_precision)<span class="question-mark">?</span>,
-        Quantity::from_raw(top_level.bid_sz.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
-        Quantity::from_raw(top_level.ask_sz.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+        Quantity::from_raw(top_level.bid_sz <span class="kw">as </span>u64 * FIXED_SCALAR <span class="kw">as </span>u64, <span class="number">0</span>)<span class="question-mark">?</span>,
+        Quantity::from_raw(top_level.ask_sz <span class="kw">as </span>u64 * FIXED_SCALAR <span class="kw">as </span>u64, <span class="number">0</span>)<span class="question-mark">?</span>,
         record.ts_recv,
         ts_init,
     )<span class="question-mark">?</span>;
@@ -916,7 +940,7 @@
         <span class="string">'T' </span>=&gt; <span class="prelude-val">Some</span>(TradeTick::new(
             instrument_id,
             Price::from_raw(record.price, price_precision)<span class="question-mark">?</span>,
-            Quantity::from_raw(record.size.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+            Quantity::from_raw(record.size <span class="kw">as </span>u64 * FIXED_SCALAR <span class="kw">as </span>u64, <span class="number">0</span>)<span class="question-mark">?</span>,
             parse_aggressor_side(record.side),
             TradeId::new(itoa::Buffer::new().format(record.sequence))<span class="question-mark">?</span>,
             record.ts_recv,
@@ -943,14 +967,14 @@
         <span class="kw">let </span>bid_order = BookOrder::new(
             OrderSide::Buy,
             Price::from_raw(level.bid_px, price_precision)<span class="question-mark">?</span>,
-            Quantity::from_raw(level.bid_sz.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+            Quantity::from_raw(level.bid_sz <span class="kw">as </span>u64 * FIXED_SCALAR <span class="kw">as </span>u64, <span class="number">0</span>)<span class="question-mark">?</span>,
             <span class="number">0</span>,
         );
 
         <span class="kw">let </span>ask_order = BookOrder::new(
             OrderSide::Sell,
             Price::from_raw(level.ask_px, price_precision)<span class="question-mark">?</span>,
-            Quantity::from_raw(level.ask_sz.into(), <span class="number">0</span>)<span class="question-mark">?</span>,
+            Quantity::from_raw(level.ask_sz <span class="kw">as </span>u64 * FIXED_SCALAR <span class="kw">as </span>u64, <span class="number">0</span>)<span class="question-mark">?</span>,
             <span class="number">0</span>,
         );
 
@@ -1044,8 +1068,8 @@
     <span class="kw">let </span>ts_event_adjustment = parse_ts_event_adjustment(record)<span class="question-mark">?</span>;
 
     <span class="comment">// Adjust `ts_event` from open to close of bar
-    </span><span class="kw">let </span>ts_event = record.hd.ts_event + ts_event_adjustment;
-    <span class="kw">let </span>ts_init = cmp::max(ts_init, ts_event);
+    </span><span class="kw">let </span>ts_event = record.hd.ts_event;
+    <span class="kw">let </span>ts_init = cmp::max(ts_init, ts_event) + ts_event_adjustment;
 
     <span class="kw">let </span>bar = Bar::new(
         bar_type,
@@ -1053,7 +1077,7 @@
         </span>Price::from_raw(record.high / <span class="number">100</span>, price_precision)<span class="question-mark">?</span>, <span class="comment">// TODO(adjust for display factor)
         </span>Price::from_raw(record.low / <span class="number">100</span>, price_precision)<span class="question-mark">?</span>,  <span class="comment">// TODO(adjust for display factor)
         </span>Price::from_raw(record.close / <span class="number">100</span>, price_precision)<span class="question-mark">?</span>, <span class="comment">// TODO(adjust for display factor)
-        </span>Quantity::from_raw(record.volume, <span class="number">0</span>)<span class="question-mark">?</span>,                <span class="comment">// TODO(adjust for display factor)
+        </span>Quantity::from_raw(record.volume * FIXED_SCALAR <span class="kw">as </span>u64, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TODO(adjust for display factor)
         </span>ts_event,
         ts_init,
     );
@@ -1063,13 +1087,19 @@
 
 <span class="kw">pub fn </span>parse_record(
     record: <span class="kw-2">&amp;</span>dbn::RecordRef,
+    rtype: dbn::RType,
     instrument_id: InstrumentId,
-    ts_init: UnixNanos,
+    price_precision: u8,
+    ts_init: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(Data, <span class="prelude-ty">Option</span>&lt;Data&gt;)&gt; {
-    <span class="kw">let </span>result = <span class="kw">match </span>record.rtype()<span class="question-mark">? </span>{
+    <span class="kw">let </span>result = <span class="kw">match </span>rtype {
         dbn::RType::Mbo =&gt; {
             <span class="kw">let </span>msg = record.get::&lt;dbn::MboMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>result = parse_mbo_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
+                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
+                <span class="prelude-val">None </span>=&gt; msg.ts_recv,
+            };
+            <span class="kw">let </span>result = parse_mbo_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
             <span class="kw">match </span>result {
                 (<span class="prelude-val">Some</span>(delta), <span class="prelude-val">None</span>) =&gt; (Data::Delta(delta), <span class="prelude-val">None</span>),
                 (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(trade)) =&gt; (Data::Trade(trade), <span class="prelude-val">None</span>),
@@ -1078,12 +1108,20 @@
         }
         dbn::RType::Mbp0 =&gt; {
             <span class="kw">let </span>msg = record.get::&lt;dbn::TradeMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>trade = parse_trade_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
+                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
+                <span class="prelude-val">None </span>=&gt; msg.ts_recv,
+            };
+            <span class="kw">let </span>trade = parse_trade_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
             (Data::Trade(trade), <span class="prelude-val">None</span>)
         }
         dbn::RType::Mbp1 =&gt; {
             <span class="kw">let </span>msg = record.get::&lt;dbn::Mbp1Msg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>result = parse_mbp1_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
+                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
+                <span class="prelude-val">None </span>=&gt; msg.ts_recv,
+            };
+            <span class="kw">let </span>result = parse_mbp1_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
             <span class="kw">match </span>result {
                 (quote, <span class="prelude-val">None</span>) =&gt; (Data::Quote(quote), <span class="prelude-val">None</span>),
                 (quote, <span class="prelude-val">Some</span>(trade)) =&gt; (Data::Quote(quote), <span class="prelude-val">Some</span>(Data::Trade(trade))),
@@ -1091,7 +1129,11 @@
         }
         dbn::RType::Mbp10 =&gt; {
             <span class="kw">let </span>msg = record.get::&lt;dbn::Mbp10Msg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>depth = parse_mbp10_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
+                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
+                <span class="prelude-val">None </span>=&gt; msg.ts_recv,
+            };
+            <span class="kw">let </span>depth = parse_mbp10_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
             (Data::Depth10(depth), <span class="prelude-val">None</span>)
         }
         dbn::RType::Ohlcv1S
@@ -1100,17 +1142,21 @@
         | dbn::RType::Ohlcv1D
         | dbn::RType::OhlcvEod =&gt; {
             <span class="kw">let </span>msg = record.get::&lt;dbn::OhlcvMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>bar = parse_ohlcv_msg(msg, instrument_id, <span class="number">2</span>, ts_init)<span class="question-mark">?</span>;
+            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
+                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
+                <span class="prelude-val">None </span>=&gt; msg.hd.ts_event,
+            };
+            <span class="kw">let </span>bar = parse_ohlcv_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
             (Data::Bar(bar), <span class="prelude-val">None</span>)
         }
-        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"RType is currently unsupported by NautilusTrader"</span>),
+        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"RType {:?} is not currently supported"</span>, rtype),
     };
 
     <span class="prelude-val">Ok</span>(result)
 }
 
 <span class="kw">pub fn </span>parse_instrument_def_msg(
-    record: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
+    record: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     publisher: <span class="kw-2">&amp;</span>DatabentoPublisher,
     ts_init: UnixNanos,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;Box&lt;<span class="kw">dyn </span>Instrument&gt;&gt; {
@@ -1118,21 +1164,25 @@
     <span class="kw">let </span>instrument_id = nautilus_instrument_id_from_databento(raw_symbol, publisher);
 
     <span class="kw">match </span>record.instrument_class <span class="kw">as </span>u8 <span class="kw">as </span>char {
-        <span class="string">'C' </span>| <span class="string">'P' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(parse_options_contract(
-            record,
-            instrument_id,
-            ts_init,
-        )<span class="question-mark">?</span>)),
         <span class="string">'K' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(parse_equity(record, instrument_id, ts_init)<span class="question-mark">?</span>)),
         <span class="string">'F' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(parse_futures_contract(
             record,
             instrument_id,
             ts_init,
         )<span class="question-mark">?</span>)),
+        <span class="string">'C' </span>| <span class="string">'P' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(parse_options_contract(
+            record,
+            instrument_id,
+            ts_init,
+        )<span class="question-mark">?</span>)),
+        <span class="string">'B' </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported `instrument_class` 'B' (BOND)"</span>),
+        <span class="string">'M' </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported `instrument_class` 'M' (MIXEDSPREAD)"</span>),
+        <span class="string">'S' </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported `instrument_class` 'S' (FUTURESPREAD)"</span>),
+        <span class="string">'T' </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported `instrument_class` 'T' (OPTIONSPREAD)"</span>),
         <span class="string">'X' </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported `instrument_class` 'X' (FX_SPOT)"</span>),
         <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(
-            <span class="string">"Invalid `instrument_class`, was {}"</span>,
-            record.instrument_class
+            <span class="string">"Unsupported `instrument_class` '{}'"</span>,
+            record.instrument_class <span class="kw">as </span>u8 <span class="kw">as </span>char
         ),
     }
 }
