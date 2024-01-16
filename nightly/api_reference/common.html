@@ -4008,19 +4008,10 @@
                </ul>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.logging.init_logging">
+               <a class="md-nav__link" href="#nautilus_trader.common.logging.is_logging_initialized">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  init_logging()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.common.logging.init_tracing">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  init_tracing()
+                  is_logging_initialized()
                  </span>
                 </code>
                </a>
@@ -38503,6 +38494,17 @@ will be appended with ‘F’.
              </span>
             </span>
            </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+             <span class="pre">
+              print_config=False
+             </span>
+            </span>
+           </em>
            <span class="sig-paren">
             )
            </span>
@@ -38809,6 +38811,24 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                  default False
                 </em>
                 ) – If the log output is bypassed.
+               </p>
+              </li>
+              <li>
+               <p>
+                <strong>
+                 print_config
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 default False
+                </em>
+                ) – If the core logging configuration should be printed to stdout on initialization.
                </p>
               </li>
              </ul>
@@ -39349,17 +39369,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                </span>
               </span>
              </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                dict
-               </span>
-               <span class="pre">
-                annotations=None
-               </span>
-              </span>
-             </em>
              <span class="sig-paren">
               )
              </span>
@@ -39464,17 +39473,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                </span>
               </span>
              </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                dict
-               </span>
-               <span class="pre">
-                annotations=None
-               </span>
-              </span>
-             </em>
              <span class="sig-paren">
               )
              </span>
@@ -39535,39 +39533,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                   ) – The log message color.
                  </p>
                 </li>
-                <li>
-                 <p>
-                  <strong>
-                   annotations
-                  </strong>
-                  (
-                  <em>
-                   dict
-                  </em>
-                  <em>
-                   [
-                  </em>
-                  <em>
-                   str
-                  </em>
-                  <em>
-                   ,
-                  </em>
-                  <em>
-                   object
-                  </em>
-                  <em>
-                   ]
-                  </em>
-                  <em>
-                   ,
-                  </em>
-                  <em>
-                   optional
-                  </em>
-                  ) – The annotations for the log record.
-                 </p>
-                </li>
                </ul>
               </dd>
              </dl>
@@ -39606,17 +39571,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
               <span class="n">
                <span class="pre">
                 ex
-               </span>
-              </span>
-             </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                dict
-               </span>
-               <span class="pre">
-                annotations=None
                </span>
               </span>
              </em>
@@ -39672,39 +39626,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                    Exception
                   </em>
                   ) – The exception to log.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   annotations
-                  </strong>
-                  (
-                  <em>
-                   dict
-                  </em>
-                  <em>
-                   [
-                  </em>
-                  <em>
-                   str
-                  </em>
-                  <em>
-                   ,
-                  </em>
-                  <em>
-                   object
-                  </em>
-                  <em>
-                   ]
-                  </em>
-                  <em>
-                   ,
-                  </em>
-                  <em>
-                   optional
-                  </em>
-                  ) – The annotations for the log record.
                  </p>
                 </li>
                </ul>
@@ -39808,17 +39729,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                </span>
               </span>
              </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                dict
-               </span>
-               <span class="pre">
-                annotations=None
-               </span>
-              </span>
-             </em>
              <span class="sig-paren">
               )
              </span>
@@ -39877,39 +39787,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                    optional
                   </em>
                   ) – The log message color.
-                 </p>
-                </li>
-                <li>
-                 <p>
-                  <strong>
-                   annotations
-                  </strong>
-                  (
-                  <em>
-                   dict
-                  </em>
-                  <em>
-                   [
-                  </em>
-                  <em>
-                   str
-                  </em>
-                  <em>
-                   ,
-                  </em>
-                  <em>
-                   object
-                  </em>
-                  <em>
-                   ]
-                  </em>
-                  <em>
-                   ,
-                  </em>
-                  <em>
-                   optional
-                  </em>
-                  ) – The annotations for the log record.
                  </p>
                 </li>
                </ul>
@@ -40186,17 +40063,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                </span>
               </span>
              </em>
-             ,
-             <em class="sig-param">
-              <span class="n">
-               <span class="pre">
-                dict
-               </span>
-               <span class="pre">
-                annotations=None
-               </span>
-              </span>
-             </em>
              <span class="sig-paren">
               )
              </span>
@@ -40257,39 +40123,6 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
                   ) – The log message color.
                  </p>
                 </li>
-                <li>
-                 <p>
-                  <strong>
-                   annotations
-                  </strong>
-                  (
-                  <em>
-                   dict
-                  </em>
-                  <em>
-                   [
-                  </em>
-                  <em>
-                   str
-                  </em>
-                  <em>
-                   ,
-                  </em>
-                  <em>
-                   object
-                  </em>
-                  <em>
-                   ]
-                  </em>
-                  <em>
-                   ,
-                  </em>
-                  <em>
-                   optional
-                  </em>
-                  ) – The annotations for the log record.
-                 </p>
-                </li>
                </ul>
               </dd>
              </dl>
@@ -40298,105 +40131,10 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
           </dd>
          </dl>
          <dl class="py function">
-          <dt class="sig sig-object py" id="nautilus_trader.common.logging.init_logging">
+          <dt class="sig sig-object py" id="nautilus_trader.common.logging.is_logging_initialized">
            <span class="sig-name descname">
             <span class="pre">
-             init_logging
-            </span>
-           </span>
-           <span class="sig-paren">
-            (
-           </span>
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              TraderId
-             </span>
-             <span class="pre">
-              trader_id
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              UUID4
-             </span>
-             <span class="pre">
-              instance_id
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              unicode
-             </span>
-             <span class="pre">
-              config_spec
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              unicode
-             </span>
-             <span class="pre">
-              directory
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              unicode
-             </span>
-             <span class="pre">
-              file_name
-             </span>
-            </span>
-           </em>
-           ,
-           <em class="sig-param">
-            <span class="n">
-             <span class="pre">
-              unicode
-             </span>
-             <span class="pre">
-              file_format
-             </span>
-            </span>
-           </em>
-           <span class="sig-paren">
-            )
-           </span>
-           <span class="sig-return">
-            <span class="sig-return-icon">
-             →
-            </span>
-            <span class="sig-return-typehint">
-             <span class="pre">
-              void
-             </span>
-            </span>
-           </span>
-           <a class="headerlink" href="#nautilus_trader.common.logging.init_logging" title="Permalink to this definition">
-            ¶
-           </a>
-          </dt>
-          <dd>
-          </dd>
-         </dl>
-         <dl class="py function">
-          <dt class="sig sig-object py" id="nautilus_trader.common.logging.init_tracing">
-           <span class="sig-name descname">
-            <span class="pre">
-             init_tracing
+             is_logging_initialized
             </span>
            </span>
            <span class="sig-paren">
@@ -40411,11 +40149,11 @@ IDs (e.g. actor/strategy IDs) and values are log levels.
             </span>
             <span class="sig-return-typehint">
              <span class="pre">
-              void
+              bool
              </span>
             </span>
            </span>
-           <a class="headerlink" href="#nautilus_trader.common.logging.init_tracing" title="Permalink to this definition">
+           <a class="headerlink" href="#nautilus_trader.common.logging.is_logging_initialized" title="Permalink to this definition">
             ¶
            </a>
           </dt>

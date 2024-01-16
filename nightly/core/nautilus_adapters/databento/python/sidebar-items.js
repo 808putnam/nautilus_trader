@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["loader","parsing"]};
+window.SIDEBAR_ITEMS = {"mod":["historical","loader","parsing"]};

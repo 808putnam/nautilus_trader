@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["LogEvent"],"fn":["init_logging","init_tracing","log"],"struct":["FileWriterConfig","LogLine","Logger","LoggerConfig"]};
+window.SIDEBAR_ITEMS = {"enum":["LogEvent"],"fn":["init_logging","init_tracing","log","map_log_level_to_filter","parse_component_levels","parse_level_filter_str"],"struct":["FileWriterConfig","LogLine","Logger","LoggerConfig"]};
