@@ -756,7 +756,14 @@
          </a>
         </h1>
         <p>
-         The platform provides logging for both backtesting and live trading using a high-performance logger implemented in Rust.
+         The platform provides logging for both backtesting and live trading using a high-performance logger implemented in Rust
+using the
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           log
+          </span>
+         </code>
+         crate.
 The logger operates in a separate thread and uses a multi-producer single consumer (MPSC) channel to receive log messages.
 This design ensures that the main thread is not blocked by log string formatting or file I/O operations.
         </p>
@@ -831,22 +838,22 @@ By default, log events with an ‘INFO’
          <ul class="simple">
           <li>
            <p>
-            ‘DEBUG’ or ‘DBG’
+            ‘DEBUG’
            </p>
           </li>
           <li>
            <p>
-            ‘INFO’ or ‘INF’
+            ‘INFO’
            </p>
           </li>
           <li>
            <p>
-            ‘WARNING’ or ‘WRN’
+            ‘WARNING’ or ‘WARN’
            </p>
           </li>
           <li>
            <p>
-            ‘ERROR’ or ‘ERR’
+            ‘ERROR’
            </p>
           </li>
          </ul>
@@ -900,7 +907,22 @@ By default, log events with an ‘INFO’
           </li>
           <li>
            <p>
+            Directory for writing log files
+           </p>
+          </li>
+          <li>
+           <p>
             Plain text or JSON log file formatting
+           </p>
+          </li>
+          <li>
+           <p>
+            Filtering of individual components by log level
+           </p>
+          </li>
+          <li>
+           <p>
+            ANSI colors in log lines
            </p>
           </li>
           <li>
@@ -908,7 +930,20 @@ By default, log events with an ‘INFO’
             Bypass logging completely
            </p>
           </li>
+          <li>
+           <p>
+            Print Rust config to stdout at initialization
+           </p>
+          </li>
          </ul>
+         <div class="admonition warning">
+          <p class="admonition-title">
+           Warning
+          </p>
+          <p>
+           Only one logger (with Rust backed logging system) can be initialized per process.
+          </p>
+         </div>
          <section id="standard-output-logging">
           <h3 id="standard-output-logging">
            Standard output logging

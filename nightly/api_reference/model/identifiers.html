@@ -2336,11 +2336,11 @@ separated by a hyphen.
            <dd>
             <p>
              Return an instrument ID parsed from the given string value.
-Must be correctly formatted including characters either side of a single
+Must be correctly formatted including symbol and venue components either side of a single
 period.
             </p>
             <p>
-             Examples: “AUD/USD.IDEALPRO”, “BTCUSDT.BINANCE”
+             Examples: ‘AUD/USD.IDEALPRO’, ‘BTCUSDT.BINANCE’
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -2372,6 +2372,24 @@ period.
                <em>
                 InstrumentId
                </em>
+              </p>
+             </dd>
+             <dt class="field-odd">
+              Raises
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                value
+               </cite>
+               is not a valid instrument ID string.
               </p>
              </dd>
             </dl>
