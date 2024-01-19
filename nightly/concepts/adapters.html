@@ -898,7 +898,7 @@ through adapter implementations, these can be found in the top level
 <span class="n">client</span> <span class="o">=</span> <span class="n">get_cached_binance_http_client</span><span class="p">(</span>
     <span class="n">loop</span><span class="o">=</span><span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">(),</span>
     <span class="n">clock</span><span class="o">=</span><span class="n">clock</span><span class="p">,</span>
-    <span class="n">logger</span><span class="o">=</span><span class="n">Logger</span><span class="p">(</span><span class="n">clock</span><span class="o">=</span><span class="n">clock</span><span class="p">),</span>
+    <span class="n">logger</span><span class="o">=</span><span class="n">Logger</span><span class="p">(),</span>
     <span class="n">account_type</span><span class="o">=</span><span class="n">account_type</span><span class="p">,</span>
     <span class="n">key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"BINANCE_FUTURES_TESTNET_API_KEY"</span><span class="p">),</span>
     <span class="n">secret</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"BINANCE_FUTURES_TESTNET_API_SECRET"</span><span class="p">),</span>
@@ -908,7 +908,7 @@ through adapter implementations, these can be found in the top level
 
 <span class="n">provider</span> <span class="o">=</span> <span class="n">BinanceFuturesInstrumentProvider</span><span class="p">(</span>
     <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
-    <span class="n">logger</span><span class="o">=</span><span class="n">Logger</span><span class="p">(</span><span class="n">clock</span><span class="o">=</span><span class="n">clock</span><span class="p">),</span>
+    <span class="n">logger</span><span class="o">=</span><span class="n">Logger</span><span class="p">(),</span>
     <span class="n">account_type</span><span class="o">=</span><span class="n">BinanceAccountType</span><span class="o">.</span><span class="n">USDT_FUTURE</span><span class="p">,</span>
 <span class="p">)</span>
 

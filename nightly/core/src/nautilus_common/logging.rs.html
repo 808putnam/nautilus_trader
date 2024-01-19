@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging.rs`."><title>logging.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (098d4fd74 2024-01-16)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging.rs`."><title>logging.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (25f8d01fd 2024-01-18)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../nautilus_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -902,6 +902,60 @@
 <a href="#900" id="900">900</a>
 <a href="#901" id="901">901</a>
 <a href="#902" id="902">902</a>
+<a href="#903" id="903">903</a>
+<a href="#904" id="904">904</a>
+<a href="#905" id="905">905</a>
+<a href="#906" id="906">906</a>
+<a href="#907" id="907">907</a>
+<a href="#908" id="908">908</a>
+<a href="#909" id="909">909</a>
+<a href="#910" id="910">910</a>
+<a href="#911" id="911">911</a>
+<a href="#912" id="912">912</a>
+<a href="#913" id="913">913</a>
+<a href="#914" id="914">914</a>
+<a href="#915" id="915">915</a>
+<a href="#916" id="916">916</a>
+<a href="#917" id="917">917</a>
+<a href="#918" id="918">918</a>
+<a href="#919" id="919">919</a>
+<a href="#920" id="920">920</a>
+<a href="#921" id="921">921</a>
+<a href="#922" id="922">922</a>
+<a href="#923" id="923">923</a>
+<a href="#924" id="924">924</a>
+<a href="#925" id="925">925</a>
+<a href="#926" id="926">926</a>
+<a href="#927" id="927">927</a>
+<a href="#928" id="928">928</a>
+<a href="#929" id="929">929</a>
+<a href="#930" id="930">930</a>
+<a href="#931" id="931">931</a>
+<a href="#932" id="932">932</a>
+<a href="#933" id="933">933</a>
+<a href="#934" id="934">934</a>
+<a href="#935" id="935">935</a>
+<a href="#936" id="936">936</a>
+<a href="#937" id="937">937</a>
+<a href="#938" id="938">938</a>
+<a href="#939" id="939">939</a>
+<a href="#940" id="940">940</a>
+<a href="#941" id="941">941</a>
+<a href="#942" id="942">942</a>
+<a href="#943" id="943">943</a>
+<a href="#944" id="944">944</a>
+<a href="#945" id="945">945</a>
+<a href="#946" id="946">946</a>
+<a href="#947" id="947">947</a>
+<a href="#948" id="948">948</a>
+<a href="#949" id="949">949</a>
+<a href="#950" id="950">950</a>
+<a href="#951" id="951">951</a>
+<a href="#952" id="952">952</a>
+<a href="#953" id="953">953</a>
+<a href="#954" id="954">954</a>
+<a href="#955" id="955">955</a>
+<a href="#956" id="956">956</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -925,23 +979,60 @@
     io::{<span class="self">self</span>, BufWriter, Stderr, Stdout, Write},
     path::{Path, PathBuf},
     str::FromStr,
-    sync::mpsc::{channel, Receiver, SendError, Sender},
+    sync::{
+        atomic::{AtomicBool, Ordering},
+        mpsc::{channel, Receiver, SendError, Sender},
+    },
     thread,
 };
 
 <span class="kw">use </span>chrono::{prelude::<span class="kw-2">*</span>, Utc};
 <span class="kw">use </span>log::{
     debug, error, info,
-    kv::{Key, ToValue, Value},
+    kv::{ToValue, Value},
     set_boxed_logger, set_max_level, warn, Level, LevelFilter, Log, STATIC_MAX_LEVEL,
 };
-<span class="kw">use </span>nautilus_core::{datetime::unix_nanos_to_iso8601, time::UnixNanos, uuid::UUID4};
+<span class="kw">use </span>nautilus_core::{
+    datetime::unix_nanos_to_iso8601,
+    time::{get_atomic_clock_realtime, get_atomic_clock_static, UnixNanos},
+    uuid::UUID4,
+};
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>tracing_subscriber::EnvFilter;
 <span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use </span><span class="kw">crate</span>::enums::{LogColor, LogLevel};
+
+<span class="kw">static </span>LOGGING_INITIALIZED: AtomicBool = AtomicBool::new(<span class="bool-val">false</span>);
+<span class="kw">static </span>LOGGING_REALTIME: AtomicBool = AtomicBool::new(<span class="bool-val">true</span>);
+<span class="kw">static </span>LOGGING_COLORED: AtomicBool = AtomicBool::new(<span class="bool-val">true</span>);
+
+<span class="doccomment">/// Returns whether the core logger is enabled.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_is_initialized() -&gt; u8 {
+    LOGGING_INITIALIZED.load(Ordering::Relaxed) <span class="kw">as </span>u8
+}
+
+<span class="doccomment">/// Returns whether the core logger is enabled.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_is_colored() -&gt; u8 {
+    LOGGING_COLORED.load(Ordering::Relaxed) <span class="kw">as </span>u8
+}
+
+<span class="doccomment">/// Sets the global logging clock to real-time mode.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_clock_set_realtime() {
+    LOGGING_REALTIME.store(<span class="bool-val">true</span>, Ordering::Relaxed);
+}
+
+<span class="doccomment">/// Sets the global logging clock to static mode with the given UNIX time (nanoseconds).
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_clock_set_static(time_ns: u64) {
+    LOGGING_REALTIME.store(<span class="bool-val">false</span>, Ordering::Relaxed);
+    <span class="kw">let </span>clock = get_atomic_clock_static();
+    clock.set_time(time_ns);
+}
 
 <span class="attr">#[cfg_attr(
     feature = <span class="string">"python"</span>,
@@ -1071,6 +1162,7 @@
 
 <span class="kw">pub fn </span>map_log_level_to_filter(log_level: LogLevel) -&gt; LevelFilter {
     <span class="kw">match </span>log_level {
+        LogLevel::Off =&gt; LevelFilter::Off,
         LogLevel::Debug =&gt; LevelFilter::Debug,
         LogLevel::Info =&gt; LevelFilter::Info,
         LogLevel::Warning =&gt; LevelFilter::Warn,
@@ -1142,6 +1234,8 @@
     config: LoggerConfig,
     file_config: FileWriterConfig,
 ) {
+    LOGGING_INITIALIZED.store(<span class="bool-val">true</span>, Ordering::Relaxed);
+    LOGGING_COLORED.store(config.is_colored, Ordering::Relaxed);
     Logger::init_with_config(trader_id, instance_id, config, file_config);
 }
 
@@ -1168,8 +1262,6 @@
 <span class="doccomment">/// Represents a log event which includes a message.
 </span><span class="attr">#[derive(Clone, Debug, Serialize, Deserialize)]
 </span><span class="kw">pub struct </span>LogLine {
-    <span class="doccomment">/// The UNIX nanoseconds timestamp when the log event occurred.
-    </span>timestamp: UnixNanos,
     <span class="doccomment">/// The log level for the event.
     </span>level: Level,
     <span class="doccomment">/// The color for the log message content.
@@ -1182,11 +1274,7 @@
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>LogLine {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
-        <span class="macro">write!</span>(
-            f,
-            <span class="string">"{} [{}] {}: {}"</span>,
-            <span class="self">self</span>.timestamp, <span class="self">self</span>.level, <span class="self">self</span>.component, <span class="self">self</span>.message
-        )
+        <span class="macro">write!</span>(f, <span class="string">"[{}] {}: {}"</span>, <span class="self">self</span>.level, <span class="self">self</span>.component, <span class="self">self</span>.message)
     }
 }
 
@@ -1202,10 +1290,6 @@
         <span class="comment">// TODO remove unwraps
         </span><span class="kw">if </span><span class="self">self</span>.enabled(record.metadata()) {
             <span class="kw">let </span>key_values = record.key_values();
-            <span class="kw">let </span>timestamp = key_values
-                .get(Key::from_str(<span class="string">"timestamp"</span>))
-                .and_then(|v| v.to_u64())
-                .expect(<span class="string">"No timestamp included in log `Record`"</span>);
             <span class="kw">let </span>color = key_values
                 .get(<span class="string">"color"</span>.into())
                 .and_then(|v| v.to_u64().map(|v| (v <span class="kw">as </span>u8).into()))
@@ -1216,7 +1300,6 @@
                 .unwrap_or_else(|| Ustr::from(record.metadata().target()));
 
             <span class="kw">let </span>line = LogLine {
-                timestamp,
                 level: record.level(),
                 color,
                 component,
@@ -1341,8 +1424,20 @@
 
         <span class="kw">let </span><span class="kw-2">mut </span>file_buf = file.map(BufWriter::new);
 
+        <span class="kw">let </span>clock_realtime = get_atomic_clock_realtime();
+        <span class="kw">let </span>clock_static = get_atomic_clock_static();
+
         <span class="comment">// Continue to receive and handle log events until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(event) = rx.recv() {
+            <span class="kw">if </span>is_bypassed {
+                <span class="kw">continue</span>;
+            }
+
+            <span class="kw">let </span>timestamp = <span class="kw">match </span>LOGGING_REALTIME.load(Ordering::Relaxed) {
+                <span class="bool-val">true </span>=&gt; clock_realtime.get_time_ns(),
+                <span class="bool-val">false </span>=&gt; clock_static.get_time_ns(),
+            };
+
             <span class="kw">match </span>event {
                 LogEvent::Flush =&gt; {
                     <span class="self">Self</span>::flush_stderr(<span class="kw-2">&amp;mut </span>err_buf);
@@ -1361,11 +1456,13 @@
                     }
 
                     <span class="kw">if </span>line.level == LevelFilter::Error {
-                        <span class="kw">let </span>line = <span class="self">Self</span>::format_console_log(<span class="kw-2">&amp;</span>line, trader_id, is_colored);
+                        <span class="kw">let </span>line =
+                            <span class="self">Self</span>::format_console_log(timestamp, <span class="kw-2">&amp;</span>line, trader_id, is_colored);
                         <span class="self">Self</span>::write_stderr(<span class="kw-2">&amp;mut </span>err_buf, <span class="kw-2">&amp;</span>line);
                         <span class="self">Self</span>::flush_stderr(<span class="kw-2">&amp;mut </span>err_buf);
                     } <span class="kw">else if </span>line.level &lt;= stdout_level {
-                        <span class="kw">let </span>line = <span class="self">Self</span>::format_console_log(<span class="kw-2">&amp;</span>line, trader_id, is_colored);
+                        <span class="kw">let </span>line =
+                            <span class="self">Self</span>::format_console_log(timestamp, <span class="kw-2">&amp;</span>line, trader_id, is_colored);
                         <span class="self">Self</span>::write_stdout(<span class="kw-2">&amp;mut </span>out_buf, <span class="kw-2">&amp;</span>line);
                         <span class="self">Self</span>::flush_stdout(<span class="kw-2">&amp;mut </span>out_buf);
                     }
@@ -1395,7 +1492,12 @@
 
                         <span class="kw">if </span>line.level &lt;= fileout_level {
                             <span class="kw">if let </span><span class="prelude-val">Some</span>(file_buf) = file_buf.as_mut() {
-                                <span class="kw">let </span>line = <span class="self">Self</span>::format_file_log(<span class="kw-2">&amp;</span>line, trader_id, is_json_format);
+                                <span class="kw">let </span>line = <span class="self">Self</span>::format_file_log(
+                                    timestamp,
+                                    <span class="kw-2">&amp;</span>line,
+                                    trader_id,
+                                    is_json_format,
+                                );
                                 <span class="self">Self</span>::write_file(file_buf, <span class="kw-2">&amp;</span>line);
                                 <span class="self">Self</span>::flush_file(file_buf);
                             }
@@ -1459,11 +1561,16 @@
         file_path
     }
 
-    <span class="kw">fn </span>format_console_log(event: <span class="kw-2">&amp;</span>LogLine, trader_id: <span class="kw-2">&amp;</span>str, is_colored: bool) -&gt; String {
+    <span class="kw">fn </span>format_console_log(
+        timestamp: UnixNanos,
+        event: <span class="kw-2">&amp;</span>LogLine,
+        trader_id: <span class="kw-2">&amp;</span>str,
+        is_colored: bool,
+    ) -&gt; String {
         <span class="kw">match </span>is_colored {
             <span class="bool-val">true </span>=&gt; <span class="macro">format!</span>(
                 <span class="string">"\x1b[1m{}\x1b[0m {}[{}] {}.{}: {}\x1b[0m\n"</span>,
-                unix_nanos_to_iso8601(event.timestamp),
+                unix_nanos_to_iso8601(timestamp),
                 <span class="kw-2">&amp;</span>event.color.to_string(),
                 event.level,
                 <span class="kw-2">&amp;</span>trader_id,
@@ -1472,7 +1579,7 @@
             ),
             <span class="bool-val">false </span>=&gt; <span class="macro">format!</span>(
                 <span class="string">"{} [{}] {}.{}: {}\n"</span>,
-                unix_nanos_to_iso8601(event.timestamp),
+                unix_nanos_to_iso8601(timestamp),
                 event.level,
                 <span class="kw-2">&amp;</span>trader_id,
                 <span class="kw-2">&amp;</span>event.component,
@@ -1481,7 +1588,12 @@
         }
     }
 
-    <span class="kw">fn </span>format_file_log(event: <span class="kw-2">&amp;</span>LogLine, trader_id: <span class="kw-2">&amp;</span>str, is_json_format: bool) -&gt; String {
+    <span class="kw">fn </span>format_file_log(
+        timestamp: UnixNanos,
+        event: <span class="kw-2">&amp;</span>LogLine,
+        trader_id: <span class="kw-2">&amp;</span>str,
+        is_json_format: bool,
+    ) -&gt; String {
         <span class="kw">if </span>is_json_format {
             <span class="kw">let </span>json_string =
                 serde_json::to_string(event).expect(<span class="string">"Error serializing log event to string"</span>);
@@ -1489,7 +1601,7 @@
         } <span class="kw">else </span>{
             <span class="macro">format!</span>(
                 <span class="string">"{} [{}] {}.{}: {}\n"</span>,
-                <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(event.timestamp),
+                <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(timestamp),
                 event.level,
                 trader_id,
                 <span class="kw-2">&amp;</span>event.component,
@@ -1541,27 +1653,22 @@
     }
 }
 
-<span class="kw">pub fn </span>log(
-    timestamp_ns: UnixNanos,
-    level: LogLevel,
-    color: LogColor,
-    component: Ustr,
-    message: Cow&lt;<span class="lifetime">'_</span>, str&gt;,
-) {
+<span class="kw">pub fn </span>log(level: LogLevel, color: LogColor, component: Ustr, message: Cow&lt;<span class="lifetime">'_</span>, str&gt;) {
     <span class="kw">let </span>color = Value::from(color <span class="kw">as </span>u8);
 
     <span class="kw">match </span>level {
+        LogLevel::Off =&gt; {}
         LogLevel::Debug =&gt; {
-            <span class="macro">debug!</span>(timestamp = timestamp_ns, component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
+            <span class="macro">debug!</span>(component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
         }
         LogLevel::Info =&gt; {
-            <span class="macro">info!</span>(timestamp = timestamp_ns, component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
+            <span class="macro">info!</span>(component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
         }
         LogLevel::Warning =&gt; {
-            <span class="macro">warn!</span>(timestamp = timestamp_ns, component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
+            <span class="macro">warn!</span>(component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
         }
         LogLevel::Error =&gt; {
-            <span class="macro">error!</span>(timestamp = timestamp_ns, component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
+            <span class="macro">error!</span>(component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
         }
     }
 }
@@ -1573,7 +1680,7 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>std::{collections::HashMap, time::Duration};
 
-    <span class="kw">use </span>log::{info, kv::ToValue, LevelFilter};
+    <span class="kw">use </span>log::{info, LevelFilter};
     <span class="kw">use </span>nautilus_core::uuid::UUID4;
     <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
     <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
@@ -1581,7 +1688,7 @@
     <span class="kw">use </span>tempfile::tempdir;
     <span class="kw">use </span>ustr::Ustr;
 
-    <span class="kw">use </span><span class="kw">super</span>::FileWriterConfig;
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
     <span class="kw">use crate</span>::{
         enums::LogColor,
         logging::{LogLine, Logger, LoggerConfig},
@@ -1591,7 +1698,6 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>log_message_serialization() {
         <span class="kw">let </span>log_message = LogLine {
-            timestamp: <span class="number">1_000_000_000</span>,
             level: log::Level::Info,
             color: LogColor::Normal,
             component: Ustr::from(<span class="string">"Portfolio"</span>),
@@ -1601,7 +1707,6 @@
         <span class="kw">let </span>serialized_json = serde_json::to_string(<span class="kw-2">&amp;</span>log_message).unwrap();
         <span class="kw">let </span>deserialized_value: Value = serde_json::from_str(<span class="kw-2">&amp;</span>serialized_json).unwrap();
 
-        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"timestamp"</span>], <span class="number">1_000_000_000</span>);
         <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"level"</span>], <span class="string">"INFO"</span>);
         <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"component"</span>], <span class="string">"Portfolio"</span>);
         <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"message"</span>], <span class="string">"This is a log message"</span>);
@@ -1663,8 +1768,9 @@
             file_config,
         );
 
+        logging_clock_set_static(<span class="number">1_650_000_000_000_000</span>);
+
         <span class="macro">info!</span>(
-            timestamp = <span class="number">1_650_000_000_000_000i64</span>.to_value(),
             component = <span class="string">"RiskEngine"</span>;
             <span class="string">"This is a test."
         </span>);
@@ -1720,8 +1826,9 @@
             file_config,
         );
 
+        logging_clock_set_static(<span class="number">1_650_000_000_000_000</span>);
+
         <span class="macro">info!</span>(
-            timestamp = <span class="number">1_650_000_000_000_000i64</span>.to_value(),
             component = <span class="string">"RiskEngine"</span>;
             <span class="string">"This is a test."
         </span>);
@@ -1772,8 +1879,9 @@
             file_config,
         );
 
+        logging_clock_set_static(<span class="number">1_650_000_000_000_000</span>);
+
         <span class="macro">info!</span>(
-            timestamp = <span class="number">1_650_000_000_000_000i64</span>.to_value(),
             component = <span class="string">"RiskEngine"</span>;
             <span class="string">"This is a test."
         </span>);
@@ -1800,7 +1908,7 @@
 
         <span class="macro">assert_eq!</span>(
         log_contents,
-        <span class="string">"{\"timestamp\":1650000000000000,\"level\":\"INFO\",\"color\":\"Normal\",\"component\":\"RiskEngine\",\"message\":\"This is a test.\"}\n"
+        <span class="string">"{\"level\":\"INFO\",\"color\":\"Normal\",\"component\":\"RiskEngine\",\"message\":\"This is a test.\"}\n"
     </span>);
     }
 }

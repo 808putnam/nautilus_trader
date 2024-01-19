@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["logger_flush","logger_log","logging_init","logging_is_initialized","tracing_init"]};
+window.SIDEBAR_ITEMS = {"fn":["logger_flush","logger_log","logging_init","tracing_init"]};
