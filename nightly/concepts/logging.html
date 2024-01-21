@@ -737,6 +737,11 @@
                 Log Colors
                </a>
               </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#using-a-logger-directly">
+                Using a Logger directly
+               </a>
+              </li>
              </ul>
             </li>
            </ul>
@@ -756,15 +761,15 @@
          </a>
         </h1>
         <p>
-         The platform provides logging for both backtesting and live trading using a high-performance logger implemented in Rust
-using the
+         The platform provides logging for both backtesting and live trading using a high-performance logging system implemented in Rust
+with a standardized facade from the
          <code class="docutils literal notranslate">
           <span class="pre">
            log
           </span>
          </code>
          crate.
-The logger operates in a separate thread and uses a multi-producer single consumer (MPSC) channel to receive log messages.
+The core logger operates in a separate thread and uses a multi-producer single consumer (MPSC) channel to receive log messages.
 This design ensures that the main thread is not blocked by log string formatting or file I/O operations.
         </p>
         <div class="admonition note">
@@ -833,9 +838,20 @@ By default, log events with an ‘INFO’
             LogLevel
            </span>
           </code>
-          ) values include:
+          ) values include (and generally match Rusts
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            tracing
+           </span>
+          </code>
+          level filters):
          </p>
          <ul class="simple">
+          <li>
+           <p>
+            ‘OFF’
+           </p>
+          </li>
           <li>
            <p>
             ‘DEBUG’
@@ -936,14 +952,6 @@ By default, log events with an ‘INFO’
            </p>
           </li>
          </ul>
-         <div class="admonition warning">
-          <p class="admonition-title">
-           Warning
-          </p>
-          <p>
-           Only one logger (with Rust backed logging system) can be initialized per process.
-          </p>
-         </div>
          <section id="standard-output-logging">
           <h3 id="standard-output-logging">
            Standard output logging
@@ -1129,6 +1137,90 @@ Disabling
            will prevent the addition of ANSI color codes to the log messages, ensuring
 compatibility across different environments where color rendering is not supported.
           </p>
+         </section>
+         <section id="using-a-logger-directly">
+          <h3 id="using-a-logger-directly">
+           Using a Logger directly
+           <a class="headerlink" href="#using-a-logger-directly" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           It’s possible to use
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             Logger
+            </span>
+           </code>
+           objects directly, and these can be initialized anywhere (very similar to the Python built-in
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             logging
+            </span>
+           </code>
+           API).
+          </p>
+          <p>
+           If you
+           <em>
+            <strong>
+             aren’t
+            </strong>
+           </em>
+           using an object which already initializes a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             NautilusKernel
+            </span>
+           </code>
+           (and logging) such as
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             BacktestEngine
+            </span>
+           </code>
+           or
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             TradingNode
+            </span>
+           </code>
+           ,
+then you can initialize a logging in the following way:
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.common.logging</span> <span class="kn">import</span> <span class="n">init_logging</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.common.logging</span> <span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="n">init_logging</span><span class="p">()</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s2">"MyLogger"</span><span class="p">)</span>
+</pre>
+           </div>
+          </div>
+          <p>
+           There are many configuration options for the
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             init_logging
+            </span>
+           </code>
+           call, please see its docstring for further details.
+          </p>
+          <div class="admonition warning">
+           <p class="admonition-title">
+            Warning
+           </p>
+           <p>
+            Only one logging system can be initialized per process with an
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              init_logging
+             </span>
+            </code>
+            call.
+           </p>
+          </div>
          </section>
         </section>
        </section>

@@ -1733,6 +1733,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.backtest.engine.BacktestEngine.logger">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  BacktestEngine.logger
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.backtest.engine.BacktestEngine.machine_id">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -5313,17 +5322,6 @@
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             Logger
-            </span>
-            <span class="pre">
-             logger
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              config:
             </span>
             <span class="pre">
@@ -5431,20 +5429,6 @@
                 </em>
                </a>
                ) – The clock for the client.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the client.
               </p>
              </li>
              <li>
@@ -6805,17 +6789,6 @@ then the component state will not change, and an error will be logged.
             </span>
            </span>
           </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             Logger
-            </span>
-            <span class="pre">
-             logger
-            </span>
-           </span>
-          </em>
           <span class="sig-paren">
            )
           </span>
@@ -6904,20 +6877,6 @@ then the component state will not change, and an error will be logged.
                 </em>
                </a>
                ) – The clock for the client.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the client.
               </p>
              </li>
             </ul>
@@ -13081,6 +13040,52 @@ through a call to
            </dd>
           </dl>
           <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.backtest.engine.BacktestEngine.logger">
+            <span class="sig-name descname">
+             <span class="pre">
+              logger
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.backtest.engine.BacktestEngine.logger" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Logger
+            </p>
+            <p>
+             Return the internal logger for the engine.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                Logger
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               BacktestEngine.logger
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.backtest.engine.BacktestEngine.machine_id">
             <span class="sig-name descname">
              <span class="pre">
@@ -14108,12 +14113,6 @@ following the run iterations.
             clock,
            </span>
            <span class="pre">
-            Logger
-           </span>
-           <span class="pre">
-            logger,
-           </span>
-           <span class="pre">
             FillModel
            </span>
            <span class="pre">
@@ -14432,20 +14431,6 @@ following the run iterations.
                 </em>
                </a>
                ) – The clock for the exchange.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the exchange.
               </p>
              </li>
              <li>
@@ -17478,17 +17463,6 @@ If False then its expected the strategy will be managing any contingent orders.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             Logger
-            </span>
-            <span class="pre">
-             logger
-            </span>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              bool
             </span>
             <span class="pre">
@@ -17595,20 +17569,6 @@ If False then its expected the strategy will be managing any contingent orders.
                 </em>
                </a>
                ) – The clock for the client.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the client.
               </p>
              </li>
              <li>
@@ -26236,7 +26196,7 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <cite>
-                LoggerAdapter
+                Logger
                </cite>
               </p>
              </dd>
@@ -26264,10 +26224,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               LoggerAdapter
+               Logger
               </span>
               <span class="pre">
-               log
+               logger
               </span>
              </span>
             </em>
@@ -26306,12 +26266,12 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <strong>
-                log
+                logger
                </strong>
                (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.LoggerAdapter" title="nautilus_trader.common.logging.LoggerAdapter">
+               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
                 <em>
-                 LoggerAdapter
+                 Logger
                 </em>
                </a>
                ) – The logger to log to.
@@ -28542,17 +28502,6 @@ and so the results of
               </span>
              </span>
             </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               Logger
-              </span>
-              <span class="pre">
-               logger
-              </span>
-             </span>
-            </em>
             <span class="sig-paren">
              )
             </span>
@@ -28637,20 +28586,6 @@ and so the results of
                   </em>
                  </a>
                  ) – The clock for the actor.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  logger
-                 </strong>
-                 (
-                 <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                  <em>
-                   Logger
-                  </em>
-                 </a>
-                 ) – The logger for the actor.
                 </p>
                </li>
               </ul>
@@ -37684,7 +37619,7 @@ then the component state will not change, and an error will be logged.
              <dd class="field-odd">
               <p>
                <cite>
-                LoggerAdapter
+                Logger
                </cite>
               </p>
              </dd>
@@ -37712,10 +37647,10 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               LoggerAdapter
+               Logger
               </span>
               <span class="pre">
-               log
+               logger
               </span>
              </span>
             </em>
@@ -39944,17 +39879,6 @@ and so the results of
               </span>
              </span>
             </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               Logger
-              </span>
-              <span class="pre">
-               logger
-              </span>
-             </span>
-            </em>
             <span class="sig-paren">
              )
             </span>
@@ -40039,20 +39963,6 @@ and so the results of
                   </em>
                  </a>
                  ) – The clock for the actor.
-                </p>
-               </li>
-               <li>
-                <p>
-                 <strong>
-                  logger
-                 </strong>
-                 (
-                 <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                  <em>
-                   Logger
-                  </em>
-                 </a>
-                 ) – The logger for the actor.
                 </p>
                </li>
               </ul>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `core/src/ffi/string.rs`."><title>string.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (25f8d01fd 2024-01-18)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `core/src/ffi/string.rs`."><title>string.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-4e54bb2b497cc83f.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_core" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (88189a71e 2024-01-19)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_core/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -246,22 +246,6 @@
 <a href="#244" id="244">244</a>
 <a href="#245" id="245">245</a>
 <a href="#246" id="246">246</a>
-<a href="#247" id="247">247</a>
-<a href="#248" id="248">248</a>
-<a href="#249" id="249">249</a>
-<a href="#250" id="250">250</a>
-<a href="#251" id="251">251</a>
-<a href="#252" id="252">252</a>
-<a href="#253" id="253">253</a>
-<a href="#254" id="254">254</a>
-<a href="#255" id="255">255</a>
-<a href="#256" id="256">256</a>
-<a href="#257" id="257">257</a>
-<a href="#258" id="258">258</a>
-<a href="#259" id="259">259</a>
-<a href="#260" id="260">260</a>
-<a href="#261" id="261">261</a>
-<a href="#262" id="262">262</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -278,6 +262,7 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">use </span>std::{
+    borrow::Cow,
     ffi::{c_char, CStr, CString},
     str,
 };
@@ -315,7 +300,7 @@
     Ustr::from(CStr::from_ptr(ptr).to_str().expect(<span class="string">"CStr::from_ptr failed"</span>))
 }
 
-<span class="doccomment">/// Convert a C string pointer into an owned `String`.
+<span class="doccomment">/// Convert a C string pointer into bytes.
 ///
 /// # Safety
 ///
@@ -325,7 +310,7 @@
 ///
 /// - If `ptr` is null.
 </span><span class="attr">#[must_use]
-</span><span class="kw">pub unsafe fn </span>cstr_to_vec(ptr: <span class="kw-2">*const </span>c_char) -&gt; Vec&lt;u8&gt; {
+</span><span class="kw">pub unsafe fn </span>cstr_to_bytes(ptr: <span class="kw-2">*const </span>c_char) -&gt; Vec&lt;u8&gt; {
     <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">"`ptr` was NULL"</span>);
     CStr::from_ptr(ptr).to_bytes().to_vec()
 }
@@ -348,7 +333,7 @@
     </span>}
 }
 
-<span class="doccomment">/// Convert a C string pointer into a string slice.
+<span class="doccomment">/// Convert a C string pointer into a static string slice.
 ///
 /// # Safety
 ///
@@ -363,7 +348,22 @@
     CStr::from_ptr(ptr).to_str().expect(<span class="string">"CStr::from_ptr failed"</span>)
 }
 
-<span class="doccomment">/// Convert a C string pointer into an owned `String`.
+<span class="doccomment">/// Convert a C string pointer into an owned `Option&lt;String&gt;`.
+///
+/// # Safety
+///
+/// - Assumes `ptr` is a valid C string pointer or NULL.
+</span><span class="attr">#[must_use]
+</span><span class="kw">pub unsafe fn </span>optional_cstr_to_str(ptr: <span class="kw-2">*const </span>c_char) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
+    <span class="kw">if </span>ptr.is_null() {
+        <span class="prelude-val">None
+    </span>} <span class="kw">else </span>{
+        <span class="prelude-val">Some</span>(cstr_to_str(ptr))
+    }
+}
+
+<span class="doccomment">/// Convert a C string pointer into a static &lt;code&gt;[Cow]&lt;[str]&gt;&lt;/code&gt;.
+/// Invalid UTF-8 sequences will be replaced with a replacement character.
 ///
 /// # Safety
 ///
@@ -373,22 +373,9 @@
 ///
 /// - If `ptr` is null.
 </span><span class="attr">#[must_use]
-</span><span class="kw">pub unsafe fn </span>cstr_to_string(ptr: <span class="kw-2">*const </span>c_char) -&gt; String {
-    cstr_to_str(ptr).to_string()
-}
-
-<span class="doccomment">/// Convert a C string pointer into an owned `Option&lt;String&gt;`.
-///
-/// # Safety
-///
-/// - Assumes `ptr` is a valid C string pointer or NULL.
-</span><span class="attr">#[must_use]
-</span><span class="kw">pub unsafe fn </span>optional_cstr_to_string(ptr: <span class="kw-2">*const </span>c_char) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
-    <span class="kw">if </span>ptr.is_null() {
-        <span class="prelude-val">None
-    </span>} <span class="kw">else </span>{
-        <span class="prelude-val">Some</span>(cstr_to_string(ptr))
-    }
+</span><span class="kw">pub unsafe fn </span>cstr_to_lossy_cow(ptr: <span class="kw-2">*const </span>c_char) -&gt; Cow&lt;<span class="lifetime">'static</span>, str&gt; {
+    <span class="macro">assert!</span>(!ptr.is_null(), <span class="string">"`ptr` was NULL"</span>);
+    CStr::from_ptr(ptr).to_string_lossy()
 }
 
 <span class="doccomment">/// Create a C string pointer to newly allocated memory from a [&amp;str].
@@ -452,30 +439,11 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_cstr_to_string() {
-        <span class="comment">// Create a valid C string pointer
-        </span><span class="kw">let </span>c_string = CString::new(<span class="string">"test string2"</span>).expect(<span class="string">"CString::new failed"</span>);
-        <span class="kw">let </span>ptr = c_string.as_ptr();
-        <span class="kw">let </span>result = <span class="kw">unsafe </span>{ cstr_to_string(ptr) };
-        <span class="macro">assert_eq!</span>(result, <span class="string">"test string2"</span>);
-    }
-
-    <span class="attr">#[rstest]
-    #[should_panic]
-    </span><span class="kw">fn </span>test_cstr_to_string_with_null_ptr() {
-        <span class="comment">// Create a null C string pointer
-        </span><span class="kw">let </span>ptr: <span class="kw-2">*const </span>c_char = std::ptr::null();
-        <span class="kw">unsafe </span>{
-            <span class="kw">let _ </span>= cstr_to_string(ptr);
-        };
-    }
-
-    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_cstr_to_vec() {
         <span class="comment">// Create a valid C string pointer
         </span><span class="kw">let </span>sample_c_string = CString::new(<span class="string">"Hello, world!"</span>).expect(<span class="string">"CString::new failed"</span>);
         <span class="kw">let </span>cstr_ptr = sample_c_string.as_ptr();
-        <span class="kw">let </span>result = <span class="kw">unsafe </span>{ cstr_to_vec(cstr_ptr) };
+        <span class="kw">let </span>result = <span class="kw">unsafe </span>{ cstr_to_bytes(cstr_ptr) };
         <span class="macro">assert_eq!</span>(result, <span class="string">b"Hello, world!"</span>);
         <span class="macro">assert_eq!</span>(result.len(), <span class="number">13</span>);
     }
@@ -486,24 +454,24 @@
         <span class="comment">// Create a null C string pointer
         </span><span class="kw">let </span>ptr: <span class="kw-2">*const </span>c_char = std::ptr::null();
         <span class="kw">unsafe </span>{
-            <span class="kw">let _ </span>= cstr_to_vec(ptr);
+            <span class="kw">let _ </span>= cstr_to_bytes(ptr);
         };
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_optional_cstr_to_string_with_null_ptr() {
-        <span class="comment">// Call optional_cstr_to_string with null pointer
+    </span><span class="kw">fn </span>test_optional_cstr_to_str_with_null_ptr() {
+        <span class="comment">// Call optional_cstr_to_str with null pointer
         </span><span class="kw">let </span>ptr = std::ptr::null();
-        <span class="kw">let </span>result = <span class="kw">unsafe </span>{ optional_cstr_to_string(ptr) };
+        <span class="kw">let </span>result = <span class="kw">unsafe </span>{ optional_cstr_to_str(ptr) };
         <span class="macro">assert!</span>(result.is_none());
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_optional_cstr_to_string_with_valid_ptr() {
+    </span><span class="kw">fn </span>test_optional_cstr_to_str_with_valid_ptr() {
         <span class="comment">// Create a valid C string
         </span><span class="kw">let </span>input_str = <span class="string">"hello world"</span>;
         <span class="kw">let </span>c_str = CString::new(input_str).expect(<span class="string">"CString::new failed"</span>);
-        <span class="kw">let </span>result = <span class="kw">unsafe </span>{ optional_cstr_to_string(c_str.as_ptr()) };
+        <span class="kw">let </span>result = <span class="kw">unsafe </span>{ optional_cstr_to_str(c_str.as_ptr()) };
         <span class="macro">assert!</span>(result.is_some());
         <span class="macro">assert_eq!</span>(result.unwrap(), input_str);
     }
