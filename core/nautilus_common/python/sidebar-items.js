@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["common"],"mod":["clock","timer"]};
+window.SIDEBAR_ITEMS = {"fn":["common"],"mod":["logging","timer","versioning"]};

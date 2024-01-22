@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["order"]};
+window.SIDEBAR_ITEMS = {"mod":["account","order"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["logger_drop","logger_get_instance_id","logger_get_machine_id_cstr","logger_get_trader_id_cstr","logger_is_bypassed","logger_is_colored","logger_log","logger_new"],"struct":["Logger_API"]};
+window.SIDEBAR_ITEMS = {"fn":["logger_flush","logger_log","logging_init","logging_log_header","logging_log_sysinfo","tracing_init"]};

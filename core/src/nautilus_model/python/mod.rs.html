@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (ef71f1047 2024-01-21)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -312,8 +313,24 @@
 <a href="#311" id="311">311</a>
 <a href="#312" id="312">312</a>
 <a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -345,6 +362,8 @@
 <span class="kw">pub mod </span>macros;
 <span class="kw">pub mod </span>orders;
 <span class="kw">pub mod </span>types;
+
+<span class="kw">pub mod </span>accounting;
 
 <span class="kw">pub const </span>PY_MODULE_MODEL: <span class="kw-2">&amp;</span>str = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>;
 
@@ -434,6 +453,7 @@
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>pyo3::{
         prelude::<span class="kw-2">*</span>,
+        prepare_freethreaded_python,
         types::{PyBool, PyInt, PyList, PyString},
     };
     <span class="kw">use </span>rstest::rstest;
@@ -443,6 +463,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_value_to_pydict() {
+        prepare_freethreaded_python();
         Python::with_gil(|py| {
             <span class="kw">let </span>json_str = <span class="string">r#"
         {
@@ -493,6 +514,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_value_to_pyobject_string() {
+        prepare_freethreaded_python();
         Python::with_gil(|py| {
             <span class="kw">let </span>val = Value::String(<span class="string">"Hello, world!"</span>.to_string());
             <span class="kw">let </span>py_obj = value_to_pyobject(py, <span class="kw-2">&amp;</span>val).unwrap();
@@ -503,6 +525,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_value_to_pyobject_bool() {
+        prepare_freethreaded_python();
         Python::with_gil(|py| {
             <span class="kw">let </span>val = Value::Bool(<span class="bool-val">true</span>);
             <span class="kw">let </span>py_obj = value_to_pyobject(py, <span class="kw-2">&amp;</span>val).unwrap();
@@ -513,6 +536,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_value_to_pyobject_array() {
+        prepare_freethreaded_python();
         Python::with_gil(|py| {
             <span class="kw">let </span>val = Value::Array(<span class="macro">vec!</span>[
                 Value::String(<span class="string">"item1"</span>.to_string()),
@@ -537,20 +561,22 @@
 <span class="doccomment">/// Loaded as nautilus_pyo3.model
 </span><span class="attr">#[pymodule]
 </span><span class="kw">pub fn </span>model(<span class="kw">_</span>: Python&lt;<span class="lifetime">'_</span>&gt;, m: <span class="kw-2">&amp;</span>PyModule) -&gt; PyResult&lt;()&gt; {
-    <span class="comment">// data
+    <span class="comment">// Data
     </span>m.add_class::&lt;<span class="kw">crate</span>::data::bar::BarSpecification&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::bar::BarType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::bar::Bar&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::order::BookOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::delta::OrderBookDelta&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::data::deltas::OrderBookDeltas&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::data::depth::OrderBookDepth10&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::quote::QuoteTick&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::data::trade::TradeTick&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// enums
+    <span class="comment">// Enums
     </span>m.add_class::&lt;enums::AccountType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::AggregationSource&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::AggressorSide&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::AssetClass&gt;()<span class="question-mark">?</span>;
-    m.add_class::&lt;enums::AssetType&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;enums::InstrumentClass&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::BarAggregation&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::BookAction&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::BookType&gt;()<span class="question-mark">?</span>;
@@ -570,7 +596,7 @@
     m.add_class::&lt;enums::TradingState&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::TrailingOffsetType&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;enums::TriggerType&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// identifiers
+    <span class="comment">// Identifiers
     </span>m.add_class::&lt;<span class="kw">crate</span>::identifiers::account_id::AccountId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::client_id::ClientId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::client_order_id::ClientOrderId&gt;()<span class="question-mark">?</span>;
@@ -585,7 +611,7 @@
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::trader_id::TraderId&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::venue::Venue&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::identifiers::venue_order_id::VenueOrderId&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// orders
+    <span class="comment">// Orders
     </span>m.add_class::&lt;<span class="kw">crate</span>::orders::limit::LimitOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::orders::limit_if_touched::LimitIfTouchedOrder&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::orders::market::MarketOrder&gt;()<span class="question-mark">?</span>;
@@ -598,7 +624,10 @@
     m.add_class::&lt;<span class="kw">crate</span>::types::money::Money&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::types::price::Price&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::types::quantity::Quantity&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// instruments
+    m.add_class::&lt;<span class="kw">crate</span>::types::balance::AccountBalance&gt;()<span class="question-mark">?</span>;
+    m.add_class::&lt;<span class="kw">crate</span>::types::balance::MarginBalance&gt;()<span class="question-mark">?</span>;
+
+    <span class="comment">// Instruments
     </span>m.add_class::&lt;<span class="kw">crate</span>::instruments::crypto_future::CryptoFuture&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::crypto_perpetual::CryptoPerpetual&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::currency_pair::CurrencyPair&gt;()<span class="question-mark">?</span>;
@@ -606,7 +635,7 @@
     m.add_class::&lt;<span class="kw">crate</span>::instruments::futures_contract::FuturesContract&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::options_contract::OptionsContract&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::instruments::synthetic::SyntheticInstrument&gt;()<span class="question-mark">?</span>;
-    <span class="comment">// events
+    <span class="comment">// Events - order
     </span>m.add_class::&lt;<span class="kw">crate</span>::events::order::denied::OrderDenied&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::events::order::filled::OrderFilled&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::events::order::initialized::OrderInitialized&gt;()<span class="question-mark">?</span>;
@@ -623,6 +652,10 @@
     m.add_class::&lt;<span class="kw">crate</span>::events::order::cancel_rejected::OrderCancelRejected&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::events::order::canceled::OrderCanceled&gt;()<span class="question-mark">?</span>;
     m.add_class::&lt;<span class="kw">crate</span>::events::order::expired::OrderExpired&gt;()<span class="question-mark">?</span>;
+    <span class="comment">// Events - account
+    </span>m.add_class::&lt;<span class="kw">crate</span>::events::account::state::AccountState&gt;()<span class="question-mark">?</span>;
+    <span class="comment">// Accounting
+    </span>m.add_class::&lt;<span class="kw">crate</span>::accounting::margin::MarginAccount&gt;()<span class="question-mark">?</span>;
     <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>

@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/arrow/quote.rs`."><title>quote.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `persistence/src/arrow/quote.rs`."><title>quote.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_persistence" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (ef71f1047 2024-01-21)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_persistence/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -301,16 +302,8 @@
 <a href="#300" id="300">300</a>
 <a href="#301" id="301">301</a>
 <a href="#302" id="302">302</a>
-<a href="#303" id="303">303</a>
-<a href="#304" id="304">304</a>
-<a href="#305" id="305">305</a>
-<a href="#306" id="306">306</a>
-<a href="#307" id="307">307</a>
-<a href="#308" id="308">308</a>
-<a href="#309" id="309">309</a>
-<a href="#310" id="310">310</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -391,34 +384,30 @@
         metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;,
         data: <span class="kw-2">&amp;</span>[<span class="self">Self</span>],
     ) -&gt; <span class="prelude-ty">Result</span>&lt;RecordBatch, ArrowError&gt; {
-        <span class="comment">// Create array builders
-        </span><span class="kw">let </span><span class="kw-2">mut </span>bid_price_builder = Int64Array::builder(data.len());
+        <span class="kw">let </span><span class="kw-2">mut </span>bid_price_builder = Int64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ask_price_builder = Int64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>bid_size_builder = UInt64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ask_size_builder = UInt64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ts_event_builder = UInt64Array::builder(data.len());
         <span class="kw">let </span><span class="kw-2">mut </span>ts_init_builder = UInt64Array::builder(data.len());
 
-        <span class="comment">// Iterate over data
-        </span><span class="kw">for </span>tick <span class="kw">in </span>data {
-            bid_price_builder.append_value(tick.bid_price.raw);
-            ask_price_builder.append_value(tick.ask_price.raw);
-            bid_size_builder.append_value(tick.bid_size.raw);
-            ask_size_builder.append_value(tick.ask_size.raw);
-            ts_event_builder.append_value(tick.ts_event);
-            ts_init_builder.append_value(tick.ts_init);
+        <span class="kw">for </span>quote <span class="kw">in </span>data {
+            bid_price_builder.append_value(quote.bid_price.raw);
+            ask_price_builder.append_value(quote.ask_price.raw);
+            bid_size_builder.append_value(quote.bid_size.raw);
+            ask_size_builder.append_value(quote.ask_size.raw);
+            ts_event_builder.append_value(quote.ts_event);
+            ts_init_builder.append_value(quote.ts_init);
         }
 
-        <span class="comment">// Build arrays
-        </span><span class="kw">let </span>bid_price_array = bid_price_builder.finish();
+        <span class="kw">let </span>bid_price_array = bid_price_builder.finish();
         <span class="kw">let </span>ask_price_array = ask_price_builder.finish();
         <span class="kw">let </span>bid_size_array = bid_size_builder.finish();
         <span class="kw">let </span>ask_size_array = ask_size_builder.finish();
         <span class="kw">let </span>ts_event_array = ts_event_builder.finish();
         <span class="kw">let </span>ts_init_array = ts_init_builder.finish();
 
-        <span class="comment">// Build record batch
-        </span>RecordBatch::try_new(
+        RecordBatch::try_new(
             <span class="self">Self</span>::get_schema(<span class="prelude-val">Some</span>(metadata.clone())).into(),
             <span class="macro">vec!</span>[
                 Arc::new(bid_price_array),
@@ -437,11 +426,8 @@
         metadata: <span class="kw-2">&amp;</span>HashMap&lt;String, String&gt;,
         record_batch: RecordBatch,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="self">Self</span>&gt;, EncodingError&gt; {
-        <span class="comment">// Parse and validate metadata
-        </span><span class="kw">let </span>(instrument_id, price_precision, size_precision) = parse_metadata(metadata)<span class="question-mark">?</span>;
-
-        <span class="comment">// Extract field value arrays
-        </span><span class="kw">let </span>cols = record_batch.columns();
+        <span class="kw">let </span>(instrument_id, price_precision, size_precision) = parse_metadata(metadata)<span class="question-mark">?</span>;
+        <span class="kw">let </span>cols = record_batch.columns();
 
         <span class="kw">let </span>bid_price_values = extract_column::&lt;Int64Array&gt;(cols, <span class="string">"bid_price"</span>, <span class="number">0</span>, DataType::Int64)<span class="question-mark">?</span>;
         <span class="kw">let </span>ask_price_values = extract_column::&lt;Int64Array&gt;(cols, <span class="string">"ask_price"</span>, <span class="number">1</span>, DataType::Int64)<span class="question-mark">?</span>;
@@ -450,8 +436,7 @@
         <span class="kw">let </span>ts_event_values = extract_column::&lt;UInt64Array&gt;(cols, <span class="string">"ts_event"</span>, <span class="number">4</span>, DataType::UInt64)<span class="question-mark">?</span>;
         <span class="kw">let </span>ts_init_values = extract_column::&lt;UInt64Array&gt;(cols, <span class="string">"ts_init"</span>, <span class="number">5</span>, DataType::UInt64)<span class="question-mark">?</span>;
 
-        <span class="comment">// Map record batch rows to vector of objects
-        </span><span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="self">Self</span>&gt;, EncodingError&gt; = (<span class="number">0</span>..record_batch.num_rows())
+        <span class="kw">let </span>result: <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="self">Self</span>&gt;, EncodingError&gt; = (<span class="number">0</span>..record_batch.num_rows())
             .map(|i| {
                 <span class="kw">let </span>bid_price =
                     Price::from_raw(bid_price_values.value(i), price_precision).unwrap();
@@ -504,7 +489,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_get_schema() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.NASDAQ"</span>);
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.XNAS"</span>);
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
         <span class="kw">let </span>schema = QuoteTick::get_schema(<span class="prelude-val">Some</span>(metadata.clone()));
         <span class="kw">let </span>expected_fields = <span class="macro">vec!</span>[
@@ -535,7 +520,7 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_encode_quote_tick() {
         <span class="comment">// Create test data
-        </span><span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.NASDAQ"</span>);
+        </span><span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.XNAS"</span>);
         <span class="kw">let </span>tick1 = QuoteTick {
             instrument_id,
             bid_price: Price::from(<span class="string">"100.10"</span>),
@@ -592,7 +577,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_decode_batch() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.NASDAQ"</span>);
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.XNAS"</span>);
         <span class="kw">let </span>metadata = QuoteTick::get_metadata(<span class="kw-2">&amp;</span>instrument_id, <span class="number">2</span>, <span class="number">0</span>);
 
         <span class="kw">let </span>bid_price = Int64Array::from(<span class="macro">vec!</span>[<span class="number">10000</span>, <span class="number">9900</span>]);

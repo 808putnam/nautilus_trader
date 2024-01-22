@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging.rs`."><title>logging.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging.rs`."><title>logging.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (ef71f1047 2024-01-21)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../nautilus_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -786,8 +787,177 @@
 <a href="#785" id="785">785</a>
 <a href="#786" id="786">786</a>
 <a href="#787" id="787">787</a>
+<a href="#788" id="788">788</a>
+<a href="#789" id="789">789</a>
+<a href="#790" id="790">790</a>
+<a href="#791" id="791">791</a>
+<a href="#792" id="792">792</a>
+<a href="#793" id="793">793</a>
+<a href="#794" id="794">794</a>
+<a href="#795" id="795">795</a>
+<a href="#796" id="796">796</a>
+<a href="#797" id="797">797</a>
+<a href="#798" id="798">798</a>
+<a href="#799" id="799">799</a>
+<a href="#800" id="800">800</a>
+<a href="#801" id="801">801</a>
+<a href="#802" id="802">802</a>
+<a href="#803" id="803">803</a>
+<a href="#804" id="804">804</a>
+<a href="#805" id="805">805</a>
+<a href="#806" id="806">806</a>
+<a href="#807" id="807">807</a>
+<a href="#808" id="808">808</a>
+<a href="#809" id="809">809</a>
+<a href="#810" id="810">810</a>
+<a href="#811" id="811">811</a>
+<a href="#812" id="812">812</a>
+<a href="#813" id="813">813</a>
+<a href="#814" id="814">814</a>
+<a href="#815" id="815">815</a>
+<a href="#816" id="816">816</a>
+<a href="#817" id="817">817</a>
+<a href="#818" id="818">818</a>
+<a href="#819" id="819">819</a>
+<a href="#820" id="820">820</a>
+<a href="#821" id="821">821</a>
+<a href="#822" id="822">822</a>
+<a href="#823" id="823">823</a>
+<a href="#824" id="824">824</a>
+<a href="#825" id="825">825</a>
+<a href="#826" id="826">826</a>
+<a href="#827" id="827">827</a>
+<a href="#828" id="828">828</a>
+<a href="#829" id="829">829</a>
+<a href="#830" id="830">830</a>
+<a href="#831" id="831">831</a>
+<a href="#832" id="832">832</a>
+<a href="#833" id="833">833</a>
+<a href="#834" id="834">834</a>
+<a href="#835" id="835">835</a>
+<a href="#836" id="836">836</a>
+<a href="#837" id="837">837</a>
+<a href="#838" id="838">838</a>
+<a href="#839" id="839">839</a>
+<a href="#840" id="840">840</a>
+<a href="#841" id="841">841</a>
+<a href="#842" id="842">842</a>
+<a href="#843" id="843">843</a>
+<a href="#844" id="844">844</a>
+<a href="#845" id="845">845</a>
+<a href="#846" id="846">846</a>
+<a href="#847" id="847">847</a>
+<a href="#848" id="848">848</a>
+<a href="#849" id="849">849</a>
+<a href="#850" id="850">850</a>
+<a href="#851" id="851">851</a>
+<a href="#852" id="852">852</a>
+<a href="#853" id="853">853</a>
+<a href="#854" id="854">854</a>
+<a href="#855" id="855">855</a>
+<a href="#856" id="856">856</a>
+<a href="#857" id="857">857</a>
+<a href="#858" id="858">858</a>
+<a href="#859" id="859">859</a>
+<a href="#860" id="860">860</a>
+<a href="#861" id="861">861</a>
+<a href="#862" id="862">862</a>
+<a href="#863" id="863">863</a>
+<a href="#864" id="864">864</a>
+<a href="#865" id="865">865</a>
+<a href="#866" id="866">866</a>
+<a href="#867" id="867">867</a>
+<a href="#868" id="868">868</a>
+<a href="#869" id="869">869</a>
+<a href="#870" id="870">870</a>
+<a href="#871" id="871">871</a>
+<a href="#872" id="872">872</a>
+<a href="#873" id="873">873</a>
+<a href="#874" id="874">874</a>
+<a href="#875" id="875">875</a>
+<a href="#876" id="876">876</a>
+<a href="#877" id="877">877</a>
+<a href="#878" id="878">878</a>
+<a href="#879" id="879">879</a>
+<a href="#880" id="880">880</a>
+<a href="#881" id="881">881</a>
+<a href="#882" id="882">882</a>
+<a href="#883" id="883">883</a>
+<a href="#884" id="884">884</a>
+<a href="#885" id="885">885</a>
+<a href="#886" id="886">886</a>
+<a href="#887" id="887">887</a>
+<a href="#888" id="888">888</a>
+<a href="#889" id="889">889</a>
+<a href="#890" id="890">890</a>
+<a href="#891" id="891">891</a>
+<a href="#892" id="892">892</a>
+<a href="#893" id="893">893</a>
+<a href="#894" id="894">894</a>
+<a href="#895" id="895">895</a>
+<a href="#896" id="896">896</a>
+<a href="#897" id="897">897</a>
+<a href="#898" id="898">898</a>
+<a href="#899" id="899">899</a>
+<a href="#900" id="900">900</a>
+<a href="#901" id="901">901</a>
+<a href="#902" id="902">902</a>
+<a href="#903" id="903">903</a>
+<a href="#904" id="904">904</a>
+<a href="#905" id="905">905</a>
+<a href="#906" id="906">906</a>
+<a href="#907" id="907">907</a>
+<a href="#908" id="908">908</a>
+<a href="#909" id="909">909</a>
+<a href="#910" id="910">910</a>
+<a href="#911" id="911">911</a>
+<a href="#912" id="912">912</a>
+<a href="#913" id="913">913</a>
+<a href="#914" id="914">914</a>
+<a href="#915" id="915">915</a>
+<a href="#916" id="916">916</a>
+<a href="#917" id="917">917</a>
+<a href="#918" id="918">918</a>
+<a href="#919" id="919">919</a>
+<a href="#920" id="920">920</a>
+<a href="#921" id="921">921</a>
+<a href="#922" id="922">922</a>
+<a href="#923" id="923">923</a>
+<a href="#924" id="924">924</a>
+<a href="#925" id="925">925</a>
+<a href="#926" id="926">926</a>
+<a href="#927" id="927">927</a>
+<a href="#928" id="928">928</a>
+<a href="#929" id="929">929</a>
+<a href="#930" id="930">930</a>
+<a href="#931" id="931">931</a>
+<a href="#932" id="932">932</a>
+<a href="#933" id="933">933</a>
+<a href="#934" id="934">934</a>
+<a href="#935" id="935">935</a>
+<a href="#936" id="936">936</a>
+<a href="#937" id="937">937</a>
+<a href="#938" id="938">938</a>
+<a href="#939" id="939">939</a>
+<a href="#940" id="940">940</a>
+<a href="#941" id="941">941</a>
+<a href="#942" id="942">942</a>
+<a href="#943" id="943">943</a>
+<a href="#944" id="944">944</a>
+<a href="#945" id="945">945</a>
+<a href="#946" id="946">946</a>
+<a href="#947" id="947">947</a>
+<a href="#948" id="948">948</a>
+<a href="#949" id="949">949</a>
+<a href="#950" id="950">950</a>
+<a href="#951" id="951">951</a>
+<a href="#952" id="952">952</a>
+<a href="#953" id="953">953</a>
+<a href="#954" id="954">954</a>
+<a href="#955" id="955">955</a>
+<a href="#956" id="956">956</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -802,227 +972,436 @@
 // -------------------------------------------------------------------------------------------------
 
 </span><span class="kw">use </span>std::{
+    borrow::Cow,
     collections::HashMap,
-    fmt,
+    env, fmt,
     fs::{create_dir_all, File},
     io::{<span class="self">self</span>, BufWriter, Stderr, Stdout, Write},
     path::{Path, PathBuf},
     str::FromStr,
-    sync::mpsc::{channel, Receiver, SendError, Sender},
+    sync::{
+        atomic::{AtomicBool, Ordering},
+        mpsc::{channel, Receiver, SendError, Sender},
+    },
     thread,
 };
 
 <span class="kw">use </span>chrono::{prelude::<span class="kw-2">*</span>, Utc};
-<span class="kw">use </span>nautilus_core::{datetime::unix_nanos_to_iso8601, time::UnixNanos, uuid::UUID4};
-<span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
-<span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>serde::{Deserialize, Serialize};
-<span class="kw">use </span>serde_json::Value;
-<span class="kw">use </span>tracing::Level;
-<span class="kw">use </span>tracing_appender::{
-    non_blocking::WorkerGuard,
-    rolling::{RollingFileAppender, Rotation},
+<span class="kw">use </span>log::{
+    debug, error, info,
+    kv::{ToValue, Value},
+    set_boxed_logger, set_max_level, warn, Level, LevelFilter, Log, STATIC_MAX_LEVEL,
 };
-<span class="kw">use </span>tracing_subscriber::{fmt::Layer, prelude::<span class="kw-2">*</span>, EnvFilter, Registry};
+<span class="kw">use </span>nautilus_core::{
+    datetime::unix_nanos_to_iso8601,
+    time::{get_atomic_clock_realtime, get_atomic_clock_static, UnixNanos},
+    uuid::UUID4,
+};
+<span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
+<span class="kw">use </span>serde::{Deserialize, Serialize};
+<span class="kw">use </span>tracing_subscriber::EnvFilter;
+<span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use </span><span class="kw">crate</span>::enums::{LogColor, LogLevel};
 
-<span class="doccomment">/// Guards the log collector and flushes it when dropped
-///
-/// This struct must be dropped when the application has completed operation
-/// it ensures that the any pending log lines are flushed before the application
-/// closes.
-</span><span class="attr">#[pyclass]
-</span><span class="kw">pub struct </span>LogGuard {
-    <span class="attr">#[allow(dead_code)]
-    </span>guards: Vec&lt;WorkerGuard&gt;,
+<span class="kw">static </span>LOGGING_INITIALIZED: AtomicBool = AtomicBool::new(<span class="bool-val">false</span>);
+<span class="kw">static </span>LOGGING_BYPASSED: AtomicBool = AtomicBool::new(<span class="bool-val">false</span>);
+<span class="kw">static </span>LOGGING_REALTIME: AtomicBool = AtomicBool::new(<span class="bool-val">true</span>);
+<span class="kw">static </span>LOGGING_COLORED: AtomicBool = AtomicBool::new(<span class="bool-val">true</span>);
+
+<span class="doccomment">/// Returns whether the core logger is enabled.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_is_initialized() -&gt; u8 {
+    LOGGING_INITIALIZED.load(Ordering::Relaxed) <span class="kw">as </span>u8
 }
 
-<span class="doccomment">/// Sets the global log collector
+<span class="doccomment">/// Sets the logging system to bypass mode.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_set_bypass() {
+    LOGGING_BYPASSED.store(<span class="bool-val">true</span>, Ordering::Relaxed)
+}
+
+<span class="doccomment">/// Shuts down the logging system.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_shutdown() {
+    <span class="macro">todo!</span>()
+}
+
+<span class="doccomment">/// Returns whether the core logger is using ANSI colors.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_is_colored() -&gt; u8 {
+    LOGGING_COLORED.load(Ordering::Relaxed) <span class="kw">as </span>u8
+}
+
+<span class="doccomment">/// Sets the global logging clock to real-time mode.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_clock_set_realtime_mode() {
+    LOGGING_REALTIME.store(<span class="bool-val">true</span>, Ordering::Relaxed);
+}
+
+<span class="doccomment">/// Sets the global logging clock to static mode.
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_clock_set_static_mode() {
+    LOGGING_REALTIME.store(<span class="bool-val">false</span>, Ordering::Relaxed);
+}
+
+<span class="doccomment">/// Sets the global logging clock static time with the given UNIX time (nanoseconds).
+</span><span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>logging_clock_set_static_time(time_ns: u64) {
+    <span class="kw">let </span>clock = get_atomic_clock_static();
+    clock.set_time(time_ns);
+}
+
+<span class="attr">#[cfg_attr(
+    feature = <span class="string">"python"</span>,
+    pyo3::pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.common"</span>)
+)]
+#[derive(Debug, Clone, PartialEq, Eq)]
+</span><span class="kw">pub struct </span>LoggerConfig {
+    <span class="doccomment">/// Maximum log level to write to stdout.
+    </span>stdout_level: LevelFilter,
+    <span class="doccomment">/// Maximum log level to write to file.
+    </span>fileout_level: LevelFilter,
+    <span class="doccomment">/// Maximum log level to write for a given component.
+    </span>component_level: HashMap&lt;Ustr, LevelFilter&gt;,
+    <span class="doccomment">/// If logger is using ANSI color codes.
+    </span><span class="kw">pub </span>is_colored: bool,
+    <span class="doccomment">/// If the configuration should be printed to stdout at initialization.
+    </span><span class="kw">pub </span>print_config: bool,
+}
+
+<span class="kw">impl </span>Default <span class="kw">for </span>LoggerConfig {
+    <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            stdout_level: LevelFilter::Info,
+            fileout_level: LevelFilter::Off,
+            component_level: HashMap::new(),
+            is_colored: <span class="bool-val">false</span>,
+            print_config: <span class="bool-val">false</span>,
+        }
+    }
+}
+
+<span class="kw">impl </span>LoggerConfig {
+    <span class="kw">pub fn </span>new(
+        stdout_level: LevelFilter,
+        fileout_level: LevelFilter,
+        component_level: HashMap&lt;Ustr, LevelFilter&gt;,
+        is_colored: bool,
+        print_config: bool,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            stdout_level,
+            fileout_level,
+            component_level,
+            is_colored,
+            print_config,
+        }
+    }
+
+    <span class="kw">pub fn </span>from_spec(spec: <span class="kw-2">&amp;</span>str) -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span><span class="self">Self </span>{
+            <span class="kw-2">mut </span>stdout_level,
+            <span class="kw-2">mut </span>fileout_level,
+            <span class="kw-2">mut </span>component_level,
+            <span class="kw-2">mut </span>is_colored,
+            <span class="kw-2">mut </span>print_config,
+        } = <span class="self">Self</span>::default();
+        spec.split(<span class="string">';'</span>).for_each(|kv| {
+            <span class="kw">if </span>kv == <span class="string">"is_colored" </span>{
+                is_colored = <span class="bool-val">true</span>;
+            } <span class="kw">else if </span>kv == <span class="string">"print_config" </span>{
+                print_config = <span class="bool-val">true</span>;
+            } <span class="kw">else </span>{
+                <span class="kw">let </span><span class="kw-2">mut </span>kv = kv.split(<span class="string">'='</span>);
+                <span class="kw">if let </span>(<span class="prelude-val">Some</span>(k), <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(lvl))) = (kv.next(), kv.next().map(LevelFilter::from_str))
+                {
+                    <span class="kw">if </span>k == <span class="string">"stdout" </span>{
+                        stdout_level = lvl;
+                    } <span class="kw">else if </span>k == <span class="string">"fileout" </span>{
+                        fileout_level = lvl;
+                    } <span class="kw">else </span>{
+                        component_level.insert(Ustr::from(k), lvl);
+                    }
+                }
+            }
+        });
+
+        <span class="self">Self </span>{
+            stdout_level,
+            fileout_level,
+            component_level,
+            is_colored,
+            print_config,
+        }
+    }
+
+    <span class="kw">pub fn </span>from_env() -&gt; <span class="self">Self </span>{
+        <span class="kw">match </span>env::var(<span class="string">"NAUTILUS_LOG"</span>) {
+            <span class="prelude-val">Ok</span>(spec) =&gt; LoggerConfig::from_spec(<span class="kw-2">&amp;</span>spec),
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">"Error parsing `LoggerConfig` spec: {e}"</span>),
+        }
+    }
+}
+
+<span class="attr">#[cfg_attr(
+    feature = <span class="string">"python"</span>,
+    pyo3::pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.common"</span>)
+)]
+#[derive(Debug, Clone, Default)]
+</span><span class="kw">pub struct </span>FileWriterConfig {
+    directory: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
+}
+
+<span class="kw">impl </span>FileWriterConfig {
+    <span class="kw">pub fn </span>new(
+        directory: <span class="prelude-ty">Option</span>&lt;String&gt;,
+        file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+        file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            directory,
+            file_name,
+            file_format,
+        }
+    }
+}
+
+<span class="kw">pub fn </span>map_log_level_to_filter(log_level: LogLevel) -&gt; LevelFilter {
+    <span class="kw">match </span>log_level {
+        LogLevel::Off =&gt; LevelFilter::Off,
+        LogLevel::Debug =&gt; LevelFilter::Debug,
+        LogLevel::Info =&gt; LevelFilter::Info,
+        LogLevel::Warning =&gt; LevelFilter::Warn,
+        LogLevel::Error =&gt; LevelFilter::Error,
+    }
+}
+
+<span class="kw">pub fn </span>parse_level_filter_str(s: <span class="kw-2">&amp;</span>str) -&gt; LevelFilter {
+    <span class="kw">let </span><span class="kw-2">mut </span>log_level_str = s.to_string().to_uppercase();
+    <span class="kw">if </span>log_level_str == <span class="string">"WARNING" </span>{
+        log_level_str = <span class="string">"WARN"</span>.to_string()
+    }
+    LevelFilter::from_str(<span class="kw-2">&amp;</span>log_level_str)
+        .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">"Invalid `LevelFilter` string, was {log_level_str}"</span>))
+}
+
+<span class="kw">pub fn </span>parse_component_levels(
+    original_map: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, serde_json::Value&gt;&gt;,
+) -&gt; HashMap&lt;Ustr, LevelFilter&gt; {
+    <span class="kw">match </span>original_map {
+        <span class="prelude-val">Some</span>(map) =&gt; {
+            <span class="kw">let </span><span class="kw-2">mut </span>new_map = HashMap::new();
+            <span class="kw">for </span>(key, value) <span class="kw">in </span>map {
+                <span class="kw">let </span>ustr_key = Ustr::from(<span class="kw-2">&amp;</span>key);
+                <span class="kw">let </span>value = parse_level_filter_str(value.as_str().unwrap());
+                new_map.insert(ustr_key, value);
+            }
+            new_map
+        }
+        <span class="prelude-val">None </span>=&gt; HashMap::new(),
+    }
+}
+
+<span class="doccomment">/// Initialize tracing.
 ///
-/// stdout_level: Set the level for the stdout writer
-/// stderr_level: Set the level for the stderr writer
-/// file_level: Set the level, the directory and the prefix for the file writer
-///
-/// It also configures a top level filter based on module/component name.
-/// The format for the string is component1=info,component2=debug.
-/// For e.g. network=error,kernel=info
+/// Tracing is meant to be used to trace/debug async Rust code. It can be
+/// configured to filter modules and write up to a specific level only using
+/// by passing a configuration using the `RUST_LOG` environment variable.
 ///
 /// # Safety
+///
 /// Should only be called once during an applications run, ideally at the
 /// beginning of the run.
-</span><span class="attr">#[pyfunction]
-#[must_use]
-</span><span class="kw">pub fn </span>set_global_log_collector(
-    stdout_level: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    stderr_level: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    file_level: <span class="prelude-ty">Option</span>&lt;(String, String, String)&gt;,
-) -&gt; LogGuard {
-    <span class="kw">let </span><span class="kw-2">mut </span>guards = Vec::new();
-    <span class="kw">let </span>stdout_sub_builder = stdout_level.map(|stdout_level| {
-        <span class="kw">let </span>stdout_level = Level::from_str(<span class="kw-2">&amp;</span>stdout_level).unwrap();
-        <span class="kw">let </span>(non_blocking, guard) = tracing_appender::non_blocking(std::io::stdout());
-        guards.push(guard);
-        Layer::default().with_writer(non_blocking.with_max_level(stdout_level))
-    });
-    <span class="kw">let </span>stderr_sub_builder = stderr_level.map(|stderr_level| {
-        <span class="kw">let </span>stderr_level = Level::from_str(<span class="kw-2">&amp;</span>stderr_level).unwrap();
-        <span class="kw">let </span>(non_blocking, guard) = tracing_appender::non_blocking(std::io::stdout());
-        guards.push(guard);
-        Layer::default().with_writer(non_blocking.with_max_level(stderr_level))
-    });
-    <span class="kw">let </span>file_sub_builder = file_level.map(|(dir_path, file_prefix, file_level)| {
-        <span class="kw">let </span>file_level = Level::from_str(<span class="kw-2">&amp;</span>file_level).unwrap();
-        <span class="kw">let </span>rolling_log = RollingFileAppender::new(Rotation::NEVER, dir_path, file_prefix);
-        <span class="kw">let </span>(non_blocking, guard) = tracing_appender::non_blocking(rolling_log);
-        guards.push(guard);
-        Layer::default()
-            .with_ansi(<span class="bool-val">false</span>) <span class="comment">// turn off unicode colors when writing to file
-            </span>.with_writer(non_blocking.with_max_level(file_level))
-    });
+</span><span class="kw">pub fn </span>init_tracing() {
+    <span class="comment">// Skip tracing initialization if `RUST_LOG` is not set
+    </span><span class="kw">if let </span><span class="prelude-val">Ok</span>(v) = env::var(<span class="string">"RUST_LOG"</span>) {
+        tracing_subscriber::fmt()
+            .with_env_filter(EnvFilter::new(v.clone()))
+            .try_init()
+            .unwrap_or_else(|e| <span class="macro">eprintln!</span>(<span class="string">"Cannot set tracing subscriber because of error: {e}"</span>));
+        <span class="macro">println!</span>(<span class="string">"Initialized tracing logs with RUST_LOG={v}"</span>);
+    }
+}
 
-    <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = Registry::default()
-        .with(stderr_sub_builder)
-        .with(stdout_sub_builder)
-        .with(file_sub_builder)
-        .with(EnvFilter::from_default_env())
-        .try_init()
-    {
-        <span class="macro">println!</span>(<span class="string">"Failed to set global default dispatcher because of error: {e}"</span>);
-    };
-
-    LogGuard { guards }
+<span class="doccomment">/// Initialize logging.
+///
+/// Logging should be used for Python and sync Rust logic which is most of
+/// the components in the main `nautilus_trader` package.
+/// Logging can be configured to filter components and write up to a specific level only
+/// by passing a configuration using the `NAUTILUS_LOG` environment variable.
+///
+/// # Safety
+///
+/// Should only be called once during an applications run, ideally at the
+/// beginning of the run.
+</span><span class="kw">pub fn </span>init_logging(
+    trader_id: TraderId,
+    instance_id: UUID4,
+    config: LoggerConfig,
+    file_config: FileWriterConfig,
+) {
+    LOGGING_INITIALIZED.store(<span class="bool-val">true</span>, Ordering::Relaxed);
+    LOGGING_COLORED.store(config.is_colored, Ordering::Relaxed);
+    Logger::init_with_config(trader_id, instance_id, config, file_config);
 }
 
 <span class="doccomment">/// Provides a high-performance logger utilizing a MPSC channel under the hood.
 ///
 /// A separate thead is spawned at initialization which receives [`LogEvent`] structs over the
 /// channel.
+</span><span class="attr">#[derive(Debug)]
 </span><span class="kw">pub struct </span>Logger {
-    tx: Sender&lt;LogEvent&gt;,
-    <span class="doccomment">/// The trader ID for the logger.
-    </span><span class="kw">pub </span>trader_id: TraderId,
-    <span class="doccomment">/// The machine ID for the logger.
-    </span><span class="kw">pub </span>machine_id: String,
-    <span class="doccomment">/// The instance ID for the logger.
-    </span><span class="kw">pub </span>instance_id: UUID4,
-    <span class="doccomment">/// The minimum log level to write to stdout.
-    </span><span class="kw">pub </span>level_stdout: LogLevel,
-    <span class="doccomment">/// The minimum log level to write to a log file.
-    </span><span class="kw">pub </span>level_file: <span class="prelude-ty">Option</span>&lt;LogLevel&gt;,
-    <span class="doccomment">/// If logger is using ANSI color codes.
-    </span><span class="kw">pub </span>is_colored: bool,
-    <span class="doccomment">/// If logging is bypassed.
-    </span><span class="kw">pub </span>is_bypassed: bool,
+    <span class="doccomment">/// Send log events to a different thread.
+    </span>tx: Sender&lt;LogEvent&gt;,
+    <span class="doccomment">/// Configure maximum levels for components and IO.
+    </span><span class="kw">pub </span>config: LoggerConfig,
+}
+
+<span class="doccomment">/// Represents a type of log event.
+</span><span class="kw">pub enum </span>LogEvent {
+    <span class="doccomment">/// A log line event.
+    </span>Log(LogLine),
+    <span class="doccomment">/// A command to flush all logger buffers.
+    </span>Flush,
 }
 
 <span class="doccomment">/// Represents a log event which includes a message.
 </span><span class="attr">#[derive(Clone, Debug, Serialize, Deserialize)]
-</span><span class="kw">pub struct </span>LogEvent {
-    <span class="doccomment">/// The UNIX nanoseconds timestamp when the log event occurred.
-    </span>timestamp: UnixNanos,
+</span><span class="kw">pub struct </span>LogLine {
     <span class="doccomment">/// The log level for the event.
-    </span>level: LogLevel,
+    </span>level: Level,
     <span class="doccomment">/// The color for the log message content.
     </span>color: LogColor,
     <span class="doccomment">/// The Nautilus system component the log event originated from.
-    </span>component: String,
+    </span>component: Ustr,
     <span class="doccomment">/// The log message content.
     </span>message: String,
 }
 
-<span class="kw">impl </span>fmt::Display <span class="kw">for </span>LogEvent {
+<span class="kw">impl </span>fmt::Display <span class="kw">for </span>LogLine {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
-        <span class="macro">write!</span>(
-            f,
-            <span class="string">"{} [{}] {}: {}"</span>,
-            <span class="self">self</span>.timestamp, <span class="self">self</span>.level, <span class="self">self</span>.component, <span class="self">self</span>.message
-        )
+        <span class="macro">write!</span>(f, <span class="string">"[{}] {}: {}"</span>, <span class="self">self</span>.level, <span class="self">self</span>.component, <span class="self">self</span>.message)
+    }
+}
+
+<span class="kw">impl </span>Log <span class="kw">for </span>Logger {
+    <span class="kw">fn </span>enabled(<span class="kw-2">&amp;</span><span class="self">self</span>, metadata: <span class="kw-2">&amp;</span>log::Metadata) -&gt; bool {
+        !LOGGING_BYPASSED.load(Ordering::Relaxed)
+            &amp;&amp; (metadata.level() &gt;= <span class="self">self</span>.config.stdout_level
+                || metadata.level() &gt;= <span class="self">self</span>.config.fileout_level)
+    }
+
+    <span class="kw">fn </span>log(<span class="kw-2">&amp;</span><span class="self">self</span>, record: <span class="kw-2">&amp;</span>log::Record) {
+        <span class="comment">// TODO remove unwraps
+        </span><span class="kw">if </span><span class="self">self</span>.enabled(record.metadata()) {
+            <span class="kw">let </span>key_values = record.key_values();
+            <span class="kw">let </span>color = key_values
+                .get(<span class="string">"color"</span>.into())
+                .and_then(|v| v.to_u64().map(|v| (v <span class="kw">as </span>u8).into()))
+                .unwrap_or(LogColor::Normal);
+            <span class="kw">let </span>component = key_values
+                .get(<span class="string">"component"</span>.into())
+                .map(|v| Ustr::from(<span class="kw-2">&amp;</span>v.to_string()))
+                .unwrap_or_else(|| Ustr::from(record.metadata().target()));
+
+            <span class="kw">let </span>line = LogLine {
+                level: record.level(),
+                color,
+                component,
+                message: <span class="macro">format!</span>(<span class="string">"{}"</span>, record.args()).to_string(),
+            };
+            <span class="kw">if let </span><span class="prelude-val">Err</span>(SendError(LogEvent::Log(line))) = <span class="self">self</span>.tx.send(LogEvent::Log(line)) {
+                <span class="macro">eprintln!</span>(<span class="string">"Error sending log event: {line}"</span>);
+            }
+        }
+    }
+
+    <span class="kw">fn </span>flush(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="self">self</span>.tx.send(LogEvent::Flush).unwrap();
     }
 }
 
 <span class="attr">#[allow(clippy::too_many_arguments)]
 </span><span class="kw">impl </span>Logger {
-    <span class="attr">#[must_use]
-    </span><span class="kw">pub fn </span>new(
-        trader_id: TraderId,
-        machine_id: String,
-        instance_id: UUID4,
-        level_stdout: LogLevel,
-        level_file: <span class="prelude-ty">Option</span>&lt;LogLevel&gt;,
-        directory: <span class="prelude-ty">Option</span>&lt;String&gt;,
-        file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
-        file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
-        component_levels: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, Value&gt;&gt;,
-        is_colored: bool,
-        is_bypassed: bool,
-    ) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>(tx, rx) = channel::&lt;LogEvent&gt;();
-        <span class="kw">let </span><span class="kw-2">mut </span>level_filters = HashMap::&lt;String, LogLevel&gt;::new();
+    <span class="kw">pub fn </span>init_with_env(trader_id: TraderId, instance_id: UUID4, file_config: FileWriterConfig) {
+        <span class="kw">let </span>config = LoggerConfig::from_env();
+        Logger::init_with_config(trader_id, instance_id, config, file_config);
+    }
 
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(component_levels_map) = component_levels {
-            <span class="kw">for </span>(key, value) <span class="kw">in </span>component_levels_map {
-                <span class="kw">match </span>serde_json::from_value::&lt;LogLevel&gt;(value) {
-                    <span class="prelude-val">Ok</span>(level) =&gt; {
-                        level_filters.insert(key, level);
-                    }
-                    <span class="prelude-val">Err</span>(e) =&gt; {
-                        <span class="comment">// Handle the error, e.g. log a warning or ignore the entry
-                        </span><span class="macro">eprintln!</span>(<span class="string">"Error parsing log level: {e:?}"</span>);
-                    }
-                }
-            }
-        }
+    <span class="kw">pub fn </span>init_with_config(
+        trader_id: TraderId,
+        instance_id: UUID4,
+        config: LoggerConfig,
+        file_config: FileWriterConfig,
+    ) {
+        <span class="kw">let </span>(tx, rx) = channel::&lt;LogEvent&gt;();
 
         <span class="kw">let </span>trader_id_clone = trader_id.value.to_string();
         <span class="kw">let </span>instance_id_clone = instance_id.to_string();
 
-        thread::spawn(<span class="kw">move </span>|| {
-            <span class="self">Self</span>::handle_messages(
-                <span class="kw-2">&amp;</span>trader_id_clone,
-                <span class="kw-2">&amp;</span>instance_id_clone,
-                level_stdout,
-                level_file,
-                directory,
-                file_name,
-                file_format,
-                level_filters,
-                is_colored,
-                rx,
-            );
-        });
-
-        <span class="self">Self </span>{
+        <span class="kw">let </span>logger = <span class="self">Self </span>{
             tx,
-            trader_id,
-            machine_id,
-            instance_id,
-            level_stdout,
-            level_file,
-            is_colored,
-            is_bypassed,
+            config: config.clone(),
+        };
+
+        <span class="kw">let </span>print_config = config.print_config;
+        <span class="kw">if </span>print_config {
+            <span class="macro">println!</span>(<span class="string">"STATIC_MAX_LEVEL={STATIC_MAX_LEVEL}"</span>);
+            <span class="macro">println!</span>(<span class="string">"Logger initialized with {:?}"</span>, config);
+        }
+
+        <span class="kw">match </span>set_boxed_logger(Box::new(logger)) {
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
+                thread::spawn(<span class="kw">move </span>|| {
+                    <span class="self">Self</span>::handle_messages(
+                        <span class="kw-2">&amp;</span>trader_id_clone,
+                        <span class="kw-2">&amp;</span>instance_id_clone,
+                        config,
+                        file_config,
+                        rx,
+                    );
+                });
+
+                <span class="kw">let </span>max_level = log::LevelFilter::Debug;
+                set_max_level(max_level);
+                <span class="kw">if </span>print_config {
+                    <span class="macro">println!</span>(<span class="string">"Logger set as `log` implementation with max level {max_level}"</span>);
+                }
+            }
+            <span class="prelude-val">Err</span>(e) =&gt; {
+                <span class="macro">eprintln!</span>(<span class="string">"Cannot set logger because of error: {e}"</span>)
+            }
         }
     }
 
-    <span class="attr">#[allow(clippy::useless_format)] </span><span class="comment">// Format is not actually useless as we escape braces
-    </span><span class="kw">fn </span>handle_messages(
+    <span class="kw">fn </span>handle_messages(
         trader_id: <span class="kw-2">&amp;</span>str,
         instance_id: <span class="kw-2">&amp;</span>str,
-        level_stdout: LogLevel,
-        level_file: <span class="prelude-ty">Option</span>&lt;LogLevel&gt;,
-        directory: <span class="prelude-ty">Option</span>&lt;String&gt;,
-        file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
-        file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
-        level_filters: HashMap&lt;String, LogLevel&gt;,
-        is_colored: bool,
+        config: LoggerConfig,
+        file_config: FileWriterConfig,
         rx: Receiver&lt;LogEvent&gt;,
     ) {
+        <span class="kw">if </span>config.print_config {
+            <span class="macro">println!</span>(<span class="string">"Logger thread `handle_messages` initialized"</span>)
+        }
+
+        <span class="kw">let </span>LoggerConfig {
+            stdout_level,
+            fileout_level,
+            component_level,
+            is_colored,
+            print_config: <span class="kw">_</span>,
+        } = config;
+
         <span class="comment">// Setup std I/O buffers
         </span><span class="kw">let </span><span class="kw-2">mut </span>out_buf = BufWriter::new(io::stdout());
         <span class="kw">let </span><span class="kw-2">mut </span>err_buf = BufWriter::new(io::stderr());
 
         <span class="comment">// Setup log file
-        </span><span class="kw">let </span>is_json_format = <span class="kw">match </span>file_format.as_ref().map(|s| s.to_lowercase()) {
+        </span><span class="kw">let </span>is_json_format = <span class="kw">match </span>file_config.file_format.as_ref().map(|s| s.to_lowercase()) {
             <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>format) <span class="kw">if </span>format == <span class="string">"json" </span>=&gt; <span class="bool-val">true</span>,
             <span class="prelude-val">None </span>=&gt; <span class="bool-val">false</span>,
             <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>unrecognized) =&gt; {
@@ -1034,14 +1413,9 @@
         };
 
         <span class="kw">let </span>file_path = PathBuf::new();
-        <span class="kw">let </span>file = <span class="kw">if </span>level_file.is_some() {
-            <span class="kw">let </span>file_path = <span class="self">Self</span>::create_log_file_path(
-                <span class="kw-2">&amp;</span>directory,
-                <span class="kw-2">&amp;</span>file_name,
-                trader_id,
-                instance_id,
-                is_json_format,
-            );
+        <span class="kw">let </span>file = <span class="kw">if </span>fileout_level &gt; LevelFilter::Off {
+            <span class="kw">let </span>file_path =
+                <span class="self">Self</span>::create_log_file_path(<span class="kw-2">&amp;</span>file_config, trader_id, instance_id, is_json_format);
 
             <span class="prelude-val">Some</span>(
                 File::options()
@@ -1056,69 +1430,77 @@
 
         <span class="kw">let </span><span class="kw-2">mut </span>file_buf = file.map(BufWriter::new);
 
-        <span class="comment">// Setup templates for formatting
-        </span><span class="kw">let </span>template_console = <span class="kw">match </span>is_colored {
-            <span class="bool-val">true </span>=&gt; <span class="macro">format!</span>(<span class="string">"\x1b[1m{{ts}}\x1b[0m {{color}}[{{level}}] {{trader_id}}.{{component}}: {{message}}\x1b[0m\n"</span>),
-            <span class="bool-val">false </span>=&gt; <span class="macro">format!</span>(<span class="string">"{{ts}} [{{level}}] {{trader_id}}.{{component}}: {{message}}\n"</span>)
-        };
-
-        <span class="kw">let </span>template_file = String::from(<span class="string">"{ts} [{level}] {trader_id}.{component}: {message}\n"</span>);
-
         <span class="comment">// Continue to receive and handle log events until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(event) = rx.recv() {
-            <span class="kw">let </span>component_level = level_filters.get(<span class="kw-2">&amp;</span>event.component);
+            <span class="kw">let </span>timestamp = <span class="kw">match </span>LOGGING_REALTIME.load(Ordering::Relaxed) {
+                <span class="bool-val">true </span>=&gt; get_atomic_clock_realtime().get_time_ns(),
+                <span class="bool-val">false </span>=&gt; get_atomic_clock_static().get_time_ns(),
+            };
 
-            <span class="comment">// Check if the component exists in level_filters and if its level is greater than event.level
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>filter_level) = component_level {
-                <span class="kw">if </span>event.level &lt; filter_level {
-                    <span class="kw">continue</span>;
+            <span class="kw">match </span>event {
+                LogEvent::Flush =&gt; {
+                    <span class="self">Self</span>::flush_stderr(<span class="kw-2">&amp;mut </span>err_buf);
+                    <span class="self">Self</span>::flush_stdout(<span class="kw-2">&amp;mut </span>out_buf);
+                    file_buf.as_mut().map(<span class="self">Self</span>::flush_file);
                 }
-            }
+                LogEvent::Log(line) =&gt; {
+                    <span class="kw">let </span>component_level = component_level.get(<span class="kw-2">&amp;</span>line.component);
 
-            <span class="kw">if </span>event.level &gt;= LogLevel::Error {
-                <span class="kw">let </span>line = <span class="self">Self</span>::format_log_line_console(<span class="kw-2">&amp;</span>event, trader_id, <span class="kw-2">&amp;</span>template_console);
-                <span class="self">Self</span>::write_stderr(<span class="kw-2">&amp;mut </span>err_buf, <span class="kw-2">&amp;</span>line);
-                <span class="self">Self</span>::flush_stderr(<span class="kw-2">&amp;mut </span>err_buf);
-            } <span class="kw">else if </span>event.level &gt;= level_stdout {
-                <span class="kw">let </span>line = <span class="self">Self</span>::format_log_line_console(<span class="kw-2">&amp;</span>event, trader_id, <span class="kw-2">&amp;</span>template_console);
-                <span class="self">Self</span>::write_stdout(<span class="kw-2">&amp;mut </span>out_buf, <span class="kw-2">&amp;</span>line);
-                <span class="self">Self</span>::flush_stdout(<span class="kw-2">&amp;mut </span>out_buf);
-            }
+                    <span class="comment">// Check if the component exists in level_filters,
+                    // and if its level is greater than event.level.
+                    </span><span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>filter_level) = component_level {
+                        <span class="kw">if </span>line.level &gt; filter_level {
+                            <span class="kw">continue</span>;
+                        }
+                    }
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(level_file) = level_file {
-                <span class="kw">if </span><span class="self">Self</span>::should_rotate_file(<span class="kw-2">&amp;</span>file_path) {
-                    <span class="comment">// Ensure previous file buffer flushed
-                    </span><span class="kw">if let </span><span class="prelude-val">Some</span>(file_buf) = file_buf.as_mut() {
-                        <span class="self">Self</span>::flush_file(file_buf);
-                    };
+                    <span class="kw">if </span>line.level == LevelFilter::Error {
+                        <span class="kw">let </span>line =
+                            <span class="self">Self</span>::format_console_log(timestamp, <span class="kw-2">&amp;</span>line, trader_id, is_colored);
+                        <span class="self">Self</span>::write_stderr(<span class="kw-2">&amp;mut </span>err_buf, <span class="kw-2">&amp;</span>line);
+                        <span class="self">Self</span>::flush_stderr(<span class="kw-2">&amp;mut </span>err_buf);
+                    } <span class="kw">else if </span>line.level &lt;= stdout_level {
+                        <span class="kw">let </span>line =
+                            <span class="self">Self</span>::format_console_log(timestamp, <span class="kw-2">&amp;</span>line, trader_id, is_colored);
+                        <span class="self">Self</span>::write_stdout(<span class="kw-2">&amp;mut </span>out_buf, <span class="kw-2">&amp;</span>line);
+                        <span class="self">Self</span>::flush_stdout(<span class="kw-2">&amp;mut </span>out_buf);
+                    }
 
-                    <span class="kw">let </span>file_path = <span class="self">Self</span>::create_log_file_path(
-                        <span class="kw-2">&amp;</span>directory,
-                        <span class="kw-2">&amp;</span>file_name,
-                        trader_id,
-                        instance_id,
-                        is_json_format,
-                    );
+                    <span class="kw">if </span>fileout_level != LevelFilter::Off {
+                        <span class="kw">if </span><span class="self">Self</span>::should_rotate_file(<span class="kw-2">&amp;</span>file_path) {
+                            <span class="comment">// Ensure previous file buffer flushed
+                            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(file_buf) = file_buf.as_mut() {
+                                <span class="self">Self</span>::flush_file(file_buf);
+                            };
 
-                    <span class="kw">let </span>file = File::options()
-                        .create(<span class="bool-val">true</span>)
-                        .append(<span class="bool-val">true</span>)
-                        .open(file_path)
-                        .expect(<span class="string">"Error creating log file"</span>);
+                            <span class="kw">let </span>file_path = <span class="self">Self</span>::create_log_file_path(
+                                <span class="kw-2">&amp;</span>file_config,
+                                trader_id,
+                                instance_id,
+                                is_json_format,
+                            );
 
-                    file_buf = <span class="prelude-val">Some</span>(BufWriter::new(file));
-                }
+                            <span class="kw">let </span>file = File::options()
+                                .create(<span class="bool-val">true</span>)
+                                .append(<span class="bool-val">true</span>)
+                                .open(file_path)
+                                .expect(<span class="string">"Error creating log file"</span>);
 
-                <span class="kw">if </span>event.level &gt;= level_file {
-                    <span class="kw">if let </span><span class="prelude-val">Some</span>(file_buf) = file_buf.as_mut() {
-                        <span class="kw">let </span>line = <span class="self">Self</span>::format_log_line_file(
-                            <span class="kw-2">&amp;</span>event,
-                            trader_id,
-                            <span class="kw-2">&amp;</span>template_file,
-                            is_json_format,
-                        );
-                        <span class="self">Self</span>::write_file(file_buf, <span class="kw-2">&amp;</span>line);
-                        <span class="self">Self</span>::flush_file(file_buf);
+                            file_buf = <span class="prelude-val">Some</span>(BufWriter::new(file));
+                        }
+
+                        <span class="kw">if </span>line.level &lt;= fileout_level {
+                            <span class="kw">if let </span><span class="prelude-val">Some</span>(file_buf) = file_buf.as_mut() {
+                                <span class="kw">let </span>line = <span class="self">Self</span>::format_file_log(
+                                    timestamp,
+                                    <span class="kw-2">&amp;</span>line,
+                                    trader_id,
+                                    is_json_format,
+                                );
+                                <span class="self">Self</span>::write_file(file_buf, <span class="kw-2">&amp;</span>line);
+                                <span class="self">Self</span>::flush_file(file_buf);
+                            }
+                        }
                     }
                 }
             }
@@ -1154,13 +1536,12 @@
     }
 
     <span class="kw">fn </span>create_log_file_path(
-        directory: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;String&gt;,
-        file_name: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;String&gt;,
+        file_config: <span class="kw-2">&amp;</span>FileWriterConfig,
         trader_id: <span class="kw-2">&amp;</span>str,
         instance_id: <span class="kw-2">&amp;</span>str,
         is_json_format: bool,
     ) -&gt; PathBuf {
-        <span class="kw">let </span>basename = <span class="kw">if let </span><span class="prelude-val">Some</span>(file_name) = file_name {
+        <span class="kw">let </span>basename = <span class="kw">if let </span><span class="prelude-val">Some</span>(file_name) = file_config.file_name.as_ref() {
             file_name.clone()
         } <span class="kw">else </span>{
             <span class="self">Self</span>::default_log_file_basename(trader_id, instance_id)
@@ -1169,7 +1550,7 @@
         <span class="kw">let </span>suffix = <span class="kw">if </span>is_json_format { <span class="string">"json" </span>} <span class="kw">else </span>{ <span class="string">"log" </span>};
         <span class="kw">let </span><span class="kw-2">mut </span>file_path = PathBuf::new();
 
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(directory) = directory {
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(directory) = file_config.directory.as_ref() {
             file_path.push(directory);
             create_dir_all(<span class="kw-2">&amp;</span>file_path).expect(<span class="string">"Failed to create directories for log file"</span>);
         }
@@ -1179,20 +1560,37 @@
         file_path
     }
 
-    <span class="kw">fn </span>format_log_line_console(event: <span class="kw-2">&amp;</span>LogEvent, trader_id: <span class="kw-2">&amp;</span>str, template: <span class="kw-2">&amp;</span>str) -&gt; String {
-        template
-            .replace(<span class="string">"{ts}"</span>, <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(event.timestamp))
-            .replace(<span class="string">"{color}"</span>, <span class="kw-2">&amp;</span>event.color.to_string())
-            .replace(<span class="string">"{level}"</span>, <span class="kw-2">&amp;</span>event.level.to_string())
-            .replace(<span class="string">"{trader_id}"</span>, trader_id)
-            .replace(<span class="string">"{component}"</span>, <span class="kw-2">&amp;</span>event.component)
-            .replace(<span class="string">"{message}"</span>, <span class="kw-2">&amp;</span>event.message)
+    <span class="kw">fn </span>format_console_log(
+        timestamp: UnixNanos,
+        event: <span class="kw-2">&amp;</span>LogLine,
+        trader_id: <span class="kw-2">&amp;</span>str,
+        is_colored: bool,
+    ) -&gt; String {
+        <span class="kw">match </span>is_colored {
+            <span class="bool-val">true </span>=&gt; <span class="macro">format!</span>(
+                <span class="string">"\x1b[1m{}\x1b[0m {}[{}] {}.{}: {}\x1b[0m\n"</span>,
+                unix_nanos_to_iso8601(timestamp),
+                <span class="kw-2">&amp;</span>event.color.to_string(),
+                event.level,
+                <span class="kw-2">&amp;</span>trader_id,
+                <span class="kw-2">&amp;</span>event.component,
+                <span class="kw-2">&amp;</span>event.message
+            ),
+            <span class="bool-val">false </span>=&gt; <span class="macro">format!</span>(
+                <span class="string">"{} [{}] {}.{}: {}\n"</span>,
+                unix_nanos_to_iso8601(timestamp),
+                event.level,
+                <span class="kw-2">&amp;</span>trader_id,
+                <span class="kw-2">&amp;</span>event.component,
+                <span class="kw-2">&amp;</span>event.message
+            ),
+        }
     }
 
-    <span class="kw">fn </span>format_log_line_file(
-        event: <span class="kw-2">&amp;</span>LogEvent,
+    <span class="kw">fn </span>format_file_log(
+        timestamp: UnixNanos,
+        event: <span class="kw-2">&amp;</span>LogLine,
         trader_id: <span class="kw-2">&amp;</span>str,
-        template: <span class="kw-2">&amp;</span>str,
         is_json_format: bool,
     ) -&gt; String {
         <span class="kw">if </span>is_json_format {
@@ -1200,12 +1598,14 @@
                 serde_json::to_string(event).expect(<span class="string">"Error serializing log event to string"</span>);
             <span class="macro">format!</span>(<span class="string">"{json_string}\n"</span>)
         } <span class="kw">else </span>{
-            template
-                .replace(<span class="string">"{ts}"</span>, <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(event.timestamp))
-                .replace(<span class="string">"{level}"</span>, <span class="kw-2">&amp;</span>event.level.to_string())
-                .replace(<span class="string">"{trader_id}"</span>, trader_id)
-                .replace(<span class="string">"{component}"</span>, <span class="kw-2">&amp;</span>event.component)
-                .replace(<span class="string">"{message}"</span>, <span class="kw-2">&amp;</span>event.message)
+            <span class="macro">format!</span>(
+                <span class="string">"{} [{}] {}.{}: {}\n"</span>,
+                <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(timestamp),
+                event.level,
+                trader_id,
+                <span class="kw-2">&amp;</span>event.component,
+                <span class="kw-2">&amp;</span>event.message,
+            )
         }
     }
 
@@ -1250,80 +1650,25 @@
             <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error writing to file: {e:?}"</span>),
         }
     }
-
-    <span class="kw">pub fn </span>send(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        timestamp: u64,
-        level: LogLevel,
-        color: LogColor,
-        component: String,
-        message: String,
-    ) {
-        <span class="kw">let </span>event = LogEvent {
-            timestamp,
-            level,
-            color,
-            component,
-            message,
-        };
-        <span class="kw">if let </span><span class="prelude-val">Err</span>(SendError(e)) = <span class="self">self</span>.tx.send(event) {
-            <span class="macro">eprintln!</span>(<span class="string">"Error sending log event: {e}"</span>);
-        }
-    }
-
-    <span class="kw">pub fn </span>debug(<span class="kw-2">&amp;mut </span><span class="self">self</span>, timestamp: u64, color: LogColor, component: String, message: String) {
-        <span class="self">self</span>.send(timestamp, LogLevel::Debug, color, component, message);
-    }
-
-    <span class="kw">pub fn </span>info(<span class="kw-2">&amp;mut </span><span class="self">self</span>, timestamp: u64, color: LogColor, component: String, message: String) {
-        <span class="self">self</span>.send(timestamp, LogLevel::Info, color, component, message);
-    }
-
-    <span class="kw">pub fn </span>warn(<span class="kw-2">&amp;mut </span><span class="self">self</span>, timestamp: u64, color: LogColor, component: String, message: String) {
-        <span class="self">self</span>.send(timestamp, LogLevel::Warning, color, component, message);
-    }
-
-    <span class="kw">pub fn </span>error(<span class="kw-2">&amp;mut </span><span class="self">self</span>, timestamp: u64, color: LogColor, component: String, message: String) {
-        <span class="self">self</span>.send(timestamp, LogLevel::Error, color, component, message);
-    }
-
-    <span class="kw">pub fn </span>critical(
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
-        timestamp: u64,
-        color: LogColor,
-        component: String,
-        message: String,
-    ) {
-        <span class="self">self</span>.send(timestamp, LogLevel::Critical, color, component, message);
-    }
 }
 
-<span class="comment">////////////////////////////////////////////////////////////////////////////////
-// Stubs
-////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[cfg(test)]
-</span><span class="kw">pub mod </span>stubs {
-    <span class="kw">use </span>nautilus_core::uuid::UUID4;
-    <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
-    <span class="kw">use </span>rstest::fixture;
+<span class="kw">pub fn </span>log(level: LogLevel, color: LogColor, component: Ustr, message: Cow&lt;<span class="lifetime">'_</span>, str&gt;) {
+    <span class="kw">let </span>color = Value::from(color <span class="kw">as </span>u8);
 
-    <span class="kw">use crate</span>::{enums::LogLevel, logging::Logger};
-
-    <span class="attr">#[fixture]
-    </span><span class="kw">pub fn </span>logger() -&gt; Logger {
-        Logger::new(
-            TraderId::from(<span class="string">"TRADER-001"</span>),
-            String::from(<span class="string">"user-01"</span>),
-            UUID4::new(),
-            LogLevel::Info,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="bool-val">true</span>,
-            <span class="bool-val">false</span>,
-        )
+    <span class="kw">match </span>level {
+        LogLevel::Off =&gt; {}
+        LogLevel::Debug =&gt; {
+            <span class="macro">debug!</span>(component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
+        }
+        LogLevel::Info =&gt; {
+            <span class="macro">info!</span>(component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
+        }
+        LogLevel::Warning =&gt; {
+            <span class="macro">warn!</span>(component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
+        }
+        LogLevel::Error =&gt; {
+            <span class="macro">error!</span>(component = component.to_value(), color = color; <span class="string">"{}"</span>, message);
+        }
     }
 }
 
@@ -1332,107 +1677,101 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>std::time::Duration;
+    <span class="kw">use </span>std::{collections::HashMap, time::Duration};
 
+    <span class="kw">use </span>log::{info, LevelFilter};
     <span class="kw">use </span>nautilus_core::uuid::UUID4;
     <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
     <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
+    <span class="kw">use </span>serde_json::Value;
     <span class="kw">use </span>tempfile::tempdir;
+    <span class="kw">use </span>ustr::Ustr;
 
-    <span class="kw">use super</span>::{stubs::<span class="kw-2">*</span>, <span class="kw-2">*</span>};
-    <span class="kw">use </span><span class="kw">crate</span>::testing::wait_until;
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use crate</span>::{
+        enums::LogColor,
+        logging::{LogLine, Logger, LoggerConfig},
+        testing::wait_until,
+    };
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>log_message_serialization() {
-        <span class="kw">let </span>log_message = LogEvent {
-            timestamp: <span class="number">1_000_000_000</span>,
-            level: LogLevel::Info,
+        <span class="kw">let </span>log_message = LogLine {
+            level: log::Level::Info,
             color: LogColor::Normal,
-            component: <span class="string">"Portfolio"</span>.to_string(),
+            component: Ustr::from(<span class="string">"Portfolio"</span>),
             message: <span class="string">"This is a log message"</span>.to_string(),
         };
 
         <span class="kw">let </span>serialized_json = serde_json::to_string(<span class="kw-2">&amp;</span>log_message).unwrap();
         <span class="kw">let </span>deserialized_value: Value = serde_json::from_str(<span class="kw-2">&amp;</span>serialized_json).unwrap();
 
-        <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"timestamp"</span>], <span class="number">1_000_000_000</span>);
         <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"level"</span>], <span class="string">"INFO"</span>);
         <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"component"</span>], <span class="string">"Portfolio"</span>);
         <span class="macro">assert_eq!</span>(deserialized_value[<span class="string">"message"</span>], <span class="string">"This is a log message"</span>);
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_new_logger(logger: Logger) {
-        <span class="macro">assert_eq!</span>(logger.trader_id, TraderId::from(<span class="string">"TRADER-001"</span>));
-        <span class="macro">assert_eq!</span>(logger.level_stdout, LogLevel::Info);
-        <span class="macro">assert_eq!</span>(logger.level_file, <span class="prelude-val">None</span>);
-        <span class="macro">assert!</span>(!logger.is_bypassed);
+    </span><span class="kw">fn </span>log_config_parsing() {
+        <span class="kw">let </span>config =
+            LoggerConfig::from_spec(<span class="string">"stdout=Info;is_colored;fileout=Debug;RiskEngine=Error"</span>);
+        <span class="macro">assert_eq!</span>(
+            config,
+            LoggerConfig {
+                stdout_level: LevelFilter::Info,
+                fileout_level: LevelFilter::Debug,
+                component_level: HashMap::from_iter(<span class="macro">vec!</span>[(
+                    Ustr::from(<span class="string">"RiskEngine"</span>),
+                    LevelFilter::Error
+                )]),
+                is_colored: <span class="bool-val">true</span>,
+                print_config: <span class="bool-val">false</span>,
+            }
+        )
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_logger_debug(<span class="kw-2">mut </span>logger: Logger) {
-        logger.debug(
-            <span class="number">1_650_000_000_000_000</span>,
-            LogColor::Normal,
-            String::from(<span class="string">"RiskEngine"</span>),
-            String::from(<span class="string">"This is a test debug message."</span>),
-        );
-    }
-
-    <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_logger_info(<span class="kw-2">mut </span>logger: Logger) {
-        logger.info(
-            <span class="number">1_650_000_000_000_000</span>,
-            LogColor::Normal,
-            String::from(<span class="string">"RiskEngine"</span>),
-            String::from(<span class="string">"This is a test info message."</span>),
-        );
-    }
-
-    <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_logger_error(<span class="kw-2">mut </span>logger: Logger) {
-        logger.error(
-            <span class="number">1_650_000_000_000_000</span>,
-            LogColor::Normal,
-            String::from(<span class="string">"RiskEngine"</span>),
-            String::from(<span class="string">"This is a test error message."</span>),
-        );
-    }
-
-    <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_logger_critical(<span class="kw-2">mut </span>logger: Logger) {
-        logger.critical(
-            <span class="number">1_650_000_000_000_000</span>,
-            LogColor::Normal,
-            String::from(<span class="string">"RiskEngine"</span>),
-            String::from(<span class="string">"This is a test critical message."</span>),
-        );
+    </span><span class="kw">fn </span>log_config_parsing2() {
+        <span class="kw">let </span>config = LoggerConfig::from_spec(<span class="string">"stdout=Warn;print_config;fileout=Error;"</span>);
+        <span class="macro">assert_eq!</span>(
+            config,
+            LoggerConfig {
+                stdout_level: LevelFilter::Warn,
+                fileout_level: LevelFilter::Error,
+                component_level: HashMap::new(),
+                is_colored: <span class="bool-val">false</span>,
+                print_config: <span class="bool-val">true</span>,
+            }
+        )
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_logging_to_file() {
+        <span class="kw">let </span>config = LoggerConfig {
+            fileout_level: LevelFilter::Debug,
+            ..Default::default()
+        };
+
         <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">"Failed to create temporary directory"</span>);
+        <span class="kw">let </span>file_config = FileWriterConfig {
+            directory: <span class="prelude-val">Some</span>(temp_dir.path().to_str().unwrap().to_string()),
+            ..Default::default()
+        };
 
-        <span class="kw">let </span><span class="kw-2">mut </span>logger = Logger::new(
+        Logger::init_with_config(
             TraderId::from(<span class="string">"TRADER-001"</span>),
-            String::from(<span class="string">"user-01"</span>),
             UUID4::new(),
-            LogLevel::Info,
-            <span class="prelude-val">Some</span>(LogLevel::Debug),
-            <span class="prelude-val">Some</span>(temp_dir.path().to_str().unwrap().to_string()),
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="bool-val">true</span>,
-            <span class="bool-val">false</span>,
+            config,
+            file_config,
         );
 
-        logger.info(
-            <span class="number">1_650_000_000_000_000</span>,
-            LogColor::Normal,
-            String::from(<span class="string">"RiskEngine"</span>),
-            String::from(<span class="string">"This is a test."</span>),
-        );
+        logging_clock_set_static_mode();
+        logging_clock_set_static_time(<span class="number">1_650_000_000_000_000</span>);
+
+        <span class="macro">info!</span>(
+            component = <span class="string">"RiskEngine"</span>;
+            <span class="string">"This is a test."
+        </span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>log_contents = String::new();
 
@@ -1454,6 +1793,7 @@
                     .find(|entry| entry.path().is_file())
                     .expect(<span class="string">"No files found in directory"</span>)
                     .path();
+                <span class="macro">dbg!</span>(<span class="kw-2">&amp;</span>log_file_path);
                 log_contents =
                     std::fs::read_to_string(log_file_path).expect(<span class="string">"Error while reading log file"</span>);
                 !log_contents.is_empty()
@@ -1463,37 +1803,34 @@
 
         <span class="macro">assert_eq!</span>(
             log_contents,
-            <span class="string">"1970-01-20T02:20:00.000000000Z [INF] TRADER-001.RiskEngine: This is a test.\n"
+            <span class="string">"1970-01-20T02:20:00.000000000Z [INFO] TRADER-001.RiskEngine: This is a test.\n"
         </span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_log_component_level_filtering() {
+        <span class="kw">let </span>config = LoggerConfig::from_spec(<span class="string">"stdout=Info;fileout=Debug;RiskEngine=Error"</span>);
+
         <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">"Failed to create temporary directory"</span>);
+        <span class="kw">let </span>file_config = FileWriterConfig {
+            directory: <span class="prelude-val">Some</span>(temp_dir.path().to_str().unwrap().to_string()),
+            ..Default::default()
+        };
 
-        <span class="kw">let </span><span class="kw-2">mut </span>logger = Logger::new(
+        Logger::init_with_config(
             TraderId::from(<span class="string">"TRADER-001"</span>),
-            String::from(<span class="string">"user-01"</span>),
             UUID4::new(),
-            LogLevel::Info,
-            <span class="prelude-val">Some</span>(LogLevel::Debug),
-            <span class="prelude-val">Some</span>(temp_dir.path().to_str().unwrap().to_string()),
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">Some</span>(HashMap::from_iter(std::iter::once((
-                String::from(<span class="string">"RiskEngine"</span>),
-                Value::from(<span class="string">"ERROR"</span>), <span class="comment">// &lt;-- This should be filtered
-            </span>)))),
-            <span class="bool-val">true</span>,
-            <span class="bool-val">false</span>,
+            config,
+            file_config,
         );
 
-        logger.info(
-            <span class="number">1_650_000_000_000_000</span>,
-            LogColor::Normal,
-            String::from(<span class="string">"RiskEngine"</span>),
-            String::from(<span class="string">"This is a test."</span>),
-        );
+        logging_clock_set_static_mode();
+        logging_clock_set_static_time(<span class="number">1_650_000_000_000_000</span>);
+
+        <span class="macro">info!</span>(
+            component = <span class="string">"RiskEngine"</span>;
+            <span class="string">"This is a test."
+        </span>);
 
         wait_until(
             || {
@@ -1524,28 +1861,30 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_logging_to_file_in_json_format() {
+        <span class="kw">let </span>config =
+            LoggerConfig::from_spec(<span class="string">"stdout=Info;is_colored;fileout=Debug;RiskEngine=Info"</span>);
+
         <span class="kw">let </span>temp_dir = tempdir().expect(<span class="string">"Failed to create temporary directory"</span>);
+        <span class="kw">let </span>file_config = FileWriterConfig {
+            directory: <span class="prelude-val">Some</span>(temp_dir.path().to_str().unwrap().to_string()),
+            file_format: <span class="prelude-val">Some</span>(<span class="string">"json"</span>.to_string()),
+            ..Default::default()
+        };
 
-        <span class="kw">let </span><span class="kw-2">mut </span>logger = Logger::new(
+        Logger::init_with_config(
             TraderId::from(<span class="string">"TRADER-001"</span>),
-            String::from(<span class="string">"user-01"</span>),
             UUID4::new(),
-            LogLevel::Info,
-            <span class="prelude-val">Some</span>(LogLevel::Debug),
-            <span class="prelude-val">Some</span>(temp_dir.path().to_str().unwrap().to_string()),
-            <span class="prelude-val">None</span>,
-            <span class="prelude-val">Some</span>(<span class="string">"json"</span>.to_string()),
-            <span class="prelude-val">None</span>,
-            <span class="bool-val">true</span>,
-            <span class="bool-val">false</span>,
+            config,
+            file_config,
         );
 
-        logger.info(
-            <span class="number">1_650_000_000_000_000</span>,
-            LogColor::Normal,
-            String::from(<span class="string">"RiskEngine"</span>),
-            String::from(<span class="string">"This is a test."</span>),
-        );
+        logging_clock_set_static_mode();
+        logging_clock_set_static_time(<span class="number">1_650_000_000_000_000</span>);
+
+        <span class="macro">info!</span>(
+            component = <span class="string">"RiskEngine"</span>;
+            <span class="string">"This is a test."
+        </span>);
 
         <span class="kw">let </span><span class="kw-2">mut </span>log_contents = String::new();
 
@@ -1569,7 +1908,7 @@
 
         <span class="macro">assert_eq!</span>(
         log_contents,
-        <span class="string">"{\"timestamp\":1650000000000000,\"level\":\"INFO\",\"color\":\"Normal\",\"component\":\"RiskEngine\",\"message\":\"This is a test.\"}\n"
+        <span class="string">"{\"level\":\"INFO\",\"color\":\"Normal\",\"component\":\"RiskEngine\",\"message\":\"This is a test.\"}\n"
     </span>);
     }
 }

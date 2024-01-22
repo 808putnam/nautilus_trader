@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `network/src/http.rs`."><title>http.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_network" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `network/src/http.rs`."><title>http.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_network" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (ef71f1047 2024-01-21)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../nautilus_network/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -407,31 +408,8 @@
 <a href="#406" id="406">406</a>
 <a href="#407" id="407">407</a>
 <a href="#408" id="408">408</a>
-<a href="#409" id="409">409</a>
-<a href="#410" id="410">410</a>
-<a href="#411" id="411">411</a>
-<a href="#412" id="412">412</a>
-<a href="#413" id="413">413</a>
-<a href="#414" id="414">414</a>
-<a href="#415" id="415">415</a>
-<a href="#416" id="416">416</a>
-<a href="#417" id="417">417</a>
-<a href="#418" id="418">418</a>
-<a href="#419" id="419">419</a>
-<a href="#420" id="420">420</a>
-<a href="#421" id="421">421</a>
-<a href="#422" id="422">422</a>
-<a href="#423" id="423">423</a>
-<a href="#424" id="424">424</a>
-<a href="#425" id="425">425</a>
-<a href="#426" id="426">426</a>
-<a href="#427" id="427">427</a>
-<a href="#428" id="428">428</a>
-<a href="#429" id="429">429</a>
-<a href="#430" id="430">430</a>
-<a href="#431" id="431">431</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -452,9 +430,11 @@
 };
 
 <span class="kw">use </span>futures_util::{stream, StreamExt};
-<span class="kw">use </span>hyper::{Body, Client, Method, Request, Response};
-<span class="kw">use </span>hyper_tls::HttpsConnector;
 <span class="kw">use </span>pyo3::{exceptions::PyException, prelude::<span class="kw-2">*</span>, types::PyBytes};
+<span class="kw">use </span>reqwest::{
+    header::{HeaderMap, HeaderName},
+    Method, Response, Url,
+};
 
 <span class="kw">use </span><span class="kw">crate</span>::ratelimiter::{clock::MonotonicClock, quota::Quota, RateLimiter};
 
@@ -468,7 +448,7 @@
 /// for the give `header_keys`.
 </span><span class="attr">#[derive(Clone)]
 </span><span class="kw">pub struct </span>InnerHttpClient {
-    client: Client&lt;HttpsConnector&lt;hyper::client::HttpConnector&gt;&gt;,
+    client: reqwest::Client,
     header_keys: Vec&lt;String&gt;,
 }
 
@@ -480,25 +460,28 @@
         headers: HashMap&lt;String, String&gt;,
         body: <span class="prelude-ty">Option</span>&lt;Vec&lt;u8&gt;&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;HttpResponse, Box&lt;<span class="kw">dyn </span>std::error::Error + Send + Sync&gt;&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>req_builder = Request::builder().method(method).uri(url);
+        <span class="kw">let </span>reqwest_url = Url::parse(url.as_str())<span class="question-mark">?</span>;
 
-        <span class="kw">for </span>(header_name, header_value) <span class="kw">in </span><span class="kw-2">&amp;</span>headers {
-            req_builder = req_builder.header(header_name, header_value);
+        <span class="kw">let </span><span class="kw-2">mut </span>header_map = HeaderMap::new();
+        <span class="kw">for </span>(header_key, header_value) <span class="kw">in </span><span class="kw-2">&amp;</span>headers {
+            <span class="kw">let </span>key = HeaderName::from_bytes(header_key.as_bytes())<span class="question-mark">?</span>;
+            <span class="kw">let _ </span>= header_map.insert(key, header_value.parse().unwrap());
         }
 
-        <span class="kw">let </span>req = <span class="kw">if let </span><span class="prelude-val">Some</span>(body) = body {
-            req_builder.body(Body::from(body))<span class="question-mark">?
-        </span>} <span class="kw">else </span>{
-            req_builder.body(Body::empty())<span class="question-mark">?
-        </span>};
+        <span class="kw">let </span>request_builder = <span class="self">self</span>.client.request(method, reqwest_url).headers(header_map);
 
-        <span class="kw">let </span>res = <span class="self">self</span>.client.request(req).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>request = <span class="kw">match </span>body {
+            <span class="prelude-val">Some</span>(b) =&gt; request_builder.body(b).build()<span class="question-mark">?</span>,
+            <span class="prelude-val">None </span>=&gt; request_builder.build()<span class="question-mark">?</span>,
+        };
+
+        <span class="kw">let </span>res = <span class="self">self</span>.client.execute(request).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="self">self</span>.to_response(res).<span class="kw">await
     </span>}
 
     <span class="kw">pub async fn </span>to_response(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        res: Response&lt;Body&gt;,
+        res: Response,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;HttpResponse, Box&lt;<span class="kw">dyn </span>std::error::Error + Send + Sync&gt;&gt; {
         <span class="kw">let </span>headers: HashMap&lt;String, String&gt; = <span class="self">self
             </span>.header_keys
@@ -508,7 +491,7 @@
             .map(|(k, v)| (k.clone(), v.to_owned()))
             .collect();
         <span class="kw">let </span>status = res.status().as_u16();
-        <span class="kw">let </span>bytes = hyper::body::to_bytes(res.into_body()).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let </span>bytes = res.bytes().<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(HttpResponse {
             status,
@@ -569,8 +552,7 @@
 
 <span class="kw">impl </span>Default <span class="kw">for </span>InnerHttpClient {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>https = HttpsConnector::new();
-        <span class="kw">let </span>client = Client::builder().build::&lt;<span class="kw">_</span>, hyper::Body&gt;(https);
+        <span class="kw">let </span>client = reqwest::Client::new();
         <span class="self">Self </span>{
             client,
             header_keys: Default::default(),
@@ -606,7 +588,7 @@
 
 <span class="attr">#[pymethods]
 </span><span class="kw">impl </span>HttpClient {
-    <span class="doccomment">/// Create a new HttpClient
+    <span class="doccomment">/// Create a new HttpClient.
     ///
     /// * `header_keys` - The key value pairs for the given `header_keys` are retained from the responses.
     /// * `keyed_quota` - A list of string quota pairs that gives quota for specific key values.
@@ -620,8 +602,7 @@
         keyed_quotas: Vec&lt;(String, Quota)&gt;,
         default_quota: <span class="prelude-ty">Option</span>&lt;Quota&gt;,
     ) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span>https = HttpsConnector::new();
-        <span class="kw">let </span>client = Client::builder().build::&lt;<span class="kw">_</span>, hyper::Body&gt;(https);
+        <span class="kw">let </span>client = reqwest::Client::new();
         <span class="kw">let </span>rate_limiter = Arc::new(RateLimiter::new_with_quota(default_quota, keyed_quotas));
 
         <span class="kw">let </span>client = InnerHttpClient {
@@ -681,55 +662,15 @@
 ////////////////////////////////////////////////////////////////////////////////
 </span><span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-    <span class="kw">use </span>std::{
-        convert::Infallible,
-        net::{SocketAddr, TcpListener},
-    };
+    <span class="kw">use </span>std::net::{SocketAddr, TcpListener};
 
-    <span class="kw">use </span>hyper::{
-        service::{make_service_fn, service_fn},
-        Body, Method, Request, Response, Server, StatusCode,
+    <span class="kw">use </span>axum::{
+        routing::{delete, get, patch, post},
+        serve, Router,
     };
-    <span class="kw">use </span>tokio::sync::oneshot;
+    <span class="kw">use </span>http::status::StatusCode;
 
     <span class="kw">use super</span>::<span class="kw-2">*</span>;
-
-    <span class="kw">async fn </span>handle(req: Request&lt;Body&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Response&lt;Body&gt;, Infallible&gt; {
-        <span class="kw">match </span>(req.method(), req.uri().path()) {
-            (<span class="kw-2">&amp;</span>Method::GET, <span class="string">"/get"</span>) =&gt; {
-                <span class="kw">let </span>response = Response::new(Body::from(<span class="string">"hello-world!"</span>));
-                <span class="prelude-val">Ok</span>(response)
-            }
-            (<span class="kw-2">&amp;</span>Method::POST, <span class="string">"/post"</span>) =&gt; {
-                <span class="kw">let </span>response = Response::builder()
-                    .status(StatusCode::OK)
-                    .body(Body::empty())
-                    .unwrap();
-                <span class="prelude-val">Ok</span>(response)
-            }
-            (<span class="kw-2">&amp;</span>Method::PATCH, <span class="string">"/patch"</span>) =&gt; {
-                <span class="kw">let </span>response = Response::builder()
-                    .status(StatusCode::OK)
-                    .body(Body::empty())
-                    .unwrap();
-                <span class="prelude-val">Ok</span>(response)
-            }
-            (<span class="kw-2">&amp;</span>Method::DELETE, <span class="string">"/delete"</span>) =&gt; {
-                <span class="kw">let </span>response = Response::builder()
-                    .status(StatusCode::OK)
-                    .body(Body::empty())
-                    .unwrap();
-                <span class="prelude-val">Ok</span>(response)
-            }
-            <span class="kw">_ </span>=&gt; {
-                <span class="kw">let </span>response = Response::builder()
-                    .status(StatusCode::NOT_FOUND)
-                    .body(Body::empty())
-                    .unwrap();
-                <span class="prelude-val">Ok</span>(response)
-            }
-        }
-    }
 
     <span class="kw">fn </span>get_unique_port() -&gt; u16 {
         <span class="comment">// Create a temporary TcpListener to get an available port
@@ -743,37 +684,41 @@
         port
     }
 
-    <span class="kw">fn </span>start_test_server() -&gt; (SocketAddr, oneshot::Sender&lt;()&gt;) {
-        <span class="kw">let </span>addr: SocketAddr = ([<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>], get_unique_port()).into();
-        <span class="kw">let </span>make_svc = make_service_fn(|_conn| <span class="kw">async </span>{ <span class="prelude-val">Ok</span>::&lt;<span class="kw">_</span>, Infallible&gt;(service_fn(handle)) });
+    <span class="kw">fn </span>create_router() -&gt; Router {
+        Router::new()
+            .route(<span class="string">"/get"</span>, get(|| <span class="kw">async </span>{ <span class="string">"hello-world!" </span>}))
+            .route(<span class="string">"/post"</span>, post(|| <span class="kw">async </span>{ StatusCode::OK }))
+            .route(<span class="string">"/patch"</span>, patch(|| <span class="kw">async </span>{ StatusCode::OK }))
+            .route(<span class="string">"/delete"</span>, delete(|| <span class="kw">async </span>{ StatusCode::OK }))
+    }
 
-        <span class="kw">let </span>(tx, rx) = oneshot::channel::&lt;()&gt;();
+    <span class="kw">async fn </span>start_test_server() -&gt; <span class="prelude-ty">Result</span>&lt;SocketAddr, Box&lt;<span class="kw">dyn </span>std::error::Error + Send + Sync&gt;&gt; {
+        <span class="kw">let </span>port = get_unique_port();
+        <span class="kw">let </span>listener = tokio::net::TcpListener::bind(<span class="macro">format!</span>(<span class="string">"127.0.0.1:{port}"</span>))
+            .<span class="kw">await
+            </span>.unwrap();
+        <span class="kw">let </span>addr = listener.local_addr().unwrap();
 
-        <span class="kw">let </span>server = Server::bind(<span class="kw-2">&amp;</span>addr).serve(make_svc);
-
-        <span class="kw">let </span>graceful = server.with_graceful_shutdown(<span class="kw">async </span>{
-            <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = rx.<span class="kw">await </span>{
-                <span class="macro">eprintln!</span>(<span class="string">"shutdown signal error: {e}"</span>);
-            }
+        tokio::spawn(<span class="kw">async move </span>{
+            serve(listener, create_router()).<span class="kw">await</span>.unwrap();
         });
 
-        tokio::spawn(<span class="kw">async </span>{
-            <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = graceful.<span class="kw">await </span>{
-                <span class="macro">eprintln!</span>(<span class="string">"server error: {e}"</span>);
-            }
-        });
-
-        (addr, tx)
+        <span class="prelude-val">Ok</span>(addr)
     }
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_get() {
-        <span class="kw">let </span>(addr, _shutdown_tx) = start_test_server();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}:{}"</span>, addr.ip(), addr.port());
+        <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
         <span class="kw">let </span>response = client
-            .send_request(Method::GET, <span class="macro">format!</span>(<span class="string">"{url}/get"</span>), HashMap::new(), <span class="prelude-val">None</span>)
+            .send_request(
+                reqwest::Method::GET,
+                <span class="macro">format!</span>(<span class="string">"{url}/get"</span>),
+                HashMap::new(),
+                <span class="prelude-val">None</span>,
+            )
             .<span class="kw">await
             </span>.unwrap();
 
@@ -783,12 +728,17 @@
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_post() {
-        <span class="kw">let </span>(addr, _shutdown_tx) = start_test_server();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}:{}"</span>, addr.ip(), addr.port());
+        <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
         <span class="kw">let </span>response = client
-            .send_request(Method::POST, <span class="macro">format!</span>(<span class="string">"{url}/post"</span>), HashMap::new(), <span class="prelude-val">None</span>)
+            .send_request(
+                reqwest::Method::POST,
+                <span class="macro">format!</span>(<span class="string">"{url}/post"</span>),
+                HashMap::new(),
+                <span class="prelude-val">None</span>,
+            )
             .<span class="kw">await
             </span>.unwrap();
 
@@ -797,8 +747,8 @@
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_post_with_body() {
-        <span class="kw">let </span>(addr, _shutdown_tx) = start_test_server();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}:{}"</span>, addr.ip(), addr.port());
+        <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
 
@@ -817,7 +767,7 @@
 
         <span class="kw">let </span>response = client
             .send_request(
-                Method::POST,
+                reqwest::Method::POST,
                 <span class="macro">format!</span>(<span class="string">"{url}/post"</span>),
                 HashMap::new(),
                 <span class="prelude-val">Some</span>(body_bytes),
@@ -830,12 +780,17 @@
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_patch() {
-        <span class="kw">let </span>(addr, _shutdown_tx) = start_test_server();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}:{}"</span>, addr.ip(), addr.port());
+        <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
         <span class="kw">let </span>response = client
-            .send_request(Method::PATCH, <span class="macro">format!</span>(<span class="string">"{url}/patch"</span>), HashMap::new(), <span class="prelude-val">None</span>)
+            .send_request(
+                reqwest::Method::PATCH,
+                <span class="macro">format!</span>(<span class="string">"{url}/patch"</span>),
+                HashMap::new(),
+                <span class="prelude-val">None</span>,
+            )
             .<span class="kw">await
             </span>.unwrap();
 
@@ -844,13 +799,13 @@
 
     <span class="attr">#[tokio::test]
     </span><span class="kw">async fn </span>test_delete() {
-        <span class="kw">let </span>(addr, _shutdown_tx) = start_test_server();
-        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{}:{}"</span>, addr.ip(), addr.port());
+        <span class="kw">let </span>addr = start_test_server().<span class="kw">await</span>.unwrap();
+        <span class="kw">let </span>url = <span class="macro">format!</span>(<span class="string">"http://{addr}"</span>);
 
         <span class="kw">let </span>client = InnerHttpClient::default();
         <span class="kw">let </span>response = client
             .send_request(
-                Method::DELETE,
+                reqwest::Method::DELETE,
                 <span class="macro">format!</span>(<span class="string">"{url}/delete"</span>),
                 HashMap::new(),
                 <span class="prelude-val">None</span>,

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Bar","BarSpecification","BarType","BarTypeParseError"]};
+window.SIDEBAR_ITEMS = {"mod":["stubs"],"struct":["Bar","BarSpecification","BarType","BarTypeParseError"]};

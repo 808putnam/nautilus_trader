@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["nautilus_instrument_id_from_databento"]};

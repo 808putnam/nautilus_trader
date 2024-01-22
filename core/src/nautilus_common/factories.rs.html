@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/factories.rs`."><title>factories.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/factories.rs`."><title>factories.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (ef71f1047 2024-01-21)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../nautilus_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -237,7 +238,7 @@
 <a href="#236" id="236">236</a>
 <a href="#237" id="237">237</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -272,39 +273,39 @@
 
 <span class="attr">#[repr(C)]
 </span><span class="kw">pub struct </span>OrderFactory {
+    clock: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>AtomicTime,
     trader_id: TraderId,
     strategy_id: StrategyId,
     order_id_generator: ClientOrderIdGenerator,
     order_list_id_generator: OrderListIdGenerator,
-    clock: AtomicTime,
 }
 
 <span class="kw">impl </span>OrderFactory {
     <span class="kw">pub fn </span>new(
         trader_id: TraderId,
         strategy_id: StrategyId,
-        clock: AtomicTime,
         init_order_id_count: <span class="prelude-ty">Option</span>&lt;usize&gt;,
         init_order_list_id_count: <span class="prelude-ty">Option</span>&lt;usize&gt;,
+        clock: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>AtomicTime,
     ) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span>order_id_generator = ClientOrderIdGenerator::new(
             trader_id,
             strategy_id,
-            clock.clone(),
             init_order_id_count.unwrap_or(<span class="number">0</span>),
+            clock,
         );
         <span class="kw">let </span>order_list_id_generator = OrderListIdGenerator::new(
             trader_id,
             strategy_id,
-            clock.clone(),
             init_order_list_id_count.unwrap_or(<span class="number">0</span>),
+            clock,
         );
         <span class="self">Self </span>{
+            clock,
             trader_id,
             strategy_id,
             order_id_generator,
             order_list_id_generator,
-            clock,
         }
     }
 
@@ -335,9 +336,9 @@
         instrument_id: InstrumentId,
         order_side: OrderSide,
         quantity: Quantity,
-        time_inf_force: TimeInForce,
-        reduce_only: bool,
-        quote_quantity: bool,
+        time_in_force: <span class="prelude-ty">Option</span>&lt;TimeInForce&gt;,
+        reduce_only: <span class="prelude-ty">Option</span>&lt;bool&gt;,
+        quote_quantity: <span class="prelude-ty">Option</span>&lt;bool&gt;,
         exec_algorithm_id: <span class="prelude-ty">Option</span>&lt;ExecAlgorithmId&gt;,
         exec_algorithm_params: <span class="prelude-ty">Option</span>&lt;HashMap&lt;Ustr, Ustr&gt;&gt;,
         tags: <span class="prelude-ty">Option</span>&lt;Ustr&gt;,
@@ -355,11 +356,11 @@
             client_order_id,
             order_side,
             quantity,
-            time_inf_force,
+            time_in_force.unwrap_or(TimeInForce::Gtc),
             UUID4::new(),
             <span class="self">self</span>.clock.get_time_ns(),
-            reduce_only,
-            quote_quantity,
+            reduce_only.unwrap_or(<span class="bool-val">false</span>),
+            quote_quantity.unwrap_or(<span class="bool-val">false</span>),
             <span class="prelude-val">Some</span>(ContingencyType::NoContingency),
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
@@ -449,9 +450,9 @@
             InstrumentId::from(<span class="string">"BTCUSDT.BINANCE"</span>),
             OrderSide::Buy,
             <span class="number">100</span>.into(),
-            TimeInForce::Gtc,
-            <span class="bool-val">false</span>,
-            <span class="bool-val">false</span>,
+            <span class="prelude-val">Some</span>(TimeInForce::Gtc),
+            <span class="prelude-val">Some</span>(<span class="bool-val">false</span>),
+            <span class="prelude-val">Some</span>(<span class="bool-val">false</span>),
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
             <span class="prelude-val">None</span>,
@@ -460,8 +461,8 @@
         <span class="macro">assert_eq!</span>(market_order.side, OrderSide::Buy);
         <span class="macro">assert_eq!</span>(market_order.quantity, <span class="number">100</span>.into());
         <span class="macro">assert_eq!</span>(market_order.time_in_force, TimeInForce::Gtc);
-        <span class="macro">assert_eq!</span>(market_order.is_reduce_only, <span class="bool-val">false</span>);
-        <span class="macro">assert_eq!</span>(market_order.is_quote_quantity, <span class="bool-val">false</span>);
+        <span class="macro">assert!</span>(!market_order.is_reduce_only);
+        <span class="macro">assert!</span>(!market_order.is_quote_quantity);
         <span class="macro">assert_eq!</span>(market_order.exec_algorithm_id, <span class="prelude-val">None</span>);
         <span class="macro">assert_eq!</span>(market_order.exec_algorithm_params, <span class="prelude-val">None</span>);
         <span class="macro">assert_eq!</span>(market_order.exec_spawn_id, <span class="prelude-val">None</span>);

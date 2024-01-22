@@ -377,7 +377,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="advanced/custom_data.html">
-                 Custom/Generic Data
+                 Custom Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -1161,12 +1161,10 @@ You can use these handlers to define actions upon receiving new market data.
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">InstrumentClose</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">InstrumentStatus</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">VenueStatus</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">Ticker</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.instruments</span> <span class="kn">import</span> <span class="n">Instrument</span>
 
 <span class="k">def</span> <span class="nf">on_order_book_deltas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deltas</span><span class="p">:</span> <span class="n">OrderBookDeltas</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_order_book</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">order_book</span><span class="p">:</span> <span class="n">OrderBook</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="k">def</span> <span class="nf">on_ticker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ticker</span><span class="p">:</span> <span class="n">Ticker</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_quote_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">:</span> <span class="n">QuoteTick</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_trade_tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">:</span> <span class="n">TradeTick</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_bar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bar</span><span class="p">:</span> <span class="n">Bar</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1175,7 +1173,7 @@ You can use these handlers to define actions upon receiving new market data.
 <span class="k">def</span> <span class="nf">on_instrument_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">InstrumentStatus</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_instrument_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">InstrumentClose</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="k">def</span> <span class="nf">on_historical_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Generic data passed to this handler</span>
+<span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Custom data passed to this handler</span>
 </pre>
             </div>
            </div>
@@ -2282,13 +2280,14 @@ live trading servers remotely, then you will need to define a configuration.
           <div class="highlight">
            <pre><span></span><span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.config</span> <span class="kn">import</span> <span class="n">StrategyConfig</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">BarType</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">InstrumentId</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.trading.strategy</span> <span class="kn">import</span> <span class="n">Strategy</span>
 
 
 <span class="k">class</span> <span class="nc">MyStrategyConfig</span><span class="p">(</span><span class="n">StrategyConfig</span><span class="p">):</span>
-    <span class="n">instrument_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">bar_type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">instrument_id</span><span class="p">:</span> <span class="n">InstrumentId</span>
+    <span class="n">bar_type</span><span class="p">:</span> <span class="n">BarType</span>
     <span class="n">fast_ema_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">slow_ema_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span>
     <span class="n">trade_size</span><span class="p">:</span> <span class="n">Decimal</span>
@@ -2309,8 +2308,8 @@ live trading servers remotely, then you will need to define a configuration.
 <span class="c1"># trading strategy to initialize.</span>
 
 <span class="n">config</span> <span class="o">=</span> <span class="n">MyStrategyConfig</span><span class="p">(</span>
-    <span class="n">instrument_id</span><span class="o">=</span><span class="s2">"ETHUSDT-PERP.BINANCE"</span><span class="p">,</span>
-    <span class="n">bar_type</span><span class="o">=</span><span class="s2">"ETHUSDT-PERP.BINANCE-1000-TICK[LAST]-INTERNAL"</span><span class="p">,</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT-PERP.BINANCE"</span><span class="p">),</span>
+    <span class="n">bar_type</span><span class="o">=</span><span class="n">BarType</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT-PERP.BINANCE-1000-TICK[LAST]-INTERNAL"</span><span class="p">),</span>
     <span class="n">trade_size</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
     <span class="n">order_id_tag</span><span class="o">=</span><span class="s2">"001"</span><span class="p">,</span>
 <span class="p">)</span>
@@ -2491,7 +2490,7 @@ example the above config would result in a strategy ID of
     <div class="md-footer-meta__inner md-grid">
      <div class="md-footer-copyright">
       <div class="md-footer-copyright__highlight">
-       © Copyright 2015-2023 Nautech Systems Pty Ltd.
+       © Copyright 2015-2024 Nautech Systems Pty Ltd.
       </div>
      </div>
     </div>

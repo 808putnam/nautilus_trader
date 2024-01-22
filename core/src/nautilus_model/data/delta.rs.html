@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/delta.rs`."><title>delta.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/delta.rs`."><title>delta.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (ef71f1047 2024-01-21)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -297,8 +298,48 @@
 <a href="#296" id="296">296</a>
 <a href="#297" id="297">297</a>
 <a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -333,12 +374,13 @@
 
 <span class="doccomment">/// Represents a single change/delta in an order book.
 </span><span class="attr">#[repr(C)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(tag = <span class="string">"type"</span>)]
 #[cfg_attr(
     feature = <span class="string">"python"</span>,
     pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>)
 )]
+#[cfg_attr(feature = <span class="string">"trivial_copy"</span>, derive(Copy))]
 </span><span class="kw">pub struct </span>OrderBookDelta {
     <span class="doccomment">/// The instrument ID for the book.
     </span><span class="kw">pub </span>instrument_id: InstrumentId,
@@ -374,6 +416,24 @@
             order,
             flags,
             sequence,
+            ts_event,
+            ts_init,
+        }
+    }
+
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>clear(
+        instrument_id: InstrumentId,
+        sequence: u64,
+        ts_event: UnixNanos,
+        ts_init: UnixNanos,
+    ) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            instrument_id,
+            action: BookAction::Clear,
+            order: NULL_ORDER,
+            flags: <span class="number">32</span>, <span class="comment">// TODO: Flags constants
+            </span>sequence,
             ts_event,
             ts_init,
         }
@@ -463,8 +523,6 @@
     }
 }
 
-<span class="kw">impl </span>Serializable <span class="kw">for </span>OrderBookDelta {}
-
 <span class="kw">impl </span>Display <span class="kw">for </span>OrderBookDelta {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="macro">write!</span>(
@@ -481,10 +539,12 @@
     }
 }
 
+<span class="kw">impl </span>Serializable <span class="kw">for </span>OrderBookDelta {}
+
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Stubs
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[cfg(test)]
+</span><span class="attr">#[cfg(feature = <span class="string">"stubs"</span>)]
 </span><span class="kw">pub mod </span>stubs {
     <span class="kw">use </span>rstest::fixture;
 
@@ -496,7 +556,7 @@
 
     <span class="attr">#[fixture]
     </span><span class="kw">pub fn </span>stub_delta() -&gt; OrderBookDelta {
-        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.NASDAQ"</span>);
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.XNAS"</span>);
         <span class="kw">let </span>action = BookAction::Add;
         <span class="kw">let </span>price = Price::from(<span class="string">"100.00"</span>);
         <span class="kw">let </span>size = Quantity::from(<span class="string">"10"</span>);
@@ -535,7 +595,7 @@
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_new() {
-        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.NASDAQ"</span>);
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.XNAS"</span>);
         <span class="kw">let </span>action = BookAction::Add;
         <span class="kw">let </span>price = Price::from(<span class="string">"100.00"</span>);
         <span class="kw">let </span>size = Quantity::from(<span class="string">"10"</span>);
@@ -571,11 +631,32 @@
     }
 
     <span class="attr">#[rstest]
+    </span><span class="kw">fn </span>test_clear() {
+        <span class="kw">let </span>instrument_id = InstrumentId::from(<span class="string">"AAPL.XNAS"</span>);
+        <span class="kw">let </span>sequence = <span class="number">1</span>;
+        <span class="kw">let </span>ts_event = <span class="number">2</span>;
+        <span class="kw">let </span>ts_init = <span class="number">3</span>;
+
+        <span class="kw">let </span>delta = OrderBookDelta::clear(instrument_id, sequence, ts_event, ts_init);
+
+        <span class="macro">assert_eq!</span>(delta.instrument_id, instrument_id);
+        <span class="macro">assert_eq!</span>(delta.action, BookAction::Clear);
+        <span class="macro">assert!</span>(delta.order.price.is_zero());
+        <span class="macro">assert!</span>(delta.order.size.is_zero());
+        <span class="macro">assert_eq!</span>(delta.order.side, OrderSide::NoOrderSide);
+        <span class="macro">assert_eq!</span>(delta.order.order_id, <span class="number">0</span>);
+        <span class="macro">assert_eq!</span>(delta.flags, <span class="number">32</span>);
+        <span class="macro">assert_eq!</span>(delta.sequence, sequence);
+        <span class="macro">assert_eq!</span>(delta.ts_event, ts_event);
+        <span class="macro">assert_eq!</span>(delta.ts_init, ts_init);
+    }
+
+    <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_display(stub_delta: OrderBookDelta) {
         <span class="kw">let </span>delta = stub_delta;
         <span class="macro">assert_eq!</span>(
             <span class="macro">format!</span>(<span class="string">"{}"</span>, delta),
-            <span class="string">"AAPL.NASDAQ,ADD,100.00,10,BUY,123456,0,1,1,2"</span>.to_string()
+            <span class="string">"AAPL.XNAS,ADD,100.00,10,BUY,123456,0,1,1,2"</span>.to_string()
         );
     }
 

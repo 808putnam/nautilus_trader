@@ -377,7 +377,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
-                 Custom/Generic Data
+                 Custom Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -832,7 +832,7 @@ deleted when the container is deleted.
                 pull
                </span>
                <span class="pre">
-                ghcr.io/nautechsystems/jupyterlab:develop
+                ghcr.io/nautechsystems/jupyterlab:nightly
                </span>
                <span class="pre">
                 --platform
@@ -866,7 +866,7 @@ deleted when the container is deleted.
                 8888:8888
                </span>
                <span class="pre">
-                ghcr.io/nautechsystems/jupyterlab:develop
+                ghcr.io/nautechsystems/jupyterlab:nightly
                </span>
               </code>
              </p>
@@ -994,8 +994,7 @@ registering indicators to receive certain data types, however in this example we
          </p>
          <div class="highlight-python notranslate">
           <div class="highlight">
-           <pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.core.message</span> <span class="kn">import</span> <span class="n">Event</span>
+           <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.core.message</span> <span class="kn">import</span> <span class="n">Event</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.indicators.macd</span> <span class="kn">import</span> <span class="n">MovingAverageConvergenceDivergence</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">QuoteTick</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">PriceType</span>
@@ -1009,7 +1008,7 @@ registering indicators to receive certain data types, however in this example we
 
 
 <span class="k">class</span> <span class="nc">MACDConfig</span><span class="p">(</span><span class="n">StrategyConfig</span><span class="p">):</span>
-    <span class="n">instrument_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">instrument_id</span><span class="p">:</span> <span class="n">InstrumentId</span>
     <span class="n">fast_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span>
     <span class="n">slow_period</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">26</span>
     <span class="n">trade_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1_000_000</span>
@@ -1021,15 +1020,17 @@ registering indicators to receive certain data types, however in this example we
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
         <span class="c1"># Our "trading signal"</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">macd</span> <span class="o">=</span> <span class="n">MovingAverageConvergenceDivergence</span><span class="p">(</span>
-            <span class="n">fast_period</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">fast_period</span><span class="p">,</span> <span class="n">slow_period</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">slow_period</span><span class="p">,</span> <span class="n">price_type</span><span class="o">=</span><span class="n">PriceType</span><span class="o">.</span><span class="n">MID</span>
+            <span class="n">fast_period</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">fast_period</span><span class="p">,</span>
+            <span class="n">slow_period</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">slow_period</span><span class="p">,</span>
+            <span class="n">price_type</span><span class="o">=</span><span class="n">PriceType</span><span class="o">.</span><span class="n">MID</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="c1"># We copy some config values onto the class to make them easier to reference later on</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">entry_threshold</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">entry_threshold</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span> <span class="o">=</span> <span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">instrument_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trade_size</span> <span class="o">=</span> <span class="n">Quantity</span><span class="o">.</span><span class="n">from_int</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">trade_size</span><span class="p">)</span>
 
         <span class="c1"># Convenience</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Position</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">:</span> <span class="n">Position</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subscribe_quote_ticks</span><span class="p">(</span><span class="n">instrument_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrument_id</span><span class="p">)</span>
@@ -1146,7 +1147,7 @@ following (minimal) aspects of the backtest:
               venues
              </span>
             </code>
-            - The simulated venues (exchanges or brokers) available in the backtest
+            - The simulated execution venues (exchanges or brokers) available in the backtest
            </p>
           </li>
           <li>
@@ -1278,7 +1279,7 @@ adding the
 <span class="n">data</span> <span class="o">=</span> <span class="n">BacktestDataConfig</span><span class="p">(</span>
     <span class="n">catalog_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
     <span class="n">data_cls</span><span class="o">=</span><span class="n">QuoteTick</span><span class="p">,</span>
-    <span class="n">instrument_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">instruments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">instruments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
     <span class="n">end_time</span><span class="o">=</span><span class="s2">"2020-01-10"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre>
@@ -1338,7 +1339,7 @@ user packages. In this instance, our
             <span class="n">strategy_path</span><span class="o">=</span><span class="s2">"__main__:MACDStrategy"</span><span class="p">,</span>
             <span class="n">config_path</span><span class="o">=</span><span class="s2">"__main__:MACDConfig"</span><span class="p">,</span>
             <span class="n">config</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
-              <span class="n">instrument_id</span><span class="o">=</span><span class="n">instruments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+              <span class="n">instrument_id</span><span class="o">=</span><span class="n">instruments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
               <span class="n">fast_period</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
               <span class="n">slow_period</span><span class="o">=</span><span class="mi">26</span><span class="p">,</span>
             <span class="p">),</span>
@@ -1499,7 +1500,7 @@ parameters or batches of data).
     <div class="md-footer-meta__inner md-grid">
      <div class="md-footer-copyright">
       <div class="md-footer-copyright__highlight">
-       © Copyright 2015-2023 Nautech Systems Pty Ltd.
+       © Copyright 2015-2024 Nautech Systems Pty Ltd.
       </div>
      </div>
     </div>

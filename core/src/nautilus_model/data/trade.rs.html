@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/trade.rs`."><title>trade.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/trade.rs`."><title>trade.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (ef71f1047 2024-01-21)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -255,8 +256,9 @@
 <a href="#254" id="254">254</a>
 <a href="#255" id="255">255</a>
 <a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -290,12 +292,13 @@
 
 <span class="doccomment">/// Represents a single trade tick in a financial market.
 </span><span class="attr">#[repr(C)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(tag = <span class="string">"type"</span>)]
 #[cfg_attr(
     feature = <span class="string">"python"</span>,
     pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>)
 )]
+#[cfg_attr(feature = <span class="string">"trivial_copy"</span>, derive(Copy))]
 </span><span class="kw">pub struct </span>TradeTick {
     <span class="doccomment">/// The trade instrument ID.
     </span><span class="kw">pub </span>instrument_id: InstrumentId,
@@ -399,8 +402,6 @@
     }
 }
 
-<span class="kw">impl </span>Serializable <span class="kw">for </span>TradeTick {}
-
 <span class="kw">impl </span>Display <span class="kw">for </span>TradeTick {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; std::fmt::Result {
         <span class="macro">write!</span>(
@@ -416,10 +417,12 @@
     }
 }
 
+<span class="kw">impl </span>Serializable <span class="kw">for </span>TradeTick {}
+
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Stubs
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[cfg(test)]
+</span><span class="attr">#[cfg(feature = <span class="string">"stubs"</span>)]
 </span><span class="kw">pub mod </span>stubs {
     <span class="kw">use </span>rstest::fixture;
 
@@ -431,7 +434,7 @@
     };
 
     <span class="attr">#[fixture]
-    </span><span class="kw">pub fn </span>trade_tick_ethusdt_buyer() -&gt; TradeTick {
+    </span><span class="kw">pub fn </span>stub_trade_tick_ethusdt_buyer() -&gt; TradeTick {
         TradeTick {
             instrument_id: InstrumentId::from(<span class="string">"ETHUSDT-PERP.BINANCE"</span>),
             price: Price::from(<span class="string">"10000.0000"</span>),
@@ -457,8 +460,8 @@
     <span class="kw">use crate</span>::{data::trade::TradeTick, enums::AggressorSide};
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_to_string(trade_tick_ethusdt_buyer: TradeTick) {
-        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
+    </span><span class="kw">fn </span>test_to_string(stub_trade_tick_ethusdt_buyer: TradeTick) {
+        <span class="kw">let </span>tick = stub_trade_tick_ethusdt_buyer;
         <span class="macro">assert_eq!</span>(
             tick.to_string(),
             <span class="string">"ETHUSDT-PERP.BINANCE,10000.0000,1.00000000,BUYER,123456789,0"
@@ -484,9 +487,9 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_from_pyobject(trade_tick_ethusdt_buyer: TradeTick) {
+    </span><span class="kw">fn </span>test_from_pyobject(stub_trade_tick_ethusdt_buyer: TradeTick) {
         pyo3::prepare_freethreaded_python();
-        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
+        <span class="kw">let </span>tick = stub_trade_tick_ethusdt_buyer;
 
         Python::with_gil(|py| {
             <span class="kw">let </span>tick_pyobject = tick.into_py(py);
@@ -496,16 +499,16 @@
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_json_serialization(trade_tick_ethusdt_buyer: TradeTick) {
-        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
+    </span><span class="kw">fn </span>test_json_serialization(stub_trade_tick_ethusdt_buyer: TradeTick) {
+        <span class="kw">let </span>tick = stub_trade_tick_ethusdt_buyer;
         <span class="kw">let </span>serialized = tick.as_json_bytes().unwrap();
         <span class="kw">let </span>deserialized = TradeTick::from_json_bytes(serialized).unwrap();
         <span class="macro">assert_eq!</span>(deserialized, tick);
     }
 
     <span class="attr">#[rstest]
-    </span><span class="kw">fn </span>test_msgpack_serialization(trade_tick_ethusdt_buyer: TradeTick) {
-        <span class="kw">let </span>tick = trade_tick_ethusdt_buyer;
+    </span><span class="kw">fn </span>test_msgpack_serialization(stub_trade_tick_ethusdt_buyer: TradeTick) {
+        <span class="kw">let </span>tick = stub_trade_tick_ethusdt_buyer;
         <span class="kw">let </span>serialized = tick.as_msgpack_bytes().unwrap();
         <span class="kw">let </span>deserialized = TradeTick::from_msgpack_bytes(serialized).unwrap();
         <span class="macro">assert_eq!</span>(deserialized, tick);

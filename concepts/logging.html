@@ -377,7 +377,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="advanced/custom_data.html">
-                 Custom/Generic Data
+                 Custom Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -737,6 +737,11 @@
                 Log Colors
                </a>
               </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#using-a-logger-directly">
+                Using a Logger directly
+               </a>
+              </li>
              </ul>
             </li>
            </ul>
@@ -756,24 +761,19 @@
          </a>
         </h1>
         <p>
-         The platform provides logging for both backtesting and live trading using a high-performance logger implemented in Rust.
-The logger operates in a separate thread and uses a multi-producer single consumer (MPSC) channel to receive log messages.
+         The platform provides logging for both backtesting and live trading using a high-performance logging system implemented in Rust
+with a standardized facade from the
+         <code class="docutils literal notranslate">
+          <span class="pre">
+           log
+          </span>
+         </code>
+         crate.
+        </p>
+        <p>
+         The core logger operates in a separate thread and uses a multi-producer single consumer (MPSC) channel to receive log messages.
 This design ensures that the main thread is not blocked by log string formatting or file I/O operations.
         </p>
-        <div class="admonition note">
-         <p class="admonition-title">
-          Note
-         </p>
-         <p>
-          The latest stable Rust MPSC channel is used, which is now based on the
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            crossbeam
-           </span>
-          </code>
-          implementation.
-         </p>
-        </div>
         <p>
          There are two configurable writers for logging:
         </p>
@@ -826,27 +826,64 @@ By default, log events with an ‘INFO’
             LogLevel
            </span>
           </code>
-          ) values include:
+          ) values include (and generally match Rusts
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            tracing
+           </span>
+          </code>
+          level filters):
          </p>
          <ul class="simple">
           <li>
            <p>
-            ‘DEBUG’ or ‘DBG’
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              OFF
+             </span>
+            </code>
            </p>
           </li>
           <li>
            <p>
-            ‘INFO’ or ‘INF’
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              DEBUG
+             </span>
+            </code>
            </p>
           </li>
           <li>
            <p>
-            ‘WARNING’ or ‘WRN’
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              INFO
+             </span>
+            </code>
            </p>
           </li>
           <li>
            <p>
-            ‘ERROR’ or ‘ERR’
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              WARNING
+             </span>
+            </code>
+            or
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              WARN
+             </span>
+            </code>
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              ERROR
+             </span>
+            </code>
            </p>
           </li>
          </ul>
@@ -900,12 +937,32 @@ By default, log events with an ‘INFO’
           </li>
           <li>
            <p>
+            Directory for writing log files
+           </p>
+          </li>
+          <li>
+           <p>
             Plain text or JSON log file formatting
            </p>
           </li>
           <li>
            <p>
+            Filtering of individual components by log level
+           </p>
+          </li>
+          <li>
+           <p>
+            ANSI colors in log lines
+           </p>
+          </li>
+          <li>
+           <p>
             Bypass logging completely
+           </p>
+          </li>
+          <li>
+           <p>
+            Print Rust config to stdout at initialization
            </p>
           </li>
          </ul>
@@ -1095,6 +1152,98 @@ Disabling
 compatibility across different environments where color rendering is not supported.
           </p>
          </section>
+         <section id="using-a-logger-directly">
+          <h3 id="using-a-logger-directly">
+           Using a Logger directly
+           <a class="headerlink" href="#using-a-logger-directly" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           It’s possible to use
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             Logger
+            </span>
+           </code>
+           objects directly, and these can be initialized anywhere (very similar to the Python built-in
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             logging
+            </span>
+           </code>
+           API).
+          </p>
+          <p>
+           If you
+           <em>
+            <strong>
+             aren’t
+            </strong>
+           </em>
+           using an object which already initializes a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             NautilusKernel
+            </span>
+           </code>
+           (and logging) such as
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             BacktestEngine
+            </span>
+           </code>
+           or
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             TradingNode
+            </span>
+           </code>
+           ,
+then you can initialize a logging in the following way:
+          </p>
+          <div class="highlight-python notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.common.logging</span> <span class="kn">import</span> <span class="n">init_logging</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.common.logging</span> <span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="n">init_logging</span><span class="p">()</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s2">"MyLogger"</span><span class="p">)</span>
+</pre>
+           </div>
+          </div>
+          <div class="admonition note">
+           <p class="admonition-title">
+            Note
+           </p>
+           <p>
+            See the
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              init_logging
+             </span>
+            </code>
+            <span class="xref myst">
+             API Reference
+            </span>
+            for further details.
+           </p>
+          </div>
+          <div class="admonition warning">
+           <p class="admonition-title">
+            Warning
+           </p>
+           <p>
+            Only one logging system can be initialized per process with an
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              init_logging
+             </span>
+            </code>
+            call.
+           </p>
+          </div>
+         </section>
         </section>
        </section>
       </article>
@@ -1139,7 +1288,7 @@ compatibility across different environments where color rendering is not support
     <div class="md-footer-meta__inner md-grid">
      <div class="md-footer-copyright">
       <div class="md-footer-copyright__highlight">
-       © Copyright 2015-2023 Nautech Systems Pty Ltd.
+       © Copyright 2015-2024 Nautech Systems Pty Ltd.
       </div>
      </div>
     </div>

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["set_global_log_collector"],"struct":["LogEvent","LogGuard","Logger"]};
+window.SIDEBAR_ITEMS = {"enum":["LogEvent"],"fn":["init_logging","init_tracing","log","logging_clock_set_realtime_mode","logging_clock_set_static_mode","logging_clock_set_static_time","logging_is_colored","logging_is_initialized","logging_set_bypass","logging_shutdown","map_log_level_to_filter","parse_component_levels","parse_level_filter_str"],"struct":["FileWriterConfig","LogLine","Logger","LoggerConfig"]};

@@ -1,5 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `infrastructure/src/redis.rs`."><title>redis.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-804b98a1284a310a.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_infrastructure" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (d6d7a9386 2023-12-22)" data-channel="nightly" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `infrastructure/src/redis.rs`."><title>redis.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-b1a3e7f8283b8434.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_infrastructure" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (ef71f1047 2024-01-21)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../nautilus_infrastructure/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -602,8 +603,31 @@
 <a href="#601" id="601">601</a>
 <a href="#602" id="602">602</a>
 <a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
+<a href="#609" id="609">609</a>
+<a href="#610" id="610">610</a>
+<a href="#611" id="611">611</a>
+<a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -630,7 +654,7 @@
 <span class="kw">use </span>nautilus_model::identifiers::trader_id::TraderId;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>redis::{Commands, Connection, Pipeline};
-<span class="kw">use </span>serde_json::{json, Value};
+<span class="kw">use </span>serde_json::json;
 
 <span class="kw">use </span><span class="kw">crate</span>::cache::{CacheDatabase, DatabaseCommand, DatabaseOperation};
 
@@ -685,7 +709,7 @@
     <span class="kw">fn </span>new(
         trader_id: TraderId,
         instance_id: UUID4,
-        config: HashMap&lt;String, Value&gt;,
+        config: HashMap&lt;String, serde_json::Value&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;RedisCacheDatabase&gt; {
         <span class="kw">let </span>redis_url = get_redis_url(<span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>client = redis::Client::open(redis_url)<span class="question-mark">?</span>;
@@ -767,7 +791,7 @@
     <span class="kw">fn </span>handle_messages(
         rx: Receiver&lt;DatabaseCommand&gt;,
         trader_key: String,
-        config: HashMap&lt;String, Value&gt;,
+        config: HashMap&lt;String, serde_json::Value&gt;,
     ) {
         <span class="kw">let </span>redis_url = get_redis_url(<span class="kw-2">&amp;</span>config);
         <span class="kw">let </span>client = redis::Client::open(redis_url).unwrap();
@@ -817,17 +841,49 @@
 
         <span class="kw">match </span>msg.op_type {
             DatabaseOperation::Insert =&gt; {
-                <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = insert(<span class="kw-2">&amp;mut </span>pipe, collection, <span class="kw-2">&amp;</span>key, msg.payload) {
+                <span class="kw">if </span>msg.payload.is_none() {
+                    <span class="macro">eprintln!</span>(<span class="string">"Null `payload` for `insert`"</span>);
+                    <span class="kw">continue</span>; <span class="comment">// Continue to next message
+                </span>};
+
+                <span class="kw">let </span>payload = msg
+                    .payload
+                    .as_ref()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_slice())
+                    .collect::&lt;Vec&lt;<span class="kw-2">&amp;</span>[u8]&gt;&gt;();
+
+                <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = insert(<span class="kw-2">&amp;mut </span>pipe, collection, <span class="kw-2">&amp;</span>key, payload) {
                     <span class="macro">eprintln!</span>(<span class="string">"{e}"</span>);
                 }
             }
             DatabaseOperation::Update =&gt; {
-                <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = update(<span class="kw-2">&amp;mut </span>pipe, collection, <span class="kw-2">&amp;</span>key, msg.payload) {
+                <span class="kw">if </span>msg.payload.is_none() {
+                    <span class="macro">eprintln!</span>(<span class="string">"Null `payload` for `update`"</span>);
+                    <span class="kw">continue</span>; <span class="comment">// Continue to next message
+                </span>};
+
+                <span class="kw">let </span>payload = msg
+                    .payload
+                    .as_ref()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_slice())
+                    .collect::&lt;Vec&lt;<span class="kw-2">&amp;</span>[u8]&gt;&gt;();
+
+                <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = update(<span class="kw-2">&amp;mut </span>pipe, collection, <span class="kw-2">&amp;</span>key, payload) {
                     <span class="macro">eprintln!</span>(<span class="string">"{e}"</span>);
                 }
             }
             DatabaseOperation::Delete =&gt; {
-                <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = delete(<span class="kw-2">&amp;mut </span>pipe, collection, <span class="kw-2">&amp;</span>key, msg.payload) {
+                <span class="comment">// `payload` can be `None` for a delete operation
+                </span><span class="kw">let </span>payload = msg
+                    .payload
+                    .as_ref()
+                    .map(|v| v.iter().map(|v| v.as_slice()).collect::&lt;Vec&lt;<span class="kw-2">&amp;</span>[u8]&gt;&gt;());
+
+                <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = delete(<span class="kw-2">&amp;mut </span>pipe, collection, <span class="kw-2">&amp;</span>key, payload) {
                     <span class="macro">eprintln!</span>(<span class="string">"{e}"</span>);
                 }
             }
@@ -883,13 +939,7 @@
     <span class="prelude-val">Ok</span>(result)
 }
 
-<span class="kw">fn </span>insert(
-    pipe: <span class="kw-2">&amp;mut </span>Pipeline,
-    collection: <span class="kw-2">&amp;</span>str,
-    key: <span class="kw-2">&amp;</span>str,
-    value: <span class="prelude-ty">Option</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;,
-) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-    <span class="kw">let </span>value = value.ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">"Null `payload` for `insert`"</span>))<span class="question-mark">?</span>;
+<span class="kw">fn </span>insert(pipe: <span class="kw-2">&amp;mut </span>Pipeline, collection: <span class="kw-2">&amp;</span>str, key: <span class="kw-2">&amp;</span>str, value: Vec&lt;<span class="kw-2">&amp;</span>[u8]&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>value.is_empty() {
         <span class="macro">bail!</span>(<span class="string">"Empty `payload` for `insert`"</span>)
     }
@@ -897,149 +947,143 @@
     <span class="kw">match </span>collection {
         INDEX =&gt; insert_index(pipe, key, <span class="kw-2">&amp;</span>value),
         GENERAL =&gt; {
-            insert_string(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_string(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         CURRENCIES =&gt; {
-            insert_string(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_string(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INSTRUMENTS =&gt; {
-            insert_string(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_string(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         SYNTHETICS =&gt; {
-            insert_string(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_string(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         ACCOUNTS =&gt; {
-            insert_list(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_list(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         ORDERS =&gt; {
-            insert_list(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_list(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         POSITIONS =&gt; {
-            insert_list(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_list(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         ACTORS =&gt; {
-            insert_string(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_string(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         STRATEGIES =&gt; {
-            insert_string(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_string(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         SNAPSHOTS =&gt; {
-            insert_list(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_list(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         HEALTH =&gt; {
-            insert_string(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_string(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported operation: `insert` for collection '{collection}'"</span>),
     }
 }
 
-<span class="kw">fn </span>insert_index(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>[Vec&lt;u8&gt;]) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<span class="kw">fn </span>insert_index(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>[u8]]) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">let </span>index_key = get_index_key(key)<span class="question-mark">?</span>;
     <span class="kw">match </span>index_key {
         INDEX_ORDER_IDS =&gt; {
-            insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDER_POSITION =&gt; {
-            insert_hset(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>], <span class="kw-2">&amp;</span>value[<span class="number">1</span>]);
+            insert_hset(pipe, key, value[<span class="number">0</span>], value[<span class="number">1</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDER_CLIENT =&gt; {
-            insert_hset(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>], <span class="kw-2">&amp;</span>value[<span class="number">1</span>]);
+            insert_hset(pipe, key, value[<span class="number">0</span>], value[<span class="number">1</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDERS =&gt; {
-            insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDERS_OPEN =&gt; {
-            insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDERS_CLOSED =&gt; {
-            insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDERS_EMULATED =&gt; {
-            insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDERS_INFLIGHT =&gt; {
-            insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_POSITIONS =&gt; {
-            insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_POSITIONS_OPEN =&gt; {
-            insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_POSITIONS_CLOSED =&gt; {
-            insert_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            insert_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Index unknown '{index_key}' on insert"</span>),
     }
 }
 
-<span class="kw">fn </span>insert_string(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) {
+<span class="kw">fn </span>insert_string(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>[u8]) {
     pipe.set(key, value);
 }
 
-<span class="kw">fn </span>insert_set(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) {
+<span class="kw">fn </span>insert_set(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>[u8]) {
     pipe.sadd(key, value);
 }
 
-<span class="kw">fn </span>insert_hset(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, name: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;, value: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) {
+<span class="kw">fn </span>insert_hset(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, name: <span class="kw-2">&amp;</span>[u8], value: <span class="kw-2">&amp;</span>[u8]) {
     pipe.hset(key, name, value);
 }
 
-<span class="kw">fn </span>insert_list(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) {
+<span class="kw">fn </span>insert_list(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>[u8]) {
     pipe.rpush(key, value);
 }
 
-<span class="kw">fn </span>update(
-    pipe: <span class="kw-2">&amp;mut </span>Pipeline,
-    collection: <span class="kw-2">&amp;</span>str,
-    key: <span class="kw-2">&amp;</span>str,
-    value: <span class="prelude-ty">Option</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;,
-) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
-    <span class="kw">let </span>value = value.ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">"Null `payload` for `update`"</span>))<span class="question-mark">?</span>;
+<span class="kw">fn </span>update(pipe: <span class="kw-2">&amp;mut </span>Pipeline, collection: <span class="kw-2">&amp;</span>str, key: <span class="kw-2">&amp;</span>str, value: Vec&lt;<span class="kw-2">&amp;</span>[u8]&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">if </span>value.is_empty() {
         <span class="macro">bail!</span>(<span class="string">"Empty `payload` for `update`"</span>)
     }
 
     <span class="kw">match </span>collection {
         ACCOUNTS =&gt; {
-            update_list(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            update_list(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         ORDERS =&gt; {
-            update_list(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            update_list(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         POSITIONS =&gt; {
-            update_list(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            update_list(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported operation: `update` for collection '{collection}'"</span>),
     }
 }
 
-<span class="kw">fn </span>update_list(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) {
+<span class="kw">fn </span>update_list(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>[u8]) {
     pipe.rpush_exists(key, value);
 }
 
@@ -1047,7 +1091,7 @@
     pipe: <span class="kw-2">&amp;mut </span>Pipeline,
     collection: <span class="kw-2">&amp;</span>str,
     key: <span class="kw-2">&amp;</span>str,
-    value: <span class="prelude-ty">Option</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;,
+    value: <span class="prelude-ty">Option</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>[u8]&gt;&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">match </span>collection {
         INDEX =&gt; remove_index(pipe, key, value),
@@ -1063,40 +1107,40 @@
     }
 }
 
-<span class="kw">fn </span>remove_index(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="prelude-ty">Option</span>&lt;Vec&lt;Vec&lt;u8&gt;&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+<span class="kw">fn </span>remove_index(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, value: <span class="prelude-ty">Option</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>[u8]&gt;&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     <span class="kw">let </span>value = value.ok_or_else(|| <span class="macro">anyhow!</span>(<span class="string">"Empty `payload` for `delete` '{key}'"</span>))<span class="question-mark">?</span>;
     <span class="kw">let </span>index_key = get_index_key(key)<span class="question-mark">?</span>;
 
     <span class="kw">match </span>index_key {
         INDEX_ORDERS_OPEN =&gt; {
-            remove_from_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            remove_from_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDERS_CLOSED =&gt; {
-            remove_from_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            remove_from_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDERS_EMULATED =&gt; {
-            remove_from_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            remove_from_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_ORDERS_INFLIGHT =&gt; {
-            remove_from_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            remove_from_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_POSITIONS_OPEN =&gt; {
-            remove_from_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            remove_from_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         INDEX_POSITIONS_CLOSED =&gt; {
-            remove_from_set(pipe, key, <span class="kw-2">&amp;</span>value[<span class="number">0</span>]);
+            remove_from_set(pipe, key, value[<span class="number">0</span>]);
             <span class="prelude-val">Ok</span>(())
         }
         <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Unsupported index operation: remove from '{index_key}'"</span>),
     }
 }
 
-<span class="kw">fn </span>remove_from_set(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, member: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) {
+<span class="kw">fn </span>remove_from_set(pipe: <span class="kw-2">&amp;mut </span>Pipeline, key: <span class="kw-2">&amp;</span>str, member: <span class="kw-2">&amp;</span>[u8]) {
     pipe.srem(key, member);
 }
 
@@ -1107,7 +1151,7 @@
 <span class="kw">fn </span>get_trader_key(
     trader_id: TraderId,
     instance_id: UUID4,
-    config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;,
+    config: <span class="kw-2">&amp;</span>HashMap&lt;String, serde_json::Value&gt;,
 ) -&gt; String {
     <span class="kw">let </span><span class="kw-2">mut </span>key = String::new();
 
@@ -1139,7 +1183,7 @@
 
 <span class="comment">// This function can be used when we handle cache serialization in Rust
 </span><span class="attr">#[allow(dead_code)]
-</span><span class="kw">fn </span>get_encoding(config: <span class="kw-2">&amp;</span>HashMap&lt;String, Value&gt;) -&gt; String {
+</span><span class="kw">fn </span>get_encoding(config: <span class="kw-2">&amp;</span>HashMap&lt;String, serde_json::Value&gt;) -&gt; String {
     config
         .get(<span class="string">"encoding"</span>)
         .and_then(|v| v.as_str())
@@ -1149,7 +1193,10 @@
 
 <span class="comment">// This function can be used when we handle cache serialization in Rust
 </span><span class="attr">#[allow(dead_code)]
-</span><span class="kw">fn </span>deserialize_payload(encoding: <span class="kw-2">&amp;</span>str, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;String, Value&gt;&gt; {
+</span><span class="kw">fn </span>deserialize_payload(
+    encoding: <span class="kw-2">&amp;</span>str,
+    payload: <span class="kw-2">&amp;</span>[u8],
+) -&gt; <span class="prelude-ty">Result</span>&lt;HashMap&lt;String, serde_json::Value&gt;&gt; {
     <span class="kw">match </span>encoding {
         <span class="string">"msgpack" </span>=&gt; rmp_serde::from_slice(payload)
             .map_err(|e| <span class="macro">anyhow!</span>(<span class="string">"Failed to deserialize msgpack `payload`: {e}"</span>)),

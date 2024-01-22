@@ -377,7 +377,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="advanced/custom_data.html">
-                 Custom/Generic Data
+                 Custom Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -967,7 +967,7 @@ primarily through the
          For those seeking customization, the platform supports user-defined data types. Refer to the advanced
          <a class="reference internal" href="advanced/custom_data.html">
           <span class="doc std std-doc">
-           Custom/Generic data guide
+           Custom data guide
           </span>
          </a>
          for more details.
@@ -1264,16 +1264,14 @@ of the Nautilus core, currently in development.
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="kn">from</span> <span class="nn">nautilus_trader</span> <span class="kn">import</span> <span class="n">PACKAGE_ROOT</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader</span> <span class="kn">import</span> <span class="n">TEST_DATA_DIR</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.persistence.loaders</span> <span class="kn">import</span> <span class="n">BinanceOrderBookDeltaDataLoader</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.persistence.wranglers</span> <span class="kn">import</span> <span class="n">OrderBookDeltaDataWrangler</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.test_kit.providers</span> <span class="kn">import</span> <span class="n">TestInstrumentProvider</span>
 
 
 <span class="c1"># Load raw data</span>
-<span class="n">data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PACKAGE_ROOT</span><span class="p">,</span> <span class="s2">"tests/test_data/binance/binance/btcusdt-depth-snap.csv"</span><span class="p">)</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">TEST_DATA_DIR</span> <span class="o">/</span> <span class="s2">"binance"</span> <span class="o">/</span> <span class="s2">"btcusdt-depth-snap.csv"</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">BinanceOrderBookDeltaDataLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
 
 <span class="c1"># Setup a wrangler</span>
@@ -1328,7 +1326,7 @@ of the Nautilus core, currently in development.
             persistence
            </span>
           </code>
-          Rust library, or available
+          Rust crate, or available
 from the
           <code class="docutils literal notranslate">
            <span class="pre">
@@ -1366,11 +1364,11 @@ from the
           </p>
           <div class="highlight-python notranslate">
            <div class="highlight">
-            <pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+            <pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.persistence.catalog</span> <span class="kn">import</span> <span class="n">ParquetDataCatalog</span>
 
 
-<span class="n">CATALOG_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"/catalog"</span>
+<span class="n">CATALOG_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"catalog"</span>
 
 <span class="c1"># Create a new catalog instance</span>
 <span class="n">catalog</span> <span class="o">=</span> <span class="n">ParquetDataCatalog</span><span class="p">(</span><span class="n">CATALOG_PATH</span><span class="p">)</span>
@@ -1675,7 +1673,7 @@ See the
     <div class="md-footer-meta__inner md-grid">
      <div class="md-footer-copyright">
       <div class="md-footer-copyright__highlight">
-       © Copyright 2015-2023 Nautech Systems Pty Ltd.
+       © Copyright 2015-2024 Nautech Systems Pty Ltd.
       </div>
      </div>
     </div>

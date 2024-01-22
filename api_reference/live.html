@@ -377,7 +377,7 @@
                </li>
                <li class="md-nav__item">
                 <a class="md-nav__link" href="../concepts/advanced/custom_data.html">
-                 Custom/Generic Data
+                 Custom Data
                 </a>
                </li>
                <li class="md-nav__item">
@@ -938,10 +938,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.live.data_client.LiveDataClient.subscribed_generic_data">
+               <a class="md-nav__link" href="#nautilus_trader.live.data_client.LiveDataClient.subscribed_custom_data">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  LiveDataClient.subscribed_generic_data()
+                  LiveDataClient.subscribed_custom_data()
                  </span>
                 </code>
                </a>
@@ -1070,15 +1070,6 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.live.data_client.LiveMarketDataClient.subscribe_ticker">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  LiveMarketDataClient.subscribe_ticker()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.live.data_client.LiveMarketDataClient.subscribe_quote_ticks">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1164,15 +1155,6 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   LiveMarketDataClient.unsubscribe_order_book_snapshots()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.live.data_client.LiveMarketDataClient.unsubscribe_ticker">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  LiveMarketDataClient.unsubscribe_ticker()
                  </span>
                 </code>
                </a>
@@ -1448,10 +1430,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_generic_data">
+               <a class="md-nav__link" href="#nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_custom_data">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  LiveMarketDataClient.subscribed_generic_data()
+                  LiveMarketDataClient.subscribed_custom_data()
                  </span>
                 </code>
                </a>
@@ -1506,15 +1488,6 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   LiveMarketDataClient.subscribed_quote_ticks()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_tickers">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  LiveMarketDataClient.subscribed_tickers()
                  </span>
                 </code>
                </a>
@@ -2003,10 +1976,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_generic_data">
+               <a class="md-nav__link" href="#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_custom_data">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  LiveDataEngine.subscribed_generic_data()
+                  LiveDataEngine.subscribed_custom_data()
                  </span>
                 </code>
                </a>
@@ -2079,15 +2052,6 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   LiveDataEngine.subscribed_synthetic_trades()
-                 </span>
-                </code>
-               </a>
-              </li>
-              <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_tickers">
-                <code class="docutils literal notranslate">
-                 <span class="pre">
-                  LiveDataEngine.subscribed_tickers()
                  </span>
                 </code>
                </a>
@@ -2252,10 +2216,10 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#nautilus_trader.live.execution_client.LiveExecutionClient.generate_trade_reports">
+               <a class="md-nav__link" href="#nautilus_trader.live.execution_client.LiveExecutionClient.generate_fill_reports">
                 <code class="docutils literal notranslate">
                  <span class="pre">
-                  LiveExecutionClient.generate_trade_reports()
+                  LiveExecutionClient.generate_fill_reports()
                  </span>
                 </code>
                </a>
@@ -3898,28 +3862,6 @@ may be presented directly by an exchange, or broker intermediary.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             logger
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-             <span class="pre">
-              Logger
-             </span>
-            </a>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              config
             </span>
            </span>
@@ -3931,32 +3873,11 @@ may be presented directly by an exchange, or broker intermediary.
            <span class="w">
            </span>
            <span class="n">
-            <span class="pre">
-             dict
-            </span>
-            <span class="p">
+            <a class="reference internal" href="config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
              <span class="pre">
-              [
+              nautilus_trader.config.common.NautilusConfig
              </span>
-            </span>
-            <span class="pre">
-             str
-            </span>
-            <span class="p">
-             <span class="pre">
-              ,
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="pre">
-             Any
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
+            </a>
             <span class="w">
             </span>
             <span class="p">
@@ -4106,41 +4027,14 @@ may be presented directly by an exchange, or broker intermediary.
              <li>
               <p>
                <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the client.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
                 config
                </strong>
                (
-               <em>
-                dict
-               </em>
-               <em>
-                [
-               </em>
-               <em>
-                str
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                object
-               </em>
-               <em>
-                ]
-               </em>
+               <a class="reference internal" href="config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+                <em>
+                 NautilusConfig
+                </em>
+               </a>
                <em>
                 ,
                </em>
@@ -5834,10 +5728,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.live.data_client.LiveDataClient.subscribed_generic_data">
+           <dt class="sig sig-object py" id="nautilus_trader.live.data_client.LiveDataClient.subscribed_custom_data">
             <span class="sig-name descname">
              <span class="pre">
-              subscribed_generic_data
+              subscribed_custom_data
              </span>
             </span>
             <span class="sig-paren">
@@ -5863,13 +5757,13 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.live.data_client.LiveDataClient.subscribed_generic_data" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.live.data_client.LiveDataClient.subscribed_custom_data" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Return the generic data types subscribed to.
+             Return the custom data types subscribed to.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -6154,28 +6048,6 @@ then the component state will not change, and an error will be logged.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             logger
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-             <span class="pre">
-              Logger
-             </span>
-            </a>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              instrument_provider
             </span>
            </span>
@@ -6189,35 +6061,9 @@ then the component state will not change, and an error will be logged.
            <span class="n">
             <a class="reference internal" href="common.html#nautilus_trader.common.providers.InstrumentProvider" title="nautilus_trader.common.providers.InstrumentProvider">
              <span class="pre">
-              nautilus_trader.common.providers.InstrumentProvider
+              InstrumentProvider
              </span>
             </a>
-            <span class="w">
-            </span>
-            <span class="p">
-             <span class="pre">
-              |
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="pre">
-             None
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="o">
-            <span class="pre">
-             =
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="default_value">
-            <span class="pre">
-             None
-            </span>
            </span>
           </em>
           ,
@@ -6235,32 +6081,11 @@ then the component state will not change, and an error will be logged.
            <span class="w">
            </span>
            <span class="n">
-            <span class="pre">
-             dict
-            </span>
-            <span class="p">
+            <a class="reference internal" href="config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
              <span class="pre">
-              [
+              nautilus_trader.config.common.NautilusConfig
              </span>
-            </span>
-            <span class="pre">
-             str
-            </span>
-            <span class="p">
-             <span class="pre">
-              ,
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="pre">
-             Any
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
+            </a>
             <span class="w">
             </span>
             <span class="p">
@@ -6410,20 +6235,6 @@ then the component state will not change, and an error will be logged.
              <li>
               <p>
                <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the client.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
                 instrument_provider
                </strong>
                (
@@ -6432,12 +6243,6 @@ then the component state will not change, and an error will be logged.
                  InstrumentProvider
                 </em>
                </a>
-               <em>
-                ,
-               </em>
-               <em>
-                optional
-               </em>
                ) – The instrument provider for the client.
               </p>
              </li>
@@ -6447,24 +6252,11 @@ then the component state will not change, and an error will be logged.
                 config
                </strong>
                (
-               <em>
-                dict
-               </em>
-               <em>
-                [
-               </em>
-               <em>
-                str
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                object
-               </em>
-               <em>
-                ]
-               </em>
+               <a class="reference internal" href="config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+                <em>
+                 NautilusConfig
+                </em>
+               </a>
                <em>
                 ,
                </em>
@@ -7479,83 +7271,6 @@ done.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.live.data_client.LiveMarketDataClient.subscribe_ticker">
-            <span class="sig-name descname">
-             <span class="pre">
-              subscribe_ticker
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               self
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               InstrumentId
-              </span>
-              <span class="pre">
-               instrument_id
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               void
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.live.data_client.LiveMarketDataClient.subscribe_ticker" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Subscribe to
-             <cite>
-              Ticker
-             </cite>
-             data for the given instrument ID.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Parameters
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <strong>
-                instrument_id
-               </strong>
-               (
-               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
-                <em>
-                 InstrumentId
-                </em>
-               </a>
-               ) – The ticker instrument to subscribe to.
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.live.data_client.LiveMarketDataClient.subscribe_quote_ticks">
             <span class="sig-name descname">
              <span class="pre">
@@ -8283,83 +7998,6 @@ done.
                 </em>
                </a>
                ) – The order book instrument to unsubscribe from.
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.live.data_client.LiveMarketDataClient.unsubscribe_ticker">
-            <span class="sig-name descname">
-             <span class="pre">
-              unsubscribe_ticker
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               self
-              </span>
-             </span>
-            </em>
-            ,
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               InstrumentId
-              </span>
-              <span class="pre">
-               instrument_id
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               void
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.live.data_client.LiveMarketDataClient.unsubscribe_ticker" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Unsubscribe from
-             <cite>
-              Ticker
-             </cite>
-             data for the given instrument ID.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Parameters
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <strong>
-                instrument_id
-               </strong>
-               (
-               <a class="reference internal" href="model/identifiers.html#nautilus_trader.model.identifiers.InstrumentId" title="nautilus_trader.model.identifiers.InstrumentId">
-                <em>
-                 InstrumentId
-                </em>
-               </a>
-               ) – The ticker instrument to unsubscribe from.
               </p>
              </dd>
             </dl>
@@ -10840,10 +10478,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_generic_data">
+           <dt class="sig sig-object py" id="nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_custom_data">
             <span class="sig-name descname">
              <span class="pre">
-              subscribed_generic_data
+              subscribed_custom_data
              </span>
             </span>
             <span class="sig-paren">
@@ -10869,13 +10507,13 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_generic_data" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_custom_data" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Return the generic data types subscribed to.
+             Return the custom data types subscribed to.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -11206,61 +10844,6 @@ then the component state will not change, and an error will be logged.
            <dd>
             <p>
              Return the quote tick instruments subscribed to.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <em>
-                list[InstrumentId]
-               </em>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_tickers">
-            <span class="sig-name descname">
-             <span class="pre">
-              subscribed_tickers
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               self
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               list
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.live.data_client.LiveMarketDataClient.subscribed_tickers" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Return the ticker instruments subscribed to.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -11678,28 +11261,6 @@ then the component state will not change, and an error will be logged.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             logger
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-             <span class="pre">
-              Logger
-             </span>
-            </a>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              config
             </span>
            </span>
@@ -11826,20 +11387,6 @@ then the component state will not change, and an error will be logged.
                 </em>
                </a>
                ) – The clock for the engine.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the engine.
               </p>
              </li>
              <li>
@@ -13019,7 +12566,7 @@ loop is running on. Calling it from a different thread may lead to unexpected be
            </dt>
            <dd>
             <p>
-             Optional[ClientId]
+             ClientId | None
             </p>
             <p>
              Return the default data client registered with the engine.
@@ -13033,9 +12580,12 @@ loop is running on. Calling it from a different thread may lead to unexpected be
              </dt>
              <dd class="field-odd">
               <p>
-               <em>
-                Optional[ClientId]
-               </em>
+               ClientId or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
               </p>
              </dd>
              <dt class="field-even">
@@ -14578,10 +14128,10 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.live.data_engine.LiveDataEngine.subscribed_generic_data">
+           <dt class="sig sig-object py" id="nautilus_trader.live.data_engine.LiveDataEngine.subscribed_custom_data">
             <span class="sig-name descname">
              <span class="pre">
-              subscribed_generic_data
+              subscribed_custom_data
              </span>
             </span>
             <span class="sig-paren">
@@ -14607,13 +14157,13 @@ then the component state will not change, and an error will be logged.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_generic_data" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_custom_data" title="Permalink to this definition">
              ¶
             </a>
            </dt>
            <dd>
             <p>
-             Return the generic data types subscribed to.
+             Return the custom data types subscribed to.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -15073,61 +14623,6 @@ then the component state will not change, and an error will be logged.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.live.data_engine.LiveDataEngine.subscribed_tickers">
-            <span class="sig-name descname">
-             <span class="pre">
-              subscribed_tickers
-             </span>
-            </span>
-            <span class="sig-paren">
-             (
-            </span>
-            <em class="sig-param">
-             <span class="n">
-              <span class="pre">
-               self
-              </span>
-             </span>
-            </em>
-            <span class="sig-paren">
-             )
-            </span>
-            <span class="sig-return">
-             <span class="sig-return-icon">
-              →
-             </span>
-             <span class="sig-return-typehint">
-              <span class="pre">
-               list
-              </span>
-             </span>
-            </span>
-            <a class="headerlink" href="#nautilus_trader.live.data_engine.LiveDataEngine.subscribed_tickers" title="Permalink to this definition">
-             ¶
-            </a>
-           </dt>
-           <dd>
-            <p>
-             Return the ticker instruments subscribed to.
-            </p>
-            <dl class="field-list simple">
-             <dt class="field-odd">
-              Returns
-              <span class="colon">
-               :
-              </span>
-             </dt>
-             <dd class="field-odd">
-              <p>
-               <em>
-                list[InstrumentId]
-               </em>
-              </p>
-             </dd>
-            </dl>
-           </dd>
-          </dl>
-          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.live.data_engine.LiveDataEngine.subscribed_trade_ticks">
             <span class="sig-name descname">
              <span class="pre">
@@ -15516,28 +15011,6 @@ which may be presented directly by an exchange, or broker intermediary.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             logger
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-             <span class="pre">
-              Logger
-             </span>
-            </a>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              config
             </span>
            </span>
@@ -15549,32 +15022,11 @@ which may be presented directly by an exchange, or broker intermediary.
            <span class="w">
            </span>
            <span class="n">
-            <span class="pre">
-             dict
-            </span>
-            <span class="p">
+            <a class="reference internal" href="config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
              <span class="pre">
-              [
+              nautilus_trader.config.common.NautilusConfig
              </span>
-            </span>
-            <span class="pre">
-             str
-            </span>
-            <span class="p">
-             <span class="pre">
-              ,
-             </span>
-            </span>
-            <span class="w">
-            </span>
-            <span class="pre">
-             Any
-            </span>
-            <span class="p">
-             <span class="pre">
-              ]
-             </span>
-            </span>
+            </a>
             <span class="w">
             </span>
             <span class="p">
@@ -15776,41 +15228,14 @@ which may be presented directly by an exchange, or broker intermediary.
              <li>
               <p>
                <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the client.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
                 config
                </strong>
                (
-               <em>
-                dict
-               </em>
-               <em>
-                [
-               </em>
-               <em>
-                str
-               </em>
-               <em>
-                ,
-               </em>
-               <em>
-                object
-               </em>
-               <em>
-                ]
-               </em>
+               <a class="reference internal" href="config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
+                <em>
+                 NautilusConfig
+                </em>
+               </a>
                <em>
                 ,
                </em>
@@ -17464,7 +16889,7 @@ done.
            </dd>
           </dl>
           <dl class="py method">
-           <dt class="sig sig-object py" id="nautilus_trader.live.execution_client.LiveExecutionClient.generate_trade_reports">
+           <dt class="sig sig-object py" id="nautilus_trader.live.execution_client.LiveExecutionClient.generate_fill_reports">
             <em class="property">
              <span class="pre">
               async
@@ -17474,7 +16899,7 @@ done.
             </em>
             <span class="sig-name descname">
              <span class="pre">
-              generate_trade_reports
+              generate_fill_reports
              </span>
             </span>
             <span class="sig-paren">
@@ -17683,9 +17108,9 @@ done.
                 [
                </span>
               </span>
-              <a class="reference internal" href="execution.html#nautilus_trader.execution.reports.TradeReport" title="nautilus_trader.execution.reports.TradeReport">
+              <a class="reference internal" href="execution.html#nautilus_trader.execution.reports.FillReport" title="nautilus_trader.execution.reports.FillReport">
                <span class="pre">
-                nautilus_trader.execution.reports.TradeReport
+                nautilus_trader.execution.reports.FillReport
                </span>
               </a>
               <span class="p">
@@ -17695,7 +17120,7 @@ done.
               </span>
              </span>
             </span>
-            <a class="headerlink" href="#nautilus_trader.live.execution_client.LiveExecutionClient.generate_trade_reports" title="Permalink to this definition">
+            <a class="headerlink" href="#nautilus_trader.live.execution_client.LiveExecutionClient.generate_fill_reports" title="Permalink to this definition">
              ¶
             </a>
            </dt>
@@ -17707,7 +17132,7 @@ done.
                `
               </span>
              </a>
-             TradeReport`s with optional query filters.
+             FillReport`s with optional query filters.
             </p>
             <p>
              The returned list may be empty if no trades match the given parameters.
@@ -17808,7 +17233,7 @@ done.
              <dd class="field-even">
               <p>
                <em>
-                list[TradeReport]
+                list[FillReport]
                </em>
               </p>
              </dd>
@@ -19598,95 +19023,173 @@ then the component state will not change, and an error will be logged.
              (
             </span>
             <em class="sig-param">
-             <span class="pre">
-              self,
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
              </span>
-             <span class="pre">
-              StrategyId
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               StrategyId
+              </span>
+              <span class="pre">
+               strategy_id
+              </span>
              </span>
-             <span class="pre">
-              strategy_id,
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               InstrumentId
+              </span>
+              <span class="pre">
+               instrument_id
+              </span>
              </span>
-             <span class="pre">
-              InstrumentId
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               ClientOrderId
+              </span>
+              <span class="pre">
+               client_order_id
+              </span>
              </span>
-             <span class="pre">
-              instrument_id,
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               VenueOrderId
+              </span>
+              <span class="pre">
+               venue_order_id
+              </span>
              </span>
-             <span class="pre">
-              ClientOrderId
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               PositionId
+              </span>
+              <span class="pre">
+               venue_position_id:
+              </span>
+              <span class="pre">
+               PositionId
+              </span>
+              <span class="pre">
+               |
+              </span>
+              <span class="pre">
+               None
+              </span>
              </span>
-             <span class="pre">
-              client_order_id,
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               TradeId
+              </span>
+              <span class="pre">
+               trade_id
+              </span>
              </span>
-             <span class="pre">
-              VenueOrderId
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               OrderSide
+              </span>
+              <span class="pre">
+               order_side
+              </span>
              </span>
-             <span class="pre">
-              venue_order_id,
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               OrderType
+              </span>
+              <span class="pre">
+               order_type
+              </span>
              </span>
-             <span class="pre">
-              PositionId
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Quantity
+              </span>
+              <span class="pre">
+               last_qty
+              </span>
              </span>
-             <span class="pre">
-              venue_position_id:
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Price
+              </span>
+              <span class="pre">
+               last_px
+              </span>
              </span>
-             <span class="pre">
-              Optional[PositionId],
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Currency
+              </span>
+              <span class="pre">
+               quote_currency
+              </span>
              </span>
-             <span class="pre">
-              TradeId
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               Money
+              </span>
+              <span class="pre">
+               commission
+              </span>
              </span>
-             <span class="pre">
-              trade_id,
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               LiquiditySide
+              </span>
+              <span class="pre">
+               liquidity_side
+              </span>
              </span>
-             <span class="pre">
-              OrderSide
-             </span>
-             <span class="pre">
-              order_side,
-             </span>
-             <span class="pre">
-              OrderType
-             </span>
-             <span class="pre">
-              order_type,
-             </span>
-             <span class="pre">
-              Quantity
-             </span>
-             <span class="pre">
-              last_qty,
-             </span>
-             <span class="pre">
-              Price
-             </span>
-             <span class="pre">
-              last_px,
-             </span>
-             <span class="pre">
-              Currency
-             </span>
-             <span class="pre">
-              quote_currency,
-             </span>
-             <span class="pre">
-              Money
-             </span>
-             <span class="pre">
-              commission,
-             </span>
-             <span class="pre">
-              LiquiditySide
-             </span>
-             <span class="pre">
-              liquidity_side,
-             </span>
-             <span class="pre">
-              uint64_t
-             </span>
-             <span class="pre">
-              ts_event
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               uint64_t
+              </span>
+              <span class="pre">
+               ts_event
+              </span>
              </span>
             </em>
             <span class="sig-paren">
@@ -21951,28 +21454,6 @@ then the component state will not change, and an error will be logged.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             logger
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-             <span class="pre">
-              Logger
-             </span>
-            </a>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              config
             </span>
            </span>
@@ -22099,20 +21580,6 @@ then the component state will not change, and an error will be logged.
                 </em>
                </a>
                ) – The clock for the engine.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the engine.
               </p>
              </li>
              <li>
@@ -23415,7 +22882,7 @@ state).
            </dt>
            <dd>
             <p>
-             Optional[ClientId]
+             ClientId | None
             </p>
             <p>
              Return the default execution client registered with the engine.
@@ -25557,28 +25024,6 @@ then the component state will not change, and an error will be logged.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
-             logger
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-             <span class="pre">
-              Logger
-             </span>
-            </a>
-           </span>
-          </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
              config
             </span>
            </span>
@@ -25719,20 +25164,6 @@ then the component state will not change, and an error will be logged.
                 </em>
                </a>
                ) – The clock for the engine.
-              </p>
-             </li>
-             <li>
-              <p>
-               <strong>
-                logger
-               </strong>
-               (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
-                <em>
-                 Logger
-                </em>
-               </a>
-               ) – The logger for the engine.
               </p>
              </li>
              <li>
@@ -29474,28 +28905,6 @@ If
             </a>
            </span>
           </em>
-          ,
-          <em class="sig-param">
-           <span class="n">
-            <span class="pre">
-             log
-            </span>
-           </span>
-           <span class="p">
-            <span class="pre">
-             :
-            </span>
-           </span>
-           <span class="w">
-           </span>
-           <span class="n">
-            <a class="reference internal" href="common.html#nautilus_trader.common.logging.LoggerAdapter" title="nautilus_trader.common.logging.LoggerAdapter">
-             <span class="pre">
-              LoggerAdapter
-             </span>
-            </a>
-           </span>
-          </em>
           <span class="sig-paren">
            )
           </span>
@@ -29640,9 +29049,9 @@ If
                 log
                </strong>
                (
-               <a class="reference internal" href="common.html#nautilus_trader.common.logging.LoggerAdapter" title="nautilus_trader.common.logging.LoggerAdapter">
+               <a class="reference internal" href="common.html#nautilus_trader.common.logging.Logger" title="nautilus_trader.common.logging.Logger">
                 <em>
-                 LoggerAdapter
+                 Logger
                 </em>
                </a>
                ) – The trading nodes logger.
@@ -30268,7 +29677,7 @@ If
     <div class="md-footer-meta__inner md-grid">
      <div class="md-footer-copyright">
       <div class="md-footer-copyright__highlight">
-       © Copyright 2015-2023 Nautech Systems Pty Ltd.
+       © Copyright 2015-2024 Nautech Systems Pty Ltd.
       </div>
      </div>
     </div>
