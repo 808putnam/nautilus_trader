@@ -769,23 +769,11 @@ with a standardized facade from the
           </span>
          </code>
          crate.
-The core logger operates in a separate thread and uses a multi-producer single consumer (MPSC) channel to receive log messages.
+        </p>
+        <p>
+         The core logger operates in a separate thread and uses a multi-producer single consumer (MPSC) channel to receive log messages.
 This design ensures that the main thread is not blocked by log string formatting or file I/O operations.
         </p>
-        <div class="admonition note">
-         <p class="admonition-title">
-          Note
-         </p>
-         <p>
-          The latest stable Rust MPSC channel is used, which is now based on the
-          <code class="docutils literal notranslate">
-           <span class="pre">
-            crossbeam
-           </span>
-          </code>
-          implementation.
-         </p>
-        </div>
         <p>
          There are two configurable writers for logging:
         </p>
@@ -849,27 +837,53 @@ By default, log events with an ‘INFO’
          <ul class="simple">
           <li>
            <p>
-            ‘OFF’
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              OFF
+             </span>
+            </code>
            </p>
           </li>
           <li>
            <p>
-            ‘DEBUG’
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              DEBUG
+             </span>
+            </code>
            </p>
           </li>
           <li>
            <p>
-            ‘INFO’
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              INFO
+             </span>
+            </code>
            </p>
           </li>
           <li>
            <p>
-            ‘WARNING’ or ‘WARN’
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              WARNING
+             </span>
+            </code>
+            or
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              WARN
+             </span>
+            </code>
            </p>
           </li>
           <li>
            <p>
-            ‘ERROR’
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              ERROR
+             </span>
+            </code>
            </p>
           </li>
          </ul>
@@ -1198,15 +1212,23 @@ then you can initialize a logging in the following way:
 </pre>
            </div>
           </div>
-          <p>
-           There are many configuration options for the
-           <code class="docutils literal notranslate">
-            <span class="pre">
-             init_logging
+          <div class="admonition note">
+           <p class="admonition-title">
+            Note
+           </p>
+           <p>
+            See the
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              init_logging
+             </span>
+            </code>
+            <span class="xref myst">
+             API Reference
             </span>
-           </code>
-           call, please see its docstring for further details.
-          </p>
+            for further details.
+           </p>
+          </div>
           <div class="admonition warning">
            <p class="admonition-title">
             Warning
