@@ -888,7 +888,7 @@ through adapter implementations, these can be found in the top level
             <pre><span></span><span class="kn">from</span> <span class="nn">nautilus_trader.adapters.binance.common.enums</span> <span class="kn">import</span> <span class="n">BinanceAccountType</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.adapters.binance.factories</span> <span class="kn">import</span> <span class="n">get_cached_binance_http_client</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.adapters.binance.futures.providers</span> <span class="kn">import</span> <span class="n">BinanceFuturesInstrumentProvider</span>
-<span class="kn">from</span> <span class="nn">nautilus_trader.common.clock</span> <span class="kn">import</span> <span class="n">LiveClock</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.common.component</span> <span class="kn">import</span> <span class="n">LiveClock</span>
 
 
 <span class="n">clock</span> <span class="o">=</span> <span class="n">LiveClock</span><span class="p">()</span>
