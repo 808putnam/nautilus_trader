@@ -749,27 +749,6 @@
                </a>
               </li>
               <li class="md-nav__item">
-               <a class="md-nav__link" href="#trader-keys">
-                Trader keys
-               </a>
-               <span class="arrow">
-                <i class="fa-solid fa-chevron-right">
-                </i>
-               </span>
-               <ul class="submenu">
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#stream">
-                  Stream
-                 </a>
-                </li>
-                <li class="md-nav__item">
-                 <a class="md-nav__link" href="#instance-id">
-                  Instance ID
-                 </a>
-                </li>
-               </ul>
-              </li>
-              <li class="md-nav__item">
                <a class="md-nav__link" href="#encoding">
                 Encoding
                </a>
@@ -778,6 +757,37 @@
                <a class="md-nav__link" href="#timestamp-formatting">
                 Timestamp formatting
                </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#message-stream-keys">
+                Message stream keys
+               </a>
+               <span class="arrow">
+                <i class="fa-solid fa-chevron-right">
+                </i>
+               </span>
+               <ul class="submenu">
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#trader-prefix">
+                  Trader prefix
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#trader-id">
+                  Trader ID
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#instance-id">
+                  Instance ID
+                 </a>
+                </li>
+                <li class="md-nav__item">
+                 <a class="md-nav__link" href="#streams-prefix">
+                  Streams prefix
+                 </a>
+                </li>
+               </ul>
               </li>
               <li class="md-nav__item">
                <a class="md-nav__link" href="#types-filtering">
@@ -1088,11 +1098,14 @@ your
 <span class="n">message_bus</span><span class="o">=</span><span class="n">MessageBusConfig</span><span class="p">(</span>
     <span class="n">database</span><span class="o">=</span><span class="n">DatabaseConfig</span><span class="p">(),</span>
     <span class="n">encoding</span><span class="o">=</span><span class="s2">"json"</span><span class="p">,</span>
-    <span class="n">stream</span><span class="o">=</span><span class="s2">"streams"</span><span class="p">,</span>
-    <span class="n">use_instance_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">timestamps_as_iso8601</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">types_filter</span><span class="o">=</span><span class="p">[</span><span class="n">QuoteTick</span><span class="p">,</span> <span class="n">TradeTick</span><span class="p">],</span>
+    <span class="n">buffer_interval_ms</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
     <span class="n">autotrim_mins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+    <span class="n">use_trader_prefix</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">use_trader_id</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">use_instance_id</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">streams_prefix</span><span class="o">=</span><span class="s2">"streams"</span><span class="p">,</span>
+    <span class="n">types_filter</span><span class="o">=</span><span class="p">[</span><span class="n">QuoteTick</span><span class="p">,</span> <span class="n">TradeTick</span><span class="p">],</span>
 <span class="p">)</span>
 <span class="o">...</span>
 </pre>
@@ -1121,76 +1134,6 @@ loopback you can pass a
            </code>
            , which will use defaults to match.
           </p>
-         </section>
-         <section id="trader-keys">
-          <h3 id="trader-keys">
-           Trader keys
-           <a class="headerlink" href="#trader-keys" title="Permalink to this heading">
-            ¶
-           </a>
-          </h3>
-          <p>
-           Trader keys are essential for identifying individual trader nodes and organizing messages within streams.
-They can be tailored to meet your specific requirements and use cases. In the context of message bus streams, a trader key is typically structured as follows:
-          </p>
-          <div class="highlight-default notranslate">
-           <div class="highlight">
-            <pre><span></span><span class="p">{</span><span class="n">stream</span><span class="p">}:{</span><span class="n">trader_id</span><span class="p">}:{</span><span class="n">instance_id</span><span class="p">}</span>
-</pre>
-           </div>
-          </div>
-          <p>
-           The following options are available for configuring trader keys:
-          </p>
-          <section id="stream">
-           <h4 id="stream">
-            Stream
-            <a class="headerlink" href="#stream" title="Permalink to this heading">
-             ¶
-            </a>
-           </h4>
-           <p>
-            The
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              stream
-             </span>
-            </code>
-            string allows you to group all streams for a single trader instance, or organize messages related to a group of trader instances.
-By configuring this grouping behavior, pass a string to the
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              stream
-             </span>
-            </code>
-            configuration option.
-           </p>
-          </section>
-          <section id="instance-id">
-           <h4 id="instance-id">
-            Instance ID
-            <a class="headerlink" href="#instance-id" title="Permalink to this heading">
-             ¶
-            </a>
-           </h4>
-           <p>
-            Each trader node is assigned a unique ‘instance ID,’ which is a UUIDv4. This instance ID helps distinguish individual traders when messages
-are distributed across multiple streams. You can include the instance ID in the trader key by setting the
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              use_instance_id
-             </span>
-            </code>
-            configuration option to
-            <code class="docutils literal notranslate">
-             <span class="pre">
-              True
-             </span>
-            </code>
-            .
-This is particularly useful when you need to track and identify traders across various streams in a multi-node trading system.
-           </p>
-          </section>
          </section>
          <section id="encoding">
           <h3 id="encoding">
@@ -1292,6 +1235,104 @@ configure ISO 8601 string formatting by setting the
            </code>
            .
           </p>
+         </section>
+         <section id="message-stream-keys">
+          <h3 id="message-stream-keys">
+           Message stream keys
+           <a class="headerlink" href="#message-stream-keys" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Message stream keys are essential for identifying individual trader nodes and organizing messages within streams.
+They can be tailored to meet your specific requirements and use cases. In the context of message bus streams, a trader key is typically structured as follows:
+          </p>
+          <div class="highlight-default notranslate">
+           <div class="highlight">
+            <pre><span></span><span class="n">trader</span><span class="p">:{</span><span class="n">trader_id</span><span class="p">}:{</span><span class="n">instance_id</span><span class="p">}:{</span><span class="n">streams_prefix</span><span class="p">}</span>
+</pre>
+           </div>
+          </div>
+          <p>
+           The following options are available for configuring message stream keys:
+          </p>
+          <section id="trader-prefix">
+           <h4 id="trader-prefix">
+            Trader prefix
+            <a class="headerlink" href="#trader-prefix" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            If the key should begin with the
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              trader
+             </span>
+            </code>
+            string.
+           </p>
+          </section>
+          <section id="trader-id">
+           <h4 id="trader-id">
+            Trader ID
+            <a class="headerlink" href="#trader-id" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            If the key should include the trader ID for the node.
+           </p>
+          </section>
+          <section id="instance-id">
+           <h4 id="instance-id">
+            Instance ID
+            <a class="headerlink" href="#instance-id" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            Each trader node is assigned a unique ‘instance ID,’ which is a UUIDv4. This instance ID helps distinguish individual traders when messages
+are distributed across multiple streams. You can include the instance ID in the trader key by setting the
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              use_instance_id
+             </span>
+            </code>
+            configuration option to
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              True
+             </span>
+            </code>
+            .
+This is particularly useful when you need to track and identify traders across various streams in a multi-node trading system.
+           </p>
+          </section>
+          <section id="streams-prefix">
+           <h4 id="streams-prefix">
+            Streams prefix
+            <a class="headerlink" href="#streams-prefix" title="Permalink to this heading">
+             ¶
+            </a>
+           </h4>
+           <p>
+            The
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              streams_prefix
+             </span>
+            </code>
+            string allows you to group all streams for a single trader instance, or organize messages related to a group of trader instances.
+By configuring this grouping behavior, pass a string to the
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              streams_prefix
+             </span>
+            </code>
+            configuration option (with other prefixes false).
+           </p>
+          </section>
          </section>
          <section id="types-filtering">
           <h3 id="types-filtering">
