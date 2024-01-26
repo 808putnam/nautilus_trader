@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["DatabentoPublisher"],"type":["PublisherId"]};
+window.SIDEBAR_ITEMS = {"struct":["DatabentoPublisher"],"type":["Dataset","PublisherId"]};

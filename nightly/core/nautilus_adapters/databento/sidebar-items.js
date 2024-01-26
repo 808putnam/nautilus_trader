@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["common","loader","parsing","python","types"]};
+window.SIDEBAR_ITEMS = {"mod":["common","loader","parsing","python","symbology","types"]};
