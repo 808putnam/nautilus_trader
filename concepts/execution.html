@@ -1147,8 +1147,8 @@ determine how a primary order is split into a series of spawned orders.
            <div class="highlight">
             <pre><span></span><span class="c1"># Configure your strategy</span>
 <span class="n">config</span> <span class="o">=</span> <span class="n">EMACrossTWAPConfig</span><span class="p">(</span>
-    <span class="n">instrument_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">ETHUSDT_BINANCE</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
-    <span class="n">bar_type</span><span class="o">=</span><span class="s2">"ETHUSDT.BINANCE-250-TICK-LAST-INTERNAL"</span><span class="p">,</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">ETHUSDT_BINANCE</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+    <span class="n">bar_type</span><span class="o">=</span><span class="n">BarType</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT.BINANCE-250-TICK-LAST-INTERNAL"</span><span class="p">),</span>
     <span class="n">trade_size</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">"0.05"</span><span class="p">),</span>
     <span class="n">fast_ema_period</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
     <span class="n">slow_ema_period</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>

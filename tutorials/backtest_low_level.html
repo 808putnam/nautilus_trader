@@ -857,6 +857,7 @@ with a TWAP execution algorithm on a simulated Binance Spot exchange using histo
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.currencies</span> <span class="kn">import</span> <span class="n">USDT</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">AccountType</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.enums</span> <span class="kn">import</span> <span class="n">OmsType</span>
+<span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">TraderId</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.identifiers</span> <span class="kn">import</span> <span class="n">Venue</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.objects</span> <span class="kn">import</span> <span class="n">Money</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.persistence.wranglers</span> <span class="kn">import</span> <span class="n">TradeTickDataWrangler</span>
@@ -970,7 +971,7 @@ to show the general configuration pattern:
          <div class="highlight-python notranslate">
           <div class="highlight">
            <pre><span></span><span class="c1"># Configure backtest engine</span>
-<span class="n">config</span> <span class="o">=</span> <span class="n">BacktestEngineConfig</span><span class="p">(</span><span class="n">trader_id</span><span class="o">=</span><span class="s2">"BACKTESTER-001"</span><span class="p">)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">BacktestEngineConfig</span><span class="p">(</span><span class="n">trader_id</span><span class="o">=</span><span class="n">TraderId</span><span class="p">(</span><span class="s2">"BACKTESTER-001"</span><span class="p">))</span>
 
 <span class="c1"># Build the backtest engine</span>
 <span class="n">engine</span> <span class="o">=</span> <span class="n">BacktestEngine</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
@@ -1098,8 +1099,8 @@ to show the general configuration pattern:
            <pre><span></span>
 <span class="c1"># Configure your strategy</span>
 <span class="n">strategy_config</span> <span class="o">=</span> <span class="n">EMACrossTWAPConfig</span><span class="p">(</span>
-    <span class="n">instrument_id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">ETHUSDT_BINANCE</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
-    <span class="n">bar_type</span><span class="o">=</span><span class="s2">"ETHUSDT.BINANCE-250-TICK-LAST-INTERNAL"</span><span class="p">,</span>
+    <span class="n">instrument_id</span><span class="o">=</span><span class="n">ETHUSDT_BINANCE</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+    <span class="n">bar_type</span><span class="o">=</span><span class="n">BarType</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ETHUSDT.BINANCE-250-TICK-LAST-INTERNAL"</span><span class="p">),</span>
     <span class="n">trade_size</span><span class="o">=</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">"0.10"</span><span class="p">),</span>
     <span class="n">fast_ema_period</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
     <span class="n">slow_ema_period</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>

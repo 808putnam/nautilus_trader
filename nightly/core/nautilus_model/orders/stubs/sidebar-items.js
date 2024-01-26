@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["market_order"],"struct":["TestOrderEventStubs"]};
