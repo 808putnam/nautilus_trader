@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -15,24 +15,22 @@
 
 import pytest
 
-from nautilus_trader.common.clock import TestClock
+from nautilus_trader.common.component import Logger
+from nautilus_trader.common.component import init_logging
 from nautilus_trader.common.enums import LogColor
 from nautilus_trader.common.enums import LogLevel
 from nautilus_trader.common.enums import log_level_from_str
 from nautilus_trader.common.enums import log_level_to_str
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.common.logging import LoggerAdapter
 
 
 class TestLogLevel:
     @pytest.mark.parametrize(
         ("enum", "expected"),
         [
-            [LogLevel.DEBUG, "DBG"],
-            [LogLevel.INFO, "INF"],
-            [LogLevel.WARNING, "WRN"],
-            [LogLevel.ERROR, "ERR"],
-            [LogLevel.CRITICAL, "CRT"],
+            [LogLevel.DEBUG, "DEBUG"],
+            [LogLevel.INFO, "INFO"],
+            [LogLevel.WARNING, "WARNING"],
+            [LogLevel.ERROR, "ERROR"],
         ],
     )
     def test_log_level_to_str(self, enum, expected):
@@ -45,16 +43,11 @@ class TestLogLevel:
     @pytest.mark.parametrize(
         ("string", "expected"),
         [
-            ["DBG", LogLevel.DEBUG],
             ["DEBUG", LogLevel.DEBUG],
-            ["INF", LogLevel.INFO],
             ["INFO", LogLevel.INFO],
-            ["WRN", LogLevel.WARNING],
+            ["WARN", LogLevel.WARNING],
             ["WARNING", LogLevel.WARNING],
-            ["ERR", LogLevel.ERROR],
             ["ERROR", LogLevel.ERROR],
-            ["CRT", LogLevel.CRITICAL],
-            ["CRITICAL", LogLevel.CRITICAL],
         ],
     )
     def test_log_level_from_str(self, string, expected):
@@ -66,139 +59,87 @@ class TestLogLevel:
 
 
 class TestLoggerTests:
+    def test_name(self):
+        # Arrange
+        name = "TEST_LOGGER"
+        logger = Logger(name=name)
+
+        # Act, Assert
+        assert logger.name == name
+
     def test_log_debug_messages_to_console(self):
         # Arrange
-        logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.DEBUG,
-            bypass=True,
-        )
-        logger_adapter = LoggerAdapter(component_name="TEST_LOGGER", logger=logger)
+        init_logging(level_stdout=LogLevel.DEBUG, bypass=True)
+        logger = Logger(name="TEST_LOGGER")
 
         # Act
-        logger_adapter.debug("This is a log message.")
+        logger.debug("This is a log message.")
 
         # Assert
         assert True  # No exceptions raised
 
     def test_log_info_messages_to_console(self):
         # Arrange
-        logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.INFO,
-            bypass=True,
-        )
-        logger_adapter = LoggerAdapter(component_name="TEST_LOGGER", logger=logger)
+        init_logging(level_stdout=LogLevel.INFO, bypass=True)
+        logger = Logger(name="TEST_LOGGER")
 
         # Act
-        logger_adapter.info("This is a log message.")
-
-        # Assert
-        assert True  # No exceptions raised
-
-    def test_log_info_with_annotation_sends_to_stdout(self):
-        # Arrange
-        logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.INFO,
-            bypass=True,
-        )
-        logger_adapter = LoggerAdapter(component_name="TEST_LOGGER", logger=logger)
-
-        annotations = {"my_tag": "something"}
-
-        # Act
-        logger_adapter.info("This is a log message.", annotations=annotations)
+        logger.info("This is a log message.")
 
         # Assert
         assert True  # No exceptions raised
 
     def test_log_info_messages_to_console_with_blue_colour(self):
         # Arrange
-        logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.INFO,
-            bypass=True,
-        )
-        logger_adapter = LoggerAdapter(component_name="TEST_LOGGER", logger=logger)
+        init_logging(level_stdout=LogLevel.INFO, bypass=True)
+        logger = Logger(name="TEST_LOGGER")
 
         # Act
-        logger_adapter.info("This is a log message.", color=LogColor.BLUE)
+        logger.info("This is a log message.", color=LogColor.BLUE)
 
         # Assert
         assert True  # No exceptions raised
 
     def test_log_info_messages_to_console_with_green_colour(self):
         # Arrange
-        logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.INFO,
-            bypass=True,
-        )
-        logger_adapter = LoggerAdapter(component_name="TEST_LOGGER", logger=logger)
+        init_logging(level_stdout=LogLevel.INFO, bypass=True)
+        logger = Logger(name="TEST_LOGGER")
 
         # Act
-        logger_adapter.info("This is a log message.", color=LogColor.GREEN)
+        logger.info("This is a log message.", color=LogColor.GREEN)
 
         # Assert
         assert True  # No exceptions raised
 
     def test_log_warning_messages_to_console(self):
         # Arrange
-        logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.WARNING,
-            bypass=True,
-        )
-        logger_adapter = LoggerAdapter(component_name="TEST_LOGGER", logger=logger)
+        init_logging(level_stdout=LogLevel.WARNING, bypass=True)
+        logger = Logger(name="TEST_LOGGER")
 
         # Act
-        logger_adapter.warning("This is a log message.")
+        logger.warning("This is a log message.")
 
         # Assert
         assert True  # No exceptions raised
 
     def test_log_error_messages_to_console(self):
         # Arrange
-        logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.ERROR,
-            bypass=True,
-        )
-        logger_adapter = LoggerAdapter(component_name="TEST_LOGGER", logger=logger)
+        init_logging(level_stdout=LogLevel.ERROR, bypass=True)
+        logger = Logger(name="TEST_LOGGER")
 
         # Act
-        logger_adapter.error("This is a log message.")
-
-        # Assert
-        assert True  # No exceptions raised
-
-    def test_log_critical_messages_to_console(self):
-        # Arrange
-        logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.CRITICAL,
-            bypass=True,
-        )
-        logger_adapter = LoggerAdapter(component_name="TEST_LOGGER", logger=logger)
-
-        # Act
-        logger_adapter.critical("This is a log message.")
+        logger.error("This is a log message.")
 
         # Assert
         assert True  # No exceptions raised
 
     def test_log_exception_messages_to_console(self):
         # Arrange
-        logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.CRITICAL,
-            bypass=True,
-        )
-        logger_adapter = LoggerAdapter(component_name="TEST_LOGGER", logger=logger)
+        init_logging(level_stdout=LogLevel.ERROR)
+        logger = Logger(name="TEST_LOGGER")
 
         # Act
-        logger_adapter.exception("We intentionally divided by zero!", ZeroDivisionError("Oops"))
+        logger.exception("We intentionally divided by zero!", ZeroDivisionError("Oops"))
 
         # Assert
         assert True  # No exceptions raised

@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -22,10 +22,10 @@ import aiohttp
 import msgspec
 
 import nautilus_trader
+from nautilus_trader.adapters.bybit.common.error import raise_bybit_error
 from nautilus_trader.adapters.bybit.http.errors import BybitError
-from nautilus_trader.common.clock import LiveClock
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.common.logging import LoggerAdapter
+from nautilus_trader.common.component import LiveClock
+from nautilus_trader.common.component import Logger
 from nautilus_trader.core.nautilus_pyo3 import HttpClient
 from nautilus_trader.core.nautilus_pyo3 import HttpMethod
 from nautilus_trader.core.nautilus_pyo3 import HttpResponse
@@ -51,7 +51,6 @@ class BybitHttpClient:
     def __init__(
         self,
         clock: LiveClock,
-        logger: Logger,
         api_key: str,
         api_secret: str,
         base_url: str,
@@ -59,7 +58,7 @@ class BybitHttpClient:
         ratelimiter_default_quota: Quota | None = None,
     ) -> None:
         self._clock: LiveClock = clock
-        self._log: LoggerAdapter = LoggerAdapter(type(self).__name__, logger=logger)
+        self._log: Logger = Logger(name=type(self).__name__)
         self._api_key: str = api_key
         self._api_secret: str = api_secret
         self._recv_window: int = 8000
@@ -67,7 +66,7 @@ class BybitHttpClient:
         self._base_url: str = base_url
         self._headers: dict[str, Any] = {
             "Content-Type": "application/json",
-            "User-Agent": "nautilus-trader/" + nautilus_trader.__version__,
+            "User-Agent": nautilus_trader.USER_AGENT,
             "X-BAPI-API-KEY": self._api_key,
         }
         self._client = HttpClient(
@@ -127,11 +126,8 @@ class BybitHttpClient:
         if response_status.retCode == 0:
             return response.body
         else:
-            self._handle_error_by_code(response_status.retCode)
+            raise_bybit_error(response_status.retCode)
         return None
-
-    def _handle_error_by_code(self, code: int):
-        pass
 
     async def sign_request(
         self,

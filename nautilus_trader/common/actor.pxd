@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,11 +19,10 @@ from cpython.datetime cimport datetime
 from libc.stdint cimport uint64_t
 
 from nautilus_trader.cache.base cimport CacheFacade
-from nautilus_trader.common.clock cimport Clock
+from nautilus_trader.common.component cimport Clock
 from nautilus_trader.common.component cimport Component
+from nautilus_trader.common.component cimport Logger
 from nautilus_trader.common.component cimport MessageBus
-from nautilus_trader.common.logging cimport Logger
-from nautilus_trader.common.logging cimport LoggerAdapter
 from nautilus_trader.core.data cimport Data
 from nautilus_trader.core.message cimport Event
 from nautilus_trader.core.rust.model cimport BookType
@@ -40,7 +39,6 @@ from nautilus_trader.model.data cimport InstrumentClose
 from nautilus_trader.model.data cimport InstrumentStatus
 from nautilus_trader.model.data cimport OrderBookDeltas
 from nautilus_trader.model.data cimport QuoteTick
-from nautilus_trader.model.data cimport Ticker
 from nautilus_trader.model.data cimport TradeTick
 from nautilus_trader.model.data cimport VenueStatus
 from nautilus_trader.model.identifiers cimport ClientId
@@ -48,6 +46,7 @@ from nautilus_trader.model.identifiers cimport InstrumentId
 from nautilus_trader.model.identifiers cimport Venue
 from nautilus_trader.model.instruments.base cimport Instrument
 from nautilus_trader.model.instruments.synthetic cimport SyntheticInstrument
+from nautilus_trader.portfolio.base cimport PortfolioFacade
 
 
 cdef class Actor(Component):
@@ -60,12 +59,14 @@ cdef class Actor(Component):
     cdef dict _indicators_for_trades
     cdef dict _indicators_for_bars
 
+    cdef readonly PortfolioFacade portfolio
+    """The read-only portfolio for the actor.\n\n:returns: `PortfolioFacade`"""
     cdef readonly config
     """The actors configuration.\n\n:returns: `NautilusConfig`"""
     cdef readonly Clock clock
     """The actors clock.\n\n:returns: `Clock`"""
-    cdef readonly LoggerAdapter log
-    """The actors logger.\n\n:returns: `LoggerAdapter`"""
+    cdef readonly Logger log
+    """The actors logger.\n\n:returns: `Logger`"""
     cdef readonly MessageBus msgbus
     """The message bus for the actor (if registered).\n\n:returns: `MessageBus` or ``None``"""
     cdef readonly CacheFacade cache
@@ -90,7 +91,6 @@ cdef class Actor(Component):
     cpdef void on_instrument(self, Instrument instrument)
     cpdef void on_order_book_deltas(self, OrderBookDeltas deltas)
     cpdef void on_order_book(self, OrderBook order_book)
-    cpdef void on_ticker(self, Ticker ticker)
     cpdef void on_quote_tick(self, QuoteTick tick)
     cpdef void on_trade_tick(self, TradeTick tick)
     cpdef void on_bar(self, Bar bar)
@@ -102,10 +102,10 @@ cdef class Actor(Component):
 
     cpdef void register_base(
         self,
+        PortfolioFacade portfolio,
         MessageBus msgbus,
         CacheFacade cache,
         Clock clock,
-        Logger logger,
     )
 
     cpdef void register_executor(self, loop, executor)
@@ -153,7 +153,6 @@ cdef class Actor(Component):
         dict kwargs=*,
         ClientId client_id=*
     )
-    cpdef void subscribe_ticker(self, InstrumentId instrument_id, ClientId client_id=*)
     cpdef void subscribe_quote_ticks(self, InstrumentId instrument_id, ClientId client_id=*)
     cpdef void subscribe_trade_ticks(self, InstrumentId instrument_id, ClientId client_id=*)
     cpdef void subscribe_bars(self, BarType bar_type, ClientId client_id=*, bint await_partial=*)
@@ -165,7 +164,6 @@ cdef class Actor(Component):
     cpdef void unsubscribe_instrument(self, InstrumentId instrument_id, ClientId client_id=*)
     cpdef void unsubscribe_order_book_deltas(self, InstrumentId instrument_id, ClientId client_id=*)
     cpdef void unsubscribe_order_book_snapshots(self, InstrumentId instrument_id, int interval_ms=*, ClientId client_id=*)
-    cpdef void unsubscribe_ticker(self, InstrumentId instrument_id, ClientId client_id=*)
     cpdef void unsubscribe_quote_ticks(self, InstrumentId instrument_id, ClientId client_id=*)
     cpdef void unsubscribe_trade_ticks(self, InstrumentId instrument_id, ClientId client_id=*)
     cpdef void unsubscribe_bars(self, BarType bar_type, ClientId client_id=*)
@@ -176,9 +174,28 @@ cdef class Actor(Component):
 
 # -- REQUESTS -------------------------------------------------------------------------------------
 
-    cpdef UUID4 request_data(self, DataType data_type, ClientId client_id, callback=*)
-    cpdef UUID4 request_instrument(self, InstrumentId instrument_id, ClientId client_id=*, callback=*)
-    cpdef UUID4 request_instruments(self, Venue venue, ClientId client_id=*, callback=*)
+    cpdef UUID4 request_data(
+        self,
+        DataType data_type,
+        ClientId client_id,
+        callback=*,
+    )
+    cpdef UUID4 request_instrument(
+        self,
+        InstrumentId instrument_id,
+        datetime start=*,
+        datetime end=*,
+        ClientId client_id=*,
+        callback=*,
+    )
+    cpdef UUID4 request_instruments(
+        self,
+        Venue venue,
+        datetime start=*,
+        datetime end=*,
+        ClientId client_id=*,
+        callback=*,
+    )
     cpdef UUID4 request_quote_ticks(
         self,
         InstrumentId instrument_id,
@@ -213,7 +230,6 @@ cdef class Actor(Component):
     cpdef void handle_instruments(self, list instruments)
     cpdef void handle_order_book(self, OrderBook order_book)
     cpdef void handle_order_book_deltas(self, OrderBookDeltas deltas)
-    cpdef void handle_ticker(self, Ticker ticker)
     cpdef void handle_quote_tick(self, QuoteTick tick)
     cpdef void handle_quote_ticks(self, list ticks)
     cpdef void handle_trade_tick(self, TradeTick tick)

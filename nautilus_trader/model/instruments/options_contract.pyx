@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -22,7 +22,7 @@ from libc.stdint cimport uint64_t
 
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.rust.model cimport AssetClass
-from nautilus_trader.core.rust.model cimport AssetType
+from nautilus_trader.core.rust.model cimport InstrumentClass
 from nautilus_trader.core.rust.model cimport OptionKind
 from nautilus_trader.model.functions cimport asset_class_from_str
 from nautilus_trader.model.functions cimport asset_class_to_str
@@ -60,6 +60,8 @@ cdef class OptionsContract(Instrument):
         The rounded lot unit size (standard/board).
     underlying : str
         The underlying asset.
+    option_kind : OptionKind
+        The kind of option (PUT | CALL).
     strike_price : Price
         The option strike price.
     activation_ns : uint64_t
@@ -96,7 +98,7 @@ cdef class OptionsContract(Instrument):
         Quantity multiplier not None,
         Quantity lot_size not None,
         str underlying,
-        OptionKind kind,
+        OptionKind option_kind,
         uint64_t activation_ns,
         uint64_t expiration_ns,
         Price strike_price not None,
@@ -109,7 +111,7 @@ cdef class OptionsContract(Instrument):
             instrument_id=instrument_id,
             raw_symbol=raw_symbol,
             asset_class=asset_class,
-            asset_type=AssetType.OPTION,
+            instrument_class=InstrumentClass.OPTION,
             quote_currency=currency,
             is_inverse=False,
             price_precision=price_precision,
@@ -133,7 +135,7 @@ cdef class OptionsContract(Instrument):
             info=info,
         )
         self.underlying = underlying
-        self.kind = kind
+        self.option_kind = option_kind
         self.activation_ns = activation_ns
         self.expiration_ns = expiration_ns
         self.strike_price = strike_price
@@ -177,7 +179,7 @@ cdef class OptionsContract(Instrument):
             multiplier=Quantity.from_str(values["multiplier"]),
             lot_size=Quantity.from_str(values["lot_size"]),
             underlying=values["underlying"],
-            kind=option_kind_from_str(values["kind"]),
+            option_kind=option_kind_from_str(values["option_kind"]),
             activation_ns=values["activation_ns"],
             expiration_ns=values["expiration_ns"],
             strike_price=Price.from_str(values["strike_price"]),
@@ -201,7 +203,7 @@ cdef class OptionsContract(Instrument):
             "multiplier": str(obj.multiplier),
             "lot_size": str(obj.lot_size),
             "underlying": str(obj.underlying),
-            "kind": option_kind_to_str(obj.kind),
+            "option_kind": option_kind_to_str(obj.option_kind),
             "activation_ns": obj.activation_ns,
             "expiration_ns": obj.expiration_ns,
             "strike_price": str(obj.strike_price),

@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -367,5 +367,11 @@ impl Money {
     #[pyo3(name = "to_formatted_str")]
     fn py_to_formatted_str(&self) -> String {
         self.to_formatted_string()
+    }
+}
+
+impl ToPyObject for Money {
+    fn to_object(&self, py: Python) -> PyObject {
+        self.into_py(py)
     }
 }

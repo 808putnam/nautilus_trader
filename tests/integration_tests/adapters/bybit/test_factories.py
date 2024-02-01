@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -12,7 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
-
 
 import asyncio
 
@@ -28,10 +27,8 @@ from nautilus_trader.adapters.bybit.factories import BybitLiveExecClientFactory
 from nautilus_trader.adapters.bybit.factories import _get_http_base_url
 from nautilus_trader.adapters.bybit.factories import _get_ws_base_url_public
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.enums import LogLevel
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.test_kit.mocks.cache_database import MockCacheDatabase
 from nautilus_trader.test_kit.stubs.identifiers import TestIdStubs
 
@@ -40,11 +37,6 @@ class TestBybitFactories:
     def setup(self):
         self.loop = asyncio.get_event_loop()
         self.clock = LiveClock()
-        self.logger = Logger(
-            clock=self.clock,
-            level_stdout=LogLevel.DEBUG,
-            bypass=True,
-        )
 
         self.trader_id = TestIdStubs.trader_id()
         self.strategy_id = TestIdStubs.strategy_id()
@@ -53,17 +45,10 @@ class TestBybitFactories:
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
-        self.cache_db = MockCacheDatabase(
-            logger=self.logger,
-        )
-
-        self.cache = Cache(
-            database=self.cache_db,
-            logger=self.logger,
-        )
+        self.cache_db = MockCacheDatabase()
+        self.cache = Cache(database=self.cache_db)
 
     @pytest.mark.parametrize(
         ("is_testnet", "expected"),
@@ -103,7 +88,6 @@ class TestBybitFactories:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
         assert isinstance(data_client, BybitDataClient)
 
@@ -119,6 +103,5 @@ class TestBybitFactories:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
         assert isinstance(data_client, BybitExecutionClient)

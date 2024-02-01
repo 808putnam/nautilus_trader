@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -14,11 +14,10 @@
 # -------------------------------------------------------------------------------------------------
 
 from decimal import Decimal
-from typing import Optional
 
 from nautilus_trader.config import StrategyConfig
 
-from nautilus_trader.common.logging cimport LogColor
+from nautilus_trader.common.component cimport LogColor
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.data cimport Data
 from nautilus_trader.core.message cimport Event
@@ -68,8 +67,8 @@ class EMACrossConfig(StrategyConfig, frozen=True):
         how the `ExecutionEngine` handles position IDs (see docs).
     """
 
-    instrument_id: str
-    bar_type: str
+    instrument_id: InstrumentId
+    bar_type: BarType
     trade_size: Decimal
     fast_ema_period: int = 10
     slow_ema_period: int = 20
@@ -109,15 +108,15 @@ cdef class EMACross(Strategy):
         super().__init__(config)
 
         # Configuration
-        self.instrument_id = InstrumentId.from_str_c(config.instrument_id)
-        self.bar_type = BarType.from_str_c(config.bar_type)
+        self.instrument_id = config.instrument_id
+        self.bar_type = config.bar_type
         self.trade_size = Decimal(config.trade_size)
 
         # Create the indicators for the strategy
         self.fast_ema = ExponentialMovingAverage(config.fast_ema_period)
         self.slow_ema = ExponentialMovingAverage(config.slow_ema_period)
 
-        self.instrument: Optional[Instrument] = None  # Initialized in on_start
+        self.instrument: Instrument | None = None  # Initialized in on_start
 
     cpdef void on_start(self):
         """
@@ -260,7 +259,7 @@ cdef class EMACross(Strategy):
 
     cpdef void on_data(self, Data data):
         """
-        Actions to be performed when the strategy is running and receives generic data.
+        Actions to be performed when the strategy is running and receives data.
 
         Parameters
         ----------

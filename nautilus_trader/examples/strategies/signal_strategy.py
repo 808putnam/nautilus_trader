@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -30,7 +30,7 @@ class SignalStrategyConfig(StrategyConfig, frozen=True):
     Configuration for ``SignalStrategy`` instances.
     """
 
-    instrument_id: str
+    instrument_id: InstrumentId
 
 
 class SignalStrategy(Strategy):
@@ -46,7 +46,7 @@ class SignalStrategy(Strategy):
 
     def __init__(self, config: SignalStrategyConfig) -> None:
         super().__init__(config)
-        self.instrument_id = InstrumentId.from_str(self.config.instrument_id)
+        self.instrument_id = self.config.instrument_id
         self.instrument: Instrument | None = None
         self.counter = 0
 

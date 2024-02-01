@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -24,12 +24,12 @@ import pytest
 from nautilus_trader.backtest.engine import BacktestEngine
 from nautilus_trader.backtest.engine import BacktestEngineConfig
 from nautilus_trader.cache.database import CacheDatabaseAdapter
-from nautilus_trader.common.clock import TestClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.enums import LogLevel
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.config import CacheDatabaseConfig
+from nautilus_trader.common.component import TestClock
 from nautilus_trader.config import LoggingConfig
+from nautilus_trader.config.common import CacheConfig
+from nautilus_trader.config.common import DatabaseConfig
+from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.data.engine import DataEngine
 from nautilus_trader.examples.strategies.ema_cross import EMACross
 from nautilus_trader.examples.strategies.ema_cross import EMACrossConfig
@@ -83,18 +83,11 @@ class TestCacheDatabaseAdapter:
     def setup(self):
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(
-            clock=self.clock,
-            level_stdout=LogLevel.DEBUG,
-            bypass=True,
-        )
-
         self.trader_id = TestIdStubs.trader_id()
 
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = TestComponentStubs.cache()
@@ -103,21 +96,18 @@ class TestCacheDatabaseAdapter:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine = DataEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.exec_engine = ExecutionEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.risk_engine = RiskEngine(
@@ -125,7 +115,6 @@ class TestCacheDatabaseAdapter:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.strategy = Strategy()
@@ -135,13 +124,13 @@ class TestCacheDatabaseAdapter:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.database = CacheDatabaseAdapter(
             trader_id=self.trader_id,
-            logger=self.logger,
+            instance_id=UUID4(),
             serializer=MsgSpecSerializer(encoding=msgspec.msgpack, timestamps_as_str=True),
+            config=CacheConfig(database=DatabaseConfig()),
         )
 
     def teardown(self):
@@ -485,10 +474,10 @@ class TestCacheDatabaseAdapter:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -512,7 +501,6 @@ class TestCacheDatabaseAdapter:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1016,10 +1004,10 @@ class TestCacheDatabaseAdapter:
         # Arrange, Act
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.database.update_actor(actor)
@@ -1048,7 +1036,6 @@ class TestCacheDatabaseAdapter:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.database.update_strategy(strategy)
@@ -1072,18 +1059,12 @@ class TestRedisCacheDatabaseIntegrity:
     def setup(self):
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(
-            clock=self.clock,
-            level_stdout=LogLevel.DEBUG,
-            bypass=True,
-        )
-
         self.trader_id = TestIdStubs.trader_id()
 
         config = BacktestEngineConfig(
             logging=LoggingConfig(bypass_logging=True),
             run_analysis=False,
-            cache_database=CacheDatabaseConfig(),  # default redis
+            cache=CacheConfig(database=DatabaseConfig()),  # default redis
         )
 
         self.engine = BacktestEngine(config=config)
@@ -1109,8 +1090,9 @@ class TestRedisCacheDatabaseIntegrity:
 
         self.database = CacheDatabaseAdapter(
             trader_id=self.trader_id,
-            logger=self.logger,
+            instance_id=UUID4(),
             serializer=MsgSpecSerializer(encoding=msgspec.msgpack, timestamps_as_str=True),
+            config=CacheConfig(database=DatabaseConfig()),
         )
 
     def teardown(self):
@@ -1121,8 +1103,8 @@ class TestRedisCacheDatabaseIntegrity:
     async def test_rerunning_backtest_with_redis_db_builds_correct_index(self):
         # Arrange
         config = EMACrossConfig(
-            instrument_id=str(self.usdjpy.id),
-            bar_type=str(TestDataStubs.bartype_usdjpy_1min_bid()),
+            instrument_id=self.usdjpy.id,
+            bar_type=TestDataStubs.bartype_usdjpy_1min_bid(),
             trade_size=Decimal(1_000_000),
             fast_ema_period=10,
             slow_ema_period=20,

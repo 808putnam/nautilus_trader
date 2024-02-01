@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -20,15 +20,15 @@ import pytest
 from nautilus_trader.backtest.engine import BacktestEngine
 from nautilus_trader.backtest.engine import BacktestEngineConfig
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import TestClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import TestClock
 from nautilus_trader.config import LoggingConfig
 from nautilus_trader.data.engine import DataEngine
 from nautilus_trader.examples.strategies.ema_cross import EMACross
 from nautilus_trader.examples.strategies.ema_cross import EMACrossConfig
 from nautilus_trader.execution.engine import ExecutionEngine
 from nautilus_trader.model.currencies import USD
+from nautilus_trader.model.data import BarType
 from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import CurrencyType
 from nautilus_trader.model.enums import OmsType
@@ -68,41 +68,34 @@ class TestCache:
     def setup(self):
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(self.clock, bypass=True)
-
         self.trader_id = TestIdStubs.trader_id()
         self.account_id = TestIdStubs.account_id()
 
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = Cache(
             database=None,
-            logger=self.logger,
         )
 
         self.portfolio = Portfolio(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine = DataEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.exec_engine = ExecutionEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.risk_engine = RiskEngine(
@@ -110,7 +103,6 @@ class TestCache:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.strategy = Strategy()
@@ -120,7 +112,6 @@ class TestCache:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
     def test_cache_general_with_no_objects(self):
@@ -1350,8 +1341,8 @@ class TestExecutionCacheIntegrityCheck:
     def test_exec_cache_check_integrity_when_index_cleared_fails(self):
         # Arrange
         config = EMACrossConfig(
-            instrument_id=str(self.usdjpy.id),
-            bar_type="USD/JPY.SIM-15-MINUTE-BID-INTERNAL",
+            instrument_id=self.usdjpy.id,
+            bar_type=BarType.from_str("USD/JPY.SIM-15-MINUTE-BID-INTERNAL"),
             trade_size=Decimal(1_000_000),
             fast_ema_period=10,
             slow_ema_period=20,

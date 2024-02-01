@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -23,9 +23,8 @@ from nautilus_trader.adapters.binance.common.constants import BINANCE_VENUE
 from nautilus_trader.adapters.binance.factories import BinanceLiveDataClientFactory
 from nautilus_trader.adapters.binance.http.client import BinanceHttpClient
 from nautilus_trader.adapters.binance.spot.providers import BinanceSpotInstrumentProvider
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.config import InstrumentProviderConfig
 from nautilus_trader.data.engine import DataEngine
 from nautilus_trader.model.data import QuoteTick
@@ -52,8 +51,6 @@ class TestBinanceSpotDataClient:
         self.loop.set_debug(True)
 
         self.clock = LiveClock()
-        self.logger = Logger(clock=self.clock, bypass=True)
-
         self.trader_id = TestIdStubs.trader_id()
         self.venue = BINANCE_VENUE
         self.account_id = AccountId(f"{self.venue.value}-001")
@@ -61,14 +58,12 @@ class TestBinanceSpotDataClient:
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = TestComponentStubs.cache()
 
         self.http_client = BinanceHttpClient(
             clock=self.clock,
-            logger=self.logger,
             key="SOME_BINANCE_API_KEY",
             secret="SOME_BINANCE_API_SECRET",
             base_url="https://api.binance.com/",  # Spot/Margin
@@ -76,7 +71,6 @@ class TestBinanceSpotDataClient:
 
         self.provider = BinanceSpotInstrumentProvider(
             client=self.http_client,
-            logger=self.logger,
             clock=self.clock,
             config=InstrumentProviderConfig(load_all=True),
         )
@@ -85,7 +79,6 @@ class TestBinanceSpotDataClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_client = BinanceLiveDataClientFactory.create(
@@ -94,7 +87,6 @@ class TestBinanceSpotDataClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
             instrument_provider=self.provider,
         )
 

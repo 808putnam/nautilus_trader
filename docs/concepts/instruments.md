@@ -1,7 +1,7 @@
 # Instruments
 
 The `Instrument` base class represents the core specification for any tradable asset/contract. There are
-currently a number of subclasses representing a range of _asset classes_ and _asset types_ which are supported by the platform:
+currently a number of subclasses representing a range of _asset classes_ and _instrument classes_ which are supported by the platform:
 - `Equity` (generic Equity)
 - `Future` (generic Futures Contract)
 - `Option` (generic Options Contract)
@@ -37,10 +37,7 @@ Exchange specific instruments can be discovered from live exchange data using an
 from nautilus_trader.adapters.binance.spot.providers import BinanceSpotInstrumentProvider
 from nautilus_trader.model.identifiers import InstrumentId
 
-provider = BinanceSpotInstrumentProvider(
-    client=binance_http_client,
-    logger=live_logger,
-)
+provider = BinanceSpotInstrumentProvider(client=binance_http_client)
 await self.provider.load_all_async()
 
 btcusdt = InstrumentId.from_str("BTCUSDT.BINANCE")

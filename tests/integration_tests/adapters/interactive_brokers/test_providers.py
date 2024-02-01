@@ -15,23 +15,19 @@
 
 from unittest.mock import AsyncMock
 
-import msgspec.structs
+import msgspec
 import pytest
 from ibapi.contract import ContractDetails
 
-# fmt: off
 from nautilus_trader.adapters.interactive_brokers.common import IBContract
 from nautilus_trader.model.enums import AssetClass
-from nautilus_trader.model.enums import AssetType
+from nautilus_trader.model.enums import InstrumentClass
 from nautilus_trader.model.enums import OptionKind
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import Symbol
 from nautilus_trader.model.identifiers import Venue
 from nautilus_trader.model.objects import Price
-from tests.integration_tests.adapters.interactive_brokers.test_kit import IBTestProviderStubs
-
-
-# fmt: on
+from tests.integration_tests.adapters.interactive_brokers.test_kit import IBTestContractStubs
 
 
 def mock_ib_contract_calls(mocker, instrument_provider, contract_details: ContractDetails):
@@ -49,7 +45,7 @@ async def test_load_equity_contract_instrument(mocker, instrument_provider):
     mock_ib_contract_calls(
         mocker=mocker,
         instrument_provider=instrument_provider,
-        contract_details=IBTestProviderStubs.aapl_equity_contract_details(),
+        contract_details=IBTestContractStubs.aapl_equity_contract_details(),
     )
 
     # Act
@@ -62,7 +58,7 @@ async def test_load_equity_contract_instrument(mocker, instrument_provider):
     # Assert
     assert InstrumentId(symbol=Symbol("AAPL"), venue=Venue("NASDAQ")) == equity.id
     assert equity.asset_class == AssetClass.EQUITY
-    assert equity.asset_type == AssetType.SPOT
+    assert equity.instrument_class == InstrumentClass.SPOT
     assert equity.multiplier == 1
     assert Price.from_str("0.01") == equity.price_increment
     assert 2, equity.price_precision
@@ -75,7 +71,7 @@ async def test_load_futures_contract_instrument(mocker, instrument_provider):
     mock_ib_contract_calls(
         mocker=mocker,
         instrument_provider=instrument_provider,
-        contract_details=IBTestProviderStubs.cl_future_contract_details(),
+        contract_details=IBTestContractStubs.cl_future_contract_details(),
     )
 
     # Act
@@ -98,7 +94,7 @@ async def test_load_options_contract_instrument(mocker, instrument_provider):
     mock_ib_contract_calls(
         mocker=mocker,
         instrument_provider=instrument_provider,
-        contract_details=IBTestProviderStubs.tsla_option_contract_details(),
+        contract_details=IBTestContractStubs.tsla_option_contract_details(),
     )
 
     # Act
@@ -114,7 +110,7 @@ async def test_load_options_contract_instrument(mocker, instrument_provider):
     assert option.multiplier == 100
     assert option.expiration_ns == 1674172800000000000
     assert option.strike_price == Price.from_str("100.0")
-    assert option.kind == OptionKind.CALL
+    assert option.option_kind == OptionKind.CALL
     assert option.price_increment == Price.from_str("0.01")
     assert option.price_precision == 2
 
@@ -126,7 +122,7 @@ async def test_load_forex_contract_instrument(mocker, instrument_provider):
     mock_ib_contract_calls(
         mocker=mocker,
         instrument_provider=instrument_provider,
-        contract_details=IBTestProviderStubs.eurusd_forex_contract_details(),
+        contract_details=IBTestContractStubs.eurusd_forex_contract_details(),
     )
 
     # Act
@@ -148,7 +144,7 @@ async def test_contract_id_to_instrument_id(mocker, instrument_provider):
     mock_ib_contract_calls(
         mocker=mocker,
         instrument_provider=instrument_provider,
-        contract_details=IBTestProviderStubs.cl_future_contract_details(),
+        contract_details=IBTestContractStubs.cl_future_contract_details(),
     )
 
     # Act
@@ -167,7 +163,7 @@ async def test_load_instrument_using_contract_id(mocker, instrument_provider):
     mock_ib_contract_calls(
         mocker=mocker,
         instrument_provider=instrument_provider,
-        contract_details=IBTestProviderStubs.eurusd_forex_contract_details(),
+        contract_details=IBTestContractStubs.eurusd_forex_contract_details(),
     )
 
     # Act
@@ -196,7 +192,7 @@ async def test_instrument_filter_callable_none(mocker, instrument_provider):
     mock_ib_contract_calls(
         mocker=mocker,
         instrument_provider=instrument_provider,
-        contract_details=IBTestProviderStubs.aapl_equity_contract_details(),
+        contract_details=IBTestContractStubs.aapl_equity_contract_details(),
     )
 
     # Act
@@ -215,7 +211,7 @@ async def test_instrument_filter_callable_option_filter(mocker, instrument_provi
     mock_ib_contract_calls(
         mocker=mocker,
         instrument_provider=instrument_provider,
-        contract_details=IBTestProviderStubs.tsla_option_contract_details(),
+        contract_details=IBTestContractStubs.tsla_option_contract_details(),
     )
 
     # Act

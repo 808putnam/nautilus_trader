@@ -6,9 +6,8 @@ from collections.abc import Awaitable
 from collections.abc import Callable
 from decimal import Decimal
 from enum import Enum
-from typing import Any
-
-from pyarrow import RecordBatch
+from os import PathLike
+from typing import Any, TypeAlias
 
 from nautilus_trader.core.data import Data
 
@@ -23,13 +22,7 @@ from nautilus_trader.core.data import Data
 
 class UUID4:
     def __init__(self, value: str) -> None: ...
-class LogGuard: ...
 
-def set_global_log_collector(
-    stdout_level: str | None,
-    stderr_level: str | None,
-    file_level: tuple[str, str, str] | None,
-) -> LogGuard: ...
 def secs_to_nanos(secs: float) -> int:
     """
     Return round nanoseconds (ns) converted from the given seconds.
@@ -135,6 +128,52 @@ def nanos_to_micros(nanos: int) -> int:
 
     """
 
+def last_weekday_nanos(year: int, month: int, day: int) -> int:
+    """
+    Return UNIX nanoseconds at midnight (UTC) of the last weekday (Mon-Fri).
+
+    Parameters
+    ----------
+    year : int
+        The year from the datum date.
+    month : int
+        The month from the datum date.
+    day : int
+        The day from the datum date.
+
+    Returns
+    -------
+    int
+
+    Raises
+    ------
+    ValueError
+        If given an invalid date.
+
+    """
+
+
+def is_within_last_24_hours(timestamp_ns: int) -> bool:
+    """
+    Return whether the given UNIX nanoseconds timestamp is within the last 24 hours.
+
+    Parameters
+    ----------
+    timestamp_ns : int
+        The UNIX nanoseconds timestamp datum.
+
+    Returns
+    -------
+    bool
+
+    Raises
+    ------
+    ValueError
+        If `timestamp` is invalid.
+
+    """
+
+
 def convert_to_snake_case(s: str) -> str:
     """
     Convert the given string from any common case (PascalCase, camelCase, kebab-case, etc.)
@@ -154,8 +193,68 @@ def convert_to_snake_case(s: str) -> str:
     """
 
 ###################################################################################################
+# Common
+###################################################################################################
+
+### Logging
+
+def init_tracing() -> None:
+    ...
+
+def init_logging(
+    trader_id: TraderId,
+    instance_id: UUID4,
+    config_spec: str,
+    directory: str,
+    file_name: str,
+    file_format: str,
+) -> None:
+    ...
+
+###################################################################################################
 # Model
 ###################################################################################################
+
+### Accounting
+class MarginAccount:
+    def __init__(
+        self,
+        event: AccountState,
+        calculate_account_state: bool
+    ) -> None: ...
+    @property
+    def id(self) -> AccountId: ...
+    @property
+    def default_leverage(self) -> float: ...
+    def leverages(self) -> dict[InstrumentId, float]: ...
+    def leverage(self,instrument_id: InstrumentId) -> float : ...
+    def set_default_leverage(self, leverage: float) -> None: ...
+    def set_leverage(self, instrument_id: InstrumentId, leverage: float) -> None: ...
+    def is_unleveraged(self) -> bool: ...
+
+    def update_initial_margin(self, instrument_id: InstrumentId, initial_margin: Money) -> None: ...
+
+    def initial_margin(self, instrument_id: InstrumentId) -> Money: ...
+    def initial_margins(self) -> dict[InstrumentId, Money]: ...
+
+    def update_maintenance_margin(self, instrument_id: InstrumentId, maintenance_margin: Money) -> None: ...
+
+    def maintenance_margin(self, instrument_id: InstrumentId) -> Money: ...
+    def maintenance_margins(self) -> dict[InstrumentId, Money]: ...
+    def calculate_initial_margin(
+        self,
+        instrument: Instrument,
+        quantity: Quantity,
+        price: Price,
+        use_quote_for_inverse: bool | None = None
+    ) -> Money: ...
+    def calculate_maintenance_margin(
+        self,
+        instrument: Instrument,
+        quantity: Quantity,
+        price: Price,
+        use_quote_for_inverse: bool | None = None
+    ) -> Money: ...
 
 ### Data types
 
@@ -205,12 +304,40 @@ class Bar:
         ts_event: int,
         ts_init: int,
     ) -> None: ...
+    @property
+    def bar_type(self) -> BarType: ...
+    @property
+    def open(self) -> Price: ...
+    @property
+    def high(self) -> Price: ...
+    @property
+    def low(self) -> Price: ...
+    @property
+    def close(self) -> Price: ...
+    @property
+    def volume(self) -> Quantity: ...
+    @property
+    def ts_event(self) -> int: ...
+    @property
+    def ts_init(self) -> int: ...
     @staticmethod
     def get_fields() -> dict[str, str]: ...
 
 class BookOrder: ...
 
 class OrderBookDelta:
+    @property
+    def ts_event(self) -> int: ...
+    @property
+    def ts_init(self) -> int: ...
+    @staticmethod
+    def get_fields() -> dict[str, str]: ...
+
+class OrderBookDepth10:
+    @property
+    def ts_event(self) -> int: ...
+    @property
+    def ts_init(self) -> int: ...
     @staticmethod
     def get_fields() -> dict[str, str]: ...
 
@@ -225,6 +352,10 @@ class QuoteTick:
         ts_event: int,
         ts_init: int,
     ) -> None: ...
+    @property
+    def ts_event(self) -> int: ...
+    @property
+    def ts_init(self) -> int: ...
     @staticmethod
     def get_fields() -> dict[str, str]: ...
 
@@ -239,6 +370,10 @@ class TradeTick:
         ts_event: int,
         ts_init: int,
     ) -> None: ...
+    @property
+    def ts_event(self) -> int: ...
+    @property
+    def ts_init(self) -> int: ...
     @staticmethod
     def get_fields() -> dict[str, str]: ...
     @classmethod
@@ -262,21 +397,21 @@ class AggressorSide(Enum):
 class AssetClass(Enum):
     EQUITY = "EQUITY"
     COMMODITY = "COMMODITY"
-    METAL = "METAL"
-    ENERGY = "ENERGY"
-    BOND = "BOND"
+    DEBT = "DEBT"
     INDEX = "INDEX"
-    CRYPTO_CURRENCY = "CRYPTO_CURRENCY"
-    SPORTS_BETTING = "SPORTS_BETTING"
+    CRYPTOCURRENCY = "CRYPTOCURRENCY"
+    ALTERNATIVE = "ALTERNATIVE"
 
-class AssetType(Enum):
+class InstrumentClass(Enum):
     SPOT = "SPOT"
     SWAP = "SWAP"
     FUTURE = "FUTURE"
     FORWARD = "FORWARD"
     CFD = "CFD"
+    BOND = "BOND"
     OPTION = "OPTION"
     WARRANT = "WARRANT"
+    SPORTS_BETTING = "SPORTS_BETTING"
 
 class BarAggregation(Enum):
     TICK = "TICK"
@@ -468,6 +603,7 @@ class StrategyId:
 
 class Symbol:
     def __init__(self, value: str) -> None: ...
+    @property
     def value(self) -> str: ...
 
 class TradeId:
@@ -617,6 +753,34 @@ class Quantity:
     def as_decimal(self) -> Decimal: ...
     def as_double(self) -> float: ...
     def to_formatted_str(self) -> str: ...
+class AccountBalance:
+    def __init__(self, total: Money, locked: Money, free: Money): ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> AccountBalance: ...
+    def to_dict(self) -> dict[str, str]: ...
+
+class MarginBalance:
+    def __init__(self, initial: Money, maintenance: Money, instrument: InstrumentId): ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> MarginBalance: ...
+    def to_dict(self) -> dict[str, str]: ...
+
+class AccountState:
+    def __init__(
+        self,
+        account_id: AccountId,
+        account_type: AccountType,
+        base_currency: Currency,
+        balances: list[AccountBalance],
+        margins: list[MarginBalance],
+        is_reported: bool,
+        event_id: UUID4,
+        ts_event: int,
+        ts_init: int,
+    ) -> None: ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> AccountState: ...
+    def to_dict(self) -> dict[str, str]: ...
 
 ### Instruments
 
@@ -634,10 +798,8 @@ class CryptoFuture:
         size_precision: int,
         price_increment: Price,
         size_increment: Quantity,
-        margin_init: float,
-        margin_maint: float,
-        maker_fee: float,
-        taker_fee: float,
+        ts_event: int,
+        ts_init: int,
         lot_size: Quantity | None = None,
         max_quantity: Quantity | None = None,
         min_quantity: Quantity | None = None,
@@ -646,6 +808,10 @@ class CryptoFuture:
         max_price: Price | None = None,
         min_price: Price | None = None,
     ) -> None: ...
+    @property
+    def id(self) -> InstrumentId: ...
+    def to_dict(self) -> dict[str, Any]: ...
+
 class CryptoPerpetual:
     def __init__(
         self,
@@ -659,10 +825,12 @@ class CryptoPerpetual:
         size_precision: int,
         price_increment: Price,
         size_increment: Quantity,
-        margin_init: float,
-        margin_maint: float,
-        maker_fee: float,
-        taker_fee: float,
+        maker_fee: Decimal,
+        taker_fee: Decimal,
+        margin_init: Decimal,
+        margin_maint: Decimal,
+        ts_event: int,
+        ts_init: int,
         lot_size: Quantity | None = None,
         max_quantity: Quantity | None = None,
         min_quantity: Quantity | None = None,
@@ -671,6 +839,10 @@ class CryptoPerpetual:
         max_price: Price | None = None,
         min_price: Price | None = None,
     ) -> None: ...
+    @property
+    def id(self) -> InstrumentId: ...
+    def to_dict(self) -> dict[str, Any]: ...
+
 class CurrencyPair:
     def __init__(
         self,
@@ -682,16 +854,22 @@ class CurrencyPair:
         size_precision: int,
         price_increment: Price,
         size_increment: Quantity,
-        margin_init: float,
-        margin_maint: float,
-        maker_fee: float,
-        taker_fee: float,
+        maker_fee: Decimal,
+        taker_fee: Decimal,
+        margin_init: Decimal,
+        margin_maint: Decimal,
+        ts_event: int,
+        ts_init: int,
         lot_size: Quantity | None = None,
         max_quantity: Quantity | None = None,
         min_quantity: Quantity | None = None,
         max_price: Price | None = None,
         min_price: Price | None = None,
     ) -> None: ...
+    @property
+    def id(self) -> InstrumentId: ...
+    def to_dict(self) -> dict[str, Any]: ...
+
 class Equity:
     def __init__(
         self,
@@ -701,17 +879,18 @@ class Equity:
         currency: Currency,
         price_precision: int,
         price_increment: Price,
-        multiplier: Quantity,
-        margin_init: float,
-        margin_maint: float,
-        maker_fee: float,
-        taker_fee: float,
+        ts_event: int,
+        ts_init: int,
         lot_size: Quantity | None = None,
         max_quantity: Quantity | None = None,
         min_quantity: Quantity | None = None,
         max_price: Price | None = None,
         min_price: Price | None = None,
     ) -> None: ...
+    @property
+    def id(self) -> InstrumentId: ...
+    def to_dict(self) -> dict[str, Any]: ...
+
 class FuturesContract:
     def __init__(
         self,
@@ -724,17 +903,19 @@ class FuturesContract:
         currency: Currency,
         price_precision: int,
         price_increment: Price,
-        margin_init: float,
-        margin_maint: float,
-        maker_fee: float,
-        taker_fee: float,
         multiplier: Quantity,
-        lot_size: Quantity | None = None,
+        lot_size: Quantity,
+        ts_event: int,
+        ts_init: int,
         max_quantity: Quantity | None = None,
         min_quantity: Quantity | None = None,
         max_price: Price | None = None,
         min_price: Price | None = None,
     ) -> None: ...
+    @property
+    def id(self) -> InstrumentId: ...
+    def to_dict(self) -> dict[str, Any]: ...
+
 class OptionsContract:
     def __init__(
         self,
@@ -749,19 +930,27 @@ class OptionsContract:
         currency: Currency,
         price_precision: int,
         price_increment: Price,
-        margin_init: float,
-        margin_maint: float,
-        maker_fee: float,
-        taker_fee: float,
-        lot_size: Quantity | None = None,
+        multiplier: Quantity,
+        lot_size: Quantity,
+        ts_event: int,
+        ts_init: int,
         max_quantity: Quantity | None = None,
         min_quantity: Quantity | None = None,
         max_price: Price | None = None,
         min_price: Price | None = None,
     ) -> None : ...
-class SyntheticInstrument: ...
+    @property
+    def id(self) -> InstrumentId: ...
+    def to_dict(self) -> dict[str, Any]: ...
+
+class SyntheticInstrument:
+    def id(self) -> InstrumentId: ...
+    def to_dict(self) -> dict[str, Any]: ...
+
+Instrument: TypeAlias = Equity | FuturesContract | OptionsContract | CryptoFuture | CryptoPerpetual | CurrencyPair | SyntheticInstrument
 
 ### Events
+
 class OrderDenied:
     def __init__(
         self,
@@ -933,6 +1122,156 @@ class OrderReleased:
     def from_dict(cls, values: dict[str, str]) -> OrderReleased: ...
     def to_dict(self) -> dict[str, str]: ...
 
+class OrderUpdated:
+    def __init__(
+        self,
+        trader_id: TraderId,
+        strategy_id: StrategyId,
+        instrument_id: InstrumentId,
+        client_order_id: ClientOrderId,
+        quantity: Quantity,
+        event_id: UUID4,
+        ts_event: int,
+        ts_init: int,
+        reconciliation: bool,
+        venue_order_id: VenueOrderId | None = None,
+        account_id: AccountId | None = None,
+        price: Price | None = None,
+        trigger_price: Price | None = None,
+    ) -> None: ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> OrderUpdated: ...
+    def to_dict(self) -> dict[str, str]: ...
+
+class OrderPendingUpdate:
+    def __init__(
+        self,
+        trader_id: TraderId,
+        strategy_id: StrategyId,
+        instrument_id: InstrumentId,
+        client_order_id: ClientOrderId,
+        account_id: AccountId,
+        event_id: UUID4,
+        ts_event: int,
+        ts_init: int,
+        reconciliation: bool,
+        venue_order_id: VenueOrderId | None = None,
+    ) -> None: ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> OrderPendingUpdate: ...
+    def to_dict(self) -> dict[str, str]: ...
+
+class OrderPendingCancel:
+    def __init__(
+        self,
+        trader_id: TraderId,
+        strategy_id: StrategyId,
+        instrument_id: InstrumentId,
+        client_order_id: ClientOrderId,
+        account_id: AccountId,
+        event_id: UUID4,
+        ts_event: int,
+        ts_init: int,
+        reconciliation: bool,
+        venue_order_id: VenueOrderId | None = None,
+    ) -> None: ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> OrderPendingCancel: ...
+    def to_dict(self) -> dict[str, str]: ...
+
+class OrderModifyRejected:
+    def __init__(
+        self,
+        trader_id: TraderId,
+        strategy_id: StrategyId,
+        instrument_id: InstrumentId,
+        client_order_id: ClientOrderId,
+        reason: str,
+        event_id: UUID4,
+        ts_event: int,
+        ts_init: int,
+        reconciliation: bool,
+        venue_order_id: VenueOrderId | None = None,
+        account_id: AccountId | None = None,
+    ) -> None: ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> OrderModifyRejected: ...
+    def to_dict(self) -> dict[str, str]: ...
+
+class OrderAccepted:
+    def __init__(
+        self,
+        trader_id: TraderId,
+        strategy_id: StrategyId,
+        instrument_id: InstrumentId,
+        client_order_id: ClientOrderId,
+        venue_order_id: VenueOrderId,
+        account_id: AccountId,
+        event_id: UUID4,
+        ts_event: int,
+        ts_init: int,
+        reconciliation: bool,
+    ) -> None: ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> OrderAccepted: ...
+    def to_dict(self) -> dict[str, str]: ...
+
+
+class OrderCancelRejected:
+    def __init__(
+        self,
+        trader_id: TraderId,
+        strategy_id: StrategyId,
+        instrument_id: InstrumentId,
+        client_order_id: ClientOrderId,
+        reason: str,
+        event_id: UUID4,
+        ts_event: int,
+        ts_init: int,
+        reconciliation: bool,
+        venue_order_id: VenueOrderId | None = None,
+        account_id: AccountId | None = None,
+    )-> None: ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> OrderCancelRejected: ...
+    def to_dict(self) -> dict[str, str]: ...
+
+class OrderCanceled:
+    def __init__(
+        self,
+        trader_id: TraderId,
+        strategy_id: StrategyId,
+        instrument_id: InstrumentId,
+        client_order_id: ClientOrderId,
+        event_id: UUID4,
+        ts_event: int,
+        ts_init: int,
+        reconciliation: bool,
+        venue_order_id: VenueOrderId | None = None,
+        account_id: AccountId | None = None,
+    ) -> None: ...
+
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> OrderCanceled: ...
+    def to_dict(self) -> dict[str, str]: ...
+
+class OrderExpired:
+    def __init__(
+        self,
+        trader_id: TraderId,
+        strategy_id: StrategyId,
+        instrument_id: InstrumentId,
+        client_order_id: ClientOrderId,
+        event_id: UUID4,
+        ts_event: int,
+        ts_init: int,
+        reconciliation: bool,
+        venue_order_id: VenueOrderId | None = None,
+        account_id: AccountId | None = None,
+    ) -> None: ...
+    @classmethod
+    def from_dict(cls, values: dict[str, str]) -> OrderExpired: ...
+    def to_dict(self) -> dict[str, str]: ...
 
 ###################################################################################################
 # Infrastructure
@@ -1032,7 +1371,7 @@ class SocketConfig:
         self,
         url: str,
         ssl: bool,
-        suffix: list[int],
+        suffix: bytes,
         handler: Callable[..., Any],
         heartbeat: tuple[int, list[int]] | None = None,
     ) -> None: ...
@@ -1043,9 +1382,10 @@ class SocketConfig:
 
 class NautilusDataType(Enum):
     OrderBookDelta = 1
-    QuoteTick = 2
-    TradeTick = 3
-    Bar = 4
+    OrderBookDepth10 = 2
+    QuoteTick = 3
+    TradeTick = 4
+    Bar = 5
 
 class DataBackendSession:
     def __init__(self, chunk_size: int = 5000) -> None: ...
@@ -1071,32 +1411,17 @@ class DataTransformer:
     @staticmethod
     def get_schema_map(data_cls: type) -> dict[str, str]: ...
     @staticmethod
-    def pyobjects_to_batches_bytes(data: list[Data]) -> bytes: ...
+    def pyobjects_to_record_batch_bytes(data: list[Data]) -> bytes: ...
     @staticmethod
-    def pyo3_order_book_deltas_to_batches_bytes(data: list[OrderBookDelta]) -> bytes: ...
+    def pyo3_order_book_deltas_to_record_batch_bytes(data: list[OrderBookDelta]) -> bytes: ...
     @staticmethod
-    def pyo3_quote_ticks_to_batches_bytes(data: list[QuoteTick]) -> bytes: ...
+    def pyo3_order_book_depth10_to_record_batch_bytes(data: list[OrderBookDepth10]) -> bytes: ...
     @staticmethod
-    def pyo3_trade_ticks_to_batches_bytes(data: list[TradeTick]) -> bytes: ...
+    def pyo3_quote_ticks_to_record_batch_bytes(data: list[QuoteTick]) -> bytes: ...
     @staticmethod
-    def pyo3_bars_to_batches_bytes(data: list[Bar]) -> bytes: ...
+    def pyo3_trade_ticks_to_record_batch_bytes(data: list[TradeTick]) -> bytes: ...
     @staticmethod
-    def record_batches_to_pybytes(batches: list[RecordBatch], schema: Any) -> bytes: ...
-
-class BarDataWrangler:
-    def __init__(
-        self,
-        bar_type: str,
-        price_precision: int,
-        size_precision: int,
-    ) -> None: ...
-    @property
-    def bar_type(self) -> str: ...
-    @property
-    def price_precision(self) -> int: ...
-    @property
-    def size_precision(self) -> int: ...
-    def process_record_batches_bytes(self, data: bytes) -> list[Bar]: ...
+    def pyo3_bars_to_record_batch_bytes(data: list[Bar]) -> bytes: ...
 
 class OrderBookDeltaDataWrangler:
     def __init__(
@@ -1111,7 +1436,7 @@ class OrderBookDeltaDataWrangler:
     def price_precision(self) -> int: ...
     @property
     def size_precision(self) -> int: ...
-    def process_record_batches_bytes(self, data: bytes) -> list[OrderBookDelta]: ...
+    def process_record_batch_bytes(self, data: bytes) -> list[OrderBookDelta]: ...
 
 class QuoteTickDataWrangler:
     def __init__(
@@ -1126,7 +1451,7 @@ class QuoteTickDataWrangler:
     def price_precision(self) -> int: ...
     @property
     def size_precision(self) -> int: ...
-    def process_record_batches_bytes(self, data: bytes) -> list[QuoteTick]: ...
+    def process_record_batch_bytes(self, data: bytes) -> list[QuoteTick]: ...
 
 class TradeTickDataWrangler:
     def __init__(
@@ -1141,17 +1466,33 @@ class TradeTickDataWrangler:
     def price_precision(self) -> int: ...
     @property
     def size_precision(self) -> int: ...
-    def process_record_batches_bytes(self, data: bytes) -> list[TradeTick]: ...
+    def process_record_batch_bytes(self, data: bytes) -> list[TradeTick]: ...
+
+class BarDataWrangler:
+    def __init__(
+        self,
+        bar_type: str,
+        price_precision: int,
+        size_precision: int,
+    ) -> None: ...
+    @property
+    def bar_type(self) -> str: ...
+    @property
+    def price_precision(self) -> int: ...
+    @property
+    def size_precision(self) -> int: ...
+    def process_record_batch_bytes(self, data: bytes) -> list[Bar]: ...
 
 
 ###################################################################################################
 # Indicators
 ###################################################################################################
+
 class SimpleMovingAverage:
     def __init__(
         self,
         period: int,
-        price_type: PriceType = None,
+        price_type: PriceType | None = None,
     )-> None: ...
     @property
     def name(self) -> str: ...
@@ -1176,7 +1517,7 @@ class ExponentialMovingAverage:
     def __init__(
         self,
         period: int,
-        price_type: PriceType = None,
+        price_type: PriceType | None = None,
     ) -> None: ...
     @property
     def name(self) -> str: ...
@@ -1202,7 +1543,7 @@ class DoubleExponentialMovingAverage:
     def __init__(
         self,
         period: int,
-        price_type = None
+        price_type: PriceType | None = None
     ) -> None: ...
     @property
     def name(self) -> str: ...
@@ -1226,7 +1567,7 @@ class HullMovingAverage:
     def __init__(
         self,
         period: int,
-        price_type: PriceType = None
+        price_type: PriceType | None = None
     ) -> None: ...
     @property
     def name(self) -> str: ...
@@ -1247,12 +1588,11 @@ class HullMovingAverage:
     def handle_bar(self, bar: Bar) -> None: ...
     def reset(self) -> None: ...
 
-
 class WilderMovingAverage:
     def __init__(
         self,
         period: int,
-        price_type: PriceType = None,
+        price_type: PriceType | None = None,
     ) -> None: ...
     @property
     def name(self) -> str: ...
@@ -1274,3 +1614,24 @@ class WilderMovingAverage:
     def handle_trade_tick(self, tick: TradeTick) -> None: ...
     def handle_bar(self, bar: Bar) -> None: ...
     def reset(self) -> None: ...
+
+###################################################################################################
+# Adapters
+###################################################################################################
+
+# Databento
+
+class DatabentoDataLoader:
+    def __init__(
+        self,
+        path: PathLike[str] | str,
+    ) -> None: ...
+
+
+class DatabentoHistoricalClient:
+    def __init__(
+        self,
+        key: str,
+    ) -> None: ...
+
+    async def get_dataset_range(self, dataset: str) -> dict[str, str]: ...

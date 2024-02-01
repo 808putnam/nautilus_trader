@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -17,17 +17,17 @@ from libc.stdint cimport uint8_t
 from libc.stdint cimport uint64_t
 
 from nautilus_trader.cache.cache cimport Cache
-from nautilus_trader.common.clock cimport Clock
+from nautilus_trader.common.component cimport CMD
+from nautilus_trader.common.component cimport EVT
+from nautilus_trader.common.component cimport RECV
+from nautilus_trader.common.component cimport SENT
+from nautilus_trader.common.component cimport Clock
+from nautilus_trader.common.component cimport LogColor
+from nautilus_trader.common.component cimport Logger
 from nautilus_trader.common.component cimport MessageBus
-from nautilus_trader.common.logging cimport CMD
-from nautilus_trader.common.logging cimport EVT
-from nautilus_trader.common.logging cimport RECV
-from nautilus_trader.common.logging cimport SENT
-from nautilus_trader.common.logging cimport LogColor
-from nautilus_trader.common.logging cimport Logger
-from nautilus_trader.common.logging cimport LoggerAdapter
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.message cimport Event
+from nautilus_trader.core.rust.common cimport logging_is_initialized
 from nautilus_trader.core.rust.model cimport ContingencyType
 from nautilus_trader.core.rust.model cimport OrderStatus
 from nautilus_trader.core.rust.model cimport TriggerType
@@ -63,8 +63,6 @@ cdef class OrderManager:
     ----------
     clock : Clock
         The clock for the order manager.
-    logger : Logger
-        The logger for the order manager.
     msgbus : MessageBus
         The message bus for the order manager.
     cache : Cache
@@ -95,14 +93,13 @@ cdef class OrderManager:
     def __init__(
         self,
         Clock clock not None,
-        Logger logger not None,
         MessageBus msgbus,
         Cache cache not None,
         str component_name not None,
         bint active_local,
-        submit_order_handler: Optional[Callable[[SubmitOrder], None]] = None,
-        cancel_order_handler: Optional[Callable[[Order], None]] = None,
-        modify_order_handler: Optional[Callable[[Order, Quantity], None]] = None,
+        submit_order_handler: Callable[[SubmitOrder], None] = None,
+        cancel_order_handler: Callable[[Order], None] = None,
+        modify_order_handler: Callable[[Order, Quantity], None] = None,
         bint debug = False,
     ):
         Condition.valid_string(component_name, "component_name")
@@ -111,7 +108,7 @@ cdef class OrderManager:
         Condition.callable_or_none(modify_order_handler, "modify_order_handler")
 
         self._clock = clock
-        self._log = LoggerAdapter(component_name=component_name, logger=logger)
+        self._log = Logger(name=component_name)
         self._msgbus = msgbus
         self._cache = cache
 
@@ -557,7 +554,7 @@ cdef class OrderManager:
     cpdef void send_emulator_command(self, TradingCommand command):
         Condition.not_none(command, "command")
 
-        if not self._log.is_bypassed:
+        if logging_is_initialized():
             self._log.info(f"{CMD}{SENT} {command}.")  # pragma: no cover  (no logging in tests)
         self._msgbus.send(endpoint="OrderEmulator.execute", msg=command)
 
@@ -565,34 +562,34 @@ cdef class OrderManager:
         Condition.not_none(command, "command")
         Condition.not_none(exec_algorithm_id, "exec_algorithm_id")
 
-        if not self._log.is_bypassed:
+        if logging_is_initialized():
             self._log.info(f"{CMD}{SENT} {command}.")  # pragma: no cover  (no logging in tests)
         self._msgbus.send(endpoint=f"{exec_algorithm_id}.execute", msg=command)
 
     cpdef void send_risk_command(self, TradingCommand command):
         Condition.not_none(command, "command")
 
-        if not self._log.is_bypassed:
+        if logging_is_initialized():
             self._log.info(f"{CMD}{SENT} {command}.")  # pragma: no cover  (no logging in tests)
         self._msgbus.send(endpoint="RiskEngine.execute", msg=command)
 
     cpdef void send_exec_command(self, TradingCommand command):
         Condition.not_none(command, "command")
 
-        if not self._log.is_bypassed:
+        if logging_is_initialized():
             self._log.info(f"{CMD}{SENT} {command}.")  # pragma: no cover  (no logging in tests)
         self._msgbus.send(endpoint="ExecEngine.execute", msg=command)
 
     cpdef void send_risk_event(self, OrderEvent event):
         Condition.not_none(event, "event")
 
-        if not self._log.is_bypassed:
+        if logging_is_initialized():
             self._log.info(f"{EVT}{SENT} {event}.")  # pragma: no cover  (no logging in tests)
         self._msgbus.send(endpoint="RiskEngine.process", msg=event)
 
     cpdef void send_exec_event(self, OrderEvent event):
         Condition.not_none(event, "event")
 
-        if not self._log.is_bypassed:
+        if logging_is_initialized():
             self._log.info(f"{EVT}{SENT} {event}.")  # pragma: no cover (no logging in tests)
         self._msgbus.send(endpoint="ExecEngine.process", msg=event)

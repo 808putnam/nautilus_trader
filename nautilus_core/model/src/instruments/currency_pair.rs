@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,18 +13,20 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-#![allow(dead_code)] // Allow for development
-
-use std::hash::{Hash, Hasher};
+use std::{
+    any::Any,
+    hash::{Hash, Hasher},
+};
 
 use anyhow::Result;
+use nautilus_core::time::UnixNanos;
 use pyo3::prelude::*;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
 use super::Instrument;
 use crate::{
-    enums::{AssetClass, AssetType},
+    enums::{AssetClass, InstrumentClass},
     identifiers::{instrument_id::InstrumentId, symbol::Symbol},
     types::{currency::Currency, price::Price, quantity::Quantity},
 };
@@ -35,24 +37,46 @@ use crate::{
     feature = "python",
     pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
+#[cfg_attr(feature = "trivial_copy", derive(Copy))]
 pub struct CurrencyPair {
+    #[pyo3(get)]
     pub id: InstrumentId,
+    #[pyo3(get)]
     pub raw_symbol: Symbol,
+    #[pyo3(get)]
     pub base_currency: Currency,
+    #[pyo3(get)]
     pub quote_currency: Currency,
+    #[pyo3(get)]
     pub price_precision: u8,
+    #[pyo3(get)]
     pub size_precision: u8,
+    #[pyo3(get)]
     pub price_increment: Price,
+    #[pyo3(get)]
     pub size_increment: Quantity,
-    pub margin_init: Decimal,
-    pub margin_maint: Decimal,
+    #[pyo3(get)]
     pub maker_fee: Decimal,
+    #[pyo3(get)]
     pub taker_fee: Decimal,
+    #[pyo3(get)]
+    pub margin_init: Decimal,
+    #[pyo3(get)]
+    pub margin_maint: Decimal,
+    #[pyo3(get)]
     pub lot_size: Option<Quantity>,
+    #[pyo3(get)]
     pub max_quantity: Option<Quantity>,
+    #[pyo3(get)]
     pub min_quantity: Option<Quantity>,
+    #[pyo3(get)]
     pub max_price: Option<Price>,
+    #[pyo3(get)]
     pub min_price: Option<Price>,
+    #[pyo3(get)]
+    pub ts_event: UnixNanos,
+    #[pyo3(get)]
+    pub ts_init: UnixNanos,
 }
 
 impl CurrencyPair {
@@ -66,15 +90,17 @@ impl CurrencyPair {
         size_precision: u8,
         price_increment: Price,
         size_increment: Quantity,
+        taker_fee: Decimal,
+        maker_fee: Decimal,
         margin_init: Decimal,
         margin_maint: Decimal,
-        maker_fee: Decimal,
-        taker_fee: Decimal,
         lot_size: Option<Quantity>,
         max_quantity: Option<Quantity>,
         min_quantity: Option<Quantity>,
         max_price: Option<Price>,
         min_price: Option<Price>,
+        ts_event: UnixNanos,
+        ts_init: UnixNanos,
     ) -> Result<Self> {
         Ok(Self {
             id,
@@ -85,15 +111,17 @@ impl CurrencyPair {
             size_precision,
             price_increment,
             size_increment,
+            taker_fee,
+            maker_fee,
             margin_init,
             margin_maint,
-            maker_fee,
-            taker_fee,
             lot_size,
             max_quantity,
             min_quantity,
             max_price,
             min_price,
+            ts_event,
+            ts_init,
         })
     }
 }
@@ -125,8 +153,8 @@ impl Instrument for CurrencyPair {
         AssetClass::FX
     }
 
-    fn asset_type(&self) -> AssetType {
-        AssetType::Spot
+    fn instrument_class(&self) -> InstrumentClass {
+        InstrumentClass::Spot
     }
 
     fn quote_currency(&self) -> &Currency {
@@ -186,20 +214,28 @@ impl Instrument for CurrencyPair {
         self.min_price
     }
 
+    fn ts_event(&self) -> UnixNanos {
+        self.ts_event
+    }
+
+    fn ts_init(&self) -> UnixNanos {
+        self.ts_init
+    }
+
+    fn as_any(&self) -> &dyn Any {
+        self
+    }
     fn margin_init(&self) -> Decimal {
         self.margin_init
     }
-
     fn margin_maint(&self) -> Decimal {
         self.margin_maint
     }
-
-    fn maker_fee(&self) -> Decimal {
-        self.maker_fee
-    }
-
     fn taker_fee(&self) -> Decimal {
         self.taker_fee
+    }
+    fn maker_fee(&self) -> Decimal {
+        self.maker_fee
     }
 }
 

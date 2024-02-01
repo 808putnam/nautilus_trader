@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -472,6 +472,7 @@ class BinanceQuoteData(msgspec.Struct, frozen=True):
     B: str  # best bid qty
     a: str  # best ask price
     A: str  # best ask qty
+    T: int | None = None  # event time
 
     def parse_to_quote_tick(
         self,
@@ -484,7 +485,7 @@ class BinanceQuoteData(msgspec.Struct, frozen=True):
             ask_price=Price.from_str(self.a),
             bid_size=Quantity.from_str(self.B),
             ask_size=Quantity.from_str(self.A),
-            ts_event=ts_init,
+            ts_event=millis_to_nanos(self.T) if self.T else ts_init,
             ts_init=ts_init,
         )
 

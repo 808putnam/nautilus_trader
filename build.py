@@ -154,15 +154,23 @@ def _build_extensions() -> list[Extension]:
         extra_link_args += [
             "AdvAPI32.Lib",
             "bcrypt.lib",
+            "Crypt32.lib",
+            "Iphlpapi.lib",
             "Kernel32.lib",
+            "ncrypt.lib",
+            "Netapi32.lib",
             "ntdll.lib",
+            "Ole32.lib",
+            "OleAut32.lib",
+            "Pdh.lib",
+            "PowrProf.lib",
+            "Psapi.lib",
+            "schannel.lib",
+            "secur32.lib",
+            "Shell32.lib",
             "User32.Lib",
             "UserEnv.Lib",
             "WS2_32.Lib",
-            "Crypt32.lib",
-            "secur32.lib",
-            "schannel.lib",
-            "ncrypt.lib",
         ]
 
     print("Creating C extension modules...")
@@ -277,15 +285,14 @@ def _strip_unneeded_symbols() -> None:
         print("Stripping unneeded symbols from binaries...")
         for so in itertools.chain(Path("nautilus_trader").rglob("*.so")):
             if platform.system() == "Linux":
-                strip_cmd = f"strip --strip-unneeded {so}"
+                strip_cmd = ["strip", "--strip-unneeded", so]
             elif platform.system() == "Darwin":
-                strip_cmd = f"strip -x {so}"
+                strip_cmd = ["strip", "-x", so]
             else:
                 raise RuntimeError(f"Cannot strip symbols for platform {platform.system()}")
             subprocess.run(
-                strip_cmd,
+                strip_cmd,  # type: ignore [arg-type] # noqa
                 check=True,
-                shell=True,  # noqa
                 capture_output=True,
             )
     except subprocess.CalledProcessError as e:

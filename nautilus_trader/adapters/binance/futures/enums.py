@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -46,6 +46,7 @@ class BinanceFuturesContractType(Enum):
     NEXT_MONTH = "NEXT_MONTH"
     CURRENT_QUARTER = "CURRENT_QUARTER"
     NEXT_QUARTER = "NEXT_QUARTER"
+    PERPETUAL_DELIVERING = "PERPETUAL_DELIVERING"
 
 
 @unique
@@ -116,6 +117,8 @@ class BinanceFuturesPositionUpdateReason(Enum):
     OPTIONS_PREMIUM_FEE = "OPTIONS_PREMIUM_FEE"
     OPTIONS_SETTLE_PROFIT = "OPTIONS_SETTLE_PROFIT"
     AUTO_EXCHANGE = "AUTO_EXCHANGE"
+    COIN_SWAP_DEPOSIT = "COIN_SWAP_DEPOSIT"
+    COIN_SWAP_WITHDRAW = "COIN_SWAP_WITHDRAW"
 
 
 @unique

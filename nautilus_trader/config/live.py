@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,6 +13,7 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+from __future__ import annotations
 
 from nautilus_trader.common import Environment
 from nautilus_trader.config.common import DataEngineConfig
@@ -24,6 +25,7 @@ from nautilus_trader.config.common import RiskEngineConfig
 from nautilus_trader.config.validation import NonNegativeInt
 from nautilus_trader.config.validation import PositiveFloat
 from nautilus_trader.config.validation import PositiveInt
+from nautilus_trader.model.identifiers import TraderId
 
 
 class LiveDataEngineConfig(DataEngineConfig, frozen=True):
@@ -123,7 +125,7 @@ class LiveDataClientConfig(NautilusConfig, frozen=True):
     Parameters
     ----------
     handle_revised_bars : bool
-        If DataClient will emit bar updates as soon new bar opens.
+        If DataClient will emit bar updates when a new bar opens.
     instrument_provider : InstrumentProviderConfig
         The clients instrument provider configuration.
     routing : RoutingConfig
@@ -159,12 +161,10 @@ class TradingNodeConfig(NautilusKernelConfig, frozen=True):
 
     Parameters
     ----------
-    trader_id : str, default "TRADER-000"
+    trader_id : TraderId, default "TRADER-000"
         The trader ID for the node (must be a name and ID tag separated by a hyphen).
     cache : CacheConfig, optional
         The cache configuration.
-    cache_database : CacheDatabaseConfig, optional
-        The cache database configuration.
     data_engine : LiveDataEngineConfig, optional
         The live data engine configuration.
     risk_engine : LiveRiskEngineConfig, optional
@@ -183,7 +183,7 @@ class TradingNodeConfig(NautilusKernelConfig, frozen=True):
     """
 
     environment: Environment = Environment.LIVE
-    trader_id: str = "TRADER-001"
+    trader_id: TraderId = TraderId("TRADER-001")
     data_engine: LiveDataEngineConfig = LiveDataEngineConfig()
     risk_engine: LiveRiskEngineConfig = LiveRiskEngineConfig()
     exec_engine: LiveExecEngineConfig = LiveExecEngineConfig()

@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -12,7 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
-
 
 from nautilus_trader.common.providers import InstrumentProvider
 from nautilus_trader.model.identifiers import InstrumentId
@@ -35,15 +34,28 @@ class TemplateInstrumentProvider(InstrumentProvider):
     must be implemented for an integration to be complete.
     """
 
-    async def load_all_async(self, filters: dict | None = None) -> None:
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+    async def load_all_async(
+        self,
+        filters: dict | None = None,
+    ) -> None:
+        raise NotImplementedError(
+            "method `load_all_async` must be implemented in the subclass",
+        )  # pragma: no cover
 
     async def load_ids_async(
         self,
         instrument_ids: list[InstrumentId],
         filters: dict | None = None,
     ) -> None:
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError(
+            "method `load_ids_async` must be implemented in the subclass",
+        )  # pragma: no cover
 
-    async def load_async(self, instrument_id: InstrumentId, filters: dict | None = None):
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+    async def load_async(
+        self,
+        instrument_id: InstrumentId,
+        filters: dict | None = None,
+    ) -> None:
+        raise NotImplementedError(
+            "method `load_async` must be implemented in the subclass",
+        )  # pragma: no cover

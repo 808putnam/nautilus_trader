@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,19 +13,20 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-#![allow(dead_code)] // Allow for development
-
-use std::hash::{Hash, Hasher};
+use std::{
+    any::Any,
+    hash::{Hash, Hasher},
+};
 
 use anyhow::Result;
 use nautilus_core::time::UnixNanos;
 use pyo3::prelude::*;
-use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
+use ustr::Ustr;
 
 use super::Instrument;
 use crate::{
-    enums::{AssetClass, AssetType, OptionKind},
+    enums::{AssetClass, InstrumentClass, OptionKind},
     identifiers::{instrument_id::InstrumentId, symbol::Symbol},
     types::{currency::Currency, price::Price, quantity::Quantity},
 };
@@ -36,27 +37,45 @@ use crate::{
     feature = "python",
     pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
+#[cfg_attr(feature = "trivial_copy", derive(Copy))]
 pub struct OptionsContract {
+    #[pyo3(get)]
     pub id: InstrumentId,
+    #[pyo3(get)]
     pub raw_symbol: Symbol,
+    #[pyo3(get)]
     pub asset_class: AssetClass,
-    pub underlying: String,
+    pub underlying: Ustr,
+    #[pyo3(get)]
     pub option_kind: OptionKind,
+    #[pyo3(get)]
     pub activation_ns: UnixNanos,
+    #[pyo3(get)]
     pub expiration_ns: UnixNanos,
+    #[pyo3(get)]
     pub strike_price: Price,
+    #[pyo3(get)]
     pub currency: Currency,
+    #[pyo3(get)]
     pub price_precision: u8,
+    #[pyo3(get)]
     pub price_increment: Price,
-    pub margin_init: Decimal,
-    pub margin_maint: Decimal,
-    pub maker_fee: Decimal,
-    pub taker_fee: Decimal,
-    pub lot_size: Option<Quantity>,
+    #[pyo3(get)]
+    pub multiplier: Quantity,
+    #[pyo3(get)]
+    pub lot_size: Quantity,
+    #[pyo3(get)]
     pub max_quantity: Option<Quantity>,
+    #[pyo3(get)]
     pub min_quantity: Option<Quantity>,
+    #[pyo3(get)]
     pub max_price: Option<Price>,
+    #[pyo3(get)]
     pub min_price: Option<Price>,
+    #[pyo3(get)]
+    pub ts_event: UnixNanos,
+    #[pyo3(get)]
+    pub ts_init: UnixNanos,
 }
 
 impl OptionsContract {
@@ -65,7 +84,7 @@ impl OptionsContract {
         id: InstrumentId,
         raw_symbol: Symbol,
         asset_class: AssetClass,
-        underlying: String,
+        underlying: Ustr,
         option_kind: OptionKind,
         activation_ns: UnixNanos,
         expiration_ns: UnixNanos,
@@ -73,15 +92,14 @@ impl OptionsContract {
         currency: Currency,
         price_precision: u8,
         price_increment: Price,
-        margin_init: Decimal,
-        margin_maint: Decimal,
-        maker_fee: Decimal,
-        taker_fee: Decimal,
-        lot_size: Option<Quantity>,
+        multiplier: Quantity,
+        lot_size: Quantity,
         max_quantity: Option<Quantity>,
         min_quantity: Option<Quantity>,
         max_price: Option<Price>,
         min_price: Option<Price>,
+        ts_event: UnixNanos,
+        ts_init: UnixNanos,
     ) -> Result<Self> {
         Ok(Self {
             id,
@@ -95,15 +113,14 @@ impl OptionsContract {
             currency,
             price_precision,
             price_increment,
+            multiplier,
             lot_size,
             max_quantity,
             min_quantity,
             max_price,
             min_price,
-            margin_init,
-            margin_maint,
-            maker_fee,
-            taker_fee,
+            ts_event,
+            ts_init,
         })
     }
 }
@@ -135,8 +152,8 @@ impl Instrument for OptionsContract {
         self.asset_class
     }
 
-    fn asset_type(&self) -> AssetType {
-        AssetType::Option
+    fn instrument_class(&self) -> InstrumentClass {
+        InstrumentClass::Option
     }
 
     fn quote_currency(&self) -> &Currency {
@@ -172,11 +189,11 @@ impl Instrument for OptionsContract {
     }
 
     fn multiplier(&self) -> Quantity {
-        Quantity::from(1)
+        self.multiplier
     }
 
     fn lot_size(&self) -> Option<Quantity> {
-        self.lot_size
+        Some(self.lot_size)
     }
 
     fn max_quantity(&self) -> Option<Quantity> {
@@ -195,20 +212,16 @@ impl Instrument for OptionsContract {
         self.min_price
     }
 
-    fn margin_init(&self) -> Decimal {
-        self.margin_init
+    fn ts_event(&self) -> UnixNanos {
+        self.ts_event
     }
 
-    fn margin_maint(&self) -> Decimal {
-        self.margin_maint
+    fn ts_init(&self) -> UnixNanos {
+        self.ts_init
     }
 
-    fn maker_fee(&self) -> Decimal {
-        self.maker_fee
-    }
-
-    fn taker_fee(&self) -> Decimal {
-        self.taker_fee
+    fn as_any(&self) -> &dyn Any {
+        self
     }
 }
 

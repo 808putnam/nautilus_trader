@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -21,12 +21,12 @@ use std::{
 };
 
 use anyhow::{anyhow, bail, Result};
-use nautilus_common::redis::get_buffer_interval;
+use nautilus_common::redis::{get_buffer_interval, get_redis_url};
 use nautilus_core::uuid::UUID4;
 use nautilus_model::identifiers::trader_id::TraderId;
 use pyo3::prelude::*;
 use redis::{Commands, Connection, Pipeline};
-use serde_json::{json, Value};
+use serde_json::json;
 
 use crate::cache::{CacheDatabase, DatabaseCommand, DatabaseOperation};
 
@@ -81,7 +81,7 @@ impl CacheDatabase for RedisCacheDatabase {
     fn new(
         trader_id: TraderId,
         instance_id: UUID4,
-        config: HashMap<String, Value>,
+        config: HashMap<String, serde_json::Value>,
     ) -> Result<RedisCacheDatabase> {
         let redis_url = get_redis_url(&config);
         let client = redis::Client::open(redis_url)?;
@@ -163,7 +163,7 @@ impl CacheDatabase for RedisCacheDatabase {
     fn handle_messages(
         rx: Receiver<DatabaseCommand>,
         trader_key: String,
-        config: HashMap<String, Value>,
+        config: HashMap<String, serde_json::Value>,
     ) {
         let redis_url = get_redis_url(&config);
         let client = redis::Client::open(redis_url).unwrap();
@@ -213,17 +213,49 @@ fn drain_buffer(conn: &mut Connection, trader_key: &str, buffer: &mut VecDeque<D
 
         match msg.op_type {
             DatabaseOperation::Insert => {
-                if let Err(e) = insert(&mut pipe, collection, &key, msg.payload) {
+                if msg.payload.is_none() {
+                    eprintln!("Null `payload` for `insert`");
+                    continue; // Continue to next message
+                };
+
+                let payload = msg
+                    .payload
+                    .as_ref()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_slice())
+                    .collect::<Vec<&[u8]>>();
+
+                if let Err(e) = insert(&mut pipe, collection, &key, payload) {
                     eprintln!("{e}");
                 }
             }
             DatabaseOperation::Update => {
-                if let Err(e) = update(&mut pipe, collection, &key, msg.payload) {
+                if msg.payload.is_none() {
+                    eprintln!("Null `payload` for `update`");
+                    continue; // Continue to next message
+                };
+
+                let payload = msg
+                    .payload
+                    .as_ref()
+                    .unwrap()
+                    .iter()
+                    .map(|v| v.as_slice())
+                    .collect::<Vec<&[u8]>>();
+
+                if let Err(e) = update(&mut pipe, collection, &key, payload) {
                     eprintln!("{e}");
                 }
             }
             DatabaseOperation::Delete => {
-                if let Err(e) = delete(&mut pipe, collection, &key, msg.payload) {
+                // `payload` can be `None` for a delete operation
+                let payload = msg
+                    .payload
+                    .as_ref()
+                    .map(|v| v.iter().map(|v| v.as_slice()).collect::<Vec<&[u8]>>());
+
+                if let Err(e) = delete(&mut pipe, collection, &key, payload) {
                     eprintln!("{e}");
                 }
             }
@@ -279,13 +311,7 @@ fn read_list(conn: &mut Connection, key: &str) -> Result<Vec<Vec<u8>>> {
     Ok(result)
 }
 
-fn insert(
-    pipe: &mut Pipeline,
-    collection: &str,
-    key: &str,
-    value: Option<Vec<Vec<u8>>>,
-) -> Result<()> {
-    let value = value.ok_or_else(|| anyhow!("Null `payload` for `insert`"))?;
+fn insert(pipe: &mut Pipeline, collection: &str, key: &str, value: Vec<&[u8]>) -> Result<()> {
     if value.is_empty() {
         bail!("Empty `payload` for `insert`")
     }
@@ -293,149 +319,143 @@ fn insert(
     match collection {
         INDEX => insert_index(pipe, key, &value),
         GENERAL => {
-            insert_string(pipe, key, &value[0]);
+            insert_string(pipe, key, value[0]);
             Ok(())
         }
         CURRENCIES => {
-            insert_string(pipe, key, &value[0]);
+            insert_string(pipe, key, value[0]);
             Ok(())
         }
         INSTRUMENTS => {
-            insert_string(pipe, key, &value[0]);
+            insert_string(pipe, key, value[0]);
             Ok(())
         }
         SYNTHETICS => {
-            insert_string(pipe, key, &value[0]);
+            insert_string(pipe, key, value[0]);
             Ok(())
         }
         ACCOUNTS => {
-            insert_list(pipe, key, &value[0]);
+            insert_list(pipe, key, value[0]);
             Ok(())
         }
         ORDERS => {
-            insert_list(pipe, key, &value[0]);
+            insert_list(pipe, key, value[0]);
             Ok(())
         }
         POSITIONS => {
-            insert_list(pipe, key, &value[0]);
+            insert_list(pipe, key, value[0]);
             Ok(())
         }
         ACTORS => {
-            insert_string(pipe, key, &value[0]);
+            insert_string(pipe, key, value[0]);
             Ok(())
         }
         STRATEGIES => {
-            insert_string(pipe, key, &value[0]);
+            insert_string(pipe, key, value[0]);
             Ok(())
         }
         SNAPSHOTS => {
-            insert_list(pipe, key, &value[0]);
+            insert_list(pipe, key, value[0]);
             Ok(())
         }
         HEALTH => {
-            insert_string(pipe, key, &value[0]);
+            insert_string(pipe, key, value[0]);
             Ok(())
         }
         _ => bail!("Unsupported operation: `insert` for collection '{collection}'"),
     }
 }
 
-fn insert_index(pipe: &mut Pipeline, key: &str, value: &[Vec<u8>]) -> Result<()> {
+fn insert_index(pipe: &mut Pipeline, key: &str, value: &[&[u8]]) -> Result<()> {
     let index_key = get_index_key(key)?;
     match index_key {
         INDEX_ORDER_IDS => {
-            insert_set(pipe, key, &value[0]);
+            insert_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_ORDER_POSITION => {
-            insert_hset(pipe, key, &value[0], &value[1]);
+            insert_hset(pipe, key, value[0], value[1]);
             Ok(())
         }
         INDEX_ORDER_CLIENT => {
-            insert_hset(pipe, key, &value[0], &value[1]);
+            insert_hset(pipe, key, value[0], value[1]);
             Ok(())
         }
         INDEX_ORDERS => {
-            insert_set(pipe, key, &value[0]);
+            insert_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_ORDERS_OPEN => {
-            insert_set(pipe, key, &value[0]);
+            insert_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_ORDERS_CLOSED => {
-            insert_set(pipe, key, &value[0]);
+            insert_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_ORDERS_EMULATED => {
-            insert_set(pipe, key, &value[0]);
+            insert_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_ORDERS_INFLIGHT => {
-            insert_set(pipe, key, &value[0]);
+            insert_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_POSITIONS => {
-            insert_set(pipe, key, &value[0]);
+            insert_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_POSITIONS_OPEN => {
-            insert_set(pipe, key, &value[0]);
+            insert_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_POSITIONS_CLOSED => {
-            insert_set(pipe, key, &value[0]);
+            insert_set(pipe, key, value[0]);
             Ok(())
         }
         _ => bail!("Index unknown '{index_key}' on insert"),
     }
 }
 
-fn insert_string(pipe: &mut Pipeline, key: &str, value: &Vec<u8>) {
+fn insert_string(pipe: &mut Pipeline, key: &str, value: &[u8]) {
     pipe.set(key, value);
 }
 
-fn insert_set(pipe: &mut Pipeline, key: &str, value: &Vec<u8>) {
+fn insert_set(pipe: &mut Pipeline, key: &str, value: &[u8]) {
     pipe.sadd(key, value);
 }
 
-fn insert_hset(pipe: &mut Pipeline, key: &str, name: &Vec<u8>, value: &Vec<u8>) {
+fn insert_hset(pipe: &mut Pipeline, key: &str, name: &[u8], value: &[u8]) {
     pipe.hset(key, name, value);
 }
 
-fn insert_list(pipe: &mut Pipeline, key: &str, value: &Vec<u8>) {
+fn insert_list(pipe: &mut Pipeline, key: &str, value: &[u8]) {
     pipe.rpush(key, value);
 }
 
-fn update(
-    pipe: &mut Pipeline,
-    collection: &str,
-    key: &str,
-    value: Option<Vec<Vec<u8>>>,
-) -> Result<()> {
-    let value = value.ok_or_else(|| anyhow!("Null `payload` for `update`"))?;
+fn update(pipe: &mut Pipeline, collection: &str, key: &str, value: Vec<&[u8]>) -> Result<()> {
     if value.is_empty() {
         bail!("Empty `payload` for `update`")
     }
 
     match collection {
         ACCOUNTS => {
-            update_list(pipe, key, &value[0]);
+            update_list(pipe, key, value[0]);
             Ok(())
         }
         ORDERS => {
-            update_list(pipe, key, &value[0]);
+            update_list(pipe, key, value[0]);
             Ok(())
         }
         POSITIONS => {
-            update_list(pipe, key, &value[0]);
+            update_list(pipe, key, value[0]);
             Ok(())
         }
         _ => bail!("Unsupported operation: `update` for collection '{collection}'"),
     }
 }
 
-fn update_list(pipe: &mut Pipeline, key: &str, value: &Vec<u8>) {
+fn update_list(pipe: &mut Pipeline, key: &str, value: &[u8]) {
     pipe.rpush_exists(key, value);
 }
 
@@ -443,7 +463,7 @@ fn delete(
     pipe: &mut Pipeline,
     collection: &str,
     key: &str,
-    value: Option<Vec<Vec<u8>>>,
+    value: Option<Vec<&[u8]>>,
 ) -> Result<()> {
     match collection {
         INDEX => remove_index(pipe, key, value),
@@ -459,40 +479,40 @@ fn delete(
     }
 }
 
-fn remove_index(pipe: &mut Pipeline, key: &str, value: Option<Vec<Vec<u8>>>) -> Result<()> {
+fn remove_index(pipe: &mut Pipeline, key: &str, value: Option<Vec<&[u8]>>) -> Result<()> {
     let value = value.ok_or_else(|| anyhow!("Empty `payload` for `delete` '{key}'"))?;
     let index_key = get_index_key(key)?;
 
     match index_key {
         INDEX_ORDERS_OPEN => {
-            remove_from_set(pipe, key, &value[0]);
+            remove_from_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_ORDERS_CLOSED => {
-            remove_from_set(pipe, key, &value[0]);
+            remove_from_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_ORDERS_EMULATED => {
-            remove_from_set(pipe, key, &value[0]);
+            remove_from_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_ORDERS_INFLIGHT => {
-            remove_from_set(pipe, key, &value[0]);
+            remove_from_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_POSITIONS_OPEN => {
-            remove_from_set(pipe, key, &value[0]);
+            remove_from_set(pipe, key, value[0]);
             Ok(())
         }
         INDEX_POSITIONS_CLOSED => {
-            remove_from_set(pipe, key, &value[0]);
+            remove_from_set(pipe, key, value[0]);
             Ok(())
         }
         _ => bail!("Unsupported index operation: remove from '{index_key}'"),
     }
 }
 
-fn remove_from_set(pipe: &mut Pipeline, key: &str, member: &Vec<u8>) {
+fn remove_from_set(pipe: &mut Pipeline, key: &str, member: &[u8]) {
     pipe.srem(key, member);
 }
 
@@ -500,37 +520,10 @@ fn delete_string(pipe: &mut Pipeline, key: &str) {
     pipe.del(key);
 }
 
-fn get_redis_url(config: &HashMap<String, Value>) -> String {
-    let host = config
-        .get("host")
-        .map(|v| v.as_str().unwrap_or("127.0.0.1"));
-    let port = config.get("port").map(|v| v.as_str().unwrap_or("6379"));
-    let username = config
-        .get("username")
-        .map(|v| v.as_str().unwrap_or_default());
-    let password = config
-        .get("password")
-        .map(|v| v.as_str().unwrap_or_default());
-    let use_ssl = config.get("ssl").unwrap_or(&json!(false));
-
-    format!(
-        "redis{}://{}:{}@{}:{}",
-        if use_ssl.as_bool().unwrap_or(false) {
-            "s"
-        } else {
-            ""
-        },
-        username.unwrap_or(""),
-        password.unwrap_or(""),
-        host.unwrap(),
-        port.unwrap(),
-    )
-}
-
 fn get_trader_key(
     trader_id: TraderId,
     instance_id: UUID4,
-    config: &HashMap<String, Value>,
+    config: &HashMap<String, serde_json::Value>,
 ) -> String {
     let mut key = String::new();
 
@@ -562,7 +555,7 @@ fn get_index_key(key: &str) -> Result<&str> {
 
 // This function can be used when we handle cache serialization in Rust
 #[allow(dead_code)]
-fn get_encoding(config: &HashMap<String, Value>) -> String {
+fn get_encoding(config: &HashMap<String, serde_json::Value>) -> String {
     config
         .get("encoding")
         .and_then(|v| v.as_str())
@@ -572,7 +565,10 @@ fn get_encoding(config: &HashMap<String, Value>) -> String {
 
 // This function can be used when we handle cache serialization in Rust
 #[allow(dead_code)]
-fn deserialize_payload(encoding: &str, payload: &[u8]) -> Result<HashMap<String, Value>> {
+fn deserialize_payload(
+    encoding: &str,
+    payload: &[u8],
+) -> Result<HashMap<String, serde_json::Value>> {
     match encoding {
         "msgpack" => rmp_serde::from_slice(payload)
             .map_err(|e| anyhow!("Failed to deserialize msgpack `payload`: {e}")),
@@ -590,18 +586,6 @@ mod tests {
     use serde_json::json;
 
     use super::*;
-
-    #[rstest]
-    fn test_get_redis_url() {
-        let mut config = HashMap::new();
-        config.insert("host".to_string(), json!("localhost"));
-        config.insert("port".to_string(), json!("1234"));
-        config.insert("username".to_string(), json!("user"));
-        config.insert("password".to_string(), json!("pass"));
-        config.insert("ssl".to_string(), json!(true));
-
-        assert_eq!(get_redis_url(&config), "rediss://user:pass@localhost:1234");
-    }
 
     #[rstest]
     fn test_get_trader_key_with_prefix_and_instance_id() {

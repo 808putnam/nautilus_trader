@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -15,8 +15,7 @@
 
 import asyncio
 
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.common.logging import LoggerAdapter
+from nautilus_trader.common.component import Logger
 from nautilus_trader.config import InstrumentProviderConfig
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.model.identifiers import InstrumentId
@@ -30,8 +29,6 @@ class InstrumentProvider:
 
     Parameters
     ----------
-    logger : Logger
-        The logger for the provider.
     config :InstrumentProviderConfig, optional
         The instrument provider config.
 
@@ -41,16 +38,10 @@ class InstrumentProvider:
 
     """
 
-    def __init__(
-        self,
-        logger: Logger,
-        config: InstrumentProviderConfig | None = None,
-    ) -> None:
-        PyCondition.not_none(logger, "logger")
-
+    def __init__(self, config: InstrumentProviderConfig | None = None) -> None:
         if config is None:
             config = InstrumentProviderConfig()
-        self._log = LoggerAdapter(type(self).__name__, logger)
+        self._log = Logger(name=type(self).__name__)
 
         self._instruments: dict[InstrumentId, Instrument] = {}
         self._currencies: dict[str, Currency] = {}
@@ -63,6 +54,8 @@ class InstrumentProvider:
         # Async loading flags
         self._loaded = False
         self._loading = False
+
+        self._log.info("READY.")
 
     @property
     def count(self) -> int:
@@ -81,7 +74,9 @@ class InstrumentProvider:
         Load the latest instruments into the provider asynchronously, optionally
         applying the given filters.
         """
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError(
+            "method `load_all_async` must be implemented in the subclass",
+        )  # pragma: no cover
 
     async def load_ids_async(
         self,
@@ -105,7 +100,9 @@ class InstrumentProvider:
             If any `instrument_id.venue` is not equal to `self.venue`.
 
         """
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError(
+            "method `load_ids_async` must be implemented in the subclass",
+        )  # pragma: no cover
 
     async def load_async(
         self,
@@ -129,7 +126,9 @@ class InstrumentProvider:
             If `instrument_id.venue` is not equal to `self.venue`.
 
         """
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError(
+            "method `load_async` must be implemented in the subclass",
+        )  # pragma: no cover
 
     async def initialize(self) -> None:
         """

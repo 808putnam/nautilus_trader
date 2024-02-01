@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -46,10 +46,10 @@ cdef class ExecutionEngine(Component):
     cdef readonly Cache _cache
     cdef readonly ExecutionClient _default_client
     cdef readonly PositionIdGenerator _pos_id_generator
-    cdef readonly dict _clients
-    cdef readonly dict _routing_map
-    cdef readonly dict _oms_overrides
-    cdef readonly dict _external_order_claims
+    cdef readonly dict[ClientId, ExecutionClient] _clients
+    cdef readonly dict[Venue, ExecutionClient] _routing_map
+    cdef readonly dict[StrategyId, OmsType] _oms_overrides
+    cdef readonly dict[InstrumentId, StrategyId] _external_order_claims
 
     cdef readonly bint debug
     """If debug mode is active (will provide extra debug logging).\n\n:returns: `bool`"""

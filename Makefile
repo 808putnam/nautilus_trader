@@ -52,9 +52,12 @@ pre-commit:
 ruff:
 	ruff check . --fix
 
-.PHONY: update
-update:
-	(cd nautilus_core && cargo update)
+.PHONY: outdated
+outdated:
+	(cd nautilus_core && cargo outdated && poetry show --outdated)
+
+.PHONY: update cargo-update
+update: cargo-update
 	poetry update
 	poetry install --with dev,test --all-extras --no-root
 
@@ -79,11 +82,15 @@ cargo-build:
 
 .PHONY: cargo-update
 cargo-update:
-	(cd nautilus_core && cargo update)
+	(cd nautilus_core && cargo update && cargo install cargo-nextest)
 
 .PHONY: cargo-test
 cargo-test:
-	RUST_BACKTRACE=1 && (cd nautilus_core && cargo test)
+	@if ! cargo nextest --version >/dev/null 2>&1; then \
+		echo "cargo-nextest is not installed. You can install it using 'cargo install cargo-nextest'"; \
+		exit 1; \
+	fi
+	RUST_BACKTRACE=1 && (cd nautilus_core && cargo nextest run --workspace --exclude tokio-tungstenite)
 
 .PHONY: cargo-test-nightly
 cargo-test-nightly:
@@ -99,7 +106,7 @@ cargo-doc:
 
 .PHONY: docker-build
 docker-build: clean
-	docker pull ${IMAGE_FULL} || docker pull ${IMAGE}:develop ||  true
+	docker pull ${IMAGE_FULL} || docker pull ${IMAGE}:nightly ||  true
 	docker build -f .docker/nautilus_trader.dockerfile --platform linux/x86_64 -t ${IMAGE_FULL} .
 
 .PHONY: docker-build-force
@@ -129,6 +136,10 @@ pytest-coverage:
 .PHONY: test-examples
 test-examples:
 	bash scripts/test-examples.sh
+
+.PHONY: install-talib
+install-talib:
+	bash scripts/install-talib.sh
 
 .PHONY: init-db
 init-db:

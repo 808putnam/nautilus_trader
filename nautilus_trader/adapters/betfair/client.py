@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -12,7 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
-
 
 from betfair_parser.endpoints import ENDPOINTS
 from betfair_parser.spec.accounts.operations import GetAccountDetails
@@ -58,8 +57,8 @@ from betfair_parser.spec.identity import LoginStatus
 from betfair_parser.spec.navigation import Menu
 from betfair_parser.spec.navigation import Navigation
 
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.common.logging import LoggerAdapter
+import nautilus_trader
+from nautilus_trader.common.component import Logger
 from nautilus_trader.core.nautilus_pyo3 import HttpClient
 from nautilus_trader.core.nautilus_pyo3 import HttpMethod
 from nautilus_trader.core.nautilus_pyo3 import HttpResponse
@@ -76,7 +75,6 @@ class BetfairHttpClient:
         username: str,
         password: str,
         app_key: str,
-        logger: Logger,
     ):
         # Config
         self.username = username
@@ -86,7 +84,7 @@ class BetfairHttpClient:
         # Client
         self._client = HttpClient()
         self._headers: dict[str, str] = {}
-        self._log = LoggerAdapter(type(self).__name__, logger)
+        self._log = Logger(name=type(self).__name__)
         self.reset_headers()
 
     async def _request(self, method: HttpMethod, request: Request) -> HttpResponse:
@@ -95,12 +93,15 @@ class BetfairHttpClient:
         body = request.body()
         if isinstance(body, str):
             body = body.encode()
+        self._log.debug(f"[REQ] {method} {url} {body.decode()} ")
         response: HttpResponse = await self._client.request(
             method,
             url,
             headers=headers,
             body=body,
         )
+        if url not in SKIP_LOG_URLS:
+            self._log.debug(f"[RESP] {response.body.decode()}")
         return response
 
     async def _post(self, request: Request) -> Request.return_type:
@@ -115,7 +116,7 @@ class BetfairHttpClient:
     def session_token(self) -> str | None:
         return self._headers.get("X-Authentication")
 
-    def update_headers(self, login_resp: LoginResponse):
+    def update_headers(self, login_resp: LoginResponse) -> None:
         self._headers.update(
             {
                 "X-Authentication": login_resp.token,
@@ -127,6 +128,7 @@ class BetfairHttpClient:
         self._headers = {
             "Accept": "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": nautilus_trader.USER_AGENT,
             "X-Application": self.app_key,
         }
 
@@ -284,3 +286,10 @@ class BetfairHttpClient:
             more_available = resp.more_available
             index = len(cleared_orders)
         return cleared_orders
+
+
+SKIP_LOG_URLS = {
+    "https://identitysso.betfair.com/api/login",
+    "https://api.betfair.com/exchange/betting/rest/v1/en/navigation/menu.json",
+    "https://api.betfair.com/exchange/betting/json-rpc/v1/SportsAPING/v1.0/listMarketCatalogue",
+}

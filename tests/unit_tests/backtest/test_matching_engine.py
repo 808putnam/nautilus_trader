@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,10 +19,8 @@ import pytest
 
 from nautilus_trader.backtest.matching_engine import OrderMatchingEngine
 from nautilus_trader.backtest.models import FillModel
-from nautilus_trader.common.clock import TestClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.enums import LogLevel
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import TestClock
 from nautilus_trader.model.enums import BookType
 from nautilus_trader.model.enums import MarketStatus
 from nautilus_trader.model.enums import OmsType
@@ -44,18 +42,11 @@ class TestOrderMatchingEngine:
     def setup(self):
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(
-            clock=self.clock,
-            level_stdout=LogLevel.DEBUG,
-            bypass=True,
-        )
-
         self.trader_id = TestIdStubs.trader_id()
 
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
         self.instrument = ETHUSDT_PERP_BINANCE
         self.instrument_id = self.instrument.id
@@ -73,7 +64,6 @@ class TestOrderMatchingEngine:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
     def test_repr(self) -> None:

@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -25,8 +25,6 @@ attempts to operate without a managing `Trader` instance.
 
 """
 
-from typing import Optional
-
 import cython
 
 from nautilus_trader.cache.cache import Cache
@@ -37,16 +35,15 @@ from libc.stdint cimport uint64_t
 
 from nautilus_trader.cache.base cimport CacheFacade
 from nautilus_trader.common.actor cimport Actor
-from nautilus_trader.common.clock cimport Clock
-from nautilus_trader.common.clock cimport TimeEvent
+from nautilus_trader.common.component cimport CMD
+from nautilus_trader.common.component cimport EVT
+from nautilus_trader.common.component cimport RECV
+from nautilus_trader.common.component cimport SENT
+from nautilus_trader.common.component cimport Clock
+from nautilus_trader.common.component cimport LogColor
 from nautilus_trader.common.component cimport MessageBus
+from nautilus_trader.common.component cimport TimeEvent
 from nautilus_trader.common.factories cimport OrderFactory
-from nautilus_trader.common.logging cimport CMD
-from nautilus_trader.common.logging cimport EVT
-from nautilus_trader.common.logging cimport RECV
-from nautilus_trader.common.logging cimport SENT
-from nautilus_trader.common.logging cimport LogColor
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.fsm cimport InvalidStateTrigger
 from nautilus_trader.core.message cimport Event
@@ -104,6 +101,7 @@ from nautilus_trader.model.orders.base cimport Order
 from nautilus_trader.model.orders.list cimport OrderList
 from nautilus_trader.model.orders.market cimport MarketOrder
 from nautilus_trader.model.position cimport Position
+from nautilus_trader.portfolio.base cimport PortfolioFacade
 
 
 cdef class Strategy(Actor):
@@ -134,10 +132,11 @@ cdef class Strategy(Actor):
 
     Warnings
     --------
-    This class should not be used directly, but through a concrete subclass.
+    - This class should not be used directly, but through a concrete subclass.
+    - Do not call components such as `clock` and `logger` in the `__init__` prior to registration.
     """
 
-    def __init__(self, config: Optional[StrategyConfig] = None):
+    def __init__(self, config: StrategyConfig | None = None):
         if config is None:
             config = StrategyConfig()
         Condition.type(config, StrategyConfig, "config")
@@ -172,12 +171,18 @@ cdef class Strategy(Actor):
 
     def _parse_external_order_claims(
         self,
-        config_claims: Optional[list[str]],
+        config_claims: list[str] | None,
     ) -> list[InstrumentId]:
         if config_claims is None:
             return []
 
-        return [InstrumentId.from_str(i) for i in config_claims]
+        order_claims: list[InstrumentId] = []
+        for instrument_id in config_claims:
+            if isinstance(instrument_id, str):
+                instrument_id = InstrumentId.from_str(instrument_id)
+            order_claims.append(instrument_id)
+
+        return order_claims
 
     def to_importable_config(self) -> ImportableStrategyConfig:
         """
@@ -237,7 +242,6 @@ cdef class Strategy(Actor):
         MessageBus msgbus,
         CacheFacade cache,
         Clock clock,
-        Logger logger,
     ):
         """
         Register the strategy with a trader.
@@ -254,8 +258,6 @@ cdef class Strategy(Actor):
             The read-only cache for the strategy.
         clock : Clock
             The clock for the strategy.
-        logger : Logger
-            The logger for the strategy.
 
         Warnings
         --------
@@ -267,16 +269,13 @@ cdef class Strategy(Actor):
         Condition.not_none(msgbus, "msgbus")
         Condition.not_none(cache, "cache")
         Condition.not_none(clock, "clock")
-        Condition.not_none(logger, "logger")
 
         self.register_base(
+            portfolio=portfolio,
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
         )
-
-        self.portfolio = portfolio  # Assigned as PortfolioFacade
 
         self.order_factory = OrderFactory(
             trader_id=self.trader_id,
@@ -287,7 +286,6 @@ cdef class Strategy(Actor):
 
         self._manager = OrderManager(
             clock=clock,
-            logger=logger,
             msgbus=msgbus,
             cache=cache,
             component_name=type(self).__name__,
@@ -1133,22 +1131,22 @@ cdef class Strategy(Actor):
         cdef str order_side_str = " " + order_side_to_str(order_side) if order_side != OrderSide.NO_ORDER_SIDE else ""
         if not open_orders and not emulated_orders:
             self.log.info(
-                f"No open or emulated{order_side_str} "
-                f"{instrument_id.value} orders to cancel.")
+                f"No {instrument_id.to_str()} open or emulated{order_side_str} "
+                f"orders to cancel.")
             return
 
         cdef int open_count = len(open_orders)
         if open_count:
             self.log.info(
                 f"Canceling {open_count} open{order_side_str} "
-                f"{instrument_id.value} order{'' if open_count == 1 else 's'}...",
+                f"{instrument_id.to_str()} order{'' if open_count == 1 else 's'}...",
             )
 
         cdef int emulated_count = len(emulated_orders)
         if emulated_count:
             self.log.info(
                 f"Canceling {emulated_count} emulated{order_side_str} "
-                f"{instrument_id.value} order{'' if emulated_count == 1 else 's'}...",
+                f"{instrument_id.to_str()} order{'' if emulated_count == 1 else 's'}...",
             )
 
         cdef:
@@ -1274,7 +1272,9 @@ cdef class Strategy(Actor):
 
         cdef str position_side_str = " " + position_side_to_str(position_side) if position_side != PositionSide.NO_POSITION_SIDE else ""
         if not positions_open:
-            self.log.info(f"No open{position_side_str} positions to close.")
+            self.log.info(
+                f"No {instrument_id.to_str()} open{position_side_str} positions to close.",
+            )
             return
 
         cdef int count = len(positions_open)

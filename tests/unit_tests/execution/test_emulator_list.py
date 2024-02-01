@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -22,10 +22,8 @@ from nautilus_trader.backtest.exchange import SimulatedExchange
 from nautilus_trader.backtest.execution_client import BacktestExecClient
 from nautilus_trader.backtest.models import FillModel
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import TestClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.enums import LogLevel
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import TestClock
 from nautilus_trader.config import DataEngineConfig
 from nautilus_trader.config import ExecEngineConfig
 from nautilus_trader.config import RiskEngineConfig
@@ -68,12 +66,6 @@ class TestOrderEmulatorWithOrderLists:
     def setup(self) -> None:
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(
-            clock=TestClock(),
-            level_stdout=LogLevel.DEBUG,
-            bypass=True,
-        )
-
         self.trader_id = TestIdStubs.trader_id()
         self.strategy_id = TestIdStubs.strategy_id()
         self.account_id = AccountId("BINANCE-001")
@@ -81,16 +73,12 @@ class TestOrderEmulatorWithOrderLists:
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
-        self.cache_db = MockCacheDatabase(
-            logger=self.logger,
-        )
+        self.cache_db = MockCacheDatabase()
 
         self.cache = Cache(
             database=self.cache_db,
-            logger=self.logger,
         )
         self.cache.add_instrument(ETHUSDT_PERP_BINANCE)
 
@@ -98,14 +86,12 @@ class TestOrderEmulatorWithOrderLists:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine = DataEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
             config=DataEngineConfig(debug=True),
         )
 
@@ -113,7 +99,6 @@ class TestOrderEmulatorWithOrderLists:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
             config=ExecEngineConfig(debug=True),
         )
 
@@ -122,16 +107,14 @@ class TestOrderEmulatorWithOrderLists:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
             config=RiskEngineConfig(debug=True),
         )
 
         self.emulator = OrderEmulator(
-            trader_id=self.trader_id,
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
             config=OrderEmulatorConfig(debug=True),
         )
 
@@ -147,10 +130,10 @@ class TestOrderEmulatorWithOrderLists:
             instruments=[ETHUSDT_PERP_BINANCE],
             modules=[],
             fill_model=FillModel(),
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
             support_contingent_orders=False,
         )
 
@@ -159,7 +142,6 @@ class TestOrderEmulatorWithOrderLists:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Wire up components
@@ -176,7 +158,6 @@ class TestOrderEmulatorWithOrderLists:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine.start()
@@ -1328,7 +1309,6 @@ class TestOrderEmulatorWithOrderLists:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
         strategy.start()
 
@@ -1407,7 +1387,6 @@ class TestOrderEmulatorWithOrderLists:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
         strategy.start()
 
@@ -1487,7 +1466,6 @@ class TestOrderEmulatorWithOrderLists:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
         strategy.start()
 

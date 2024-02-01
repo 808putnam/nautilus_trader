@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,6 +19,7 @@ from typing import Any
 from nautilus_trader.common.enums import LogColor
 from nautilus_trader.config import StrategyConfig
 from nautilus_trader.config.validation import PositiveFloat
+from nautilus_trader.config.validation import PositiveInt
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.data import Data
 from nautilus_trader.core.message import Event
@@ -28,7 +29,6 @@ from nautilus_trader.model.data import Bar
 from nautilus_trader.model.data import BarType
 from nautilus_trader.model.data import OrderBookDeltas
 from nautilus_trader.model.data import QuoteTick
-from nautilus_trader.model.data import Ticker
 from nautilus_trader.model.data import TradeTick
 from nautilus_trader.model.enums import OrderSide
 from nautilus_trader.model.enums import TimeInForce
@@ -55,9 +55,9 @@ class EMACrossTWAPConfig(StrategyConfig, frozen=True):
         The bar type for the strategy.
     trade_size : str
         The position size per trade (interpreted as Decimal).
-    fast_ema_period : int, default 10
+    fast_ema_period : PositiveInt, default 10
         The fast EMA period.
-    slow_ema_period : int, default 20
+    slow_ema_period : PositiveInt, default 20
         The slow EMA period.
     twap_horizon_secs : PositiveFloat, default 30.0
         The TWAP horizon (seconds) over which the algorithm will execute.
@@ -74,11 +74,11 @@ class EMACrossTWAPConfig(StrategyConfig, frozen=True):
 
     """
 
-    instrument_id: str
-    bar_type: str
+    instrument_id: InstrumentId
+    bar_type: BarType
     trade_size: Decimal
-    fast_ema_period: int = 10
-    slow_ema_period: int = 20
+    fast_ema_period: PositiveInt = 10
+    slow_ema_period: PositiveInt = 20
     twap_horizon_secs: PositiveFloat = 30.0
     twap_interval_secs: PositiveFloat = 3.0
     close_positions_on_stop: bool = True
@@ -119,8 +119,8 @@ class EMACrossTWAP(Strategy):
         super().__init__(config)
 
         # Configuration
-        self.instrument_id = InstrumentId.from_str(config.instrument_id)
-        self.bar_type = BarType.from_str(config.bar_type)
+        self.instrument_id = config.instrument_id
+        self.bar_type = config.bar_type
         self.trade_size = Decimal(config.trade_size)
 
         # Create the indicators for the strategy
@@ -197,19 +197,6 @@ class EMACrossTWAP(Strategy):
         """
         # For debugging (must add a subscription)
         # self.log.info(repr(order_book), LogColor.CYAN)
-
-    def on_ticker(self, ticker: Ticker) -> None:
-        """
-        Actions to be performed when the strategy is running and receives a ticker.
-
-        Parameters
-        ----------
-        ticker : Ticker
-            The ticker received.
-
-        """
-        # For debugging (must add a subscription)
-        # self.log.info(repr(ticker), LogColor.CYAN)
 
     def on_quote_tick(self, tick: QuoteTick) -> None:
         """
@@ -308,7 +295,7 @@ class EMACrossTWAP(Strategy):
 
     def on_data(self, data: Data) -> None:
         """
-        Actions to be performed when the strategy is running and receives generic data.
+        Actions to be performed when the strategy is running and receives data.
 
         Parameters
         ----------

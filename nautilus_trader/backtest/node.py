@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -34,10 +34,12 @@ from nautilus_trader.model.data import capsule_to_list
 from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import OmsType
 from nautilus_trader.model.enums import book_type_from_str
+from nautilus_trader.model.identifiers import ClientId
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import Venue
 from nautilus_trader.model.objects import Currency
 from nautilus_trader.model.objects import Money
+from nautilus_trader.persistence.catalog.parquet import ParquetDataCatalog
 from nautilus_trader.persistence.catalog.types import CatalogDataResult
 
 
@@ -163,7 +165,7 @@ class BacktestNode:
                             f"`end_time` ({data_config.end_time}) is before `start_time` ({data_config.start_time})",
                         )
 
-                instrument_id: InstrumentId = InstrumentId.from_str(data_config.instrument_id)
+                instrument_id: InstrumentId = data_config.instrument_id
                 if instrument_id.venue not in venue_ids:
                     raise InvalidConfiguration(
                         f"Venue '{instrument_id.venue}' for {instrument_id} "
@@ -212,7 +214,8 @@ class BacktestNode:
         # Add instruments
         for config in data_configs:
             if is_nautilus_class(config.data_type):
-                instruments = config.catalog().instruments(instrument_ids=config.instrument_id)
+                catalog = self.load_catalog(config)
+                instruments = catalog.instruments(instrument_ids=config.instrument_id)
                 for instrument in instruments or []:
                     if instrument.id not in engine.cache.instrument_ids():
                         engine.add_instrument(instrument)
@@ -276,7 +279,7 @@ class BacktestNode:
 
         # Add query for all data configs
         for config in data_configs:
-            catalog = config.catalog()
+            catalog = self.load_catalog(config)
             if config.data_type == Bar:
                 # TODO: Temporary hack - improve bars config and decide implementation with `filter_expr`
                 assert config.instrument_id, "No `instrument_id` for Bar data config"
@@ -319,29 +322,56 @@ class BacktestNode:
         # Load data
         for config in data_configs:
             t0 = pd.Timestamp.now()
-            engine._log.info(
+            engine.logger.info(
                 f"Reading {config.data_type} data for instrument={config.instrument_id}.",
             )
-            result: CatalogDataResult = config.load()
+            result: CatalogDataResult = self.load_data_config(config)
             if config.instrument_id and result.instrument is None:
-                engine._log.warning(
+                engine.logger.warning(
                     f"Requested instrument_id={result.instrument} from data_config not found in catalog",
                 )
                 continue
             if not result.data:
-                engine._log.warning(f"No data found for {config}")
+                engine.logger.warning(f"No data found for {config}")
                 continue
 
             t1 = pd.Timestamp.now()
-            engine._log.info(
+            engine.logger.info(
                 f"Read {len(result.data):,} events from parquet in {pd.Timedelta(t1 - t0)}s.",
             )
             self._load_engine_data(engine=engine, result=result)
             t2 = pd.Timestamp.now()
-            engine._log.info(f"Engine load took {pd.Timedelta(t2 - t1)}s")
+            engine.logger.info(f"Engine load took {pd.Timedelta(t2 - t1)}s")
 
         engine.run(run_config_id=run_config_id)
         engine.dispose()
+
+    @classmethod
+    def load_catalog(cls, config: BacktestDataConfig) -> ParquetDataCatalog:
+        return ParquetDataCatalog(
+            path=config.catalog_path,
+            fs_protocol=config.catalog_fs_protocol,
+            fs_storage_options=config.catalog_fs_storage_options,
+        )
+
+    @classmethod
+    def load_data_config(cls, config: BacktestDataConfig) -> CatalogDataResult:
+        catalog: ParquetDataCatalog = cls.load_catalog(config)
+
+        instruments = (
+            catalog.instruments(instrument_ids=[config.instrument_id])
+            if config.instrument_id
+            else None
+        )
+        if config.instrument_id and not instruments:
+            return CatalogDataResult(data_cls=config.data_type, data=[])
+
+        return CatalogDataResult(
+            data_cls=config.data_type,
+            data=catalog.query(**config.query),
+            instrument=instruments[0] if instruments else None,
+            client_id=ClientId(config.client_id) if config.client_id else None,
+        )
 
     def dispose(self):
         for engine in self.get_engines():

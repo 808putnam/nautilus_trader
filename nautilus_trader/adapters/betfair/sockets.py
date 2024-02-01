@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -20,8 +20,7 @@ from collections.abc import Callable
 import msgspec
 
 from nautilus_trader.adapters.betfair.client import BetfairHttpClient
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.common.logging import LoggerAdapter
+from nautilus_trader.common.component import Logger
 from nautilus_trader.core.nautilus_pyo3 import SocketClient
 from nautilus_trader.core.nautilus_pyo3 import SocketConfig
 
@@ -43,7 +42,6 @@ class BetfairStreamClient:
     def __init__(
         self,
         http_client: BetfairHttpClient,
-        logger_adapter: LoggerAdapter,
         message_handler: Callable[[bytes], None],
         host: str | None = HOST,
         port: int | None = None,
@@ -51,7 +49,7 @@ class BetfairStreamClient:
         encoding: str | None = None,
     ) -> None:
         self._http_client = http_client
-        self._log = logger_adapter
+        self._log = Logger(type(self).__name__)
         self.handler = message_handler
         self.host = host or HOST
         self.port = port or PORT
@@ -145,16 +143,14 @@ class BetfairOrderStreamClient(BetfairStreamClient):
     def __init__(
         self,
         http_client: BetfairHttpClient,
-        logger: Logger,
-        message_handler,
+        message_handler: Callable[[bytes], None],
         partition_matched_by_strategy_ref: bool = True,
         include_overall_position: str | None = None,
         customer_strategy_refs: str | None = None,
         **kwargs,
-    ):
+    ) -> None:
         super().__init__(
             http_client=http_client,
-            logger_adapter=LoggerAdapter("BetfairOrderStreamClient", logger),
             message_handler=message_handler,
             **kwargs,
         )
@@ -177,6 +173,7 @@ class BetfairOrderStreamClient(BetfairStreamClient):
         await self.send(msgspec.json.encode(subscribe_msg))
 
     def post_reconnection(self):
+        super().post_reconnection()
         self._loop.create_task(self.post_connection())
 
 
@@ -188,13 +185,11 @@ class BetfairMarketStreamClient(BetfairStreamClient):
     def __init__(
         self,
         http_client: BetfairHttpClient,
-        logger: Logger,
         message_handler: Callable,
         **kwargs,
     ):
         super().__init__(
             http_client=http_client,
-            logger_adapter=LoggerAdapter("BetfairMarketStreamClient", logger),
             message_handler=message_handler,
             **kwargs,
         )
@@ -286,4 +281,5 @@ class BetfairMarketStreamClient(BetfairStreamClient):
         await self.send(msgspec.json.encode(self.auth_message()))
 
     def post_reconnection(self):
+        super().post_reconnection()
         self._loop.create_task(self.post_connection())

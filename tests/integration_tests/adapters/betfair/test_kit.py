@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -56,11 +56,11 @@ from nautilus_trader.config import StreamingConfig
 from nautilus_trader.core.nautilus_pyo3 import HttpMethod
 from nautilus_trader.model.data import OrderBookDelta
 from nautilus_trader.model.data import TradeTick
+from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import TraderId
 from nautilus_trader.model.instruments.betting import BettingInstrument
 from nautilus_trader.model.instruments.betting import null_handicap
 from nautilus_trader.persistence.catalog import ParquetDataCatalog
-from nautilus_trader.test_kit.stubs.component import TestComponentStubs
 from tests import TEST_DATA_DIR
 
 
@@ -97,17 +97,15 @@ class BetfairTestStubs:
     ) -> BetfairInstrumentProvider:
         return BetfairInstrumentProvider(
             client=betfair_client,
-            logger=TestComponentStubs.logger(),
-            config=config or BetfairInstrumentProviderConfig(),
+            config=config or BetfairInstrumentProviderConfig(account_currency="GBP"),
         )
 
     @staticmethod
-    def betfair_client(loop, logger) -> BetfairHttpClient:
+    def betfair_client(loop) -> BetfairHttpClient:
         client = BetfairHttpClient(
             username="",
             password="",
             app_key="",
-            logger=logger,
         )
 
         async def request(method, request: Request, **kwargs):
@@ -122,7 +120,7 @@ class BetfairTestStubs:
                 "SportsAPING/v1.0/placeOrders": BetfairResponses.betting_place_order_success,
                 "SportsAPING/v1.0/replaceOrders": BetfairResponses.betting_replace_orders_success,
                 "SportsAPING/v1.0/cancelOrders": BetfairResponses.betting_cancel_orders_success,
-                "SportsAPING/v1.0/listCurrentOrders": BetfairResponses.list_current_orders,
+                "SportsAPING/v1.0/listCurrentOrders": BetfairResponses.list_current_orders_executable,
                 "SportsAPING/v1.0/listClearedOrders": BetfairResponses.list_cleared_orders,
             }
             kw = {}
@@ -213,11 +211,11 @@ class BetfairTestStubs:
     @staticmethod
     def betfair_backtest_run_config(
         catalog_path: str,
-        instrument_id: str,
+        instrument_id: InstrumentId,
         catalog_fs_protocol: str = "memory",
-        persist=True,
-        add_strategy=True,
-        bypass_risk=False,
+        persist: bool = True,
+        add_strategy: bool = True,
+        bypass_risk: bool = False,
         flush_interval_ms: int | None = None,
         bypass_logging: bool = True,
         log_level: str = "WARNING",
@@ -381,8 +379,12 @@ class BetfairResponses:
         return BetfairResponses.load("list_cleared_orders.json")
 
     @staticmethod
-    def list_current_orders():
-        return BetfairResponses.load("list_current_orders.json")
+    def list_current_orders_executable():
+        return BetfairResponses.load("list_current_orders_executable.json")
+
+    @staticmethod
+    def list_current_orders_execution_complete():
+        return BetfairResponses.load("list_current_orders_execution_complete.json")
 
     @staticmethod
     def list_current_orders_empty():
@@ -851,7 +853,7 @@ def load_betfair_data(catalog: ParquetDataCatalog) -> ParquetDataCatalog:
     filename = TEST_DATA_DIR / "betfair" / "1.166564490.bz2"
 
     # Write betting instruments
-    instruments = betting_instruments_from_file(filename)
+    instruments = betting_instruments_from_file(filename, currency="GBP")
     catalog.write_data(instruments)
 
     # Write data

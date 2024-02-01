@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -17,7 +17,7 @@ use std::{
     cmp::Ordering,
     fmt::{Display, Formatter, Result as FmtResult},
     hash::{Hash, Hasher},
-    ops::{Add, AddAssign, Mul, Neg, Sub, SubAssign},
+    ops::{Add, AddAssign, Div, Mul, Neg, Sub, SubAssign},
     str::FromStr,
 };
 
@@ -243,6 +243,14 @@ impl Mul<f64> for Money {
     type Output = f64;
     fn mul(self, rhs: f64) -> Self::Output {
         self.as_f64() * rhs
+    }
+}
+
+// DIVIDE
+impl Div<f64> for Money {
+    type Output = f64;
+    fn div(self, rhs: f64) -> Self::Output {
+        self.as_f64() / rhs
     }
 }
 

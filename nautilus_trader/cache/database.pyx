@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -14,14 +14,11 @@
 # -------------------------------------------------------------------------------------------------
 
 import warnings
-from typing import Optional
 
 import msgspec
 
-from nautilus_trader.config import CacheDatabaseConfig
-from nautilus_trader.core.nautilus_pyo3 import UUID4 as RustUUID4
-from nautilus_trader.core.nautilus_pyo3 import RedisCacheDatabase as RustRedisCacheDatabase
-from nautilus_trader.core.nautilus_pyo3 import TraderId as RustTraderId
+from nautilus_trader.config import CacheConfig
+from nautilus_trader.core import nautilus_pyo3
 
 from cpython.datetime cimport datetime
 from libc.stdint cimport uint64_t
@@ -30,12 +27,12 @@ from nautilus_trader.accounting.accounts.base cimport Account
 from nautilus_trader.accounting.factory cimport AccountFactory
 from nautilus_trader.cache.facade cimport CacheDatabaseFacade
 from nautilus_trader.common.actor cimport Actor
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.datetime cimport format_iso8601
 from nautilus_trader.core.rust.common cimport LogColor
 from nautilus_trader.core.rust.model cimport OrderType
 from nautilus_trader.core.rust.model cimport TriggerType
+from nautilus_trader.core.uuid cimport UUID4
 from nautilus_trader.execution.messages cimport SubmitOrder
 from nautilus_trader.execution.messages cimport SubmitOrderList
 from nautilus_trader.model.data cimport QuoteTick
@@ -105,18 +102,18 @@ cdef class CacheDatabaseAdapter(CacheDatabaseFacade):
     Parameters
     ----------
     trader_id : TraderId
-        The trader ID for the database.
-    logger : Logger
-        The logger for the database.
+        The trader ID for the adapter.
+    instance_id : UUID4
+        The instance ID for the adapter.
     serializer : Serializer
         The serializer for database operations.
-    config : CacheDatabaseConfig, optional
+    config : CacheConfig, optional
         The configuration for the instance.
 
     Raises
     ------
     TypeError
-        If `config` is not of type `CacheDatabaseConfig`.
+        If `config` is not of type `CacheConfig`.
 
     Warnings
     --------
@@ -132,14 +129,14 @@ cdef class CacheDatabaseAdapter(CacheDatabaseFacade):
     def __init__(
         self,
         TraderId trader_id not None,
-        Logger logger not None,
+        UUID4 instance_id not None,
         Serializer serializer not None,
-        config: Optional[CacheDatabaseConfig] = None,
+        config: CacheConfig | None = None,
     ):
         if config is None:
-            config = CacheDatabaseConfig()
-        Condition.type(config, CacheDatabaseConfig, "config")
-        super().__init__(logger, config)
+            config = CacheConfig()
+        Condition.type(config, CacheConfig, "config")
+        super().__init__(config)
 
         # Validate configuration
         if config.buffer_interval_ms and config.buffer_interval_ms > 1000:
@@ -149,13 +146,13 @@ cdef class CacheDatabaseAdapter(CacheDatabaseFacade):
             )
 
         # Configuration
-        self._log.info(f"{config.type=}", LogColor.BLUE)
+        self._log.info(f"{config.database=}", LogColor.BLUE)
         self._log.info(f"{config.encoding=}", LogColor.BLUE)
+        self._log.info(f"{config.timestamps_as_iso8601=}", LogColor.BLUE)
         self._log.info(f"{config.buffer_interval_ms=}", LogColor.BLUE)
         self._log.info(f"{config.flush_on_start=}", LogColor.BLUE)
         self._log.info(f"{config.use_trader_prefix=}", LogColor.BLUE)
         self._log.info(f"{config.use_instance_id=}", LogColor.BLUE)
-        self._log.info(f"{config.timestamps_as_iso8601=}", LogColor.BLUE)
 
         # Database keys
         self._key_trader      = f"{_TRADER}-{trader_id}"              # noqa
@@ -187,9 +184,9 @@ cdef class CacheDatabaseAdapter(CacheDatabaseFacade):
 
         self._serializer = serializer
 
-        self._backing = RustRedisCacheDatabase(
-            trader_id=RustTraderId(trader_id.value),
-            instance_id=RustUUID4(logger.instance_id.value),
+        self._backing = nautilus_pyo3.RedisCacheDatabase(
+            trader_id=nautilus_pyo3.TraderId(trader_id.value),
+            instance_id=nautilus_pyo3.UUID4(instance_id.value),
             config_json=msgspec.json.encode(config),
         )
 

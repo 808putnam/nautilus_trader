@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -30,6 +30,7 @@ from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import BookType
 from nautilus_trader.model.enums import OmsType
 from nautilus_trader.model.identifiers import ClientId
+from nautilus_trader.model.identifiers import TraderId
 from nautilus_trader.model.objects import Money
 from tests.integration_tests.adapters.betfair.test_kit import BetfairDataProvider
 from tests.integration_tests.adapters.betfair.test_kit import betting_instrument
@@ -37,7 +38,7 @@ from tests.integration_tests.adapters.betfair.test_kit import betting_instrument
 
 if __name__ == "__main__":
     # Configure backtest engine
-    config = BacktestEngineConfig(trader_id="BACKTESTER-001")
+    config = BacktestEngineConfig(trader_id=TraderId("BACKTESTER-001"))
 
     # Build the backtest engine
     engine = BacktestEngine(config=config)
@@ -78,7 +79,7 @@ if __name__ == "__main__":
     strategies = [
         OrderBookImbalance(
             config=OrderBookImbalanceConfig(
-                instrument_id=instrument.id.value,
+                instrument_id=instrument.id,
                 max_trade_size=Decimal(10),
                 order_id_tag=instrument.selection_id,
             ),

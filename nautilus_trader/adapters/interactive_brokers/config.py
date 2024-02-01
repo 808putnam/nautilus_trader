@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -12,6 +12,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
+
+from __future__ import annotations
 
 from typing import Literal
 
@@ -86,7 +88,9 @@ class InteractiveBrokersInstrumentProviderConfig(InstrumentProviderConfig, froze
 
     """
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, InteractiveBrokersInstrumentProviderConfig):
+            return False
         return (
             self.load_ids == other.load_ids
             and self.load_contracts == other.load_contracts
@@ -96,7 +100,7 @@ class InteractiveBrokersInstrumentProviderConfig(InstrumentProviderConfig, froze
             and self.build_futures_chain == other.build_futures_chain
         )
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(
             (
                 self.load_ids,

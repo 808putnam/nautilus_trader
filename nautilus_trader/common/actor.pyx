@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -17,7 +17,7 @@
 The `Actor` class allows traders to implement their own customized components.
 
 A user can inherit from `Actor` and optionally override any of the
-"on" named event methods. The class is not entirely initialized in a stand-alone
+"on" named event handler methods. The class is not entirely initialized in a stand-alone
 way, the intended usage is to pass actors to a `Trader` so that they can be
 fully "wired" into the platform. Exceptions will be raised if an `Actor`
 attempts to operate without a managing `Trader` instance.
@@ -26,7 +26,6 @@ attempts to operate without a managing `Trader` instance.
 
 import asyncio
 from concurrent.futures import Executor
-from typing import Optional
 
 import cython
 
@@ -40,19 +39,20 @@ from cpython.datetime cimport datetime
 from libc.stdint cimport uint64_t
 
 from nautilus_trader.cache.base cimport CacheFacade
-from nautilus_trader.common.clock cimport Clock
-from nautilus_trader.common.clock cimport LiveClock
+from nautilus_trader.common.component cimport CMD
+from nautilus_trader.common.component cimport REQ
+from nautilus_trader.common.component cimport SENT
+from nautilus_trader.common.component cimport Clock
 from nautilus_trader.common.component cimport Component
+from nautilus_trader.common.component cimport LiveClock
+from nautilus_trader.common.component cimport Logger
 from nautilus_trader.common.component cimport MessageBus
-from nautilus_trader.common.logging cimport CMD
-from nautilus_trader.common.logging cimport REQ
-from nautilus_trader.common.logging cimport SENT
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.data cimport Data
 from nautilus_trader.core.message cimport Event
 from nautilus_trader.core.rust.common cimport ComponentState
 from nautilus_trader.core.rust.common cimport LogColor
+from nautilus_trader.core.rust.common cimport logging_is_initialized
 from nautilus_trader.core.rust.model cimport BookType
 from nautilus_trader.core.uuid cimport UUID4
 from nautilus_trader.data.messages cimport DataRequest
@@ -68,7 +68,6 @@ from nautilus_trader.model.data cimport InstrumentStatus
 from nautilus_trader.model.data cimport OrderBookDelta
 from nautilus_trader.model.data cimport OrderBookDeltas
 from nautilus_trader.model.data cimport QuoteTick
-from nautilus_trader.model.data cimport Ticker
 from nautilus_trader.model.data cimport TradeTick
 from nautilus_trader.model.data cimport VenueStatus
 from nautilus_trader.model.identifiers cimport ClientId
@@ -77,6 +76,7 @@ from nautilus_trader.model.identifiers cimport InstrumentId
 from nautilus_trader.model.identifiers cimport Venue
 from nautilus_trader.model.instruments.base cimport Instrument
 from nautilus_trader.model.instruments.synthetic cimport SyntheticInstrument
+from nautilus_trader.portfolio.base cimport PortfolioFacade
 
 
 cdef class Actor(Component):
@@ -95,24 +95,24 @@ cdef class Actor(Component):
 
     Warnings
     --------
-    This class should not be used directly, but through a concrete subclass.
+    - This class should not be used directly, but through a concrete subclass.
+    - Do not call components such as `clock` and `logger` in the `__init__` prior to registration.
     """
 
-    def __init__(self, config: Optional[ActorConfig] = None):
+    def __init__(self, config: ActorConfig | None = None):
         if config is None:
             config = ActorConfig()
         Condition.type(config, ActorConfig, "config")
 
-        if config.component_id is not None:
+        if isinstance(config.component_id, str):
             component_id = ComponentId(config.component_id)
         else:
-            component_id = None
+            component_id = config.component_id
 
         super().__init__(
-            clock=Clock(),  # Use placeholder abstract clock until registered
-            logger=Logger(clock=Clock(), dummy=True),  # Use dummy logger until registered
+            clock=Clock(),  # Use placeholder until registered
             component_id=component_id,
-            config=config.dict(),
+            config=config,
         )
 
         self._warning_events: set[type] = set()
@@ -398,22 +398,6 @@ cdef class Actor(Component):
         """
         # Optionally override in subclass
 
-    cpdef void on_ticker(self, Ticker ticker):
-        """
-        Actions to be performed when running and receives a ticker.
-
-        Parameters
-        ----------
-        ticker : Ticker
-            The ticker received.
-
-        Warnings
-        --------
-        System method (not intended to be called by user code).
-
-        """
-        # Optionally override in subclass
-
     cpdef void on_quote_tick(self, QuoteTick tick):
         """
         Actions to be performed when running and receives a quote tick.
@@ -464,7 +448,7 @@ cdef class Actor(Component):
 
     cpdef void on_data(self, Data data):
         """
-        Actions to be performed when running and receives generic data.
+        Actions to be performed when running and receives data.
 
         Parameters
         ----------
@@ -545,40 +529,40 @@ cdef class Actor(Component):
 
     cpdef void register_base(
         self,
+        PortfolioFacade portfolio,
         MessageBus msgbus,
         CacheFacade cache,
         Clock clock,
-        Logger logger,
     ):
         """
         Register with a trader.
 
         Parameters
         ----------
+        portfolio : PortfolioFacade
+            The read-only portfolio for the actor.
         msgbus : MessageBus
             The message bus for the actor.
         cache : CacheFacade
             The read-only cache for the actor.
         clock : Clock
             The clock for the actor.
-        logger : Logger
-            The logger for the actor.
 
         Warnings
         --------
         System method (not intended to be called by user code).
 
         """
+        Condition.not_none(portfolio, "portfolio")
         Condition.not_none(msgbus, "msgbus")
         Condition.not_none(cache, "cache")
         Condition.not_none(clock, "clock")
-        Condition.not_none(logger, "logger")
 
         clock.register_default_handler(self.handle_event)
         self._change_clock(clock)
-        self._change_logger(logger)
         self._change_msgbus(msgbus)  # The trader ID is assigned here
 
+        self.portfolio = portfolio  # Assigned as PortfolioFacade
         self.msgbus = msgbus
         self.cache = cache
         self.clock = self._clock
@@ -1270,7 +1254,7 @@ cdef class Actor(Component):
         depth : int, optional
             The maximum depth for the order book. A depth of 0 is maximum depth.
         interval_ms : int
-            The order book snapshot interval in milliseconds.
+            The order book snapshot interval in milliseconds (not less than 20 milliseconds).
         kwargs : dict, optional
             The keyword arguments for exchange specific parameters.
         client_id : ClientId, optional
@@ -1282,12 +1266,16 @@ cdef class Actor(Component):
         ValueError
             If `depth` is negative (< 0).
         ValueError
-            If `interval_ms` is not positive (> 0).
+            If `interval_ms` is less than the minimum of 20.
+
+        Warnings
+        --------
+        Consider subscribing to order book deltas if you need intervals less than 20 milliseconds.
 
         """
         Condition.not_none(instrument_id, "instrument_id")
         Condition.not_negative(depth, "depth")
-        Condition.not_negative(interval_ms, "interval_ms")
+        Condition.true(interval_ms >= 20, f"`interval_ms` {interval_ms} was less than minimum 20")
         Condition.true(self.trader_id is not None, "The actor has not been registered")
 
         if book_type == BookType.L1_MBP and depth > 1:
@@ -1315,39 +1303,6 @@ cdef class Actor(Component):
                 "interval_ms": interval_ms,
                 "kwargs": kwargs,
             }),
-            command_id=UUID4(),
-            ts_init=self._clock.timestamp_ns(),
-        )
-
-        self._send_data_cmd(command)
-
-    cpdef void subscribe_ticker(self, InstrumentId instrument_id, ClientId client_id = None):
-        """
-        Subscribe to streaming `Ticker` data for the given instrument ID.
-
-        Parameters
-        ----------
-        instrument_id : InstrumentId
-            The tick instrument to subscribe to.
-        client_id : ClientId, optional
-            The specific client ID for the command.
-            If ``None`` then will be inferred from the venue in the instrument ID.
-
-        """
-        Condition.not_none(instrument_id, "instrument_id")
-        Condition.true(self.trader_id is not None, "The actor has not been registered")
-
-        self._msgbus.subscribe(
-            topic=f"data.tickers"
-                  f".{instrument_id.venue}"
-                  f".{instrument_id.symbol}",
-            handler=self.handle_ticker,
-        )
-
-        cdef Subscribe command = Subscribe(
-            client_id=client_id,
-            venue=instrument_id.venue,
-            data_type=DataType(Ticker, metadata={"instrument_id": instrument_id}),
             command_id=UUID4(),
             ts_init=self._clock.timestamp_ns(),
         )
@@ -1735,39 +1690,6 @@ cdef class Actor(Component):
 
         self._send_data_cmd(command)
 
-    cpdef void unsubscribe_ticker(self, InstrumentId instrument_id, ClientId client_id = None):
-        """
-        Unsubscribe from streaming `Ticker` data for the given instrument ID.
-
-        Parameters
-        ----------
-        instrument_id : InstrumentId
-            The tick instrument to unsubscribe from.
-        client_id : ClientId, optional
-            The specific client ID for the command.
-            If ``None`` then will be inferred from the venue in the instrument ID.
-
-        """
-        Condition.not_none(instrument_id, "instrument_id")
-        Condition.true(self.trader_id is not None, "The actor has not been registered")
-
-        self._msgbus.unsubscribe(
-            topic=f"data.tickers"
-                  f".{instrument_id.venue}"
-                  f".{instrument_id.symbol}",
-            handler=self.handle_ticker,
-        )
-
-        cdef Unsubscribe command = Unsubscribe(
-            client_id=client_id,
-            venue=instrument_id.venue,
-            data_type=DataType(Ticker, metadata={"instrument_id": instrument_id}),
-            command_id=UUID4(),
-            ts_init=self._clock.timestamp_ns(),
-        )
-
-        self._send_data_cmd(command)
-
     cpdef void unsubscribe_quote_ticks(self, InstrumentId instrument_id, ClientId client_id = None):
         """
         Unsubscribe from streaming `QuoteTick` data for the given instrument ID.
@@ -2013,9 +1935,9 @@ cdef class Actor(Component):
             If `callback` is not `None` and not of type `Callable`.
 
         """
+        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.not_none(client_id, "client_id")
         Condition.not_none(data_type, "data_type")
-        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.callable_or_none(callback, "callback")
 
         cdef UUID4 request_id = UUID4()
@@ -2036,16 +1958,25 @@ cdef class Actor(Component):
     cpdef UUID4 request_instrument(
         self,
         InstrumentId instrument_id,
+        datetime start = None,
+        datetime end = None,
         ClientId client_id = None,
         callback: Callable[[UUID4], None] | None = None,
     ):
         """
         Request `Instrument` data for the given instrument ID.
 
+        If `end` is ``None`` then will request up to the most recent data.
+
         Parameters
         ----------
         instrument_id : InstrumentId
             The instrument ID for the request.
+        start : datetime, optional
+            The start datetime (UTC) of request time range (inclusive).
+        end : datetime, optional
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
         client_id : ClientId, optional
             The specific client ID for the command.
             If ``None`` then will be inferred from the venue in the instrument ID.
@@ -2060,11 +1991,16 @@ cdef class Actor(Component):
 
         Raises
         ------
+        ValueError
+            If `start` and `end` are not `None` and `start` is >= `end`.
         TypeError
             If `callback` is not `None` and not of type `Callable`.
 
         """
+        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.not_none(instrument_id, "instrument_id")
+        if start is not None and end is not None:
+            Condition.true(start < end, "start was >= end")
         Condition.callable_or_none(callback, "callback")
 
         cdef UUID4 request_id = UUID4()
@@ -2073,6 +2009,8 @@ cdef class Actor(Component):
             venue=instrument_id.venue,
             data_type=DataType(Instrument, metadata={
                 "instrument_id": instrument_id,
+                "start": start,
+                "end": end,
             }),
             callback=self._handle_instrument_response,
             request_id=request_id,
@@ -2087,16 +2025,25 @@ cdef class Actor(Component):
     cpdef UUID4 request_instruments(
         self,
         Venue venue,
+        datetime start = None,
+        datetime end = None,
         ClientId client_id = None,
         callback: Callable[[UUID4], None] | None = None,
     ):
         """
         Request all `Instrument` data for the given venue.
 
+        If `end` is ``None`` then will request up to the most recent data.
+
         Parameters
         ----------
         venue : Venue
             The venue for the request.
+        start : datetime, optional
+            The start datetime (UTC) of request time range (inclusive).
+        end : datetime, optional
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
         client_id : ClientId, optional
             The specific client ID for the command.
             If ``None`` then will be inferred from the venue in the instrument ID.
@@ -2111,11 +2058,16 @@ cdef class Actor(Component):
 
         Raises
         ------
+        ValueError
+            If `start` and `end` are not `None` and `start` is >= `end`.
         TypeError
             If `callback` is not `None` and not of type `Callable`.
 
         """
+        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.not_none(venue, "venue")
+        if start is not None and end is not None:
+            Condition.true(start < end, "start was >= end")
         Condition.callable_or_none(callback, "callback")
 
         cdef UUID4 request_id = UUID4()
@@ -2124,6 +2076,8 @@ cdef class Actor(Component):
             venue=venue,
             data_type=DataType(Instrument, metadata={
                 "venue": venue,
+                "start": start,
+                "end": end,
             }),
             callback=self._handle_instruments_response,
             request_id=request_id,
@@ -2155,8 +2109,8 @@ cdef class Actor(Component):
         start : datetime, optional
             The start datetime (UTC) of request time range (inclusive).
         end : datetime, optional
-            The end datetime (UTC) of request time range (inclusive).
-            If ``None`` then will default to the current datetime (UTC).
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
         client_id : ClientId, optional
             The specific client ID for the command.
             If ``None`` then will be inferred from the venue in the instrument ID.
@@ -2172,15 +2126,15 @@ cdef class Actor(Component):
         Raises
         ------
         ValueError
-            If `start` is not less than `end`.
+            If `start` and `end` are not `None` and `start` is >= `end`.
         TypeError
             If `callback` is not `None` and not of type `Callable`.
 
         """
+        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.not_none(instrument_id, "instrument_id")
         if start is not None and end is not None:
             Condition.true(start < end, "start was >= end")
-        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.callable_or_none(callback, "callback")
 
         cdef UUID4 request_id = UUID4()
@@ -2222,8 +2176,8 @@ cdef class Actor(Component):
         start : datetime, optional
             The start datetime (UTC) of request time range (inclusive).
         end : datetime, optional
-            The end datetime (UTC) of request time range (inclusive).
-            If ``None`` then will default to the current datetime (UTC).
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
         client_id : ClientId, optional
             The specific client ID for the command.
             If ``None`` then will be inferred from the venue in the instrument ID.
@@ -2239,15 +2193,15 @@ cdef class Actor(Component):
         Raises
         ------
         ValueError
-            If `start` is not less than `end`.
+            If `start` and `end` are not `None` and `start` is >= `end`.
         TypeError
             If `callback` is not `None` and not of type `Callable`.
 
         """
+        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.not_none(instrument_id, "instrument_id")
         if start is not None and end is not None:
             Condition.true(start < end, "start was >= end")
-        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.callable_or_none(callback, "callback")
 
         cdef UUID4 request_id = UUID4()
@@ -2289,8 +2243,8 @@ cdef class Actor(Component):
         start : datetime, optional
             The start datetime (UTC) of request time range (inclusive).
         end : datetime, optional
-            The end datetime (UTC) of request time range (inclusive).
-            If ``None`` then will default to the current datetime (UTC).
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
         client_id : ClientId, optional
             The specific client ID for the command.
             If ``None`` then will be inferred from the venue in the instrument ID.
@@ -2306,15 +2260,15 @@ cdef class Actor(Component):
         Raises
         ------
         ValueError
-            If `start` is not less than `end`.
+            If `start` and `end` are not `None` and `start` is >= `end`.
         TypeError
             If `callback` is not `None` and not of type `Callable`.
 
         """
+        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.not_none(bar_type, "bar_type")
         if start is not None and end is not None:
             Condition.true(start < end, "start was >= end")
-        Condition.true(self.trader_id is not None, "The actor has not been registered")
         Condition.callable_or_none(callback, "callback")
 
         cdef UUID4 request_id = UUID4()
@@ -2482,31 +2436,6 @@ cdef class Actor(Component):
                 self.on_order_book(order_book)
             except Exception as e:
                 self._log.exception(f"Error on handling {repr(order_book)}", e)
-                raise
-
-    cpdef void handle_ticker(self, Ticker ticker):
-        """
-        Handle the given ticker.
-
-        If state is ``RUNNING`` then passes to `on_ticker`.
-
-        Parameters
-        ----------
-        ticker : Ticker
-            The ticker received.
-
-        Warnings
-        --------
-        System method (not intended to be called by user code).
-
-        """
-        Condition.not_none(ticker, "ticker")
-
-        if self._fsm.state == ComponentState.RUNNING:
-            try:
-                self.on_ticker(ticker)
-            except Exception as e:
-                self._log.exception(f"Error on handling {repr(ticker)}", e)
                 raise
 
     cpdef void handle_quote_tick(self, QuoteTick tick):
@@ -2921,11 +2850,11 @@ cdef class Actor(Component):
 # -- EGRESS ---------------------------------------------------------------------------------------
 
     cdef void _send_data_cmd(self, DataCommand command):
-        if not self._log.is_bypassed:
+        if logging_is_initialized():
             self._log.info(f"{CMD}{SENT} {command}.")
         self._msgbus.send(endpoint="DataEngine.execute", msg=command)
 
     cdef void _send_data_req(self, DataRequest request):
-        if not self._log.is_bypassed:
+        if logging_is_initialized():
             self._log.info(f"{REQ}{SENT} {request}.")
         self._msgbus.request(endpoint="DataEngine.request", request=request)

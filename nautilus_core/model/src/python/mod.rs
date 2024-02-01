@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -31,6 +31,8 @@ pub mod instruments;
 pub mod macros;
 pub mod orders;
 pub mod types;
+
+pub mod accounting;
 
 pub const PY_MODULE_MODEL: &str = "nautilus_trader.core.nautilus_pyo3.model";
 
@@ -120,6 +122,7 @@ pub fn value_to_pyobject(py: Python<'_>, val: &Value) -> PyResult<PyObject> {
 mod tests {
     use pyo3::{
         prelude::*,
+        prepare_freethreaded_python,
         types::{PyBool, PyInt, PyList, PyString},
     };
     use rstest::rstest;
@@ -129,6 +132,7 @@ mod tests {
 
     #[rstest]
     fn test_value_to_pydict() {
+        prepare_freethreaded_python();
         Python::with_gil(|py| {
             let json_str = r#"
         {
@@ -179,6 +183,7 @@ mod tests {
 
     #[rstest]
     fn test_value_to_pyobject_string() {
+        prepare_freethreaded_python();
         Python::with_gil(|py| {
             let val = Value::String("Hello, world!".to_string());
             let py_obj = value_to_pyobject(py, &val).unwrap();
@@ -189,6 +194,7 @@ mod tests {
 
     #[rstest]
     fn test_value_to_pyobject_bool() {
+        prepare_freethreaded_python();
         Python::with_gil(|py| {
             let val = Value::Bool(true);
             let py_obj = value_to_pyobject(py, &val).unwrap();
@@ -199,6 +205,7 @@ mod tests {
 
     #[rstest]
     fn test_value_to_pyobject_array() {
+        prepare_freethreaded_python();
         Python::with_gil(|py| {
             let val = Value::Array(vec![
                 Value::String("item1".to_string()),
@@ -223,20 +230,22 @@ mod tests {
 /// Loaded as nautilus_pyo3.model
 #[pymodule]
 pub fn model(_: Python<'_>, m: &PyModule) -> PyResult<()> {
-    // data
+    // Data
     m.add_class::<crate::data::bar::BarSpecification>()?;
     m.add_class::<crate::data::bar::BarType>()?;
     m.add_class::<crate::data::bar::Bar>()?;
     m.add_class::<crate::data::order::BookOrder>()?;
     m.add_class::<crate::data::delta::OrderBookDelta>()?;
+    m.add_class::<crate::data::deltas::OrderBookDeltas>()?;
+    m.add_class::<crate::data::depth::OrderBookDepth10>()?;
     m.add_class::<crate::data::quote::QuoteTick>()?;
     m.add_class::<crate::data::trade::TradeTick>()?;
-    // enums
+    // Enums
     m.add_class::<enums::AccountType>()?;
     m.add_class::<enums::AggregationSource>()?;
     m.add_class::<enums::AggressorSide>()?;
     m.add_class::<enums::AssetClass>()?;
-    m.add_class::<enums::AssetType>()?;
+    m.add_class::<enums::InstrumentClass>()?;
     m.add_class::<enums::BarAggregation>()?;
     m.add_class::<enums::BookAction>()?;
     m.add_class::<enums::BookType>()?;
@@ -256,7 +265,7 @@ pub fn model(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<enums::TradingState>()?;
     m.add_class::<enums::TrailingOffsetType>()?;
     m.add_class::<enums::TriggerType>()?;
-    // identifiers
+    // Identifiers
     m.add_class::<crate::identifiers::account_id::AccountId>()?;
     m.add_class::<crate::identifiers::client_id::ClientId>()?;
     m.add_class::<crate::identifiers::client_order_id::ClientOrderId>()?;
@@ -271,7 +280,7 @@ pub fn model(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<crate::identifiers::trader_id::TraderId>()?;
     m.add_class::<crate::identifiers::venue::Venue>()?;
     m.add_class::<crate::identifiers::venue_order_id::VenueOrderId>()?;
-    // orders
+    // Orders
     m.add_class::<crate::orders::limit::LimitOrder>()?;
     m.add_class::<crate::orders::limit_if_touched::LimitIfTouchedOrder>()?;
     m.add_class::<crate::orders::market::MarketOrder>()?;
@@ -284,7 +293,10 @@ pub fn model(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<crate::types::money::Money>()?;
     m.add_class::<crate::types::price::Price>()?;
     m.add_class::<crate::types::quantity::Quantity>()?;
-    // instruments
+    m.add_class::<crate::types::balance::AccountBalance>()?;
+    m.add_class::<crate::types::balance::MarginBalance>()?;
+
+    // Instruments
     m.add_class::<crate::instruments::crypto_future::CryptoFuture>()?;
     m.add_class::<crate::instruments::crypto_perpetual::CryptoPerpetual>()?;
     m.add_class::<crate::instruments::currency_pair::CurrencyPair>()?;
@@ -292,7 +304,7 @@ pub fn model(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<crate::instruments::futures_contract::FuturesContract>()?;
     m.add_class::<crate::instruments::options_contract::OptionsContract>()?;
     m.add_class::<crate::instruments::synthetic::SyntheticInstrument>()?;
-    // events
+    // Events - order
     m.add_class::<crate::events::order::denied::OrderDenied>()?;
     m.add_class::<crate::events::order::filled::OrderFilled>()?;
     m.add_class::<crate::events::order::initialized::OrderInitialized>()?;
@@ -301,5 +313,17 @@ pub fn model(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<crate::events::order::submitted::OrderSubmitted>()?;
     m.add_class::<crate::events::order::emulated::OrderEmulated>()?;
     m.add_class::<crate::events::order::released::OrderReleased>()?;
+    m.add_class::<crate::events::order::updated::OrderUpdated>()?;
+    m.add_class::<crate::events::order::pending_update::OrderPendingUpdate>()?;
+    m.add_class::<crate::events::order::pending_cancel::OrderPendingCancel>()?;
+    m.add_class::<crate::events::order::modify_rejected::OrderModifyRejected>()?;
+    m.add_class::<crate::events::order::accepted::OrderAccepted>()?;
+    m.add_class::<crate::events::order::cancel_rejected::OrderCancelRejected>()?;
+    m.add_class::<crate::events::order::canceled::OrderCanceled>()?;
+    m.add_class::<crate::events::order::expired::OrderExpired>()?;
+    // Events - account
+    m.add_class::<crate::events::account::state::AccountState>()?;
+    // Accounting
+    m.add_class::<crate::accounting::margin::MarginAccount>()?;
     Ok(())
 }

@@ -1,5 +1,5 @@
 # -----------------------------------book--------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -16,7 +16,7 @@
 import time
 from collections.abc import Iterable
 
-import msgspec.json
+import msgspec
 import pandas as pd
 from betfair_parser.spec.betting.enums import MarketProjection
 from betfair_parser.spec.betting.type_definitions import MarketCatalogue
@@ -32,7 +32,6 @@ from nautilus_trader.adapters.betfair.client import BetfairHttpClient
 from nautilus_trader.adapters.betfair.common import BETFAIR_TICK_SCHEME
 from nautilus_trader.adapters.betfair.constants import BETFAIR_VENUE
 from nautilus_trader.adapters.betfair.parsing.common import chunk
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.common.providers import InstrumentProvider
 from nautilus_trader.config import InstrumentProviderConfig
 from nautilus_trader.model.identifiers import InstrumentId
@@ -40,7 +39,8 @@ from nautilus_trader.model.instruments import BettingInstrument
 from nautilus_trader.model.instruments.betting import null_handicap
 
 
-class BetfairInstrumentProviderConfig(InstrumentProviderConfig, frozen=True):
+class BetfairInstrumentProviderConfig(InstrumentProviderConfig, frozen=True, kw_only=True):
+    account_currency: str
     event_type_ids: list[str] | None = None
     event_ids: list[str] | None = None
     market_ids: list[str] | None = None
@@ -57,8 +57,6 @@ class BetfairInstrumentProvider(InstrumentProvider):
     ----------
     client : BetfairClient, optional
         The client for the provider.
-    logger : Logger
-        The logger for the provider.
     config : InstrumentProviderConfig, optional
         The configuration for the provider.
 
@@ -67,17 +65,14 @@ class BetfairInstrumentProvider(InstrumentProvider):
     def __init__(
         self,
         client: BetfairHttpClient | None,
-        logger: Logger,
         config: BetfairInstrumentProviderConfig,
     ):
         assert config is not None, "Must pass config to BetfairInstrumentProvider"
-        super().__init__(
-            logger=logger,
-            config=config,
-        )
+        super().__init__(config=config)
+
         self._config = config
         self._client = client
-        self._account_currency = None
+        self._account_currency = config.account_currency
 
     async def load_ids_async(
         self,

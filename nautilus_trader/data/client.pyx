@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,15 +13,13 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
-from typing import Optional
-
+from nautilus_trader.config.common import NautilusConfig
 from cpython.datetime cimport datetime
 
 from nautilus_trader.cache.cache cimport Cache
-from nautilus_trader.common.clock cimport Clock
+from nautilus_trader.common.component cimport Clock
 from nautilus_trader.common.component cimport Component
 from nautilus_trader.common.component cimport MessageBus
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.data cimport Data
 from nautilus_trader.core.rust.model cimport BookType
@@ -47,11 +45,9 @@ cdef class DataClient(Component):
         The message bus for the client.
     clock : Clock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
     venue : Venue, optional
         The client venue. If multi-venue then can be ``None``.
-    config : dict[str, object], optional
+    config : NautilusConfig, optional
         The configuration for the instance.
 
     Warnings
@@ -65,17 +61,13 @@ cdef class DataClient(Component):
         MessageBus msgbus not None,
         Cache cache not None,
         Clock clock not None,
-        Logger logger not None,
-        Venue venue: Optional[Venue] = None,
-        dict config = None,
+        Venue venue: Venue | None = None,
+        config: NautilusConfig | None = None,
     ):
-        if config is None:
-            config = {}
         super().__init__(
             clock=clock,
-            logger=logger,
             component_id=client_id,
-            component_name=config.get("name", f"DataClient-{client_id}"),
+            component_name=f"DataClient-{client_id}",
             msgbus=msgbus,
             config=config,
         )
@@ -106,9 +98,9 @@ cdef class DataClient(Component):
 
 # -- SUBSCRIPTIONS --------------------------------------------------------------------------------
 
-    cpdef list subscribed_generic_data(self):
+    cpdef list subscribed_custom_data(self):
         """
-        Return the generic data types subscribed to.
+        Return the custom data types subscribed to.
 
         Returns
         -------
@@ -217,11 +209,9 @@ cdef class MarketDataClient(DataClient):
         The cache for the client.
     clock : Clock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
     venue : Venue, optional
         The client venue. If multi-venue then can be ``None``.
-    config : dict[str, object], optional
+    config : NautilusConfig, optional
         The configuration for the instance.
 
     Warnings
@@ -235,9 +225,8 @@ cdef class MarketDataClient(DataClient):
         MessageBus msgbus not None,
         Cache cache not None,
         Clock clock not None,
-        Logger logger not None,
-        Venue venue: Optional[Venue] = None,
-        dict config = None,
+        Venue venue: Venue | None = None,
+        config: NautilusConfig | None = None,
     ):
         super().__init__(
             client_id=client_id,
@@ -245,14 +234,12 @@ cdef class MarketDataClient(DataClient):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 
         # Subscriptions
         self._subscriptions_order_book_delta = set()     # type: set[InstrumentId]
         self._subscriptions_order_book_snapshot = set()  # type: set[InstrumentId]
-        self._subscriptions_ticker = set()               # type: set[InstrumentId]
         self._subscriptions_quote_tick = set()           # type: set[InstrumentId]
         self._subscriptions_trade_tick = set()           # type: set[InstrumentId]
         self._subscriptions_bar = set()                  # type: set[BarType]
@@ -266,9 +253,9 @@ cdef class MarketDataClient(DataClient):
 
 # -- SUBSCRIPTIONS --------------------------------------------------------------------------------
 
-    cpdef list subscribed_generic_data(self):
+    cpdef list subscribed_custom_data(self):
         """
-        Return the generic data types subscribed to.
+        Return the custom data types subscribed to.
 
         Returns
         -------
@@ -309,17 +296,6 @@ cdef class MarketDataClient(DataClient):
 
         """
         return sorted(list(self._subscriptions_order_book_snapshot))
-
-    cpdef list subscribed_tickers(self):
-        """
-        Return the ticker instruments subscribed to.
-
-        Returns
-        -------
-        list[InstrumentId]
-
-        """
-        return sorted(list(self._subscriptions_ticker))
 
     cpdef list subscribed_quote_ticks(self):
         """
@@ -401,7 +377,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to {data_type}: not implemented. "
             f"You can implement by overriding the `subscribe` method for this client.",
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe` must be implemented in the subclass")
 
     cpdef void subscribe_instruments(self):
         """
@@ -412,7 +388,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to all `Instrument` data: not implemented. "
             f"You can implement by overriding the `subscribe_instruments` method for this client.",
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_instruments` must be implemented in the subclass")
 
     cpdef void subscribe_instrument(self, InstrumentId instrument_id):
         """
@@ -423,7 +399,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to `Instrument` data for {instrument_id}: not implemented. "
             f"You can implement by overriding the `subscribe_instrument` method for this client.",
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_instrument` must be implemented in the subclass")
 
     cpdef void subscribe_order_book_deltas(self, InstrumentId instrument_id, BookType book_type, int depth = 0, dict kwargs = None):
         """
@@ -445,7 +421,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to `OrderBookDeltas` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `subscribe_order_book_deltas` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_order_book_deltas` must be implemented in the subclass")
 
     cpdef void subscribe_order_book_snapshots(self, InstrumentId instrument_id, BookType book_type, int depth = 0, dict kwargs = None):
         """
@@ -467,23 +443,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to `OrderBook` snapshots data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `subscribe_order_book_snapshots` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
-
-    cpdef void subscribe_ticker(self, InstrumentId instrument_id):
-        """
-        Subscribe to `Ticker` data for the given instrument ID.
-
-        Parameters
-        ----------
-        instrument_id : InstrumentId
-            The ticker instrument to subscribe to.
-
-        """
-        self._log.error(  # pragma: no cover
-            f"Cannot subscribe to `Ticker` data for {instrument_id}: not implemented. "  # pragma: no cover
-            f"You can implement by overriding the `subscribe_ticker` method for this client.",  # pragma: no cover
-        )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_order_book_snapshots` must be implemented in the subclass")
 
     cpdef void subscribe_quote_ticks(self, InstrumentId instrument_id):
         """
@@ -499,7 +459,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to `QuoteTick` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `subscribe_quote_ticks` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_quote_ticks` must be implemented in the subclass")
 
     cpdef void subscribe_trade_ticks(self, InstrumentId instrument_id):
         """
@@ -515,7 +475,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to `TradeTick` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `subscribe_trade_ticks` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_trade_ticks` must be implemented in the subclass")
 
     cpdef void subscribe_venue_status(self, Venue venue):
         """
@@ -531,7 +491,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to `VenueStatus` data for {venue}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `subscribe_venue_status` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_venue_status` must be implemented in the subclass")
 
     cpdef void subscribe_instrument_status(self, InstrumentId instrument_id):
         """
@@ -547,7 +507,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to `InstrumentStatus` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `subscribe_instrument_status` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_instrument_status` must be implemented in the subclass")
 
     cpdef void subscribe_instrument_close(self, InstrumentId instrument_id):
         """
@@ -563,7 +523,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to `InstrumentClose` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `subscribe_instrument_close` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_instrument_close` must be implemented in the subclass")
 
     cpdef void subscribe_bars(self, BarType bar_type):
         """
@@ -579,7 +539,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot subscribe to `Bar` data for {bar_type}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `subscribe_bars` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `subscribe_bars` must be implemented in the subclass")
 
     cpdef void unsubscribe(self, DataType data_type):
         """
@@ -605,7 +565,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from all `Instrument` data: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_instruments` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_instruments` must be implemented in the subclass")
 
     cpdef void unsubscribe_instrument(self, InstrumentId instrument_id):
         """
@@ -621,7 +581,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from `Instrument` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_instrument` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_instrument` must be implemented in the subclass")
 
     cpdef void unsubscribe_order_book_deltas(self, InstrumentId instrument_id):
         """
@@ -637,7 +597,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from `OrderBookDeltas` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_order_book_deltas` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_order_book_deltas` must be implemented in the subclass")
 
     cpdef void unsubscribe_order_book_snapshots(self, InstrumentId instrument_id):
         """
@@ -653,23 +613,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from `OrderBook` snapshot data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_order_book_snapshots` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
-
-    cpdef void unsubscribe_ticker(self, InstrumentId instrument_id):
-        """
-        Unsubscribe from `Ticker` data for the given instrument ID.
-
-        Parameters
-        ----------
-        instrument_id : InstrumentId
-            The ticker instrument to unsubscribe from.
-
-        """
-        self._log.error(  # pragma: no cover
-            f"Cannot unsubscribe from `Ticker` data for {instrument_id}: not implemented. "  # pragma: no cover
-            f"You can implement by overriding the `unsubscribe_ticker` method for this client.",  # pragma: no cover
-        )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_order_book_snapshots` must be implemented in the subclass")
 
     cpdef void unsubscribe_quote_ticks(self, InstrumentId instrument_id):
         """
@@ -685,7 +629,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from `QuoteTick` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_quote_ticks` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_quote_ticks` must be implemented in the subclass")
 
     cpdef void unsubscribe_trade_ticks(self, InstrumentId instrument_id):
         """
@@ -701,7 +645,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from `TradeTick` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_trade_ticks` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_trade_ticks` must be implemented in the subclass")
 
     cpdef void unsubscribe_bars(self, BarType bar_type):
         """
@@ -717,7 +661,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from `Bar` data for {bar_type}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_bars` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_bars` must be implemented in the subclass")
 
     cpdef void unsubscribe_venue_status(self, Venue venue):
         """
@@ -733,7 +677,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from `VenueStatus` data for {venue}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_venue_status` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_venue_status` must be implemented in the subclass")
 
     cpdef void unsubscribe_instrument_status(self, InstrumentId instrument_id):
         """
@@ -749,7 +693,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from `InstrumentStatus` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_instrument_status` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_instrument_status` must be implemented in the subclass")
 
     cpdef void unsubscribe_instrument_close(self, InstrumentId instrument_id):
         """
@@ -765,7 +709,7 @@ cdef class MarketDataClient(DataClient):
             f"Cannot unsubscribe from `InstrumentClose` data for {instrument_id}: not implemented. "  # pragma: no cover
             f"You can implement by overriding the `unsubscribe_instrument_close` method for this client.",  # pragma: no cover
         )
-        raise NotImplementedError("method must be implemented in the subclass")
+        raise NotImplementedError("method `unsubscribe_instrument_close` must be implemented in the subclass")
 
     cpdef void _add_subscription(self, DataType data_type):
         Condition.not_none(data_type, "data_type")
@@ -786,11 +730,6 @@ cdef class MarketDataClient(DataClient):
         Condition.not_none(instrument_id, "instrument_id")
 
         self._subscriptions_order_book_snapshot.add(instrument_id)
-
-    cpdef void _add_subscription_ticker(self, InstrumentId instrument_id):
-        Condition.not_none(instrument_id, "instrument_id")
-
-        self._subscriptions_ticker.add(instrument_id)
 
     cpdef void _add_subscription_quote_ticks(self, InstrumentId instrument_id):
         Condition.not_none(instrument_id, "instrument_id")
@@ -842,11 +781,6 @@ cdef class MarketDataClient(DataClient):
 
         self._subscriptions_order_book_snapshot.discard(instrument_id)
 
-    cpdef void _remove_subscription_ticker(self, InstrumentId instrument_id):
-        Condition.not_none(instrument_id, "instrument_id")
-
-        self._subscriptions_ticker.discard(instrument_id)
-
     cpdef void _remove_subscription_quote_ticks(self, InstrumentId instrument_id):
         Condition.not_none(instrument_id, "instrument_id")
 
@@ -879,7 +813,13 @@ cdef class MarketDataClient(DataClient):
 
 # -- REQUESTS -------------------------------------------------------------------------------------
 
-    cpdef void request_instrument(self, InstrumentId instrument_id, UUID4 correlation_id):
+    cpdef void request_instrument(
+        self,
+        InstrumentId instrument_id,
+        UUID4 correlation_id,
+        datetime start = None,
+        datetime end = None,
+    ):
         """
         Request `Instrument` data for the given instrument ID.
 
@@ -889,6 +829,11 @@ cdef class MarketDataClient(DataClient):
             The instrument ID for the request.
         correlation_id : UUID4
             The correlation ID for the request.
+        start : datetime, optional
+            The start datetime (UTC) of request time range (inclusive).
+        end : datetime, optional
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
 
         """
         self._log.error(  # pragma: no cover
@@ -896,7 +841,13 @@ cdef class MarketDataClient(DataClient):
             f"You can implement by overriding the `request_instrument` method for this client.",  # pragma: no cover  # noqa
         )
 
-    cpdef void request_instruments(self, Venue venue, UUID4 correlation_id):
+    cpdef void request_instruments(
+        self,
+        Venue venue,
+        UUID4 correlation_id,
+        datetime start = None,
+        datetime end = None,
+    ):
         """
         Request all `Instrument` data for the given venue.
 
@@ -906,6 +857,11 @@ cdef class MarketDataClient(DataClient):
             The venue for the request.
         correlation_id : UUID4
             The correlation ID for the request.
+        start : datetime, optional
+            The start datetime (UTC) of request time range (inclusive).
+        end : datetime, optional
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
 
         """
         self._log.error(  # pragma: no cover
@@ -933,10 +889,10 @@ cdef class MarketDataClient(DataClient):
         correlation_id : UUID4
             The correlation ID for the request.
         start : datetime, optional
-            The specified from datetime for the data.
+            The start datetime (UTC) of request time range (inclusive).
         end : datetime, optional
-            The specified to datetime for the data. If ``None`` then will default
-            to the current datetime.
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
 
         """
         self._log.error(  # pragma: no cover
@@ -964,10 +920,10 @@ cdef class MarketDataClient(DataClient):
         correlation_id : UUID4
             The correlation ID for the request.
         start : datetime, optional
-            The specified from datetime for the data.
+            The start datetime (UTC) of request time range (inclusive).
         end : datetime, optional
-            The specified to datetime for the data. If ``None`` then will default
-            to the current datetime.
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
 
         """
         self._log.error(  # pragma: no cover
@@ -995,10 +951,10 @@ cdef class MarketDataClient(DataClient):
         correlation_id : UUID4
             The correlation ID for the request.
         start : datetime, optional
-            The specified from datetime for the data.
+            The start datetime (UTC) of request time range (inclusive).
         end : datetime, optional
-            The specified to datetime for the data. If ``None`` then will default
-            to the current datetime.
+            The end datetime (UTC) of request time range.
+            The inclusiveness depends on individual data client implementation.
 
         """
         self._log.error(  # pragma: no cover

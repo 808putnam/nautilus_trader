@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -15,15 +15,16 @@
 
 import pytest
 
-from nautilus_trader.common.clock import TestClock
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import LiveClock
+
+
+@pytest.fixture(autouse=True)
+def setup_benchmark(benchmark):
+    benchmark.extra_info["disable_gc"] = True
+    benchmark.extra_info["warmup"] = True
+    return benchmark
 
 
 @pytest.fixture()
 def clock():
-    return TestClock()
-
-
-@pytest.fixture()
-def logger(clock):
-    return Logger(clock, bypass=True)
+    return LiveClock()

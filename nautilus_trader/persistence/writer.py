@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -22,11 +22,11 @@ import pyarrow as pa
 from fsspec.compression import AbstractBufferedFile
 from pyarrow import RecordBatchStreamWriter
 
-from nautilus_trader.common.logging import LoggerAdapter
+from nautilus_trader.common.component import Logger
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.data import Data
 from nautilus_trader.model.data import Bar
-from nautilus_trader.model.data import GenericData
+from nautilus_trader.model.data import CustomData
 from nautilus_trader.model.data import OrderBookDelta
 from nautilus_trader.model.data import OrderBookDeltas
 from nautilus_trader.model.data import QuoteTick
@@ -48,25 +48,25 @@ class StreamingFeatherWriter:
     ----------
     path : str
         The path to persist the stream to.
-    logger : LoggerAdapter
-        The logger for the writer.
     fs_protocol : str, default 'file'
         The `fsspec` file system protocol.
     flush_interval_ms : int, optional
         The flush interval (milliseconds) for writing chunks.
     replace : bool, default False
         If existing files at the given `path` should be replaced.
+    include_types : list[type], optional
+        A list of Arrow serializable types to write.
+        If this is specified then *only* the included types will be written.
 
     """
 
     def __init__(
         self,
         path: str,
-        logger: LoggerAdapter,
         fs_protocol: str | None = "file",
         flush_interval_ms: int | None = None,
         replace: bool = False,
-        include_types: tuple[type] | None = None,
+        include_types: list[type] | None = None,
     ) -> None:
         self.path = path
         self.fs: fsspec.AbstractFileSystem = fsspec.filesystem(fs_protocol)
@@ -84,7 +84,7 @@ class StreamingFeatherWriter:
         self.fs.makedirs(self.fs._parent(self.path), exist_ok=True)
 
         self._schemas = list_schemas()
-        self.logger = logger
+        self.logger = Logger(type(self).__name__)
         self._files: dict[object, TextIOWrapper | BinaryIO | AbstractBufferedFile] = {}
         self._writers: dict[str, RecordBatchStreamWriter] = {}
         self._instrument_writers: dict[tuple[str, str], RecordBatchStreamWriter] = {}
@@ -113,8 +113,9 @@ class StreamingFeatherWriter:
         """
         return all(self._files[table_name].closed for table_name in self._files)
 
-    def _create_writer(self, cls: type, table_name: str | None = None):
-        if self.include_types is not None and cls.__name__ not in self.include_types:
+    def _create_writer(self, cls: type, table_name: str | None = None) -> None:
+        # Check if an include types filter has been specified
+        if self.include_types is not None and cls not in self.include_types:
             return
 
         table_name = class_to_filename(cls) if not table_name else table_name
@@ -137,9 +138,11 @@ class StreamingFeatherWriter:
             self._create_writer(cls=cls)
 
     def _create_instrument_writer(self, cls: type, obj: Any) -> None:
-        """
-        Create an arrow writer with instrument specific metadata in the schema.
-        """
+        # Check if an include types filter has been specified
+        if self.include_types is not None and cls not in self.include_types:
+            return
+
+        # Create an arrow writer with instrument specific metadata in the schema
         metadata: dict[bytes, bytes] = self._extract_obj_metadata(obj)
         mapped_cls = {OrderBookDeltas: OrderBookDelta}.get(cls, cls)
         schema = self._schemas[mapped_cls].with_metadata(metadata)
@@ -213,7 +216,7 @@ class StreamingFeatherWriter:
         PyCondition.not_none(obj, "obj")
 
         cls = obj.__class__
-        if isinstance(obj, GenericData):
+        if isinstance(obj, CustomData):
             cls = obj.data_type.type
         elif isinstance(obj, Instrument):
             if obj.id not in self._instruments:
@@ -225,7 +228,7 @@ class StreamingFeatherWriter:
             table += f"_{str(bar.bar_type).lower()}"
 
         if table not in self._writers:
-            if table.startswith("genericdata_signal"):
+            if table.startswith("custom_signal"):
                 self._create_writer(cls=cls)
             elif table.startswith("bar"):
                 self._create_writer(cls=cls, table_name=table)
@@ -361,8 +364,8 @@ def generate_signal_class(name: str, value_type: type) -> type:
     )
     register_arrow(
         data_cls=SignalData,
-        serializer=serialize_signal,
-        deserializer=deserialize_signal,
+        encoder=serialize_signal,
+        decoder=deserialize_signal,
         schema=schema,
     )
 

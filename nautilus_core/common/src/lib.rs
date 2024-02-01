@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -18,6 +18,7 @@ pub mod enums;
 pub mod factories;
 pub mod generators;
 pub mod handlers;
+pub mod headers;
 pub mod logging;
 pub mod msgbus;
 pub mod testing;
@@ -32,5 +33,5 @@ pub mod ffi;
 #[cfg(feature = "python")]
 pub mod python;
 
-#[cfg(feature = "redis-msgbus")]
+#[cfg(feature = "redis")]
 pub mod redis;

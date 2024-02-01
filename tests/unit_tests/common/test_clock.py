@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -22,10 +22,10 @@ import pandas as pd
 import pytest
 import pytz
 
-from nautilus_trader.common.clock import LiveClock
-from nautilus_trader.common.clock import TestClock
-from nautilus_trader.common.clock import TimeEvent
-from nautilus_trader.common.clock import TimeEventHandler
+from nautilus_trader.common.component import LiveClock
+from nautilus_trader.common.component import TestClock
+from nautilus_trader.common.component import TimeEvent
+from nautilus_trader.common.component import TimeEventHandler
 from nautilus_trader.core.datetime import millis_to_nanos
 from nautilus_trader.test_kit.stubs.data import UNIX_EPOCH
 

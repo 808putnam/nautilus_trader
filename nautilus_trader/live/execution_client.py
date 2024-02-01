@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -24,16 +24,15 @@ from asyncio import Task
 from collections.abc import Callable
 from collections.abc import Coroutine
 from datetime import timedelta
-from typing import Any
 
 import pandas as pd
 
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
 from nautilus_trader.common.enums import LogColor
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.common.providers import InstrumentProvider
+from nautilus_trader.config.common import NautilusConfig
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.execution.client import ExecutionClient
@@ -45,9 +44,9 @@ from nautilus_trader.execution.messages import QueryOrder
 from nautilus_trader.execution.messages import SubmitOrder
 from nautilus_trader.execution.messages import SubmitOrderList
 from nautilus_trader.execution.reports import ExecutionMassStatus
+from nautilus_trader.execution.reports import FillReport
 from nautilus_trader.execution.reports import OrderStatusReport
 from nautilus_trader.execution.reports import PositionStatusReport
-from nautilus_trader.execution.reports import TradeReport
 from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import OmsType
 from nautilus_trader.model.identifiers import ClientId
@@ -82,9 +81,7 @@ class LiveExecutionClient(ExecutionClient):
         The cache for the client.
     clock : LiveClock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
-    config : dict[str, object], optional
+    config : NautilusConfig, optional
         The configuration for the instance.
 
     Raises
@@ -110,8 +107,7 @@ class LiveExecutionClient(ExecutionClient):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
-        config: dict[str, Any] | None = None,
+        config: NautilusConfig | None = None,
     ) -> None:
         PyCondition.type(instrument_provider, InstrumentProvider, "instrument_provider")
 
@@ -124,7 +120,6 @@ class LiveExecutionClient(ExecutionClient):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 
@@ -313,7 +308,9 @@ class LiveExecutionClient(ExecutionClient):
             If both the `client_order_id` and `venue_order_id` are ``None``.
 
         """
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError(
+            "method `generate_order_status_report` must be implemented in the subclass",
+        )  # pragma: no cover
 
     async def generate_order_status_reports(
         self,
@@ -332,9 +329,9 @@ class LiveExecutionClient(ExecutionClient):
         instrument_id : InstrumentId, optional
             The instrument ID query filter.
         start : pd.Timestamp, optional
-            The start datetime query filter.
+            The start datetime (UTC) query filter.
         end : pd.Timestamp, optional
-            The end datetime query filter.
+            The end datetime (UTC) query filter.
         open_only : bool, default False
             If the query is for open orders only.
 
@@ -343,17 +340,19 @@ class LiveExecutionClient(ExecutionClient):
         list[OrderStatusReport]
 
         """
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError(
+            "method `generate_order_status_reports` must be implemented in the subclass",
+        )  # pragma: no cover
 
-    async def generate_trade_reports(
+    async def generate_fill_reports(
         self,
         instrument_id: InstrumentId | None = None,
         venue_order_id: VenueOrderId | None = None,
         start: pd.Timestamp | None = None,
         end: pd.Timestamp | None = None,
-    ) -> list[TradeReport]:
+    ) -> list[FillReport]:
         """
-        Generate a list of `TradeReport`s with optional query filters.
+        Generate a list of `FillReport`s with optional query filters.
 
         The returned list may be empty if no trades match the given parameters.
 
@@ -364,16 +363,18 @@ class LiveExecutionClient(ExecutionClient):
         venue_order_id : VenueOrderId, optional
             The venue order ID (assigned by the venue) query filter.
         start : pd.Timestamp, optional
-            The start datetime query filter.
+            The start datetime (UTC) query filter.
         end : pd.Timestamp, optional
-            The end datetime query filter.
+            The end datetime (UTC) query filter.
 
         Returns
         -------
-        list[TradeReport]
+        list[FillReport]
 
         """
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError(
+            "method `generate_fill_reports` must be implemented in the subclass",
+        )  # pragma: no cover
 
     async def generate_position_status_reports(
         self,
@@ -391,16 +392,18 @@ class LiveExecutionClient(ExecutionClient):
         instrument_id : InstrumentId, optional
             The instrument ID query filter.
         start : pd.Timestamp, optional
-            The start datetime query filter.
+            The start datetime (UTC) query filter.
         end : pd.Timestamp, optional
-            The end datetime query filter.
+            The end datetime (UTC) query filter.
 
         Returns
         -------
         list[PositionStatusReport]
 
         """
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError(
+            "method `generate_position_status_reports` must be implemented in the subclass",
+        )  # pragma: no cover
 
     async def generate_mass_status(
         self,
@@ -438,12 +441,12 @@ class LiveExecutionClient(ExecutionClient):
         try:
             reports = await asyncio.gather(
                 self.generate_order_status_reports(start=since),
-                self.generate_trade_reports(start=since),
+                self.generate_fill_reports(start=since),
                 self.generate_position_status_reports(start=since),
             )
 
             mass_status.add_order_reports(reports=reports[0])
-            mass_status.add_trade_reports(reports=reports[1])
+            mass_status.add_fill_reports(reports=reports[1])
             mass_status.add_position_reports(reports=reports[2])
 
             self.reconciliation_active = False
@@ -463,7 +466,7 @@ class LiveExecutionClient(ExecutionClient):
         )
 
         if report is None:
-            self._log.warning("Did not received `OrderStatusReport` from request.")
+            self._log.warning("Did not receive `OrderStatusReport` from request.")
             return
 
         self._send_order_status_report(report)

@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -33,8 +33,7 @@ from nautilus_trader.adapters.binance.futures.schemas.account import BinanceFutu
 from nautilus_trader.adapters.binance.futures.schemas.market import BinanceFuturesSymbolInfo
 from nautilus_trader.adapters.binance.futures.schemas.wallet import BinanceFuturesCommissionRate
 from nautilus_trader.adapters.binance.http.client import BinanceHttpClient
-from nautilus_trader.common.clock import LiveClock
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.providers import InstrumentProvider
 from nautilus_trader.config import InstrumentProviderConfig
 from nautilus_trader.core.correctness import PyCondition
@@ -60,8 +59,6 @@ class BinanceFuturesInstrumentProvider(InstrumentProvider):
     ----------
     client : APIClient
         The client for the provider.
-    logger : Logger
-        The logger for the provider.
     config : InstrumentProviderConfig, optional
         The configuration for the provider.
 
@@ -70,15 +67,11 @@ class BinanceFuturesInstrumentProvider(InstrumentProvider):
     def __init__(
         self,
         client: BinanceHttpClient,
-        logger: Logger,
         clock: LiveClock,
         account_type: BinanceAccountType = BinanceAccountType.USDT_FUTURE,
         config: InstrumentProviderConfig | None = None,
     ):
-        super().__init__(
-            logger=logger,
-            config=config,
-        )
+        super().__init__(config=config)
 
         self._clock = clock
         self._client = client

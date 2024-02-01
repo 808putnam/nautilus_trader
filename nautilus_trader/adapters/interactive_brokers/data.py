@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -27,9 +27,8 @@ from nautilus_trader.adapters.interactive_brokers.config import InteractiveBroke
 from nautilus_trader.adapters.interactive_brokers.parsing.data import timedelta_to_duration_str
 from nautilus_trader.adapters.interactive_brokers.providers import InteractiveBrokersInstrumentProvider
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.live.data_client import LiveMarketDataClient
 from nautilus_trader.model.data import Bar
@@ -60,11 +59,10 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
         instrument_provider: InteractiveBrokersInstrumentProvider,
         ibg_client_id: int,
         config: InteractiveBrokersDataClientConfig,
-    ):
+    ) -> None:
         """
         Initialize a new instance of the ``InteractiveBrokersDataClient`` class.
 
@@ -80,8 +78,6 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
             The cache for the client.
         clock : LiveClock
             The clock for the client.
-        logger : Logger
-            The logger for the client.
         instrument_provider : InteractiveBrokersInstrumentProvider
             The instrument provider.
         ibg_client_id : int
@@ -94,15 +90,15 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
             loop=loop,
             client_id=ClientId(f"{IB_VENUE.value}-{ibg_client_id:03d}"),
             venue=None,
-            instrument_provider=instrument_provider,
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
-            config={
-                "name": f"{type(self).__name__}-{ibg_client_id:03d}",
-                "client_id": ibg_client_id,
-            },
+            instrument_provider=instrument_provider,
+            config=config,  # TODO: Config needs to be fully formed earlier than this
+            # config={
+            #     "name": f"{type(self).__name__}-{ibg_client_id:03d}",
+            #     "client_id": ibg_client_id,
+            # },
         )
         self._client = client
         self._handle_revised_bars = config.handle_revised_bars
@@ -115,7 +111,7 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
 
     async def _connect(self):
         # Connect client
-        await self._client.is_running_async()
+        await self._client.wait_until_ready()
         self._client.registered_nautilus_clients.add(self.id)
 
         # Set Market Data Type
@@ -168,11 +164,6 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
             "implement the `_subscribe_order_book_snapshots` coroutine",  # pragma: no cover
         )
 
-    async def _subscribe_ticker(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(  # pragma: no cover
-            "implement the `_subscribe_ticker` coroutine",  # pragma: no cover
-        )
-
     async def _subscribe_quote_ticks(self, instrument_id: InstrumentId) -> None:
         if not (instrument := self._cache.instrument(instrument_id)):
             self._log.error(
@@ -205,7 +196,7 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
             tick_type="AllLast",
         )
 
-    async def _subscribe_bars(self, bar_type: BarType):
+    async def _subscribe_bars(self, bar_type: BarType) -> None:
         if not (instrument := self._cache.instrument(bar_type.instrument_id)):
             self._log.error(f"Cannot subscribe to {bar_type}, Instrument not found.")
             return
@@ -255,11 +246,6 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
             "implement the `_unsubscribe_order_book_snapshots` coroutine",  # pragma: no cover
         )
 
-    async def _unsubscribe_ticker(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(  # pragma: no cover
-            "implement the `_unsubscribe_ticker` coroutine",  # pragma: no cover
-        )
-
     async def _unsubscribe_quote_ticks(self, instrument_id: InstrumentId) -> None:
         await self._client.unsubscribe_ticks(instrument_id, "BidAsk")
 
@@ -283,7 +269,23 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
             "implement the `_request` coroutine",  # pragma: no cover
         )
 
-    async def _request_instrument(self, instrument_id: InstrumentId, correlation_id: UUID4):
+    async def _request_instrument(
+        self,
+        instrument_id: InstrumentId,
+        correlation_id: UUID4,
+        start: pd.Timestamp | None = None,
+        end: pd.Timestamp | None = None,
+    ) -> None:
+        if start is not None:
+            self._log.warning(
+                f"Requesting instrument {instrument_id} with specified `start` which has no effect.",
+            )
+
+        if end is not None:
+            self._log.warning(
+                f"Requesting instrument {instrument_id} with specified `end` which has no effect.",
+            )
+
         await self.instrument_provider.load_async(instrument_id)
         if instrument := self.instrument_provider.find(instrument_id):
             self._handle_data(instrument)
@@ -292,7 +294,13 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
             return
         self._handle_instrument(instrument, correlation_id)
 
-    async def _request_instruments(self, venue: Venue, correlation_id: UUID4):
+    async def _request_instruments(
+        self,
+        venue: Venue,
+        correlation_id: UUID4,
+        start: pd.Timestamp | None = None,
+        end: pd.Timestamp | None = None,
+    ) -> None:
         raise NotImplementedError(  # pragma: no cover
             "implement the `_request_instruments` coroutine",  # pragma: no cover
         )
@@ -364,7 +372,7 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
         limit: int,
         start: pd.Timestamp | None = None,
         end: pd.Timestamp | None = None,
-    ):
+    ) -> list[QuoteTick | TradeTick]:
         if not start:
             limit = self._cache.tick_capacity
 
@@ -373,7 +381,7 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
 
         ticks: list[QuoteTick | TradeTick] = []
         while (start and end > start) or (len(ticks) < limit > 0):
-            await self._client.is_running_async()
+            await self._client.wait_until_ready()
             ticks_part = await self._client.get_historical_ticks(
                 contract,
                 tick_type,
@@ -422,7 +430,7 @@ class InteractiveBrokersDataClient(LiveMarketDataClient):
 
         bars: list[Bar] = []
         while (start and end > start) or (len(bars) < limit > 0):
-            bars_part = await self._client.get_historical_bars(
+            bars_part: list[Bar] = await self._client.get_historical_bars(
                 bar_type=bar_type,
                 contract=IBContract(**instrument.info["contract"]),
                 use_rth=self._use_regular_trading_hours,

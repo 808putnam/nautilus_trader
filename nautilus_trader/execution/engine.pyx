@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -31,7 +31,6 @@ just need to override the `execute` and `process` methods.
 
 import time
 from decimal import Decimal
-from typing import Optional
 
 from nautilus_trader.config import ExecEngineConfig
 from nautilus_trader.config.error import InvalidConfiguration
@@ -42,15 +41,15 @@ from libc.stdint cimport uint64_t
 
 from nautilus_trader.accounting.accounts.base cimport Account
 from nautilus_trader.cache.cache cimport Cache
-from nautilus_trader.common.clock cimport Clock
+from nautilus_trader.common.component cimport CMD
+from nautilus_trader.common.component cimport EVT
+from nautilus_trader.common.component cimport RECV
+from nautilus_trader.common.component cimport Clock
 from nautilus_trader.common.component cimport Component
+from nautilus_trader.common.component cimport LogColor
+from nautilus_trader.common.component cimport Logger
 from nautilus_trader.common.component cimport MessageBus
 from nautilus_trader.common.generators cimport PositionIdGenerator
-from nautilus_trader.common.logging cimport CMD
-from nautilus_trader.common.logging cimport EVT
-from nautilus_trader.common.logging cimport RECV
-from nautilus_trader.common.logging cimport LogColor
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.fsm cimport InvalidStateTrigger
 from nautilus_trader.core.rust.model cimport ContingencyType
@@ -105,8 +104,6 @@ cdef class ExecutionEngine(Component):
         The cache for the engine.
     clock : Clock
         The clock for the engine.
-    logger : Logger
-        The logger for the engine.
     config : ExecEngineConfig, optional
         The configuration for the instance.
 
@@ -121,25 +118,23 @@ cdef class ExecutionEngine(Component):
         MessageBus msgbus not None,
         Cache cache not None,
         Clock clock not None,
-        Logger logger not None,
-        config: Optional[ExecEngineConfig] = None,
+        config: ExecEngineConfig | None = None,
     ) -> None:
         if config is None:
             config = ExecEngineConfig()
         Condition.type(config, ExecEngineConfig, "config")
         super().__init__(
             clock=clock,
-            logger=logger,
             component_id=ComponentId("ExecEngine"),
             msgbus=msgbus,
-            config=config.dict(),
+            config=config,
         )
 
         self._cache: Cache = cache
 
         self._clients: dict[ClientId, ExecutionClient] = {}
         self._routing_map: dict[Venue, ExecutionClient] = {}
-        self._default_client: Optional[ExecutionClient] = None
+        self._default_client: ExecutionClient | None = None
         self._oms_overrides: dict[StrategyId, OmsType] = {}
         self._external_order_claims: dict[InstrumentId, StrategyId] = {}
 
@@ -187,7 +182,7 @@ cdef class ExecutionEngine(Component):
         return sorted(list(self._clients.keys()))
 
     @property
-    def default_client(self) -> Optional[ClientId]:
+    def default_client(self) -> ClientId | None:
         """
         Return the default execution client registered with the engine.
 
@@ -525,7 +520,7 @@ cdef class ExecutionEngine(Component):
             The execution mass status report to reconcile.
 
         """
-        # Should be overridden for live execution enginesj
+        # Should be overridden for live execution engines
 
 # -- ABSTRACT METHODS -----------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -32,11 +32,12 @@ from nautilus_trader.adapters.bybit.schemas.ws import BybitWsAccountExecutionMsg
 from nautilus_trader.adapters.bybit.schemas.ws import BybitWsAccountOrderMsg
 from nautilus_trader.adapters.bybit.schemas.ws import BybitWsAccountPositionMsg
 from nautilus_trader.adapters.bybit.schemas.ws import BybitWsMessageGeneral
+from nautilus_trader.adapters.bybit.utils import get_api_key
+from nautilus_trader.adapters.bybit.utils import get_api_secret
 from nautilus_trader.adapters.bybit.websocket.client import BybitWebsocketClient
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.common.providers import InstrumentProvider
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.datetime import millis_to_nanos
@@ -45,9 +46,9 @@ from nautilus_trader.core.rust.model import TimeInForce
 from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.execution.messages import CancelAllOrders
 from nautilus_trader.execution.messages import SubmitOrder
+from nautilus_trader.execution.reports import FillReport
 from nautilus_trader.execution.reports import OrderStatusReport
 from nautilus_trader.execution.reports import PositionStatusReport
-from nautilus_trader.execution.reports import TradeReport
 from nautilus_trader.live.execution_client import LiveExecutionClient
 from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import OmsType
@@ -57,7 +58,6 @@ from nautilus_trader.model.identifiers import AccountId
 from nautilus_trader.model.identifiers import ClientId
 from nautilus_trader.model.identifiers import ClientOrderId
 from nautilus_trader.model.identifiers import InstrumentId
-from nautilus_trader.model.identifiers import Symbol
 from nautilus_trader.model.identifiers import TradeId
 from nautilus_trader.model.identifiers import VenueOrderId
 from nautilus_trader.model.objects import Money
@@ -77,7 +77,6 @@ class BybitExecutionClient(LiveExecutionClient):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
         instrument_provider: InstrumentProvider,
         instrument_types: list[BybitInstrumentType],
         base_url_ws: str,
@@ -94,7 +93,6 @@ class BybitExecutionClient(LiveExecutionClient):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
         )
         # Configuration
         self._use_position_ids = config.use_position_ids
@@ -110,15 +108,14 @@ class BybitExecutionClient(LiveExecutionClient):
         self._instrument_ids: dict[str, InstrumentId] = {}
         self._generate_order_status_retries: dict[ClientOrderId, int] = {}
 
-        # Websocket API
+        # WebSocket API
         self._ws_client = BybitWebsocketClient(
             clock=clock,
-            logger=logger,
             handler=self._handle_ws_message,
             base_url=base_url_ws,
             is_private=True,
-            api_key=config.api_key,
-            api_secret=config.api_secret,
+            api_key=config.api_key or get_api_key(config.testnet),
+            api_secret=config.api_secret or get_api_secret(config.testnet),
         )
 
         # Http API
@@ -239,14 +236,14 @@ class BybitExecutionClient(LiveExecutionClient):
             self._log.error(f"Failed to generate OrderStatusReport: {e}")
         return None
 
-    async def generate_trade_reports(
+    async def generate_fill_reports(
         self,
         instrument_id: InstrumentId | None = None,
         venue_order_id: VenueOrderId | None = None,
         start: pd.Timestamp | None = None,
         end: pd.Timestamp | None = None,
-    ) -> list[TradeReport]:
-        self._log.info("Requesting TradeReports...")
+    ) -> list[FillReport]:
+        self._log.info("Requesting FillReports...")
         return []
 
     async def generate_position_status_reports(
@@ -256,7 +253,22 @@ class BybitExecutionClient(LiveExecutionClient):
         end: pd.Timestamp | None = None,
     ) -> list[PositionStatusReport]:
         self._log.info("Requesting PositionStatusReports...")
-        return []
+        reports: list[PositionStatusReport] = []
+        for instrument_type in self._instrument_types:
+            positions = await self._http_account.query_position_info(instrument_type)
+            for position in positions:
+                instr: InstrumentId = BybitSymbol(
+                    position.symbol + "-" + instrument_type.value.upper(),
+                ).parse_as_nautilus()
+                position_report = position.parse_to_position_status_report(
+                    account_id=self.account_id,
+                    instrument_id=instr,
+                    report_id=UUID4(),
+                    ts_init=self._clock.timestamp_ns(),
+                )
+                self._log.debug(f"Received {position_report}.")
+                reports.append(position_report)
+        return reports
 
     def _get_cache_active_symbols(self) -> set[str]:
         # check in cache for all active orders
@@ -268,15 +280,6 @@ class BybitExecutionClient(LiveExecutionClient):
         for position in open_positions:
             active_symbols.add(BybitSymbol(position.instrument_id.symbol.value))
         return active_symbols
-
-    def _get_cached_instrument_id(self, symbol: str) -> InstrumentId | None:
-        # parse instrument id
-        nautilus_symbol: str = BybitSymbol(symbol).parse_as_nautilus()
-        instrument_id: InstrumentId = self._instrument_ids.get(nautilus_symbol)
-        if not instrument_id:
-            instrument_id = InstrumentId(Symbol(nautilus_symbol), BYBIT_VENUE)
-            self._instrument_ids[nautilus_symbol] = instrument_id
-        return instrument_id
 
     async def _get_active_position_symbols(self, symbol: str | None) -> set[str]:
         active_symbols: set[str] = set()
@@ -386,12 +389,12 @@ class BybitExecutionClient(LiveExecutionClient):
         try:
             ws_message = self._decoder_ws_msg_general.decode(raw)
             self._topic_check(ws_message.topic, raw)
-        except Exception:
+        except Exception as e:
             ws_message_sub = self._decoder_ws_subscription.decode(raw)
             if ws_message_sub.success:
                 self._log.info("Success subscribing")
             else:
-                self._log.error("Failed to subscribe.")
+                self._log.error(f"Failed to subscribe. {e!s}")
 
     def _topic_check(self, topic: str, raw: bytes) -> None:
         if "order" in topic:

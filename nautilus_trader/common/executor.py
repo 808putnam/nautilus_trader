@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -24,7 +24,7 @@ from concurrent.futures import Executor
 from dataclasses import dataclass
 from typing import Any
 
-from nautilus_trader.common.logging import LoggerAdapter
+from nautilus_trader.common.component import Logger
 from nautilus_trader.core.uuid import UUID4
 
 
@@ -74,7 +74,7 @@ class ActorExecutor:
         The event loop for the application.
     executor : Executor
         The inner executor to register.
-    logger : LoggerAdatper
+    logger : Logger, optional
         The logger for the executor.
 
     Warnings
@@ -89,11 +89,11 @@ class ActorExecutor:
         self,
         loop: asyncio.AbstractEventLoop,
         executor: Executor,
-        logger: LoggerAdapter,
+        logger: Logger | None = None,
     ):
         self._loop = loop
         self._executor: Executor = executor
-        self._log: LoggerAdapter = logger
+        self._log: Logger = logger or Logger(name=type(self).__name__)
 
         self._active_tasks: dict[TaskId, Future[Any]] = {}
         self._future_index: dict[Future[Any], TaskId] = {}
@@ -184,6 +184,7 @@ class ActorExecutor:
             return
 
         self._active_tasks.pop(task_id, None)
+        self._queued_tasks.discard(task_id)
 
         if task.done():
             try:

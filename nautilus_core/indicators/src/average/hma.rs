@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -107,7 +107,7 @@ impl HullMovingAverage {
         let _ma2 = WeightedMovingAverage::new(period, w2, price_type)?;
         let _ma3 = WeightedMovingAverage::new(period_sqrt, w3, price_type)?;
 
-        Ok(HullMovingAverage {
+        Ok(Self {
             period,
             price_type: price_type.unwrap_or(PriceType::Last),
             value: 0.0,

@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,6 +19,8 @@ import pandas as pd
 
 from nautilus_trader.common.enums import LogColor
 from nautilus_trader.config import StrategyConfig
+from nautilus_trader.config.validation import PositiveFloat
+from nautilus_trader.config.validation import PositiveInt
 from nautilus_trader.core.data import Data
 from nautilus_trader.core.message import Event
 from nautilus_trader.indicators.atr import AverageTrueRange
@@ -27,7 +29,6 @@ from nautilus_trader.model.data import Bar
 from nautilus_trader.model.data import BarType
 from nautilus_trader.model.data import OrderBookDeltas
 from nautilus_trader.model.data import QuoteTick
-from nautilus_trader.model.data import Ticker
 from nautilus_trader.model.data import TradeTick
 from nautilus_trader.model.enums import OrderSide
 from nautilus_trader.model.enums import TimeInForce
@@ -53,9 +54,9 @@ class VolatilityMarketMakerConfig(StrategyConfig, frozen=True):
         The instrument ID for the strategy.
     bar_type : BarType
         The bar type for the strategy.
-    atr_period : int
+    atr_period : PositiveInt
         The period for the ATR indicator.
-    atr_multiple : float
+    atr_multiple : PositiveFloat
         The ATR multiple for bracketing limit orders.
     trade_size : Decimal
         The position size per trade.
@@ -71,10 +72,10 @@ class VolatilityMarketMakerConfig(StrategyConfig, frozen=True):
 
     """
 
-    instrument_id: str
-    bar_type: str
-    atr_period: int
-    atr_multiple: float
+    instrument_id: InstrumentId
+    bar_type: BarType
+    atr_period: PositiveInt
+    atr_multiple: PositiveFloat
     trade_size: Decimal
     emulation_trigger: str = "NO_TRIGGER"
 
@@ -97,8 +98,8 @@ class VolatilityMarketMaker(Strategy):
         super().__init__(config)
 
         # Configuration
-        self.instrument_id = InstrumentId.from_str(config.instrument_id)
-        self.bar_type = BarType.from_str(config.bar_type)
+        self.instrument_id = config.instrument_id
+        self.bar_type = config.bar_type
         self.atr_multiple = config.atr_multiple
         self.trade_size = Decimal(config.trade_size)
         self.emulation_trigger = TriggerType[config.emulation_trigger]
@@ -133,13 +134,21 @@ class VolatilityMarketMaker(Strategy):
         self.subscribe_quote_ticks(self.instrument_id)
 
         # self.subscribe_trade_ticks(self.instrument_id)
-        # self.subscribe_ticker(self.instrument_id)  # For debugging
         # self.subscribe_order_book_deltas(self.instrument_id)  # For debugging
         # self.subscribe_order_book_snapshots(
         #     self.instrument_id,
         #     depth=20,
         #     interval_ms=1000,
         # )  # For debugging
+
+        # self.subscribe_data(
+        #     data_type=DataType(
+        #         BinanceTicker,
+        #         metadata={"instrument_id": self.instrument.id},
+        #     ),
+        #     client_id=ClientId("BINANCE"),
+        # )
+
         # self.subscribe_data(
         #     data_type=DataType(
         #         BinanceFuturesMarkPriceUpdate,
@@ -150,7 +159,7 @@ class VolatilityMarketMaker(Strategy):
 
     def on_data(self, data: Data) -> None:
         """
-        Actions to be performed when the strategy is running and receives generic data.
+        Actions to be performed when the strategy is running and receives data.
 
         Parameters
         ----------
@@ -159,7 +168,7 @@ class VolatilityMarketMaker(Strategy):
 
         """
         # For debugging (must add a subscription)
-        # self.log.info(repr(data), LogColor.CYAN)
+        self.log.info(repr(data), LogColor.CYAN)
 
     def on_instrument(self, instrument: Instrument) -> None:
         """
@@ -200,19 +209,6 @@ class VolatilityMarketMaker(Strategy):
         """
         # For debugging (must add a subscription)
         self.log.info(repr(deltas), LogColor.CYAN)
-
-    def on_ticker(self, ticker: Ticker) -> None:
-        """
-        Actions to be performed when the strategy is running and receives a ticker.
-
-        Parameters
-        ----------
-        ticker : Ticker
-            The ticker received.
-
-        """
-        # For debugging (must add a subscription)
-        # self.log.info(repr(ticker), LogColor.CYAN)
 
     def on_quote_tick(self, tick: QuoteTick) -> None:
         """
@@ -373,7 +369,6 @@ class VolatilityMarketMaker(Strategy):
         self.unsubscribe_bars(self.bar_type)
         self.unsubscribe_quote_ticks(self.instrument_id)
         # self.unsubscribe_trade_ticks(self.instrument_id)
-        # self.unsubscribe_ticker(self.instrument_id)  # For debugging
         # self.unsubscribe_order_book_deltas(self.instrument_id)  # For debugging
         # self.unsubscribe_order_book_snapshots(self.instrument_id)  # For debugging
 

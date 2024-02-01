@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -23,21 +23,23 @@ from nautilus_trader.examples.strategies.ema_cross_trailing_stop import EMACross
 from nautilus_trader.examples.strategies.ema_cross_trailing_stop import EMACrossTrailingStopConfig
 from nautilus_trader.model.currencies import ETH
 from nautilus_trader.model.currencies import USDT
+from nautilus_trader.model.data import BarType
 from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import OmsType
+from nautilus_trader.model.identifiers import TraderId
 from nautilus_trader.model.identifiers import Venue
 from nautilus_trader.model.objects import Money
 from nautilus_trader.persistence.wranglers import TradeTickDataWrangler
-from nautilus_trader.test_kit.fixtures.memory import snapshot_memory
 from nautilus_trader.test_kit.providers import TestDataProvider
 from nautilus_trader.test_kit.providers import TestInstrumentProvider
+from tests.mem_leak_tests.conftest import snapshot_memory
 
 
 @snapshot_memory(5)
 def run(*args, **kwargs):
     # Configure backtest engine
     config = BacktestEngineConfig(
-        trader_id="BACKTESTER-001",
+        trader_id=TraderId("BACKTESTER-001"),
         logging=LoggingConfig(log_level="INFO", bypass_logging=True),
     )
 
@@ -66,8 +68,8 @@ def run(*args, **kwargs):
 
     # Configure your strategy
     config = EMACrossTrailingStopConfig(
-        instrument_id=str(ETHUSDT_BINANCE.id),
-        bar_type="ETHUSDT.BINANCE-100-TICK-LAST-INTERNAL",
+        instrument_id=ETHUSDT_BINANCE.id,
+        bar_type=BarType.from_str("ETHUSDT.BINANCE-100-TICK-LAST-INTERNAL"),
         trade_size=Decimal("0.05"),
         fast_ema_period=10,
         slow_ema_period=20,

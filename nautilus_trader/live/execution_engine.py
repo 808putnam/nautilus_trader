@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -20,10 +20,9 @@ from decimal import Decimal
 from typing import Any, Final
 
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
 from nautilus_trader.common.enums import LogColor
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.config import LiveExecEngineConfig
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.datetime import dt_to_unix_nanos
@@ -35,9 +34,9 @@ from nautilus_trader.execution.messages import QueryOrder
 from nautilus_trader.execution.messages import TradingCommand
 from nautilus_trader.execution.reports import ExecutionMassStatus
 from nautilus_trader.execution.reports import ExecutionReport
+from nautilus_trader.execution.reports import FillReport
 from nautilus_trader.execution.reports import OrderStatusReport
 from nautilus_trader.execution.reports import PositionStatusReport
-from nautilus_trader.execution.reports import TradeReport
 from nautilus_trader.model.enums import LiquiditySide
 from nautilus_trader.model.enums import OrderStatus
 from nautilus_trader.model.enums import OrderType
@@ -81,8 +80,6 @@ class LiveExecutionEngine(ExecutionEngine):
         The cache for the engine.
     clock : LiveClock
         The clock for the engine.
-    logger : Logger
-        The logger for the engine.
     config : LiveExecEngineConfig, optional
         The configuration for the instance.
 
@@ -101,7 +98,6 @@ class LiveExecutionEngine(ExecutionEngine):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
         config: LiveExecEngineConfig | None = None,
     ) -> None:
         if config is None:
@@ -111,7 +107,6 @@ class LiveExecutionEngine(ExecutionEngine):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 
@@ -493,8 +488,8 @@ class LiveExecutionEngine(ExecutionEngine):
 
         if isinstance(report, OrderStatusReport):
             result = self._reconcile_order_report(report, [])  # No trades to reconcile
-        elif isinstance(report, TradeReport):
-            result = self._reconcile_trade_report_single(report)
+        elif isinstance(report, FillReport):
+            result = self._reconcile_fill_report_single(report)
         elif isinstance(report, PositionStatusReport):
             result = self._reconcile_position_report(report)
         else:
@@ -546,7 +541,7 @@ class LiveExecutionEngine(ExecutionEngine):
 
         # Reconcile all reported orders
         for venue_order_id, order_report in mass_status.order_reports().items():
-            trades = mass_status.trade_reports().get(venue_order_id, [])
+            trades = mass_status.fill_reports().get(venue_order_id, [])
 
             # Check and handle duplicate client order IDs
             client_order_id = order_report.client_order_id
@@ -555,12 +550,12 @@ class LiveExecutionEngine(ExecutionEngine):
                 continue  # Determine how to handle this
 
             # Check for duplicate trade IDs
-            for trade_report in trades:
-                if trade_report.trade_id in reconciled_trades:
+            for fill_report in trades:
+                if fill_report.trade_id in reconciled_trades:
                     self._log.warning(
-                        f"Duplicate {trade_report.trade_id!r} detected: {trade_report}.",
+                        f"Duplicate {fill_report.trade_id!r} detected: {fill_report}.",
                     )
-                reconciled_trades.add(trade_report.trade_id)
+                reconciled_trades.add(fill_report.trade_id)
 
             try:
                 result = self._reconcile_order_report(order_report, trades)
@@ -589,7 +584,7 @@ class LiveExecutionEngine(ExecutionEngine):
     def _reconcile_order_report(  # noqa (too complex)
         self,
         report: OrderStatusReport,
-        trades: list[TradeReport],
+        trades: list[FillReport],
     ) -> bool:
         client_order_id: ClientOrderId = report.client_order_id
         if client_order_id is None:
@@ -648,7 +643,7 @@ class LiveExecutionEngine(ExecutionEngine):
                     self._generate_order_triggered(order, report)
                 # Reconcile all trades
                 for trade in trades:
-                    self._reconcile_trade_report(order, trade, instrument)
+                    self._reconcile_fill_report(order, trade, instrument)
                 self._generate_order_canceled(order, report)
             return True  # Reconciled
 
@@ -663,14 +658,14 @@ class LiveExecutionEngine(ExecutionEngine):
 
         # Reconcile all trades
         for trade in trades:
-            self._reconcile_trade_report(order, trade, instrument)
+            self._reconcile_fill_report(order, trade, instrument)
 
         if report.avg_px is None:
             self._log.warning("report.avg_px was `None` when a value was expected.")
 
         # Check reported filled qty against order filled qty
         if report.filled_qty != order.filled_qty:
-            # This is due to missing trade report(s), there may now be some
+            # This is due to missing fill report(s), there may now be some
             # information loss if multiple fills occurred to reach the reported
             # state, or if commissions differed from the default.
             fill: OrderFilled = self._generate_inferred_fill(order, report, instrument)
@@ -683,20 +678,20 @@ class LiveExecutionEngine(ExecutionEngine):
 
         return True  # Reconciled
 
-    def _reconcile_trade_report_single(self, report: TradeReport) -> bool:
+    def _reconcile_fill_report_single(self, report: FillReport) -> bool:
         client_order_id: ClientOrderId | None = self._cache.client_order_id(
             report.venue_order_id,
         )
         if client_order_id is None:
             self._log.error(
-                f"Cannot reconcile TradeReport: client order ID {client_order_id} not found.",
+                f"Cannot reconcile FillReport: client order ID {client_order_id} not found.",
             )
             return False  # Failed
 
         order: Order | None = self._cache.order(client_order_id)
         if order is None:
             self._log.error(
-                "Cannot reconcile TradeReport: no order for client order ID {client_order_id}",
+                "Cannot reconcile FillReport: no order for client order ID {client_order_id}",
             )
             return False  # Failed
 
@@ -708,12 +703,12 @@ class LiveExecutionEngine(ExecutionEngine):
             )
             return False  # Failed
 
-        return self._reconcile_trade_report(order, report, instrument)
+        return self._reconcile_fill_report(order, report, instrument)
 
-    def _reconcile_trade_report(
+    def _reconcile_fill_report(
         self,
         order: Order,
-        report: TradeReport,
+        report: FillReport,
         instrument: Instrument,
     ) -> bool:
         if report.trade_id in order.trade_ids:
@@ -1012,27 +1007,27 @@ class LiveExecutionEngine(ExecutionEngine):
     def _generate_order_filled(
         self,
         order: Order,
-        trade: TradeReport,
+        report: FillReport,
         instrument: Instrument,
     ) -> None:
         filled = OrderFilled(
             trader_id=order.trader_id,
             strategy_id=order.strategy_id,
-            instrument_id=trade.instrument_id,
+            instrument_id=report.instrument_id,
             client_order_id=order.client_order_id,
-            venue_order_id=trade.venue_order_id,
-            account_id=trade.account_id,
-            trade_id=trade.trade_id,
-            position_id=trade.venue_position_id,
+            venue_order_id=report.venue_order_id,
+            account_id=report.account_id,
+            trade_id=report.trade_id,
+            position_id=report.venue_position_id,
             order_side=order.side,
             order_type=order.order_type,
-            last_qty=trade.last_qty,
-            last_px=trade.last_px,
+            last_qty=report.last_qty,
+            last_px=report.last_px,
             currency=instrument.quote_currency,
-            commission=trade.commission,
-            liquidity_side=trade.liquidity_side,
+            commission=report.commission,
+            liquidity_side=report.liquidity_side,
             event_id=UUID4(),
-            ts_event=trade.ts_event,
+            ts_event=report.ts_event,
             ts_init=self._clock.timestamp_ns(),
             reconciliation=True,
         )

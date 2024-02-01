@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -35,10 +35,9 @@ from nautilus_trader.adapters.binance.http.market import BinanceMarketHttpAPI
 from nautilus_trader.adapters.binance.http.user import BinanceUserDataHttpAPI
 from nautilus_trader.adapters.binance.websocket.client import BinanceWebSocketClient
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
 from nautilus_trader.common.enums import LogColor
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.common.providers import InstrumentProvider
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.datetime import nanos_to_millis
@@ -49,9 +48,9 @@ from nautilus_trader.execution.messages import CancelOrder
 from nautilus_trader.execution.messages import ModifyOrder
 from nautilus_trader.execution.messages import SubmitOrder
 from nautilus_trader.execution.messages import SubmitOrderList
+from nautilus_trader.execution.reports import FillReport
 from nautilus_trader.execution.reports import OrderStatusReport
 from nautilus_trader.execution.reports import PositionStatusReport
-from nautilus_trader.execution.reports import TradeReport
 from nautilus_trader.live.execution_client import LiveExecutionClient
 from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import OmsType
@@ -102,8 +101,6 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
         The cache for the client.
     clock : LiveClock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
     instrument_provider : BinanceSpotInstrumentProvider
         The instrument provider.
     account_type : BinanceAccountType
@@ -130,7 +127,6 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
         instrument_provider: InstrumentProvider,
         account_type: BinanceAccountType,
         base_url_ws: str,
@@ -147,7 +143,6 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
         )
 
         # Configuration
@@ -183,7 +178,6 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
         # WebSocket API
         self._ws_client = BinanceWebSocketClient(
             clock=clock,
-            logger=logger,
             handler=self._handle_user_ws_message,
             base_url=base_url_ws,
             loop=self._loop,
@@ -214,6 +208,7 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
             BinanceErrorCode.DISCONNECTED,
             BinanceErrorCode.TOO_MANY_REQUESTS,  # Short retry delays may result in bans
             BinanceErrorCode.TIMEOUT,
+            BinanceErrorCode.SERVER_BUSY,
             BinanceErrorCode.INVALID_TIMESTAMP,
             BinanceErrorCode.CANCEL_REJECTED,
             BinanceErrorCode.ME_RECVWINDOW_REJECT,
@@ -294,7 +289,7 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
                     self._log.debug(f"Pinging WebSocket listen key {self._listen_key}...")
                     await self._http_user.keepalive_listen_key(listen_key=self._listen_key)
         except asyncio.CancelledError:
-            self._log.debug("`ping_listen_keys` task was canceled.")
+            self._log.debug("Canceled `ping_listen_keys` task.")
 
     async def _disconnect(self) -> None:
         # Cancel tasks
@@ -479,14 +474,14 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
 
         return reports
 
-    async def generate_trade_reports(
+    async def generate_fill_reports(
         self,
         instrument_id: InstrumentId | None = None,
         venue_order_id: VenueOrderId | None = None,
         start: pd.Timestamp | None = None,
         end: pd.Timestamp | None = None,
-    ) -> list[TradeReport]:
-        self._log.info("Requesting TradeReports...")
+    ) -> list[FillReport]:
+        self._log.info("Requesting FillReports...")
 
         try:
             # Check Binance for all trades on active symbols
@@ -502,16 +497,16 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
                 )
                 binance_trades.extend(response)
         except BinanceError as e:
-            self._log.exception(f"Cannot generate TradeReport: {e.message}", e)
+            self._log.exception(f"Cannot generate FillReport: {e.message}", e)
             return []
 
         # Parse all Binance trades
-        reports: list[TradeReport] = []
+        reports: list[FillReport] = []
         for trade in binance_trades:
             if trade.symbol is None:
                 self._log.warning(f"No symbol for trade {trade}.")
                 continue
-            report = trade.parse_to_trade_report(
+            report = trade.parse_to_fill_report(
                 account_id=self.account_id,
                 instrument_id=self._get_cached_instrument_id(trade.symbol),
                 report_id=UUID4(),
@@ -526,7 +521,7 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
 
         len_reports = len(reports)
         plural = "" if len_reports == 1 else "s"
-        self._log.info(f"Received {len(reports)} TradeReport{plural}.")
+        self._log.info(f"Received {len(reports)} FillReport{plural}.")
 
         return reports
 
@@ -576,7 +571,14 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
             )
         return time_in_force
 
-    def _determine_good_till_date(self, order: Order) -> int | None:
+    def _determine_good_till_date(
+        self,
+        order: Order,
+        time_in_force: BinanceTimeInForce | None,
+    ) -> int | None:
+        if time_in_force is None or time_in_force != BinanceTimeInForce.GTD:
+            return None
+
         good_till_date = nanos_to_millis(order.expire_time_ns) if order.expire_time_ns else None
         if self._binance_account_type.is_spot_or_margin:
             good_till_date = None
@@ -663,7 +665,7 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
             side=self._enum_parser.parse_internal_order_side(order.side),
             order_type=self._enum_parser.parse_internal_order_type(order),
             time_in_force=time_in_force,
-            good_till_date=self._determine_good_till_date(order),
+            good_till_date=self._determine_good_till_date(order, time_in_force),
             quantity=str(order.quantity),
             price=str(order.price),
             iceberg_qty=str(order.display_qty) if order.display_qty is not None else None,
@@ -686,12 +688,13 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
             )
             return
 
+        time_in_force = self._determine_time_in_force(order)
         await self._http_account.new_order(
             symbol=order.instrument_id.symbol.value,
             side=self._enum_parser.parse_internal_order_side(order.side),
             order_type=self._enum_parser.parse_internal_order_type(order),
-            time_in_force=self._determine_time_in_force(order),
-            good_till_date=self._determine_good_till_date(order),
+            time_in_force=time_in_force,
+            good_till_date=self._determine_good_till_date(order, time_in_force),
             quantity=str(order.quantity),
             price=str(order.price),
             stop_price=str(order.trigger_price),
@@ -730,12 +733,13 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
             )
             return
 
+        time_in_force = self._determine_time_in_force(order)
         await self._http_account.new_order(
             symbol=order.instrument_id.symbol.value,
             side=self._enum_parser.parse_internal_order_side(order.side),
             order_type=self._enum_parser.parse_internal_order_type(order),
-            time_in_force=self._determine_time_in_force(order),
-            good_till_date=self._determine_good_till_date(order),
+            time_in_force=time_in_force,
+            good_till_date=self._determine_good_till_date(order, time_in_force),
             quantity=str(order.quantity),
             stop_price=str(order.trigger_price),
             working_type=working_type,
@@ -782,12 +786,13 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
                     f"and could not find quotes or trades for {order.instrument_id}",
                 )
 
+        time_in_force = self._determine_time_in_force(order)
         await self._http_account.new_order(
             symbol=order.instrument_id.symbol.value,
             side=self._enum_parser.parse_internal_order_side(order.side),
             order_type=self._enum_parser.parse_internal_order_type(order),
-            time_in_force=self._determine_time_in_force(order),
-            good_till_date=self._determine_good_till_date(order),
+            time_in_force=time_in_force,
+            good_till_date=self._determine_good_till_date(order, time_in_force),
             quantity=str(order.quantity),
             activation_price=str(activation_price),
             callback_rate=str(order.trailing_offset / 100),

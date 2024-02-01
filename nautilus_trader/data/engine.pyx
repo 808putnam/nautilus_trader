@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -30,7 +30,6 @@ just need to override the `execute`, `process`, `send` and `receive` methods.
 """
 
 from typing import Callable
-from typing import Optional
 
 from nautilus_trader.common.enums import LogColor
 from nautilus_trader.config import DataEngineConfig
@@ -40,19 +39,22 @@ from cpython.datetime cimport datetime
 from cpython.datetime cimport timedelta
 from libc.stdint cimport uint64_t
 
-from nautilus_trader.common.clock cimport Clock
+from nautilus_trader.common.component cimport CMD
+from nautilus_trader.common.component cimport RECV
+from nautilus_trader.common.component cimport REQ
+from nautilus_trader.common.component cimport RES
+from nautilus_trader.common.component cimport Clock
 from nautilus_trader.common.component cimport Component
+from nautilus_trader.common.component cimport Logger
 from nautilus_trader.common.component cimport MessageBus
-from nautilus_trader.common.logging cimport CMD
-from nautilus_trader.common.logging cimport RECV
-from nautilus_trader.common.logging cimport REQ
-from nautilus_trader.common.logging cimport RES
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.data cimport Data
 from nautilus_trader.core.datetime cimport dt_to_unix_nanos
 from nautilus_trader.core.datetime cimport unix_nanos_to_dt
 from nautilus_trader.core.rust.common cimport ComponentState
+from nautilus_trader.core.rust.core cimport NANOSECONDS_IN_MILLISECOND
+from nautilus_trader.core.rust.core cimport NANOSECONDS_IN_SECOND
+from nautilus_trader.core.rust.core cimport millis_to_nanos
 from nautilus_trader.core.rust.model cimport PriceType
 from nautilus_trader.core.uuid cimport UUID4
 from nautilus_trader.data.aggregation cimport BarAggregator
@@ -76,6 +78,7 @@ from nautilus_trader.model.data cimport InstrumentClose
 from nautilus_trader.model.data cimport InstrumentStatus
 from nautilus_trader.model.data cimport OrderBookDelta
 from nautilus_trader.model.data cimport OrderBookDeltas
+from nautilus_trader.model.data cimport OrderBookDepth10
 from nautilus_trader.model.data cimport QuoteTick
 from nautilus_trader.model.data cimport TradeTick
 from nautilus_trader.model.data cimport VenueStatus
@@ -101,8 +104,6 @@ cdef class DataEngine(Component):
         The cache for the engine.
     clock : Clock
         The clock for the engine.
-    logger : Logger
-        The logger for the engine.
     config : DataEngineConfig, optional
         The configuration for the instance.
     """
@@ -112,26 +113,24 @@ cdef class DataEngine(Component):
         MessageBus msgbus not None,
         Cache cache not None,
         Clock clock not None,
-        Logger logger not None,
-        config: Optional[DataEngineConfig] = None,
+        config: DataEngineConfig | None = None,
     ):
         if config is None:
             config = DataEngineConfig()
         Condition.type(config, DataEngineConfig, "config")
         super().__init__(
             clock=clock,
-            logger=logger,
             component_id=ComponentId("DataEngine"),
             msgbus=msgbus,
-            config=config.dict(),
+            config=config,
         )
 
         self._cache = cache
 
         self._clients: dict[ClientId, DataClient] = {}
         self._routing_map: dict[Venue, DataClient] = {}
-        self._default_client: Optional[DataClient] = None
-        self._catalog: Optional[ParquetDataCatalog] = None
+        self._default_client: DataClient | None = None
+        self._catalog: ParquetDataCatalog | None = None
         self._order_book_intervals: dict[(InstrumentId, int), list[Callable[[Bar], None]]] = {}
         self._bar_aggregators: dict[BarType, BarAggregator] = {}
         self._synthetic_quote_feeds: dict[InstrumentId, list[SyntheticInstrument]] = {}
@@ -171,13 +170,13 @@ cdef class DataEngine(Component):
         return sorted(list(self._clients.keys()))
 
     @property
-    def default_client(self) -> Optional[ClientId]:
+    def default_client(self) -> ClientId | None:
         """
         Return the default data client registered with the engine.
 
         Returns
         -------
-        Optional[ClientId]
+        ClientId or ``None``
 
         """
         return self._default_client.id if self._default_client is not None else None
@@ -336,9 +335,9 @@ cdef class DataEngine(Component):
 
 # -- SUBSCRIPTIONS --------------------------------------------------------------------------------
 
-    cpdef list subscribed_generic_data(self):
+    cpdef list subscribed_custom_data(self):
         """
-        Return the generic data types subscribed to.
+        Return the custom data types subscribed to.
 
         Returns
         -------
@@ -348,7 +347,7 @@ cdef class DataEngine(Component):
         cdef list subscriptions = []
         cdef DataClient client
         for client in self._clients.values():
-            subscriptions += client.subscribed_generic_data()
+            subscriptions += client.subscribed_custom_data()
         return subscriptions
 
     cpdef list subscribed_instruments(self):
@@ -394,21 +393,6 @@ cdef class DataEngine(Component):
         cdef MarketDataClient client
         for client in [c for c in self._clients.values() if isinstance(c, MarketDataClient)]:
             subscriptions += client.subscribed_order_book_snapshots()
-        return subscriptions
-
-    cpdef list subscribed_tickers(self):
-        """
-        Return the ticker instruments subscribed to.
-
-        Returns
-        -------
-        list[InstrumentId]
-
-        """
-        cdef list subscriptions = []
-        cdef MarketDataClient client
-        for client in [c for c in self._clients.values() if isinstance(c, MarketDataClient)]:
-            subscriptions += client.subscribed_tickers()
         return subscriptions
 
     cpdef list subscribed_quote_ticks(self):
@@ -666,11 +650,6 @@ cdef class DataEngine(Component):
                 command.data_type.metadata.get("instrument_id"),
                 command.data_type.metadata,
             )
-        elif command.data_type.type == Ticker:
-            self._handle_subscribe_ticker(
-                client,
-                command.data_type.metadata.get("instrument_id"),
-            )
         elif command.data_type.type == QuoteTick:
             self._handle_subscribe_quote_ticks(
                 client,
@@ -722,11 +701,6 @@ cdef class DataEngine(Component):
                 client,
                 command.data_type.metadata.get("instrument_id"),
                 command.data_type.metadata,
-            )
-        elif command.data_type.type == Ticker:
-            self._handle_unsubscribe_ticker(
-                client,
-                command.data_type.metadata.get("instrument_id"),
             )
         elif command.data_type.type == QuoteTick:
             self._handle_unsubscribe_quote_ticks(
@@ -799,18 +773,27 @@ cdef class DataEngine(Component):
             self._log.error("Cannot subscribe for synthetic instrument `OrderBook` data.")
             return
 
-        cdef int interval_ms = metadata["interval_ms"]
+        cdef:
+            uint64_t interval_ms = metadata["interval_ms"]
+            uint64_t interval_ns
+            uint64_t timestamp_ns
         key = (instrument_id, interval_ms)
         if key not in self._order_book_intervals:
             self._order_book_intervals[key] = []
-            now = self._clock.utc_now()
-            start_time = now - timedelta(milliseconds=int((now.second * 1000) % interval_ms), microseconds=now.microsecond)
-            timer_name = f"OrderBook_{instrument_id}_{interval_ms}"
-            self._clock.set_timer(
+
+            timer_name = f"OrderBook|{instrument_id}|{interval_ms}"
+            interval_ns = millis_to_nanos(interval_ms)
+            timestamp_ns = self._clock.timestamp_ns()
+            start_time_ns = timestamp_ns - (timestamp_ns % interval_ns)
+
+            if start_time_ns - NANOSECONDS_IN_MILLISECOND <= self._clock.timestamp_ns():
+                start_time_ns += NANOSECONDS_IN_SECOND  # Add one second
+
+            self._clock.set_timer_ns(
                 name=timer_name,
-                interval=timedelta(milliseconds=interval_ms),
-                start_time=start_time,
-                stop_time=None,
+                interval_ns=interval_ns,
+                start_time_ns=start_time_ns,
+                stop_time_ns=0,  # No stop
                 callback=self._snapshot_order_book,
             )
             self._log.debug(f"Set timer {timer_name}.")
@@ -883,20 +866,17 @@ cdef class DataEngine(Component):
                 priority=10,
             )
 
-    cpdef void _handle_subscribe_ticker(
-        self,
-        MarketDataClient client,
-        InstrumentId instrument_id,
-    ):
-        Condition.not_none(client, "client")
-        Condition.not_none(instrument_id, "instrument_id")
+        topic = f"data.book.depth.{instrument_id.venue}.{instrument_id.symbol}"
 
-        if instrument_id.is_synthetic():
-            self._log.error("Cannot subscribe for synthetic instrument `Ticker` data.")
-            return
-
-        if instrument_id not in client.subscribed_tickers():
-            client.subscribe_ticker(instrument_id)
+        if not only_deltas and not self._msgbus.is_subscribed(
+            topic=topic,
+            handler=self._update_order_book,
+        ):
+            self._msgbus.subscribe(
+                topic=topic,
+                handler=self._update_order_book,
+                priority=10,
+            )
 
     cpdef void _handle_subscribe_quote_ticks(
         self,
@@ -1011,7 +991,7 @@ cdef class DataEngine(Component):
         Condition.not_none(data_type, "data_type")
 
         try:
-            if data_type not in client.subscribed_generic_data():
+            if data_type not in client.subscribed_custom_data():
                 client.subscribe(data_type)
         except NotImplementedError:
             self._log.error(
@@ -1128,25 +1108,6 @@ cdef class DataEngine(Component):
         ):
             client.unsubscribe_order_book_snapshots(instrument_id)
 
-    cpdef void _handle_unsubscribe_ticker(
-        self,
-        MarketDataClient client,
-        InstrumentId instrument_id,
-    ):
-        Condition.not_none(client, "client")
-        Condition.not_none(instrument_id, "instrument_id")
-
-        if instrument_id.is_synthetic():
-            self._log.error("Cannot unsubscribe from synthetic instrument `Ticker` data.")
-            return
-
-        if not self._msgbus.has_subscribers(
-            f"data.tickers"
-            f".{instrument_id.venue}"
-            f".{instrument_id.symbol}",
-        ):
-            client.unsubscribe_ticker(instrument_id)
-
     cpdef void _handle_unsubscribe_quote_ticks(
         self,
         MarketDataClient client,
@@ -1225,7 +1186,7 @@ cdef class DataEngine(Component):
         # Query data catalog
         if self._catalog:
             # For now we'll just query the catalog if its present (as very likely this is a backtest)
-            self._query_data_catalog(request)
+            self._query_catalog(request)
             return
 
         # Query data client
@@ -1245,9 +1206,19 @@ cdef class DataEngine(Component):
             Condition.true(isinstance(client, MarketDataClient), "client was not a MarketDataClient")
             instrument_id = request.data_type.metadata.get("instrument_id")
             if instrument_id is None:
-                client.request_instruments(request.data_type.metadata.get("venue"), request.id)
+                client.request_instruments(
+                    request.data_type.metadata.get("venue"),
+                    request.id,
+                    request.data_type.metadata.get("start"),
+                    request.data_type.metadata.get("end"),
+                )
             else:
-                client.request_instrument(instrument_id, request.id)
+                client.request_instrument(
+                    instrument_id,
+                    request.id,
+                    request.data_type.metadata.get("start"),
+                    request.data_type.metadata.get("end"),
+                )
         elif request.data_type.type == QuoteTick:
             Condition.true(isinstance(client, MarketDataClient), "client was not a MarketDataClient")
             client.request_quote_ticks(
@@ -1281,7 +1252,7 @@ cdef class DataEngine(Component):
             except NotImplementedError:
                 self._log.error(f"Cannot handle request: unrecognized data type {request.data_type}.")
 
-    cpdef void _query_data_catalog(self, DataRequest request):
+    cpdef void _query_catalog(self, DataRequest request):
         cdef datetime start = request.data_type.metadata.get("start")
         cdef datetime end = request.data_type.metadata.get("end")
 
@@ -1335,7 +1306,7 @@ cdef class DataEngine(Component):
                 end=ts_end,
             )
         else:
-            data = self._catalog.generic_data(
+            data = self._catalog.custom_data(
                 cls=request.data_type.type,
                 metadata=request.data_type.metadata,
                 start=ts_start,
@@ -1369,8 +1340,8 @@ cdef class DataEngine(Component):
             self._handle_order_book_delta(data)
         elif isinstance(data, OrderBookDeltas):
             self._handle_order_book_deltas(data)
-        elif isinstance(data, Ticker):
-            self._handle_ticker(data)
+        elif isinstance(data, OrderBookDepth10):
+            self._handle_order_book_depth(data)
         elif isinstance(data, QuoteTick):
             self._handle_quote_tick(data)
         elif isinstance(data, TradeTick):
@@ -1385,8 +1356,8 @@ cdef class DataEngine(Component):
             self._handle_instrument_status(data)
         elif isinstance(data, InstrumentClose):
             self._handle_close_price(data)
-        elif isinstance(data, GenericData):
-            self._handle_generic_data(data)
+        elif isinstance(data, CustomData):
+            self._handle_custom_data(data)
         else:
             self._log.error(f"Cannot handle data: unrecognized type {type(data)} {data}.")
 
@@ -1419,13 +1390,12 @@ cdef class DataEngine(Component):
             msg=deltas,
         )
 
-    cpdef void _handle_ticker(self, Ticker ticker):
-        self._cache.add_ticker(ticker)
+    cpdef void _handle_order_book_depth(self, OrderBookDepth10 depth):
         self._msgbus.publish_c(
-            topic=f"data.tickers"
-                  f".{ticker.instrument_id.venue}"
-                  f".{ticker.instrument_id.symbol}",
-            msg=ticker,
+            topic=f"data.book.depth"
+                  f".{depth.instrument_id.venue}"
+                  f".{depth.instrument_id.symbol}",
+            msg=depth,
         )
 
     cpdef void _handle_quote_tick(self, QuoteTick tick):
@@ -1506,7 +1476,7 @@ cdef class DataEngine(Component):
     cpdef void _handle_close_price(self, InstrumentClose data):
         self._msgbus.publish_c(topic=f"data.venue.close_price.{data.instrument_id}", msg=data)
 
-    cpdef void _handle_generic_data(self, GenericData data):
+    cpdef void _handle_custom_data(self, CustomData data):
         self._msgbus.publish_c(topic=f"data.{data.data_type.topic}", msg=data.data)
 
 # -- RESPONSE HANDLERS ----------------------------------------------------------------------------
@@ -1581,9 +1551,9 @@ cdef class DataEngine(Component):
         order_book.apply(data)
 
     cpdef void _snapshot_order_book(self, TimeEvent snap_event):
-        cdef tuple pieces = snap_event.name.partition('_')[2].partition('_')
-        cdef InstrumentId instrument_id = InstrumentId.from_str_c(pieces[0])
-        cdef int interval_ms = int(pieces[2])
+        cdef tuple[str] parts = snap_event.name.partition('|')[2].rpartition('|')
+        cdef InstrumentId instrument_id = InstrumentId.from_str_c(parts[0])
+        cdef int interval_ms = int(parts[2])
 
         cdef OrderBook order_book = self._cache.order_book(instrument_id)
         if order_book:
@@ -1625,7 +1595,6 @@ cdef class DataEngine(Component):
                 bar_type=bar_type,
                 handler=self.process,
                 clock=self._clock,
-                logger=self._log.get_logger(),
                 build_with_no_updates=self._time_bars_build_with_no_updates,
                 timestamp_on_close=self._time_bars_timestamp_on_close,
                 interval_type=self._time_bars_interval_type,
@@ -1635,21 +1604,18 @@ cdef class DataEngine(Component):
                 instrument=instrument,
                 bar_type=bar_type,
                 handler=self.process,
-                logger=self._log.get_logger(),
             )
         elif bar_type.spec.aggregation == BarAggregation.VOLUME:
             aggregator = VolumeBarAggregator(
                 instrument=instrument,
                 bar_type=bar_type,
                 handler=self.process,
-                logger=self._log.get_logger(),
             )
         elif bar_type.spec.aggregation == BarAggregation.VALUE:
             aggregator = ValueBarAggregator(
                 instrument=instrument,
                 bar_type=bar_type,
                 handler=self.process,
-                logger=self._log.get_logger(),
             )
         else:
             raise RuntimeError(  # pragma: no cover (design-time error)

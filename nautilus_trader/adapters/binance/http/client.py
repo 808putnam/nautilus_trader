@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -23,9 +23,8 @@ import msgspec
 import nautilus_trader
 from nautilus_trader.adapters.binance.http.error import BinanceClientError
 from nautilus_trader.adapters.binance.http.error import BinanceServerError
-from nautilus_trader.common.clock import LiveClock
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.common.logging import LoggerAdapter
+from nautilus_trader.common.component import LiveClock
+from nautilus_trader.common.component import Logger
 from nautilus_trader.core.nautilus_pyo3 import HttpClient
 from nautilus_trader.core.nautilus_pyo3 import HttpMethod
 from nautilus_trader.core.nautilus_pyo3 import HttpResponse
@@ -40,8 +39,6 @@ class BinanceHttpClient:
     ----------
     clock : LiveClock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
     key : str
         The Binance API key for requests.
     secret : str
@@ -58,7 +55,6 @@ class BinanceHttpClient:
     def __init__(
         self,
         clock: LiveClock,
-        logger: Logger,
         key: str,
         secret: str,
         base_url: str,
@@ -66,14 +62,14 @@ class BinanceHttpClient:
         ratelimiter_default_quota: Quota | None = None,
     ) -> None:
         self._clock: LiveClock = clock
-        self._log: LoggerAdapter = LoggerAdapter(type(self).__name__, logger=logger)
+        self._log: Logger = Logger(type(self).__name__)
         self._key: str = key
 
         self._base_url: str = base_url
         self._secret: str = secret
         self._headers: dict[str, Any] = {
             "Content-Type": "application/json",
-            "User-Agent": "nautilus-trader/" + nautilus_trader.__version__,
+            "User-Agent": nautilus_trader.USER_AGENT,
             "X-MBX-APIKEY": key,
         }
         self._client = HttpClient(

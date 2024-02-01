@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,18 +13,42 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+from __future__ import annotations
+
+import hashlib
 import importlib
-import importlib.util
+from collections.abc import Callable
+from decimal import Decimal
 from typing import Any
 
 import fsspec
 import msgspec
+import pandas as pd
 
 from nautilus_trader.common import Environment
 from nautilus_trader.config.validation import PositiveFloat
 from nautilus_trader.config.validation import PositiveInt
 from nautilus_trader.core.correctness import PyCondition
-from nautilus_trader.persistence.catalog.parquet import ParquetDataCatalog
+from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.model.data import BarType
+from nautilus_trader.model.identifiers import ComponentId
+from nautilus_trader.model.identifiers import ExecAlgorithmId
+from nautilus_trader.model.identifiers import Identifier
+from nautilus_trader.model.identifiers import InstrumentId
+from nautilus_trader.model.identifiers import StrategyId
+from nautilus_trader.model.identifiers import TraderId
+from nautilus_trader.model.objects import Price
+from nautilus_trader.model.objects import Quantity
+
+
+CUSTOM_ENCODINGS: dict[type, Callable] = {
+    pd.DataFrame: lambda x: x.to_json(),
+}
+
+
+CUSTOM_DECODINGS: dict[type, Callable] = {
+    pd.DataFrame: lambda x: pd.read_json(x),
+}
 
 
 def resolve_path(path: str) -> type:
@@ -34,10 +58,78 @@ def resolve_path(path: str) -> type:
     return cls
 
 
+def msgspec_encoding_hook(obj: Any) -> Any:
+    if isinstance(obj, Decimal):
+        return str(obj)
+    if isinstance(obj, UUID4):
+        return obj.value
+    if isinstance(obj, Identifier):
+        return obj.value
+    if isinstance(obj, BarType):
+        return str(obj)
+    if isinstance(obj, (Price | Quantity)):
+        return str(obj)
+    if isinstance(obj, (pd.Timestamp | pd.Timedelta)):
+        return obj.isoformat()
+    if isinstance(obj, type) and hasattr(obj, "fully_qualified_name"):
+        return obj.fully_qualified_name()
+    if type(obj) in CUSTOM_ENCODINGS:
+        func = CUSTOM_ENCODINGS[type(obj)]
+        return func(obj)
+
+    raise TypeError(f"Encoding objects of type {obj.__class__} is unsupported")
+
+
+def msgspec_decoding_hook(obj_type: type, obj: Any) -> Any:
+    if obj_type in (Decimal, UUID4, pd.Timestamp, pd.Timedelta):
+        return obj_type(obj)
+    if obj_type == InstrumentId:
+        return InstrumentId.from_str(obj)
+    if issubclass(obj_type, Identifier):
+        return obj_type(obj)
+    if obj_type == BarType:
+        return BarType.from_str(obj)
+    if obj_type == Price:
+        return Price.from_str(obj)
+    if obj_type == Quantity:
+        return Quantity.from_str(obj)
+    if obj_type in CUSTOM_DECODINGS:
+        func = CUSTOM_DECODINGS[obj_type]
+        return func(obj)
+
+    raise TypeError(f"Decoding objects of type {obj_type} is unsupported")
+
+
+def register_config_encoding(type_: type, encoder: Callable) -> None:
+    global CUSTOM_ENCODINGS
+    CUSTOM_ENCODINGS[type_] = encoder
+
+
+def register_config_decoding(type_: type, decoder: Callable) -> None:
+    global CUSTOM_DECODINGS
+    CUSTOM_DECODINGS[type_] = decoder
+
+
+def tokenize_config(obj: NautilusConfig) -> str:
+    return hashlib.sha256(obj.json()).hexdigest()
+
+
 class NautilusConfig(msgspec.Struct, kw_only=True, frozen=True):
     """
     The base class for all Nautilus configuration objects.
     """
+
+    @property
+    def id(self) -> str:
+        """
+        Return the hashed identifier for the configuration.
+
+        Returns
+        -------
+        str
+
+        """
+        return tokenize_config(self)
 
     @classmethod
     def fully_qualified_name(cls) -> str:
@@ -54,6 +146,25 @@ class NautilusConfig(msgspec.Struct, kw_only=True, frozen=True):
 
         """
         return cls.__module__ + ":" + cls.__qualname__
+
+    @classmethod
+    def parse(cls, raw: bytes) -> Any:
+        """
+        Return a decoded object of the given `cls`.
+
+        Parameters
+        ----------
+        cls : type
+            The type to decode to.
+        raw : bytes
+            The raw bytes to decode.
+
+        Returns
+        -------
+        Any
+
+        """
+        return msgspec.json.decode(raw, type=cls, dec_hook=msgspec_decoding_hook)
 
     def dict(self) -> dict[str, Any]:
         """
@@ -75,26 +186,19 @@ class NautilusConfig(msgspec.Struct, kw_only=True, frozen=True):
         bytes
 
         """
-        return msgspec.json.encode(self)
+        return msgspec.json.encode(self, enc_hook=msgspec_encoding_hook)
 
-    @classmethod
-    def parse(cls, raw: bytes) -> Any:
+    def json_primitives(self) -> dict[str, Any]:  # type: ignore [valid-type]
         """
-        Return a decoded object of the given `cls`.
-
-        Parameters
-        ----------
-        cls : type
-            The type to decode to.
-        raw : bytes
-            The raw bytes to decode.
+        Return a dictionary representation of the configuration with JSON primitive
+        types as values.
 
         Returns
         -------
-        Any
+        dict[str, Any]
 
         """
-        return msgspec.json.decode(raw, type=cls)
+        return msgspec.json.decode(self.json())
 
     def validate(self) -> bool:
         """
@@ -105,24 +209,7 @@ class NautilusConfig(msgspec.Struct, kw_only=True, frozen=True):
         bool
 
         """
-        return bool(msgspec.json.decode(self.json(), type=self.__class__))
-
-
-class CacheConfig(NautilusConfig, frozen=True):
-    """
-    Configuration for ``Cache`` instances.
-
-    Parameters
-    ----------
-    tick_capacity : PositiveInt, default 10_000
-        The maximum length for internal tick dequeues.
-    bar_capacity : PositiveInt, default 10_000
-        The maximum length for internal bar dequeues.
-
-    """
-
-    tick_capacity: PositiveInt = 10_000
-    bar_capacity: PositiveInt = 10_000
+        return bool(self.parse(self.json()))
 
 
 class DatabaseConfig(NautilusConfig, frozen=True):
@@ -146,7 +233,7 @@ class DatabaseConfig(NautilusConfig, frozen=True):
 
     Notes
     -----
-    Requires Redis version 6.2.0 and above for correct operation.
+    If `type` is 'redis' then requires Redis version 6.2.0 and above for correct operation.
 
     """
 
@@ -158,54 +245,48 @@ class DatabaseConfig(NautilusConfig, frozen=True):
     ssl: bool = False
 
 
-class CacheDatabaseConfig(NautilusConfig, frozen=True):
+class CacheConfig(NautilusConfig, frozen=True):
     """
-    Configuration for ``CacheDatabase`` instances.
+    Configuration for ``Cache`` instances.
 
     Parameters
     ----------
-    type : str, {'in-memory', 'redis'}, default 'in-memory'
-        The database type.
-    host : str, default 'localhost'
-        The database host address.
-    port : int, optional
-        The database port.
-    username : str, optional
-        The account username for the database connection.
-    password : str, optional
-        The account password for the database connection.
-    ssl : bool, default False
-        If database should use an SSL enabled connection.
+    database : DatabaseConfig, optional
+        The configuration for the cache backing database.
     encoding : str, {'msgpack', 'json'}, default 'msgpack'
         The encoding for database operations, controls the type of serializer used.
+    timestamps_as_iso8601, default False
+        If timestamps should be persisted as ISO 8601 strings.
+        If `False` then will persit as UNIX nanoseconds.
     buffer_interval_ms : PositiveInt, optional
         The buffer interval (milliseconds) between pipelined/batched transactions.
         The recommended range if using buffered pipeling is [10, 1000] milliseconds,
         with a good compromise being 100 milliseconds.
+    use_trader_prefix : bool, default True
+        If a 'trader-' prefix is used for keys.
+    use_instance_id : bool, default False
+        If the traders instance ID is used for keys.
     flush_on_start : bool, default False
         If database should be flushed on start.
-    use_trader_prefix : bool, default True
-        If a 'trader-' prefix is applied to keys.
-    use_instance_id : bool, default False
-        If the traders instance ID should be used for keys.
-    timestamps_as_iso8601, default False
-        If timestamps should be persisted as ISO 8601 strings.
-        If `False` then will persit as UNIX nanoseconds.
+    drop_instruments_on_reset : bool, default True
+        If instruments data should be dropped from the caches memory on reset.
+    tick_capacity : PositiveInt, default 10_000
+        The maximum length for internal tick dequeues.
+    bar_capacity : PositiveInt, default 10_000
+        The maximum length for internal bar dequeues.
 
     """
 
-    type: str = "in-memory"
-    host: str = "localhost"
-    port: int | None = None
-    username: str | None = None
-    password: str | None = None
-    ssl: bool = False
+    database: DatabaseConfig | None = None
     encoding: str = "msgpack"
+    timestamps_as_iso8601: bool = False
     buffer_interval_ms: PositiveInt | None = None
-    flush_on_start: bool = False
     use_trader_prefix: bool = True
     use_instance_id: bool = False
-    timestamps_as_iso8601: bool = False
+    flush_on_start: bool = False
+    drop_instruments_on_reset: bool = True
+    tick_capacity: PositiveInt = 10_000
+    bar_capacity: PositiveInt = 10_000
 
 
 class MessageBusConfig(NautilusConfig, frozen=True):
@@ -218,6 +299,9 @@ class MessageBusConfig(NautilusConfig, frozen=True):
         The configuration for the message bus backing database.
     encoding : str, {'msgpack', 'json'}, default 'msgpack'
         The encoding for database operations, controls the type of serializer used.
+    timestamps_as_iso8601, default False
+        If timestamps should be persisted as ISO 8601 strings.
+        If `False` then will persit as UNIX nanoseconds.
     buffer_interval_ms : PositiveInt, optional
         The buffer interval (milliseconds) between pipelined/batched transactions.
         The recommended range if using buffered pipeling is [10, 1000] milliseconds,
@@ -227,14 +311,17 @@ class MessageBusConfig(NautilusConfig, frozen=True):
         The actual window may extend up to one minute beyond the specified value since streams are
         trimmed at most once every minute.
         Note that this feature requires Redis version 6.2.0 or higher; otherwise it will result
-        in acommand syntax error.
-    stream : str, optional
-        The additional prefix for externally published stream names (must have a `database` config).
+        in a command syntax error.
+    use_trader_prefix : bool, default True
+        If a 'trader-' prefix is used for stream names.
+    use_trader_id : bool, default True
+        If the traders ID is used for stream names.
     use_instance_id : bool, default False
-        If the traders instance ID should be used in stream names.
-    timestamps_as_iso8601, default False
-        If timestamps should be persisted as ISO 8601 strings.
-        If `False` then will persit as UNIX nanoseconds.
+        If the traders instance ID is used for stream names.
+    streams_prefix : str, default 'streams'
+        The prefix for externally published stream names (must have a `database` config).
+        If `use_trader_id` and `use_instance_id` are *both* false, then it becomes possible for
+        many traders to be configured to write to the same streams.
     types_filter : list[type], optional
         A list of serializable types *not* to publish externally.
 
@@ -242,11 +329,13 @@ class MessageBusConfig(NautilusConfig, frozen=True):
 
     database: DatabaseConfig | None = None
     encoding: str = "msgpack"
+    timestamps_as_iso8601: bool = False
     buffer_interval_ms: PositiveInt | None = None
     autotrim_mins: int | None = None
-    stream: str | None = None
+    use_trader_prefix: bool = True
+    use_trader_id: bool = True
     use_instance_id: bool = False
-    timestamps_as_iso8601: bool = False
+    streams_prefix: str = "streams"
     types_filter: list[type] | None = None
 
 
@@ -258,7 +347,7 @@ class InstrumentProviderConfig(NautilusConfig, frozen=True):
     ----------
     load_all : bool, default False
         If all venue instruments should be loaded on start.
-    load_ids : FrozenSet[str], optional
+    load_ids : FrozenSet[InstrumentId], optional
         The list of instrument IDs to be loaded on start (if `load_all_instruments` is False).
     filters : frozendict, optional
         The venue specific instrument loading filters to apply.
@@ -281,7 +370,7 @@ class InstrumentProviderConfig(NautilusConfig, frozen=True):
         return hash((self.load_all, self.load_ids, self.filters))
 
     load_all: bool = False
-    load_ids: frozenset[str] | None = None
+    load_ids: frozenset[InstrumentId] | None = None
     filters: dict[str, Any] | None = None
     filter_callable: str | None = None
     log_warnings: bool = True
@@ -393,6 +482,9 @@ class StreamingConfig(NautilusConfig, frozen=True):
         The flush interval (milliseconds) for writing chunks.
     replace_existing: bool, default False
         If any existing feather files should be replaced.
+    include_types : list[type], optional
+        A list of Arrow serializable types to write.
+        If this is specified then *only* the included types will be written.
 
     """
 
@@ -401,13 +493,15 @@ class StreamingConfig(NautilusConfig, frozen=True):
     fs_storage_options: dict | None = None
     flush_interval_ms: int | None = None
     replace_existing: bool = False
-    include_types: list[str] | None = None
+    include_types: list[type] | None = None
 
     @property
     def fs(self):
         return fsspec.filesystem(protocol=self.fs_protocol, **(self.fs_storage_options or {}))
 
-    def as_catalog(self) -> ParquetDataCatalog:
+    def as_catalog(self):
+        from nautilus_trader.persistence.catalog.parquet import ParquetDataCatalog
+
         return ParquetDataCatalog(
             path=self.catalog_path,
             fs_protocol=self.fs_protocol,
@@ -441,13 +535,13 @@ class ActorConfig(NautilusConfig, kw_only=True, frozen=True):
 
     Parameters
     ----------
-    component_id : str, optional
+    component_id : ComponentId, optional
         The component ID. If ``None`` then the identifier will be taken from
         `type(self).__name__`.
 
     """
 
-    component_id: str | None = None
+    component_id: ComponentId | None = None
 
 
 class ImportableActorConfig(NautilusConfig, frozen=True):
@@ -507,7 +601,7 @@ class StrategyConfig(NautilusConfig, kw_only=True, frozen=True):
 
     Parameters
     ----------
-    strategy_id : str, optional
+    strategy_id : StrategyId, optional
         The unique ID for the strategy. Will become the strategy ID if not None.
     order_id_tag : str, optional
         The unique order ID tag for the strategy. Must be unique
@@ -515,7 +609,7 @@ class StrategyConfig(NautilusConfig, kw_only=True, frozen=True):
     oms_type : OmsType, optional
         The order management system type for the strategy. This will determine
         how the `ExecutionEngine` handles position IDs (see docs).
-    external_order_claims : list[str], optional
+    external_order_claims : list[InstrumentId], optional
         The external order claim instrument IDs.
         External orders for matching instrument IDs will be associated with (claimed by) the strategy.
     manage_contingent_orders : bool, default False
@@ -527,10 +621,10 @@ class StrategyConfig(NautilusConfig, kw_only=True, frozen=True):
 
     """
 
-    strategy_id: str | None = None
+    strategy_id: StrategyId | None = None
     order_id_tag: str | None = None
     oms_type: str | None = None
-    external_order_claims: list[str] | None = None
+    external_order_claims: list[InstrumentId] | None = None
     manage_contingent_orders: bool = False
     manage_gtd_expiry: bool = False
 
@@ -625,7 +719,6 @@ class ControllerFactory:
         from nautilus_trader.trading.trader import Trader
 
         PyCondition.type(trader, Trader, "trader")
-
         controller_cls = resolve_path(config.controller_path)
         config_cls = resolve_path(config.config_path)
         config = config_cls(**config.config)
@@ -641,13 +734,13 @@ class ExecAlgorithmConfig(NautilusConfig, kw_only=True, frozen=True):
 
     Parameters
     ----------
-    exec_algorithm_id : str, optional
+    exec_algorithm_id : ExecAlgorithmId, optional
         The unique ID for the execution algorithm.
         If not ``None`` then will become the execution algorithm ID.
 
     """
 
-    exec_algorithm_id: str | None = None
+    exec_algorithm_id: ExecAlgorithmId | None = None
 
 
 class ImportableExecAlgorithmConfig(NautilusConfig, frozen=True):
@@ -701,35 +794,6 @@ class ExecAlgorithmFactory:
         return exec_algorithm_cls(config=config_cls(**config.config))
 
 
-class TracingConfig(NautilusConfig, frozen=True):
-    """
-    Configuration for standard output and file logging for Rust tracing statements for a
-    ``NautilusKernel`` instance.
-
-    Parameters
-    ----------
-    stdout_level : str, optional
-        The minimum log level to write to stdout. Possible options are "debug",
-        "info", "warn", "error". Setting it None means no logs are written to
-        stdout.
-    stderr_level : str, optional
-        The minimum log level to write to stderr. Possible options are "debug",
-        "info", "warn", "error". Setting it None means no logs are written to
-        stderr.
-    file_config : tuple[str, str, str], optional
-        The minimum log level to write to log file. Possible options are "debug",
-        "info", "warn", "error". Setting it None means no logs are written to
-        the log file.
-        The second str is the prefix name of the log file and the third str is
-        the name of the directory.
-
-    """
-
-    stdout_level: str | None = None
-    stderr_level: str | None = None
-    file_level: tuple[str, str, str] | None = None
-
-
 class LoggingConfig(NautilusConfig, frozen=True):
     """
     Configuration for standard output and file logging for a ``NautilusKernel``
@@ -758,6 +822,8 @@ class LoggingConfig(NautilusConfig, frozen=True):
         IDs (e.g. actor/strategy IDs) and values are log levels.
     bypass_logging : bool, default False
         If all logging should be bypassed.
+    print_config : bool, default False
+        If the core logging configuration should be printed to stdout at initialization.
 
     """
 
@@ -769,6 +835,7 @@ class LoggingConfig(NautilusConfig, frozen=True):
     log_colors: bool = True
     log_component_levels: dict[str, str] | None = None
     bypass_logging: bool = False
+    print_config: bool = False
 
 
 class NautilusKernelConfig(NautilusConfig, frozen=True):
@@ -779,12 +846,10 @@ class NautilusKernelConfig(NautilusConfig, frozen=True):
     ----------
     environment : Environment { ``BACKTEST``, ``SANDBOX``, ``LIVE`` }
         The kernel environment context.
-    trader_id : str
+    trader_id : TraderId
         The trader ID for the kernel (must be a name and ID tag separated by a hyphen).
     cache : CacheConfig, optional
         The cache configuration.
-    cache_database : CacheDatabaseConfig, optional
-        The cache database configuration.
     message_bus : MessageBusConfig, optional
         The message bus configuration.
     data_engine : DataEngineConfig, optional
@@ -815,8 +880,6 @@ class NautilusKernelConfig(NautilusConfig, frozen=True):
         If the asyncio event loop should be in debug mode.
     logging : LoggingConfig, optional
         The logging config for the kernel.
-    tracing : TracingConfig, optional
-        The tracing (core logging) config for the kernel.
     snapshot_orders : bool, default False
         If order state snapshot lists should be persisted.
         Snapshots will be taken at every order state update (when events are applied).
@@ -844,10 +907,9 @@ class NautilusKernelConfig(NautilusConfig, frozen=True):
     """
 
     environment: Environment
-    trader_id: str
-    instance_id: str | None = None
+    trader_id: TraderId
+    instance_id: UUID4 | None = None
     cache: CacheConfig | None = None
-    cache_database: CacheDatabaseConfig | None = None
     message_bus: MessageBusConfig | None = None
     data_engine: DataEngineConfig | None = None
     risk_engine: RiskEngineConfig | None = None
@@ -863,7 +925,6 @@ class NautilusKernelConfig(NautilusConfig, frozen=True):
     save_state: bool = False
     loop_debug: bool = False
     logging: LoggingConfig | None = None
-    tracing: TracingConfig | None = None
     snapshot_orders: bool = False
     snapshot_positions: bool = False
     snapshot_positions_interval: PositiveFloat | None = None
@@ -897,7 +958,7 @@ class ImportableConfig(NautilusConfig, frozen=True):
     factory: ImportableFactoryConfig | None = None
 
     @staticmethod
-    def is_importable(data: dict):
+    def is_importable(data: dict) -> bool:
         return set(data) == {"path", "config"}
 
     def create(self):

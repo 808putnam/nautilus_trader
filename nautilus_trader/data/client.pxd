@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -33,7 +33,7 @@ cdef class DataClient(Component):
     cdef set _subscriptions_generic
 
     cdef readonly Venue venue
-    """The clients venue ID (if not a routing client).\n\n:returns: `Venue` or ``None``"""
+    """The clients venue ID (if applicable).\n\n:returns: `Venue` or ``None``"""
     cdef readonly bint is_connected
     """If the client is connected.\n\n:returns: `bool`"""
 
@@ -41,7 +41,7 @@ cdef class DataClient(Component):
 
 # -- SUBSCRIPTIONS --------------------------------------------------------------------------------
 
-    cpdef list subscribed_generic_data(self)
+    cpdef list subscribed_custom_data(self)
 
     cpdef void subscribe(self, DataType data_type)
     cpdef void unsubscribe(self, DataType data_type)
@@ -62,7 +62,6 @@ cdef class DataClient(Component):
 cdef class MarketDataClient(DataClient):
     cdef set _subscriptions_order_book_delta
     cdef set _subscriptions_order_book_snapshot
-    cdef set _subscriptions_ticker
     cdef set _subscriptions_quote_tick
     cdef set _subscriptions_trade_tick
     cdef set _subscriptions_bar
@@ -78,7 +77,6 @@ cdef class MarketDataClient(DataClient):
     cpdef list subscribed_instruments(self)
     cpdef list subscribed_order_book_deltas(self)
     cpdef list subscribed_order_book_snapshots(self)
-    cpdef list subscribed_tickers(self)
     cpdef list subscribed_quote_ticks(self)
     cpdef list subscribed_trade_ticks(self)
     cpdef list subscribed_bars(self)
@@ -90,7 +88,6 @@ cdef class MarketDataClient(DataClient):
     cpdef void subscribe_instrument(self, InstrumentId instrument_id)
     cpdef void subscribe_order_book_deltas(self, InstrumentId instrument_id, BookType book_type, int depth=*, dict kwargs=*)
     cpdef void subscribe_order_book_snapshots(self, InstrumentId instrument_id, BookType book_type, int depth=*, dict kwargs=*)
-    cpdef void subscribe_ticker(self, InstrumentId instrument_id)
     cpdef void subscribe_quote_ticks(self, InstrumentId instrument_id)
     cpdef void subscribe_trade_ticks(self, InstrumentId instrument_id)
     cpdef void subscribe_bars(self, BarType bar_type)
@@ -101,7 +98,6 @@ cdef class MarketDataClient(DataClient):
     cpdef void unsubscribe_instrument(self, InstrumentId instrument_id)
     cpdef void unsubscribe_order_book_deltas(self, InstrumentId instrument_id)
     cpdef void unsubscribe_order_book_snapshots(self, InstrumentId instrument_id)
-    cpdef void unsubscribe_ticker(self, InstrumentId instrument_id)
     cpdef void unsubscribe_quote_ticks(self, InstrumentId instrument_id)
     cpdef void unsubscribe_trade_ticks(self, InstrumentId instrument_id)
     cpdef void unsubscribe_bars(self, BarType bar_type)
@@ -112,7 +108,6 @@ cdef class MarketDataClient(DataClient):
     cpdef void _add_subscription_instrument(self, InstrumentId instrument_id)
     cpdef void _add_subscription_order_book_deltas(self, InstrumentId instrument_id)
     cpdef void _add_subscription_order_book_snapshots(self, InstrumentId instrument_id)
-    cpdef void _add_subscription_ticker(self, InstrumentId instrument_id)
     cpdef void _add_subscription_quote_ticks(self, InstrumentId instrument_id)
     cpdef void _add_subscription_trade_ticks(self, InstrumentId instrument_id)
     cpdef void _add_subscription_bars(self, BarType bar_type)
@@ -122,7 +117,6 @@ cdef class MarketDataClient(DataClient):
     cpdef void _remove_subscription_instrument(self, InstrumentId instrument_id)
     cpdef void _remove_subscription_order_book_deltas(self, InstrumentId instrument_id)
     cpdef void _remove_subscription_order_book_snapshots(self, InstrumentId instrument_id)
-    cpdef void _remove_subscription_ticker(self, InstrumentId instrument_id)
     cpdef void _remove_subscription_quote_ticks(self, InstrumentId instrument_id)
     cpdef void _remove_subscription_trade_ticks(self, InstrumentId instrument_id)
     cpdef void _remove_subscription_bars(self, BarType bar_type)
@@ -132,8 +126,20 @@ cdef class MarketDataClient(DataClient):
 
 # -- REQUEST HANDLERS -----------------------------------------------------------------------------
 
-    cpdef void request_instrument(self, InstrumentId instrument_id, UUID4 correlation_id)
-    cpdef void request_instruments(self, Venue venue, UUID4 correlation_id)
+    cpdef void request_instrument(
+        self,
+        InstrumentId instrument_id,
+        UUID4 correlation_id,
+        datetime start=*,
+        datetime end=*,
+    )
+    cpdef void request_instruments(
+        self,
+        Venue venue,
+        UUID4 correlation_id,
+        datetime start=*,
+        datetime end=*,
+    )
     cpdef void request_quote_ticks(
         self,
         InstrumentId instrument_id,

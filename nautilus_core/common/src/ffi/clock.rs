@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,7 +19,7 @@ use std::{
 };
 
 use nautilus_core::{
-    ffi::{cvec::CVec, parsing::u8_as_bool, string::cstr_to_string},
+    ffi::{cvec::CVec, parsing::u8_as_bool, string::cstr_to_str},
     time::UnixNanos,
 };
 use pyo3::{
@@ -143,7 +143,7 @@ pub unsafe extern "C" fn test_clock_set_time_alert_ns(
 ) {
     assert!(!callback_ptr.is_null());
 
-    let name = cstr_to_string(name_ptr);
+    let name = cstr_to_str(name_ptr);
     let callback_py = Python::with_gil(|py| match callback_ptr {
         ptr if ptr != ffi::Py_None() => Some(PyObject::from_borrowed_ptr(py, ptr)),
         _ => None,
@@ -168,7 +168,7 @@ pub unsafe extern "C" fn test_clock_set_timer_ns(
 ) {
     assert!(!callback_ptr.is_null());
 
-    let name = cstr_to_string(name_ptr);
+    let name = cstr_to_str(name_ptr);
     let stop_time_ns = match stop_time_ns {
         0 => None,
         _ => Some(stop_time_ns),
@@ -221,8 +221,8 @@ pub unsafe extern "C" fn test_clock_next_time_ns(
     clock: &mut TestClock_API,
     name_ptr: *const c_char,
 ) -> UnixNanos {
-    let name = cstr_to_string(name_ptr);
-    clock.next_time_ns(&name)
+    let name = cstr_to_str(name_ptr);
+    clock.next_time_ns(name)
 }
 
 /// # Safety
@@ -233,8 +233,8 @@ pub unsafe extern "C" fn test_clock_cancel_timer(
     clock: &mut TestClock_API,
     name_ptr: *const c_char,
 ) {
-    let name = cstr_to_string(name_ptr);
-    clock.cancel_timer(&name);
+    let name = cstr_to_str(name_ptr);
+    clock.cancel_timer(name);
 }
 
 #[no_mangle]

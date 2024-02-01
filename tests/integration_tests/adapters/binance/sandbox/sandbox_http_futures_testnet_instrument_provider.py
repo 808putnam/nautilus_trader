@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -21,8 +21,7 @@ from nautilus_trader.adapters.binance.common.constants import BINANCE_VENUE
 from nautilus_trader.adapters.binance.common.enums import BinanceAccountType
 from nautilus_trader.adapters.binance.factories import get_cached_binance_http_client
 from nautilus_trader.adapters.binance.futures.providers import BinanceFuturesInstrumentProvider
-from nautilus_trader.common.clock import LiveClock
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import Symbol
 
@@ -33,7 +32,6 @@ async def test_binance_futures_testnet_instrument_provider():
 
     client = get_cached_binance_http_client(
         clock=clock,
-        logger=Logger(clock=clock),
         account_type=BinanceAccountType.USDT_FUTURE,
         key=os.getenv("BINANCE_FUTURES_TESTNET_API_KEY"),
         secret=os.getenv("BINANCE_FUTURES_TESTNET_API_SECRET"),
@@ -43,7 +41,6 @@ async def test_binance_futures_testnet_instrument_provider():
     provider = BinanceFuturesInstrumentProvider(
         client=client,
         clock=clock,
-        logger=Logger(clock=clock),
     )
 
     # await provider.load_all_async()

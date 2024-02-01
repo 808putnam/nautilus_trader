@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,13 +19,10 @@ import pytest
 
 from nautilus_trader.backtest.data_client import BacktestMarketDataClient
 from nautilus_trader.common.actor import Actor
-from nautilus_trader.common.clock import TestClock
 from nautilus_trader.common.component import MessageBus
+from nautilus_trader.common.component import TestClock
 from nautilus_trader.common.enums import ComponentState
-from nautilus_trader.common.enums import LogLevel
 from nautilus_trader.common.executor import TaskId
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.common.logging import LoggerAdapter
 from nautilus_trader.config import ActorConfig
 from nautilus_trader.config import ImportableActorConfig
 from nautilus_trader.core.data import Data
@@ -48,9 +45,10 @@ from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import Symbol
 from nautilus_trader.model.identifiers import Venue
 from nautilus_trader.persistence.writer import StreamingFeatherWriter
+from nautilus_trader.portfolio.portfolio import Portfolio
 from nautilus_trader.test_kit.mocks.actors import KaboomActor
 from nautilus_trader.test_kit.mocks.actors import MockActor
-from nautilus_trader.test_kit.mocks.data import data_catalog_setup
+from nautilus_trader.test_kit.mocks.data import setup_catalog
 from nautilus_trader.test_kit.providers import TestInstrumentProvider
 from nautilus_trader.test_kit.stubs.component import TestComponentStubs
 from nautilus_trader.test_kit.stubs.data import UNIX_EPOCH
@@ -70,11 +68,6 @@ class TestActor:
     def setup(self) -> None:
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(
-            clock=self.clock,
-            level_stdout=LogLevel.DEBUG,
-            bypass=True,
-        )
 
         self.trader_id = TestIdStubs.trader_id()
         self.account_id = TestIdStubs.account_id()
@@ -83,23 +76,26 @@ class TestActor:
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = TestComponentStubs.cache()
+
+        self.portfolio = Portfolio(
+            msgbus=self.msgbus,
+            cache=self.cache,
+            clock=self.clock,
+        )
 
         self.data_engine = DataEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.exec_engine = ExecutionEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_client = BacktestMarketDataClient(
@@ -107,7 +103,6 @@ class TestActor:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine.register_client(self.data_client)
@@ -141,10 +136,10 @@ class TestActor:
         # Arrange, Act
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Assert
@@ -162,10 +157,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act, Assert
@@ -179,10 +174,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -195,10 +190,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.register_warning_event(OrderDenied)
@@ -213,10 +208,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         event = TestEventStubs.cash_account_state()
@@ -231,10 +226,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -247,10 +242,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -263,10 +258,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -279,10 +274,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -295,10 +290,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -311,10 +306,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -327,10 +322,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -343,10 +338,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -359,10 +354,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -375,10 +370,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -387,30 +382,14 @@ class TestActor:
         # Assert
         assert True  # Exception not raised
 
-    def test_on_ticker_when_not_overridden_does_nothing(self) -> None:
-        # Arrange
-        actor = Actor(config=ActorConfig(component_id=self.component_id))
-        actor.register_base(
-            msgbus=self.msgbus,
-            cache=self.cache,
-            clock=self.clock,
-            logger=self.logger,
-        )
-
-        # Act
-        actor.on_ticker(TestDataStubs.ticker())
-
-        # Assert
-        assert True  # Exception not raised
-
     def test_on_venue_status_when_not_overridden_does_nothing(self) -> None:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -423,10 +402,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -439,10 +418,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -455,10 +434,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         tick = TestDataStubs.quote_tick()
@@ -473,10 +452,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         tick = TestDataStubs.trade_tick()
@@ -491,10 +470,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         bar = TestDataStubs.bar_5decimal()
@@ -509,10 +488,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         bar = TestDataStubs.bar_5decimal()
@@ -527,10 +506,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         news_event = NewsEvent(
@@ -551,10 +530,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -567,10 +546,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -583,10 +562,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -599,10 +578,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -615,10 +594,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -631,10 +610,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -647,10 +626,10 @@ class TestActor:
         # Arrange
         actor = Actor(config=ActorConfig(component_id=self.component_id))
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -663,10 +642,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act, Assert
@@ -678,10 +657,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -696,10 +675,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -716,10 +695,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act, Assert
@@ -731,10 +710,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act, Assert
@@ -746,10 +725,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -764,10 +743,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -782,10 +761,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -801,10 +780,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -820,10 +799,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -839,10 +818,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -864,10 +843,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -883,10 +862,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -900,10 +879,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -918,10 +897,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.start()
@@ -938,10 +917,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -955,10 +934,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.reset()
@@ -974,10 +953,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.start()
@@ -993,10 +972,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.start()
@@ -1012,10 +991,10 @@ class TestActor:
         # Arrange
         actor = KaboomActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.set_explode_on_start(False)
@@ -1029,10 +1008,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1046,10 +1025,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.start()
@@ -1065,10 +1044,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.start()
@@ -1084,10 +1063,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1101,10 +1080,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         tick = TestDataStubs.quote_tick()
@@ -1116,41 +1095,20 @@ class TestActor:
         assert actor.calls == []
         assert actor.store == []
 
-    def test_handle_ticker_when_running_sends_to_on_quote_tick(self) -> None:
-        # Arrange
-        actor = MockActor()
-        actor.register_base(
-            msgbus=self.msgbus,
-            cache=self.cache,
-            clock=self.clock,
-            logger=self.logger,
-        )
-
-        actor.start()
-
-        ticker = TestDataStubs.ticker()
-
-        # Act
-        actor.handle_ticker(ticker)
-
-        # Assert
-        assert actor.calls == ["on_start", "on_ticker"]
-        assert actor.store[0] == ticker
-
     def test_handle_quote_tick_when_not_running_does_not_send_to_on_quote_tick(self) -> None:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
-        ticker = TestDataStubs.ticker()
+        quote = TestDataStubs.quote_tick()
 
         # Act
-        actor.handle_ticker(ticker)
+        actor.handle_quote_tick(quote)
 
         # Assert
         assert actor.calls == []
@@ -1160,10 +1118,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.start()
@@ -1181,10 +1139,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         tick = TestDataStubs.trade_tick()
@@ -1200,10 +1158,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.start()
@@ -1221,10 +1179,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         bar = TestDataStubs.bar_5decimal()
@@ -1240,10 +1198,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.start()
@@ -1261,10 +1219,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
         result: list[Bar] = []
         actor.on_historical_data = result.append
@@ -1283,10 +1241,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         data = NewsEvent(
@@ -1308,10 +1266,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.start()
@@ -1335,10 +1293,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         synthetic = TestInstrumentProvider.synthetic_instrument()
@@ -1352,10 +1310,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         synthetic = TestInstrumentProvider.synthetic_instrument()
@@ -1370,10 +1328,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         synthetic = TestInstrumentProvider.synthetic_instrument()
@@ -1386,10 +1344,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         synthetic = TestInstrumentProvider.synthetic_instrument()
@@ -1461,10 +1419,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         unknown = TaskId.create()
@@ -1476,10 +1434,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act, Assert
@@ -1492,10 +1450,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         handler: list[str] = []
@@ -1516,10 +1474,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         handler: list[str] = []
@@ -1537,10 +1495,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         data_type = DataType(NewsEvent, {"type": "NEWS_WIRE", "topic": "Earthquake"})
@@ -1551,7 +1509,7 @@ class TestActor:
         # Assert
         assert self.data_engine.command_count == 0
         assert (
-            actor.msgbus.subscriptions()[0].topic
+            actor.msgbus.subscriptions()[4].topic
             == "data.NewsEvent.type=NEWS_WIRE.topic=Earthquake"
         )
 
@@ -1559,10 +1517,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         data_type = DataType(NewsEvent, {"type": "NEWS_WIRE", "topic": "Earthquake"})
@@ -1573,7 +1531,7 @@ class TestActor:
         # Assert
         assert self.data_engine.command_count == 1
         assert (
-            actor.msgbus.subscriptions()[0].topic
+            actor.msgbus.subscriptions()[4].topic
             == "data.NewsEvent.type=NEWS_WIRE.topic=Earthquake"
         )
 
@@ -1581,10 +1539,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         data_type = DataType(NewsEvent, {"type": "NEWS_WIRE", "topic": "Earthquake"})
@@ -1595,16 +1553,16 @@ class TestActor:
 
         # Assert
         assert self.data_engine.command_count == 0
-        assert actor.msgbus.subscriptions() == []
+        assert len(actor.msgbus.subscriptions()) == 4  # Portfolio subscriptions only
 
     def test_unsubscribe_custom_data_with_client_id(self) -> None:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         data_type = DataType(NewsEvent, {"type": "NEWS_WIRE", "topic": "Earthquake"})
@@ -1615,16 +1573,16 @@ class TestActor:
 
         # Assert
         assert self.data_engine.command_count == 2
-        assert actor.msgbus.subscriptions() == []
+        assert len(actor.msgbus.subscriptions()) == 4  # Portfolio subscriptions only
 
     def test_subscribe_order_book(self) -> None:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1637,10 +1595,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.subscribe_order_book_snapshots(AUDUSD_SIM.id, book_type=BookType.L2_MBP)
@@ -1655,10 +1613,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1671,10 +1629,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.unsubscribe_order_book_deltas(AUDUSD_SIM.id)
@@ -1689,10 +1647,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1710,10 +1668,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1727,10 +1685,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1745,10 +1703,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.subscribe_instrument(AUDUSD_SIM.id)
@@ -1760,51 +1718,14 @@ class TestActor:
         assert self.data_engine.subscribed_instruments() == []
         assert self.data_engine.command_count == 2
 
-    def test_subscribe_ticker(self) -> None:
-        # Arrange
-        actor = MockActor()
-        actor.register_base(
-            msgbus=self.msgbus,
-            cache=self.cache,
-            clock=self.clock,
-            logger=self.logger,
-        )
-
-        # Act
-        actor.subscribe_ticker(AUDUSD_SIM.id)
-
-        # Assert
-        expected_instrument = InstrumentId(Symbol("AUD/USD"), Venue("SIM"))
-        assert self.data_engine.subscribed_tickers() == [expected_instrument]
-        assert self.data_engine.command_count == 1
-
-    def test_unsubscribe_ticker(self) -> None:
-        # Arrange
-        actor = MockActor()
-        actor.register_base(
-            msgbus=self.msgbus,
-            cache=self.cache,
-            clock=self.clock,
-            logger=self.logger,
-        )
-
-        actor.subscribe_ticker(AUDUSD_SIM.id)
-
-        # Act
-        actor.unsubscribe_ticker(AUDUSD_SIM.id)
-
-        # Assert
-        assert self.data_engine.subscribed_tickers() == []
-        assert self.data_engine.command_count == 2
-
     def test_subscribe_quote_ticks(self) -> None:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1819,10 +1740,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.subscribe_quote_ticks(AUDUSD_SIM.id)
@@ -1838,10 +1759,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -1856,10 +1777,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.subscribe_trade_ticks(AUDUSD_SIM.id)
@@ -1875,10 +1796,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         handler: list[Data] = []
@@ -1901,10 +1822,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act, Assert
@@ -1915,10 +1836,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         handler: list[Data] = []
@@ -1942,20 +1863,16 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
-        catalog = data_catalog_setup(protocol="memory", path="/catalog")
+        catalog = setup_catalog(protocol="memory", path="/catalog")
 
         writer = StreamingFeatherWriter(
             path=catalog.path,
             fs_protocol=catalog.fs_protocol,
-            logger=LoggerAdapter(
-                component_name="Actor",
-                logger=self.logger,
-            ),
             replace=True,
         )
         self.msgbus.subscribe("data*", writer.write)
@@ -1964,16 +1881,16 @@ class TestActor:
         actor.publish_signal(name="Test", value=5.0, ts_event=0)
 
         # Assert
-        assert catalog.fs.exists(f"{catalog.path}/genericdata_signal_test.feather")
+        assert catalog.fs.exists(f"{catalog.path}/custom_signal_test.feather")
 
     def test_subscribe_bars(self) -> None:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         bar_type = TestDataStubs.bartype_audusd_1min_bid()
@@ -1989,10 +1906,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         bar_type = TestDataStubs.bartype_audusd_1min_bid()
@@ -2010,10 +1927,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         actor.subscribe_venue_status(Venue("NYMEX"))
@@ -2026,10 +1943,10 @@ class TestActor:
         handler: list[NewsEvent] = []
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         data_type = DataType(NewsEvent, {"type": "NEWS_WIRE", "topic": "Earthquakes"})
@@ -2051,10 +1968,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -2071,10 +1988,10 @@ class TestActor:
         handler: list[QuoteTick] = []
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         tick = TestDataStubs.quote_tick()
@@ -2105,10 +2022,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Act
@@ -2125,10 +2042,10 @@ class TestActor:
         handler: list[TradeTick] = []
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         tick = TestDataStubs.trade_tick()
@@ -2158,10 +2075,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         bar_type = TestDataStubs.bartype_audusd_1min_bid()
@@ -2180,10 +2097,10 @@ class TestActor:
         handler: list[Bar] = []
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         bar_type = TestDataStubs.bartype_audusd_1min_bid()
@@ -2222,10 +2139,10 @@ class TestActor:
         # Arrange
         actor = MockActor()
         actor.register_base(
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         bar_type = TestDataStubs.bartype_audusd_1min_bid()

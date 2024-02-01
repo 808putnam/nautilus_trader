@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -17,14 +17,13 @@
 This module provides a data client for backtesting.
 """
 
-from typing import Optional
+from nautilus_trader.config.common import NautilusConfig
 
 from cpython.datetime cimport datetime
 
 from nautilus_trader.cache.cache cimport Cache
-from nautilus_trader.common.clock cimport Clock
+from nautilus_trader.common.component cimport Clock
 from nautilus_trader.common.component cimport MessageBus
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.rust.model cimport BookType
 from nautilus_trader.core.uuid cimport UUID4
@@ -52,9 +51,7 @@ cdef class BacktestDataClient(DataClient):
         The cache for the client.
     clock : Clock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
-    config : dict[str, object], optional
+    config : NautilusConfig, optional
         The configuration for the instance.
     """
 
@@ -64,8 +61,7 @@ cdef class BacktestDataClient(DataClient):
         MessageBus msgbus not None,
         Cache cache not None,
         Clock clock not None,
-        Logger logger not None,
-        dict config = None,
+        config: NautilusConfig | None = None,
     ):
         super().__init__(
             client_id=client_id,
@@ -73,7 +69,6 @@ cdef class BacktestDataClient(DataClient):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 
@@ -124,8 +119,6 @@ cdef class BacktestMarketDataClient(MarketDataClient):
         The cache for the client.
     clock : Clock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
     """
 
     def __init__(
@@ -134,7 +127,6 @@ cdef class BacktestMarketDataClient(MarketDataClient):
         MessageBus msgbus not None,
         Cache cache not None,
         Clock clock not None,
-        Logger logger not None,
     ):
         super().__init__(
             client_id=client_id,
@@ -142,7 +134,6 @@ cdef class BacktestMarketDataClient(MarketDataClient):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
         )
 
         self.is_connected = False
@@ -213,19 +204,6 @@ cdef class BacktestMarketDataClient(MarketDataClient):
             return
 
         self._add_subscription_order_book_snapshots(instrument_id)
-        # Do nothing else for backtest
-
-    cpdef void subscribe_ticker(self, InstrumentId instrument_id):
-        Condition.not_none(instrument_id, "instrument_id")
-
-        if not self._cache.instrument(instrument_id):
-            self._log.error(
-                f"Cannot find instrument {instrument_id} to subscribe for `Ticker` data. "
-                "No data has been loaded for this instrument.",
-            )
-            return
-
-        self._add_subscription_ticker(instrument_id)
         # Do nothing else for backtest
 
     cpdef void subscribe_quote_ticks(self, InstrumentId instrument_id):
@@ -307,12 +285,6 @@ cdef class BacktestMarketDataClient(MarketDataClient):
         self._remove_subscription_order_book_snapshots(instrument_id)
         # Do nothing else for backtest
 
-    cpdef void unsubscribe_ticker(self, InstrumentId instrument_id):
-        Condition.not_none(instrument_id, "instrument_id")
-
-        self._remove_subscription_ticker(instrument_id)
-        # Do nothing else for backtest
-
     cpdef void unsubscribe_quote_ticks(self, InstrumentId instrument_id):
         Condition.not_none(instrument_id, "instrument_id")
 
@@ -350,7 +322,13 @@ cdef class BacktestMarketDataClient(MarketDataClient):
 
 # -- REQUESTS -------------------------------------------------------------------------------------
 
-    cpdef void request_instrument(self, InstrumentId instrument_id, UUID4 correlation_id):
+    cpdef void request_instrument(
+        self,
+        InstrumentId instrument_id,
+        UUID4 correlation_id,
+        datetime start: datetime | None = None,
+        datetime end: datetime | None = None,
+    ):
         Condition.not_none(instrument_id, "instrument_id")
         Condition.not_none(correlation_id, "correlation_id")
 
@@ -369,7 +347,13 @@ cdef class BacktestMarketDataClient(MarketDataClient):
             correlation_id=correlation_id,
         )
 
-    cpdef void request_instruments(self, Venue venue, UUID4 correlation_id):
+    cpdef void request_instruments(
+        self,
+        Venue venue,
+        UUID4 correlation_id,
+        datetime start: datetime | None = None,
+        datetime end: datetime | None = None,
+    ):
         Condition.not_none(correlation_id, "correlation_id")
 
         cdef list instruments = self._cache.instruments(venue)
@@ -388,8 +372,8 @@ cdef class BacktestMarketDataClient(MarketDataClient):
         InstrumentId instrument_id,
         int limit,
         UUID4 correlation_id,
-        datetime start: Optional[datetime] = None,
-        datetime end: Optional[datetime] = None,
+        datetime start: datetime | None = None,
+        datetime end: datetime | None = None,
     ):
         Condition.not_none(instrument_id, "instrument_id")
         Condition.not_none(correlation_id, "correlation_id")
@@ -401,8 +385,8 @@ cdef class BacktestMarketDataClient(MarketDataClient):
         InstrumentId instrument_id,
         int limit,
         UUID4 correlation_id,
-        datetime start: Optional[datetime] = None,
-        datetime end: Optional[datetime] = None,
+        datetime start: datetime | None = None,
+        datetime end: datetime | None = None,
     ):
         Condition.not_none(instrument_id, "instrument_id")
         Condition.not_negative_int(limit, "limit")
@@ -415,8 +399,8 @@ cdef class BacktestMarketDataClient(MarketDataClient):
         BarType bar_type,
         int limit,
         UUID4 correlation_id,
-        datetime start: Optional[datetime] = None,
-        datetime end: Optional[datetime] = None,
+        datetime start: datetime | None = None,
+        datetime end: datetime | None = None,
     ):
         Condition.not_none(bar_type, "bar_type")
         Condition.not_negative_int(limit, "limit")

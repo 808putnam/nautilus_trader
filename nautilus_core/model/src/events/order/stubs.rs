@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -22,9 +22,12 @@ use ustr::Ustr;
 use crate::{
     enums::{ContingencyType, LiquiditySide, OrderSide, OrderType, TimeInForce, TriggerType},
     events::order::{
-        denied::OrderDenied, emulated::OrderEmulated, filled::OrderFilled,
-        initialized::OrderInitialized, rejected::OrderRejected, released::OrderReleased,
-        submitted::OrderSubmitted, triggered::OrderTriggered,
+        accepted::OrderAccepted, cancel_rejected::OrderCancelRejected, denied::OrderDenied,
+        emulated::OrderEmulated, expired::OrderExpired, filled::OrderFilled,
+        initialized::OrderInitialized, modify_rejected::OrderModifyRejected,
+        pending_cancel::OrderPendingCancel, pending_update::OrderPendingUpdate,
+        rejected::OrderRejected, released::OrderReleased, submitted::OrderSubmitted,
+        triggered::OrderTriggered, updated::OrderUpdated,
     },
     identifiers::{
         account_id::AccountId, client_order_id::ClientOrderId, instrument_id::InstrumentId,
@@ -243,6 +246,186 @@ pub fn order_released(
         uuid4,
         0,
         0,
+    )
+    .unwrap()
+}
+
+#[fixture]
+pub fn order_updated(
+    trader_id: TraderId,
+    strategy_id_ema_cross: StrategyId,
+    instrument_id_btc_usdt: InstrumentId,
+    client_order_id: ClientOrderId,
+    venue_order_id: VenueOrderId,
+    account_id: AccountId,
+    uuid4: UUID4,
+) -> OrderUpdated {
+    OrderUpdated::new(
+        trader_id,
+        strategy_id_ema_cross,
+        instrument_id_btc_usdt,
+        client_order_id,
+        Quantity::from(100),
+        uuid4,
+        0,
+        0,
+        false,
+        Some(venue_order_id),
+        Some(account_id),
+        Some(Price::from("22000")),
+        None,
+    )
+    .unwrap()
+}
+
+#[fixture]
+pub fn order_pending_update(
+    trader_id: TraderId,
+    strategy_id_ema_cross: StrategyId,
+    instrument_id_btc_usdt: InstrumentId,
+    client_order_id: ClientOrderId,
+    account_id: AccountId,
+    venue_order_id: VenueOrderId,
+    uuid4: UUID4,
+) -> OrderPendingUpdate {
+    OrderPendingUpdate::new(
+        trader_id,
+        strategy_id_ema_cross,
+        instrument_id_btc_usdt,
+        client_order_id,
+        account_id,
+        uuid4,
+        0,
+        0,
+        false,
+        Some(venue_order_id),
+    )
+    .unwrap()
+}
+
+#[fixture]
+pub fn order_pending_cancel(
+    trader_id: TraderId,
+    strategy_id_ema_cross: StrategyId,
+    instrument_id_btc_usdt: InstrumentId,
+    client_order_id: ClientOrderId,
+    account_id: AccountId,
+    venue_order_id: VenueOrderId,
+    uuid4: UUID4,
+) -> OrderPendingCancel {
+    OrderPendingCancel::new(
+        trader_id,
+        strategy_id_ema_cross,
+        instrument_id_btc_usdt,
+        client_order_id,
+        account_id,
+        uuid4,
+        0,
+        0,
+        false,
+        Some(venue_order_id),
+    )
+    .unwrap()
+}
+
+#[fixture]
+pub fn order_modify_rejected(
+    trader_id: TraderId,
+    strategy_id_ema_cross: StrategyId,
+    instrument_id_btc_usdt: InstrumentId,
+    client_order_id: ClientOrderId,
+    venue_order_id: VenueOrderId,
+    account_id: AccountId,
+    uuid4: UUID4,
+) -> OrderModifyRejected {
+    OrderModifyRejected::new(
+        trader_id,
+        strategy_id_ema_cross,
+        instrument_id_btc_usdt,
+        client_order_id,
+        Ustr::from("ORDER_DOES_NOT_EXIST"),
+        uuid4,
+        0,
+        0,
+        false,
+        Some(venue_order_id),
+        Some(account_id),
+    )
+    .unwrap()
+}
+
+#[fixture]
+pub fn order_accepted(
+    trader_id: TraderId,
+    strategy_id_ema_cross: StrategyId,
+    instrument_id_btc_usdt: InstrumentId,
+    client_order_id: ClientOrderId,
+    account_id: AccountId,
+    venue_order_id: VenueOrderId,
+    uuid4: UUID4,
+) -> OrderAccepted {
+    OrderAccepted::new(
+        trader_id,
+        strategy_id_ema_cross,
+        instrument_id_btc_usdt,
+        client_order_id,
+        venue_order_id,
+        account_id,
+        uuid4,
+        0,
+        0,
+        false,
+    )
+    .unwrap()
+}
+
+#[fixture]
+pub fn order_cancel_rejected(
+    trader_id: TraderId,
+    strategy_id_ema_cross: StrategyId,
+    instrument_id_btc_usdt: InstrumentId,
+    client_order_id: ClientOrderId,
+    venue_order_id: VenueOrderId,
+    account_id: AccountId,
+    uuid4: UUID4,
+) -> OrderCancelRejected {
+    OrderCancelRejected::new(
+        trader_id,
+        strategy_id_ema_cross,
+        instrument_id_btc_usdt,
+        client_order_id,
+        Ustr::from("ORDER_DOES_NOT_EXISTS"),
+        uuid4,
+        0,
+        0,
+        false,
+        Some(venue_order_id),
+        Some(account_id),
+    )
+    .unwrap()
+}
+
+#[fixture]
+pub fn order_expired(
+    trader_id: TraderId,
+    strategy_id_ema_cross: StrategyId,
+    instrument_id_btc_usdt: InstrumentId,
+    client_order_id: ClientOrderId,
+    venue_order_id: VenueOrderId,
+    account_id: AccountId,
+    uuid4: UUID4,
+) -> OrderExpired {
+    OrderExpired::new(
+        trader_id,
+        strategy_id_ema_cross,
+        instrument_id_btc_usdt,
+        client_order_id,
+        uuid4,
+        0,
+        0,
+        false,
+        Some(venue_order_id),
+        Some(account_id),
     )
     .unwrap()
 }

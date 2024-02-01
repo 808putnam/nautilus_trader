@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -12,7 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
-
 
 from nautilus_trader.config import StrategyConfig
 from nautilus_trader.model.book import OrderBook
@@ -38,7 +37,7 @@ class SubscribeStrategyConfig(StrategyConfig, frozen=True):
     Configuration for ``SubscribeStrategy`` instances.
     """
 
-    instrument_id: str
+    instrument_id: InstrumentId
     book_type: BookType | None = None
     snapshots: bool = False
     trade_ticks: bool = False
@@ -60,7 +59,7 @@ class SubscribeStrategy(Strategy):
 
     def __init__(self, config: SubscribeStrategyConfig) -> None:
         super().__init__(config)
-        self.instrument_id = InstrumentId.from_str(self.config.instrument_id)
+        self.instrument_id = self.config.instrument_id
         self.book: OrderBook | None = None
 
     def on_start(self) -> None:

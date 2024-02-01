@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -18,10 +18,8 @@ import sys
 import pytest
 
 from nautilus_trader.backtest.data_client import BacktestMarketDataClient
-from nautilus_trader.common.clock import TestClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.enums import LogLevel
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import TestClock
 from nautilus_trader.core.data import Data
 from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.data.engine import DataEngine
@@ -39,7 +37,6 @@ from nautilus_trader.model.data import DataType
 from nautilus_trader.model.data import OrderBookDelta
 from nautilus_trader.model.data import OrderBookDeltas
 from nautilus_trader.model.data import QuoteTick
-from nautilus_trader.model.data import Ticker
 from nautilus_trader.model.data import TradeTick
 from nautilus_trader.model.enums import BarAggregation
 from nautilus_trader.model.enums import BookType
@@ -52,7 +49,7 @@ from nautilus_trader.model.instruments import Instrument
 from nautilus_trader.model.objects import Price
 from nautilus_trader.model.objects import Quantity
 from nautilus_trader.portfolio.portfolio import Portfolio
-from nautilus_trader.test_kit.mocks.data import data_catalog_setup
+from nautilus_trader.test_kit.mocks.data import setup_catalog
 from nautilus_trader.test_kit.providers import TestInstrumentProvider
 from nautilus_trader.test_kit.stubs.component import TestComponentStubs
 from nautilus_trader.test_kit.stubs.data import TestDataStubs
@@ -63,8 +60,11 @@ from tests.unit_tests.portfolio.test_portfolio import BETFAIR
 
 BITMEX = Venue("BITMEX")
 BINANCE = Venue("BINANCE")
+XNAS = Venue("XNAS")
+AAPL_XNAS = TestInstrumentProvider.equity()
 XBTUSD_BITMEX = TestInstrumentProvider.xbtusd_bitmex()
 BTCUSDT_BINANCE = TestInstrumentProvider.btcusdt_binance()
+BTCUSDT_PERP_BINANCE = TestInstrumentProvider.btcusdt_perp_binance()
 ETHUSDT_BINANCE = TestInstrumentProvider.ethusdt_binance()
 
 
@@ -72,18 +72,11 @@ class TestDataEngine:
     def setup(self):
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(
-            clock=self.clock,
-            level_stdout=LogLevel.DEBUG,
-            bypass=True,
-        )
-
         self.trader_id = TestIdStubs.trader_id()
 
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = TestComponentStubs.cache()
@@ -92,7 +85,6 @@ class TestDataEngine:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         config = DataEngineConfig(
@@ -103,7 +95,6 @@ class TestDataEngine:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
             config=config,
         )
 
@@ -112,7 +103,6 @@ class TestDataEngine:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.bitmex_client = BacktestMarketDataClient(
@@ -120,7 +110,6 @@ class TestDataEngine:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.quandl = BacktestMarketDataClient(
@@ -128,7 +117,6 @@ class TestDataEngine:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.betfair = BacktestMarketDataClient(
@@ -136,7 +124,6 @@ class TestDataEngine:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine.process(BTCUSDT_BINANCE)
@@ -329,7 +316,7 @@ class TestDataEngine:
             venue=BINANCE,
             data_type=DataType(
                 Data,
-                metadata={  # str data type is invalid
+                metadata={
                     "instrument_id": InstrumentId(Symbol("SOMETHING"), Venue("RANDOM")),
                     "start": None,
                     "end": None,
@@ -360,7 +347,7 @@ class TestDataEngine:
             venue=BINANCE,
             data_type=DataType(
                 QuoteTick,
-                metadata={  # str data type is invalid
+                metadata={
                     "instrument_id": InstrumentId(Symbol("SOMETHING"), Venue("RANDOM")),
                     "start": None,
                     "end": None,
@@ -377,7 +364,7 @@ class TestDataEngine:
             venue=BINANCE,
             data_type=DataType(
                 QuoteTick,
-                metadata={  # str data type is invalid
+                metadata={
                     "instrument_id": InstrumentId(Symbol("SOMETHING"), Venue("RANDOM")),
                     "start": None,
                     "end": None,
@@ -433,7 +420,7 @@ class TestDataEngine:
 
         # Assert
         assert self.data_engine.command_count == 1
-        assert self.data_engine.subscribed_generic_data() == []
+        assert self.data_engine.subscribed_custom_data() == []
 
     def test_execute_unsubscribe_custom_data(self):
         # Arrange
@@ -469,7 +456,7 @@ class TestDataEngine:
 
         # Assert
         assert self.data_engine.command_count == 2
-        assert self.data_engine.subscribed_generic_data() == []
+        assert self.data_engine.subscribed_custom_data() == []
 
     def test_execute_unsubscribe_when_data_type_unrecognized_logs_and_does_nothing(
         self,
@@ -480,7 +467,7 @@ class TestDataEngine:
         unsubscribe = Unsubscribe(
             client_id=ClientId(BINANCE.value),
             venue=BINANCE,
-            data_type=DataType(Data),  # str data type is invalid
+            data_type=DataType(Data),
             command_id=UUID4(),
             ts_init=self.clock.timestamp_ns(),
         )
@@ -987,7 +974,7 @@ class TestDataEngine:
         self.data_engine.execute(subscribe)
 
         # Act
-        events = self.clock.advance_time(1_000_000_000)
+        events = self.clock.advance_time(2_000_000_000)
         events[0].handle()
 
         # Assert
@@ -1031,7 +1018,7 @@ class TestDataEngine:
         # Act
         self.data_engine.process(snapshot)
 
-        events = self.clock.advance_time(1_000_000_000)
+        events = self.clock.advance_time(2_000_000_000)
         events[0].handle()
 
         # Assert
@@ -1134,7 +1121,7 @@ class TestDataEngine:
         )
 
         self.data_engine.process(snapshot)
-        events = self.clock.advance_time(1_000_000_000)
+        events = self.clock.advance_time(2_000_000_000)
         events[0].handle()
 
         # Act
@@ -1146,6 +1133,80 @@ class TestDataEngine:
         assert cached_book.instrument_id == ETHUSDT_BINANCE.id
         assert handler1[0] == cached_book
         assert handler2[0] == cached_book
+
+    def test_process_order_book_depth_when_multiple_subscribers_then_sends_to_registered_handlers(
+        self,
+    ):
+        # Arrange
+        self.data_engine.register_client(self.binance_client)
+        self.binance_client.start()
+
+        self.data_engine.process(BTCUSDT_PERP_BINANCE)  # <-- add necessary instrument for test
+
+        handler1 = []
+        handler2 = []
+        self.msgbus.subscribe(
+            topic="data.book.depth.BINANCE.BTCUSDT-PERP",
+            handler=handler1.append,
+        )
+        self.msgbus.subscribe(
+            topic="data.book.depth.BINANCE.BTCUSDT-PERP",
+            handler=handler2.append,
+        )
+
+        subscribe1 = Subscribe(
+            client_id=ClientId("BINANCE"),
+            venue=BINANCE,
+            data_type=DataType(
+                OrderBook,
+                {
+                    "instrument_id": BTCUSDT_PERP_BINANCE.id,
+                    "book_type": BookType.L2_MBP,
+                    "depth": 10,
+                    "interval_ms": 1000,
+                },
+            ),
+            command_id=UUID4(),
+            ts_init=self.clock.timestamp_ns(),
+        )
+
+        subscribe2 = Subscribe(
+            client_id=ClientId(BINANCE.value),
+            venue=BINANCE,
+            data_type=DataType(
+                OrderBook,
+                {
+                    "instrument_id": BTCUSDT_PERP_BINANCE.id,
+                    "book_type": BookType.L2_MBP,
+                    "depth": 10,
+                    "interval_ms": 1000,
+                },
+            ),
+            command_id=UUID4(),
+            ts_init=self.clock.timestamp_ns(),
+        )
+
+        self.data_engine.execute(subscribe1)
+        self.data_engine.execute(subscribe2)
+
+        depth = TestDataStubs.order_book_depth10(
+            instrument_id=BTCUSDT_PERP_BINANCE.id,
+            ts_event=1,
+        )
+
+        self.data_engine.process(depth)
+        events = self.clock.advance_time(2_000_000_000)
+        events[0].handle()
+
+        # Act
+        self.data_engine.process(depth)
+
+        # Assert
+        cached_book = self.cache.order_book(BTCUSDT_PERP_BINANCE.id)
+        assert isinstance(cached_book, OrderBook)
+        assert cached_book.instrument_id == BTCUSDT_PERP_BINANCE.id
+        assert handler1[0] == depth
+        assert handler2[0] == depth
 
     def test_order_book_delta_creates_book(self):
         # Arrange
@@ -1184,59 +1245,6 @@ class TestDataEngine:
         assert isinstance(cached_book, OrderBook)
         assert cached_book.instrument_id == ETHUSDT_BINANCE.id
         assert cached_book.best_bid_price() == 100
-
-    def test_execute_subscribe_ticker(self):
-        # Arrange
-        self.data_engine.register_client(self.binance_client)
-        self.binance_client.start()
-
-        handler = []
-        self.msgbus.subscribe(topic="data.quotes.BINANCE.ETH/USD", handler=handler.append)
-
-        subscribe = Subscribe(
-            client_id=ClientId(BINANCE.value),
-            venue=BINANCE,
-            data_type=DataType(Ticker, metadata={"instrument_id": ETHUSDT_BINANCE.id}),
-            command_id=UUID4(),
-            ts_init=self.clock.timestamp_ns(),
-        )
-
-        self.data_engine.execute(subscribe)
-
-        # Assert
-        assert self.data_engine.subscribed_tickers() == [ETHUSDT_BINANCE.id]
-
-    def test_execute_unsubscribe_ticker(self):
-        # Arrange
-        self.data_engine.register_client(self.binance_client)
-        self.binance_client.start()
-
-        handler = []
-        self.msgbus.subscribe(topic="data.quotes.BINANCE.ETH/USD", handler=handler.append)
-
-        subscribe = Subscribe(
-            client_id=ClientId(BINANCE.value),
-            venue=BINANCE,
-            data_type=DataType(Ticker, metadata={"instrument_id": ETHUSDT_BINANCE.id}),
-            command_id=UUID4(),
-            ts_init=self.clock.timestamp_ns(),
-        )
-
-        self.data_engine.execute(subscribe)
-
-        unsubscribe = Unsubscribe(
-            client_id=ClientId(BINANCE.value),
-            venue=BINANCE,
-            data_type=DataType(Ticker, metadata={"instrument_id": ETHUSDT_BINANCE.id}),
-            command_id=UUID4(),
-            ts_init=self.clock.timestamp_ns(),
-        )
-
-        # Act
-        self.data_engine.execute(unsubscribe)
-
-        # Assert
-        assert self.data_engine.subscribed_tickers() == []
 
     def test_execute_subscribe_quote_ticks(self):
         # Arrange
@@ -2003,7 +2011,7 @@ class TestDataEngine:
             venue=BINANCE,
             data_type=DataType(
                 Instrument,
-                metadata={  # str data type is invalid
+                metadata={
                     "instrument_id": ETHUSDT_BINANCE.id,
                 },
             ),
@@ -2030,7 +2038,7 @@ class TestDataEngine:
             venue=BINANCE,
             data_type=DataType(
                 Instrument,
-                metadata={  # str data type is invalid
+                metadata={
                     "venue": BINANCE,
                 },
             ),
@@ -2050,7 +2058,7 @@ class TestDataEngine:
     @pytest.mark.skipif(sys.platform == "win32", reason="Failing on windows")
     def test_request_instrument_when_catalog_registered(self):
         # Arrange
-        catalog = data_catalog_setup(protocol="file")
+        catalog = setup_catalog(protocol="file")
 
         idealpro = Venue("IDEALPRO")
         instrument = TestInstrumentProvider.default_fx_ccy("AUD/USD", venue=idealpro)
@@ -2080,7 +2088,7 @@ class TestDataEngine:
     @pytest.mark.skipif(sys.platform == "win32", reason="Failing on windows")
     def test_request_instruments_for_venue_when_catalog_registered(self):
         # Arrange
-        catalog = data_catalog_setup(protocol="file")
+        catalog = setup_catalog(protocol="file")
 
         idealpro = Venue("IDEALPRO")
         instrument = TestInstrumentProvider.default_fx_ccy("AUD/USD", venue=idealpro)
@@ -2110,7 +2118,7 @@ class TestDataEngine:
     # TODO: Implement with new Rust datafusion backend"
     # def test_request_quote_ticks_when_catalog_registered_using_rust(self) -> None:
     #     # Arrange
-    #     catalog = data_catalog_setup(protocol="file")
+    #     catalog = catalog_setup(protocol="file")
     #     self.clock.set_time(to_time_ns=1638058200000000000)  # <- Set to end of data
     #
     #     parquet_data_path = os.path.join(TEST_DATA_DIR, "quote_tick_data.parquet")
@@ -2193,7 +2201,7 @@ class TestDataEngine:
 
     # def test_request_trade_ticks_when_catalog_registered_using_rust(self) -> None:
     #     # Arrange
-    #     catalog = data_catalog_setup(protocol="file")
+    #     catalog = catalog_setup(protocol="file")
     #     self.clock.set_time(to_time_ns=1638058200000000000)  # <- Set to end of data
     #
     #     parquet_data_path = os.path.join(TEST_DATA_DIR, "trade_tick_data.parquet")
@@ -2293,7 +2301,7 @@ class TestDataEngine:
     #
     # def test_request_bars_when_catalog_registered(self):
     #     # Arrange
-    #     catalog = data_catalog_setup(protocol="file")
+    #     catalog = catalog_setup(protocol="file")
     #     self.clock.set_time(to_time_ns=1638058200000000000)  # <- Set to end of data
     #
     #     bar_type = TestDataStubs.bartype_adabtc_binance_1min_last()

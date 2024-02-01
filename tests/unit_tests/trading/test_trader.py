@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -23,9 +23,8 @@ from nautilus_trader.backtest.exchange import SimulatedExchange
 from nautilus_trader.backtest.execution_client import BacktestExecClient
 from nautilus_trader.backtest.models import FillModel
 from nautilus_trader.common.actor import Actor
-from nautilus_trader.common.clock import TestClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import TestClock
 from nautilus_trader.config import ActorConfig
 from nautilus_trader.config import StrategyConfig
 from nautilus_trader.config.common import ExecAlgorithmConfig
@@ -39,6 +38,7 @@ from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import OmsType
 from nautilus_trader.model.identifiers import ClientId
 from nautilus_trader.model.identifiers import ComponentId
+from nautilus_trader.model.identifiers import ExecAlgorithmId
 from nautilus_trader.model.identifiers import StrategyId
 from nautilus_trader.model.identifiers import TraderId
 from nautilus_trader.model.identifiers import Venue
@@ -59,14 +59,11 @@ class TestTrader:
     def setup(self) -> None:
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(self.clock, bypass=True)
-
         self.trader_id = TestIdStubs.trader_id()
 
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = TestComponentStubs.cache()
@@ -75,14 +72,12 @@ class TestTrader:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine = DataEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine.process(USDJPY_SIM)
@@ -91,7 +86,6 @@ class TestTrader:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.exchange = SimulatedExchange(
@@ -102,13 +96,13 @@ class TestTrader:
             starting_balances=[Money(1_000_000, USD)],
             default_leverage=Decimal(50),
             leverages={},
+            portfolio=self.portfolio,
             msgbus=self.msgbus,
             cache=self.cache,
             instruments=[USDJPY_SIM],
             modules=[],
             fill_model=FillModel(),
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_client = BacktestMarketDataClient(
@@ -116,7 +110,6 @@ class TestTrader:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.exec_client = BacktestExecClient(
@@ -124,7 +117,6 @@ class TestTrader:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.risk_engine = RiskEngine(
@@ -132,7 +124,6 @@ class TestTrader:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         # Wire up components
@@ -148,7 +139,6 @@ class TestTrader:
             risk_engine=self.risk_engine,
             exec_engine=self.exec_engine,
             clock=self.clock,
-            logger=self.logger,
         )
 
     def test_initialize_trader(self) -> None:
@@ -320,7 +310,7 @@ class TestTrader:
     def test_add_strategies_with_duplicate_order_id_tags_raises_runtime_error(self) -> None:
         # Arrange
         config = MyStrategyConfig(
-            instrument_id=USDJPY_SIM.id.value,
+            instrument_id=USDJPY_SIM.id,
             order_id_tag="000",  # <-- will be a duplicate
         )
         strategies = [Strategy(), MyStrategy(config=config)]
@@ -432,8 +422,12 @@ class TestTrader:
 
     def test_change_exec_algorithms(self) -> None:
         # Arrange
-        exec_algorithm1 = ExecAlgorithm(ExecAlgorithmConfig(exec_algorithm_id="001"))
-        exec_algorithm2 = ExecAlgorithm(ExecAlgorithmConfig(exec_algorithm_id="002"))
+        exec_algorithm1 = ExecAlgorithm(
+            ExecAlgorithmConfig(exec_algorithm_id=ExecAlgorithmId("001")),
+        )
+        exec_algorithm2 = ExecAlgorithm(
+            ExecAlgorithmConfig(exec_algorithm_id=ExecAlgorithmId("002")),
+        )
         exec_algorithms = [exec_algorithm1, exec_algorithm2]
 
         # Act
@@ -450,8 +444,8 @@ class TestTrader:
     def test_clear_exec_algorithms(self) -> None:
         # Arrange
         exec_algorithms = [
-            ExecAlgorithm(ExecAlgorithmConfig(exec_algorithm_id="001")),
-            ExecAlgorithm(ExecAlgorithmConfig(exec_algorithm_id="002")),
+            ExecAlgorithm(ExecAlgorithmConfig(exec_algorithm_id=ExecAlgorithmId("001"))),
+            ExecAlgorithm(ExecAlgorithmConfig(exec_algorithm_id=ExecAlgorithmId("002"))),
         ]
 
         self.trader.add_exec_algorithms(exec_algorithms)

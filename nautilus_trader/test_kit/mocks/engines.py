@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -29,7 +29,6 @@ class MockLiveDataEngine(LiveDataEngine):
         msgbus,
         cache,
         clock,
-        logger,
         config=None,
     ):
         super().__init__(
@@ -37,7 +36,6 @@ class MockLiveDataEngine(LiveDataEngine):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 
@@ -48,8 +46,8 @@ class MockLiveDataEngine(LiveDataEngine):
     def execute(self, command):
         self.commands.append(command)
 
-    def process(self, event):
-        self.events.append(event)
+    def process(self, data):
+        self.events.append(data)
 
     def receive(self, response):
         self.responses.append(response)
@@ -66,7 +64,6 @@ class MockLiveExecutionEngine(LiveExecutionEngine):
         msgbus,
         cache,
         clock,
-        logger,
         config=None,
     ):
         super().__init__(
@@ -74,7 +71,6 @@ class MockLiveExecutionEngine(LiveExecutionEngine):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 
@@ -100,7 +96,6 @@ class MockLiveRiskEngine(LiveRiskEngine):
         msgbus,
         cache,
         clock,
-        logger,
         config=None,
     ):
         super().__init__(
@@ -109,7 +104,6 @@ class MockLiveRiskEngine(LiveRiskEngine):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 

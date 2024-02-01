@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,6 +13,7 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+import msgspec
 import pyarrow as pa
 
 from nautilus_trader.model.instruments import BettingInstrument
@@ -139,10 +140,7 @@ SCHEMAS = {
             "raw_symbol": pa.string(),
             "currency": pa.dictionary(pa.int16(), pa.string()),
             "price_precision": pa.uint8(),
-            "size_precision": pa.uint8(),
             "price_increment": pa.dictionary(pa.int16(), pa.string()),
-            "size_increment": pa.dictionary(pa.int16(), pa.string()),
-            "multiplier": pa.dictionary(pa.int16(), pa.string()),
             "lot_size": pa.dictionary(pa.int16(), pa.string()),
             "isin": pa.string(),
             "margin_init": pa.string(),
@@ -188,7 +186,7 @@ SCHEMAS = {
             "activation_ns": pa.uint64(),
             "expiration_ns": pa.uint64(),
             "strike_price": pa.dictionary(pa.int64(), pa.string()),
-            "kind": pa.dictionary(pa.int8(), pa.string()),
+            "option_kind": pa.dictionary(pa.int8(), pa.string()),
             "ts_event": pa.uint64(),
             "ts_init": pa.uint64(),
         },
@@ -196,8 +194,10 @@ SCHEMAS = {
 }
 
 
-def serialize(obj) -> pa.RecordBatch:
+def serialize(obj: Instrument) -> pa.RecordBatch:
     data = obj.to_dict(obj)
+    if "info" in data:
+        data["info"] = msgspec.json.encode(data["info"])
     schema = SCHEMAS[obj.__class__].with_metadata({"class": obj.__class__.__name__})
     return pa.RecordBatch.from_pylist([data], schema)
 
@@ -213,4 +213,13 @@ def deserialize(batch: pa.RecordBatch) -> list[Instrument]:
         b"FuturesContract": FuturesContract,
         b"OptionsContract": OptionsContract,
     }[ins_type]
-    return [Cls.from_dict(data) for data in batch.to_pylist()]
+
+    maps = batch.to_pylist()
+    for m in maps:
+        info = m.get("info")
+        if info is not None:
+            m["info"] = msgspec.json.decode(info)
+        else:
+            m["info"] = None
+
+    return [Cls.from_dict(data) for data in maps]

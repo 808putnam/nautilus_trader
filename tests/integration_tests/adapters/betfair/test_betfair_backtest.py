@@ -1,3 +1,18 @@
+# -------------------------------------------------------------------------------------------------
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
+#  https://nautechsystems.io
+#
+#  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
+#  You may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+# -------------------------------------------------------------------------------------------------
+
 from nautilus_trader.adapters.betfair.constants import BETFAIR_VENUE
 from nautilus_trader.adapters.betfair.parsing.core import BetfairParser
 from nautilus_trader.backtest.engine import BacktestEngine
@@ -11,6 +26,7 @@ from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import BookType
 from nautilus_trader.model.enums import OmsType
 from nautilus_trader.model.identifiers import ClientId
+from nautilus_trader.model.identifiers import TraderId
 from nautilus_trader.model.objects import Money
 from tests.integration_tests.adapters.betfair.test_kit import BetfairDataProvider
 from tests.integration_tests.adapters.betfair.test_kit import betting_instrument
@@ -19,7 +35,7 @@ from tests.integration_tests.adapters.betfair.test_kit import betting_instrument
 def test_betfair_backtest():
     # Arrange
     config = BacktestEngineConfig(
-        trader_id="BACKTESTER-001",
+        trader_id=TraderId("BACKTESTER-001"),
         logging=LoggingConfig(bypass_logging=True),
     )
 
@@ -62,7 +78,7 @@ def test_betfair_backtest():
     strategies = [
         OrderBookImbalance(
             config=OrderBookImbalanceConfig(
-                instrument_id=instrument.id.value,
+                instrument_id=instrument.id,
                 max_trade_size=Decimal(10),
                 order_id_tag=instrument.selection_id,
             ),

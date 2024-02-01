@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,12 +19,12 @@ from nautilus_trader.adapters.bybit.common.enums import BybitOrderType
 from nautilus_trader.adapters.bybit.common.enums import BybitTimeInForce
 from nautilus_trader.adapters.bybit.endpoints.account.fee_rate import BybitFeeRateEndpoint
 from nautilus_trader.adapters.bybit.endpoints.account.fee_rate import BybitFeeRateGetParameters
+from nautilus_trader.adapters.bybit.endpoints.account.position_info import BybitPositionInfoEndpoint
+from nautilus_trader.adapters.bybit.endpoints.account.position_info import PositionInfoGetParameters
 
 # fmt: off
 from nautilus_trader.adapters.bybit.endpoints.account.wallet_balance import BybitWalletBalanceEndpoint
 from nautilus_trader.adapters.bybit.endpoints.account.wallet_balance import BybitWalletBalanceGetParameters
-from nautilus_trader.adapters.bybit.endpoints.position.position_info import BybitPositionInfoEndpoint
-from nautilus_trader.adapters.bybit.endpoints.position.position_info import PositionInfoGetParameters
 from nautilus_trader.adapters.bybit.endpoints.trade.cancel_all_orders import BybitCancelAllOrdersEndpoint
 from nautilus_trader.adapters.bybit.endpoints.trade.cancel_all_orders import BybitCancelAllOrdersPostParameters
 
@@ -41,7 +41,7 @@ from nautilus_trader.adapters.bybit.schemas.order import BybitPlaceOrder
 from nautilus_trader.adapters.bybit.schemas.position import BybitPositionStruct
 from nautilus_trader.adapters.bybit.schemas.symbol import BybitSymbol
 from nautilus_trader.adapters.bybit.utils import get_category_from_instrument_type
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.core.correctness import PyCondition
 
 

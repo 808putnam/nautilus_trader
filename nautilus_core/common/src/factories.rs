@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -34,39 +34,39 @@ use crate::generators::{
 
 #[repr(C)]
 pub struct OrderFactory {
+    clock: &'static AtomicTime,
     trader_id: TraderId,
     strategy_id: StrategyId,
     order_id_generator: ClientOrderIdGenerator,
     order_list_id_generator: OrderListIdGenerator,
-    clock: AtomicTime,
 }
 
 impl OrderFactory {
     pub fn new(
         trader_id: TraderId,
         strategy_id: StrategyId,
-        clock: AtomicTime,
         init_order_id_count: Option<usize>,
         init_order_list_id_count: Option<usize>,
+        clock: &'static AtomicTime,
     ) -> Self {
         let order_id_generator = ClientOrderIdGenerator::new(
             trader_id,
             strategy_id,
-            clock.clone(),
             init_order_id_count.unwrap_or(0),
+            clock,
         );
         let order_list_id_generator = OrderListIdGenerator::new(
             trader_id,
             strategy_id,
-            clock.clone(),
             init_order_list_id_count.unwrap_or(0),
+            clock,
         );
         Self {
+            clock,
             trader_id,
             strategy_id,
             order_id_generator,
             order_list_id_generator,
-            clock,
         }
     }
 
@@ -97,9 +97,9 @@ impl OrderFactory {
         instrument_id: InstrumentId,
         order_side: OrderSide,
         quantity: Quantity,
-        time_inf_force: TimeInForce,
-        reduce_only: bool,
-        quote_quantity: bool,
+        time_in_force: Option<TimeInForce>,
+        reduce_only: Option<bool>,
+        quote_quantity: Option<bool>,
         exec_algorithm_id: Option<ExecAlgorithmId>,
         exec_algorithm_params: Option<HashMap<Ustr, Ustr>>,
         tags: Option<Ustr>,
@@ -117,11 +117,11 @@ impl OrderFactory {
             client_order_id,
             order_side,
             quantity,
-            time_inf_force,
+            time_in_force.unwrap_or(TimeInForce::Gtc),
             UUID4::new(),
             self.clock.get_time_ns(),
-            reduce_only,
-            quote_quantity,
+            reduce_only.unwrap_or(false),
+            quote_quantity.unwrap_or(false),
             Some(ContingencyType::NoContingency),
             None,
             None,
@@ -211,9 +211,9 @@ pub mod tests {
             InstrumentId::from("BTCUSDT.BINANCE"),
             OrderSide::Buy,
             100.into(),
-            TimeInForce::Gtc,
-            false,
-            false,
+            Some(TimeInForce::Gtc),
+            Some(false),
+            Some(false),
             None,
             None,
             None,
@@ -222,8 +222,8 @@ pub mod tests {
         assert_eq!(market_order.side, OrderSide::Buy);
         assert_eq!(market_order.quantity, 100.into());
         assert_eq!(market_order.time_in_force, TimeInForce::Gtc);
-        assert_eq!(market_order.is_reduce_only, false);
-        assert_eq!(market_order.is_quote_quantity, false);
+        assert!(!market_order.is_reduce_only);
+        assert!(!market_order.is_quote_quantity);
         assert_eq!(market_order.exec_algorithm_id, None);
         assert_eq!(market_order.exec_algorithm_params, None);
         assert_eq!(market_order.exec_spawn_id, None);

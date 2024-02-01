@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -29,10 +29,8 @@ from nautilus_trader.adapters.betfair.providers import load_markets
 from nautilus_trader.adapters.betfair.providers import load_markets_metadata
 from nautilus_trader.adapters.betfair.providers import make_instruments
 from nautilus_trader.adapters.betfair.providers import parse_market_catalog
-from nautilus_trader.common.clock import LiveClock
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.model.enums import MarketStatus
-from nautilus_trader.test_kit.stubs.component import TestComponentStubs
 from tests.integration_tests.adapters.betfair.test_kit import BetfairResponses
 from tests.integration_tests.adapters.betfair.test_kit import BetfairStreaming
 from tests.integration_tests.adapters.betfair.test_kit import BetfairTestStubs
@@ -44,12 +42,10 @@ class TestBetfairInstrumentProvider:
         # Fixture Setup
         self.loop = asyncio.get_event_loop()
         self.clock = LiveClock()
-        self.logger = Logger(clock=self.clock, bypass=True)
-        self.client = BetfairTestStubs.betfair_client(loop=self.loop, logger=self.logger)
+        self.client = BetfairTestStubs.betfair_client(loop=self.loop)
         self.provider = BetfairInstrumentProvider(
             client=self.client,
-            logger=TestComponentStubs.logger(),
-            config=BetfairInstrumentProviderConfig(),
+            config=BetfairInstrumentProviderConfig(account_currency="GBP"),
         )
         self.parser = BetfairParser(currency="GBP")
 

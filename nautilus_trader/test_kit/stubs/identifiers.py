@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -75,6 +75,14 @@ class TestIdStubs:
     @staticmethod
     def audusd_idealpro_id() -> InstrumentId:
         return InstrumentId(Symbol("AUD/USD"), Venue("IDEALPRO"))
+
+    @staticmethod
+    def aapl_xnas_id() -> InstrumentId:
+        return InstrumentId(Symbol("AAPL"), Venue("XNAS"))
+
+    @staticmethod
+    def msft_xnas_id() -> InstrumentId:
+        return InstrumentId(Symbol("MSFT"), Venue("XNAS"))
 
     @staticmethod
     def betting_instrument_id():

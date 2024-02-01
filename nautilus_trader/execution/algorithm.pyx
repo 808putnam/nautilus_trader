@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -14,7 +14,6 @@
 # -------------------------------------------------------------------------------------------------
 
 from typing import Any
-from typing import Optional
 
 from nautilus_trader.config import ExecAlgorithmConfig
 from nautilus_trader.config import ImportableExecAlgorithmConfig
@@ -25,18 +24,18 @@ from libc.stdint cimport uint64_t
 
 from nautilus_trader.cache.base cimport CacheFacade
 from nautilus_trader.common.actor cimport Actor
-from nautilus_trader.common.clock cimport Clock
+from nautilus_trader.common.component cimport CMD
+from nautilus_trader.common.component cimport EVT
+from nautilus_trader.common.component cimport RECV
+from nautilus_trader.common.component cimport SENT
+from nautilus_trader.common.component cimport Clock
+from nautilus_trader.common.component cimport LogColor
 from nautilus_trader.common.component cimport MessageBus
-from nautilus_trader.common.logging cimport CMD
-from nautilus_trader.common.logging cimport EVT
-from nautilus_trader.common.logging cimport RECV
-from nautilus_trader.common.logging cimport SENT
-from nautilus_trader.common.logging cimport LogColor
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.datetime cimport dt_to_unix_nanos
 from nautilus_trader.core.fsm cimport InvalidStateTrigger
 from nautilus_trader.core.rust.common cimport ComponentState
+from nautilus_trader.core.rust.common cimport logging_is_initialized
 from nautilus_trader.core.rust.model cimport ContingencyType
 from nautilus_trader.core.rust.model cimport OrderStatus
 from nautilus_trader.core.rust.model cimport TimeInForce
@@ -106,15 +105,17 @@ cdef class ExecAlgorithm(Actor):
     This class should not be used directly, but through a concrete subclass.
     """
 
-    def __init__(self, config: Optional[ExecAlgorithmConfig] = None):
+    def __init__(self, config: ExecAlgorithmConfig | None = None):
         if config is None:
             config = ExecAlgorithmConfig()
         Condition.type(config, ExecAlgorithmConfig, "config")
 
         super().__init__()
         # Assign Execution Algorithm ID after base class initialized
-        component_id = type(self).__name__ if config.exec_algorithm_id is None else config.exec_algorithm_id
-        self.id = ExecAlgorithmId(component_id)
+        if isinstance(config.exec_algorithm_id, str):
+            self.id = ExecAlgorithmId(config.exec_algorithm_id)
+        else:
+            self.id = config.exec_algorithm_id or ExecAlgorithmId(type(self).__name__)
 
         # Configuration
         self.config = config
@@ -149,7 +150,6 @@ cdef class ExecAlgorithm(Actor):
         MessageBus msgbus,
         CacheFacade cache,
         Clock clock,
-        Logger logger,
     ):
         """
         Register the execution algorithm with a trader.
@@ -166,8 +166,6 @@ cdef class ExecAlgorithm(Actor):
             The read-only cache for the execution algorithm.
         clock : Clock
             The clock for the execution algorithm.
-        logger : Logger
-            The logger for the execution algorithm.
 
         Warnings
         --------
@@ -179,16 +177,13 @@ cdef class ExecAlgorithm(Actor):
         Condition.not_none(msgbus, "msgbus")
         Condition.not_none(cache, "cache")
         Condition.not_none(clock, "clock")
-        Condition.not_none(logger, "logger")
 
         self.register_base(
+            portfolio=portfolio,
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
         )
-
-        self.portfolio = portfolio
 
         # Register endpoints
         self._msgbus.register(endpoint=f"{self.id}.execute", handler=self.execute)
@@ -1468,16 +1463,16 @@ cdef class ExecAlgorithm(Actor):
 # -- EGRESS ---------------------------------------------------------------------------------------
 
     cdef void _send_emulator_command(self, TradingCommand command):
-        if not self.log.is_bypassed:
+        if logging_is_initialized():
             self.log.info(f"{CMD}{SENT} {command}.")
         self._msgbus.send(endpoint="OrderEmulator.execute", msg=command)
 
     cdef void _send_risk_command(self, TradingCommand command):
-        if not self.log.is_bypassed:
+        if logging_is_initialized():
             self.log.info(f"{CMD}{SENT} {command}.")
         self._msgbus.send(endpoint="RiskEngine.execute", msg=command)
 
     cdef void _send_exec_command(self, TradingCommand command):
-        if not self.log.is_bypassed:
+        if logging_is_initialized():
             self.log.info(f"{CMD}{SENT} {command}.")
         self._msgbus.send(endpoint="ExecEngine.execute", msg=command)

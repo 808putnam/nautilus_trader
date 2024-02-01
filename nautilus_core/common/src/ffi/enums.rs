@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -15,7 +15,7 @@
 
 use std::{ffi::c_char, str::FromStr};
 
-use nautilus_core::ffi::string::{cstr_to_string, str_to_cstr};
+use nautilus_core::ffi::string::{cstr_to_str, str_to_cstr};
 
 use crate::enums::{ComponentState, ComponentTrigger, LogColor, LogLevel};
 
@@ -27,11 +27,12 @@ pub extern "C" fn component_state_to_cstr(value: ComponentState) -> *const c_cha
 /// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 #[no_mangle]
 pub unsafe extern "C" fn component_state_from_cstr(ptr: *const c_char) -> ComponentState {
-    let value = cstr_to_string(ptr);
-    ComponentState::from_str(&value)
+    let value = cstr_to_str(ptr);
+    ComponentState::from_str(value)
         .unwrap_or_else(|_| panic!("invalid `ComponentState` enum string value, was '{value}'"))
 }
 
@@ -43,11 +44,12 @@ pub extern "C" fn component_trigger_to_cstr(value: ComponentTrigger) -> *const c
 /// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 #[no_mangle]
 pub unsafe extern "C" fn component_trigger_from_cstr(ptr: *const c_char) -> ComponentTrigger {
-    let value = cstr_to_string(ptr);
-    ComponentTrigger::from_str(&value)
+    let value = cstr_to_str(ptr);
+    ComponentTrigger::from_str(value)
         .unwrap_or_else(|_| panic!("invalid `ComponentTrigger` enum string value, was '{value}'"))
 }
 
@@ -59,11 +61,12 @@ pub extern "C" fn log_level_to_cstr(value: LogLevel) -> *const c_char {
 /// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 #[no_mangle]
 pub unsafe extern "C" fn log_level_from_cstr(ptr: *const c_char) -> LogLevel {
-    let value = cstr_to_string(ptr);
-    LogLevel::from_str(&value)
+    let value = cstr_to_str(ptr);
+    LogLevel::from_str(value)
         .unwrap_or_else(|_| panic!("invalid `LogLevel` enum string value, was '{value}'"))
 }
 
@@ -75,10 +78,11 @@ pub extern "C" fn log_color_to_cstr(value: LogColor) -> *const c_char {
 /// Returns an enum from a Python string.
 ///
 /// # Safety
+///
 /// - Assumes `ptr` is a valid C string pointer.
 #[no_mangle]
 pub unsafe extern "C" fn log_color_from_cstr(ptr: *const c_char) -> LogColor {
-    let value = cstr_to_string(ptr);
-    LogColor::from_str(&value)
+    let value = cstr_to_str(ptr);
+    LogColor::from_str(value)
         .unwrap_or_else(|_| panic!("invalid `LogColor` enum string value, was '{value}'"))
 }

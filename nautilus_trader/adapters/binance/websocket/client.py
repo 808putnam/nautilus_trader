@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,10 +19,9 @@ from collections.abc import Callable
 from typing import Any
 
 from nautilus_trader.adapters.binance.common.schemas.symbol import BinanceSymbol
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
+from nautilus_trader.common.component import Logger
 from nautilus_trader.common.enums import LogColor
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.common.logging import LoggerAdapter
 from nautilus_trader.core.nautilus_pyo3 import WebSocketClient
 from nautilus_trader.core.nautilus_pyo3 import WebSocketConfig
 
@@ -35,8 +34,6 @@ class BinanceWebSocketClient:
     ----------
     clock : LiveClock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
     base_url : str
         The base URL for the WebSocket connection.
     handler : Callable[[bytes], None]
@@ -53,14 +50,12 @@ class BinanceWebSocketClient:
     def __init__(
         self,
         clock: LiveClock,
-        logger: Logger,
         base_url: str,
         handler: Callable[[bytes], None],
         loop: asyncio.AbstractEventLoop,
     ) -> None:
         self._clock = clock
-        self._logger = logger
-        self._log: LoggerAdapter = LoggerAdapter(type(self).__name__, logger=logger)
+        self._log: Logger = Logger(type(self).__name__)
 
         self._base_url: str = base_url
         self._handler: Callable[[bytes], None] = handler

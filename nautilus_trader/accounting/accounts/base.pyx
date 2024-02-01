@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -12,8 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
-
-from typing import Optional
 
 from nautilus_trader.accounting.error import AccountBalanceNegative
 
@@ -458,10 +456,10 @@ cdef class Account:
         bool
 
         """
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError("method `is_unleveraged` must be implemented in the subclass")  # pragma: no cover
 
     cdef void _recalculate_balance(self, Currency currency):
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError("method `_recalculate_balance` must be implemented in the subclass")  # pragma: no cover
 
     cpdef Money calculate_commission(
         self,
@@ -471,15 +469,15 @@ cdef class Account:
         LiquiditySide liquidity_side,
         bint use_quote_for_inverse=False,
     ):
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError("method `calculate_commission` must be implemented in the subclass")  # pragma: no cover
 
     cpdef list calculate_pnls(
         self,
         Instrument instrument,
         OrderFilled fill,
-        Position position: Optional[Position] = None,
+        Position position: Position | None = None,
     ):
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError("method `calculate_pnls` must be implemented in the subclass")  # pragma: no cover
 
     cpdef Money balance_impact(
         self,
@@ -488,4 +486,4 @@ cdef class Account:
         Price price,
         OrderSide order_side,
     ):
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError("method `balance_impact` must be implemented in the subclass")  # pragma: no cover

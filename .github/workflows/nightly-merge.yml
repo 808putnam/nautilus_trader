@@ -1,0 +1,30 @@
+name: nightly-merge
+
+on:
+  push:
+    branches: [nightly-merge-test]
+  # schedule:
+  #   - cron: '0 14 * * *'  # At 14:00 UTC every day
+
+jobs:
+  nightly-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.NIGHTLY_TOKEN }}
+          fetch-depth: 0  # Fetch all history for all tags and branches
+
+      - name: Nightly merge
+        uses: robotology/gh-action-nightly-merge@v1.4.0
+        with:
+          stable_branch: 'develop'  # Branch to merge from
+          development_branch: 'nightly'  # Branch to merge to
+          allow_ff: false
+          user_name: 'Chris Sellers'
+          user_email: 'chris@cjdsellers.io'
+          push_token: 'NIGHTLY_TOKEN'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NIGHTLY_TOKEN: ${{ secrets.NIGHTLY_TOKEN }}

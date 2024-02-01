@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -31,11 +31,11 @@ from typing import Any
 import pandas as pd
 
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
 from nautilus_trader.common.enums import LogColor
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.common.providers import InstrumentProvider
+from nautilus_trader.config.common import NautilusConfig
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.data.client import DataClient
@@ -66,9 +66,7 @@ class LiveDataClient(DataClient):
         The cache for the client.
     clock : LiveClock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
-    config : dict[str, object], optional
+    config : NautilusConfig, optional
         The configuration for the instance.
 
     Warnings
@@ -85,8 +83,7 @@ class LiveDataClient(DataClient):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
-        config: dict[str, Any] | None = None,
+        config: NautilusConfig | None = None,
     ) -> None:
         super().__init__(
             client_id=client_id,
@@ -94,7 +91,6 @@ class LiveDataClient(DataClient):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 
@@ -274,17 +270,15 @@ class LiveMarketDataClient(MarketDataClient):
         The client ID.
     venue : Venue, optional with no default so ``None`` must be passed explicitly
         The client venue. If multi-venue then can be ``None``.
-    instrument_provider : InstrumentProvider
-        The instrument provider for the client.
     msgbus : MessageBus
         The message bus for the client.
     cache : Cache
         The cache for the client.
     clock : LiveClock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
-    config : dict[str, object], optional
+    instrument_provider : InstrumentProvider
+        The instrument provider for the client.
+    config : NautilusConfig, optional
         The configuration for the instance.
 
     Warnings
@@ -298,12 +292,11 @@ class LiveMarketDataClient(MarketDataClient):
         loop: asyncio.AbstractEventLoop,
         client_id: ClientId,
         venue: Venue | None,
-        instrument_provider: InstrumentProvider,
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
-        config: dict[str, Any] | None = None,
+        instrument_provider: InstrumentProvider,
+        config: NautilusConfig | None = None,
     ) -> None:
         PyCondition.type(instrument_provider, InstrumentProvider, "instrument_provider")
 
@@ -313,7 +306,6 @@ class LiveMarketDataClient(MarketDataClient):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 
@@ -485,13 +477,6 @@ class LiveMarketDataClient(MarketDataClient):
             actions=lambda: self._add_subscription_order_book_snapshots(instrument_id),
         )
 
-    def subscribe_ticker(self, instrument_id: InstrumentId) -> None:
-        self.create_task(
-            self._subscribe_ticker(instrument_id),
-            log_msg=f"subscribe: ticker {instrument_id}",
-            actions=lambda: self._add_subscription_ticker(instrument_id),
-        )
-
     def subscribe_quote_ticks(self, instrument_id: InstrumentId) -> None:
         self.create_task(
             self._subscribe_quote_ticks(instrument_id),
@@ -564,13 +549,6 @@ class LiveMarketDataClient(MarketDataClient):
             actions=lambda: self._remove_subscription_order_book_snapshots(instrument_id),
         )
 
-    def unsubscribe_ticker(self, instrument_id: InstrumentId) -> None:
-        self.create_task(
-            self._unsubscribe_ticker(instrument_id),
-            log_msg=f"unsubscribe: ticker {instrument_id}",
-            actions=lambda: self._remove_subscription_ticker(instrument_id),
-        )
-
     def unsubscribe_quote_ticks(self, instrument_id: InstrumentId) -> None:
         self.create_task(
             self._unsubscribe_quote_ticks(instrument_id),
@@ -609,21 +587,46 @@ class LiveMarketDataClient(MarketDataClient):
     # -- REQUESTS ---------------------------------------------------------------------------------
 
     def request(self, data_type: DataType, correlation_id: UUID4) -> None:
+        self._log.debug(f"Request data {data_type}.")
         self.create_task(
             self._request(data_type, correlation_id),
             log_msg=f"request: {data_type}",
         )
 
-    def request_instrument(self, instrument_id: InstrumentId, correlation_id: UUID4) -> None:
+    def request_instrument(
+        self,
+        instrument_id: InstrumentId,
+        correlation_id: UUID4,
+        start: pd.Timestamp | None = None,
+        end: pd.Timestamp | None = None,
+    ) -> None:
+        self._log.debug(f"Request instrument {instrument_id}.")
         self.create_task(
-            self._request_instrument(instrument_id, correlation_id),
+            self._request_instrument(
+                instrument_id=instrument_id,
+                correlation_id=correlation_id,
+                start=start,
+                end=end,
+            ),
             log_msg=f"request: instrument {instrument_id}",
         )
 
-    def request_instruments(self, venue: Venue, correlation_id: UUID4) -> None:
+    def request_instruments(
+        self,
+        venue: Venue,
+        correlation_id: UUID4,
+        start: pd.Timestamp | None = None,
+        end: pd.Timestamp | None = None,
+    ) -> None:
         self._log.debug(f"Request instruments for {venue} {correlation_id}.")
         self.create_task(
-            self._request_instruments(venue, correlation_id),
+            self._request_instruments(
+                venue=venue,
+                correlation_id=correlation_id,
+                start=start,
+                end=end,
+            ),
+            log_msg=f"request: instruments for {venue}",
         )
 
     def request_quote_ticks(
@@ -643,6 +646,7 @@ class LiveMarketDataClient(MarketDataClient):
                 start=start,
                 end=end,
             ),
+            log_msg=f"request: quote ticks {instrument_id}",
         )
 
     def request_trade_ticks(
@@ -662,6 +666,7 @@ class LiveMarketDataClient(MarketDataClient):
                 start=start,
                 end=end,
             ),
+            log_msg=f"request: trade ticks {instrument_id}",
         )
 
     def request_bars(
@@ -681,6 +686,7 @@ class LiveMarketDataClient(MarketDataClient):
                 start=start,
                 end=end,
             ),
+            log_msg=f"request: bars {bar_type}",
         )
 
     ############################################################################
@@ -733,11 +739,6 @@ class LiveMarketDataClient(MarketDataClient):
             "implement the `_subscribe_order_book_snapshots` coroutine",  # pragma: no cover
         )
 
-    async def _subscribe_ticker(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(  # pragma: no cover
-            "implement the `_subscribe_ticker` coroutine",  # pragma: no cover
-        )
-
     async def _subscribe_quote_ticks(self, instrument_id: InstrumentId) -> None:
         raise NotImplementedError(  # pragma: no cover
             "implement the `_subscribe_quote_ticks` coroutine",  # pragma: no cover
@@ -788,11 +789,6 @@ class LiveMarketDataClient(MarketDataClient):
             "implement the `_unsubscribe_order_book_snapshots` coroutine",  # pragma: no cover
         )
 
-    async def _unsubscribe_ticker(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(  # pragma: no cover
-            "implement the `_unsubscribe_ticker` coroutine",  # pragma: no cover
-        )
-
     async def _unsubscribe_quote_ticks(self, instrument_id: InstrumentId) -> None:
         raise NotImplementedError(  # pragma: no cover
             "implement the `_unsubscribe_quote_ticks` coroutine",  # pragma: no cover
@@ -823,12 +819,24 @@ class LiveMarketDataClient(MarketDataClient):
             "implement the `_request` coroutine",  # pragma: no cover
         )
 
-    async def _request_instrument(self, instrument_id: InstrumentId, correlation_id: UUID4) -> None:
+    async def _request_instrument(
+        self,
+        instrument_id: InstrumentId,
+        correlation_id: UUID4,
+        start: pd.Timestamp | None = None,
+        end: pd.Timestamp | None = None,
+    ) -> None:
         raise NotImplementedError(  # pragma: no cover
             "implement the `_request_instrument` coroutine",  # pragma: no cover
         )
 
-    async def _request_instruments(self, venue: Venue, correlation_id: UUID4) -> None:
+    async def _request_instruments(
+        self,
+        venue: Venue,
+        correlation_id: UUID4,
+        start: pd.Timestamp | None = None,
+        end: pd.Timestamp | None = None,
+    ) -> None:
         raise NotImplementedError(  # pragma: no cover
             "implement the `_request_instruments` coroutine",  # pragma: no cover
         )

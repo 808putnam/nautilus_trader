@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -13,17 +13,16 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
-from nautilus_trader.common.clock import TestClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import TestClock
 from nautilus_trader.core.data import Data
 from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.data.client import DataClient
 from nautilus_trader.data.client import MarketDataClient
 from nautilus_trader.data.engine import DataEngine
 from nautilus_trader.model.currencies import USD
+from nautilus_trader.model.data import CustomData
 from nautilus_trader.model.data import DataType
-from nautilus_trader.model.data import GenericData
 from nautilus_trader.model.identifiers import ClientId
 from nautilus_trader.model.identifiers import Venue
 from nautilus_trader.portfolio.portfolio import Portfolio
@@ -44,14 +43,11 @@ class TestDataClient:
     def setup(self):
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(self.clock, bypass=True)
-
         self.trader_id = TestIdStubs.trader_id()
 
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = TestComponentStubs.cache()
@@ -60,14 +56,12 @@ class TestDataClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine = DataEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.venue = Venue("SIM")
@@ -78,7 +72,6 @@ class TestDataClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
     def test_subscribe_when_not_implemented_logs_error(self):
@@ -121,10 +114,10 @@ class TestDataClient:
             ts_event=0,
             ts_init=0,
         )
-        generic_data = GenericData(data_type, data)
+        custom_data = CustomData(data_type, data)
 
         # Act
-        self.client._handle_data_py(generic_data)
+        self.client._handle_data_py(custom_data)
 
         # Assert
         assert self.data_engine.data_count == 1
@@ -151,14 +144,11 @@ class TestMarketDataClient:
     def setup(self):
         # Fixture Setup
         self.clock = TestClock()
-        self.logger = Logger(self.clock, bypass=True)
-
         self.trader_id = TestIdStubs.trader_id()
 
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = TestComponentStubs.cache()
@@ -167,14 +157,12 @@ class TestMarketDataClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine = DataEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.venue = Venue("SIM")
@@ -185,7 +173,6 @@ class TestMarketDataClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
     def test_handle_instrument_sends_to_data_engine(self):
@@ -211,16 +198,6 @@ class TestMarketDataClient:
 
         # Act
         self.client._handle_data_py(deltas)
-
-        # Assert
-        assert self.data_engine.data_count == 1
-
-    def test_handle_ticker_sends_to_data_engine(self):
-        # Arrange
-        tick = TestDataStubs.ticker()
-
-        # Act
-        self.client._handle_data_py(tick)
 
         # Assert
         assert self.data_engine.data_count == 1

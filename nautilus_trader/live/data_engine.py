@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -18,9 +18,8 @@ from asyncio import Queue
 from typing import Final
 
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.config import LiveDataEngineConfig
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.data import Data
@@ -44,8 +43,6 @@ class LiveDataEngine(DataEngine):
         The cache for the engine.
     clock : LiveClock
         The clock for the engine.
-    logger : Logger
-        The logger for the engine.
     config : LiveDataEngineConfig, optional
         The configuration for the instance.
 
@@ -64,7 +61,6 @@ class LiveDataEngine(DataEngine):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
         config: LiveDataEngineConfig | None = None,
     ) -> None:
         if config is None:
@@ -74,7 +70,6 @@ class LiveDataEngine(DataEngine):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             config=config,
         )
 
@@ -300,6 +295,7 @@ class LiveDataEngine(DataEngine):
 
         """
         PyCondition.not_none(response, "response")
+        # Do not allow None through (None is a sentinel value which stops the queue)
 
         try:
             self._loop.call_soon_threadsafe(self._res_queue.put_nowait, response)

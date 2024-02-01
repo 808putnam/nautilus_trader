@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -37,10 +37,9 @@ from nautilus_trader.adapters.binance.futures.schemas.user import BinanceFutures
 from nautilus_trader.adapters.binance.http.client import BinanceHttpClient
 from nautilus_trader.adapters.binance.http.error import BinanceError
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
 from nautilus_trader.common.enums import LogColor
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.datetime import millis_to_nanos
 from nautilus_trader.core.uuid import UUID4
@@ -69,8 +68,6 @@ class BinanceFuturesExecutionClient(BinanceCommonExecutionClient):
         The cache for the client.
     clock : LiveClock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
     instrument_provider : BinanceFuturesInstrumentProvider
         The instrument provider.
     base_url_ws : str
@@ -89,7 +86,6 @@ class BinanceFuturesExecutionClient(BinanceCommonExecutionClient):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
         instrument_provider: BinanceFuturesInstrumentProvider,
         base_url_ws: str,
         config: BinanceExecClientConfig,
@@ -119,7 +115,6 @@ class BinanceFuturesExecutionClient(BinanceCommonExecutionClient):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             instrument_provider=instrument_provider,
             account_type=account_type,
             base_url_ws=base_url_ws,

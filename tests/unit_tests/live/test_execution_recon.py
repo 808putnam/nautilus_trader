@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,14 +19,13 @@ from decimal import Decimal
 import pandas as pd
 import pytest
 
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
 from nautilus_trader.common.factories import OrderFactory
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.common.providers import InstrumentProvider
 from nautilus_trader.core.uuid import UUID4
+from nautilus_trader.execution.reports import FillReport
 from nautilus_trader.execution.reports import OrderStatusReport
-from nautilus_trader.execution.reports import TradeReport
 from nautilus_trader.live.data_engine import LiveDataEngine
 from nautilus_trader.live.execution_engine import LiveExecutionEngine
 from nautilus_trader.live.risk_engine import LiveRiskEngine
@@ -70,12 +69,6 @@ class TestLiveExecutionReconciliation:
         self.loop.set_debug(True)
 
         self.clock = LiveClock()
-        self.logger = Logger(
-            self.clock,
-            level_stdout=10,  # DEBUG
-            bypass=True,
-        )
-
         self.account_id = TestIdStubs.account_id()
         self.trader_id = TestIdStubs.trader_id()
 
@@ -88,7 +81,6 @@ class TestLiveExecutionReconciliation:
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = TestComponentStubs.cache()
@@ -97,7 +89,6 @@ class TestLiveExecutionReconciliation:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine = LiveDataEngine(
@@ -105,7 +96,6 @@ class TestLiveExecutionReconciliation:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.exec_engine = LiveExecutionEngine(
@@ -113,7 +103,6 @@ class TestLiveExecutionReconciliation:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.risk_engine = LiveRiskEngine(
@@ -122,7 +111,6 @@ class TestLiveExecutionReconciliation:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.client = MockLiveExecutionClient(
@@ -131,11 +119,10 @@ class TestLiveExecutionReconciliation:
             venue=SIM,
             account_type=AccountType.CASH,
             base_currency=USD,
-            instrument_provider=InstrumentProvider(logger=self.logger),
+            instrument_provider=InstrumentProvider(),
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
         self.portfolio.update_account(TestEventStubs.cash_account_state())
         self.exec_engine.register_client(self.client)
@@ -385,7 +372,7 @@ class TestLiveExecutionReconciliation:
             ts_init=0,
         )
 
-        trade_report = TradeReport(
+        fill_report = FillReport(
             account_id=self.account_id,
             instrument_id=AUDUSD_SIM.id,
             client_order_id=ClientOrderId("O-123456"),
@@ -402,7 +389,7 @@ class TestLiveExecutionReconciliation:
         )
 
         self.client.add_order_status_report(order_report)
-        self.client.add_trade_reports(venue_order_id, [trade_report])
+        self.client.add_fill_reports(venue_order_id, [fill_report])
 
         # Act
         result = await self.exec_engine.reconcile_state()
@@ -437,7 +424,7 @@ class TestLiveExecutionReconciliation:
             ts_init=0,
         )
 
-        trade_report = TradeReport(
+        fill_report = FillReport(
             account_id=self.account_id,
             instrument_id=AUDUSD_SIM.id,
             client_order_id=ClientOrderId("O-123456"),
@@ -455,7 +442,7 @@ class TestLiveExecutionReconciliation:
         )
 
         self.client.add_order_status_report(order_report)
-        self.client.add_trade_reports(venue_order_id, [trade_report])
+        self.client.add_fill_reports(venue_order_id, [fill_report])
 
         # Act
         result = await self.exec_engine.reconcile_state()
@@ -525,7 +512,7 @@ class TestLiveExecutionReconciliation:
             ts_init=0,
         )
 
-        trade_report = TradeReport(
+        fill_report = FillReport(
             account_id=self.account_id,
             instrument_id=AUDUSD_SIM.id,
             client_order_id=ClientOrderId("O-123456"),
@@ -543,7 +530,7 @@ class TestLiveExecutionReconciliation:
         )
 
         self.client.add_order_status_report(order_report)
-        self.client.add_trade_reports(venue_order_id, [trade_report])
+        self.client.add_fill_reports(venue_order_id, [fill_report])
 
         # Act
         result = await self.exec_engine.reconcile_state()

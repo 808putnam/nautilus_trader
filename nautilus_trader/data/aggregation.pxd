@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -18,9 +18,9 @@ from cpython.datetime cimport timedelta
 from libc.stdint cimport uint8_t
 from libc.stdint cimport uint64_t
 
-from nautilus_trader.common.clock cimport Clock
-from nautilus_trader.common.clock cimport TimeEvent
-from nautilus_trader.common.logging cimport LoggerAdapter
+from nautilus_trader.common.component cimport Clock
+from nautilus_trader.common.component cimport Logger
+from nautilus_trader.common.component cimport TimeEvent
 from nautilus_trader.model.data cimport Bar
 from nautilus_trader.model.data cimport BarType
 from nautilus_trader.model.data cimport QuoteTick
@@ -59,7 +59,7 @@ cdef class BarBuilder:
 
 
 cdef class BarAggregator:
-    cdef LoggerAdapter _log
+    cdef Logger _log
     cdef BarBuilder _builder
     cdef object _handler
     cdef bint _await_partial

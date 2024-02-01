@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -21,8 +21,7 @@ from aiohttp import ClientResponse
 from nautilus_trader.adapters.binance.http.client import BinanceHttpClient
 from nautilus_trader.adapters.binance.spot.http.wallet import BinanceSpotWalletHttpAPI
 from nautilus_trader.adapters.binance.spot.schemas.wallet import BinanceSpotTradeFee
-from nautilus_trader.common.clock import LiveClock
-from nautilus_trader.common.logging import Logger
+from nautilus_trader.common.component import LiveClock
 
 
 @pytest.mark.skip(reason="WIP")
@@ -30,10 +29,8 @@ class TestBinanceUserHttpAPI:
     def setup(self):
         # Fixture Setup
         clock = LiveClock()
-        logger = Logger(clock=clock)
         self.client = BinanceHttpClient(
             clock=clock,
-            logger=logger,
             key="SOME_BINANCE_API_KEY",
             secret="SOME_BINANCE_API_SECRET",
             base_url="https://api.binance.com/",  # Spot/Margin

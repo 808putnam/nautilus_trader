@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -12,7 +12,6 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
-
 
 import os
 
@@ -31,9 +30,8 @@ from nautilus_trader.adapters.bybit.endpoints.market.klines import BybitKlinesGe
 from nautilus_trader.adapters.bybit.endpoints.market.server_time import BybitServerTimeEndpoint
 from nautilus_trader.adapters.bybit.factories import get_bybit_http_client
 from nautilus_trader.adapters.bybit.http.client import BybitHttpClient
-from nautilus_trader.common.clock import LiveClock
-from nautilus_trader.common.logging import Logger
-from nautilus_trader.utils.save_struct_to_file import save_struct_to_file
+from nautilus_trader.common.component import LiveClock
+from tests.integration_tests.adapters.bybit.utils.save_struct_to_file import save_struct_to_file
 
 
 force_create = True if "FORCE_CREATE" in os.environ else False
@@ -47,7 +45,6 @@ def client() -> BybitHttpClient:
 
     client = get_bybit_http_client(
         clock=clock,
-        logger=Logger(clock=clock),
         is_testnet=True,
     )
     return client

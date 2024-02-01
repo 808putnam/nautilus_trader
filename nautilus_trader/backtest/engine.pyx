@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -15,8 +15,6 @@
 
 import pickle
 from decimal import Decimal
-from typing import Optional
-from typing import Union
 
 import pandas as pd
 
@@ -25,7 +23,6 @@ from nautilus_trader.backtest.results import BacktestResult
 from nautilus_trader.common import Environment
 from nautilus_trader.config import BacktestEngineConfig
 from nautilus_trader.config import CacheConfig
-from nautilus_trader.config import CacheDatabaseConfig
 from nautilus_trader.config import DataEngineConfig
 from nautilus_trader.config import ExecEngineConfig
 from nautilus_trader.config import RiskEngineConfig
@@ -46,14 +43,16 @@ from nautilus_trader.backtest.models cimport LatencyModel
 from nautilus_trader.backtest.modules cimport SimulationModule
 from nautilus_trader.cache.base cimport CacheFacade
 from nautilus_trader.common.actor cimport Actor
-from nautilus_trader.common.clock cimport LiveClock
-from nautilus_trader.common.clock cimport TestClock
-from nautilus_trader.common.clock cimport TimeEvent
-from nautilus_trader.common.clock cimport TimeEventHandler
-from nautilus_trader.common.logging cimport Logger
-from nautilus_trader.common.logging cimport LoggerAdapter
-from nautilus_trader.common.logging cimport log_level_from_str
-from nautilus_trader.common.logging cimport log_memory
+from nautilus_trader.common.component cimport LiveClock
+from nautilus_trader.common.component cimport Logger
+from nautilus_trader.common.component cimport TestClock
+from nautilus_trader.common.component cimport TimeEvent
+from nautilus_trader.common.component cimport TimeEventHandler
+from nautilus_trader.common.component cimport log_level_from_str
+from nautilus_trader.common.component cimport log_sysinfo
+from nautilus_trader.common.component cimport set_logging_clock_realtime_mode
+from nautilus_trader.common.component cimport set_logging_clock_static_mode
+from nautilus_trader.common.component cimport set_logging_clock_static_time
 from nautilus_trader.core.correctness cimport Condition
 from nautilus_trader.core.data cimport Data
 from nautilus_trader.core.datetime cimport maybe_dt_to_unix_nanos
@@ -64,6 +63,7 @@ from nautilus_trader.core.rust.backtest cimport time_event_accumulator_drain
 from nautilus_trader.core.rust.backtest cimport time_event_accumulator_drop
 from nautilus_trader.core.rust.backtest cimport time_event_accumulator_new
 from nautilus_trader.core.rust.common cimport TimeEventHandler_t
+from nautilus_trader.core.rust.common cimport logging_is_colored
 from nautilus_trader.core.rust.common cimport vec_time_event_handlers_drop
 from nautilus_trader.core.rust.core cimport CVec
 from nautilus_trader.core.rust.model cimport AccountType
@@ -73,7 +73,7 @@ from nautilus_trader.core.rust.model cimport OmsType
 from nautilus_trader.core.uuid cimport UUID4
 from nautilus_trader.execution.algorithm cimport ExecAlgorithm
 from nautilus_trader.model.data cimport Bar
-from nautilus_trader.model.data cimport GenericData
+from nautilus_trader.model.data cimport CustomData
 from nautilus_trader.model.data cimport InstrumentStatus
 from nautilus_trader.model.data cimport OrderBookDelta
 from nautilus_trader.model.data cimport OrderBookDeltas
@@ -108,7 +108,7 @@ cdef class BacktestEngine:
         If `config` is not of type `BacktestEngineConfig`.
     """
 
-    def __init__(self, config: Optional[BacktestEngineConfig] = None) -> None:
+    def __init__(self, config: BacktestEngineConfig | None = None) -> None:
         if config is None:
             config = BacktestEngineConfig()
         Condition.type(config, BacktestEngineConfig, "config")
@@ -116,12 +116,11 @@ cdef class BacktestEngine:
         self._config: BacktestEngineConfig  = config
 
         # Setup components
-        self._clock: Clock = LiveClock()  # Real-time for the engine
         self._accumulator = <TimeEventAccumulatorAPI>time_event_accumulator_new()
 
         # Run IDs
-        self._run_config_id: Optional[str] = None
-        self._run_id: Optional[UUID4] = None
+        self._run_config_id: str | None = None
+        self._run_id: UUID4 | None = None
 
         # Venues and data
         self._venues: dict[Venue, SimulatedExchange] = {}
@@ -131,21 +130,16 @@ cdef class BacktestEngine:
         self._iteration: uint64_t = 0
 
         # Timing
-        self._run_started: Optional[datetime] = None
-        self._run_finished: Optional[datetime] = None
-        self._backtest_start: Optional[datetime] = None
-        self._backtest_end: Optional[datetime] = None
+        self._run_started: datetime | None = None
+        self._run_finished: datetime | None = None
+        self._backtest_start: datetime | None = None
+        self._backtest_end: datetime | None = None
 
         # Build core system kernel
         self._kernel = NautilusKernel(name=type(self).__name__, config=config)
+        self._log = Logger(type(self).__name__)
 
         self._data_engine: DataEngine = self._kernel.data_engine
-
-        # Setup engine logging
-        self._log = LoggerAdapter(
-            component_name=type(self).__name__,
-            logger=self._kernel.logger,
-        )
 
     def __del__(self) -> None:
         if self._accumulator._0 != NULL:
@@ -202,6 +196,18 @@ cdef class BacktestEngine:
         return self._kernel
 
     @property
+    def logger(self) -> Logger:
+        """
+        Return the internal logger for the engine.
+
+        Returns
+        -------
+        Logger
+
+        """
+        return self._log
+
+    @property
     def run_config_id(self) -> str:
         """
         Return the last backtest engine run config ID.
@@ -238,7 +244,7 @@ cdef class BacktestEngine:
         return self._iteration
 
     @property
-    def run_started(self) -> Optional[datetime]:
+    def run_started(self) -> datetime | None:
         """
         Return when the last backtest run started (if run).
 
@@ -250,7 +256,7 @@ cdef class BacktestEngine:
         return self._run_started
 
     @property
-    def run_finished(self) -> Optional[datetime]:
+    def run_finished(self) -> datetime | None:
         """
         Return when the last backtest run finished (if run).
 
@@ -262,7 +268,7 @@ cdef class BacktestEngine:
         return self._run_finished
 
     @property
-    def backtest_start(self) -> Optional[datetime]:
+    def backtest_start(self) -> datetime | None:
         """
         Return the last backtest run time range start (if run).
 
@@ -274,7 +280,7 @@ cdef class BacktestEngine:
         return self._backtest_start
 
     @property
-    def backtest_end(self) -> Optional[datetime]:
+    def backtest_end(self) -> datetime | None:
         """
         Return the last backtest run time range end (if run).
 
@@ -350,12 +356,12 @@ cdef class BacktestEngine:
         oms_type: OmsType,
         account_type: AccountType,
         starting_balances: list[Money],
-        base_currency: Optional[Currency] = None,
-        default_leverage: Optional[Decimal] = None,
-        leverages: Optional[dict[InstrumentId, Decimal]] = None,
-        modules: Optional[list[SimulationModule]] = None,
-        fill_model: Optional[FillModel] = None,
-        latency_model: Optional[LatencyModel] = None,
+        base_currency: Currency | None = None,
+        default_leverage: Decimal | None = None,
+        leverages: dict[InstrumentId, Decimal] | None = None,
+        modules: list[SimulationModule] | None = None,
+        fill_model: FillModel | None = None,
+        latency_model: LatencyModel | None = None,
         book_type: BookType = BookType.L1_MBP,
         routing: bool = False,
         frozen_account: bool = False,
@@ -448,13 +454,13 @@ cdef class BacktestEngine:
             leverages=leverages or {},
             instruments=[],
             modules=modules,
+            portfolio=self.kernel.portfolio,
             msgbus=self.kernel.msgbus,
             cache=self.kernel.cache,
             fill_model=fill_model,
             latency_model=latency_model,
             book_type=book_type,
             clock=self.kernel.clock,
-            logger=self.kernel.logger,
             frozen_account=frozen_account,
             bar_execution=bar_execution,
             reject_stop_orders=reject_stop_orders,
@@ -473,7 +479,6 @@ cdef class BacktestEngine:
             msgbus=self.kernel.msgbus,
             cache=self.kernel.cache,
             clock=self.kernel.clock,
-            logger=self.kernel.logger,
             routing=routing,
             frozen_account=frozen_account,
         )
@@ -560,14 +565,14 @@ cdef class BacktestEngine:
         bint sort = True,
     ) -> None:
         """
-        Add the given data to the backtest engine.
+        Add the given custom data to the backtest engine.
 
         Parameters
         ----------
         data : list[Data]
             The data to add.
         client_id : ClientId, optional
-            The data client ID to associate with generic data.
+            The data client ID to associate with custom data.
         validate : bool, default True
             If `data` should be validated
             (recommended when adding data directly to the engine).
@@ -637,7 +642,7 @@ cdef class BacktestEngine:
                 Condition.not_none(client_id, "client_id")
                 # Check client has been registered
                 self._add_data_client_if_not_exists(client_id)
-                if isinstance(first, GenericData):
+                if isinstance(first, CustomData):
                     data_added_str = f"{type(first.data).__name__} "
 
         # Add data
@@ -780,9 +785,6 @@ cdef class BacktestEngine:
             # End current backtest run
             self.end()
 
-        # Change logger clock back to live clock for consistent time stamping
-        self.kernel.logger.change_clock(self._clock)
-
         # Reset DataEngine
         if self.kernel.data_engine.is_running:
             self.kernel.data_engine.stop()
@@ -797,6 +799,11 @@ cdef class BacktestEngine:
         if self.kernel.risk_engine.is_running:
             self.kernel.risk_engine.stop()
         self.kernel.risk_engine.reset()
+
+        # Reset Emulator
+        if self.kernel.emulator.is_running:
+            self.kernel.emulator.stop()
+        self.kernel.emulator.reset()
 
         self.kernel.trader.reset()
 
@@ -833,21 +840,21 @@ cdef class BacktestEngine:
         Clear all actors from the engines internal trader.
 
         """
-        self._trader.clear_actors()
+        self._kernel.trader.clear_actors()
 
     def clear_strategies(self) -> None:
         """
         Clear all trading strategies from the engines internal trader.
 
         """
-        self._trader.clear_strategies()
+        self._kernel.trader.clear_strategies()
 
-    def clear_exec_algorthms(self) -> None:
+    def clear_exec_algorithms(self) -> None:
         """
         Clear all execution algorithms from the engines internal trader.
 
         """
-        self._trader.clear_exec_algorthms()
+        self._kernel.trader.clear_exec_algorithms()
 
     def dispose(self) -> None:
         """
@@ -862,9 +869,9 @@ cdef class BacktestEngine:
 
     def run(
         self,
-        start: Optional[Union[datetime, str, int]] = None,
-        end: Optional[Union[datetime, str, int]] = None,
-        run_config_id: Optional[str] = None,
+        start: datetime | str | int | None = None,
+        end: datetime | str | int | None = None,
+        run_config_id: str | None = None,
         streaming: bool = False,
     ) -> None:
         """
@@ -884,12 +891,12 @@ cdef class BacktestEngine:
 
         Parameters
         ----------
-        start : Union[datetime, str, int], optional
-            The start datetime (UTC) for the backtest run. If ``None`` engine runs
-            from the start of the data.
-        end : Union[datetime, str, int], optional
-            The end datetime (UTC) for the backtest run. If ``None`` engine runs
-            to the end of the data.
+        start : datetime or str or int, optional
+            The start datetime (UTC) for the backtest run.
+            If ``None`` engine runs from the start of the data.
+        end : datetime or str or int, optional
+            The end datetime (UTC) for the backtest run.
+            If ``None`` engine runs to the end of the data.
         run_config_id : str, optional
             The tokenized `BacktestRunConfig` ID.
         streaming : bool, default False
@@ -935,9 +942,11 @@ cdef class BacktestEngine:
         except AccountError:
             pass
 
-        self._run_finished = self._clock.utc_now()
+        self._run_finished = pd.Timestamp.utcnow()
         self._backtest_end = self.kernel.clock.utc_now()
-        self._kernel.logger.change_clock(self._clock)
+
+        # Change logger clock back to real-time for consistent time stamping
+        set_logging_clock_realtime_mode()
 
         self._log_post_run()
 
@@ -976,9 +985,9 @@ cdef class BacktestEngine:
 
     def _run(
         self,
-        start: Optional[Union[datetime, str, int]] = None,
-        end: Optional[Union[datetime, str, int]] = None,
-        run_config_id: Optional[str] = None,
+        start: datetime | str | int | None = None,
+        end: datetime | str | int | None = None,
+        run_config_id: str | None = None,
     ):
         cdef uint64_t start_ns
         cdef uint64_t end_ns
@@ -1016,7 +1025,7 @@ cdef class BacktestEngine:
             # Initialize run
             self._run_config_id = run_config_id  # Can be None
             self._run_id = UUID4()
-            self._run_started = self._clock.utc_now()
+            self._run_started = pd.Timestamp.utcnow()
             self._backtest_start = start
             for exchange in self._venues.values():
                 exchange.initialize_account()
@@ -1039,7 +1048,9 @@ cdef class BacktestEngine:
             self._kernel.start()
 
             # Change logger clock for the run
-            self._kernel.logger.change_clock(self.kernel.clock)
+            self._kernel.clock.set_time(start_ns)
+            set_logging_clock_static_mode()
+            set_logging_clock_static_time(start_ns)
             self._log_pre_run()
 
         self._log_run(start, end)
@@ -1145,6 +1156,8 @@ cdef class BacktestEngine:
             return self._data[cursor]
 
     cdef CVec _advance_time(self, uint64_t ts_now, list clocks):
+        set_logging_clock_static_time(ts_now)
+
         cdef TestClock clock
         for clock in clocks:
             time_event_accumulator_advance_clock(
@@ -1208,10 +1221,15 @@ cdef class BacktestEngine:
                     exchange.process(ts_event_init)
 
     def _get_log_color_code(self):
-        return "\033[36m" if self._log.is_colored else ""
+        return "\033[36m" if logging_is_colored() else ""
 
     def _log_pre_run(self):
-        log_memory(self._log)
+        log_sysinfo(
+            trader_id=self._kernel.trader_id,
+            machine_id=self._kernel.machine_id,
+            instance_id=self._kernel.instance_id,
+            component=type(self).__name__,
+        )
 
         cdef str color = self._get_log_color_code()
 
@@ -1291,7 +1309,7 @@ cdef class BacktestEngine:
             self._log.info(f"{color}=================================================================")
             self._log.info(f"{repr(account)}")
             self._log.info(f"{color}-----------------------------------------------------------------")
-            unrealized_pnls: Optional[dict[Currency, Money]] = None
+            unrealized_pnls: dict[Currency, Money] | None = None
             if venue.is_frozen_account:
                 self._log.warning(f"ACCOUNT FROZEN")
             else:
@@ -1366,7 +1384,6 @@ cdef class BacktestEngine:
                 msgbus=self._kernel.msgbus,
                 cache=self._kernel.cache,
                 clock=self._kernel.clock,
-                logger=self._kernel.logger,
             )
             self._kernel.data_engine.register_client(client)
 
@@ -1378,6 +1395,5 @@ cdef class BacktestEngine:
                 msgbus=self._kernel.msgbus,
                 cache=self._kernel.cache,
                 clock=self._kernel.clock,
-                logger=self._kernel.logger,
             )
             self._kernel.data_engine.register_client(client)

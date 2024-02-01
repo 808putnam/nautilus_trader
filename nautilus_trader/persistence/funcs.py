@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -15,10 +15,11 @@
 
 from nautilus_trader.core.inspect import is_nautilus_class
 from nautilus_trader.core.nautilus_pyo3 import convert_to_snake_case
+from nautilus_trader.model.identifiers import InstrumentId
 
 
 INVALID_WINDOWS_CHARS = r'<>:"/\|?* '
-GENERIC_DATA_PREFIX = "genericdata_"
+CUSTOM_DATA_PREFIX = "custom_"
 
 # Taken from https://github.com/dask/dask/blob/261bf174931580230717abca93fe172e166cc1e8/dask/utils.py
 byte_sizes = {
@@ -87,14 +88,16 @@ def class_to_filename(cls: type) -> str:
     filename_mappings = {"OrderBookDeltas": "OrderBookDelta"}
     name = f"{convert_to_snake_case(filename_mappings.get(cls.__name__, cls.__name__))}"
     if not is_nautilus_class(cls):
-        name = f"{GENERIC_DATA_PREFIX}{name}"
+        name = f"{CUSTOM_DATA_PREFIX}{name}"
     return name
 
 
-def urisafe_instrument_id(instrument_id: str) -> str:
+def urisafe_instrument_id(instrument_id: InstrumentId | str) -> str:
     """
     Convert an instrument_id into a valid URI for writing to a file path.
     """
+    if isinstance(instrument_id, InstrumentId):
+        instrument_id = instrument_id.value
     return instrument_id.replace("/", "")
 
 

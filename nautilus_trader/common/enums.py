@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -21,8 +21,8 @@ from nautilus_trader.common.component import component_state_from_str
 from nautilus_trader.common.component import component_state_to_str
 from nautilus_trader.common.component import component_trigger_from_str
 from nautilus_trader.common.component import component_trigger_to_str
-from nautilus_trader.common.logging import log_level_from_str
-from nautilus_trader.common.logging import log_level_to_str
+from nautilus_trader.common.component import log_level_from_str
+from nautilus_trader.common.component import log_level_to_str
 from nautilus_trader.core.rust.common import ComponentState
 from nautilus_trader.core.rust.common import ComponentTrigger
 from nautilus_trader.core.rust.common import LogColor

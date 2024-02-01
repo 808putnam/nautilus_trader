@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -26,9 +26,8 @@ from nautilus_trader.adapters.binance.config import BinanceExecClientConfig
 from nautilus_trader.adapters.binance.http.client import BinanceHttpClient
 from nautilus_trader.adapters.binance.spot.execution import BinanceSpotExecutionClient
 from nautilus_trader.adapters.binance.spot.providers import BinanceSpotInstrumentProvider
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.config import InstrumentProviderConfig
 from nautilus_trader.core.nautilus_pyo3 import HttpMethod
 from nautilus_trader.core.uuid import UUID4
@@ -57,7 +56,6 @@ class TestBinanceSpotExecutionClient:
         self.loop.set_debug(True)
 
         self.clock = LiveClock()
-        self.logger = Logger(clock=self.clock, bypass=True)
 
         self.trader_id = TestIdStubs.trader_id()
         self.venue = BINANCE_VENUE
@@ -66,14 +64,12 @@ class TestBinanceSpotExecutionClient:
         self.msgbus = MessageBus(
             trader_id=self.trader_id,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.cache = TestComponentStubs.cache()
 
         self.http_client = BinanceHttpClient(
             clock=self.clock,
-            logger=self.logger,
             key="SOME_BINANCE_API_KEY",
             secret="SOME_BINANCE_API_SECRET",
             base_url="https://api.binance.com/",  # Spot/Margin
@@ -81,7 +77,6 @@ class TestBinanceSpotExecutionClient:
 
         self.provider = BinanceSpotInstrumentProvider(
             client=self.http_client,
-            logger=self.logger,
             clock=self.clock,
             config=InstrumentProviderConfig(load_all=True),
         )
@@ -90,21 +85,18 @@ class TestBinanceSpotExecutionClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.data_engine = DataEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.exec_engine = ExecutionEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.risk_engine = RiskEngine(
@@ -112,7 +104,6 @@ class TestBinanceSpotExecutionClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
         self.exec_client = BinanceSpotExecutionClient(
@@ -121,7 +112,6 @@ class TestBinanceSpotExecutionClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
             instrument_provider=self.provider,
             base_url_ws="",  # Not required for testing
             config=BinanceExecClientConfig(),
@@ -137,7 +127,6 @@ class TestBinanceSpotExecutionClient:
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
         )
 
     @pytest.mark.skip(reason="Pending overhaul of testing")

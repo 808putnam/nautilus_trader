@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -23,6 +23,7 @@ from nautilus_trader.model.currencies import ETH
 from nautilus_trader.model.currencies import USD
 from nautilus_trader.model.currencies import USDT
 from nautilus_trader.model.enums import option_kind_from_str
+from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.instruments import CryptoFuture
 from nautilus_trader.model.instruments import CryptoPerpetual
 from nautilus_trader.model.instruments import Equity
@@ -34,6 +35,7 @@ from nautilus_trader.model.objects import Price
 from nautilus_trader.model.objects import Quantity
 from nautilus_trader.test_kit.providers import TestDataProvider
 from nautilus_trader.test_kit.providers import TestInstrumentProvider
+from nautilus_trader.test_kit.rust.instruments_pyo3 import TestInstrumentProviderPyo3
 
 
 provider = TestDataProvider()
@@ -44,8 +46,8 @@ XBTUSD_BITMEX = TestInstrumentProvider.xbtusd_bitmex()
 BTCUSDT_BINANCE = TestInstrumentProvider.btcusdt_binance()
 BTCUSDT_220325 = TestInstrumentProvider.btcusdt_future_binance()
 ETHUSD_BITMEX = TestInstrumentProvider.ethusd_bitmex()
-AAPL_EQUITY = TestInstrumentProvider.equity(symbol="AAPL", venue="NASDAQ")
-ES_FUTURE = TestInstrumentProvider.future(symbol="ESZ21", underlying="ES", venue="CME")
+AAPL_EQUITY = TestInstrumentProvider.equity(symbol="AAPL", venue="XNAS")
+ES_FUTURE = TestInstrumentProvider.es_future(expiry_year=2023, expiry_month=12)
 AAPL_OPTION = TestInstrumentProvider.aapl_option()
 
 
@@ -91,7 +93,7 @@ class TestInstrument:
             "id": "BTCUSDT.BINANCE",
             "raw_symbol": "BTCUSDT",
             "asset_class": "CRYPTOCURRENCY",
-            "asset_type": "SPOT",
+            "instrument_class": "SPOT",
             "quote_currency": "USDT",
             "is_inverse": False,
             "price_precision": 2,
@@ -122,7 +124,7 @@ class TestInstrument:
             "id": "BTCUSDT.BINANCE",
             "raw_symbol": "BTCUSDT",
             "asset_class": "CRYPTOCURRENCY",
-            "asset_type": "SPOT",
+            "instrument_class": "SPOT",
             "quote_currency": "USDT",
             "is_inverse": False,
             "price_precision": 2,
@@ -227,15 +229,12 @@ class TestInstrument:
         assert Equity.from_dict(result) == AAPL_EQUITY
         assert result == {
             "type": "Equity",
-            "id": "AAPL.NASDAQ",
+            "id": "AAPL.XNAS",
             "raw_symbol": "AAPL",
             "currency": "USD",
             "price_precision": 2,
             "price_increment": "0.01",
-            "size_precision": 0,
-            "size_increment": "1",
-            "multiplier": "1",
-            "lot_size": "1",
+            "lot_size": "100",
             "isin": "US0378331005",
             "margin_init": "0",
             "margin_maint": "0",
@@ -252,24 +251,24 @@ class TestInstrument:
         # Assert
         assert FuturesContract.from_dict(result) == ES_FUTURE
         assert result == {
+            "type": "FuturesContract",
+            "id": "ESZ3.GLBX",
+            "raw_symbol": "ESZ3",
             "asset_class": "INDEX",
+            "underlying": "ES",
             "currency": "USD",
-            "activation_ns": 1616160600000000000,
-            "expiration_ns": 1639751400000000000,
-            "id": "ESZ21.CME",
+            "activation_ns": 1622842200000000000,
+            "expiration_ns": 1702650600000000000,
             "lot_size": "1",
             "margin_init": "0",
             "margin_maint": "0",
             "multiplier": "1",
-            "raw_symbol": "ESZ21",
-            "price_increment": "0.01",
+            "price_increment": "0.25",
             "price_precision": 2,
             "size_increment": "1",
             "size_precision": 0,
-            "ts_event": 1638133151389539971,
-            "ts_init": 1638316800000000000,
-            "type": "FuturesContract",
-            "underlying": "ES",
+            "ts_event": 1622842200000000000,
+            "ts_init": 1622842200000000000,
         }
 
     def test_option_instrument_to_dict(self):
@@ -279,17 +278,18 @@ class TestInstrument:
         # Assert
         assert OptionsContract.from_dict(result) == AAPL_OPTION
         assert result == {
+            "type": "OptionsContract",
+            "id": "AAPL211217C00150000.OPRA",
+            "raw_symbol": "AAPL211217C00150000",
             "asset_class": "EQUITY",
             "currency": "USD",
             "activation_ns": 1631836800000000000,
             "expiration_ns": 1639699200000000000,
-            "id": "AAPL211217C00150000.OPRA",
-            "kind": "CALL",
+            "option_kind": "CALL",
             "lot_size": "1",
             "margin_init": "0",
             "margin_maint": "0",
             "multiplier": "100",
-            "raw_symbol": "AAPL211217C00150000",
             "price_increment": "0.01",
             "price_precision": 2,
             "size_increment": "1",
@@ -297,7 +297,6 @@ class TestInstrument:
             "strike_price": "149.00",
             "ts_event": 0,
             "ts_init": 0,
-            "type": "OptionsContract",
             "underlying": "AAPL",
         }
 
@@ -450,4 +449,40 @@ class TestInstrument:
 
     def test_option_attributes(self):
         assert AAPL_OPTION.underlying == "AAPL"
-        assert AAPL_OPTION.kind == option_kind_from_str("CALL")
+        assert AAPL_OPTION.option_kind == option_kind_from_str("CALL")
+
+
+def test_pyo3_equity_to_legacy_equity() -> None:
+    # Arrange
+    pyo3_instrument = TestInstrumentProviderPyo3.aapl_equity()
+
+    # Act
+    instrument = Equity.from_dict(pyo3_instrument.to_dict())
+
+    # Assert
+    assert isinstance(instrument, Equity)
+    assert instrument.id == InstrumentId.from_str("AAPL.XNAS")
+
+
+def test_pyo3_future_to_legacy_future() -> None:
+    # Arrange
+    pyo3_instrument = TestInstrumentProviderPyo3.futures_contract_es()
+
+    # Act
+    instrument = FuturesContract.from_dict(pyo3_instrument.to_dict())
+
+    # Assert
+    assert isinstance(instrument, FuturesContract)
+    assert instrument.id == InstrumentId.from_str("ESZ21.CME")
+
+
+def test_pyo3_option_to_legacy_option() -> None:
+    # Arrange
+    pyo3_instrument = TestInstrumentProviderPyo3.aapl_option()
+
+    # Act
+    instrument = OptionsContract.from_dict(pyo3_instrument.to_dict())
+
+    # Assert
+    assert isinstance(instrument, OptionsContract)
+    assert instrument.id == InstrumentId.from_str("AAPL211217C00150000.OPRA")

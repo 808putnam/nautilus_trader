@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -33,6 +33,7 @@ from nautilus_trader.config import TradingNodeConfig
 from nautilus_trader.examples.strategies.subscribe import SubscribeStrategy
 from nautilus_trader.examples.strategies.subscribe import SubscribeStrategyConfig
 from nautilus_trader.live.node import TradingNode
+from nautilus_trader.model.identifiers import InstrumentId
 
 
 # fmt: on
@@ -135,7 +136,7 @@ node = TradingNode(config=config_node)
 
 # Configure your strategy
 strategy_config = SubscribeStrategyConfig(
-    instrument_id="EUR/USD.IDEALPRO",
+    instrument_id=InstrumentId.from_str("EUR/USD.IDEALPRO"),
     # book_type=None,
     # snapshots=True,
     trade_ticks=False,

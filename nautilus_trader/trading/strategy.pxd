@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -15,11 +15,10 @@
 
 from nautilus_trader.cache.base cimport CacheFacade
 from nautilus_trader.common.actor cimport Actor
-from nautilus_trader.common.clock cimport Clock
-from nautilus_trader.common.clock cimport TimeEvent
+from nautilus_trader.common.component cimport Clock
 from nautilus_trader.common.component cimport MessageBus
+from nautilus_trader.common.component cimport TimeEvent
 from nautilus_trader.common.factories cimport OrderFactory
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.rust.model cimport OmsType
 from nautilus_trader.core.rust.model cimport OrderSide
 from nautilus_trader.core.rust.model cimport PositionSide
@@ -70,8 +69,6 @@ from nautilus_trader.portfolio.base cimport PortfolioFacade
 cdef class Strategy(Actor):
     cdef OrderManager _manager
 
-    cdef readonly PortfolioFacade portfolio
-    """The read-only portfolio for the strategy.\n\n:returns: `PortfolioFacade`"""
     cdef readonly OrderFactory order_factory
     """The order factory for the strategy.\n\n:returns: `OrderFactory`"""
     cdef readonly str order_id_tag
@@ -94,7 +91,6 @@ cdef class Strategy(Actor):
         MessageBus msgbus,
         CacheFacade cache,
         Clock clock,
-        Logger logger,
     )
     cpdef void change_id(self, StrategyId strategy_id)
     cpdef void change_order_id_tag(self, str order_id_tag)

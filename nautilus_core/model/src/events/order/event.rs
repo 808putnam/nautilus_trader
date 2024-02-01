@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-//  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+//  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
 //
 //  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -20,7 +20,7 @@ use crate::{
     events::order::{
         accepted::OrderAccepted, cancel_rejected::OrderCancelRejected, canceled::OrderCanceled,
         denied::OrderDenied, emulated::OrderEmulated, expired::OrderExpired, filled::OrderFilled,
-        initialized::OrderInitialized, modified_rejected::OrderModifyRejected,
+        initialized::OrderInitialized, modify_rejected::OrderModifyRejected,
         pending_cancel::OrderPendingCancel, pending_update::OrderPendingUpdate,
         rejected::OrderRejected, released::OrderReleased, submitted::OrderSubmitted,
         triggered::OrderTriggered, updated::OrderUpdated,

@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -22,15 +22,14 @@ from nautilus_trader.adapters.bybit.data import BybitDataClient
 from nautilus_trader.adapters.bybit.execution import BybitExecutionClient
 from nautilus_trader.adapters.bybit.http.client import BybitHttpClient
 from nautilus_trader.adapters.bybit.provider import BybitInstrumentProvider
+from nautilus_trader.adapters.env import get_env_key
 from nautilus_trader.cache.cache import Cache
-from nautilus_trader.common.clock import LiveClock
+from nautilus_trader.common.component import LiveClock
 from nautilus_trader.common.component import MessageBus
-from nautilus_trader.common.logging import Logger
 from nautilus_trader.config import InstrumentProviderConfig
 from nautilus_trader.core.nautilus_pyo3 import Quota
 from nautilus_trader.live.factories import LiveDataClientFactory
 from nautilus_trader.live.factories import LiveExecClientFactory
-from nautilus_trader.utils.env import get_env_key
 
 
 HTTP_CLIENTS: dict[str, BybitHttpClient] = {}
@@ -38,7 +37,6 @@ HTTP_CLIENTS: dict[str, BybitHttpClient] = {}
 
 def get_bybit_http_client(
     clock: LiveClock,
-    logger: Logger,
     key: str | None = None,
     secret: str | None = None,
     base_url: str | None = None,
@@ -54,8 +52,6 @@ def get_bybit_http_client(
     ----------
     clock : LiveClock
         The clock for the client.
-    logger : Logger
-        The logger for the client.
     key : str, optional
         The API key for the client.
     secret : str, optional
@@ -76,8 +72,8 @@ def get_bybit_http_client(
     http_base_url = base_url or _get_http_base_url(is_testnet)
     client_key: str = "|".join((key, secret))
 
-    # setup rate limit quotas
-    # current rate limit in bybit is 120 requests in any 5-second window.
+    # Setup rate limit quotas
+    # Current rate limit in bybit is 120 requests in any 5-second window,
     # and that is 24 request per second.
     # https://bybit-exchange.github.io/docs/v5/rate-limit
     ratelimiter_default_quota = Quota.rate_per_second(24)
@@ -86,7 +82,6 @@ def get_bybit_http_client(
     if client_key not in HTTP_CLIENTS:
         client = BybitHttpClient(
             clock=clock,
-            logger=logger,
             api_key=key,
             api_secret=secret,
             base_url=http_base_url,
@@ -99,7 +94,6 @@ def get_bybit_http_client(
 
 def get_bybit_instrument_provider(
     client: BybitHttpClient,
-    logger: Logger,
     clock: LiveClock,
     instrument_types: list[BybitInstrumentType],
     config: InstrumentProviderConfig,
@@ -114,8 +108,6 @@ def get_bybit_instrument_provider(
     ----------
     client : BybitHttpClient
         The client for the instrument provider.
-    logger : Logger
-        The logger for the instrument provider.
     clock : LiveClock
         The clock for the instrument provider.
     instrument_types : list[BybitInstrumentType]
@@ -132,7 +124,6 @@ def get_bybit_instrument_provider(
     """
     return BybitInstrumentProvider(
         client=client,
-        logger=logger,
         config=config,
         clock=clock,
         instrument_types=instrument_types,
@@ -152,7 +143,6 @@ class BybitLiveDataClientFactory(LiveDataClientFactory):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
     ) -> BybitDataClient:
         """
         Create a new Bybit data client.
@@ -171,8 +161,6 @@ class BybitLiveDataClientFactory(LiveDataClientFactory):
             The cache for the client.
         clock: LiveClock
             The clock for the instrument provider.
-        logger : Logger
-            The logger for the instrument provider.
 
         Returns
         -------
@@ -181,7 +169,6 @@ class BybitLiveDataClientFactory(LiveDataClientFactory):
         """
         client: BybitHttpClient = get_bybit_http_client(
             clock=clock,
-            logger=logger,
             key=config.api_key,
             secret=config.api_secret,
             base_url=config.base_url_http,
@@ -189,7 +176,6 @@ class BybitLiveDataClientFactory(LiveDataClientFactory):
         )
         provider = get_bybit_instrument_provider(
             client=client,
-            logger=logger,
             clock=clock,
             instrument_types=config.instrument_types,
             config=config.instrument_provider,
@@ -206,7 +192,6 @@ class BybitLiveDataClientFactory(LiveDataClientFactory):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             instrument_provider=provider,
             instrument_types=config.instrument_types,
             ws_urls=ws_base_urls,
@@ -227,7 +212,6 @@ class BybitLiveExecClientFactory(LiveExecClientFactory):
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-        logger: Logger,
     ) -> BybitExecutionClient:
         """
         Create a new Bybit execution client.
@@ -246,8 +230,6 @@ class BybitLiveExecClientFactory(LiveExecClientFactory):
             The cache for the client.
         clock : LiveClock
             The clock for the client.
-        logger : Logger
-            The logger for the client.
 
         Returns
         -------
@@ -256,7 +238,6 @@ class BybitLiveExecClientFactory(LiveExecClientFactory):
         """
         client: BybitHttpClient = get_bybit_http_client(
             clock=clock,
-            logger=logger,
             key=config.api_key,
             secret=config.api_secret,
             base_url=config.base_url_http,
@@ -264,7 +245,6 @@ class BybitLiveExecClientFactory(LiveExecClientFactory):
         )
         provider = get_bybit_instrument_provider(
             client=client,
-            logger=logger,
             clock=clock,
             instrument_types=config.instrument_types,
             config=config.instrument_provider,
@@ -276,7 +256,6 @@ class BybitLiveExecClientFactory(LiveExecClientFactory):
             msgbus=msgbus,
             cache=cache,
             clock=clock,
-            logger=logger,
             instrument_provider=provider,
             instrument_types=config.instrument_types,
             base_url_ws=config.base_url_ws or default_base_url_ws,
@@ -286,16 +265,32 @@ class BybitLiveExecClientFactory(LiveExecClientFactory):
 
 def _get_api_key(is_testnet: bool) -> str:
     if is_testnet:
-        return get_env_key("BYBIT_TESTNET_API_KEY")
+        key = get_env_key("BYBIT_TESTNET_API_KEY")
+        if not key:
+            raise ValueError(
+                "BYBIT_TESTNET_API_KEY environment variable not set",
+            )
+        return key
     else:
-        return get_env_key("BYBIT_API_KEY")
+        key = get_env_key("BYBIT_API_KEY")
+        if not key:
+            raise ValueError("BYBIT_API_KEY environment variable not set")
+        return key
 
 
 def _get_api_secret(is_testnet: bool) -> str:
     if is_testnet:
-        return get_env_key("BYBIT_TESTNET_API_SECRET")
+        secret = get_env_key("BYBIT_TESTNET_API_SECRET")
+        if not secret:
+            raise ValueError(
+                "BYBIT_TESTNET_API_SECRET environment variable not set",
+            )
+        return secret
     else:
-        return get_env_key("BYBIT_API_SECRET")
+        secret = get_env_key("BYBIT_API_SECRET")
+        if not secret:
+            raise ValueError("BYBIT_API_SECRET environment variable not set")
+        return secret
 
 
 def _get_http_base_url(is_testnet: bool):

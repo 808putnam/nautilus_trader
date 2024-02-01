@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -29,8 +29,9 @@ from nautilus_trader.execution.messages cimport SubmitOrderList
 from nautilus_trader.model.data cimport Bar
 from nautilus_trader.model.data cimport InstrumentClose
 from nautilus_trader.model.data cimport InstrumentStatus
+from nautilus_trader.model.data cimport OrderBookDelta
+from nautilus_trader.model.data cimport OrderBookDeltas
 from nautilus_trader.model.data cimport QuoteTick
-from nautilus_trader.model.data cimport Ticker
 from nautilus_trader.model.data cimport TradeTick
 from nautilus_trader.model.data cimport VenueStatus
 from nautilus_trader.model.events.account cimport AccountState
@@ -101,8 +102,9 @@ _OBJECT_TO_DICT_MAP: dict[str, Callable[[None], dict]] = {
     CurrencyPair.__name__: CurrencyPair.to_dict_c,
     CryptoPerpetual.__name__: CryptoPerpetual.to_dict_c,
     CryptoFuture.__name__: CryptoFuture.to_dict_c,
+    OrderBookDelta.__name__: OrderBookDelta.to_dict_c,
+    OrderBookDeltas.__name__: OrderBookDeltas.to_dict_c,
     TradeTick.__name__: TradeTick.to_dict_c,
-    Ticker.__name__: Ticker.to_dict_c,
     QuoteTick.__name__: QuoteTick.to_dict_c,
     Bar.__name__: Bar.to_dict_c,
     InstrumentStatus.__name__: InstrumentStatus.to_dict_c,
@@ -150,8 +152,9 @@ _OBJECT_FROM_DICT_MAP: dict[str, Callable[[dict], Any]] = {
     CurrencyPair.__name__: CurrencyPair.from_dict_c,
     CryptoPerpetual.__name__: CryptoPerpetual.from_dict_c,
     CryptoFuture.__name__: CryptoFuture.from_dict_c,
+    OrderBookDelta.__name__: OrderBookDelta.from_dict_c,
+    OrderBookDeltas.__name__: OrderBookDeltas.from_dict_c,
     TradeTick.__name__: TradeTick.from_dict_c,
-    Ticker.__name__: Ticker.from_dict_c,
     QuoteTick.__name__: QuoteTick.from_dict_c,
     Bar.__name__: Bar.from_dict_c,
     InstrumentStatus.__name__: InstrumentStatus.from_dict_c,
@@ -162,7 +165,7 @@ _OBJECT_FROM_DICT_MAP: dict[str, Callable[[dict], Any]] = {
 }
 
 
-EXTERNAL_PUBLISHING_TYPES = (
+_EXTERNAL_PUBLISHABLE_TYPES = {
     str,
     int,
     float,
@@ -202,8 +205,9 @@ EXTERNAL_PUBLISHING_TYPES = (
     CurrencyPair,
     CryptoPerpetual,
     CryptoFuture,
+    OrderBookDelta,
+    OrderBookDeltas,
     TradeTick,
-    Ticker,
     QuoteTick,
     Bar,
     InstrumentStatus,
@@ -211,7 +215,7 @@ EXTERNAL_PUBLISHING_TYPES = (
     InstrumentClose,
     BinanceBar,
     BinanceTicker,
-)
+}
 
 
 cpdef void register_serializable_object(
@@ -221,6 +225,10 @@ cpdef void register_serializable_object(
 ):
     """
     Register the given object with the global serialization object maps.
+
+    The `type` will also be registered as an external publishable type and
+    will be published externally on the message bus unless also added to
+    the `MessageBusConfig.types_filter`.
 
     Parameters
     ----------
@@ -246,6 +254,7 @@ cpdef void register_serializable_object(
 
     _OBJECT_TO_DICT_MAP[obj.__name__] = to_dict
     _OBJECT_FROM_DICT_MAP[obj.__name__] = from_dict
+    _EXTERNAL_PUBLISHABLE_TYPES.add(obj)
 
 
 cdef class Serializer:
@@ -262,8 +271,8 @@ cdef class Serializer:
 
     cpdef bytes serialize(self, object obj):
         """Abstract method (implement in subclass)."""
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError("method `serialize` must be implemented in the subclass")  # pragma: no cover
 
     cpdef object deserialize(self, bytes obj_bytes):
         """Abstract method (implement in subclass)."""
-        raise NotImplementedError("method must be implemented in the subclass")  # pragma: no cover
+        raise NotImplementedError("method `deserialize` must be implemented in the subclass")  # pragma: no cover

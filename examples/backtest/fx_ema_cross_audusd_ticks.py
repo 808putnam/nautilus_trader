@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -27,8 +27,10 @@ from nautilus_trader.backtest.modules import FXRolloverInterestModule
 from nautilus_trader.examples.strategies.ema_cross import EMACross
 from nautilus_trader.examples.strategies.ema_cross import EMACrossConfig
 from nautilus_trader.model.currencies import USD
+from nautilus_trader.model.data import BarType
 from nautilus_trader.model.enums import AccountType
 from nautilus_trader.model.enums import OmsType
+from nautilus_trader.model.identifiers import TraderId
 from nautilus_trader.model.identifiers import Venue
 from nautilus_trader.model.objects import Money
 from nautilus_trader.persistence.wranglers import QuoteTickDataWrangler
@@ -39,7 +41,7 @@ from nautilus_trader.test_kit.providers import TestInstrumentProvider
 if __name__ == "__main__":
     # Configure backtest engine
     config = BacktestEngineConfig(
-        trader_id="BACKTESTER-001",
+        trader_id=TraderId("BACKTESTER-001"),
     )
 
     # Build the backtest engine
@@ -84,8 +86,8 @@ if __name__ == "__main__":
 
     # Configure your strategy
     config = EMACrossConfig(
-        instrument_id=str(AUDUSD_SIM.id),
-        bar_type="AUD/USD.SIM-100-TICK-MID-INTERNAL",
+        instrument_id=AUDUSD_SIM.id,
+        bar_type=BarType.from_str("AUD/USD.SIM-100-TICK-MID-INTERNAL"),
         trade_size=Decimal(1_000_000),
         fast_ema_period=10,
         slow_ema_period=20,

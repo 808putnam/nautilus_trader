@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2023 Nautech Systems Pty Ltd. All rights reserved.
+#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 #  https://nautechsystems.io
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
@@ -19,9 +19,8 @@ from libc.stdint cimport uint64_t
 
 from nautilus_trader.cache.base cimport CacheFacade
 from nautilus_trader.common.actor cimport Actor
-from nautilus_trader.common.clock cimport Clock
+from nautilus_trader.common.component cimport Clock
 from nautilus_trader.common.component cimport MessageBus
-from nautilus_trader.common.logging cimport Logger
 from nautilus_trader.core.rust.model cimport ContingencyType
 from nautilus_trader.core.rust.model cimport TimeInForce
 from nautilus_trader.core.rust.model cimport TriggerType
@@ -71,9 +70,6 @@ cdef class ExecAlgorithm(Actor):
     cdef dict _exec_spawn_ids
     cdef set _subscribed_strategies
 
-    cdef readonly PortfolioFacade portfolio
-    """The read-only portfolio for the strategy.\n\n:returns: `PortfolioFacade`"""
-
 # -- REGISTRATION ---------------------------------------------------------------------------------
 
     cpdef void register(
@@ -83,7 +79,6 @@ cdef class ExecAlgorithm(Actor):
         MessageBus msgbus,
         CacheFacade cache,
         Clock clock,
-        Logger logger,
     )
 
 # -- INTERNAL -------------------------------------------------------------------------------------
