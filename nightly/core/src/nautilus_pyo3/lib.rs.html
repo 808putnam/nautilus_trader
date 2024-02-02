@@ -184,6 +184,12 @@
     <span class="comment">// Set pyo3_nautilus to be recognized as a subpackage
     </span>sys_modules.set_item(module_name, m)<span class="question-mark">?</span>;
 
+    <span class="kw">let </span>n = <span class="string">"accounting"</span>;
+    <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_accounting::python::accounting);
+    m.add_wrapped(submodule)<span class="question-mark">?</span>;
+    sys_modules.set_item(<span class="macro">format!</span>(<span class="string">"{module_name}.{n}"</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
+    re_export_module_attributes(m, n)<span class="question-mark">?</span>;
+
     <span class="kw">let </span>n = <span class="string">"databento"</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(databento);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
@@ -228,12 +234,6 @@
 
     <span class="kw">let </span>n = <span class="string">"persistence"</span>;
     <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_persistence::python::persistence);
-    m.add_wrapped(submodule)<span class="question-mark">?</span>;
-    sys_modules.set_item(<span class="macro">format!</span>(<span class="string">"{module_name}.{n}"</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
-    re_export_module_attributes(m, n)<span class="question-mark">?</span>;
-
-    <span class="kw">let </span>n = <span class="string">"accounting"</span>;
-    <span class="kw">let </span>submodule = <span class="macro">pyo3::wrap_pymodule!</span>(nautilus_accounting::python::accounting);
     m.add_wrapped(submodule)<span class="question-mark">?</span>;
     sys_modules.set_item(<span class="macro">format!</span>(<span class="string">"{module_name}.{n}"</span>), m.getattr(n)<span class="question-mark">?</span>)<span class="question-mark">?</span>;
     re_export_module_attributes(m, n)<span class="question-mark">?</span>;
