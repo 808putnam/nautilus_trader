@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["get_date_time_range","nautilus_instrument_id_from_databento"]};
+window.SIDEBAR_ITEMS = {"constant":["ALL_SYMBOLS","DATABENTO"],"fn":["get_date_time_range","nautilus_instrument_id_from_databento"]};

@@ -2416,6 +2416,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.equity.Equity.from_pyo3">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Equity.from_pyo3()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.instruments.equity.Equity.fully_qualified_name">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -2831,6 +2840,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   FuturesContract.from_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.futures_contract.FuturesContract.from_pyo3">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  FuturesContract.from_pyo3()
                  </span>
                 </code>
                </a>
@@ -3260,6 +3278,15 @@
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OptionsContract.from_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.instruments.options_contract.OptionsContract.from_pyo3">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OptionsContract.from_pyo3()
                  </span>
                 </code>
                </a>
@@ -4105,6 +4132,15 @@
                </a>
               </li>
              </ul>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#nautilus_trader.model.instruments.base.instruments_from_pyo3">
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                instruments_from_pyo3()
+               </span>
+              </code>
+             </a>
             </li>
            </ul>
           </li>
@@ -17604,6 +17640,88 @@ currency for inverse instruments.
            </dd>
           </dl>
           <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.equity.Equity.from_pyo3">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_pyo3
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               pyo3_instrument
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.model.instruments.equity.Equity" title="nautilus_trader.model.instruments.equity.Equity">
+               <span class="pre">
+                Equity
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.equity.Equity.from_pyo3" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return legacy Cython equity instrument converted from the given pyo3 Rust object.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                pyo3_instrument
+               </strong>
+               (
+               <em>
+                nautilus_pyo3.Equity
+               </em>
+               ) – The pyo3 Rust equity instrument to convert from.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                Equity
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
            <dt class="sig sig-object py" id="nautilus_trader.model.instruments.equity.Equity.fully_qualified_name">
             <em class="property">
              <span class="pre">
@@ -20451,6 +20569,88 @@ currency for inverse instruments.
                 ]
                </em>
                ) – The values to initialize the instrument with.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                FuturesContract
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.futures_contract.FuturesContract.from_pyo3">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_pyo3
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               pyo3_instrument
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.model.instruments.futures_contract.FuturesContract" title="nautilus_trader.model.instruments.futures_contract.FuturesContract">
+               <span class="pre">
+                FuturesContract
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.futures_contract.FuturesContract.from_pyo3" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return legacy Cython futures contract instrument converted from the given pyo3 Rust object.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                pyo3_instrument
+               </strong>
+               (
+               <em>
+                nautilus_pyo3.FuturesContract
+               </em>
+               ) – The pyo3 Rust futures contract instrument to convert from.
               </p>
              </dd>
              <dt class="field-even">
@@ -23399,6 +23599,88 @@ currency for inverse instruments.
                 ]
                </em>
                ) – The values to initialize the instrument with.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               <em>
+                OptionsContract
+               </em>
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.instruments.options_contract.OptionsContract.from_pyo3">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_pyo3
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               pyo3_instrument
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <span class="sig-return">
+             <span class="sig-return-icon">
+              →
+             </span>
+             <span class="sig-return-typehint">
+              <a class="reference internal" href="#nautilus_trader.model.instruments.options_contract.OptionsContract" title="nautilus_trader.model.instruments.options_contract.OptionsContract">
+               <span class="pre">
+                OptionsContract
+               </span>
+              </a>
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.instruments.options_contract.OptionsContract.from_pyo3" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return legacy Cython options contract instrument converted from the given pyo3 Rust object.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                pyo3_instrument
+               </strong>
+               (
+               <em>
+                nautilus_pyo3.OptionsContract
+               </em>
+               ) – The pyo3 Rust options contract instrument to convert from.
               </p>
              </dd>
              <dt class="field-even">
@@ -29562,6 +29844,46 @@ currency for inverse instruments.
             </dl>
            </dd>
           </dl>
+         </dd>
+        </dl>
+        <dl class="py function">
+         <dt class="sig sig-object py" id="nautilus_trader.model.instruments.base.instruments_from_pyo3">
+          <span class="sig-name descname">
+           <span class="pre">
+            instruments_from_pyo3
+           </span>
+          </span>
+          <span class="sig-paren">
+           (
+          </span>
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
+             list
+            </span>
+            <span class="pre">
+             pyo3_instruments
+            </span>
+           </span>
+          </em>
+          <span class="sig-paren">
+           )
+          </span>
+          <span class="sig-return">
+           <span class="sig-return-icon">
+            →
+           </span>
+           <span class="sig-return-typehint">
+            <span class="pre">
+             list
+            </span>
+           </span>
+          </span>
+          <a class="headerlink" href="#nautilus_trader.model.instruments.base.instruments_from_pyo3" title="Permalink to this definition">
+           ¶
+          </a>
+         </dt>
+         <dd>
          </dd>
         </dl>
        </section>
