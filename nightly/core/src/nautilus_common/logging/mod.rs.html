@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging.rs`."><title>logging.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (bf3c6c5be 2024-02-01)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/logging/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (b11fbfbf3 2024-02-03)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../nautilus_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -794,168 +794,6 @@
 <a href="#792" id="792">792</a>
 <a href="#793" id="793">793</a>
 <a href="#794" id="794">794</a>
-<a href="#795" id="795">795</a>
-<a href="#796" id="796">796</a>
-<a href="#797" id="797">797</a>
-<a href="#798" id="798">798</a>
-<a href="#799" id="799">799</a>
-<a href="#800" id="800">800</a>
-<a href="#801" id="801">801</a>
-<a href="#802" id="802">802</a>
-<a href="#803" id="803">803</a>
-<a href="#804" id="804">804</a>
-<a href="#805" id="805">805</a>
-<a href="#806" id="806">806</a>
-<a href="#807" id="807">807</a>
-<a href="#808" id="808">808</a>
-<a href="#809" id="809">809</a>
-<a href="#810" id="810">810</a>
-<a href="#811" id="811">811</a>
-<a href="#812" id="812">812</a>
-<a href="#813" id="813">813</a>
-<a href="#814" id="814">814</a>
-<a href="#815" id="815">815</a>
-<a href="#816" id="816">816</a>
-<a href="#817" id="817">817</a>
-<a href="#818" id="818">818</a>
-<a href="#819" id="819">819</a>
-<a href="#820" id="820">820</a>
-<a href="#821" id="821">821</a>
-<a href="#822" id="822">822</a>
-<a href="#823" id="823">823</a>
-<a href="#824" id="824">824</a>
-<a href="#825" id="825">825</a>
-<a href="#826" id="826">826</a>
-<a href="#827" id="827">827</a>
-<a href="#828" id="828">828</a>
-<a href="#829" id="829">829</a>
-<a href="#830" id="830">830</a>
-<a href="#831" id="831">831</a>
-<a href="#832" id="832">832</a>
-<a href="#833" id="833">833</a>
-<a href="#834" id="834">834</a>
-<a href="#835" id="835">835</a>
-<a href="#836" id="836">836</a>
-<a href="#837" id="837">837</a>
-<a href="#838" id="838">838</a>
-<a href="#839" id="839">839</a>
-<a href="#840" id="840">840</a>
-<a href="#841" id="841">841</a>
-<a href="#842" id="842">842</a>
-<a href="#843" id="843">843</a>
-<a href="#844" id="844">844</a>
-<a href="#845" id="845">845</a>
-<a href="#846" id="846">846</a>
-<a href="#847" id="847">847</a>
-<a href="#848" id="848">848</a>
-<a href="#849" id="849">849</a>
-<a href="#850" id="850">850</a>
-<a href="#851" id="851">851</a>
-<a href="#852" id="852">852</a>
-<a href="#853" id="853">853</a>
-<a href="#854" id="854">854</a>
-<a href="#855" id="855">855</a>
-<a href="#856" id="856">856</a>
-<a href="#857" id="857">857</a>
-<a href="#858" id="858">858</a>
-<a href="#859" id="859">859</a>
-<a href="#860" id="860">860</a>
-<a href="#861" id="861">861</a>
-<a href="#862" id="862">862</a>
-<a href="#863" id="863">863</a>
-<a href="#864" id="864">864</a>
-<a href="#865" id="865">865</a>
-<a href="#866" id="866">866</a>
-<a href="#867" id="867">867</a>
-<a href="#868" id="868">868</a>
-<a href="#869" id="869">869</a>
-<a href="#870" id="870">870</a>
-<a href="#871" id="871">871</a>
-<a href="#872" id="872">872</a>
-<a href="#873" id="873">873</a>
-<a href="#874" id="874">874</a>
-<a href="#875" id="875">875</a>
-<a href="#876" id="876">876</a>
-<a href="#877" id="877">877</a>
-<a href="#878" id="878">878</a>
-<a href="#879" id="879">879</a>
-<a href="#880" id="880">880</a>
-<a href="#881" id="881">881</a>
-<a href="#882" id="882">882</a>
-<a href="#883" id="883">883</a>
-<a href="#884" id="884">884</a>
-<a href="#885" id="885">885</a>
-<a href="#886" id="886">886</a>
-<a href="#887" id="887">887</a>
-<a href="#888" id="888">888</a>
-<a href="#889" id="889">889</a>
-<a href="#890" id="890">890</a>
-<a href="#891" id="891">891</a>
-<a href="#892" id="892">892</a>
-<a href="#893" id="893">893</a>
-<a href="#894" id="894">894</a>
-<a href="#895" id="895">895</a>
-<a href="#896" id="896">896</a>
-<a href="#897" id="897">897</a>
-<a href="#898" id="898">898</a>
-<a href="#899" id="899">899</a>
-<a href="#900" id="900">900</a>
-<a href="#901" id="901">901</a>
-<a href="#902" id="902">902</a>
-<a href="#903" id="903">903</a>
-<a href="#904" id="904">904</a>
-<a href="#905" id="905">905</a>
-<a href="#906" id="906">906</a>
-<a href="#907" id="907">907</a>
-<a href="#908" id="908">908</a>
-<a href="#909" id="909">909</a>
-<a href="#910" id="910">910</a>
-<a href="#911" id="911">911</a>
-<a href="#912" id="912">912</a>
-<a href="#913" id="913">913</a>
-<a href="#914" id="914">914</a>
-<a href="#915" id="915">915</a>
-<a href="#916" id="916">916</a>
-<a href="#917" id="917">917</a>
-<a href="#918" id="918">918</a>
-<a href="#919" id="919">919</a>
-<a href="#920" id="920">920</a>
-<a href="#921" id="921">921</a>
-<a href="#922" id="922">922</a>
-<a href="#923" id="923">923</a>
-<a href="#924" id="924">924</a>
-<a href="#925" id="925">925</a>
-<a href="#926" id="926">926</a>
-<a href="#927" id="927">927</a>
-<a href="#928" id="928">928</a>
-<a href="#929" id="929">929</a>
-<a href="#930" id="930">930</a>
-<a href="#931" id="931">931</a>
-<a href="#932" id="932">932</a>
-<a href="#933" id="933">933</a>
-<a href="#934" id="934">934</a>
-<a href="#935" id="935">935</a>
-<a href="#936" id="936">936</a>
-<a href="#937" id="937">937</a>
-<a href="#938" id="938">938</a>
-<a href="#939" id="939">939</a>
-<a href="#940" id="940">940</a>
-<a href="#941" id="941">941</a>
-<a href="#942" id="942">942</a>
-<a href="#943" id="943">943</a>
-<a href="#944" id="944">944</a>
-<a href="#945" id="945">945</a>
-<a href="#946" id="946">946</a>
-<a href="#947" id="947">947</a>
-<a href="#948" id="948">948</a>
-<a href="#949" id="949">949</a>
-<a href="#950" id="950">950</a>
-<a href="#951" id="951">951</a>
-<a href="#952" id="952">952</a>
-<a href="#953" id="953">953</a>
-<a href="#954" id="954">954</a>
-<a href="#955" id="955">955</a>
-<a href="#956" id="956">956</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -971,13 +809,13 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::{
+</span><span class="kw">pub mod </span>headers;
+<span class="kw">pub mod </span>writer;
+
+<span class="kw">use </span>std::{
     borrow::Cow,
     collections::HashMap,
     env, fmt,
-    fs::{create_dir_all, File},
-    io::{<span class="self">self</span>, BufWriter, Stderr, Stdout, Write},
-    path::{Path, PathBuf},
     str::FromStr,
     sync::{
         atomic::{AtomicBool, Ordering},
@@ -986,7 +824,6 @@
     thread,
 };
 
-<span class="kw">use </span>chrono::{prelude::<span class="kw-2">*</span>, Utc};
 <span class="kw">use </span>log::{
     debug, error, info,
     kv::{ToValue, Value},
@@ -1002,7 +839,10 @@
 <span class="kw">use </span>tracing_subscriber::EnvFilter;
 <span class="kw">use </span>ustr::Ustr;
 
-<span class="kw">use </span><span class="kw">crate</span>::enums::{LogColor, LogLevel};
+<span class="kw">use crate</span>::{
+    enums::{LogColor, LogLevel},
+    logging::writer::{FileWriter, FileWriterConfig, LogWriter, StderrWriter, StdoutWriter},
+};
 
 <span class="kw">static </span>LOGGING_INITIALIZED: AtomicBool = AtomicBool::new(<span class="bool-val">false</span>);
 <span class="kw">static </span>LOGGING_BYPASSED: AtomicBool = AtomicBool::new(<span class="bool-val">false</span>);
@@ -1059,9 +899,9 @@
 #[derive(Debug, Clone, PartialEq, Eq)]
 </span><span class="kw">pub struct </span>LoggerConfig {
     <span class="doccomment">/// Maximum log level to write to stdout.
-    </span>stdout_level: LevelFilter,
+    </span><span class="kw">pub </span>stdout_level: LevelFilter,
     <span class="doccomment">/// Maximum log level to write to file.
-    </span>fileout_level: LevelFilter,
+    </span><span class="kw">pub </span>fileout_level: LevelFilter,
     <span class="doccomment">/// Maximum log level to write for a given component.
     </span>component_level: HashMap&lt;Ustr, LevelFilter&gt;,
     <span class="doccomment">/// If logger is using ANSI color codes.
@@ -1140,31 +980,6 @@
         <span class="kw">match </span>env::var(<span class="string">"NAUTILUS_LOG"</span>) {
             <span class="prelude-val">Ok</span>(spec) =&gt; LoggerConfig::from_spec(<span class="kw-2">&amp;</span>spec),
             <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">panic!</span>(<span class="string">"Error parsing `LoggerConfig` spec: {e}"</span>),
-        }
-    }
-}
-
-<span class="attr">#[cfg_attr(
-    feature = <span class="string">"python"</span>,
-    pyo3::pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.common"</span>)
-)]
-#[derive(Debug, Clone, Default)]
-</span><span class="kw">pub struct </span>FileWriterConfig {
-    directory: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
-}
-
-<span class="kw">impl </span>FileWriterConfig {
-    <span class="kw">pub fn </span>new(
-        directory: <span class="prelude-ty">Option</span>&lt;String&gt;,
-        file_name: <span class="prelude-ty">Option</span>&lt;String&gt;,
-        file_format: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    ) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            directory,
-            file_name,
-            file_format,
         }
     }
 }
@@ -1272,13 +1087,66 @@
 </span><span class="attr">#[derive(Clone, Debug, Serialize, Deserialize)]
 </span><span class="kw">pub struct </span>LogLine {
     <span class="doccomment">/// The log level for the event.
-    </span>level: Level,
+    </span><span class="kw">pub </span>level: Level,
     <span class="doccomment">/// The color for the log message content.
-    </span>color: LogColor,
+    </span><span class="kw">pub </span>color: LogColor,
     <span class="doccomment">/// The Nautilus system component the log event originated from.
-    </span>component: Ustr,
+    </span><span class="kw">pub </span>component: Ustr,
     <span class="doccomment">/// The log message content.
-    </span>message: String,
+    </span><span class="kw">pub </span>message: String,
+}
+
+<span class="kw">pub struct </span>LogLineWrapper {
+    line: LogLine,
+    cache: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    colored: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    timestamp: String,
+    trader_id: Ustr,
+}
+
+<span class="kw">impl </span>LogLineWrapper {
+    <span class="kw">pub fn </span>new(line: LogLine, trader_id: Ustr, timestamp: UnixNanos) -&gt; <span class="self">Self </span>{
+        LogLineWrapper {
+            line,
+            cache: <span class="prelude-val">None</span>,
+            colored: <span class="prelude-val">None</span>,
+            timestamp: unix_nanos_to_iso8601(timestamp),
+            trader_id,
+        }
+    }
+
+    <span class="kw">pub fn </span>get_string(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
+        <span class="self">self</span>.cache.get_or_insert_with(|| {
+            <span class="macro">format!</span>(
+                <span class="string">"{} [{}] {}.{}: {}\n"</span>,
+                <span class="self">self</span>.timestamp,
+                <span class="self">self</span>.line.level,
+                <span class="self">self</span>.trader_id,
+                <span class="kw-2">&amp;</span><span class="self">self</span>.line.component,
+                <span class="kw-2">&amp;</span><span class="self">self</span>.line.message
+            )
+        })
+    }
+
+    <span class="kw">pub fn </span>get_colored(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
+        <span class="self">self</span>.colored.get_or_insert_with(|| {
+            <span class="macro">format!</span>(
+                <span class="string">"\x1b[1m{}\x1b[0m {}[{}] {}.{}: {}\x1b[0m\n"</span>,
+                <span class="self">self</span>.timestamp,
+                <span class="kw-2">&amp;</span><span class="self">self</span>.line.color.to_string(),
+                <span class="self">self</span>.line.level,
+                <span class="self">self</span>.trader_id,
+                <span class="kw-2">&amp;</span><span class="self">self</span>.line.component,
+                <span class="kw-2">&amp;</span><span class="self">self</span>.line.message
+            )
+        })
+    }
+
+    <span class="kw">pub fn </span>get_json(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="kw">let </span>json_string =
+            serde_json::to_string(<span class="kw-2">&amp;</span><span class="self">self</span>.line).expect(<span class="string">"Error serializing log event to string"</span>);
+        <span class="macro">format!</span>(<span class="string">"{json_string}\n"</span>)
+    }
 }
 
 <span class="kw">impl </span>fmt::Display <span class="kw">for </span>LogLine {
@@ -1339,9 +1207,6 @@
     ) {
         <span class="kw">let </span>(tx, rx) = channel::&lt;LogEvent&gt;();
 
-        <span class="kw">let </span>trader_id_clone = trader_id.value.to_string();
-        <span class="kw">let </span>instance_id_clone = instance_id.to_string();
-
         <span class="kw">let </span>logger = <span class="self">Self </span>{
             tx,
             config: config.clone(),
@@ -1357,8 +1222,8 @@
             <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
                 thread::spawn(<span class="kw">move </span>|| {
                     <span class="self">Self</span>::handle_messages(
-                        <span class="kw-2">&amp;</span>trader_id_clone,
-                        <span class="kw-2">&amp;</span>instance_id_clone,
+                        trader_id.to_string(),
+                        instance_id.to_string(),
                         config,
                         file_config,
                         rx,
@@ -1378,8 +1243,8 @@
     }
 
     <span class="kw">fn </span>handle_messages(
-        trader_id: <span class="kw-2">&amp;</span>str,
-        instance_id: <span class="kw-2">&amp;</span>str,
+        trader_id: String,
+        instance_id: String,
         config: LoggerConfig,
         file_config: FileWriterConfig,
         rx: Receiver&lt;LogEvent&gt;,
@@ -1391,59 +1256,31 @@
         <span class="kw">let </span>LoggerConfig {
             stdout_level,
             fileout_level,
-            component_level,
+            <span class="kw-2">ref </span>component_level,
             is_colored,
             print_config: <span class="kw">_</span>,
         } = config;
 
+        <span class="kw">let </span>trader_id_cache = Ustr::from(<span class="kw-2">&amp;</span>trader_id);
+
         <span class="comment">// Setup std I/O buffers
-        </span><span class="kw">let </span><span class="kw-2">mut </span>out_buf = BufWriter::new(io::stdout());
-        <span class="kw">let </span><span class="kw-2">mut </span>err_buf = BufWriter::new(io::stderr());
-
-        <span class="comment">// Setup log file
-        </span><span class="kw">let </span>is_json_format = <span class="kw">match </span>file_config.file_format.as_ref().map(|s| s.to_lowercase()) {
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>format) <span class="kw">if </span>format == <span class="string">"json" </span>=&gt; <span class="bool-val">true</span>,
-            <span class="prelude-val">None </span>=&gt; <span class="bool-val">false</span>,
-            <span class="prelude-val">Some</span>(<span class="kw-2">ref </span>unrecognized) =&gt; {
-                <span class="macro">eprintln!</span>(
-                    <span class="string">"Unrecognized log file format: {unrecognized}. Using plain text format as default."
-                </span>);
-                <span class="bool-val">false
-            </span>}
-        };
-
-        <span class="kw">let </span>file_path = PathBuf::new();
-        <span class="kw">let </span>file = <span class="kw">if </span>fileout_level &gt; LevelFilter::Off {
-            <span class="kw">let </span>file_path =
-                <span class="self">Self</span>::create_log_file_path(<span class="kw-2">&amp;</span>file_config, trader_id, instance_id, is_json_format);
-
-            <span class="prelude-val">Some</span>(
-                File::options()
-                    .create(<span class="bool-val">true</span>)
-                    .append(<span class="bool-val">true</span>)
-                    .open(file_path)
-                    .expect(<span class="string">"Error creating log file"</span>),
-            )
-        } <span class="kw">else </span>{
-            <span class="prelude-val">None
-        </span>};
-
-        <span class="kw">let </span><span class="kw-2">mut </span>file_buf = file.map(BufWriter::new);
+        </span><span class="kw">let </span><span class="kw-2">mut </span>stdout_writer = StdoutWriter::new(stdout_level, is_colored);
+        <span class="kw">let </span><span class="kw-2">mut </span>stderr_writer = StderrWriter::new(is_colored);
+        <span class="kw">let </span><span class="kw-2">mut </span>file_writer =
+            FileWriter::new(trader_id.clone(), instance_id, file_config, fileout_level);
 
         <span class="comment">// Continue to receive and handle log events until channel is hung up
         </span><span class="kw">while let </span><span class="prelude-val">Ok</span>(event) = rx.recv() {
-            <span class="kw">let </span>timestamp = <span class="kw">match </span>LOGGING_REALTIME.load(Ordering::Relaxed) {
-                <span class="bool-val">true </span>=&gt; get_atomic_clock_realtime().get_time_ns(),
-                <span class="bool-val">false </span>=&gt; get_atomic_clock_static().get_time_ns(),
-            };
-
             <span class="kw">match </span>event {
                 LogEvent::Flush =&gt; {
-                    <span class="self">Self</span>::flush_stderr(<span class="kw-2">&amp;mut </span>err_buf);
-                    <span class="self">Self</span>::flush_stdout(<span class="kw-2">&amp;mut </span>out_buf);
-                    file_buf.as_mut().map(<span class="self">Self</span>::flush_file);
+                    <span class="kw">break</span>;
                 }
                 LogEvent::Log(line) =&gt; {
+                    <span class="kw">let </span>timestamp = <span class="kw">match </span>LOGGING_REALTIME.load(Ordering::Relaxed) {
+                        <span class="bool-val">true </span>=&gt; get_atomic_clock_realtime().get_time_ns(),
+                        <span class="bool-val">false </span>=&gt; get_atomic_clock_static().get_time_ns(),
+                    };
+
                     <span class="kw">let </span>component_level = component_level.get(<span class="kw-2">&amp;</span>line.component);
 
                     <span class="comment">// Check if the component exists in level_filters,
@@ -1454,200 +1291,39 @@
                         }
                     }
 
-                    <span class="kw">if </span>line.level == LevelFilter::Error {
-                        <span class="kw">let </span>line =
-                            <span class="self">Self</span>::format_console_log(timestamp, <span class="kw-2">&amp;</span>line, trader_id, is_colored);
-                        <span class="self">Self</span>::write_stderr(<span class="kw-2">&amp;mut </span>err_buf, <span class="kw-2">&amp;</span>line);
-                        <span class="self">Self</span>::flush_stderr(<span class="kw-2">&amp;mut </span>err_buf);
-                    } <span class="kw">else if </span>line.level &lt;= stdout_level {
-                        <span class="kw">let </span>line =
-                            <span class="self">Self</span>::format_console_log(timestamp, <span class="kw-2">&amp;</span>line, trader_id, is_colored);
-                        <span class="self">Self</span>::write_stdout(<span class="kw-2">&amp;mut </span>out_buf, <span class="kw-2">&amp;</span>line);
-                        <span class="self">Self</span>::flush_stdout(<span class="kw-2">&amp;mut </span>out_buf);
+                    <span class="kw">let </span><span class="kw-2">mut </span>wrapper = LogLineWrapper::new(line, trader_id_cache, timestamp);
+
+                    <span class="kw">if </span>stderr_writer.enabled(<span class="kw-2">&amp;</span>wrapper.line) {
+                        <span class="kw">if </span>is_colored {
+                            stderr_writer.write(wrapper.get_colored());
+                        } <span class="kw">else </span>{
+                            stderr_writer.write(wrapper.get_string());
+                        }
+                        <span class="comment">// TODO: remove flushes once log guard is implemented
+                        </span>stderr_writer.flush();
                     }
 
-                    <span class="kw">if </span>fileout_level != LevelFilter::Off {
-                        <span class="kw">if </span><span class="self">Self</span>::should_rotate_file(<span class="kw-2">&amp;</span>file_path) {
-                            <span class="comment">// Ensure previous file buffer flushed
-                            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(file_buf) = file_buf.as_mut() {
-                                <span class="self">Self</span>::flush_file(file_buf);
-                            };
-
-                            <span class="kw">let </span>file_path = <span class="self">Self</span>::create_log_file_path(
-                                <span class="kw-2">&amp;</span>file_config,
-                                trader_id,
-                                instance_id,
-                                is_json_format,
-                            );
-
-                            <span class="kw">let </span>file = File::options()
-                                .create(<span class="bool-val">true</span>)
-                                .append(<span class="bool-val">true</span>)
-                                .open(file_path)
-                                .expect(<span class="string">"Error creating log file"</span>);
-
-                            file_buf = <span class="prelude-val">Some</span>(BufWriter::new(file));
+                    <span class="kw">if </span>stdout_writer.enabled(<span class="kw-2">&amp;</span>wrapper.line) {
+                        <span class="kw">if </span>is_colored {
+                            stdout_writer.write(wrapper.get_colored());
+                        } <span class="kw">else </span>{
+                            stdout_writer.write(wrapper.get_string());
                         }
+                        stdout_writer.flush();
+                    }
 
-                        <span class="kw">if </span>line.level &lt;= fileout_level {
-                            <span class="kw">if let </span><span class="prelude-val">Some</span>(file_buf) = file_buf.as_mut() {
-                                <span class="kw">let </span>line = <span class="self">Self</span>::format_file_log(
-                                    timestamp,
-                                    <span class="kw-2">&amp;</span>line,
-                                    trader_id,
-                                    is_json_format,
-                                );
-                                <span class="self">Self</span>::write_file(file_buf, <span class="kw-2">&amp;</span>line);
-                                <span class="self">Self</span>::flush_file(file_buf);
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">ref mut </span>writer) = file_writer {
+                        <span class="kw">if </span>writer.enabled(<span class="kw-2">&amp;</span>wrapper.line) {
+                            <span class="kw">if </span>writer.json_format {
+                                writer.write(<span class="kw-2">&amp;</span>wrapper.get_json());
+                            } <span class="kw">else </span>{
+                                writer.write(wrapper.get_string());
                             }
+                            writer.flush();
                         }
                     }
                 }
             }
-        }
-
-        <span class="comment">// Finally ensure remaining buffers are flushed
-        </span><span class="self">Self</span>::flush_stderr(<span class="kw-2">&amp;mut </span>err_buf);
-        <span class="self">Self</span>::flush_stdout(<span class="kw-2">&amp;mut </span>out_buf);
-    }
-
-    <span class="kw">fn </span>should_rotate_file(file_path: <span class="kw-2">&amp;</span>Path) -&gt; bool {
-        <span class="kw">if </span>file_path.exists() {
-            <span class="kw">let </span>current_date_utc = Utc::now().date_naive();
-            <span class="kw">let </span>metadata = file_path
-                .metadata()
-                .expect(<span class="string">"Failed to read log file metadata"</span>);
-            <span class="kw">let </span>creation_time = metadata
-                .created()
-                .expect(<span class="string">"Failed to get log file creation time"</span>);
-
-            <span class="kw">let </span>creation_time_utc: DateTime&lt;Utc&gt; = creation_time.into();
-            <span class="kw">let </span>creation_date_utc = creation_time_utc.date_naive();
-
-            current_date_utc != creation_date_utc
-        } <span class="kw">else </span>{
-            <span class="bool-val">false
-        </span>}
-    }
-
-    <span class="kw">fn </span>default_log_file_basename(trader_id: <span class="kw-2">&amp;</span>str, instance_id: <span class="kw-2">&amp;</span>str) -&gt; String {
-        <span class="kw">let </span>current_date_utc = Utc::now().format(<span class="string">"%Y-%m-%d"</span>);
-        <span class="macro">format!</span>(<span class="string">"{trader_id}_{current_date_utc}_{instance_id}"</span>)
-    }
-
-    <span class="kw">fn </span>create_log_file_path(
-        file_config: <span class="kw-2">&amp;</span>FileWriterConfig,
-        trader_id: <span class="kw-2">&amp;</span>str,
-        instance_id: <span class="kw-2">&amp;</span>str,
-        is_json_format: bool,
-    ) -&gt; PathBuf {
-        <span class="kw">let </span>basename = <span class="kw">if let </span><span class="prelude-val">Some</span>(file_name) = file_config.file_name.as_ref() {
-            file_name.clone()
-        } <span class="kw">else </span>{
-            <span class="self">Self</span>::default_log_file_basename(trader_id, instance_id)
-        };
-
-        <span class="kw">let </span>suffix = <span class="kw">if </span>is_json_format { <span class="string">"json" </span>} <span class="kw">else </span>{ <span class="string">"log" </span>};
-        <span class="kw">let </span><span class="kw-2">mut </span>file_path = PathBuf::new();
-
-        <span class="kw">if let </span><span class="prelude-val">Some</span>(directory) = file_config.directory.as_ref() {
-            file_path.push(directory);
-            create_dir_all(<span class="kw-2">&amp;</span>file_path).expect(<span class="string">"Failed to create directories for log file"</span>);
-        }
-
-        file_path.push(basename);
-        file_path.set_extension(suffix);
-        file_path
-    }
-
-    <span class="kw">fn </span>format_console_log(
-        timestamp: UnixNanos,
-        event: <span class="kw-2">&amp;</span>LogLine,
-        trader_id: <span class="kw-2">&amp;</span>str,
-        is_colored: bool,
-    ) -&gt; String {
-        <span class="kw">match </span>is_colored {
-            <span class="bool-val">true </span>=&gt; <span class="macro">format!</span>(
-                <span class="string">"\x1b[1m{}\x1b[0m {}[{}] {}.{}: {}\x1b[0m\n"</span>,
-                unix_nanos_to_iso8601(timestamp),
-                <span class="kw-2">&amp;</span>event.color.to_string(),
-                event.level,
-                <span class="kw-2">&amp;</span>trader_id,
-                <span class="kw-2">&amp;</span>event.component,
-                <span class="kw-2">&amp;</span>event.message
-            ),
-            <span class="bool-val">false </span>=&gt; <span class="macro">format!</span>(
-                <span class="string">"{} [{}] {}.{}: {}\n"</span>,
-                unix_nanos_to_iso8601(timestamp),
-                event.level,
-                <span class="kw-2">&amp;</span>trader_id,
-                <span class="kw-2">&amp;</span>event.component,
-                <span class="kw-2">&amp;</span>event.message
-            ),
-        }
-    }
-
-    <span class="kw">fn </span>format_file_log(
-        timestamp: UnixNanos,
-        event: <span class="kw-2">&amp;</span>LogLine,
-        trader_id: <span class="kw-2">&amp;</span>str,
-        is_json_format: bool,
-    ) -&gt; String {
-        <span class="kw">if </span>is_json_format {
-            <span class="kw">let </span>json_string =
-                serde_json::to_string(event).expect(<span class="string">"Error serializing log event to string"</span>);
-            <span class="macro">format!</span>(<span class="string">"{json_string}\n"</span>)
-        } <span class="kw">else </span>{
-            <span class="macro">format!</span>(
-                <span class="string">"{} [{}] {}.{}: {}\n"</span>,
-                <span class="kw-2">&amp;</span>unix_nanos_to_iso8601(timestamp),
-                event.level,
-                trader_id,
-                <span class="kw-2">&amp;</span>event.component,
-                <span class="kw-2">&amp;</span>event.message,
-            )
-        }
-    }
-
-    <span class="kw">fn </span>write_stdout(out_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;Stdout&gt;, line: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">match </span>out_buf.write_all(line.as_bytes()) {
-            <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error writing to stdout: {e:?}"</span>),
-        }
-    }
-
-    <span class="kw">fn </span>flush_stdout(out_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;Stdout&gt;) {
-        <span class="kw">match </span>out_buf.flush() {
-            <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error flushing stdout: {e:?}"</span>),
-        }
-    }
-
-    <span class="kw">fn </span>write_stderr(err_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;Stderr&gt;, line: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">match </span>err_buf.write_all(line.as_bytes()) {
-            <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error writing to stderr: {e:?}"</span>),
-        }
-    }
-
-    <span class="kw">fn </span>flush_stderr(err_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;Stderr&gt;) {
-        <span class="kw">match </span>err_buf.flush() {
-            <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error flushing stderr: {e:?}"</span>),
-        }
-    }
-
-    <span class="kw">fn </span>write_file(file_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;File&gt;, line: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">match </span>file_buf.write_all(line.as_bytes()) {
-            <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error writing to file: {e:?}"</span>),
-        }
-    }
-
-    <span class="kw">fn </span>flush_file(file_buf: <span class="kw-2">&amp;mut </span>BufWriter&lt;File&gt;) {
-        <span class="kw">match </span>file_buf.flush() {
-            <span class="prelude-val">Ok</span>(()) =&gt; {}
-            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error writing to file: {e:?}"</span>),
         }
     }
 }

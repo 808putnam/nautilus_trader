@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `accounting/src/account/margin.rs`."><title>margin.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_accounting" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (bf3c6c5be 2024-02-01)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `accounting/src/account/margin.rs`."><title>margin.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_accounting" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (b11fbfbf3 2024-02-03)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_accounting/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -622,6 +622,19 @@
 <a href="#620" id="620">620</a>
 <a href="#621" id="621">621</a>
 <a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
+<a href="#627" id="627">627</a>
+<a href="#628" id="628">628</a>
+<a href="#629" id="629">629</a>
+<a href="#630" id="630">630</a>
+<a href="#631" id="631">631</a>
+<a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -646,9 +659,6 @@
     hash::{Hash, Hasher},
 };
 
-<span class="kw">use </span><span class="kw">crate</span>::account::base::BaseAccount;
-<span class="kw">use </span><span class="kw">crate</span>::account::Account;
-<span class="kw">use </span><span class="kw">crate</span>::position::Position;
 <span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_model::enums::{AccountType, LiquiditySide, OrderSide};
 <span class="kw">use </span>nautilus_model::events::account::state::AccountState;
@@ -662,6 +672,10 @@
 <span class="kw">use </span>nautilus_model::types::quantity::Quantity;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>rust_decimal::prelude::ToPrimitive;
+
+<span class="kw">use </span><span class="kw">crate</span>::account::base::BaseAccount;
+<span class="kw">use </span><span class="kw">crate</span>::account::Account;
+<span class="kw">use </span><span class="kw">crate</span>::position::Position;
 
 <span class="attr">#[derive(Debug)]
 #[cfg_attr(
@@ -693,25 +707,30 @@
         <span class="self">self</span>.leverages.insert(instrument_id, leverage);
     }
 
-    <span class="kw">pub fn </span>get_leverage(<span class="kw-2">&amp;</span><span class="self">self</span>, instrument_id: <span class="kw-2">&amp;</span>InstrumentId) -&gt; f64 {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>get_leverage(<span class="kw-2">&amp;</span><span class="self">self</span>, instrument_id: <span class="kw-2">&amp;</span>InstrumentId) -&gt; f64 {
         <span class="kw-2">*</span><span class="self">self
             </span>.leverages
             .get(instrument_id)
             .unwrap_or(<span class="kw-2">&amp;</span><span class="self">self</span>.default_leverage)
     }
 
-    <span class="kw">pub fn </span>is_unleveraged(<span class="kw-2">&amp;</span><span class="self">self</span>, instrument_id: InstrumentId) -&gt; bool {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>is_unleveraged(<span class="kw-2">&amp;</span><span class="self">self</span>, instrument_id: InstrumentId) -&gt; bool {
         <span class="self">self</span>.get_leverage(<span class="kw-2">&amp;</span>instrument_id) == <span class="number">1.0
     </span>}
 
-    <span class="kw">pub fn </span>is_cash_account(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>is_cash_account(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.account_type == AccountType::Cash
     }
-    <span class="kw">pub fn </span>is_margin_account(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>is_margin_account(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.account_type == AccountType::Margin
     }
 
-    <span class="kw">pub fn </span>initial_margins(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;InstrumentId, Money&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>initial_margins(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;InstrumentId, Money&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>initial_margins: HashMap&lt;InstrumentId, Money&gt; = HashMap::new();
         <span class="self">self</span>.margins.values().for_each(|margin_balance| {
             initial_margins.insert(margin_balance.instrument_id, margin_balance.initial);
@@ -719,7 +738,8 @@
         initial_margins
     }
 
-    <span class="kw">pub fn </span>maintenance_margins(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;InstrumentId, Money&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>maintenance_margins(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;InstrumentId, Money&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>maintenance_margins: HashMap&lt;InstrumentId, Money&gt; = HashMap::new();
         <span class="self">self</span>.margins.values().for_each(|margin_balance| {
             maintenance_margins.insert(margin_balance.instrument_id, margin_balance.maintenance);
@@ -745,14 +765,16 @@
             new_margin_balance.initial = margin_init;
             <span class="self">self</span>.margins.insert(instrument_id, new_margin_balance);
         }
-        <span class="self">self</span>.recalculate_balance(margin_init.currency)
+        <span class="self">self</span>.recalculate_balance(margin_init.currency);
     }
 
-    <span class="kw">pub fn </span>initial_margin(<span class="kw-2">&amp;</span><span class="self">self</span>, instrument_id: InstrumentId) -&gt; Money {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>initial_margin(<span class="kw-2">&amp;</span><span class="self">self</span>, instrument_id: InstrumentId) -&gt; Money {
         <span class="kw">let </span>margin_balance = <span class="self">self</span>.margins.get(<span class="kw-2">&amp;</span>instrument_id);
-        <span class="kw">if </span>margin_balance.is_none() {
-            <span class="macro">panic!</span>(<span class="string">"Cannot get margin_init when no margin_balance"</span>)
-        }
+        <span class="macro">assert!</span>(
+            margin_balance.is_some(),
+            <span class="string">"Cannot get margin_init when no margin_balance"
+        </span>);
         margin_balance.unwrap().initial
     }
 
@@ -778,14 +800,16 @@
             new_margin_balance.maintenance = margin_maintenance;
             <span class="self">self</span>.margins.insert(instrument_id, new_margin_balance);
         }
-        <span class="self">self</span>.recalculate_balance(margin_maintenance.currency)
+        <span class="self">self</span>.recalculate_balance(margin_maintenance.currency);
     }
 
-    <span class="kw">pub fn </span>maintenance_margin(<span class="kw-2">&amp;</span><span class="self">self</span>, instrument_id: InstrumentId) -&gt; Money {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>maintenance_margin(<span class="kw-2">&amp;</span><span class="self">self</span>, instrument_id: InstrumentId) -&gt; Money {
         <span class="kw">let </span>margin_balance = <span class="self">self</span>.margins.get(<span class="kw-2">&amp;</span>instrument_id);
-        <span class="kw">if </span>margin_balance.is_none() {
-            <span class="macro">panic!</span>(<span class="string">"Cannot get maintenance_margin when no margin_balance"</span>)
-        }
+        <span class="macro">assert!</span>(
+            margin_balance.is_some(),
+            <span class="string">"Cannot get maintenance_margin when no margin_balance"
+        </span>);
         margin_balance.unwrap().maintenance
     }
 
@@ -856,10 +880,11 @@
             }
         });
         <span class="kw">let </span>total_free = current_balance.total.raw - total_margin;
-        <span class="kw">if </span>total_free &lt; <span class="number">0 </span>{
-            <span class="comment">// TODO error handle this with AccountMarginExceeded
-            </span><span class="macro">panic!</span>(<span class="string">"Cannot recalculate balance when total_free is less than 0.0"</span>)
-        }
+        <span class="comment">// TODO error handle this with AccountMarginExceeded
+        </span><span class="macro">assert!</span>(
+            total_free &gt;= <span class="number">0</span>,
+            <span class="string">"Cannot recalculate balance when total_free is less than 0.0"
+        </span>);
         <span class="kw">let </span>new_balance = AccountBalance::new(
             current_balance.total,
             Money::from_raw(total_margin, currency),
@@ -924,7 +949,7 @@
         <span class="self">self</span>.balances.clone()
     }
     <span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: AccountState) {
-        <span class="self">self</span>.base_apply(event)
+        <span class="self">self</span>.base_apply(event);
     }
     <span class="kw">fn </span>calculate_balance_locked&lt;T: Instrument&gt;(
         <span class="kw-2">&amp;mut </span><span class="self">self</span>,
@@ -977,9 +1002,10 @@
             <span class="string">"MarginAccount(id={}, type={}, base={})"</span>,
             <span class="self">self</span>.id,
             <span class="self">self</span>.account_type,
-            <span class="self">self</span>.base_currency
-                .map(|base_currency| <span class="macro">format!</span>(<span class="string">"{}"</span>, base_currency.code))
-                .unwrap_or_else(|| <span class="string">"None"</span>.to_string()),
+            <span class="self">self</span>.base_currency.map_or_else(
+                || <span class="string">"None"</span>.to_string(),
+                |base_currency| <span class="macro">format!</span>(<span class="string">"{}"</span>, base_currency.code)
+            ),
         )
     }
 }
@@ -1030,7 +1056,7 @@
             margin_account.last_event(),
             <span class="prelude-val">Some</span>(margin_account_state.clone())
         );
-        <span class="macro">assert_eq!</span>(margin_account.events(), <span class="macro">vec!</span>[margin_account_state.clone()]);
+        <span class="macro">assert_eq!</span>(margin_account.events(), <span class="macro">vec!</span>[margin_account_state]);
         <span class="macro">assert_eq!</span>(margin_account.event_count(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(
             margin_account.balance_total(<span class="prelude-val">None</span>),
@@ -1089,7 +1115,7 @@
         <span class="kw-2">mut </span>margin_account: MarginAccount,
         instrument_id_aud_usd_sim: InstrumentId,
     ) {
-        margin_account.set_leverage(instrument_id_aud_usd_sim.clone(), <span class="number">10.0</span>);
+        margin_account.set_leverage(instrument_id_aud_usd_sim, <span class="number">10.0</span>);
         <span class="macro">assert!</span>(!margin_account.is_unleveraged(instrument_id_aud_usd_sim));
     }
 
@@ -1098,7 +1124,7 @@
         <span class="kw-2">mut </span>margin_account: MarginAccount,
         instrument_id_aud_usd_sim: InstrumentId,
     ) {
-        margin_account.set_leverage(instrument_id_aud_usd_sim.clone(), <span class="number">1.0</span>);
+        margin_account.set_leverage(instrument_id_aud_usd_sim, <span class="number">1.0</span>);
         <span class="macro">assert!</span>(margin_account.is_unleveraged(instrument_id_aud_usd_sim));
     }
 
@@ -1185,7 +1211,7 @@
         xbtusd_bitmex: CryptoPerpetual,
     ) {
         <span class="kw">let </span>result_use_quote_inverse_true = margin_account.calculate_initial_margin(
-            xbtusd_bitmex.clone(),
+            xbtusd_bitmex,
             Quantity::from(<span class="number">100_000</span>),
             Price::from(<span class="string">"11493.60"</span>),
             <span class="prelude-val">Some</span>(<span class="bool-val">false</span>),
