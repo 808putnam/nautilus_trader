@@ -3650,13 +3650,11 @@ is raised.
           <dd>
            <p>
             Bases:
-            <a class="reference internal" href="../config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               NautilusConfig
-              </span>
-             </code>
-            </a>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              NautilusConfig
+             </span>
+            </code>
            </p>
            <p>
             Class representing a leg within combo orders.
@@ -4278,13 +4276,11 @@ types as values.
           <dd>
            <p>
             Bases:
-            <a class="reference internal" href="../config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               NautilusConfig
-              </span>
-             </code>
-            </a>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              NautilusConfig
+             </span>
+            </code>
            </p>
            <p>
             Delta-Neutral Contract.
@@ -5808,13 +5804,11 @@ types as values.
           <dd>
            <p>
             Bases:
-            <a class="reference internal" href="../config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               NautilusConfig
-              </span>
-             </code>
-            </a>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              NautilusConfig
+             </span>
+            </code>
            </p>
            <p>
             Class describing an instrument’s definition with additional fields for
@@ -6787,13 +6781,11 @@ types as values.
           <dd>
            <p>
             Bases:
-            <a class="reference internal" href="../config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               NautilusConfig
-              </span>
-             </code>
-            </a>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              NautilusConfig
+             </span>
+            </code>
            </p>
            <p>
             Used to attach to Nautilus Order Tags for IB specific order parameters.
@@ -8848,13 +8840,11 @@ types as values.
           <dd>
            <p>
             Bases:
-            <a class="reference internal" href="../config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               NautilusConfig
-              </span>
-             </code>
-            </a>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              NautilusConfig
+             </span>
+            </code>
            </p>
            <p>
             ContractDetails class to be used internally in Nautilus for ease of
@@ -9760,13 +9750,11 @@ types as values.
           <dd>
            <p>
             Bases:
-            <a class="reference internal" href="../config.html#nautilus_trader.config.common.NautilusConfig" title="nautilus_trader.config.common.NautilusConfig">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               NautilusConfig
-              </span>
-             </code>
-            </a>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              NautilusConfig
+             </span>
+            </code>
            </p>
            <p>
             Configuration for
@@ -10706,6 +10694,40 @@ types as values.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              strict_symbology
+             </span>
+            </span>
+            <span class="p">
+             <span class="pre">
+              :
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="n">
+             <span class="pre">
+              bool
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="o">
+             <span class="pre">
+              =
+             </span>
+            </span>
+            <span class="w">
+            </span>
+            <span class="default_value">
+             <span class="pre">
+              False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               load_contracts
              </span>
             </span>
@@ -11049,13 +11071,11 @@ types as values.
           <dd>
            <p>
             Bases:
-            <a class="reference internal" href="../config.html#nautilus_trader.config.common.InstrumentProviderConfig" title="nautilus_trader.config.common.InstrumentProviderConfig">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               InstrumentProviderConfig
-              </span>
-             </code>
-            </a>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              InstrumentProviderConfig
+             </span>
+            </code>
            </p>
            <p>
             Configuration for
@@ -11075,6 +11095,40 @@ types as values.
             </dt>
             <dd class="field-odd">
              <ul class="simple">
+              <li>
+               <p>
+                <strong>
+                 strict_symbology
+                </strong>
+                (
+                <em>
+                 bool
+                </em>
+                <em>
+                 ,
+                </em>
+                <em>
+                 optional
+                </em>
+                ) – Determines the symbology format used for identifying instruments. If set to True,
+a strict symbology format is used, as provided by InteractiveBrokers where instrument symbols
+are detailed in the format
+                <cite>
+                 localSymbol=secType.exchange
+                </cite>
+                (e.g.,
+                <cite>
+                 EUR.USD=CASH.IDEALPRO
+                </cite>
+                ).
+If False, a simplified symbology format is applied, using a notation like
+                <cite>
+                 EUR/USD.IDEALPRO
+                </cite>
+                .
+The default value is False, favoring simplified symbology unless specified otherwise.
+               </p>
+              </li>
               <li>
                <p>
                 <strong>
@@ -11783,6 +11837,14 @@ types as values.
            <em class="sig-param">
             <span class="n">
              <span class="pre">
+              strict_symbology=False
+             </span>
+            </span>
+           </em>
+           ,
+           <em class="sig-param">
+            <span class="n">
+             <span class="pre">
               load_contracts=None
              </span>
             </span>
@@ -11842,7 +11904,7 @@ types as values.
               routing:
              </span>
              <span class="pre">
-              ~nautilus_trader.config.live.RoutingConfig
+              ~nautilus_trader.live.config.RoutingConfig
              </span>
              <span class="pre">
               =
@@ -12023,7 +12085,7 @@ types as values.
               at
              </span>
              <span class="pre">
-              0x7fd8956cc910&gt;
+              0x7fb1beb6db90&gt;
              </span>
              <span class="pre">
               =
@@ -12043,13 +12105,11 @@ types as values.
           <dd>
            <p>
             Bases:
-            <a class="reference internal" href="../config.html#nautilus_trader.config.live.LiveDataClientConfig" title="nautilus_trader.config.live.LiveDataClientConfig">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               LiveDataClientConfig
-              </span>
-             </code>
-            </a>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              LiveDataClientConfig
+             </span>
+            </code>
            </p>
            <p>
             Configuration for
@@ -12734,6 +12794,9 @@ types as values.
               log_warnings=True,
              </span>
              <span class="pre">
+              strict_symbology=False,
+             </span>
+             <span class="pre">
               load_contracts=None,
              </span>
              <span class="pre">
@@ -12771,11 +12834,9 @@ types as values.
             <span class="w">
             </span>
             <span class="n">
-             <a class="reference internal" href="../config.html#nautilus_trader.config.live.RoutingConfig" title="nautilus_trader.config.live.RoutingConfig">
-              <span class="pre">
-               RoutingConfig
-              </span>
-             </a>
+             <span class="pre">
+              RoutingConfig
+             </span>
             </span>
             <span class="w">
             </span>
@@ -13022,13 +13083,11 @@ types as values.
           <dd>
            <p>
             Bases:
-            <a class="reference internal" href="../config.html#nautilus_trader.config.live.LiveExecClientConfig" title="nautilus_trader.config.live.LiveExecClientConfig">
-             <code class="xref py py-class docutils literal notranslate">
-              <span class="pre">
-               LiveExecClientConfig
-              </span>
-             </code>
-            </a>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              LiveExecClientConfig
+             </span>
+            </code>
            </p>
            <p>
             Configuration for
