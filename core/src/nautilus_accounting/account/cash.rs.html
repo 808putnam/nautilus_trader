@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `accounting/src/account/cash.rs`."><title>cash.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_accounting" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (11f32b73e 2024-01-31)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `accounting/src/account/cash.rs`."><title>cash.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_accounting" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_accounting/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -581,6 +581,9 @@
 <a href="#579" id="579">579</a>
 <a href="#580" id="580">580</a>
 <a href="#581" id="581">581</a>
+<a href="#582" id="582">582</a>
+<a href="#583" id="583">583</a>
+<a href="#584" id="584">584</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -596,23 +599,25 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span><span class="kw">crate</span>::account::base::BaseAccount;
-<span class="kw">use </span><span class="kw">crate</span>::account::Account;
-<span class="kw">use </span><span class="kw">crate</span>::position::Position;
+</span><span class="kw">use </span>std::collections::HashMap;
+<span class="kw">use </span>std::fmt::Display;
+<span class="kw">use </span>std::ops::{Deref, DerefMut};
+
 <span class="kw">use </span>anyhow::Result;
 <span class="kw">use </span>nautilus_model::enums::{AccountType, LiquiditySide, OrderSide};
 <span class="kw">use </span>nautilus_model::events::account::state::AccountState;
 <span class="kw">use </span>nautilus_model::events::order::filled::OrderFilled;
 <span class="kw">use </span>nautilus_model::instruments::Instrument;
+<span class="kw">use </span>nautilus_model::position::Position;
 <span class="kw">use </span>nautilus_model::types::balance::AccountBalance;
 <span class="kw">use </span>nautilus_model::types::currency::Currency;
 <span class="kw">use </span>nautilus_model::types::money::Money;
 <span class="kw">use </span>nautilus_model::types::price::Price;
 <span class="kw">use </span>nautilus_model::types::quantity::Quantity;
 <span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
-<span class="kw">use </span>std::collections::HashMap;
-<span class="kw">use </span>std::fmt::Display;
-<span class="kw">use </span>std::ops::{Deref, DerefMut};
+
+<span class="kw">use </span><span class="kw">crate</span>::account::base::BaseAccount;
+<span class="kw">use </span><span class="kw">crate</span>::account::Account;
 
 <span class="attr">#[derive(Debug)]
 #[cfg_attr(
@@ -630,14 +635,17 @@
         })
     }
 
-    <span class="kw">pub fn </span>is_cash_account(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>is_cash_account(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.account_type == AccountType::Cash
     }
-    <span class="kw">pub fn </span>is_margin_account(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>is_margin_account(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.account_type == AccountType::Margin
     }
 
-    <span class="kw">pub fn </span>is_unleveraged(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>is_unleveraged(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="bool-val">false
     </span>}
 }
@@ -682,7 +690,7 @@
         <span class="self">self</span>.balances.clone()
     }
     <span class="kw">fn </span>apply(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: AccountState) {
-        <span class="self">self</span>.base_apply(event)
+        <span class="self">self</span>.base_apply(event);
     }
 
     <span class="kw">fn </span>calculate_balance_locked&lt;T: Instrument&gt;(
@@ -750,9 +758,10 @@
             <span class="string">"CashAccount(id={}, type={}, base={})"</span>,
             <span class="self">self</span>.id,
             <span class="self">self</span>.account_type,
-            <span class="self">self</span>.base_currency
-                .map(|base_currency| <span class="macro">format!</span>(<span class="string">"{}"</span>, base_currency.code))
-                .unwrap_or_else(|| <span class="string">"None"</span>.to_string()),
+            <span class="self">self</span>.base_currency.map_or_else(
+                || <span class="string">"None"</span>.to_string(),
+                |base_currency| <span class="macro">format!</span>(<span class="string">"{}"</span>, base_currency.code)
+            ),
         )
     }
 }
@@ -765,7 +774,6 @@
     <span class="kw">use </span><span class="kw">crate</span>::account::cash::CashAccount;
     <span class="kw">use </span><span class="kw">crate</span>::account::stubs::<span class="kw-2">*</span>;
     <span class="kw">use </span><span class="kw">crate</span>::account::Account;
-    <span class="kw">use </span><span class="kw">crate</span>::position::Position;
     <span class="kw">use </span>nautilus_common::factories::OrderFactory;
     <span class="kw">use </span>nautilus_common::stubs::<span class="kw-2">*</span>;
     <span class="kw">use </span>nautilus_model::enums::{AccountType, LiquiditySide, OrderSide};
@@ -780,6 +788,7 @@
     <span class="kw">use </span>nautilus_model::instruments::stubs::<span class="kw-2">*</span>;
     <span class="kw">use </span>nautilus_model::orders::market::MarketOrder;
     <span class="kw">use </span>nautilus_model::orders::stubs::TestOrderEventStubs;
+    <span class="kw">use </span>nautilus_model::position::Position;
     <span class="kw">use </span>nautilus_model::types::currency::Currency;
     <span class="kw">use </span>nautilus_model::types::money::Money;
     <span class="kw">use </span>nautilus_model::types::price::Price;
@@ -791,9 +800,9 @@
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_display(cash_account: CashAccount) {
         <span class="macro">assert_eq!</span>(
-            <span class="macro">format!</span>(<span class="string">"{}"</span>, cash_account),
+            <span class="macro">format!</span>(<span class="string">"{cash_account}"</span>),
             <span class="string">"CashAccount(id=SIM-001, type=CASH, base=USD)"
-        </span>)
+        </span>);
     }
 
     <span class="attr">#[rstest]
@@ -805,7 +814,7 @@
         <span class="macro">assert_eq!</span>(cash_account.account_type, AccountType::Cash);
         <span class="macro">assert_eq!</span>(cash_account.base_currency, <span class="prelude-val">Some</span>(Currency::from(<span class="string">"USD"</span>)));
         <span class="macro">assert_eq!</span>(cash_account.last_event(), <span class="prelude-val">Some</span>(cash_account_state.clone()));
-        <span class="macro">assert_eq!</span>(cash_account.events(), <span class="macro">vec!</span>[cash_account_state.clone()]);
+        <span class="macro">assert_eq!</span>(cash_account.events(), <span class="macro">vec!</span>[cash_account_state]);
         <span class="macro">assert_eq!</span>(cash_account.event_count(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(
             cash_account.balance_total(<span class="prelude-val">None</span>),
@@ -842,10 +851,7 @@
             <span class="prelude-val">Some</span>(cash_account_state_multi.clone())
         );
         <span class="macro">assert_eq!</span>(cash_account_state_multi.base_currency, <span class="prelude-val">None</span>);
-        <span class="macro">assert_eq!</span>(
-            cash_account_multi.events(),
-            <span class="macro">vec!</span>[cash_account_state_multi.clone()]
-        );
+        <span class="macro">assert_eq!</span>(cash_account_multi.events(), <span class="macro">vec!</span>[cash_account_state_multi]);
         <span class="macro">assert_eq!</span>(cash_account_multi.event_count(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(
             cash_account_multi.balance_total(<span class="prelude-val">Some</span>(Currency::BTC())),
@@ -903,8 +909,8 @@
         <span class="macro">assert_eq!</span>(
             cash_account_multi.events,
             <span class="macro">vec!</span>[
-                cash_account_state_multi.clone(),
-                cash_account_state_multi_changed_btc.clone()
+                cash_account_state_multi,
+                cash_account_state_multi_changed_btc
             ]
         );
         <span class="macro">assert_eq!</span>(cash_account_multi.event_count(), <span class="number">2</span>);
@@ -948,7 +954,7 @@
                 <span class="prelude-val">None</span>,
             )
             .unwrap();
-        <span class="macro">assert_eq!</span>(balance_locked, Money::from(<span class="string">"800032 USD"</span>))
+        <span class="macro">assert_eq!</span>(balance_locked, Money::from(<span class="string">"800032 USD"</span>));
     }
 
     <span class="attr">#[rstest]
@@ -965,7 +971,7 @@
                 <span class="prelude-val">None</span>,
             )
             .unwrap();
-        <span class="macro">assert_eq!</span>(balance_locked, Money::from(<span class="string">"1000040 AUD"</span>))
+        <span class="macro">assert_eq!</span>(balance_locked, Money::from(<span class="string">"1000040 AUD"</span>));
     }
 
     <span class="attr">#[rstest]
@@ -982,7 +988,7 @@
                 <span class="prelude-val">None</span>,
             )
             .unwrap();
-        <span class="macro">assert_eq!</span>(balance_locked, Money::from(<span class="string">"100 USD"</span>))
+        <span class="macro">assert_eq!</span>(balance_locked, Money::from(<span class="string">"100 USD"</span>));
     }
 
     <span class="attr">#[rstest]
@@ -1003,8 +1009,8 @@
             <span class="prelude-val">None</span>,
         );
         <span class="kw">let </span>fill = TestOrderEventStubs::order_filled::&lt;MarketOrder, CurrencyPair&gt;(
-            order,
-            audusd_sim,
+            <span class="kw-2">&amp;</span>order,
+            <span class="kw-2">&amp;</span>audusd_sim,
             <span class="prelude-val">Some</span>(StrategyId::new(<span class="string">"S-001"</span>).unwrap()),
             <span class="prelude-val">None</span>,
             <span class="prelude-val">Some</span>(PositionId::new(<span class="string">"P-123456"</span>).unwrap()),
@@ -1017,7 +1023,7 @@
         <span class="kw">let </span>pnls = cash_account_million_usd
             .calculate_pnls(audusd_sim, fill, <span class="prelude-val">Some</span>(position))
             .unwrap();
-        <span class="macro">assert_eq!</span>(pnls, <span class="macro">vec!</span>[Money::from(<span class="string">"-800000 USD"</span>)])
+        <span class="macro">assert_eq!</span>(pnls, <span class="macro">vec!</span>[Money::from(<span class="string">"-800000 USD"</span>)]);
     }
 
     <span class="attr">#[rstest]
@@ -1038,8 +1044,8 @@
             <span class="prelude-val">None</span>,
         );
         <span class="kw">let </span>fill1 = TestOrderEventStubs::order_filled::&lt;MarketOrder, CurrencyPair&gt;(
-            order1,
-            currency_pair_btcusdt,
+            <span class="kw-2">&amp;</span>order1,
+            <span class="kw-2">&amp;</span>currency_pair_btcusdt,
             <span class="prelude-val">Some</span>(StrategyId::new(<span class="string">"S-001"</span>).unwrap()),
             <span class="prelude-val">None</span>,
             <span class="prelude-val">Some</span>(PositionId::new(<span class="string">"P-123456"</span>).unwrap()),
@@ -1064,8 +1070,8 @@
             <span class="prelude-val">None</span>,
         );
         <span class="kw">let </span>fill2 = TestOrderEventStubs::order_filled::&lt;MarketOrder, CurrencyPair&gt;(
-            order2,
-            currency_pair_btcusdt,
+            <span class="kw-2">&amp;</span>order2,
+            <span class="kw-2">&amp;</span>currency_pair_btcusdt,
             <span class="prelude-val">Some</span>(StrategyId::new(<span class="string">"S-001"</span>).unwrap()),
             <span class="prelude-val">None</span>,
             <span class="prelude-val">Some</span>(PositionId::new(<span class="string">"P-123456"</span>).unwrap()),

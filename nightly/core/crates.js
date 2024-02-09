@@ -1,1 +1,0 @@
-window.ALL_CRATES = ["drop_db","init_db","nautilus_accounting","nautilus_adapters","nautilus_backtest","nautilus_common","nautilus_core","nautilus_indicators","nautilus_infrastructure","nautilus_model","nautilus_network","nautilus_persistence","nautilus_pyo3","tokio_tungstenite"];

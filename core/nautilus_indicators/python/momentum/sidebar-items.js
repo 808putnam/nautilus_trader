@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["rsi"]};
+window.SIDEBAR_ITEMS = {"mod":["aroon","rsi"]};

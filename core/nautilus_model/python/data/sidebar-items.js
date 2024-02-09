@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["bar","delta","depth","order","quote","trade"]};
+window.SIDEBAR_ITEMS = {"fn":["data_to_pycapsule"],"mod":["bar","delta","depth","order","quote","trade"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["account","position","python"]};
+window.SIDEBAR_ITEMS = {"mod":["account","python"]};
