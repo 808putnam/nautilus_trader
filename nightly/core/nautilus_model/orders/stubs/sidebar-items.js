@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["market_order"],"struct":["TestOrderEventStubs"]};
+window.SIDEBAR_ITEMS = {"struct":["TestOrderEventStubs","TestOrderStubs"]};
