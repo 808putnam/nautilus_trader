@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/loader.rs`."><title>loader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (d44e3b95c 2024-02-09)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/loader.rs`."><title>loader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (6cc484351 2024-02-10)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_adapters/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -289,15 +289,6 @@
 <a href="#287" id="287">287</a>
 <a href="#288" id="288">288</a>
 <a href="#289" id="289">289</a>
-<a href="#290" id="290">290</a>
-<a href="#291" id="291">291</a>
-<a href="#292" id="292">292</a>
-<a href="#293" id="293">293</a>
-<a href="#294" id="294">294</a>
-<a href="#295" id="295">295</a>
-<a href="#296" id="296">296</a>
-<a href="#297" id="297">297</a>
-<a href="#298" id="298">298</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -335,7 +326,7 @@
 <span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use super</span>::{
-    parsing::{parse_instrument_def_msg_v1, parse_raw_ptr_to_ustr, parse_record},
+    decode::{decode_instrument_def_msg_v1, decode_record, raw_ptr_to_ustr},
     types::{DatabentoPublisher, Dataset, PublisherId},
 };
 
@@ -354,10 +345,6 @@
 ///  - DEFINITION -&gt; `Instrument`
 ///  - IMBALANCE -&gt; `DatabentoImbalance`
 ///  - STATISTICS -&gt; `DatabentoStatistics`
-///
-/// For the loader to work correctly, you must first either:
-///  - Load Databento instrument definitions from a DBN file using `load_instruments(...)`
-///  - Manually add Nautilus instrument objects through `add_instruments(...)`
 ///
 /// # Warnings
 /// The following Databento instrument classes are not supported:
@@ -425,7 +412,6 @@
             .collect::&lt;IndexMap&lt;Venue, Ustr&gt;&gt;();
 
         <span class="self">self</span>.publisher_venue_map = publishers
-            .clone()
             .into_iter()
             .map(|p| (p.publisher_id, Venue::from(p.venue.as_str())))
             .collect::&lt;IndexMap&lt;u16, Venue&gt;&gt;();
@@ -495,9 +481,7 @@
             .get(instrument_id)
             .expect(<span class="string">"No raw symbol found for {instrument_id}"</span>);
 
-        <span class="kw">let </span>symbol = Symbol {
-            value: Ustr::from(raw_symbol),
-        };
+        <span class="kw">let </span>symbol = Symbol::from_str_unchecked(raw_symbol);
 
         <span class="prelude-val">Ok</span>(InstrumentId::new(symbol, venue))
     }
@@ -528,7 +512,6 @@
             <span class="kw">match </span>dbn_stream.get() {
                 <span class="prelude-val">Some</span>(record) =&gt; {
                     <span class="kw">let </span>rec_ref = dbn::RecordRef::from(record);
-                    <span class="kw">let </span>rtype = rec_ref.rtype().expect(<span class="string">"Invalid `rtype` for data loading"</span>);
                     <span class="kw">let </span>instrument_id = <span class="kw">match </span><span class="kw-2">&amp;</span>instrument_id {
                         <span class="prelude-val">Some</span>(id) =&gt; <span class="kw-2">*</span>id, <span class="comment">// Copy
                         </span><span class="prelude-val">None </span>=&gt; {
@@ -543,9 +526,8 @@
                         }
                     };
 
-                    <span class="kw">match </span>parse_record(
+                    <span class="kw">match </span>decode_record(
                         <span class="kw-2">&amp;</span>rec_ref,
-                        rtype,
                         instrument_id,
                         price_precision,
                         <span class="prelude-val">None</span>,
@@ -576,7 +558,7 @@
                     <span class="kw">let </span>msg = rec_ref.get::&lt;InstrumentDefMsgV1&gt;().unwrap();
 
                     <span class="kw">let </span>raw_symbol = <span class="kw">unsafe </span>{
-                        parse_raw_ptr_to_ustr(record.raw_symbol.as_ptr())
+                        raw_ptr_to_ustr(record.raw_symbol.as_ptr())
                             .expect(<span class="string">"Error parsing `raw_symbol`"</span>)
                     };
                     <span class="kw">let </span>symbol = Symbol { value: raw_symbol };
@@ -586,7 +568,7 @@
                         .expect(<span class="string">"`Venue` not found `publisher_id`"</span>);
                     <span class="kw">let </span>instrument_id = InstrumentId::new(symbol, <span class="kw-2">*</span>venue);
 
-                    <span class="kw">match </span>parse_instrument_def_msg_v1(record, instrument_id, msg.ts_recv) {
+                    <span class="kw">match </span>decode_instrument_def_msg_v1(record, instrument_id, msg.ts_recv) {
                         <span class="prelude-val">Ok</span>(data) =&gt; <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(data)),
                         <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)),
                     }

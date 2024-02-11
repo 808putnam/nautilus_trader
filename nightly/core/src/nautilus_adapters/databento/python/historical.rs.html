@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/python/historical.rs`."><title>historical.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (d44e3b95c 2024-02-09)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/python/historical.rs`."><title>historical.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (6cc484351 2024-02-10)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../nautilus_adapters/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -363,15 +363,6 @@
 <a href="#361" id="361">361</a>
 <a href="#362" id="362">362</a>
 <a href="#363" id="363">363</a>
-<a href="#364" id="364">364</a>
-<a href="#365" id="365">365</a>
-<a href="#366" id="366">366</a>
-<a href="#367" id="367">367</a>
-<a href="#368" id="368">368</a>
-<a href="#369" id="369">369</a>
-<a href="#370" id="370">370</a>
-<a href="#371" id="371">371</a>
-<a href="#372" id="372">372</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -390,7 +381,7 @@
 </span><span class="kw">use </span>std::{fs, num::NonZeroU64, sync::Arc};
 
 <span class="kw">use </span>databento::{<span class="self">self</span>, historical::timeseries::GetRangeParams};
-<span class="kw">use </span>dbn::{<span class="self">self</span>, Record, VersionUpgradePolicy};
+<span class="kw">use </span>dbn::{<span class="self">self</span>, VersionUpgradePolicy};
 <span class="kw">use </span>indexmap::IndexMap;
 <span class="kw">use </span>nautilus_core::{
     python::to_pyvalue_err,
@@ -410,8 +401,8 @@
 
 <span class="kw">use </span><span class="kw">crate</span>::databento::{
     common::get_date_time_range,
-    parsing::{parse_instrument_def_msg, parse_raw_ptr_to_ustr, parse_record},
-    symbology::parse_nautilus_instrument_id,
+    decode::{decode_instrument_def_msg, decode_record, raw_ptr_to_ustr},
+    symbology::decode_nautilus_instrument_id,
     types::{DatabentoPublisher, PublisherId},
 };
 
@@ -514,12 +505,12 @@
             <span class="kw">let </span><span class="kw-2">mut </span>instruments = Vec::new();
 
             <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(rec)) = decoder.decode_record::&lt;dbn::InstrumentDefMsg&gt;().<span class="kw">await </span>{
-                <span class="kw">let </span>raw_symbol = <span class="kw">unsafe </span>{ parse_raw_ptr_to_ustr(rec.raw_symbol.as_ptr()).unwrap() };
+                <span class="kw">let </span>raw_symbol = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(rec.raw_symbol.as_ptr()).unwrap() };
                 <span class="kw">let </span>symbol = Symbol { value: raw_symbol };
                 <span class="kw">let </span>venue = publisher_venue_map.get(<span class="kw-2">&amp;</span>rec.hd.publisher_id).unwrap();
                 <span class="kw">let </span>instrument_id = InstrumentId::new(symbol, <span class="kw-2">*</span>venue);
 
-                <span class="kw">let </span>result = parse_instrument_def_msg(rec, instrument_id, ts_init);
+                <span class="kw">let </span>result = decode_instrument_def_msg(rec, instrument_id, ts_init);
                 <span class="kw">match </span>result {
                     <span class="prelude-val">Ok</span>(instrument) =&gt; instruments.push(instrument),
                     <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"{e:?}"</span>),
@@ -575,15 +566,12 @@
 
             <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(rec)) = decoder.decode_record::&lt;dbn::Mbp1Msg&gt;().<span class="kw">await </span>{
                 <span class="kw">let </span>rec_ref = dbn::RecordRef::from(rec);
-                <span class="kw">let </span>rtype = rec_ref.rtype().expect(<span class="string">"Invalid `rtype` for data loading"</span>);
-
                 <span class="kw">let </span>venue = publisher_venue_map.get(<span class="kw-2">&amp;</span>rec.hd.publisher_id).unwrap();
-                <span class="kw">let </span>instrument_id = parse_nautilus_instrument_id(<span class="kw-2">&amp;</span>rec_ref, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">*</span>venue)
+                <span class="kw">let </span>instrument_id = decode_nautilus_instrument_id(<span class="kw-2">&amp;</span>rec_ref, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">*</span>venue)
                     .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
-                <span class="kw">let </span>(data, <span class="kw">_</span>) = parse_record(
+                <span class="kw">let </span>(data, <span class="kw">_</span>) = decode_record(
                     <span class="kw-2">&amp;</span>rec_ref,
-                    rtype,
                     instrument_id,
                     price_precision,
                     <span class="prelude-val">Some</span>(ts_init),
@@ -641,15 +629,12 @@
 
             <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(rec)) = decoder.decode_record::&lt;dbn::TradeMsg&gt;().<span class="kw">await </span>{
                 <span class="kw">let </span>rec_ref = dbn::RecordRef::from(rec);
-                <span class="kw">let </span>rtype = rec_ref.rtype().expect(<span class="string">"Invalid `rtype` for data loading"</span>);
-
                 <span class="kw">let </span>venue = publisher_venue_map.get(<span class="kw-2">&amp;</span>rec.hd.publisher_id).unwrap();
-                <span class="kw">let </span>instrument_id = parse_nautilus_instrument_id(<span class="kw-2">&amp;</span>rec_ref, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">*</span>venue)
+                <span class="kw">let </span>instrument_id = decode_nautilus_instrument_id(<span class="kw-2">&amp;</span>rec_ref, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">*</span>venue)
                     .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
-                <span class="kw">let </span>(data, <span class="kw">_</span>) = parse_record(
+                <span class="kw">let </span>(data, <span class="kw">_</span>) = decode_record(
                     <span class="kw-2">&amp;</span>rec_ref,
-                    rtype,
                     instrument_id,
                     price_precision,
                     <span class="prelude-val">Some</span>(ts_init),
@@ -716,15 +701,12 @@
 
             <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(rec)) = decoder.decode_record::&lt;dbn::OhlcvMsg&gt;().<span class="kw">await </span>{
                 <span class="kw">let </span>rec_ref = dbn::RecordRef::from(rec);
-                <span class="kw">let </span>rtype = rec_ref.rtype().expect(<span class="string">"Invalid `rtype` for data loading"</span>);
-
                 <span class="kw">let </span>venue = publisher_venue_map.get(<span class="kw-2">&amp;</span>rec.hd.publisher_id).unwrap();
-                <span class="kw">let </span>instrument_id = parse_nautilus_instrument_id(<span class="kw-2">&amp;</span>rec_ref, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">*</span>venue)
+                <span class="kw">let </span>instrument_id = decode_nautilus_instrument_id(<span class="kw-2">&amp;</span>rec_ref, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">*</span>venue)
                     .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
-                <span class="kw">let </span>(data, <span class="kw">_</span>) = parse_record(
+                <span class="kw">let </span>(data, <span class="kw">_</span>) = decode_record(
                     <span class="kw-2">&amp;</span>rec_ref,
-                    rtype,
                     instrument_id,
                     price_precision,
                     <span class="prelude-val">Some</span>(ts_init),
