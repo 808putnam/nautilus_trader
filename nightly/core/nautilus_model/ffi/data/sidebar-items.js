@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["bar","delta","depth","order","quote","trade"]};
+window.SIDEBAR_ITEMS = {"mod":["bar","delta","deltas","depth","order","quote","trade"]};
