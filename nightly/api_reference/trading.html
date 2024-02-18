@@ -14004,6 +14004,17 @@ If
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               managed=True
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -14138,6 +14149,24 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  managed
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
               </ul>
              </dd>
             </dl>
@@ -14223,6 +14252,17 @@ If
               </span>
               <span class="pre">
                client_id=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               managed=True
               </span>
              </span>
             </em>
@@ -14336,7 +14376,7 @@ as per the last subscription request (this will also affect all subscribers).
                  <em>
                   int
                  </em>
-                 ) – The order book snapshot interval in milliseconds (not less than 20 milliseconds).
+                 ) – The order book snapshot interval in milliseconds (must be positive).
                 </p>
                </li>
                <li>
@@ -14384,6 +14424,24 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  managed
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
               </ul>
              </dd>
              <dt class="field-even">
@@ -14415,7 +14473,7 @@ If
                  <cite>
                   interval_ms
                  </cite>
-                 is less than the minimum of 20.
+                 is not positive (&gt; 0).
                 </p>
                </li>
               </ul>
@@ -14426,7 +14484,7 @@ If
               Warning
              </p>
              <p>
-              Consider subscribing to order book deltas if you need intervals less than 20 milliseconds.
+              Consider subscribing to order book deltas if you need intervals less than 100 milliseconds.
              </p>
             </div>
            </dd>
@@ -31490,6 +31548,17 @@ If
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               managed=True
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -31624,6 +31693,24 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  managed
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
               </ul>
              </dd>
             </dl>
@@ -31709,6 +31796,17 @@ If
               </span>
               <span class="pre">
                client_id=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               managed=True
               </span>
              </span>
             </em>
@@ -31822,7 +31920,7 @@ as per the last subscription request (this will also affect all subscribers).
                  <em>
                   int
                  </em>
-                 ) – The order book snapshot interval in milliseconds (not less than 20 milliseconds).
+                 ) – The order book snapshot interval in milliseconds (must be positive).
                 </p>
                </li>
                <li>
@@ -31870,6 +31968,24 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  managed
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
               </ul>
              </dd>
              <dt class="field-even">
@@ -31901,7 +32017,7 @@ If
                  <cite>
                   interval_ms
                  </cite>
-                 is less than the minimum of 20.
+                 is not positive (&gt; 0).
                 </p>
                </li>
               </ul>
@@ -31912,7 +32028,7 @@ If
               Warning
              </p>
              <p>
-              Consider subscribing to order book deltas if you need intervals less than 20 milliseconds.
+              Consider subscribing to order book deltas if you need intervals less than 100 milliseconds.
              </p>
             </div>
            </dd>
