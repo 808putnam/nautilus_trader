@@ -24819,9 +24819,6 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookDeltas
-              </span>
-              <span class="pre">
                deltas
               </span>
              </span>
@@ -24850,7 +24847,7 @@ then the component state will not change, and an error will be logged.
             <p>
              Passes to
              <cite>
-              on_order_book_delta
+              on_order_book_deltas
              </cite>
              if state is
              <code class="docutils literal notranslate">
@@ -24859,6 +24856,16 @@ then the component state will not change, and an error will be logged.
               </span>
              </code>
              .
+The
+             <cite>
+              deltas
+             </cite>
+             will be
+             <cite>
+              nautilus_pyo3.OrderBookDeltas
+             </cite>
+             if the
+pyo3_conversion flag was set for the subscription.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -24878,6 +24885,12 @@ then the component state will not change, and an error will be logged.
                  OrderBookDeltas
                 </em>
                </a>
+               <em>
+                or
+               </em>
+               <em>
+                nautilus_pyo3.OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -27213,9 +27226,6 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookDeltas
-              </span>
-              <span class="pre">
                deltas
               </span>
              </span>
@@ -27259,6 +27269,12 @@ update.
                  OrderBookDeltas
                 </em>
                </a>
+               <em>
+                or
+               </em>
+               <em>
+                nautilus_pyo3.OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -32322,6 +32338,17 @@ If
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               pyo3_conversion=False
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -32472,6 +32499,32 @@ If
                   default True
                  </em>
                  ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  pyo3_conversion
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – If received deltas should be converted to
+                 <cite>
+                  nautilus_pyo3.OrderBookDeltas
+                 </cite>
+                 prior to being passed to the
+                 <cite>
+                  on_order_book_deltas
+                 </cite>
+                 handler.
                 </p>
                </li>
               </ul>
@@ -36298,9 +36351,6 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookDeltas
-              </span>
-              <span class="pre">
                deltas
               </span>
              </span>
@@ -36329,7 +36379,7 @@ then the component state will not change, and an error will be logged.
             <p>
              Passes to
              <cite>
-              on_order_book_delta
+              on_order_book_deltas
              </cite>
              if state is
              <code class="docutils literal notranslate">
@@ -36338,6 +36388,16 @@ then the component state will not change, and an error will be logged.
               </span>
              </code>
              .
+The
+             <cite>
+              deltas
+             </cite>
+             will be
+             <cite>
+              nautilus_pyo3.OrderBookDeltas
+             </cite>
+             if the
+pyo3_conversion flag was set for the subscription.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -36357,6 +36417,12 @@ then the component state will not change, and an error will be logged.
                  OrderBookDeltas
                 </em>
                </a>
+               <em>
+                or
+               </em>
+               <em>
+                nautilus_pyo3.OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -38666,9 +38732,6 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookDeltas
-              </span>
-              <span class="pre">
                deltas
               </span>
              </span>
@@ -38712,6 +38775,12 @@ update.
                  OrderBookDeltas
                 </em>
                </a>
+               <em>
+                or
+               </em>
+               <em>
+                nautilus_pyo3.OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -43758,6 +43827,17 @@ If
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               pyo3_conversion=False
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -43908,6 +43988,32 @@ If
                   default True
                  </em>
                  ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  pyo3_conversion
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – If received deltas should be converted to
+                 <cite>
+                  nautilus_pyo3.OrderBookDeltas
+                 </cite>
+                 prior to being passed to the
+                 <cite>
+                  on_order_book_deltas
+                 </cite>
+                 handler.
                 </p>
                </li>
               </ul>

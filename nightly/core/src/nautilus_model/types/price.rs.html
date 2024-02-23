@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/types/price.rs`."><title>price.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (6672c16af 2024-02-17)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/types/price.rs`."><title>price.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (397937d81 2024-02-22)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -505,6 +505,11 @@
 <a href="#503" id="503">503</a>
 <a href="#504" id="504">504</a>
 <a href="#505" id="505">505</a>
+<a href="#506" id="506">506</a>
+<a href="#507" id="507">507</a>
+<a href="#508" id="508">508</a>
+<a href="#509" id="509">509</a>
+<a href="#510" id="510">510</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -611,8 +616,8 @@
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>as_decimal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
         <span class="comment">// Scale down the raw value to match the precision
-        </span><span class="kw">let </span>rescaled_raw = <span class="self">self</span>.raw / i64::pow(<span class="number">10</span>, (FIXED_PRECISION - <span class="self">self</span>.precision) <span class="kw">as </span>u32);
-        Decimal::from_i128_with_scale(rescaled_raw <span class="kw">as </span>i128, <span class="self">self</span>.precision <span class="kw">as </span>u32)
+        </span><span class="kw">let </span>rescaled_raw = <span class="self">self</span>.raw / i64::pow(<span class="number">10</span>, u32::from(FIXED_PRECISION - <span class="self">self</span>.precision));
+        Decimal::from_i128_with_scale(i128::from(rescaled_raw), u32::from(<span class="self">self</span>.precision))
     }
 
     <span class="attr">#[must_use]
@@ -654,7 +659,7 @@
 
 <span class="kw">impl </span>Hash <span class="kw">for </span>Price {
     <span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
-        <span class="self">self</span>.raw.hash(state)
+        <span class="self">self</span>.raw.hash(state);
     }
 }
 
@@ -790,7 +795,7 @@
         </span>D: Deserializer&lt;<span class="lifetime">'de</span>&gt;,
     {
         <span class="kw">let </span>price_str: <span class="kw-2">&amp;</span>str = Deserialize::deserialize(_deserializer)<span class="question-mark">?</span>;
-        <span class="kw">let </span>price: Price = price_str.into();
+        <span class="kw">let </span>price: <span class="self">Self </span>= price_str.into();
         <span class="prelude-val">Ok</span>(price)
     }
 }
@@ -853,7 +858,12 @@
         <span class="macro">assert_eq!</span>(price.to_string(), <span class="string">"0.00812000"</span>);
         <span class="macro">assert!</span>(!price.is_zero());
         <span class="macro">assert_eq!</span>(price.as_decimal(), <span class="macro">dec!</span>(<span class="number">0.00812000</span>));
-        <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(f64, price.as_f64(), <span class="number">0.00812</span>, epsilon = <span class="number">0.000001</span>));
+        <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(
+            f64,
+            price.as_f64(),
+            <span class="number">0.00812</span>,
+            epsilon = <span class="number">0.000_001
+        </span>));
     }
 
     <span class="attr">#[rstest]
@@ -967,7 +977,7 @@
         <span class="kw">let </span>price1 = Price::new(<span class="number">1.000</span>, <span class="number">3</span>).unwrap();
         <span class="kw">let </span>price2 = Price::new(<span class="number">1.011</span>, <span class="number">3</span>).unwrap();
         <span class="kw">let </span>price3 = price1 + price2;
-        <span class="macro">assert_eq!</span>(price3.raw, <span class="number">2_011_000_000</span>)
+        <span class="macro">assert_eq!</span>(price3.raw, <span class="number">2_011_000_000</span>);
     }
 
     <span class="attr">#[rstest]
@@ -982,14 +992,14 @@
     </span><span class="kw">fn </span>test_add_assign() {
         <span class="kw">let </span><span class="kw-2">mut </span>price = Price::new(<span class="number">1.000</span>, <span class="number">3</span>).unwrap();
         price += Price::new(<span class="number">1.011</span>, <span class="number">3</span>).unwrap();
-        <span class="macro">assert_eq!</span>(price.raw, <span class="number">2_011_000_000</span>)
+        <span class="macro">assert_eq!</span>(price.raw, <span class="number">2_011_000_000</span>);
     }
 
     <span class="attr">#[rstest]
     </span><span class="kw">fn </span>test_sub_assign() {
         <span class="kw">let </span><span class="kw-2">mut </span>price = Price::new(<span class="number">1.000</span>, <span class="number">3</span>).unwrap();
         price -= Price::new(<span class="number">0.011</span>, <span class="number">3</span>).unwrap();
-        <span class="macro">assert_eq!</span>(price.raw, <span class="number">989_000_000</span>)
+        <span class="macro">assert_eq!</span>(price.raw, <span class="number">989_000_000</span>);
     }
 
     <span class="attr">#[rstest]
@@ -997,7 +1007,7 @@
         <span class="kw">let </span>price1 = Price::new(<span class="number">1.000</span>, <span class="number">3</span>).unwrap();
         <span class="kw">let </span>price2 = Price::new(<span class="number">1.011</span>, <span class="number">3</span>).unwrap();
         <span class="kw">let </span>result = price1 * price2.into();
-        <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(f64, result, <span class="number">1.011</span>, epsilon = <span class="number">0.000001</span>));
+        <span class="macro">assert!</span>(<span class="macro">approx_eq!</span>(f64, result, <span class="number">1.011</span>, epsilon = <span class="number">0.000_001</span>));
     }
 
     <span class="attr">#[rstest]

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/ffi/orderbook/container.rs`."><title>container.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (6672c16af 2024-02-17)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/ffi/orderbook/container.rs`."><title>container.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (397937d81 2024-02-22)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -320,6 +320,25 @@
 <a href="#318" id="318">318</a>
 <a href="#319" id="319">319</a>
 <a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -355,9 +374,9 @@
     mbp: <span class="prelude-ty">Option</span>&lt;OrderBookMbp&gt;,
 }
 
-<span class="kw">const </span>L3_MBO_NOT_INITILIZED: <span class="kw-2">&amp;</span>str = <span class="string">"L3 MBO book not initialized"</span>;
-<span class="kw">const </span>L2_MBP_NOT_INITILIZED: <span class="kw-2">&amp;</span>str = <span class="string">"L2 MBP book not initialized"</span>;
-<span class="kw">const </span>L1_MBP_NOT_INITILIZED: <span class="kw-2">&amp;</span>str = <span class="string">"L1 MBP book not initialized"</span>;
+<span class="kw">const </span>L3_MBO_NOT_INITILIZED: <span class="kw-2">&amp;</span>str = <span class="string">"L3_MBO book not initialized"</span>;
+<span class="kw">const </span>L2_MBP_NOT_INITILIZED: <span class="kw-2">&amp;</span>str = <span class="string">"L2_MBP book not initialized"</span>;
+<span class="kw">const </span>L1_MBP_NOT_INITILIZED: <span class="kw-2">&amp;</span>str = <span class="string">"L1_MBP book not initialized"</span>;
 
 <span class="kw">impl </span>OrderBookContainer {
     <span class="attr">#[must_use]
@@ -376,15 +395,18 @@
         }
     }
 
-    <span class="kw">pub fn </span>instrument_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; InstrumentId {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>instrument_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; InstrumentId {
         <span class="self">self</span>.instrument_id
     }
 
-    <span class="kw">pub fn </span>book_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BookType {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>book_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; BookType {
         <span class="self">self</span>.book_type
     }
 
-    <span class="kw">pub fn </span>sequence(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>sequence(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.mbo.as_ref().expect(L3_MBO_NOT_INITILIZED).sequence,
             BookType::L2_MBP =&gt; <span class="self">self</span>.mbp.as_ref().expect(L2_MBP_NOT_INITILIZED).sequence,
@@ -392,7 +414,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>ts_last(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>ts_last(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.mbo.as_ref().expect(L3_MBO_NOT_INITILIZED).ts_last,
             BookType::L2_MBP =&gt; <span class="self">self</span>.mbp.as_ref().expect(L2_MBP_NOT_INITILIZED).ts_last,
@@ -400,7 +423,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>count(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.mbo.as_ref().expect(L3_MBO_NOT_INITILIZED).count,
             BookType::L2_MBP =&gt; <span class="self">self</span>.mbp.as_ref().expect(L2_MBP_NOT_INITILIZED).count,
@@ -504,23 +528,26 @@
         };
     }
 
-    <span class="kw">pub fn </span>bids(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>Level&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>bids(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>Level&gt; {
         <span class="kw">match </span><span class="self">self</span>.book_type {
-            BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().bids(),
-            BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().bids(),
-            BookType::L1_MBP =&gt; <span class="self">self</span>.get_mbp().bids(),
+            BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().bids().collect(),
+            BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().bids().collect(),
+            BookType::L1_MBP =&gt; <span class="self">self</span>.get_mbp().bids().collect(),
         }
     }
 
-    <span class="kw">pub fn </span>asks(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>Level&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>asks(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<span class="kw-2">&amp;</span>Level&gt; {
         <span class="kw">match </span><span class="self">self</span>.book_type {
-            BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().asks(),
-            BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().asks(),
-            BookType::L1_MBP =&gt; <span class="self">self</span>.get_mbp().asks(),
+            BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().asks().collect(),
+            BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().asks().collect(),
+            BookType::L1_MBP =&gt; <span class="self">self</span>.get_mbp().asks().collect(),
         }
     }
 
-    <span class="kw">pub fn </span>has_bid(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>has_bid(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().has_bid(),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().has_bid(),
@@ -528,7 +555,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>has_ask(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>has_ask(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().has_ask(),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().has_ask(),
@@ -536,7 +564,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>best_bid_price(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Price&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>best_bid_price(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Price&gt; {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().best_bid_price(),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().best_bid_price(),
@@ -544,7 +573,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>best_ask_price(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Price&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>best_ask_price(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Price&gt; {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().best_ask_price(),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().best_ask_price(),
@@ -552,7 +582,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>best_bid_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Quantity&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>best_bid_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Quantity&gt; {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().best_bid_size(),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().best_bid_size(),
@@ -560,7 +591,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>best_ask_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Quantity&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>best_ask_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Quantity&gt; {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().best_ask_size(),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().best_ask_size(),
@@ -568,7 +600,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>spread(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>spread(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().spread(),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().spread(),
@@ -576,7 +609,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>midpoint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>midpoint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().midpoint(),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().midpoint(),
@@ -584,7 +618,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>get_avg_px_for_quantity(<span class="kw-2">&amp;</span><span class="self">self</span>, qty: Quantity, order_side: OrderSide) -&gt; f64 {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>get_avg_px_for_quantity(<span class="kw-2">&amp;</span><span class="self">self</span>, qty: Quantity, order_side: OrderSide) -&gt; f64 {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().get_avg_px_for_quantity(qty, order_side),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().get_avg_px_for_quantity(qty, order_side),
@@ -592,7 +627,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>get_quantity_for_price(<span class="kw-2">&amp;</span><span class="self">self</span>, price: Price, order_side: OrderSide) -&gt; f64 {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>get_quantity_for_price(<span class="kw-2">&amp;</span><span class="self">self</span>, price: Price, order_side: OrderSide) -&gt; f64 {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().get_quantity_for_price(price, order_side),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().get_quantity_for_price(price, order_side),
@@ -600,7 +636,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>simulate_fills(<span class="kw-2">&amp;</span><span class="self">self</span>, order: <span class="kw-2">&amp;</span>BookOrder) -&gt; Vec&lt;(Price, Quantity)&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>simulate_fills(<span class="kw-2">&amp;</span><span class="self">self</span>, order: <span class="kw-2">&amp;</span>BookOrder) -&gt; Vec&lt;(Price, Quantity)&gt; {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().simulate_fills(order),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().simulate_fills(order),
@@ -616,7 +653,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>pprint(<span class="kw-2">&amp;</span><span class="self">self</span>, num_levels: usize) -&gt; String {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>pprint(<span class="kw-2">&amp;</span><span class="self">self</span>, num_levels: usize) -&gt; String {
         <span class="kw">match </span><span class="self">self</span>.book_type {
             BookType::L3_MBO =&gt; <span class="self">self</span>.get_mbo().pprint(num_levels),
             BookType::L2_MBP =&gt; <span class="self">self</span>.get_mbp().pprint(num_levels),
