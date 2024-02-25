@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["TestTimer","TimeEvent","TimeEventHandler"],"trait":["Timer"]};
+window.SIDEBAR_ITEMS = {"struct":["LiveTimer","TestTimer","TimeEvent","TimeEventHandler"],"trait":["Timer"]};

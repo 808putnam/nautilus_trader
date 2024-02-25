@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/orders/base.rs`."><title>base.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/orders/base.rs`."><title>base.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -774,6 +774,13 @@
 <a href="#772" id="772">772</a>
 <a href="#773" id="773">773</a>
 <a href="#774" id="774">774</a>
+<a href="#775" id="775">775</a>
+<a href="#776" id="776">776</a>
+<a href="#777" id="777">777</a>
+<a href="#778" id="778">778</a>
+<a href="#779" id="779">779</a>
+<a href="#780" id="780">780</a>
+<a href="#781" id="781">781</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -794,7 +801,6 @@
 <span class="kw">use </span>nautilus_core::{time::UnixNanos, uuid::UUID4};
 <span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>serde::{Deserialize, Serialize};
-<span class="kw">use </span>thiserror;
 <span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use crate</span>::{
@@ -845,13 +851,15 @@
     OrderType::MarketIfTouched,
 ];
 
-<span class="kw">pub fn </span>ustr_hashmap_to_str(h: HashMap&lt;Ustr, Ustr&gt;) -&gt; HashMap&lt;String, String&gt; {
+<span class="attr">#[must_use]
+</span><span class="kw">pub fn </span>ustr_hashmap_to_str(h: HashMap&lt;Ustr, Ustr&gt;) -&gt; HashMap&lt;String, String&gt; {
     h.into_iter()
         .map(|(k, v)| (k.to_string(), v.to_string()))
         .collect()
 }
 
-<span class="kw">pub fn </span>str_hashmap_to_ustr(h: HashMap&lt;String, String&gt;) -&gt; HashMap&lt;Ustr, Ustr&gt; {
+<span class="attr">#[must_use]
+</span><span class="kw">pub fn </span>str_hashmap_to_ustr(h: HashMap&lt;String, String&gt;) -&gt; HashMap&lt;Ustr, Ustr&gt; {
     h.into_iter()
         .map(|(k, v)| (Ustr::from(<span class="kw-2">&amp;</span>k), Ustr::from(<span class="kw-2">&amp;</span>v)))
         .collect()
@@ -859,69 +867,69 @@
 
 <span class="kw">impl </span>OrderStatus {
     <span class="attr">#[rustfmt::skip]
-    </span><span class="kw">pub fn </span>transition(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderEvent) -&gt; <span class="prelude-ty">Result</span>&lt;OrderStatus, OrderError&gt; {
+    </span><span class="kw">pub fn </span>transition(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderEvent) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, OrderError&gt; {
         <span class="kw">let </span>new_state = <span class="kw">match </span>(<span class="self">self</span>, event) {
-            (OrderStatus::Initialized, OrderEvent::OrderDenied(<span class="kw">_</span>)) =&gt; OrderStatus::Denied,
-            (OrderStatus::Initialized, OrderEvent::OrderEmulated(<span class="kw">_</span>)) =&gt; OrderStatus::Emulated,  <span class="comment">// Emulated orders
-            </span>(OrderStatus::Initialized, OrderEvent::OrderReleased(<span class="kw">_</span>)) =&gt; OrderStatus::Released,  <span class="comment">// Emulated orders
-            </span>(OrderStatus::Initialized, OrderEvent::OrderSubmitted(<span class="kw">_</span>)) =&gt; OrderStatus::Submitted,
-            (OrderStatus::Initialized, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; OrderStatus::Rejected,  <span class="comment">// External orders
-            </span>(OrderStatus::Initialized, OrderEvent::OrderAccepted(<span class="kw">_</span>)) =&gt; OrderStatus::Accepted,  <span class="comment">// External orders
-            </span>(OrderStatus::Initialized, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,  <span class="comment">// External orders
-            </span>(OrderStatus::Initialized, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; OrderStatus::Expired,  <span class="comment">// External orders
-            </span>(OrderStatus::Initialized, OrderEvent::OrderTriggered(<span class="kw">_</span>)) =&gt; OrderStatus::Triggered, <span class="comment">// External orders
-            </span>(OrderStatus::Emulated, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,  <span class="comment">// Emulated orders
-            </span>(OrderStatus::Emulated, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; OrderStatus::Expired,  <span class="comment">// Emulated orders
-            </span>(OrderStatus::Emulated, OrderEvent::OrderReleased(<span class="kw">_</span>)) =&gt; OrderStatus::Released,  <span class="comment">// Emulated orders
-            </span>(OrderStatus::Released, OrderEvent::OrderSubmitted(<span class="kw">_</span>)) =&gt; OrderStatus::Submitted,  <span class="comment">// Emulated orders
-            </span>(OrderStatus::Released, OrderEvent::OrderDenied(<span class="kw">_</span>)) =&gt; OrderStatus::Denied,  <span class="comment">// Emulated orders
-            </span>(OrderStatus::Released, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,  <span class="comment">// Execution algo
-            </span>(OrderStatus::Submitted, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; OrderStatus::PendingUpdate,
-            (OrderStatus::Submitted, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; OrderStatus::PendingCancel,
-            (OrderStatus::Submitted, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; OrderStatus::Rejected,
-            (OrderStatus::Submitted, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,  <span class="comment">// FOK and IOC cases
-            </span>(OrderStatus::Submitted, OrderEvent::OrderAccepted(<span class="kw">_</span>)) =&gt; OrderStatus::Accepted,
-            (OrderStatus::Submitted, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; OrderStatus::PartiallyFilled,
-            (OrderStatus::Submitted, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; OrderStatus::Filled,
-            (OrderStatus::Accepted, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; OrderStatus::Rejected,  <span class="comment">// StopLimit order
-            </span>(OrderStatus::Accepted, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; OrderStatus::PendingUpdate,
-            (OrderStatus::Accepted, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; OrderStatus::PendingCancel,
-            (OrderStatus::Accepted, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,
-            (OrderStatus::Accepted, OrderEvent::OrderTriggered(<span class="kw">_</span>)) =&gt; OrderStatus::Triggered,
-            (OrderStatus::Accepted, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; OrderStatus::Expired,
-            (OrderStatus::Accepted, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; OrderStatus::PartiallyFilled,
-            (OrderStatus::Accepted, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; OrderStatus::Filled,
-            (OrderStatus::Canceled, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; OrderStatus::PartiallyFilled,  <span class="comment">// Real world possibility
-            </span>(OrderStatus::Canceled, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; OrderStatus::Filled,  <span class="comment">// Real world possibility
-            </span>(OrderStatus::PendingUpdate, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; OrderStatus::Rejected,
-            (OrderStatus::PendingUpdate, OrderEvent::OrderAccepted(<span class="kw">_</span>)) =&gt; OrderStatus::Accepted,
-            (OrderStatus::PendingUpdate, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,
-            (OrderStatus::PendingUpdate, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; OrderStatus::Expired,
-            (OrderStatus::PendingUpdate, OrderEvent::OrderTriggered(<span class="kw">_</span>)) =&gt; OrderStatus::Triggered,
-            (OrderStatus::PendingUpdate, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; OrderStatus::PendingUpdate,  <span class="comment">// Allow multiple requests
-            </span>(OrderStatus::PendingUpdate, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; OrderStatus::PendingCancel,
-            (OrderStatus::PendingUpdate, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; OrderStatus::PartiallyFilled,
-            (OrderStatus::PendingUpdate, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; OrderStatus::Filled,
-            (OrderStatus::PendingCancel, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; OrderStatus::Rejected,
-            (OrderStatus::PendingCancel, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; OrderStatus::PendingCancel,  <span class="comment">// Allow multiple requests
-            </span>(OrderStatus::PendingCancel, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,
-            (OrderStatus::PendingCancel, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; OrderStatus::Expired,
-            (OrderStatus::PendingCancel, OrderEvent::OrderAccepted(<span class="kw">_</span>)) =&gt; OrderStatus::Accepted,  <span class="comment">// Allow failed cancel requests
-            </span>(OrderStatus::PendingCancel, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; OrderStatus::PartiallyFilled,
-            (OrderStatus::PendingCancel, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; OrderStatus::Filled,
-            (OrderStatus::Triggered, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; OrderStatus::Rejected,
-            (OrderStatus::Triggered, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; OrderStatus::PendingUpdate,
-            (OrderStatus::Triggered, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; OrderStatus::PendingCancel,
-            (OrderStatus::Triggered, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,
-            (OrderStatus::Triggered, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; OrderStatus::Expired,
-            (OrderStatus::Triggered, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; OrderStatus::PartiallyFilled,
-            (OrderStatus::Triggered, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; OrderStatus::Filled,
-            (OrderStatus::PartiallyFilled, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; OrderStatus::PendingUpdate,
-            (OrderStatus::PartiallyFilled, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; OrderStatus::PendingCancel,
-            (OrderStatus::PartiallyFilled, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; OrderStatus::Canceled,
-            (OrderStatus::PartiallyFilled, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; OrderStatus::Expired,
-            (OrderStatus::PartiallyFilled, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; OrderStatus::PartiallyFilled,
-            (OrderStatus::PartiallyFilled, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; OrderStatus::Filled,
+            (<span class="self">Self</span>::Initialized, OrderEvent::OrderDenied(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Denied,
+            (<span class="self">Self</span>::Initialized, OrderEvent::OrderEmulated(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Emulated,  <span class="comment">// Emulated orders
+            </span>(<span class="self">Self</span>::Initialized, OrderEvent::OrderReleased(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Released,  <span class="comment">// Emulated orders
+            </span>(<span class="self">Self</span>::Initialized, OrderEvent::OrderSubmitted(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Submitted,
+            (<span class="self">Self</span>::Initialized, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Rejected,  <span class="comment">// External orders
+            </span>(<span class="self">Self</span>::Initialized, OrderEvent::OrderAccepted(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Accepted,  <span class="comment">// External orders
+            </span>(<span class="self">Self</span>::Initialized, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Canceled,  <span class="comment">// External orders
+            </span>(<span class="self">Self</span>::Initialized, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Expired,  <span class="comment">// External orders
+            </span>(<span class="self">Self</span>::Initialized, OrderEvent::OrderTriggered(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Triggered, <span class="comment">// External orders
+            </span>(<span class="self">Self</span>::Emulated, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Canceled,  <span class="comment">// Emulated orders
+            </span>(<span class="self">Self</span>::Emulated, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Expired,  <span class="comment">// Emulated orders
+            </span>(<span class="self">Self</span>::Emulated, OrderEvent::OrderReleased(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Released,  <span class="comment">// Emulated orders
+            </span>(<span class="self">Self</span>::Released, OrderEvent::OrderSubmitted(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Submitted,  <span class="comment">// Emulated orders
+            </span>(<span class="self">Self</span>::Released, OrderEvent::OrderDenied(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Denied,  <span class="comment">// Emulated orders
+            </span>(<span class="self">Self</span>::Released, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Canceled,  <span class="comment">// Execution algo
+            </span>(<span class="self">Self</span>::Submitted, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingUpdate,
+            (<span class="self">Self</span>::Submitted, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingCancel,
+            (<span class="self">Self</span>::Submitted, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Rejected,
+            (<span class="self">Self</span>::Submitted, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Canceled,  <span class="comment">// FOK and IOC cases
+            </span>(<span class="self">Self</span>::Submitted, OrderEvent::OrderAccepted(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Accepted,
+            (<span class="self">Self</span>::Submitted, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PartiallyFilled,
+            (<span class="self">Self</span>::Submitted, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Filled,
+            (<span class="self">Self</span>::Accepted, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Rejected,  <span class="comment">// StopLimit order
+            </span>(<span class="self">Self</span>::Accepted, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingUpdate,
+            (<span class="self">Self</span>::Accepted, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingCancel,
+            (<span class="self">Self</span>::Accepted, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Canceled,
+            (<span class="self">Self</span>::Accepted, OrderEvent::OrderTriggered(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Triggered,
+            (<span class="self">Self</span>::Accepted, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Expired,
+            (<span class="self">Self</span>::Accepted, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PartiallyFilled,
+            (<span class="self">Self</span>::Accepted, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Filled,
+            (<span class="self">Self</span>::Canceled, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PartiallyFilled,  <span class="comment">// Real world possibility
+            </span>(<span class="self">Self</span>::Canceled, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Filled,  <span class="comment">// Real world possibility
+            </span>(<span class="self">Self</span>::PendingUpdate, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Rejected,
+            (<span class="self">Self</span>::PendingUpdate, OrderEvent::OrderAccepted(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Accepted,
+            (<span class="self">Self</span>::PendingUpdate, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Canceled,
+            (<span class="self">Self</span>::PendingUpdate, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Expired,
+            (<span class="self">Self</span>::PendingUpdate, OrderEvent::OrderTriggered(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Triggered,
+            (<span class="self">Self</span>::PendingUpdate, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingUpdate,  <span class="comment">// Allow multiple requests
+            </span>(<span class="self">Self</span>::PendingUpdate, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingCancel,
+            (<span class="self">Self</span>::PendingUpdate, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PartiallyFilled,
+            (<span class="self">Self</span>::PendingUpdate, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Filled,
+            (<span class="self">Self</span>::PendingCancel, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Rejected,
+            (<span class="self">Self</span>::PendingCancel, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingCancel,  <span class="comment">// Allow multiple requests
+            </span>(<span class="self">Self</span>::PendingCancel, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Canceled,
+            (<span class="self">Self</span>::PendingCancel, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Expired,
+            (<span class="self">Self</span>::PendingCancel, OrderEvent::OrderAccepted(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Accepted,  <span class="comment">// Allow failed cancel requests
+            </span>(<span class="self">Self</span>::PendingCancel, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PartiallyFilled,
+            (<span class="self">Self</span>::PendingCancel, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Filled,
+            (<span class="self">Self</span>::Triggered, OrderEvent::OrderRejected(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Rejected,
+            (<span class="self">Self</span>::Triggered, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingUpdate,
+            (<span class="self">Self</span>::Triggered, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingCancel,
+            (<span class="self">Self</span>::Triggered, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Canceled,
+            (<span class="self">Self</span>::Triggered, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Expired,
+            (<span class="self">Self</span>::Triggered, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PartiallyFilled,
+            (<span class="self">Self</span>::Triggered, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Filled,
+            (<span class="self">Self</span>::PartiallyFilled, OrderEvent::OrderPendingUpdate(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingUpdate,
+            (<span class="self">Self</span>::PartiallyFilled, OrderEvent::OrderPendingCancel(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PendingCancel,
+            (<span class="self">Self</span>::PartiallyFilled, OrderEvent::OrderCanceled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Canceled,
+            (<span class="self">Self</span>::PartiallyFilled, OrderEvent::OrderExpired(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Expired,
+            (<span class="self">Self</span>::PartiallyFilled, OrderEvent::OrderPartiallyFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::PartiallyFilled,
+            (<span class="self">Self</span>::PartiallyFilled, OrderEvent::OrderFilled(<span class="kw">_</span>)) =&gt; <span class="self">Self</span>::Filled,
             <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(OrderError::InvalidStateTransition),
         };
         <span class="prelude-val">Ok</span>(new_state)
@@ -1285,7 +1293,7 @@
     }
 
     <span class="kw">fn </span>submitted(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderSubmitted) {
-        <span class="self">self</span>.account_id = <span class="prelude-val">Some</span>(event.account_id)
+        <span class="self">self</span>.account_id = <span class="prelude-val">Some</span>(event.account_id);
     }
 
     <span class="kw">fn </span>accepted(<span class="kw-2">&amp;mut </span><span class="self">self</span>, event: <span class="kw-2">&amp;</span>OrderAccepted) {
@@ -1369,10 +1377,11 @@
                 OrderSide::Sell <span class="kw">if </span>avg_px &lt; current_price =&gt; <span class="prelude-val">Some</span>(current_price - avg_px),
                 <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
             }
-        })
+        });
     }
 
-    <span class="kw">pub fn </span>opposite_side(side: OrderSide) -&gt; OrderSide {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>opposite_side(side: OrderSide) -&gt; OrderSide {
         <span class="kw">match </span>side {
             OrderSide::Buy =&gt; OrderSide::Sell,
             OrderSide::Sell =&gt; OrderSide::Buy,
@@ -1380,7 +1389,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>closing_side(side: PositionSide) -&gt; OrderSide {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>closing_side(side: PositionSide) -&gt; OrderSide {
         <span class="kw">match </span>side {
             PositionSide::Long =&gt; OrderSide::Sell,
             PositionSide::Short =&gt; OrderSide::Buy,
@@ -1389,7 +1399,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>signed_decimal_qty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>signed_decimal_qty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
         <span class="kw">match </span><span class="self">self</span>.side {
             OrderSide::Buy =&gt; <span class="self">self</span>.quantity.as_decimal(),
             OrderSide::Sell =&gt; -<span class="self">self</span>.quantity.as_decimal(),
@@ -1397,7 +1408,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>would_reduce_only(<span class="kw-2">&amp;</span><span class="self">self</span>, side: PositionSide, position_qty: Quantity) -&gt; bool {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>would_reduce_only(<span class="kw-2">&amp;</span><span class="self">self</span>, side: PositionSide, position_qty: Quantity) -&gt; bool {
         <span class="kw">if </span>side == PositionSide::Flat {
             <span class="kw">return </span><span class="bool-val">false</span>;
         }
@@ -1411,11 +1423,13 @@
         }
     }
 
-    <span class="kw">pub fn </span>commission(<span class="kw-2">&amp;</span><span class="self">self</span>, currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="prelude-ty">Option</span>&lt;Money&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>commission(<span class="kw-2">&amp;</span><span class="self">self</span>, currency: <span class="kw-2">&amp;</span>Currency) -&gt; <span class="prelude-ty">Option</span>&lt;Money&gt; {
         <span class="self">self</span>.commissions.get(currency).copied()
     }
 
-    <span class="kw">pub fn </span>commissions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;Currency, Money&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>commissions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;Currency, Money&gt; {
         <span class="self">self</span>.commissions.clone()
     }
 }
@@ -1453,7 +1467,7 @@
     #[case(OrderSide::NoOrderSide, OrderSide::NoOrderSide)]
     </span><span class="kw">fn </span>test_order_opposite_side(<span class="attr">#[case] </span>order_side: OrderSide, <span class="attr">#[case] </span>expected_side: OrderSide) {
         <span class="kw">let </span>result = OrderCore::opposite_side(order_side);
-        <span class="macro">assert_eq!</span>(result, expected_side)
+        <span class="macro">assert_eq!</span>(result, expected_side);
     }
 
     <span class="attr">#[rstest]
@@ -1462,7 +1476,7 @@
     #[case(PositionSide::NoPositionSide, OrderSide::NoOrderSide)]
     </span><span class="kw">fn </span>test_closing_side(<span class="attr">#[case] </span>position_side: PositionSide, <span class="attr">#[case] </span>expected_side: OrderSide) {
         <span class="kw">let </span>result = OrderCore::closing_side(position_side);
-        <span class="macro">assert_eq!</span>(result, expected_side)
+        <span class="macro">assert_eq!</span>(result, expected_side);
     }
 
     <span class="attr">#[rstest]
@@ -1477,7 +1491,7 @@
             .into();
 
         <span class="kw">let </span>result = order.signed_decimal_qty();
-        <span class="macro">assert_eq!</span>(result, expected)
+        <span class="macro">assert_eq!</span>(result, expected);
     }
 
     <span class="attr">#[rustfmt::skip]
@@ -1539,7 +1553,7 @@
 
         <span class="macro">assert_eq!</span>(order.client_order_id, init.client_order_id);
         <span class="macro">assert_eq!</span>(order.status(), OrderStatus::Filled);
-        <span class="macro">assert_eq!</span>(order.filled_qty(), Quantity::from(<span class="number">100000</span>));
+        <span class="macro">assert_eq!</span>(order.filled_qty(), Quantity::from(<span class="number">100_000</span>));
         <span class="macro">assert_eq!</span>(order.leaves_qty(), Quantity::from(<span class="number">0</span>));
         <span class="macro">assert_eq!</span>(order.avg_px(), <span class="prelude-val">Some</span>(<span class="number">1.0</span>));
         <span class="macro">assert!</span>(!order.is_open());

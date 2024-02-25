@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["databento"]};
+window.SIDEBAR_ITEMS = {};

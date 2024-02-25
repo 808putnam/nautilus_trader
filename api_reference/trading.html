@@ -3461,6 +3461,15 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.trading.trader.Trader.instance_id">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Trader.instance_id
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.trading.trader.Trader.actors">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -4108,7 +4117,7 @@ framework. Custom trading strategies can be implemented by inheriting from the
                <em>
                 optional
                </em>
-               ) – The configuratuon for the controller
+               ) – The configuration for the controller
               </p>
              </li>
             </ul>
@@ -6756,9 +6765,6 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookDeltas
-              </span>
-              <span class="pre">
                deltas
               </span>
              </span>
@@ -6787,7 +6793,7 @@ then the component state will not change, and an error will be logged.
             <p>
              Passes to
              <cite>
-              on_order_book_delta
+              on_order_book_deltas
              </cite>
              if state is
              <code class="docutils literal notranslate">
@@ -6796,6 +6802,16 @@ then the component state will not change, and an error will be logged.
               </span>
              </code>
              .
+The
+             <cite>
+              deltas
+             </cite>
+             will be
+             <cite>
+              nautilus_pyo3.OrderBookDeltas
+             </cite>
+             if the
+pyo3_conversion flag was set for the subscription.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -6815,6 +6831,12 @@ then the component state will not change, and an error will be logged.
                  OrderBookDeltas
                 </em>
                </a>
+               <em>
+                or
+               </em>
+               <em>
+                nautilus_pyo3.OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -9073,9 +9095,6 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookDeltas
-              </span>
-              <span class="pre">
                deltas
               </span>
              </span>
@@ -9119,6 +9138,12 @@ update.
                  OrderBookDeltas
                 </em>
                </a>
+               <em>
+                or
+               </em>
+               <em>
+                nautilus_pyo3.OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -14004,6 +14029,28 @@ If
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               managed=True
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               pyo3_conversion=False
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -14138,6 +14185,50 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  managed
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  pyo3_conversion
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – If received deltas should be converted to
+                 <cite>
+                  nautilus_pyo3.OrderBookDeltas
+                 </cite>
+                 prior to being passed to the
+                 <cite>
+                  on_order_book_deltas
+                 </cite>
+                 handler.
+                </p>
+               </li>
               </ul>
              </dd>
             </dl>
@@ -14223,6 +14314,17 @@ If
               </span>
               <span class="pre">
                client_id=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               managed=True
               </span>
              </span>
             </em>
@@ -14336,7 +14438,7 @@ as per the last subscription request (this will also affect all subscribers).
                  <em>
                   int
                  </em>
-                 ) – The order book snapshot interval in milliseconds (not less than 20 milliseconds).
+                 ) – The order book snapshot interval in milliseconds (must be positive).
                 </p>
                </li>
                <li>
@@ -14384,6 +14486,24 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  managed
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
               </ul>
              </dd>
              <dt class="field-even">
@@ -14415,7 +14535,7 @@ If
                  <cite>
                   interval_ms
                  </cite>
-                 is less than the minimum of 20.
+                 is not positive (&gt; 0).
                 </p>
                </li>
               </ul>
@@ -14426,7 +14546,7 @@ If
               Warning
              </p>
              <p>
-              Consider subscribing to order book deltas if you need intervals less than 20 milliseconds.
+              Consider subscribing to order book deltas if you need intervals less than 100 milliseconds.
              </p>
             </div>
            </dd>
@@ -21385,9 +21505,6 @@ then the component state will not change, and an error will be logged.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookDeltas
-              </span>
-              <span class="pre">
                deltas
               </span>
              </span>
@@ -21416,7 +21533,7 @@ then the component state will not change, and an error will be logged.
             <p>
              Passes to
              <cite>
-              on_order_book_delta
+              on_order_book_deltas
              </cite>
              if state is
              <code class="docutils literal notranslate">
@@ -21425,6 +21542,16 @@ then the component state will not change, and an error will be logged.
               </span>
              </code>
              .
+The
+             <cite>
+              deltas
+             </cite>
+             will be
+             <cite>
+              nautilus_pyo3.OrderBookDeltas
+             </cite>
+             if the
+pyo3_conversion flag was set for the subscription.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -21444,6 +21571,12 @@ then the component state will not change, and an error will be logged.
                  OrderBookDeltas
                 </em>
                </a>
+               <em>
+                or
+               </em>
+               <em>
+                nautilus_pyo3.OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -24194,9 +24327,6 @@ update.
             <em class="sig-param">
              <span class="n">
               <span class="pre">
-               OrderBookDeltas
-              </span>
-              <span class="pre">
                deltas
               </span>
              </span>
@@ -24240,6 +24370,12 @@ update.
                  OrderBookDeltas
                 </em>
                </a>
+               <em>
+                or
+               </em>
+               <em>
+                nautilus_pyo3.OrderBookDeltas
+               </em>
                ) – The order book deltas received.
               </p>
              </dd>
@@ -31490,6 +31626,28 @@ If
               </span>
              </span>
             </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               managed=True
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               pyo3_conversion=False
+              </span>
+             </span>
+            </em>
             <span class="sig-paren">
              )
             </span>
@@ -31624,6 +31782,50 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  managed
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
+               <li>
+                <p>
+                 <strong>
+                  pyo3_conversion
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default False
+                 </em>
+                 ) – If received deltas should be converted to
+                 <cite>
+                  nautilus_pyo3.OrderBookDeltas
+                 </cite>
+                 prior to being passed to the
+                 <cite>
+                  on_order_book_deltas
+                 </cite>
+                 handler.
+                </p>
+               </li>
               </ul>
              </dd>
             </dl>
@@ -31709,6 +31911,17 @@ If
               </span>
               <span class="pre">
                client_id=None
+              </span>
+             </span>
+            </em>
+            ,
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               bool
+              </span>
+              <span class="pre">
+               managed=True
               </span>
              </span>
             </em>
@@ -31822,7 +32035,7 @@ as per the last subscription request (this will also affect all subscribers).
                  <em>
                   int
                  </em>
-                 ) – The order book snapshot interval in milliseconds (not less than 20 milliseconds).
+                 ) – The order book snapshot interval in milliseconds (must be positive).
                 </p>
                </li>
                <li>
@@ -31870,6 +32083,24 @@ If
                  then will be inferred from the venue in the instrument ID.
                 </p>
                </li>
+               <li>
+                <p>
+                 <strong>
+                  managed
+                 </strong>
+                 (
+                 <em>
+                  bool
+                 </em>
+                 <em>
+                  ,
+                 </em>
+                 <em>
+                  default True
+                 </em>
+                 ) – If an order book should be managed by the data engine based on the subscribed feed.
+                </p>
+               </li>
               </ul>
              </dd>
              <dt class="field-even">
@@ -31901,7 +32132,7 @@ If
                  <cite>
                   interval_ms
                  </cite>
-                 is less than the minimum of 20.
+                 is not positive (&gt; 0).
                 </p>
                </li>
               </ul>
@@ -31912,7 +32143,7 @@ If
               Warning
              </p>
              <p>
-              Consider subscribing to order book deltas if you need intervals less than 20 milliseconds.
+              Consider subscribing to order book deltas if you need intervals less than 100 milliseconds.
              </p>
             </div>
            </dd>
@@ -33749,6 +33980,28 @@ instance of the platform.
           <em class="sig-param">
            <span class="n">
             <span class="pre">
+             instance_id
+            </span>
+           </span>
+           <span class="p">
+            <span class="pre">
+             :
+            </span>
+           </span>
+           <span class="w">
+           </span>
+           <span class="n">
+            <a class="reference internal" href="core.html#nautilus_trader.core.uuid.UUID4" title="nautilus_trader.core.uuid.UUID4">
+             <span class="pre">
+              UUID4
+             </span>
+            </a>
+           </span>
+          </em>
+          ,
+          <em class="sig-param">
+           <span class="n">
+            <span class="pre">
              msgbus
             </span>
            </span>
@@ -34027,6 +34280,20 @@ strategies.
              <li>
               <p>
                <strong>
+                instance_id
+               </strong>
+               (
+               <a class="reference internal" href="core.html#nautilus_trader.core.uuid.UUID4" title="nautilus_trader.core.uuid.UUID4">
+                <em>
+                 UUID4
+                </em>
+               </a>
+               ) – The instance ID for the trader.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
                 msgbus
                </strong>
                (
@@ -34231,6 +34498,59 @@ strategies.
               </p>
              </li>
             </ul>
+           </dd>
+          </dl>
+          <dl class="py property">
+           <dt class="sig sig-object py" id="nautilus_trader.trading.trader.Trader.instance_id">
+            <em class="property">
+             <span class="pre">
+              property
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              instance_id
+             </span>
+            </span>
+            <em class="property">
+             <span class="p">
+              <span class="pre">
+               :
+              </span>
+             </span>
+             <span class="w">
+             </span>
+             <a class="reference internal" href="core.html#nautilus_trader.core.uuid.UUID4" title="nautilus_trader.core.uuid.UUID4">
+              <span class="pre">
+               UUID4
+              </span>
+             </a>
+            </em>
+            <a class="headerlink" href="#nautilus_trader.trading.trader.Trader.instance_id" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the traders instance ID.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                UUID4
+               </em>
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py method">

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["book","level"]};
+window.SIDEBAR_ITEMS = {"mod":["book","container","level"]};

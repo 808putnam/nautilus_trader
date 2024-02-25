@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/orderbook/ladder.rs`."><title>ladder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/orderbook/ladder.rs`."><title>ladder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -694,6 +694,15 @@
 <a href="#692" id="692">692</a>
 <a href="#693" id="693">693</a>
 <a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -725,6 +734,10 @@
 
 <span class="doccomment">/// Represents a price level with a specified side in an order books ladder.
 </span><span class="attr">#[derive(Clone, Copy, Debug, Eq)]
+#[cfg_attr(
+    feature = <span class="string">"python"</span>,
+    pyo3::pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>)
+)]
 </span><span class="kw">pub struct </span>BookPrice {
     <span class="kw">pub </span>value: Price,
     <span class="kw">pub </span>side: OrderSide,
@@ -766,6 +779,7 @@
 }
 
 <span class="doccomment">/// Represents one side of an order book as a ladder of price levels.
+</span><span class="attr">#[derive(Clone, Debug)]
 </span><span class="kw">pub struct </span>Ladder {
     <span class="kw">pub </span>side: OrderSide,
     <span class="kw">pub </span>levels: BTreeMap&lt;BookPrice, Level&gt;,
@@ -794,7 +808,7 @@
 
     <span class="kw">pub fn </span>add_bulk(<span class="kw-2">&amp;mut </span><span class="self">self</span>, orders: Vec&lt;BookOrder&gt;) {
         <span class="kw">for </span>order <span class="kw">in </span>orders {
-            <span class="self">self</span>.add(order)
+            <span class="self">self</span>.add(order);
         }
     }
 
@@ -860,12 +874,15 @@
 
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>sizes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
-        <span class="kw">return </span><span class="self">self</span>.levels.values().map(|l| l.size()).sum();
+        <span class="self">self</span>.levels.values().map(<span class="kw">super</span>::level::Level::size).sum()
     }
 
     <span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>exposures(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
-        <span class="kw">return </span><span class="self">self</span>.levels.values().map(|l| l.exposure()).sum();
+        <span class="self">self</span>.levels
+            .values()
+            .map(<span class="kw">super</span>::level::Level::exposure)
+            .sum()
     }
 
     <span class="attr">#[must_use]
@@ -876,7 +893,8 @@
         }
     }
 
-    <span class="kw">pub fn </span>simulate_fills(<span class="kw-2">&amp;</span><span class="self">self</span>, order: <span class="kw-2">&amp;</span>BookOrder) -&gt; Vec&lt;(Price, Quantity)&gt; {
+    <span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>simulate_fills(<span class="kw-2">&amp;</span><span class="self">self</span>, order: <span class="kw-2">&amp;</span>BookOrder) -&gt; Vec&lt;(Price, Quantity)&gt; {
         <span class="kw">let </span>is_reversed = <span class="self">self</span>.side == OrderSide::Buy;
 
         <span class="kw">let </span><span class="kw-2">mut </span>fills = Vec::new();
@@ -899,11 +917,11 @@
                         fills.push((book_order.price, remainder));
                     }
                     <span class="kw">return </span>fills;
-                } <span class="kw">else </span>{
-                    <span class="comment">// Add this fill and continue
-                    </span>fills.push((book_order.price, current));
-                    cumulative_denominator += current;
                 }
+
+                <span class="comment">// Add this fill and continue
+                </span>fills.push((book_order.price, current));
+                cumulative_denominator += current;
             }
         }
 
@@ -959,7 +977,7 @@
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">20.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">200.0</span>);
-        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">10.0</span>)
+        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">10.0</span>);
     }
 
     <span class="attr">#[rstest]
@@ -974,7 +992,7 @@
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">3</span>);
         <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">300.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">2520.0</span>);
-        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">10.0</span>)
+        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">10.0</span>);
     }
 
     <span class="attr">#[rstest]
@@ -994,7 +1012,7 @@
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">3</span>);
         <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">300.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">3780.0</span>);
-        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.0</span>)
+        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.0</span>);
     }
 
     <span class="attr">#[rstest]
@@ -1047,7 +1065,7 @@
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">20.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">222.0</span>);
-        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.1</span>)
+        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.1</span>);
     }
 
     <span class="attr">#[rstest]
@@ -1063,7 +1081,7 @@
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">20.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">222.0</span>);
-        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.1</span>)
+        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.1</span>);
     }
 
     <span class="attr">#[rstest]
@@ -1079,7 +1097,7 @@
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">10.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">110.0</span>);
-        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.0</span>)
+        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.0</span>);
     }
 
     <span class="attr">#[rstest]
@@ -1095,7 +1113,7 @@
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">1</span>);
         <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">10.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">110.0</span>);
-        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.0</span>)
+        <span class="macro">assert_eq!</span>(ladder.top().unwrap().price.value.as_f64(), <span class="number">11.0</span>);
     }
 
     <span class="attr">#[rstest]
@@ -1121,7 +1139,7 @@
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">0.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">0.0</span>);
-        <span class="macro">assert_eq!</span>(ladder.top(), <span class="prelude-val">None</span>)
+        <span class="macro">assert_eq!</span>(ladder.top(), <span class="prelude-val">None</span>);
     }
 
     <span class="attr">#[rstest]
@@ -1137,7 +1155,7 @@
         <span class="macro">assert_eq!</span>(ladder.len(), <span class="number">0</span>);
         <span class="macro">assert_eq!</span>(ladder.sizes(), <span class="number">0.0</span>);
         <span class="macro">assert_eq!</span>(ladder.exposures(), <span class="number">0.0</span>);
-        <span class="macro">assert_eq!</span>(ladder.top(), <span class="prelude-val">None</span>)
+        <span class="macro">assert_eq!</span>(ladder.top(), <span class="prelude-val">None</span>);
     }
 
     <span class="attr">#[rstest]

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/python/live.rs`."><title>live.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/python/live.rs`."><title>live.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../nautilus_adapters/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -285,6 +285,160 @@
 <a href="#283" id="283">283</a>
 <a href="#284" id="284">284</a>
 <a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
+<a href="#351" id="351">351</a>
+<a href="#352" id="352">352</a>
+<a href="#353" id="353">353</a>
+<a href="#354" id="354">354</a>
+<a href="#355" id="355">355</a>
+<a href="#356" id="356">356</a>
+<a href="#357" id="357">357</a>
+<a href="#358" id="358">358</a>
+<a href="#359" id="359">359</a>
+<a href="#360" id="360">360</a>
+<a href="#361" id="361">361</a>
+<a href="#362" id="362">362</a>
+<a href="#363" id="363">363</a>
+<a href="#364" id="364">364</a>
+<a href="#365" id="365">365</a>
+<a href="#366" id="366">366</a>
+<a href="#367" id="367">367</a>
+<a href="#368" id="368">368</a>
+<a href="#369" id="369">369</a>
+<a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
+<a href="#402" id="402">402</a>
+<a href="#403" id="403">403</a>
+<a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -300,35 +454,38 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::fs;
-<span class="kw">use </span>std::str::FromStr;
-<span class="kw">use </span>std::sync::Arc;
+</span><span class="kw">use </span>std::{collections::HashMap, ffi::CStr, fs, str::FromStr, sync::Arc};
 
-<span class="kw">use </span>anyhow::Result;
-<span class="kw">use </span>databento::live::Subscription;
-<span class="kw">use </span>dbn::{PitSymbolMap, RType, Record, SymbolIndex, VersionUpgradePolicy};
+<span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span>databento::{
+    dbn::{PitSymbolMap, Record, SymbolIndex, VersionUpgradePolicy},
+    live::Subscription,
+};
 <span class="kw">use </span>indexmap::IndexMap;
 <span class="kw">use </span>log::{error, info};
-<span class="kw">use </span>nautilus_core::python::to_pyruntime_err;
 <span class="kw">use </span>nautilus_core::{
-    python::to_pyvalue_err,
-    time::{get_atomic_clock_realtime, UnixNanos},
+    python::{to_pyruntime_err, to_pyvalue_err},
+    time::{get_atomic_clock_realtime, AtomicTime, UnixNanos},
 };
-<span class="kw">use </span>nautilus_model::data::Data;
-<span class="kw">use </span>nautilus_model::identifiers::instrument_id::InstrumentId;
-<span class="kw">use </span>nautilus_model::identifiers::symbol::Symbol;
-<span class="kw">use </span>nautilus_model::identifiers::venue::Venue;
-<span class="kw">use </span>nautilus_model::python::data::data_to_pycapsule;
-<span class="kw">use </span>pyo3::exceptions::PyRuntimeError;
-<span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
+<span class="kw">use </span>nautilus_model::{
+    data::{delta::OrderBookDelta, deltas::OrderBookDeltas, Data},
+    ffi::data::deltas::OrderBookDeltas_API,
+    identifiers::{instrument_id::InstrumentId, symbol::Symbol, venue::Venue},
+    python::data::data_to_pycapsule,
+};
+<span class="kw">use </span>pyo3::{exceptions::PyRuntimeError, prelude::<span class="kw-2">*</span>};
 <span class="kw">use </span>time::OffsetDateTime;
-<span class="kw">use </span>tokio::sync::Mutex;
-<span class="kw">use </span>tokio::time::{timeout, Duration};
-
-<span class="kw">use </span><span class="kw">crate</span>::databento::parsing::{parse_instrument_def_msg, parse_record};
-<span class="kw">use </span><span class="kw">crate</span>::databento::types::{DatabentoPublisher, PublisherId};
+<span class="kw">use </span>tokio::{
+    sync::Mutex,
+    time::{timeout, Duration},
+};
+<span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use </span><span class="kw">super</span>::loader::convert_instrument_to_pyobject;
+<span class="kw">use </span><span class="kw">crate</span>::databento::{
+    decode::{decode_instrument_def_msg, decode_record},
+    types::{DatabentoPublisher, PublisherId},
+};
 
 <span class="attr">#[cfg_attr(
     feature = <span class="string">"python"</span>,
@@ -340,8 +497,8 @@
     <span class="attr">#[pyo3(get)]
     </span><span class="kw">pub </span>dataset: String,
     inner: <span class="prelude-ty">Option</span>&lt;Arc&lt;Mutex&lt;databento::LiveClient&gt;&gt;&gt;,
-    runtime: tokio::runtime::Runtime,
-    publishers: Arc&lt;IndexMap&lt;PublisherId, DatabentoPublisher&gt;&gt;,
+    publisher_venue_map: Arc&lt;IndexMap&lt;PublisherId, Venue&gt;&gt;,
+    glbx_exchange_map: Arc&lt;HashMap&lt;Symbol, Venue&gt;&gt;,
 }
 
 <span class="kw">impl </span>DatabentoLiveClient {
@@ -358,7 +515,8 @@
         <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.inner {
             <span class="prelude-val">Some</span>(client) =&gt; <span class="prelude-val">Ok</span>(client.clone()),
             <span class="prelude-val">None </span>=&gt; {
-                <span class="kw">let </span>client = <span class="self">self</span>.runtime.block_on(<span class="self">self</span>.initialize_client())<span class="question-mark">?</span>;
+                <span class="kw">let </span>rt = pyo3_asyncio::tokio::get_runtime();
+                <span class="kw">let </span>client = rt.block_on(<span class="self">self</span>.initialize_client())<span class="question-mark">?</span>;
                 <span class="self">self</span>.inner = <span class="prelude-val">Some</span>(Arc::new(Mutex::new(client)));
                 <span class="prelude-val">Ok</span>(<span class="self">self</span>.inner.clone().unwrap())
             }
@@ -373,18 +531,29 @@
         <span class="kw">let </span>file_content = fs::read_to_string(publishers_path)<span class="question-mark">?</span>;
         <span class="kw">let </span>publishers_vec: Vec&lt;DatabentoPublisher&gt; =
             serde_json::from_str(<span class="kw-2">&amp;</span>file_content).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
-        <span class="kw">let </span>publishers = publishers_vec
+
+        <span class="kw">let </span>publisher_venue_map = publishers_vec
             .into_iter()
-            .map(|p| (p.publisher_id, p))
-            .collect::&lt;IndexMap&lt;u16, DatabentoPublisher&gt;&gt;();
+            .map(|p| (p.publisher_id, Venue::from(p.venue.as_str())))
+            .collect::&lt;IndexMap&lt;u16, Venue&gt;&gt;();
 
         <span class="prelude-val">Ok</span>(<span class="self">Self </span>{
             key,
             dataset,
             inner: <span class="prelude-val">None</span>,
-            runtime: tokio::runtime::Runtime::new()<span class="question-mark">?</span>,
-            publishers: Arc::new(publishers),
+            publisher_venue_map: Arc::new(publisher_venue_map),
+            glbx_exchange_map: Arc::new(HashMap::new()),
         })
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">"load_glbx_exchange_map"</span>)]
+    </span><span class="kw">fn </span>py_load_glbx_exchange_map(<span class="kw-2">&amp;mut </span><span class="self">self</span>, map: HashMap&lt;Symbol, Venue&gt;) {
+        <span class="self">self</span>.glbx_exchange_map = Arc::new(map);
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">"get_glbx_exchange_map"</span>)]
+    </span><span class="kw">fn </span>py_get_glbx_exchange_map(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;Symbol, Venue&gt; {
+        <span class="self">self</span>.glbx_exchange_map.as_ref().clone()
     }
 
     <span class="attr">#[pyo3(name = <span class="string">"subscribe"</span>)]
@@ -430,20 +599,36 @@
     }
 
     <span class="attr">#[pyo3(name = <span class="string">"start"</span>)]
-    </span><span class="kw">fn </span>py_start&lt;<span class="lifetime">'py</span>&gt;(<span class="kw-2">&amp;mut </span><span class="self">self</span>, py: Python&lt;<span class="lifetime">'py</span>&gt;, callback: PyObject) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
+    </span><span class="kw">fn </span>py_start&lt;<span class="lifetime">'py</span>&gt;(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        py: Python&lt;<span class="lifetime">'py</span>&gt;,
+        callback: PyObject,
+        replay: bool,
+    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
         <span class="kw">let </span>arc_client = <span class="self">self</span>.get_inner_client().map_err(to_pyruntime_err)<span class="question-mark">?</span>;
-        <span class="kw">let </span>publishers = <span class="self">self</span>.publishers.clone();
+        <span class="kw">let </span>publisher_venue_map = <span class="self">self</span>.publisher_venue_map.clone();
+        <span class="kw">let </span>glbx_exchange_map = <span class="self">self</span>.glbx_exchange_map.clone();
+        <span class="kw">let </span>clock = get_atomic_clock_realtime();
+
+        <span class="kw">let </span><span class="kw-2">mut </span>buffering_start = <span class="kw">match </span>replay {
+            <span class="bool-val">true </span>=&gt; <span class="prelude-val">Some</span>(clock.get_time_ns()),
+            <span class="bool-val">false </span>=&gt; <span class="prelude-val">None</span>,
+        };
 
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
-            <span class="kw">let </span>clock = get_atomic_clock_realtime();
             <span class="kw">let </span><span class="kw-2">mut </span>client = arc_client.lock().<span class="kw">await</span>;
             <span class="kw">let </span><span class="kw-2">mut </span>symbol_map = PitSymbolMap::new();
+            <span class="kw">let </span><span class="kw-2">mut </span>instrument_id_map: HashMap&lt;u32, InstrumentId&gt; = HashMap::new();
 
             <span class="kw">let </span>timeout_duration = Duration::from_millis(<span class="number">10</span>);
             <span class="kw">let </span>relock_interval = timeout_duration.as_nanos() <span class="kw">as </span>u64;
             <span class="kw">let </span><span class="kw-2">mut </span>lock_last_dropped_ns = <span class="number">0_u64</span>;
 
+            <span class="kw">let </span><span class="kw-2">mut </span>buffered_deltas: HashMap&lt;InstrumentId, Vec&lt;OrderBookDelta&gt;&gt; = HashMap::new();
+
             client.start().<span class="kw">await</span>.map_err(to_pyruntime_err)<span class="question-mark">?</span>;
+
+            <span class="kw">let </span><span class="kw-2">mut </span>deltas_count = <span class="number">0_u64</span>;
 
             <span class="kw">loop </span>{
                 <span class="comment">// Check if need to drop then re-aquire lock
@@ -474,72 +659,84 @@
                     }
                 };
 
-                <span class="kw">let </span>rtype = record.rtype().expect(<span class="string">"Invalid `rtype`"</span>);
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::ErrorMsg&gt;() {
+                    handle_error_msg(msg);
+                } <span class="kw">else if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::SystemMsg&gt;() {
+                    handle_system_msg(msg);
+                } <span class="kw">else if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::SymbolMappingMsg&gt;() {
+                    <span class="comment">// Remove instrument ID index as the raw symbol may have changed
+                    </span>instrument_id_map.remove(<span class="kw-2">&amp;</span>msg.hd.instrument_id);
+                    handle_symbol_mapping_msg(msg, <span class="kw-2">&amp;mut </span>symbol_map);
+                } <span class="kw">else if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::InstrumentDefMsg&gt;() {
+                    handle_instrument_def_msg(
+                        msg,
+                        <span class="kw-2">&amp;</span>publisher_venue_map,
+                        <span class="kw-2">&amp;</span>glbx_exchange_map,
+                        <span class="kw-2">&amp;mut </span>instrument_id_map,
+                        clock,
+                        <span class="kw-2">&amp;</span>callback,
+                    )
+                    .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+                } <span class="kw">else </span>{
+                    <span class="kw">let </span>(<span class="kw-2">mut </span>data1, data2) = handle_record(
+                        record,
+                        <span class="kw-2">&amp;</span>symbol_map,
+                        <span class="kw-2">&amp;</span>publisher_venue_map,
+                        <span class="kw-2">&amp;</span>glbx_exchange_map,
+                        <span class="kw-2">&amp;mut </span>instrument_id_map,
+                        clock,
+                    )
+                    .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
-                <span class="kw">match </span>rtype {
-                    RType::SymbolMapping =&gt; {
-                        symbol_map.on_record(record).unwrap_or_else(|<span class="kw">_</span>| {
-                            <span class="macro">panic!</span>(<span class="string">"Error updating `symbol_map` with {record:?}"</span>)
-                        });
-                    }
-                    RType::Error =&gt; {
-                        <span class="macro">eprintln!</span>(<span class="string">"{record:?}"</span>); <span class="comment">// TODO: Just print stderr for now
-                        </span><span class="macro">error!</span>(<span class="string">"{:?}"</span>, record);
-                    }
-                    RType::System =&gt; {
-                        <span class="macro">println!</span>(<span class="string">"{record:?}"</span>); <span class="comment">// TODO: Just print stdout for now
-                        </span><span class="macro">info!</span>(<span class="string">"{:?}"</span>, record);
-                    }
-                    RType::InstrumentDef =&gt; {
-                        <span class="kw">let </span>msg = record
-                            .get::&lt;dbn::InstrumentDefMsg&gt;()
-                            .expect(<span class="string">"Error converting record to `InstrumentDefMsg`"</span>);
-                        <span class="kw">let </span>publisher_id = record.publisher().unwrap() <span class="kw">as </span>PublisherId;
-                        <span class="kw">let </span>publisher = publishers.get(<span class="kw-2">&amp;</span>publisher_id).unwrap();
-                        <span class="kw">let </span>ts_init = clock.get_time_ns();
-                        <span class="kw">let </span>result = parse_instrument_def_msg(msg, publisher, ts_init);
+                    <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::MboMsg&gt;() {
+                        <span class="comment">// SAFETY: An MBO message will always produce a delta
+                        </span><span class="kw">if let </span>Data::Delta(delta) = data1.clone().unwrap() {
+                            <span class="kw">let </span>buffer = buffered_deltas.entry(delta.instrument_id).or_default();
+                            buffer.push(delta);
 
-                        <span class="kw">match </span>result {
-                            <span class="prelude-val">Ok</span>(instrument) =&gt; {
-                                Python::with_gil(|py| {
-                                    <span class="kw">let </span>py_obj =
-                                        convert_instrument_to_pyobject(py, instrument).unwrap();
-                                    <span class="kw">match </span>callback.call1(py, (py_obj,)) {
-                                        <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {}
-                                        <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error on callback, {e:?}"</span>), <span class="comment">// Just print error for now
-                                    </span>};
-                                });
+                            <span class="comment">// TODO: Temporary for debugging
+                            </span>deltas_count += <span class="number">1</span>;
+                            <span class="macro">println!</span>(
+                                <span class="string">"Buffering delta: {} {} {:?} flags={}"</span>,
+                                deltas_count, delta.ts_event, buffering_start, msg.flags,
+                            );
+
+                            <span class="comment">// Check if last message in the packet
+                            </span><span class="kw">if </span>msg.flags &amp; dbn::flags::LAST == <span class="number">0 </span>{
+                                <span class="kw">continue</span>; <span class="comment">// NOT last message
+                            </span>}
+
+                            <span class="comment">// Check if snapshot
+                            </span><span class="kw">if </span>msg.flags &amp; dbn::flags::SNAPSHOT != <span class="number">0 </span>{
+                                <span class="kw">continue</span>; <span class="comment">// Buffer snapshot
+                            </span>}
+
+                            <span class="comment">// Check if buffering a replay
+                            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(start_ns) = buffering_start {
+                                <span class="kw">if </span>delta.ts_event &lt;= start_ns {
+                                    <span class="kw">continue</span>; <span class="comment">// Continue buffering replay
+                                </span>}
+                                buffering_start = <span class="prelude-val">None</span>;
                             }
-                            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"{e:?}"</span>),
+
+                            <span class="comment">// SAFETY: We can guarantee a deltas vec exists
+                            </span><span class="kw">let </span>buffer = buffered_deltas.remove(<span class="kw-2">&amp;</span>delta.instrument_id).unwrap();
+                            <span class="kw">let </span>deltas = OrderBookDeltas::new(delta.instrument_id, buffer);
+                            <span class="kw">let </span>deltas = OrderBookDeltas_API::new(deltas);
+                            data1 = <span class="prelude-val">Some</span>(Data::Deltas(deltas));
                         }
-                        <span class="kw">continue</span>;
-                    }
-                    <span class="kw">_ </span>=&gt; {
-                        <span class="kw">let </span>raw_symbol = symbol_map
-                            .get_for_rec(<span class="kw-2">&amp;</span>record)
-                            .expect(<span class="string">"Cannot resolve raw_symbol from `symbol_map`"</span>);
+                    };
 
-                        <span class="kw">let </span>symbol = Symbol::from_str_unchecked(raw_symbol);
-                        <span class="kw">let </span>publisher_id = record.publisher().unwrap() <span class="kw">as </span>PublisherId;
-                        <span class="kw">let </span>venue_str = publishers.get(<span class="kw-2">&amp;</span>publisher_id).unwrap().venue.as_str();
-                        <span class="kw">let </span>venue = Venue::from_str_unchecked(venue_str);
-
-                        <span class="kw">let </span>instrument_id = InstrumentId::new(symbol, venue);
-                        <span class="kw">let </span>ts_init = clock.get_time_ns();
-
-                        <span class="kw">let </span>(data, maybe_data) =
-                            parse_record(<span class="kw-2">&amp;</span>record, rtype, instrument_id, <span class="number">2</span>, <span class="prelude-val">Some</span>(ts_init))
-                                .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
-
-                        Python::with_gil(|py| {
+                    Python::with_gil(|py| {
+                        <span class="kw">if let </span><span class="prelude-val">Some</span>(data) = data1 {
                             call_python_with_data(py, <span class="kw-2">&amp;</span>callback, data);
+                        }
 
-                            <span class="kw">if let </span><span class="prelude-val">Some</span>(data) = maybe_data {
-                                call_python_with_data(py, <span class="kw-2">&amp;</span>callback, data);
-                            }
-                        });
-                    }
-                }
+                        <span class="kw">if let </span><span class="prelude-val">Some</span>(data) = data2 {
+                            call_python_with_data(py, <span class="kw-2">&amp;</span>callback, data);
+                        }
+                    });
+                };
             }
             <span class="prelude-val">Ok</span>(())
         })
@@ -561,6 +758,117 @@
             )),
         }
     }
+}
+
+<span class="kw">fn </span>handle_error_msg(msg: <span class="kw-2">&amp;</span>dbn::ErrorMsg) {
+    <span class="macro">eprintln!</span>(<span class="string">"{msg:?}"</span>); <span class="comment">// TODO: Just print stderr for now
+    </span><span class="macro">error!</span>(<span class="string">"{:?}"</span>, msg);
+}
+
+<span class="kw">fn </span>handle_system_msg(msg: <span class="kw-2">&amp;</span>dbn::SystemMsg) {
+    <span class="macro">println!</span>(<span class="string">"{msg:?}"</span>); <span class="comment">// TODO: Just print stdout for now
+    </span><span class="macro">info!</span>(<span class="string">"{:?}"</span>, msg);
+}
+
+<span class="kw">fn </span>handle_symbol_mapping_msg(msg: <span class="kw-2">&amp;</span>dbn::SymbolMappingMsg, symbol_map: <span class="kw-2">&amp;mut </span>PitSymbolMap) {
+    symbol_map
+        .on_symbol_mapping(msg)
+        .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">"Error updating `symbol_map` with {msg:?}"</span>));
+}
+
+<span class="kw">fn </span>update_instrument_id_map(
+    header: <span class="kw-2">&amp;</span>dbn::RecordHeader,
+    raw_symbol: <span class="kw-2">&amp;</span>str,
+    publisher_venue_map: <span class="kw-2">&amp;</span>IndexMap&lt;PublisherId, Venue&gt;,
+    glbx_exchange_map: <span class="kw-2">&amp;</span>HashMap&lt;Symbol, Venue&gt;,
+    instrument_id_map: <span class="kw-2">&amp;mut </span>HashMap&lt;u32, InstrumentId&gt;,
+) -&gt; InstrumentId {
+    <span class="comment">// Check if instrument ID is already in the map
+    </span><span class="kw">if let </span><span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>instrument_id) = instrument_id_map.get(<span class="kw-2">&amp;</span>header.instrument_id) {
+        <span class="kw">return </span>instrument_id;
+    }
+
+    <span class="kw">let </span>symbol = Symbol {
+        value: Ustr::from(raw_symbol),
+    };
+
+    <span class="kw">let </span>publisher_id = header.publisher_id;
+    <span class="kw">let </span>venue = <span class="kw">match </span>glbx_exchange_map.get(<span class="kw-2">&amp;</span>symbol) {
+        <span class="prelude-val">Some</span>(venue) =&gt; venue,
+        <span class="prelude-val">None </span>=&gt; publisher_venue_map
+            .get(<span class="kw-2">&amp;</span>publisher_id)
+            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">"No venue found for `publisher_id` {publisher_id}"</span>)),
+    };
+    <span class="kw">let </span>instrument_id = InstrumentId::new(symbol, <span class="kw-2">*</span>venue);
+
+    instrument_id_map.insert(header.instrument_id, instrument_id);
+    instrument_id
+}
+
+<span class="kw">fn </span>handle_instrument_def_msg(
+    msg: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
+    publisher_venue_map: <span class="kw-2">&amp;</span>IndexMap&lt;PublisherId, Venue&gt;,
+    glbx_exchange_map: <span class="kw-2">&amp;</span>HashMap&lt;Symbol, Venue&gt;,
+    instrument_id_map: <span class="kw-2">&amp;mut </span>HashMap&lt;u32, InstrumentId&gt;,
+    clock: <span class="kw-2">&amp;</span>AtomicTime,
+    callback: <span class="kw-2">&amp;</span>PyObject,
+) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="kw">let </span>c_str: <span class="kw-2">&amp;</span>CStr = <span class="kw">unsafe </span>{ CStr::from_ptr(msg.raw_symbol.as_ptr()) };
+    <span class="kw">let </span>raw_symbol: <span class="kw-2">&amp;</span>str = c_str.to_str().map_err(|e| <span class="macro">anyhow!</span>(e))<span class="question-mark">?</span>;
+
+    <span class="kw">let </span>instrument_id = update_instrument_id_map(
+        msg.header(),
+        raw_symbol,
+        publisher_venue_map,
+        glbx_exchange_map,
+        instrument_id_map,
+    );
+
+    <span class="kw">let </span>ts_init = clock.get_time_ns();
+    <span class="kw">let </span>result = decode_instrument_def_msg(msg, instrument_id, ts_init);
+
+    <span class="kw">match </span>result {
+        <span class="prelude-val">Ok</span>(instrument) =&gt; Python::with_gil(|py| {
+            <span class="kw">let </span>py_obj = convert_instrument_to_pyobject(py, instrument).unwrap();
+            <span class="kw">match </span>callback.call1(py, (py_obj,)) {
+                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Ok</span>(()),
+                <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">bail!</span>(e),
+            }
+        }),
+        <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(e),
+    }
+}
+
+<span class="kw">fn </span>handle_record(
+    rec_ref: dbn::RecordRef,
+    symbol_map: <span class="kw-2">&amp;</span>PitSymbolMap,
+    publisher_venue_map: <span class="kw-2">&amp;</span>IndexMap&lt;PublisherId, Venue&gt;,
+    glbx_exchange_map: <span class="kw-2">&amp;</span>HashMap&lt;Symbol, Venue&gt;,
+    instrument_id_map: <span class="kw-2">&amp;mut </span>HashMap&lt;u32, InstrumentId&gt;,
+    clock: <span class="kw-2">&amp;</span>AtomicTime,
+) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="prelude-ty">Option</span>&lt;Data&gt;, <span class="prelude-ty">Option</span>&lt;Data&gt;)&gt; {
+    <span class="kw">let </span>raw_symbol = symbol_map
+        .get_for_rec(<span class="kw-2">&amp;</span>rec_ref)
+        .expect(<span class="string">"Cannot resolve `raw_symbol` from `symbol_map`"</span>);
+
+    <span class="kw">let </span>instrument_id = update_instrument_id_map(
+        rec_ref.header(),
+        raw_symbol,
+        publisher_venue_map,
+        glbx_exchange_map,
+        instrument_id_map,
+    );
+
+    <span class="kw">let </span>price_precision = <span class="number">2</span>; <span class="comment">// Hard coded for now
+    </span><span class="kw">let </span>ts_init = clock.get_time_ns();
+
+    decode_record(
+        <span class="kw-2">&amp;</span>rec_ref,
+        instrument_id,
+        price_precision,
+        <span class="prelude-val">Some</span>(ts_init),
+        <span class="bool-val">true</span>, <span class="comment">// Always include trades
+    </span>)
 }
 
 <span class="kw">fn </span>call_python_with_data(py: Python, callback: <span class="kw-2">&amp;</span>PyObject, data: Data) {

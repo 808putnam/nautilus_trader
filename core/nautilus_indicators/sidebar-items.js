@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["average","indicator","momentum","python","ratio"]};
+window.SIDEBAR_ITEMS = {"mod":["average","book","indicator","momentum","python","ratio","volatility"]};

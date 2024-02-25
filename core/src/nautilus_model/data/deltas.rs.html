@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/deltas.rs`."><title>deltas.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/deltas.rs`."><title>deltas.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -336,6 +336,20 @@
 <a href="#334" id="334">334</a>
 <a href="#335" id="335">335</a>
 <a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a>
+<a href="#347" id="347">347</a>
+<a href="#348" id="348">348</a>
+<a href="#349" id="349">349</a>
+<a href="#350" id="350">350</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -351,20 +365,23 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::fmt::{Display, Formatter};
+</span><span class="kw">use </span>std::{
+    fmt::{Display, Formatter},
+    hash::{Hash, Hasher},
+};
 
 <span class="kw">use </span>nautilus_core::time::UnixNanos;
-<span class="kw">use </span>pyo3::prelude::<span class="kw-2">*</span>;
 
 <span class="kw">use </span><span class="kw">super</span>::delta::OrderBookDelta;
 <span class="kw">use </span><span class="kw">crate</span>::identifiers::instrument_id::InstrumentId;
 
 <span class="doccomment">/// Represents a grouped batch of `OrderBookDelta` updates for an `OrderBook`.
-</span><span class="attr">#[repr(C)]
-#[derive(Clone, Debug)]
+///
+/// This type cannot be `repr(C)` due to the `deltas` vec.
+</span><span class="attr">#[derive(Clone, Debug)]
 #[cfg_attr(
     feature = <span class="string">"python"</span>,
-    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>)
+    pyo3::pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.model"</span>)
 )]
 </span><span class="kw">pub struct </span>OrderBookDeltas {
     <span class="doccomment">/// The instrument ID for the book.
@@ -384,14 +401,14 @@
 <span class="kw">impl </span>OrderBookDeltas {
     <span class="attr">#[allow(clippy::too_many_arguments)]
     #[must_use]
-    </span><span class="kw">pub fn </span>new(
-        instrument_id: InstrumentId,
-        deltas: Vec&lt;OrderBookDelta&gt;,
-        flags: u8,
-        sequence: u64,
-        ts_event: UnixNanos,
-        ts_init: UnixNanos,
-    ) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>new(instrument_id: InstrumentId, deltas: Vec&lt;OrderBookDelta&gt;) -&gt; <span class="self">Self </span>{
+        <span class="macro">assert!</span>(!deltas.is_empty(), <span class="string">"`deltas` cannot be empty"</span>);
+        <span class="comment">// SAFETY: We asserted `deltas` is not empty
+        </span><span class="kw">let </span>last = deltas.last().unwrap();
+        <span class="kw">let </span>flags = last.flags;
+        <span class="kw">let </span>sequence = last.sequence;
+        <span class="kw">let </span>ts_event = last.ts_event;
+        <span class="kw">let </span>ts_init = last.ts_init;
         <span class="self">Self </span>{
             instrument_id,
             deltas,
@@ -403,7 +420,22 @@
     }
 }
 
-<span class="comment">// TODO: Potentially implement later
+<span class="kw">impl </span>PartialEq&lt;<span class="self">Self</span>&gt; <span class="kw">for </span>OrderBookDeltas {
+    <span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; bool {
+        <span class="self">self</span>.instrument_id == other.instrument_id &amp;&amp; <span class="self">self</span>.sequence == other.sequence
+    }
+}
+
+<span class="kw">impl </span>Eq <span class="kw">for </span>OrderBookDeltas {}
+
+<span class="kw">impl </span>Hash <span class="kw">for </span>OrderBookDeltas {
+    <span class="kw">fn </span>hash&lt;H: Hasher&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <span class="kw-2">&amp;mut </span>H) {
+        <span class="self">self</span>.instrument_id.hash(state);
+        <span class="self">self</span>.sequence.hash(state);
+    }
+}
+
+<span class="comment">// TODO: Implement
 // impl Serializable for OrderBookDeltas {}
 
 // TODO: Exact format for Debug and Display TBD
@@ -429,7 +461,7 @@
 </span><span class="kw">pub mod </span>stubs {
     <span class="kw">use </span>rstest::fixture;
 
-    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use </span><span class="kw">super</span>::OrderBookDeltas;
     <span class="kw">use crate</span>::{
         data::{delta::OrderBookDelta, order::BookOrder},
         enums::{BookAction, OrderSide},
@@ -533,7 +565,7 @@
 
         <span class="kw">let </span>deltas = <span class="macro">vec!</span>[delta0, delta1, delta2, delta3, delta4, delta5, delta6];
 
-        OrderBookDeltas::new(instrument_id, deltas, flags, sequence, ts_event, ts_init)
+        OrderBookDeltas::new(instrument_id, deltas)
     }
 }
 
@@ -648,10 +680,6 @@
         <span class="kw">let </span>deltas = OrderBookDeltas::new(
             instrument_id,
             <span class="macro">vec!</span>[delta0, delta1, delta2, delta3, delta4, delta5, delta6],
-            flags,
-            sequence,
-            ts_event,
-            ts_init,
         );
 
         <span class="macro">assert_eq!</span>(deltas.instrument_id, instrument_id);
@@ -667,7 +695,7 @@
     </span><span class="kw">fn </span>test_display(stub_deltas: OrderBookDeltas) {
         <span class="kw">let </span>deltas = stub_deltas;
         <span class="macro">assert_eq!</span>(
-            <span class="macro">format!</span>(<span class="string">"{}"</span>, deltas),
+            <span class="macro">format!</span>(<span class="string">"{deltas}"</span>),
             <span class="string">"AAPL.XNAS,len=7,flags=32,sequence=0,ts_event=1,ts_init=2"</span>.to_string()
         );
     }

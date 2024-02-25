@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/data/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -133,6 +133,14 @@
 <a href="#131" id="131">131</a>
 <a href="#132" id="132">132</a>
 <a href="#133" id="133">133</a>
+<a href="#134" id="134">134</a>
+<a href="#135" id="135">135</a>
+<a href="#136" id="136">136</a>
+<a href="#137" id="137">137</a>
+<a href="#138" id="138">138</a>
+<a href="#139" id="139">139</a>
+<a href="#140" id="140">140</a>
+<a href="#141" id="141">141</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -162,13 +170,14 @@
     bar::Bar, delta::OrderBookDelta, deltas::OrderBookDeltas, depth::OrderBookDepth10,
     quote::QuoteTick, trade::TradeTick,
 };
+<span class="kw">use </span><span class="kw">crate</span>::ffi::data::deltas::OrderBookDeltas_API;
 
 <span class="attr">#[repr(C)]
 #[derive(Clone, Debug)]
-#[cfg_attr(feature = <span class="string">"trivial_copy"</span>, derive(Copy))]
 #[allow(clippy::large_enum_variant)] </span><span class="comment">// TODO: Optimize this (largest variant 1008 vs 136 bytes)
 </span><span class="kw">pub enum </span>Data {
     Delta(OrderBookDelta),
+    Deltas(OrderBookDeltas_API),
     Depth10(OrderBookDepth10),
     Quote(QuoteTick),
     Trade(TradeTick),
@@ -182,11 +191,12 @@
 <span class="kw">impl </span>HasTsInit <span class="kw">for </span>Data {
     <span class="kw">fn </span>get_ts_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos {
         <span class="kw">match </span><span class="self">self </span>{
-            Data::Delta(d) =&gt; d.ts_init,
-            Data::Depth10(d) =&gt; d.ts_init,
-            Data::Quote(q) =&gt; q.ts_init,
-            Data::Trade(t) =&gt; t.ts_init,
-            Data::Bar(b) =&gt; b.ts_init,
+            <span class="self">Self</span>::Delta(d) =&gt; d.ts_init,
+            <span class="self">Self</span>::Deltas(d) =&gt; d.ts_init,
+            <span class="self">Self</span>::Depth10(d) =&gt; d.ts_init,
+            <span class="self">Self</span>::Quote(q) =&gt; q.ts_init,
+            <span class="self">Self</span>::Trade(t) =&gt; t.ts_init,
+            <span class="self">Self</span>::Bar(b) =&gt; b.ts_init,
         }
     }
 }
@@ -197,13 +207,13 @@
     }
 }
 
-<span class="kw">impl </span>HasTsInit <span class="kw">for </span>OrderBookDepth10 {
+<span class="kw">impl </span>HasTsInit <span class="kw">for </span>OrderBookDeltas {
     <span class="kw">fn </span>get_ts_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos {
         <span class="self">self</span>.ts_init
     }
 }
 
-<span class="kw">impl </span>HasTsInit <span class="kw">for </span>OrderBookDeltas {
+<span class="kw">impl </span>HasTsInit <span class="kw">for </span>OrderBookDepth10 {
     <span class="kw">fn </span>get_ts_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos {
         <span class="self">self</span>.ts_init
     }
@@ -238,6 +248,12 @@
     }
 }
 
+<span class="kw">impl </span>From&lt;OrderBookDeltas_API&gt; <span class="kw">for </span>Data {
+    <span class="kw">fn </span>from(value: OrderBookDeltas_API) -&gt; <span class="self">Self </span>{
+        <span class="self">Self</span>::Deltas(value)
+    }
+}
+
 <span class="kw">impl </span>From&lt;OrderBookDepth10&gt; <span class="kw">for </span>Data {
     <span class="kw">fn </span>from(value: OrderBookDepth10) -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>::Depth10(value)
@@ -264,6 +280,6 @@
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>data_clone(data: <span class="kw-2">&amp;</span>Data) -&gt; Data {
-    <span class="kw-2">*</span>data <span class="comment">// Actually a copy
-</span>}
+    data.clone()
+}
 </code></pre></div></section></main></body></html>

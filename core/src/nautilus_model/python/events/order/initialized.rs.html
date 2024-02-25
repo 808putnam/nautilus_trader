@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/events/order/initialized.rs`."><title>initialized.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/events/order/initialized.rs`."><title>initialized.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../../" data-static-root-path="../../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../src-files.js"></script><script defer src="../../../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -338,6 +338,9 @@
 <a href="#336" id="336">336</a>
 <a href="#337" id="337">337</a>
 <a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -503,52 +506,55 @@
             <span class="self">self</span>.reduce_only,
             <span class="self">self</span>.quote_quantity,
             <span class="self">self</span>.price
-                .map(|price| <span class="macro">format!</span>(<span class="string">"{}"</span>, price))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |price| <span class="macro">format!</span>(<span class="string">"{price}"</span>)),
             <span class="self">self</span>.emulation_trigger
-                .map(|trigger| <span class="macro">format!</span>(<span class="string">"{}"</span>, trigger))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |trigger| <span class="macro">format!</span>(<span class="string">"{trigger}"</span>)),
             <span class="self">self</span>.trigger_instrument_id
-                .map(|instrument_id| <span class="macro">format!</span>(<span class="string">"{}"</span>, instrument_id))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |instrument_id| <span class="macro">format!</span>(
+                    <span class="string">"{instrument_id}"
+                </span>)),
             <span class="self">self</span>.contingency_type
-                .map(|contingency_type| <span class="macro">format!</span>(<span class="string">"{}"</span>, contingency_type))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |contingency_type| <span class="macro">format!</span>(
+                    <span class="string">"{contingency_type}"
+                </span>)),
             <span class="self">self</span>.order_list_id
-                .map(|order_list_id| <span class="macro">format!</span>(<span class="string">"{}"</span>, order_list_id))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |order_list_id| <span class="macro">format!</span>(
+                    <span class="string">"{order_list_id}"
+                </span>)),
             <span class="self">self</span>.linked_order_ids
                 .as_ref()
-                .map(|linked_order_ids| linked_order_ids
+                .map_or(<span class="string">"None"</span>.to_string(), |linked_order_ids| linked_order_ids
                     .iter()
                     .map(ToString::to_string)
                     .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
-                    .join(<span class="string">", "</span>))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                    .join(<span class="string">", "</span>)),
             <span class="self">self</span>.parent_order_id
-                .map(|parent_order_id| <span class="macro">format!</span>(<span class="string">"{}"</span>, parent_order_id))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |parent_order_id| <span class="macro">format!</span>(
+                    <span class="string">"{parent_order_id}"
+                </span>)),
             <span class="self">self</span>.exec_algorithm_id
-                .map(|exec_algorithm_id| <span class="macro">format!</span>(<span class="string">"{}"</span>, exec_algorithm_id))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |exec_algorithm_id| <span class="macro">format!</span>(
+                    <span class="string">"{exec_algorithm_id}"
+                </span>)),
             <span class="self">self</span>.exec_algorithm_params
                 .as_ref()
-                .map(|exec_algorithm_params| <span class="macro">format!</span>(<span class="string">"{:?}"</span>, exec_algorithm_params))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |exec_algorithm_params| <span class="macro">format!</span>(
+                    <span class="string">"{exec_algorithm_params:?}"
+                </span>)),
             <span class="self">self</span>.exec_spawn_id
-                .map(|exec_spawn_id| <span class="macro">format!</span>(<span class="string">"{}"</span>, exec_spawn_id))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |exec_spawn_id| <span class="macro">format!</span>(
+                    <span class="string">"{exec_spawn_id}"
+                </span>)),
             <span class="self">self</span>.tags
                 .as_ref()
-                .map(|tags| <span class="macro">format!</span>(<span class="string">"{}"</span>, tags))
-                .unwrap_or(<span class="string">"None"</span>.to_string()),
+                .map_or(<span class="string">"None"</span>.to_string(), |tags| <span class="macro">format!</span>(<span class="string">"{tags}"</span>)),
             <span class="self">self</span>.event_id,
             <span class="self">self</span>.ts_init
         )
     }
 
     <span class="kw">fn </span>__str__(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
-        <span class="macro">format!</span>(<span class="string">"{}"</span>, <span class="self">self</span>)
+        <span class="macro">format!</span>(<span class="string">"{self}"</span>)
     }
 
     <span class="attr">#[staticmethod]
@@ -593,14 +599,14 @@
         }
         <span class="kw">match </span><span class="self">self</span>.trailing_offset {
             <span class="prelude-val">Some</span>(trailing_offset) =&gt; {
-                dict.set_item(<span class="string">"trailing_offset"</span>, trailing_offset.to_string())<span class="question-mark">?
-            </span>}
+                dict.set_item(<span class="string">"trailing_offset"</span>, trailing_offset.to_string())<span class="question-mark">?</span>;
+            }
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"trailing_offset"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
         }
         <span class="kw">match </span><span class="self">self</span>.trailing_offset_type {
             <span class="prelude-val">Some</span>(trailing_offset_type) =&gt; {
-                dict.set_item(<span class="string">"trailing_offset_type"</span>, trailing_offset_type.to_string())<span class="question-mark">?
-            </span>}
+                dict.set_item(<span class="string">"trailing_offset_type"</span>, trailing_offset_type.to_string())<span class="question-mark">?</span>;
+            }
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"trailing_offset_type"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
         }
         <span class="kw">match </span><span class="self">self</span>.expire_time {
@@ -613,20 +619,20 @@
         }
         <span class="kw">match </span><span class="self">self</span>.emulation_trigger {
             <span class="prelude-val">Some</span>(emulation_trigger) =&gt; {
-                dict.set_item(<span class="string">"emulation_trigger"</span>, emulation_trigger.to_string())<span class="question-mark">?
-            </span>}
+                dict.set_item(<span class="string">"emulation_trigger"</span>, emulation_trigger.to_string())<span class="question-mark">?</span>;
+            }
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"emulation_trigger"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
         }
         <span class="kw">match </span><span class="self">self</span>.trigger_instrument_id {
             <span class="prelude-val">Some</span>(trigger_instrument_id) =&gt; {
-                dict.set_item(<span class="string">"trigger_instrument_id"</span>, trigger_instrument_id.to_string())<span class="question-mark">?
-            </span>}
+                dict.set_item(<span class="string">"trigger_instrument_id"</span>, trigger_instrument_id.to_string())<span class="question-mark">?</span>;
+            }
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"trigger_instrument_id"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
         }
         <span class="kw">match </span><span class="self">self</span>.contingency_type {
             <span class="prelude-val">Some</span>(contingency_type) =&gt; {
-                dict.set_item(<span class="string">"contingency_type"</span>, contingency_type.to_string())<span class="question-mark">?
-            </span>}
+                dict.set_item(<span class="string">"contingency_type"</span>, contingency_type.to_string())<span class="question-mark">?</span>;
+            }
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"contingency_type"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
         }
         <span class="kw">match </span><span class="self">self</span>.order_list_id {
@@ -645,14 +651,14 @@
         }
         <span class="kw">match </span><span class="self">self</span>.parent_order_id {
             <span class="prelude-val">Some</span>(parent_order_id) =&gt; {
-                dict.set_item(<span class="string">"parent_order_id"</span>, parent_order_id.to_string())<span class="question-mark">?
-            </span>}
+                dict.set_item(<span class="string">"parent_order_id"</span>, parent_order_id.to_string())<span class="question-mark">?</span>;
+            }
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"parent_order_id"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
         }
         <span class="kw">match </span><span class="self">self</span>.exec_algorithm_id {
             <span class="prelude-val">Some</span>(exec_algorithm_id) =&gt; {
-                dict.set_item(<span class="string">"exec_algorithm_id"</span>, exec_algorithm_id.to_string())<span class="question-mark">?
-            </span>}
+                dict.set_item(<span class="string">"exec_algorithm_id"</span>, exec_algorithm_id.to_string())<span class="question-mark">?</span>;
+            }
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"exec_algorithm_id"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
         }
         <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.exec_algorithm_params {

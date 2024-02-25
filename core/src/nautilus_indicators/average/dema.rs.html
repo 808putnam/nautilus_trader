@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `indicators/src/average/dema.rs`."><title>dema.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_indicators" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `indicators/src/average/dema.rs`."><title>dema.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_indicators" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_indicators/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -257,10 +257,10 @@
     </span><span class="kw">pub </span>value: f64,
     <span class="doccomment">/// The input count for the indicator.
     </span><span class="kw">pub </span>count: usize,
-    <span class="kw">pub </span>is_initialized: bool,
+    <span class="kw">pub </span>initialized: bool,
     has_inputs: bool,
-    _ema1: ExponentialMovingAverage,
-    _ema2: ExponentialMovingAverage,
+    ema1: ExponentialMovingAverage,
+    ema2: ExponentialMovingAverage,
 }
 
 <span class="kw">impl </span>Display <span class="kw">for </span>DoubleExponentialMovingAverage {
@@ -277,16 +277,16 @@
     <span class="kw">fn </span>has_inputs(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.has_inputs
     }
-    <span class="kw">fn </span>is_initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.is_initialized
+    <span class="kw">fn </span>initialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="self">self</span>.initialized
     }
 
-    <span class="kw">fn </span>handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>QuoteTick) {
-        <span class="self">self</span>.update_raw(tick.extract_price(<span class="self">self</span>.price_type).into());
+    <span class="kw">fn </span>handle_quote_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, quote: <span class="kw-2">&amp;</span>QuoteTick) {
+        <span class="self">self</span>.update_raw(quote.extract_price(<span class="self">self</span>.price_type).into());
     }
 
-    <span class="kw">fn </span>handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, tick: <span class="kw-2">&amp;</span>TradeTick) {
-        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>tick.price).into());
+    <span class="kw">fn </span>handle_trade_tick(<span class="kw-2">&amp;mut </span><span class="self">self</span>, trade: <span class="kw-2">&amp;</span>TradeTick) {
+        <span class="self">self</span>.update_raw((<span class="kw-2">&amp;</span>trade.price).into());
     }
 
     <span class="kw">fn </span>handle_bar(<span class="kw-2">&amp;mut </span><span class="self">self</span>, bar: <span class="kw-2">&amp;</span>Bar) {
@@ -297,7 +297,7 @@
         <span class="self">self</span>.value = <span class="number">0.0</span>;
         <span class="self">self</span>.count = <span class="number">0</span>;
         <span class="self">self</span>.has_inputs = <span class="bool-val">false</span>;
-        <span class="self">self</span>.is_initialized = <span class="bool-val">false</span>;
+        <span class="self">self</span>.initialized = <span class="bool-val">false</span>;
     }
 }
 
@@ -309,9 +309,9 @@
             value: <span class="number">0.0</span>,
             count: <span class="number">0</span>,
             has_inputs: <span class="bool-val">false</span>,
-            is_initialized: <span class="bool-val">false</span>,
-            _ema1: ExponentialMovingAverage::new(period, price_type)<span class="question-mark">?</span>,
-            _ema2: ExponentialMovingAverage::new(period, price_type)<span class="question-mark">?</span>,
+            initialized: <span class="bool-val">false</span>,
+            ema1: ExponentialMovingAverage::new(period, price_type)<span class="question-mark">?</span>,
+            ema2: ExponentialMovingAverage::new(period, price_type)<span class="question-mark">?</span>,
         })
     }
 }
@@ -329,14 +329,14 @@
             <span class="self">self</span>.has_inputs = <span class="bool-val">true</span>;
             <span class="self">self</span>.value = value;
         }
-        <span class="self">self</span>._ema1.update_raw(value);
-        <span class="self">self</span>._ema2.update_raw(<span class="self">self</span>._ema1.value);
+        <span class="self">self</span>.ema1.update_raw(value);
+        <span class="self">self</span>.ema2.update_raw(<span class="self">self</span>.ema1.value);
 
-        <span class="self">self</span>.value = <span class="number">2.0f64</span>.mul_add(<span class="self">self</span>._ema1.value, -<span class="self">self</span>._ema2.value);
+        <span class="self">self</span>.value = <span class="number">2.0f64</span>.mul_add(<span class="self">self</span>.ema1.value, -<span class="self">self</span>.ema2.value);
         <span class="self">self</span>.count += <span class="number">1</span>;
 
-        <span class="kw">if </span>!<span class="self">self</span>.is_initialized &amp;&amp; <span class="self">self</span>.count &gt;= <span class="self">self</span>.period {
-            <span class="self">self</span>.is_initialized = <span class="bool-val">true</span>;
+        <span class="kw">if </span>!<span class="self">self</span>.initialized &amp;&amp; <span class="self">self</span>.count &gt;= <span class="self">self</span>.period {
+            <span class="self">self</span>.initialized = <span class="bool-val">true</span>;
         }
     }
 }
@@ -360,7 +360,7 @@
         <span class="kw">let </span>display_str = <span class="macro">format!</span>(<span class="string">"{indicator_dema_10}"</span>);
         <span class="macro">assert_eq!</span>(display_str, <span class="string">"DoubleExponentialMovingAverage(period=10)"</span>);
         <span class="macro">assert_eq!</span>(indicator_dema_10.period, <span class="number">10</span>);
-        <span class="macro">assert!</span>(!indicator_dema_10.is_initialized);
+        <span class="macro">assert!</span>(!indicator_dema_10.initialized);
         <span class="macro">assert!</span>(!indicator_dema_10.has_inputs);
     }
 
@@ -383,9 +383,9 @@
         <span class="kw">for </span>i <span class="kw">in </span><span class="number">1</span>..<span class="number">10 </span>{
             indicator_dema_10.update_raw(f64::from(i));
         }
-        <span class="macro">assert!</span>(!indicator_dema_10.is_initialized);
+        <span class="macro">assert!</span>(!indicator_dema_10.initialized);
         indicator_dema_10.update_raw(<span class="number">10.0</span>);
-        <span class="macro">assert!</span>(indicator_dema_10.is_initialized);
+        <span class="macro">assert!</span>(indicator_dema_10.initialized);
     }
 
     <span class="attr">#[rstest]
@@ -414,7 +414,7 @@
         indicator_dema_10.handle_bar(<span class="kw-2">&amp;</span>bar_ethusdt_binance_minute_bid);
         <span class="macro">assert_eq!</span>(indicator_dema_10.value, <span class="number">1522.0</span>);
         <span class="macro">assert!</span>(indicator_dema_10.has_inputs);
-        <span class="macro">assert!</span>(!indicator_dema_10.is_initialized);
+        <span class="macro">assert!</span>(!indicator_dema_10.initialized);
     }
 
     <span class="attr">#[rstest]
@@ -425,7 +425,7 @@
         <span class="macro">assert_eq!</span>(indicator_dema_10.value, <span class="number">0.0</span>);
         <span class="macro">assert_eq!</span>(indicator_dema_10.count, <span class="number">0</span>);
         <span class="macro">assert!</span>(!indicator_dema_10.has_inputs);
-        <span class="macro">assert!</span>(!indicator_dema_10.is_initialized);
+        <span class="macro">assert!</span>(!indicator_dema_10.initialized);
     }
 }
 </code></pre></div></section></main></body></html>

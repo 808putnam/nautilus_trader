@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/ffi/orderbook/book.rs`."><title>book.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/ffi/orderbook/book.rs`."><title>book.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -276,6 +276,12 @@
 <a href="#274" id="274">274</a>
 <a href="#275" id="275">275</a>
 <a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -298,15 +304,15 @@
 
 <span class="kw">use </span>nautilus_core::ffi::{cvec::CVec, string::str_to_cstr};
 
-<span class="kw">use </span><span class="kw">super</span>::level::Level_API;
+<span class="kw">use super</span>::{container::OrderBookContainer, level::Level_API};
 <span class="kw">use crate</span>::{
     data::{
         delta::OrderBookDelta, depth::OrderBookDepth10, order::BookOrder, quote::QuoteTick,
         trade::TradeTick,
     },
     enums::{BookType, OrderSide},
+    ffi::data::deltas::OrderBookDeltas_API,
     identifiers::instrument_id::InstrumentId,
-    orderbook::book::OrderBook,
     types::{price::Price, quantity::Quantity},
 };
 
@@ -320,10 +326,10 @@
 /// having to manually access the underlying `OrderBook` instance.
 </span><span class="attr">#[repr(C)]
 #[allow(non_camel_case_types)]
-</span><span class="kw">pub struct </span>OrderBook_API(Box&lt;OrderBook&gt;);
+</span><span class="kw">pub struct </span>OrderBook_API(Box&lt;OrderBookContainer&gt;);
 
 <span class="kw">impl </span>Deref <span class="kw">for </span>OrderBook_API {
-    <span class="kw">type </span>Target = OrderBook;
+    <span class="kw">type </span>Target = OrderBookContainer;
 
     <span class="kw">fn </span>deref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span>::Target {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0
@@ -338,7 +344,7 @@
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_new(instrument_id: InstrumentId, book_type: BookType) -&gt; OrderBook_API {
-    OrderBook_API(Box::new(OrderBook::new(instrument_id, book_type)))
+    OrderBook_API(Box::new(OrderBookContainer::new(instrument_id, book_type)))
 }
 
 <span class="attr">#[no_mangle]
@@ -348,7 +354,7 @@
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_reset(book: <span class="kw-2">&amp;mut </span>OrderBook_API) {
-    book.reset()
+    book.reset();
 }
 
 <span class="attr">#[no_mangle]
@@ -363,17 +369,17 @@
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_sequence(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; u64 {
-    book.sequence
+    book.sequence()
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_ts_last(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; u64 {
-    book.ts_last
+    book.ts_last()
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_count(book: <span class="kw-2">&amp;</span>OrderBook_API) -&gt; u64 {
-    book.count
+    book.count()
 }
 
 <span class="attr">#[no_mangle]
@@ -383,7 +389,7 @@
     ts_event: u64,
     sequence: u64,
 ) {
-    book.add(order, ts_event, sequence)
+    book.add(order, ts_event, sequence);
 }
 
 <span class="attr">#[no_mangle]
@@ -393,7 +399,7 @@
     ts_event: u64,
     sequence: u64,
 ) {
-    book.update(order, ts_event, sequence)
+    book.update(order, ts_event, sequence);
 }
 
 <span class="attr">#[no_mangle]
@@ -403,32 +409,38 @@
     ts_event: u64,
     sequence: u64,
 ) {
-    book.delete(order, ts_event, sequence)
+    book.delete(order, ts_event, sequence);
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_clear(book: <span class="kw-2">&amp;mut </span>OrderBook_API, ts_event: u64, sequence: u64) {
-    book.clear(ts_event, sequence)
+    book.clear(ts_event, sequence);
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_clear_bids(book: <span class="kw-2">&amp;mut </span>OrderBook_API, ts_event: u64, sequence: u64) {
-    book.clear_bids(ts_event, sequence)
+    book.clear_bids(ts_event, sequence);
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_clear_asks(book: <span class="kw-2">&amp;mut </span>OrderBook_API, ts_event: u64, sequence: u64) {
-    book.clear_asks(ts_event, sequence)
+    book.clear_asks(ts_event, sequence);
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_apply_delta(book: <span class="kw-2">&amp;mut </span>OrderBook_API, delta: OrderBookDelta) {
-    book.apply_delta(delta)
+    book.apply_delta(delta);
+}
+
+<span class="attr">#[no_mangle]
+</span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_apply_deltas(book: <span class="kw-2">&amp;mut </span>OrderBook_API, deltas: <span class="kw-2">&amp;</span>OrderBookDeltas_API) {
+    <span class="comment">// Clone will actually copy the contents of the `deltas` vec
+    </span>book.apply_deltas(deltas.deref().clone());
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_apply_depth(book: <span class="kw-2">&amp;mut </span>OrderBook_API, depth: OrderBookDepth10) {
-    book.apply_depth(depth)
+    book.apply_depth(depth);
 }
 
 <span class="attr">#[no_mangle]
@@ -451,12 +463,12 @@
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_has_bid(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; u8 {
-    book.has_bid() <span class="kw">as </span>u8
+    u8::from(book.has_bid())
 }
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_has_ask(book: <span class="kw-2">&amp;mut </span>OrderBook_API) -&gt; u8 {
-    book.has_ask() <span class="kw">as </span>u8
+    u8::from(book.has_ask())
 }
 
 <span class="attr">#[no_mangle]
@@ -530,7 +542,7 @@
 
 <span class="attr">#[no_mangle]
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>orderbook_check_integrity(book: <span class="kw-2">&amp;</span>OrderBook_API) {
-    book.check_integrity().unwrap()
+    book.check_integrity().unwrap();
 }
 
 <span class="comment">// TODO: This struct implementation potentially leaks memory
@@ -540,7 +552,7 @@
 </span><span class="kw">pub extern </span><span class="string">"C" </span><span class="kw">fn </span>vec_fills_drop(v: CVec) {
     <span class="kw">let </span>CVec { ptr, len, cap } = v;
     <span class="kw">let </span>data: Vec&lt;(Price, Quantity)&gt; =
-        <span class="kw">unsafe </span>{ Vec::from_raw_parts(ptr <span class="kw">as </span><span class="kw-2">*mut </span>(Price, Quantity), len, cap) };
+        <span class="kw">unsafe </span>{ Vec::from_raw_parts(ptr.cast::&lt;(Price, Quantity)&gt;(), len, cap) };
     drop(data); <span class="comment">// Memory freed here
 </span>}
 

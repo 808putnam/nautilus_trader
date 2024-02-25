@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/types/quantity.rs`."><title>quantity.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (98aa3624b 2024-02-08)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/python/types/quantity.rs`."><title>quantity.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -417,7 +417,7 @@
 </span><span class="kw">impl </span>Quantity {
     <span class="attr">#[new]
     </span><span class="kw">fn </span>py_new(value: f64, precision: u8) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        Quantity::new(value, precision).map_err(to_pyvalue_err)
+        <span class="self">Self</span>::new(value, precision).map_err(to_pyvalue_err)
     }
 
     <span class="kw">fn </span>__setstate__(<span class="kw-2">&amp;mut </span><span class="self">self</span>, py: Python, state: PyObject) -&gt; PyResult&lt;()&gt; {
@@ -439,14 +439,14 @@
 
     <span class="attr">#[staticmethod]
     </span><span class="kw">fn </span>_safe_constructor() -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
-        <span class="prelude-val">Ok</span>(Quantity::zero(<span class="number">0</span>)) <span class="comment">// Safe default
+        <span class="prelude-val">Ok</span>(<span class="self">Self</span>::zero(<span class="number">0</span>)) <span class="comment">// Safe default
     </span>}
 
     <span class="kw">fn </span>__add__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: PyObject, py: Python) -&gt; PyResult&lt;PyObject&gt; {
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_f64() + other_float).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() + other_qty.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() + other_dec).into_py(py))
@@ -462,7 +462,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((other_float + <span class="self">self</span>.as_f64()).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((other_qty.as_decimal() + <span class="self">self</span>.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((other_dec + <span class="self">self</span>.as_decimal()).into_py(py))
@@ -478,7 +478,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_f64() - other_float).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() - other_qty.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() - other_dec).into_py(py))
@@ -494,7 +494,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((other_float - <span class="self">self</span>.as_f64()).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((other_qty.as_decimal() - <span class="self">self</span>.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((other_dec - <span class="self">self</span>.as_decimal()).into_py(py))
@@ -510,7 +510,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_f64() * other_float).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() * other_qty.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() * other_dec).into_py(py))
@@ -526,7 +526,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((other_float * <span class="self">self</span>.as_f64()).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((other_qty.as_decimal() * <span class="self">self</span>.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((other_dec * <span class="self">self</span>.as_decimal()).into_py(py))
@@ -542,7 +542,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_f64() / other_float).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() / other_qty.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() / other_dec).into_py(py))
@@ -558,7 +558,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((other_float / <span class="self">self</span>.as_f64()).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((other_qty.as_decimal() / <span class="self">self</span>.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((other_dec / <span class="self">self</span>.as_decimal()).into_py(py))
@@ -574,7 +574,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_f64() / other_float).floor().into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() / other_qty.as_decimal())
                 .floor()
                 .into_py(py))
@@ -592,7 +592,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((other_float / <span class="self">self</span>.as_f64()).floor().into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((other_qty.as_decimal() / <span class="self">self</span>.as_decimal())
                 .floor()
                 .into_py(py))
@@ -610,7 +610,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_f64() % other_float).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() % other_qty.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((<span class="self">self</span>.as_decimal() % other_dec).into_py(py))
@@ -626,7 +626,7 @@
         <span class="kw">if </span>other.as_ref(py).is_instance_of::&lt;PyFloat&gt;() {
             <span class="kw">let </span>other_float: f64 = other.extract(py)<span class="question-mark">?</span>;
             <span class="prelude-val">Ok</span>((other_float % <span class="self">self</span>.as_f64()).into_py(py))
-        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="prelude-val">Ok</span>((other_qty.as_decimal() % <span class="self">self</span>.as_decimal()).into_py(py))
         } <span class="kw">else if let </span><span class="prelude-val">Ok</span>(other_dec) = other.extract::&lt;Decimal&gt;(py) {
             <span class="prelude-val">Ok</span>((other_dec % <span class="self">self</span>.as_decimal()).into_py(py))
@@ -665,7 +665,7 @@
     }
 
     <span class="kw">fn </span>__richcmp__(<span class="kw-2">&amp;</span><span class="self">self</span>, other: PyObject, op: CompareOp, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; Py&lt;PyAny&gt; {
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;Quantity&gt;(py) {
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(other_qty) = other.extract::&lt;<span class="self">Self</span>&gt;(py) {
             <span class="kw">match </span>op {
                 CompareOp::Eq =&gt; <span class="self">self</span>.eq(<span class="kw-2">&amp;</span>other_qty).into_py(py),
                 CompareOp::Ne =&gt; <span class="self">self</span>.ne(<span class="kw-2">&amp;</span>other_qty).into_py(py),
@@ -714,27 +714,27 @@
 
     <span class="attr">#[staticmethod]
     #[pyo3(name = <span class="string">"from_raw"</span>)]
-    </span><span class="kw">fn </span>py_from_raw(raw: u64, precision: u8) -&gt; PyResult&lt;Quantity&gt; {
-        Quantity::from_raw(raw, precision).map_err(to_pyvalue_err)
+    </span><span class="kw">fn </span>py_from_raw(raw: u64, precision: u8) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+        <span class="self">Self</span>::from_raw(raw, precision).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[staticmethod]
     #[pyo3(name = <span class="string">"zero"</span>)]
     #[pyo3(signature = (precision = <span class="number">0</span>))]
-    </span><span class="kw">fn </span>py_zero(precision: u8) -&gt; PyResult&lt;Quantity&gt; {
-        Quantity::new(<span class="number">0.0</span>, precision).map_err(to_pyvalue_err)
+    </span><span class="kw">fn </span>py_zero(precision: u8) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+        <span class="self">Self</span>::new(<span class="number">0.0</span>, precision).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[staticmethod]
     #[pyo3(name = <span class="string">"from_int"</span>)]
-    </span><span class="kw">fn </span>py_from_int(value: u64) -&gt; PyResult&lt;Quantity&gt; {
-        Quantity::new(value <span class="kw">as </span>f64, <span class="number">0</span>).map_err(to_pyvalue_err)
+    </span><span class="kw">fn </span>py_from_int(value: u64) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+        <span class="self">Self</span>::new(value <span class="kw">as </span>f64, <span class="number">0</span>).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[staticmethod]
     #[pyo3(name = <span class="string">"from_str"</span>)]
-    </span><span class="kw">fn </span>py_from_str(value: <span class="kw-2">&amp;</span>str) -&gt; PyResult&lt;Quantity&gt; {
-        Quantity::from_str(value).map_err(to_pyvalue_err)
+    </span><span class="kw">fn </span>py_from_str(value: <span class="kw-2">&amp;</span>str) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+        <span class="self">Self</span>::from_str(value).map_err(to_pyvalue_err)
     }
 
     <span class="attr">#[pyo3(name = <span class="string">"is_zero"</span>)]

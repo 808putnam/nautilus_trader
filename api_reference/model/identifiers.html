@@ -1129,6 +1129,15 @@
              </span>
              <ul class="submenu">
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.identifiers.Venue.from_code">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  Venue.from_code()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.identifiers.Venue.is_synthetic">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -3323,7 +3332,8 @@ which did not originate from any strategy being managed by the system.
            Represents a valid trade match ID (assigned by a trading venue).
           </p>
           <p>
-           Can correspond to the
+           Maximum length is 36 characters.
+Can correspond to the
            <cite>
             TradeID &lt;1003&gt; field
            </cite>
@@ -3359,16 +3369,32 @@ the exchange or central counterparty.
             </span>
            </dt>
            <dd class="field-even">
-            <p>
-             <strong>
-              ValueError
-             </strong>
-             – If
-             <cite>
-              value
-             </cite>
-             is not a valid string.
-            </p>
+            <ul class="simple">
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                value
+               </cite>
+               is not a valid string.
+              </p>
+             </li>
+             <li>
+              <p>
+               <strong>
+                ValueError
+               </strong>
+               – If
+               <cite>
+                value
+               </cite>
+               length exceeds maximum 36 characters.
+              </p>
+             </li>
+            </ul>
            </dd>
           </dl>
           <p class="rubric">
@@ -3720,6 +3746,89 @@ do not collide with those from another node instance.
              </cite>
              is not a valid string.
             </p>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.identifiers.Venue.from_code">
+            <em class="property">
+             <span class="pre">
+              static
+             </span>
+             <span class="w">
+             </span>
+            </em>
+            <span class="sig-name descname">
+             <span class="pre">
+              from_code
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               unicode
+              </span>
+              <span class="pre">
+               code
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.identifiers.Venue.from_code" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             Return the venue with the given
+             <cite>
+              code
+             </cite>
+             from the built-in internal map (if found).
+            </p>
+            <p>
+             Currency only supports CME Globex exchange ISO 10383 MIC codes.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Parameters
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <strong>
+                code
+               </strong>
+               (
+               <em>
+                str
+               </em>
+               ) – The code of the venue.
+              </p>
+             </dd>
+             <dt class="field-even">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               Venue or
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 None
+                </span>
+               </code>
+              </p>
+             </dd>
+            </dl>
            </dd>
           </dl>
           <dl class="py method">

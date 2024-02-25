@@ -1777,6 +1777,15 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.OrderBookDeltas.flags">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBookDeltas.flags
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.data.OrderBookDeltas.from_dict">
                 <code class="docutils literal notranslate">
                  <span class="pre">
@@ -1822,10 +1831,28 @@
                </a>
               </li>
               <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.OrderBookDeltas.to_capsule">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBookDeltas.to_capsule()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
                <a class="md-nav__link" href="#nautilus_trader.model.data.OrderBookDeltas.to_dict">
                 <code class="docutils literal notranslate">
                  <span class="pre">
                   OrderBookDeltas.to_dict()
+                 </span>
+                </code>
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#nautilus_trader.model.data.OrderBookDeltas.to_pyo3">
+                <code class="docutils literal notranslate">
+                 <span class="pre">
+                  OrderBookDeltas.to_pyo3()
                  </span>
                 </code>
                </a>
@@ -10665,7 +10692,10 @@ the key and value contents of metadata must themselves be hashable.
            </dt>
            <dd>
             <p>
-             The order book deltas.
+             list[OrderBookDelta]
+            </p>
+            <p>
+             Return the contained deltas.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -10676,9 +10706,66 @@ the key and value contents of metadata must themselves be hashable.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
-                list[OrderBookDelta]
-               </cite>
+               <em>
+                list[OrderBookDeltas]
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDeltas.deltas
+              </p>
+             </dd>
+            </dl>
+           </dd>
+          </dl>
+          <dl class="py attribute">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.OrderBookDeltas.flags">
+            <span class="sig-name descname">
+             <span class="pre">
+              flags
+             </span>
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.data.OrderBookDeltas.flags" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+            <p>
+             uint8_t
+            </p>
+            <p>
+             Return the flags for the last delta.
+            </p>
+            <dl class="field-list simple">
+             <dt class="field-odd">
+              Returns
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-odd">
+              <p>
+               <em>
+                uint8_t
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDeltas.flags
               </p>
              </dd>
             </dl>
@@ -10871,7 +10958,10 @@ the key and value contents of metadata must themselves be hashable.
            </dt>
            <dd>
             <p>
-             The instrument ID for the order book.
+             InstrumentId
+            </p>
+            <p>
+             Return the deltas book instrument ID.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -10882,9 +10972,20 @@ the key and value contents of metadata must themselves be hashable.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
+               <em>
                 InstrumentId
-               </cite>
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDeltas.instrument_id
               </p>
              </dd>
             </dl>
@@ -10903,7 +11004,10 @@ the key and value contents of metadata must themselves be hashable.
            </dt>
            <dd>
             <p>
-             If the deltas represent a snapshot (an initial CLEAR then deltas).
+             bool
+            </p>
+            <p>
+             If the deltas is a snapshot.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -10914,9 +11018,20 @@ the key and value contents of metadata must themselves be hashable.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
+               <em>
                 bool
-               </cite>
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDeltas.is_snapshot
               </p>
              </dd>
             </dl>
@@ -10935,7 +11050,10 @@ the key and value contents of metadata must themselves be hashable.
            </dt>
            <dd>
             <p>
-             If the sequence number for the last delta.
+             uint64_t
+            </p>
+            <p>
+             Return the sequence number for the last delta.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -10946,12 +11064,50 @@ the key and value contents of metadata must themselves be hashable.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
-                bool
-               </cite>
+               <em>
+                uint64_t
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDeltas.sequence
               </p>
              </dd>
             </dl>
+           </dd>
+          </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.OrderBookDeltas.to_capsule">
+            <span class="sig-name descname">
+             <span class="pre">
+              to_capsule
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.data.OrderBookDeltas.to_capsule" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
            </dd>
           </dl>
           <dl class="py method">
@@ -11009,6 +11165,33 @@ the key and value contents of metadata must themselves be hashable.
             </dl>
            </dd>
           </dl>
+          <dl class="py method">
+           <dt class="sig sig-object py" id="nautilus_trader.model.data.OrderBookDeltas.to_pyo3">
+            <span class="sig-name descname">
+             <span class="pre">
+              to_pyo3
+             </span>
+            </span>
+            <span class="sig-paren">
+             (
+            </span>
+            <em class="sig-param">
+             <span class="n">
+              <span class="pre">
+               self
+              </span>
+             </span>
+            </em>
+            <span class="sig-paren">
+             )
+            </span>
+            <a class="headerlink" href="#nautilus_trader.model.data.OrderBookDeltas.to_pyo3" title="Permalink to this definition">
+             ¶
+            </a>
+           </dt>
+           <dd>
+           </dd>
+          </dl>
           <dl class="py attribute">
            <dt class="sig sig-object py" id="nautilus_trader.model.data.OrderBookDeltas.ts_event">
             <span class="sig-name descname">
@@ -11022,7 +11205,10 @@ the key and value contents of metadata must themselves be hashable.
            </dt>
            <dd>
             <p>
-             The UNIX timestamp (nanoseconds) when the last delta event occurred.
+             int
+            </p>
+            <p>
+             The UNIX timestamp (nanoseconds) when the data event occurred.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -11033,9 +11219,20 @@ the key and value contents of metadata must themselves be hashable.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
-                uint64_t
-               </cite>
+               <em>
+                int
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDeltas.ts_event
               </p>
              </dd>
             </dl>
@@ -11054,7 +11251,10 @@ the key and value contents of metadata must themselves be hashable.
            </dt>
            <dd>
             <p>
-             The UNIX timestamp (nanoseconds) when the last delta event was initialized.
+             int
+            </p>
+            <p>
+             The UNIX timestamp (nanoseconds) when the object was initialized.
             </p>
             <dl class="field-list simple">
              <dt class="field-odd">
@@ -11065,9 +11265,20 @@ the key and value contents of metadata must themselves be hashable.
              </dt>
              <dd class="field-odd">
               <p>
-               <cite>
-                uint64_t
-               </cite>
+               <em>
+                int
+               </em>
+              </p>
+             </dd>
+             <dt class="field-even">
+              Type
+              <span class="colon">
+               :
+              </span>
+             </dt>
+             <dd class="field-even">
+              <p>
+               OrderBookDeltas.ts_init
               </p>
              </dd>
             </dl>
