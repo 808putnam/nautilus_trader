@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/loader.rs`."><title>loader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (397937d81 2024-02-22)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/loader.rs`."><title>loader.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_adapters/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -287,6 +287,64 @@
 <a href="#285" id="285">285</a>
 <a href="#286" id="286">286</a>
 <a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -302,13 +360,13 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::{env, fs, path::PathBuf};
+</span><span class="kw">use </span>std::{collections::HashMap, env, fs, path::PathBuf};
 
 <span class="kw">use </span>anyhow::{bail, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span>dbn::{
     compat::InstrumentDefMsgV1,
     decode::{dbn::Decoder, DbnMetadata, DecodeStream},
-    Record,
+    Publisher, Record,
 };
 <span class="kw">use </span>indexmap::IndexMap;
 <span class="kw">use </span>nautilus_model::{
@@ -359,6 +417,7 @@
     publishers_map: IndexMap&lt;PublisherId, DatabentoPublisher&gt;,
     venue_dataset_map: IndexMap&lt;Venue, Dataset&gt;,
     publisher_venue_map: IndexMap&lt;PublisherId, Venue&gt;,
+    glbx_exchange_map: HashMap&lt;Symbol, Venue&gt;,
 }
 
 <span class="kw">impl </span>DatabentoDataLoader {
@@ -367,6 +426,7 @@
             publishers_map: IndexMap::new(),
             venue_dataset_map: IndexMap::new(),
             publisher_venue_map: IndexMap::new(),
+            glbx_exchange_map: HashMap::new(),
         };
 
         <span class="comment">// Load publishers
@@ -407,12 +467,28 @@
             })
             .collect::&lt;IndexMap&lt;Venue, Ustr&gt;&gt;();
 
+        <span class="comment">// Insert CME Globex exchanges
+        </span><span class="kw">let </span>glbx = Dataset::from(<span class="string">"GLBX"</span>);
+        <span class="self">self</span>.venue_dataset_map.insert(Venue::CBCM(), glbx);
+        <span class="self">self</span>.venue_dataset_map.insert(Venue::GLBX(), glbx);
+        <span class="self">self</span>.venue_dataset_map.insert(Venue::NYUM(), glbx);
+        <span class="self">self</span>.venue_dataset_map.insert(Venue::XCBT(), glbx);
+        <span class="self">self</span>.venue_dataset_map.insert(Venue::XCEC(), glbx);
+        <span class="self">self</span>.venue_dataset_map.insert(Venue::XCME(), glbx);
+        <span class="self">self</span>.venue_dataset_map.insert(Venue::XFXS(), glbx);
+        <span class="self">self</span>.venue_dataset_map.insert(Venue::XNYM(), glbx);
+
         <span class="self">self</span>.publisher_venue_map = publishers
             .into_iter()
             .map(|p| (p.publisher_id, Venue::from(p.venue.as_str())))
             .collect::&lt;IndexMap&lt;u16, Venue&gt;&gt;();
 
         <span class="prelude-val">Ok</span>(())
+    }
+
+    <span class="comment">// Return the map of CME Globex symbols to exchange venues.
+    </span><span class="kw">pub fn </span>load_glbx_exchange_map(<span class="kw-2">&amp;mut </span><span class="self">self</span>, map: HashMap&lt;Symbol, Venue&gt;) {
+        <span class="self">self</span>.glbx_exchange_map = map;
     }
 
     <span class="doccomment">/// Return the internal Databento publishers currently held by the loader.
@@ -431,6 +507,12 @@
     </span><span class="attr">#[must_use]
     </span><span class="kw">pub fn </span>get_venue_for_publisher(<span class="kw-2">&amp;</span><span class="self">self</span>, publisher_id: PublisherId) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Venue&gt; {
         <span class="self">self</span>.publisher_venue_map.get(<span class="kw-2">&amp;</span>publisher_id)
+    }
+
+    <span class="comment">// Return the venue which matches the given `publisher_id` (if found).
+    </span><span class="attr">#[must_use]
+    </span><span class="kw">pub fn </span>get_glbx_exchange_map(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;Symbol, Venue&gt; {
+        <span class="self">self</span>.glbx_exchange_map.clone()
     }
 
     <span class="kw">pub fn </span>get_nautilus_instrument_id_for_record(
@@ -488,6 +570,56 @@
         <span class="prelude-val">Ok</span>(metadata.schema.map(|schema| schema.to_string()))
     }
 
+    <span class="kw">pub fn </span>read_definition_records(
+        <span class="kw-2">&amp;mut </span><span class="self">self</span>,
+        path: PathBuf,
+    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Result</span>&lt;Box&lt;<span class="kw">dyn </span>Instrument&gt;&gt;&gt; + <span class="lifetime">'_</span>&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>decoder = Decoder::from_zstd_file(path)<span class="question-mark">?</span>;
+        decoder.set_upgrade_policy(dbn::VersionUpgradePolicy::Upgrade);
+        <span class="kw">let </span><span class="kw-2">mut </span>dbn_stream = decoder.decode_stream::&lt;InstrumentDefMsgV1&gt;();
+
+        <span class="prelude-val">Ok</span>(std::iter::from_fn(<span class="kw">move </span>|| {
+            dbn_stream.advance();
+
+            <span class="kw">match </span>dbn_stream.get() {
+                <span class="prelude-val">Some</span>(rec) =&gt; {
+                    <span class="kw">let </span>rec_ref = dbn::RecordRef::from(rec);
+                    <span class="kw">let </span>msg = rec_ref.get::&lt;InstrumentDefMsgV1&gt;().unwrap();
+
+                    <span class="kw">let </span>raw_symbol = <span class="kw">unsafe </span>{
+                        raw_ptr_to_ustr(rec.raw_symbol.as_ptr())
+                            .expect(<span class="string">"Error obtaining `raw_symbol` pointer"</span>)
+                    };
+                    <span class="kw">let </span>symbol = Symbol { value: raw_symbol };
+
+                    <span class="kw">let </span>publisher = rec.hd.publisher().expect(<span class="string">"Invalid `publisher` for record"</span>);
+                    <span class="kw">let </span>venue = <span class="kw">match </span>publisher {
+                        Publisher::GlbxMdp3Glbx =&gt; {
+                            <span class="comment">// SAFETY: GLBX instruments have a valid `exchange` field
+                            </span><span class="kw">let </span>exchange = rec.exchange().unwrap();
+                            <span class="kw">let </span>venue = Venue::from_code(exchange).unwrap_or_else(|<span class="kw">_</span>| {
+                                <span class="macro">panic!</span>(<span class="string">"`Venue` not found for exchange {exchange}"</span>)
+                            });
+                            <span class="self">self</span>.glbx_exchange_map.insert(symbol, venue);
+                            venue
+                        }
+                        <span class="kw">_ </span>=&gt; <span class="kw-2">*</span><span class="self">self
+                            </span>.publisher_venue_map
+                            .get(<span class="kw-2">&amp;</span>msg.hd.publisher_id)
+                            .expect(<span class="string">"`Venue` not found `publisher_id`"</span>),
+                    };
+                    <span class="kw">let </span>instrument_id = InstrumentId::new(symbol, venue);
+
+                    <span class="kw">match </span>decode_instrument_def_msg_v1(rec, instrument_id, msg.ts_recv) {
+                        <span class="prelude-val">Ok</span>(data) =&gt; <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(data)),
+                        <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)),
+                    }
+                }
+                <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
+            }
+        }))
+    }
+
     <span class="kw">pub fn </span>read_records&lt;T&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         path: PathBuf,
@@ -506,19 +638,39 @@
         </span><span class="prelude-val">Ok</span>(std::iter::from_fn(<span class="kw">move </span>|| {
             dbn_stream.advance();
             <span class="kw">match </span>dbn_stream.get() {
-                <span class="prelude-val">Some</span>(record) =&gt; {
-                    <span class="kw">let </span>rec_ref = dbn::RecordRef::from(record);
+                <span class="prelude-val">Some</span>(rec) =&gt; {
+                    <span class="kw">let </span>rec_ref = dbn::RecordRef::from(rec);
                     <span class="kw">let </span>instrument_id = <span class="kw">match </span><span class="kw-2">&amp;</span>instrument_id {
                         <span class="prelude-val">Some</span>(id) =&gt; <span class="kw-2">*</span>id, <span class="comment">// Copy
                         </span><span class="prelude-val">None </span>=&gt; {
-                            <span class="kw">let </span>publisher_id = rec_ref.publisher().expect(<span class="string">"No publisher for record"</span>)
-                                <span class="kw">as </span>PublisherId;
-                            <span class="kw">let </span>venue = <span class="self">self
-                                </span>.publisher_venue_map
-                                .get(<span class="kw-2">&amp;</span>publisher_id)
-                                .expect(<span class="string">"`Venue` not found for `publisher_id`"</span>);
-                            <span class="self">self</span>.get_nautilus_instrument_id_for_record(<span class="kw-2">&amp;</span>rec_ref, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">*</span>venue)
-                                .expect(<span class="string">"Error resolving symbology mapping for {rec_ref}"</span>)
+                            <span class="kw">let </span>publisher =
+                                rec_ref.publisher().expect(<span class="string">"Invalid `publisher` for record"</span>);
+                            <span class="kw">let </span>publisher_id = publisher <span class="kw">as </span>PublisherId;
+                            <span class="kw">let </span>venue =
+                                <span class="self">self</span>.publisher_venue_map
+                                    .get(<span class="kw-2">&amp;</span>publisher_id)
+                                    .unwrap_or_else(|| {
+                                        <span class="macro">panic!</span>(
+                                            <span class="string">"`Venue` not found for `publisher_id` {publisher_id}"
+                                        </span>)
+                                    });
+                            <span class="kw">let </span><span class="kw-2">mut </span>instrument_id = <span class="self">self
+                                </span>.get_nautilus_instrument_id_for_record(<span class="kw-2">&amp;</span>rec_ref, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">*</span>venue)
+                                .unwrap_or_else(|<span class="kw">_</span>| {
+                                    <span class="macro">panic!</span>(<span class="string">"Error resolving symbology mapping for {:?}"</span>, rec_ref)
+                                });
+
+                            <span class="kw">if </span>publisher == Publisher::GlbxMdp3Glbx {
+                                <span class="comment">// Source actual exchange from GLBX instrument
+                                // definitions if they were loaded.
+                                </span><span class="kw">if let </span><span class="prelude-val">Some</span>(venue) =
+                                    <span class="self">self</span>.glbx_exchange_map.get(<span class="kw-2">&amp;</span>instrument_id.symbol)
+                                {
+                                    instrument_id.venue = <span class="kw-2">*</span>venue;
+                                }
+                            };
+
+                            instrument_id
                         }
                     };
 
@@ -529,42 +681,6 @@
                         <span class="prelude-val">None</span>,
                         include_trades,
                     ) {
-                        <span class="prelude-val">Ok</span>(data) =&gt; <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(data)),
-                        <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)),
-                    }
-                }
-                <span class="prelude-val">None </span>=&gt; <span class="prelude-val">None</span>,
-            }
-        }))
-    }
-
-    <span class="kw">pub fn </span>read_definition_records(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        path: PathBuf,
-    ) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="kw">impl </span>Iterator&lt;Item = <span class="prelude-ty">Result</span>&lt;Box&lt;<span class="kw">dyn </span>Instrument&gt;&gt;&gt; + <span class="lifetime">'_</span>&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>decoder = Decoder::from_zstd_file(path)<span class="question-mark">?</span>;
-        decoder.set_upgrade_policy(dbn::VersionUpgradePolicy::Upgrade);
-        <span class="kw">let </span><span class="kw-2">mut </span>dbn_stream = decoder.decode_stream::&lt;InstrumentDefMsgV1&gt;();
-
-        <span class="prelude-val">Ok</span>(std::iter::from_fn(<span class="kw">move </span>|| {
-            dbn_stream.advance();
-            <span class="kw">match </span>dbn_stream.get() {
-                <span class="prelude-val">Some</span>(record) =&gt; {
-                    <span class="kw">let </span>rec_ref = dbn::RecordRef::from(record);
-                    <span class="kw">let </span>msg = rec_ref.get::&lt;InstrumentDefMsgV1&gt;().unwrap();
-
-                    <span class="kw">let </span>raw_symbol = <span class="kw">unsafe </span>{
-                        raw_ptr_to_ustr(record.raw_symbol.as_ptr())
-                            .expect(<span class="string">"Error parsing `raw_symbol`"</span>)
-                    };
-                    <span class="kw">let </span>symbol = Symbol { value: raw_symbol };
-                    <span class="kw">let </span>venue = <span class="self">self
-                        </span>.publisher_venue_map
-                        .get(<span class="kw-2">&amp;</span>msg.hd.publisher_id)
-                        .expect(<span class="string">"`Venue` not found `publisher_id`"</span>);
-                    <span class="kw">let </span>instrument_id = InstrumentId::new(symbol, <span class="kw-2">*</span>venue);
-
-                    <span class="kw">match </span>decode_instrument_def_msg_v1(record, instrument_id, msg.ts_recv) {
                         <span class="prelude-val">Ok</span>(data) =&gt; <span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(data)),
                         <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Some</span>(<span class="prelude-val">Err</span>(e)),
                     }

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/currencies.rs`."><title>currencies.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (397937d81 2024-02-22)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `model/src/currencies.rs`."><title>currencies.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_model" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../nautilus_model/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -1055,6 +1055,18 @@
 <a href="#1053" id="1053">1053</a>
 <a href="#1054" id="1054">1054</a>
 <a href="#1055" id="1055">1055</a>
+<a href="#1056" id="1056">1056</a>
+<a href="#1057" id="1057">1057</a>
+<a href="#1058" id="1058">1058</a>
+<a href="#1059" id="1059">1059</a>
+<a href="#1060" id="1060">1060</a>
+<a href="#1061" id="1061">1061</a>
+<a href="#1062" id="1062">1062</a>
+<a href="#1063" id="1063">1063</a>
+<a href="#1064" id="1064">1064</a>
+<a href="#1065" id="1065">1065</a>
+<a href="#1066" id="1066">1066</a>
+<a href="#1067" id="1067">1067</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1080,7 +1092,9 @@
 
 <span class="kw">use crate</span>::{enums::CurrencyType, types::currency::Currency};
 
-<span class="comment">// Fiat currency static locks
+<span class="comment">///////////////////////////////////////////////////////////////////////////////
+// Fiat currencies
+///////////////////////////////////////////////////////////////////////////////
 </span><span class="kw">static </span>AUD_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 <span class="kw">static </span>BRL_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 <span class="kw">static </span>CAD_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
@@ -1111,12 +1125,16 @@
 <span class="kw">static </span>USD_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 <span class="kw">static </span>ZAR_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 
-<span class="comment">// Commodity backed currency static locks
+<span class="comment">///////////////////////////////////////////////////////////////////////////////
+// Commodity backed currencies
+///////////////////////////////////////////////////////////////////////////////
 </span><span class="kw">static </span>XAG_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 <span class="kw">static </span>XAU_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 <span class="kw">static </span>XPT_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 
-<span class="comment">// Crypto currency static locks
+<span class="comment">///////////////////////////////////////////////////////////////////////////////
+// Crypto currencies
+///////////////////////////////////////////////////////////////////////////////
 </span><span class="kw">static </span>ONEINCH_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 <span class="kw">static </span>AAVE_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 <span class="kw">static </span>ACA_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
@@ -1160,7 +1178,9 @@
 <span class="kw">static </span>ZEC_LOCK: OnceLock&lt;Currency&gt; = OnceLock::new();
 
 <span class="kw">impl </span>Currency {
-    <span class="comment">// Crypto currencies
+    <span class="comment">///////////////////////////////////////////////////////////////////////////
+    // Crypto currencies
+    ///////////////////////////////////////////////////////////////////////////
     </span><span class="attr">#[allow(non_snake_case)]
     #[must_use]
     </span><span class="kw">pub fn </span>AUD() -&gt; <span class="self">Self </span>{
@@ -2037,7 +2057,9 @@
 
 <span class="kw">pub static </span>CURRENCY_MAP: Lazy&lt;Mutex&lt;HashMap&lt;String, Currency&gt;&gt;&gt; = Lazy::new(|| {
     <span class="kw">let </span><span class="kw-2">mut </span>map = HashMap::new();
-    <span class="comment">// Fiat currencies
+    <span class="comment">///////////////////////////////////////////////////////////////////////////
+    // Fiat currencies
+    ///////////////////////////////////////////////////////////////////////////
     </span>map.insert(Currency::AUD().code.to_string(), Currency::AUD());
     map.insert(Currency::BRL().code.to_string(), Currency::BRL());
     map.insert(Currency::CAD().code.to_string(), Currency::CAD());
@@ -2069,7 +2091,9 @@
     map.insert(Currency::XAU().code.to_string(), Currency::XAU());
     map.insert(Currency::XPT().code.to_string(), Currency::XPT());
     map.insert(Currency::ZAR().code.to_string(), Currency::ZAR());
-    <span class="comment">// Crypto currencies
+    <span class="comment">///////////////////////////////////////////////////////////////////////////
+    // Crypto currencies
+    ///////////////////////////////////////////////////////////////////////////
     </span>map.insert(Currency::AAVE().code.to_string(), Currency::AAVE());
     map.insert(Currency::ACA().code.to_string(), Currency::ACA());
     map.insert(Currency::ADA().code.to_string(), Currency::ADA());

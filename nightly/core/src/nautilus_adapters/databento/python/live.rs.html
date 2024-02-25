@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/python/live.rs`."><title>live.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (397937d81 2024-02-22)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/python/live.rs`."><title>live.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../nautilus_adapters/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -410,6 +410,35 @@
 <a href="#408" id="408">408</a>
 <a href="#409" id="409">409</a>
 <a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -428,8 +457,10 @@
 </span><span class="kw">use </span>std::{collections::HashMap, ffi::CStr, fs, str::FromStr, sync::Arc};
 
 <span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
-<span class="kw">use </span>databento::dbn::{PitSymbolMap, Record, SymbolIndex, VersionUpgradePolicy};
-<span class="kw">use </span>databento::live::Subscription;
+<span class="kw">use </span>databento::{
+    dbn::{PitSymbolMap, Record, SymbolIndex, VersionUpgradePolicy},
+    live::Subscription,
+};
 <span class="kw">use </span>indexmap::IndexMap;
 <span class="kw">use </span>log::{error, info};
 <span class="kw">use </span>nautilus_core::{
@@ -467,6 +498,7 @@
     </span><span class="kw">pub </span>dataset: String,
     inner: <span class="prelude-ty">Option</span>&lt;Arc&lt;Mutex&lt;databento::LiveClient&gt;&gt;&gt;,
     publisher_venue_map: Arc&lt;IndexMap&lt;PublisherId, Venue&gt;&gt;,
+    glbx_exchange_map: Arc&lt;HashMap&lt;Symbol, Venue&gt;&gt;,
 }
 
 <span class="kw">impl </span>DatabentoLiveClient {
@@ -510,7 +542,18 @@
             dataset,
             inner: <span class="prelude-val">None</span>,
             publisher_venue_map: Arc::new(publisher_venue_map),
+            glbx_exchange_map: Arc::new(HashMap::new()),
         })
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">"load_glbx_exchange_map"</span>)]
+    </span><span class="kw">fn </span>py_load_glbx_exchange_map(<span class="kw-2">&amp;mut </span><span class="self">self</span>, map: HashMap&lt;Symbol, Venue&gt;) {
+        <span class="self">self</span>.glbx_exchange_map = Arc::new(map);
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">"get_glbx_exchange_map"</span>)]
+    </span><span class="kw">fn </span>py_get_glbx_exchange_map(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;Symbol, Venue&gt; {
+        <span class="self">self</span>.glbx_exchange_map.as_ref().clone()
     }
 
     <span class="attr">#[pyo3(name = <span class="string">"subscribe"</span>)]
@@ -564,6 +607,7 @@
     ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
         <span class="kw">let </span>arc_client = <span class="self">self</span>.get_inner_client().map_err(to_pyruntime_err)<span class="question-mark">?</span>;
         <span class="kw">let </span>publisher_venue_map = <span class="self">self</span>.publisher_venue_map.clone();
+        <span class="kw">let </span>glbx_exchange_map = <span class="self">self</span>.glbx_exchange_map.clone();
         <span class="kw">let </span>clock = get_atomic_clock_realtime();
 
         <span class="kw">let </span><span class="kw-2">mut </span>buffering_start = <span class="kw">match </span>replay {
@@ -627,6 +671,7 @@
                     handle_instrument_def_msg(
                         msg,
                         <span class="kw-2">&amp;</span>publisher_venue_map,
+                        <span class="kw-2">&amp;</span>glbx_exchange_map,
                         <span class="kw-2">&amp;mut </span>instrument_id_map,
                         clock,
                         <span class="kw-2">&amp;</span>callback,
@@ -637,6 +682,7 @@
                         record,
                         <span class="kw-2">&amp;</span>symbol_map,
                         <span class="kw-2">&amp;</span>publisher_venue_map,
+                        <span class="kw-2">&amp;</span>glbx_exchange_map,
                         <span class="kw-2">&amp;mut </span>instrument_id_map,
                         clock,
                     )
@@ -734,6 +780,7 @@
     header: <span class="kw-2">&amp;</span>dbn::RecordHeader,
     raw_symbol: <span class="kw-2">&amp;</span>str,
     publisher_venue_map: <span class="kw-2">&amp;</span>IndexMap&lt;PublisherId, Venue&gt;,
+    glbx_exchange_map: <span class="kw-2">&amp;</span>HashMap&lt;Symbol, Venue&gt;,
     instrument_id_map: <span class="kw-2">&amp;mut </span>HashMap&lt;u32, InstrumentId&gt;,
 ) -&gt; InstrumentId {
     <span class="comment">// Check if instrument ID is already in the map
@@ -744,7 +791,14 @@
     <span class="kw">let </span>symbol = Symbol {
         value: Ustr::from(raw_symbol),
     };
-    <span class="kw">let </span>venue = publisher_venue_map.get(<span class="kw-2">&amp;</span>header.publisher_id).unwrap();
+
+    <span class="kw">let </span>publisher_id = header.publisher_id;
+    <span class="kw">let </span>venue = <span class="kw">match </span>glbx_exchange_map.get(<span class="kw-2">&amp;</span>symbol) {
+        <span class="prelude-val">Some</span>(venue) =&gt; venue,
+        <span class="prelude-val">None </span>=&gt; publisher_venue_map
+            .get(<span class="kw-2">&amp;</span>publisher_id)
+            .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">"No venue found for `publisher_id` {publisher_id}"</span>)),
+    };
     <span class="kw">let </span>instrument_id = InstrumentId::new(symbol, <span class="kw-2">*</span>venue);
 
     instrument_id_map.insert(header.instrument_id, instrument_id);
@@ -754,6 +808,7 @@
 <span class="kw">fn </span>handle_instrument_def_msg(
     msg: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     publisher_venue_map: <span class="kw-2">&amp;</span>IndexMap&lt;PublisherId, Venue&gt;,
+    glbx_exchange_map: <span class="kw-2">&amp;</span>HashMap&lt;Symbol, Venue&gt;,
     instrument_id_map: <span class="kw-2">&amp;mut </span>HashMap&lt;u32, InstrumentId&gt;,
     clock: <span class="kw-2">&amp;</span>AtomicTime,
     callback: <span class="kw-2">&amp;</span>PyObject,
@@ -765,6 +820,7 @@
         msg.header(),
         raw_symbol,
         publisher_venue_map,
+        glbx_exchange_map,
         instrument_id_map,
     );
 
@@ -784,20 +840,22 @@
 }
 
 <span class="kw">fn </span>handle_record(
-    record: dbn::RecordRef,
+    rec_ref: dbn::RecordRef,
     symbol_map: <span class="kw-2">&amp;</span>PitSymbolMap,
     publisher_venue_map: <span class="kw-2">&amp;</span>IndexMap&lt;PublisherId, Venue&gt;,
+    glbx_exchange_map: <span class="kw-2">&amp;</span>HashMap&lt;Symbol, Venue&gt;,
     instrument_id_map: <span class="kw-2">&amp;mut </span>HashMap&lt;u32, InstrumentId&gt;,
     clock: <span class="kw-2">&amp;</span>AtomicTime,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="prelude-ty">Option</span>&lt;Data&gt;, <span class="prelude-ty">Option</span>&lt;Data&gt;)&gt; {
     <span class="kw">let </span>raw_symbol = symbol_map
-        .get_for_rec(<span class="kw-2">&amp;</span>record)
+        .get_for_rec(<span class="kw-2">&amp;</span>rec_ref)
         .expect(<span class="string">"Cannot resolve `raw_symbol` from `symbol_map`"</span>);
 
     <span class="kw">let </span>instrument_id = update_instrument_id_map(
-        record.header(),
+        rec_ref.header(),
         raw_symbol,
         publisher_venue_map,
+        glbx_exchange_map,
         instrument_id_map,
     );
 
@@ -805,7 +863,7 @@
     </span><span class="kw">let </span>ts_init = clock.get_time_ns();
 
     decode_record(
-        <span class="kw-2">&amp;</span>record,
+        <span class="kw-2">&amp;</span>rec_ref,
         instrument_id,
         price_precision,
         <span class="prelude-val">Some</span>(ts_init),
