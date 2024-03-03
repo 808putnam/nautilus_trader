@@ -968,7 +968,7 @@ First, download and load the data by running the next cell (this should take ~ 1
           </a>
          </h2>
          <p>
-          NautilusTrader includes a handful of indicators built-in, in this example we will use a MACD indicator to
+          NautilusTrader includes many indicators built-in, in this example we will use the MACD indicator to
 build a simple trading strategy.
          </p>
          <p>
@@ -976,7 +976,7 @@ build a simple trading strategy.
           <a class="reference external" href="https://www.investopedia.com/terms/m/macd.asp">
            MACD here
           </a>
-          , so this
+          , this
 indicator merely serves as an example without any expected alpha. There is also a way of
 registering indicators to receive certain data types, however in this example we manually pass the received
           <code class="docutils literal notranslate">
@@ -1104,14 +1104,16 @@ registering indicators to receive certain data types, however in this example we
           </a>
          </h2>
          <p>
-          Now that we have a trading strategy and data, we can begin to configure a backtest run! Nautilus uses a
+          Now that we have a trading strategy and data, we can begin to configure a backtest run.
+         </p>
+         <p>
+          Nautilus uses a
           <code class="docutils literal notranslate">
            <span class="pre">
             BacktestNode
            </span>
           </code>
-          to orchestrate backtest runs, which requires some setup. This may seem a little complex at first,
-however this is necessary for the capabilities that Nautilus strives for.
+          to orchestrate backtest runs, which requires some setup.
          </p>
          <p>
           To configure a
@@ -1162,7 +1164,7 @@ following (minimal) aspects of the backtest:
           </li>
          </ul>
          <p>
-          There are many more configurable features which will be described later in the docs, for now this will get us up and running.
+          There are many more configuration options which are described the docs, for now this will get us up and running.
          </p>
         </section>
         <section id="venue">
@@ -1227,7 +1229,7 @@ the account type (
           </a>
          </h2>
          <p>
-          Second, we need to know about the instruments that we would like to load data for, we can use the
+          Second, we need to specify the instruments that we would like to load data for, we can use the
           <code class="docutils literal notranslate">
            <span class="pre">
             ParquetDataCatalog
@@ -1302,7 +1304,7 @@ adding the
           </code>
           which represents the configuration of our core trading system.
 Here we need to pass our trading strategies, we can also adjust the log level
-and configure many other components (however, it’s also fine to use the defaults):
+and configure many other components (however, it’s also fine to use the sensible defaults):
          </p>
          <p>
           Strategies are added via the

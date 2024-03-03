@@ -713,6 +713,57 @@
               Overview
              </a>
             </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#documentation">
+              Documentation
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#databento-binary-encoding-dbn">
+              Databento Binary Encoding (DBN)
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#supported-schemas">
+              Supported schemas
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#performance-considerations">
+              Performance considerations
+             </a>
+            </li>
+            <li class="md-nav__item">
+             <a class="md-nav__link" href="#data-types">
+              Data types
+             </a>
+             <span class="arrow">
+              <i class="fa-solid fa-chevron-right">
+              </i>
+             </span>
+             <ul class="submenu">
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#instrument-definitions">
+                Instrument definitions
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#mbo-market-by-order">
+                MBO (market by order)
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#mbp-1-market-by-price-top-level">
+                MBP-1 (market by price, top-level)
+               </a>
+              </li>
+              <li class="md-nav__item">
+               <a class="md-nav__link" href="#ohlcv-bar-aggregates">
+                OHLCV (bar aggregates)
+               </a>
+              </li>
+             </ul>
+            </li>
            </ul>
           </li>
          </ul>
@@ -729,25 +780,58 @@
           ¶
          </a>
         </h1>
+        <div class="admonition warning">
+         <p class="admonition-title">
+          Warning
+         </p>
+         <p>
+          We are currently working on this integration guide - consider it incomplete.
+         </p>
+        </div>
         <p>
-         NautilusTrader offers an adapter for integrating with the Databento API and
+         NautilusTrader provides an adapter for integrating with the Databento API and
          <a class="reference external" href="https://docs.databento.com/knowledge-base/new-users/dbn-encoding">
           Databento Binary Encoding (DBN)
          </a>
          format data.
-This includes loading historical data from disk into Nautilus objects for research and backtesting purposes,
-as well as subscribing to real-time data feeds to support live trading.
         </p>
+        <p>
+         The capabilities of this adapter include:
+        </p>
+        <ul class="simple">
+         <li>
+          <p>
+           Loading historical data from DBN files on disk into Nautilus objects for backtesting and writing to the data catalog
+          </p>
+         </li>
+         <li>
+          <p>
+           Requesting historical data which is converted to Nautilus objects to support live trading and backtesting
+          </p>
+         </li>
+         <li>
+          <p>
+           Subscribing to real-time data feeds which is converted to Nautilus objects to support live trading and sandbox environments
+          </p>
+         </li>
+        </ul>
         <div class="admonition tip">
          <p class="admonition-title">
           Tip
          </p>
          <p>
-          For testing purposes,
           <a class="reference external" href="https://databento.com/signup">
            Databento
           </a>
-          currently offers $125 USD in free data credits for new account sign-ups.
+          currently offers 125 USD in free data credits (historical data only) for new account sign-ups.
+         </p>
+         <p>
+          With careful requests, this is more than enough for testing and evaluation purposes.
+It’s recommended you make use of the
+          <a class="reference external" href="https://docs.databento.com/api-reference-historical/metadata/metadata-get-cost">
+           /metadata.get_cost
+          </a>
+          endpoint.
          </p>
         </div>
         <section id="overview">
@@ -757,6 +841,14 @@ as well as subscribing to real-time data feeds to support live trading.
            ¶
           </a>
          </h2>
+         <p>
+          The integrations implementation takes the
+          <a class="reference external" href="https://crates.io/crates/databento">
+           databento-rs
+          </a>
+          crate as a dependency,
+which is the official Rust client library provided by Databento. There are actually no Databento Python dependencies.
+         </p>
          <p>
           The following adapter classes are available:
          </p>
@@ -768,7 +860,7 @@ as well as subscribing to real-time data feeds to support live trading.
               DatabentoDataLoader
              </span>
             </code>
-            which allows loading Databento Binary Encoding (DBN) data from disk.
+            which allows loading Databento Binary Encoding (DBN) data from disk
            </p>
           </li>
           <li>
@@ -778,7 +870,27 @@ as well as subscribing to real-time data feeds to support live trading.
               DatabentoInstrumentProvider
              </span>
             </code>
-            which connects to the Databento API to provide latest or historical instrument definitions.
+            which integrates with the Databento API (HTTP) to provide latest or historical instrument definitions
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              DatabentoHistoricalClient
+             </span>
+            </code>
+            which integrates with the Databento API (HTTP) for historical market data requests
+           </p>
+          </li>
+          <li>
+           <p>
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              DatabentoLiveClient
+             </span>
+            </code>
+            which integrates with the Databento API (raw TCP) for subscribing to real-time data feeds
            </p>
           </li>
           <li>
@@ -788,10 +900,661 @@ as well as subscribing to real-time data feeds to support live trading.
               DatabentoDataClient
              </span>
             </code>
-            which allows requesting historical market data and subscribing to real-time data feeds.
+            providing a
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              LiveMarketDataClient
+             </span>
+            </code>
+            implementation for running a trading node in real time
            </p>
           </li>
          </ul>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           There is no optional extra installation for
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             databento
+            </span>
+           </code>
+           , at this stage the core components of the adapter are compiled
+as static libraries and linked during the build by default.
+          </p>
+         </div>
+        </section>
+        <section id="documentation">
+         <h2 id="documentation">
+          Documentation
+          <a class="headerlink" href="#documentation" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          Databento provides extensive documentation for users
+          <a class="reference external" href="https://docs.databento.com/knowledge-base/new-users">
+           https://docs.databento.com/knowledge-base/new-users
+          </a>
+          .
+It’s recommended you also refer to this documentation in conjunction with this Nautilus integration guide.
+         </p>
+        </section>
+        <section id="databento-binary-encoding-dbn">
+         <h2 id="databento-binary-encoding-dbn">
+          Databento Binary Encoding (DBN)
+          <a class="headerlink" href="#databento-binary-encoding-dbn" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The integration provides a decoder which can convert DBN format data to Nautilus objects.
+You can read more about the DBN format
+          <a class="reference external" href="https://docs.databento.com/knowledge-base/new-users/dbn-encoding">
+           here
+          </a>
+          .
+         </p>
+         <p>
+          The same Rust implemented decoder is used for:
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            Loading and decoding DBN files from disk
+           </p>
+          </li>
+          <li>
+           <p>
+            Decoding historical and live data in real-time
+           </p>
+          </li>
+         </ul>
+        </section>
+        <section id="supported-schemas">
+         <h2 id="supported-schemas">
+          Supported schemas
+          <a class="headerlink" href="#supported-schemas" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The following Databento schemas are supported by NautilusTrader:
+         </p>
+         <table>
+          <thead>
+           <tr class="row-odd">
+            <th class="head">
+             <p>
+              Databento schema
+             </p>
+            </th>
+            <th class="head">
+             <p>
+              Nautilus type
+             </p>
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr class="row-even">
+            <td>
+             <p>
+              MBO
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                OrderBookDelta
+               </span>
+              </code>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              MBP_1
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                QuoteTick
+               </span>
+              </code>
+              +
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                TradeTick
+               </span>
+              </code>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              MBP_10
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                OrderBookDepth10
+               </span>
+              </code>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              TBBO
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                QuoteTick
+               </span>
+              </code>
+              +
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                TradeTick
+               </span>
+              </code>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              TRADES
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                TradeTick
+               </span>
+              </code>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              OHLCV_1S
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                Bar
+               </span>
+              </code>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              OHLCV_1M
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                Bar
+               </span>
+              </code>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              OHLCV_1H
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                Bar
+               </span>
+              </code>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              OHLCV_1D
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                Bar
+               </span>
+              </code>
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              DEFINITION
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                Instrument
+               </span>
+              </code>
+              (various types)
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              IMBALANCE
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                DatabentoImbalance
+               </span>
+              </code>
+              (under development)
+             </p>
+            </td>
+           </tr>
+           <tr class="row-odd">
+            <td>
+             <p>
+              STATISTICS
+             </p>
+            </td>
+            <td>
+             <p>
+              <code class="docutils literal notranslate">
+               <span class="pre">
+                DatabentoStatistics
+               </span>
+              </code>
+              (under development)
+             </p>
+            </td>
+           </tr>
+           <tr class="row-even">
+            <td>
+             <p>
+              STATUS
+             </p>
+            </td>
+            <td>
+             <p>
+              Not yet available
+             </p>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </section>
+        <section id="performance-considerations">
+         <h2 id="performance-considerations">
+          Performance considerations
+          <a class="headerlink" href="#performance-considerations" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          When backtesting with Databento DBN data, there are two options:
+         </p>
+         <ul class="simple">
+          <li>
+           <p>
+            Store the data in DBN (
+            <code class="docutils literal notranslate">
+             <span class="pre">
+              .dbn.zst
+             </span>
+            </code>
+            ) format files and decode to Nautilus objects on every run
+           </p>
+          </li>
+          <li>
+           <p>
+            Convert the DBN files to Nautilus Parquet format and write to the data catalog once (stored as Parquet on disk)
+           </p>
+          </li>
+         </ul>
+         <p>
+          Whilst the DBN -&gt; Nautilus decoder is implemented in Rust and has been optimized,
+the best performance for backtesting will be achieved by writing the Nautilus
+objects to the data catalog, which performs the decoding step once.
+         </p>
+         <p>
+          <a class="reference external" href="https://arrow.apache.org/datafusion/">
+           DataFusion
+          </a>
+          provides a query engine which is leveraged as a backend to load
+the Nautilus Parquet data from disk, which achieves extremely high through-put (at least an order of magnitude faster
+than converting DBN -&gt; Nautilus on the fly for every backtest run).
+         </p>
+         <div class="admonition note">
+          <p class="admonition-title">
+           Note
+          </p>
+          <p>
+           Performance benchmarks are under development.
+          </p>
+         </div>
+        </section>
+        <section id="data-types">
+         <h2 id="data-types">
+          Data types
+          <a class="headerlink" href="#data-types" title="Permalink to this heading">
+           ¶
+          </a>
+         </h2>
+         <p>
+          The following section discusses Databento schema -&gt; Nautilus data type equivalence
+and considerations.
+         </p>
+         <section id="instrument-definitions">
+          <h3 id="instrument-definitions">
+           Instrument definitions
+           <a class="headerlink" href="#instrument-definitions" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           Databento provides a single schema to cover all instrument classes, these are
+decoded to the appropriate Nautilus
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             Instrument
+            </span>
+           </code>
+           types.
+          </p>
+          <p>
+           The following Databento instrument classes are supported by NautilusTrader:
+          </p>
+          <table>
+           <thead>
+            <tr class="row-odd">
+             <th class="head">
+              <p>
+               Databento instrument class
+              </p>
+             </th>
+             <th class="head">
+              <p>
+               Nautilus instrument type
+              </p>
+             </th>
+            </tr>
+           </thead>
+           <tbody>
+            <tr class="row-even">
+             <td>
+              <p>
+               BOND
+              </p>
+             </td>
+             <td>
+              <p>
+               Not yet available
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               CALL
+              </p>
+             </td>
+             <td>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 OptionsContract
+                </span>
+               </code>
+              </p>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               FUTURE
+              </p>
+             </td>
+             <td>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 FuturesContract
+                </span>
+               </code>
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               STOCK
+              </p>
+             </td>
+             <td>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 Equity
+                </span>
+               </code>
+              </p>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               MIXEDSPREAD
+              </p>
+             </td>
+             <td>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 OptionsSpread
+                </span>
+               </code>
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               PUT
+              </p>
+             </td>
+             <td>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 OptionsContract
+                </span>
+               </code>
+              </p>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               FUTURESPREAD
+              </p>
+             </td>
+             <td>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 FuturesSpread
+                </span>
+               </code>
+              </p>
+             </td>
+            </tr>
+            <tr class="row-odd">
+             <td>
+              <p>
+               OPTIONSPREAD
+              </p>
+             </td>
+             <td>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 OptionsSpread
+                </span>
+               </code>
+              </p>
+             </td>
+            </tr>
+            <tr class="row-even">
+             <td>
+              <p>
+               FXSPOT
+              </p>
+             </td>
+             <td>
+              <p>
+               <code class="docutils literal notranslate">
+                <span class="pre">
+                 CurrencyPair
+                </span>
+               </code>
+              </p>
+             </td>
+            </tr>
+           </tbody>
+          </table>
+         </section>
+         <section id="mbo-market-by-order">
+          <h3 id="mbo-market-by-order">
+           MBO (market by order)
+           <a class="headerlink" href="#mbo-market-by-order" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           This schema is the highest granularity offered by Databento, and represents
+full order book depth. Some messages also provide trade information, and so when
+decoding MBO messages Nautilus will produce an
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             OrderBookDelta
+            </span>
+           </code>
+           and optionally a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             TradeTick
+            </span>
+           </code>
+           .
+          </p>
+          <p>
+           The Nautilus live data client will buffer MBO messages until an
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             F_LAST
+            </span>
+           </code>
+           flag
+is seen. A discrete
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             OrderBookDeltas
+            </span>
+           </code>
+           container object will then be passed to the
+registered handler.
+          </p>
+          <p>
+           Order book snapshots are also buffered into a discrete
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             OrderBookDeltas
+            </span>
+           </code>
+           container
+object, which occurs during the replay startup sequence.
+          </p>
+         </section>
+         <section id="mbp-1-market-by-price-top-level">
+          <h3 id="mbp-1-market-by-price-top-level">
+           MBP-1 (market by price, top-level)
+           <a class="headerlink" href="#mbp-1-market-by-price-top-level" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           This schema represents the top-of-book only. Like with MBO messages, some
+messages carry trade information, and so when decoding MBP-1 messages Nautilus
+will produce a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             QuoteTick
+            </span>
+           </code>
+           and optionally a
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             TradeTick
+            </span>
+           </code>
+           .
+          </p>
+         </section>
+         <section id="ohlcv-bar-aggregates">
+          <h3 id="ohlcv-bar-aggregates">
+           OHLCV (bar aggregates)
+           <a class="headerlink" href="#ohlcv-bar-aggregates" title="Permalink to this heading">
+            ¶
+           </a>
+          </h3>
+          <p>
+           The
+           <code class="docutils literal notranslate">
+            <span class="pre">
+             ts_event
+            </span>
+           </code>
+           timestamps are normalized to bar close during Nautilus decoding.
+          </p>
+         </section>
         </section>
        </section>
       </article>
