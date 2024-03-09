@@ -1532,7 +1532,7 @@ Nautilus will use is the CME exchange code provided by instrument definition mes
             ts_event
            </span>
           </code>
-          field, as this timestamp is much more reliable and consistent, and is guaranteed to be monotonically increasing per symbol.
+          field, as this timestamp is much more reliable and consistent, and is guaranteed to be monotonically increasing per instrument.
          </p>
          <p>
           See the following Databento docs for further information:
@@ -1812,13 +1812,13 @@ will produce a
              QuoteTick
             </span>
            </code>
-           and optionally a
+           and also a
            <code class="docutils literal notranslate">
             <span class="pre">
              TradeTick
             </span>
            </code>
-           .
+           if the message is a trade.
           </p>
          </section>
          <section id="ohlcv-bar-aggregates">
@@ -1829,7 +1829,7 @@ will produce a
            </a>
           </h3>
           <p>
-           The Databento bar aggregation schemas are timestamped at the
+           The Databento bar aggregation messages are timestamped at the
            <strong>
             open
            </strong>
@@ -1947,7 +1947,7 @@ There are two
           <p>
            There is currently a limitation that all MBO (order book deltas) subscriptions for a dataset have to be made at
 node startup, to then be able to replay data from the beginning of the session. If subsequent subscriptions
-arrive after start, then they will be ignored and an error logged.
+arrive after start, then an error will be logged (and the subscription ignored).
           </p>
           <p>
            There is no such limitation for any of the other Databento schemas.
@@ -2010,7 +2010,8 @@ configuration(s):
     <span class="n">data_clients</span><span class="o">=</span><span class="p">{</span>
         <span class="n">DATABENTO</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">"api_key"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># 'DATABENTO_API_KEY' env var</span>
-            <span class="s2">"http_gateway"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Override for the default HTTP gateway</span>
+            <span class="s2">"http_gateway"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Override for the default HTTP historical gateway</span>
+            <span class="s2">"live_gateway"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Override for the default raw TCP real-time gateway</span>
             <span class="s2">"instrument_provider"</span><span class="p">:</span> <span class="n">InstrumentProviderConfig</span><span class="p">(</span><span class="n">load_all</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
             <span class="s2">"instrument_ids"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Nautilus instrument IDs to load on start</span>
             <span class="s2">"parent_symbols"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Databento parent symbols to load on start</span>
@@ -2093,7 +2094,7 @@ configuration(s):
                live_gateway
               </span>
              </code>
-             - The live client gateway override (useful for testing and typically not needed by most users)
+             - The raw TCP real-time client gateway override (useful for testing and typically not needed by most users)
             </p>
            </li>
            <li>
