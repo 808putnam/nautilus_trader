@@ -19,7 +19,6 @@ use std::{
 };
 
 use nautilus_core::{time::UnixNanos, uuid::UUID4};
-use pyo3::prelude::*;
 use ustr::Ustr;
 
 use super::base::{Order, OrderCore};
@@ -41,7 +40,7 @@ use crate::{
 
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct MarketToLimitOrder {
     core: OrderCore,
@@ -322,16 +321,18 @@ impl Order for MarketToLimitOrder {
         self.core.apply(event)?;
 
         if is_order_filled && self.price.is_some() {
-            self.core.set_slippage(self.price.unwrap())
+            self.core.set_slippage(self.price.unwrap());
         };
 
         Ok(())
     }
 
     fn update(&mut self, event: &OrderUpdated) {
-        if event.trigger_price.is_some() {
-            panic!("{}", OrderError::InvalidOrderEvent);
-        }
+        assert!(
+            event.trigger_price.is_none(),
+            "{}",
+            OrderError::InvalidOrderEvent
+        );
 
         if let Some(price) = event.price {
             self.price = Some(price);
@@ -344,7 +345,7 @@ impl Order for MarketToLimitOrder {
 
 impl From<OrderInitialized> for MarketToLimitOrder {
     fn from(event: OrderInitialized) -> Self {
-        MarketToLimitOrder::new(
+        Self::new(
             event.trader_id,
             event.strategy_id,
             event.instrument_id,

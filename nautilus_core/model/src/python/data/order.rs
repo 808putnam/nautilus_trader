@@ -27,7 +27,7 @@ use pyo3::{prelude::*, pyclass::CompareOp, types::PyDict};
 use crate::{
     data::order::{BookOrder, OrderId},
     enums::OrderSide,
-    python::PY_MODULE_MODEL,
+    python::common::PY_MODULE_MODEL,
     types::{price::Price, quantity::Quantity},
 };
 
@@ -61,22 +61,26 @@ impl BookOrder {
     }
 
     #[getter]
-    fn side(&self) -> OrderSide {
+    #[pyo3(name = "side")]
+    fn py_side(&self) -> OrderSide {
         self.side
     }
 
     #[getter]
-    fn price(&self) -> Price {
+    #[pyo3(name = "price")]
+    fn py_price(&self) -> Price {
         self.price
     }
 
     #[getter]
-    fn size(&self) -> Quantity {
+    #[pyo3(name = "size")]
+    fn py_size(&self) -> Quantity {
         self.size
     }
 
     #[getter]
-    fn order_id(&self) -> u64 {
+    #[pyo3(name = "order_id")]
+    fn py_order_id(&self) -> u64 {
         self.order_id
     }
 
@@ -160,7 +164,7 @@ mod tests {
         Python::with_gil(|py| {
             let dict_string = book_order.py_as_dict(py).unwrap().to_string();
             let expected_string =
-                r#"{'side': 'BUY', 'price': '100.00', 'size': '10', 'order_id': 123456}"#;
+                r"{'side': 'BUY', 'price': '100.00', 'size': '10', 'order_id': 123456}";
             assert_eq!(dict_string, expected_string);
         });
     }

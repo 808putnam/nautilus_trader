@@ -61,7 +61,6 @@ impl Default for TimeEventAccumulator {
 ////////////////////////////////////////////////////////////////////////////////
 // C API
 ////////////////////////////////////////////////////////////////////////////////
-#[cfg(feature = "ffi")]
 #[repr(C)]
 pub struct TimeEventAccumulatorAPI(Box<TimeEventAccumulator>);
 
@@ -109,6 +108,8 @@ pub extern "C" fn time_event_accumulator_drain(accumulator: &mut TimeEventAccumu
 ////////////////////////////////////////////////////////////////////////////////
 #[cfg(test)]
 mod tests {
+    use std::ffi::c_char;
+
     use nautilus_common::timer::TimeEvent;
     use nautilus_core::uuid::UUID4;
     use pyo3::{types::PyList, Py, Python};
@@ -127,17 +128,17 @@ mod tests {
 
             let mut accumulator = TimeEventAccumulator::new();
 
-            let time_event1 =
-                TimeEvent::new(Ustr::from("TEST_EVENT_1"), UUID4::new(), 100, 100).unwrap();
-            let time_event2 =
-                TimeEvent::new(Ustr::from("TEST_EVENT_2"), UUID4::new(), 300, 300).unwrap();
-            let time_event3 =
-                TimeEvent::new(Ustr::from("TEST_EVENT_3"), UUID4::new(), 200, 200).unwrap();
+            let time_event1 = TimeEvent::new(Ustr::from("TEST_EVENT_1"), UUID4::new(), 100, 100);
+            let time_event2 = TimeEvent::new(Ustr::from("TEST_EVENT_2"), UUID4::new(), 300, 300);
+            let time_event3 = TimeEvent::new(Ustr::from("TEST_EVENT_3"), UUID4::new(), 200, 200);
 
             // Note: as_ptr returns a borrowed pointer. It is valid as long
             // as the object is in scope. In this case `callback_ptr` is valid
             // as long as `py_append` is in scope.
-            let callback_ptr = py_append.as_ptr().cast::<pyo3::ffi::PyObject>();
+            let callback_ptr = py_append
+                .as_ptr()
+                .cast::<pyo3::ffi::PyObject>()
+                .cast::<c_char>();
 
             let handler1 = TimeEventHandler {
                 event: time_event1.clone(),

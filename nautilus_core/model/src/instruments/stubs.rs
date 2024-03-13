@@ -19,6 +19,7 @@ use rstest::fixture;
 use rust_decimal_macros::dec;
 use ustr::Ustr;
 
+use super::{futures_spread::FuturesSpread, options_spread::OptionsSpread};
 use crate::{
     enums::{AssetClass, OptionKind},
     identifiers::{instrument_id::InstrumentId, symbol::Symbol, venue::Venue},
@@ -127,6 +128,36 @@ pub fn xbtusd_bitmex() -> CryptoPerpetual {
     .unwrap()
 }
 
+#[fixture]
+pub fn ethusdt_bitmex() -> CryptoPerpetual {
+    CryptoPerpetual::new(
+        InstrumentId::from("ETHUSD.BITMEX"),
+        Symbol::from("ETHUSD"),
+        Currency::ETH(),
+        Currency::USD(),
+        Currency::ETH(),
+        true,
+        2,
+        0,
+        Price::from("0.05"),
+        Quantity::from("1"),
+        dec!(-0.00025),
+        dec!(0.00075),
+        dec!(0.01),
+        dec!(0.0035),
+        None,
+        None,
+        None,
+        None,
+        None,
+        Some(Price::from("10000000")),
+        Some(Price::from("0.01")),
+        0,
+        0,
+    )
+    .unwrap()
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // CurrencyPair
 ////////////////////////////////////////////////////////////////////////////////
@@ -142,13 +173,15 @@ pub fn currency_pair_btcusdt() -> CurrencyPair {
         6,
         Price::from("0.01"),
         Quantity::from("0.000001"),
-        dec!(0.0),
-        dec!(0.0),
+        dec!(0.001),
+        dec!(0.001),
         dec!(0.001),
         dec!(0.001),
         None,
         Some(Quantity::from("9000")),
         Some(Quantity::from("0.000001")),
+        None,
+        None,
         Some(Price::from("1000000")),
         Some(Price::from("0.01")),
         0,
@@ -157,6 +190,35 @@ pub fn currency_pair_btcusdt() -> CurrencyPair {
     .unwrap()
 }
 
+#[fixture]
+pub fn currency_pair_ethusdt() -> CurrencyPair {
+    CurrencyPair::new(
+        InstrumentId::from("ETHUSDT.BINANCE"),
+        Symbol::from("ETHUSDT"),
+        Currency::from("ETH"),
+        Currency::from("USDT"),
+        2,
+        5,
+        Price::from("0.01"),
+        Quantity::from("0.00001"),
+        dec!(0.0001),
+        dec!(0.0001),
+        dec!(0.01),
+        dec!(0.0035),
+        None,
+        Some(Quantity::from("9000")),
+        Some(Quantity::from("0.00001")),
+        None,
+        None,
+        Some(Price::from("1000000")),
+        Some(Price::from("0.01")),
+        0,
+        0,
+    )
+    .unwrap()
+}
+
+#[must_use]
 pub fn default_fx_ccy(symbol: Symbol, venue: Option<Venue>) -> CurrencyPair {
     let target_venue = venue.unwrap_or(Venue::from("SIM"));
     let instrument_id = InstrumentId::new(symbol, target_venue);
@@ -182,6 +244,8 @@ pub fn default_fx_ccy(symbol: Symbol, venue: Option<Venue>) -> CurrencyPair {
         Some(Quantity::from("100")),
         None,
         None,
+        None,
+        None,
         0,
         0,
     )
@@ -190,6 +254,11 @@ pub fn default_fx_ccy(symbol: Symbol, venue: Option<Venue>) -> CurrencyPair {
 #[fixture]
 pub fn audusd_sim() -> CurrencyPair {
     default_fx_ccy(Symbol::from("AUD/USD"), Some(Venue::from("SIM")))
+}
+
+#[fixture]
+pub fn usdjpy_idealpro() -> CurrencyPair {
+    default_fx_ccy(Symbol::from("USD/JPY"), Some(Venue::from("IDEALPRO")))
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -225,10 +294,41 @@ pub fn futures_contract_es() -> FuturesContract {
     let activation = Utc.with_ymd_and_hms(2021, 4, 8, 0, 0, 0).unwrap();
     let expiration = Utc.with_ymd_and_hms(2021, 7, 8, 0, 0, 0).unwrap();
     FuturesContract::new(
-        InstrumentId::new(Symbol::from("ESZ21"), Venue::from("CME")),
-        Symbol::from("ESZ21"),
+        InstrumentId::from("ESZ1.GLBX"),
+        Symbol::from("ESZ1"),
         AssetClass::Index,
         Ustr::from("ES"),
+        activation.timestamp_nanos_opt().unwrap() as UnixNanos,
+        expiration.timestamp_nanos_opt().unwrap() as UnixNanos,
+        Currency::USD(),
+        2,
+        Price::from("0.01"),
+        Quantity::from(1),
+        Quantity::from(1),
+        None,
+        None,
+        None,
+        None,
+        0,
+        0,
+    )
+    .unwrap()
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// FuturesSpread
+////////////////////////////////////////////////////////////////////////////////
+
+#[fixture]
+pub fn futures_spread_es() -> FuturesSpread {
+    let activation = Utc.with_ymd_and_hms(2022, 6, 21, 13, 30, 0).unwrap();
+    let expiration = Utc.with_ymd_and_hms(2024, 6, 21, 13, 30, 0).unwrap();
+    FuturesSpread::new(
+        InstrumentId::from("ESM4-ESU4.GLBX"),
+        Symbol::from("ESM4-ESU4"),
+        AssetClass::Index,
+        Ustr::from("ES"),
+        Ustr::from("EQ"),
         activation.timestamp_nanos_opt().unwrap() as UnixNanos,
         expiration.timestamp_nanos_opt().unwrap() as UnixNanos,
         Currency::USD(),
@@ -263,6 +363,37 @@ pub fn options_contract_appl() -> OptionsContract {
         activation.timestamp_nanos_opt().unwrap() as UnixNanos,
         expiration.timestamp_nanos_opt().unwrap() as UnixNanos,
         Price::from("149.0"),
+        Currency::USD(),
+        2,
+        Price::from("0.01"),
+        Quantity::from(1),
+        Quantity::from(1),
+        None,
+        None,
+        None,
+        None,
+        0,
+        0,
+    )
+    .unwrap()
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// OptionsSpread
+////////////////////////////////////////////////////////////////////////////////
+
+#[fixture]
+pub fn options_spread() -> OptionsSpread {
+    let activation = Utc.with_ymd_and_hms(2023, 11, 6, 20, 54, 7).unwrap();
+    let expiration = Utc.with_ymd_and_hms(2024, 2, 23, 22, 59, 0).unwrap();
+    OptionsSpread::new(
+        InstrumentId::from("UD:U$: GN 2534559.GLBX"),
+        Symbol::from("UD:U$: GN 2534559"),
+        AssetClass::FX,
+        Ustr::from("SR3"), // British Pound futures (option on futures)
+        Ustr::from("GN"),
+        activation.timestamp_nanos_opt().unwrap() as UnixNanos,
+        expiration.timestamp_nanos_opt().unwrap() as UnixNanos,
         Currency::USD(),
         2,
         Price::from("0.01"),

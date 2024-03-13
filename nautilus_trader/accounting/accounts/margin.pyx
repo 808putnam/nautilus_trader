@@ -64,6 +64,42 @@ cdef class MarginAccount(Account):
         self._leverages: dict[InstrumentId, Decimal] = {}
         self._margins: dict[InstrumentId, MarginBalance] = {m.instrument_id: m for m in event.margins}
 
+    @staticmethod
+    cdef dict to_dict_c(MarginAccount obj):
+        Condition.not_none(obj, "obj")
+        return {
+            "type": "MarginAccount",
+            "calculate_account_state": obj.calculate_account_state,
+            "events": [AccountState.to_dict_c(event) for event in obj.events_c()]
+        }
+
+    @staticmethod
+    def to_dict(MarginAccount obj):
+        return MarginAccount.to_dict_c(obj)
+
+    @staticmethod
+    cdef MarginAccount from_dict_c(dict values):
+        Condition.not_none(values, "values")
+        calculate_account_state = values["calculate_account_state"]
+        events = values["events"]
+        events = values["events"]
+        if len(events) == 0:
+            return None
+        init_event = events[0]
+        other_events = events[1:]
+        account = MarginAccount(
+            event=AccountState.from_dict_c(init_event),
+            calculate_account_state=calculate_account_state
+        )
+        for event in other_events:
+            account.apply(AccountState.from_dict_c(event))
+        return account
+
+    @staticmethod
+    def from_dict(dict values):
+        return MarginAccount.from_dict_c(values)
+
+
 # -- QUERIES --------------------------------------------------------------------------------------
 
     cpdef dict margins(self):
@@ -648,7 +684,7 @@ cdef class MarginAccount(Account):
         cdef dict pnls = {}  # type: dict[Currency, Money]
 
         cdef Money pnl
-        if position is not None and position.entry != fill.order_side:
+        if position is not None and position.quantity._mem.raw != 0 and position.entry != fill.order_side:
             # Calculate and add PnL
             pnl = position.calculate_pnl(
                 avg_px_open=position.avg_px_open,
@@ -669,13 +705,10 @@ cdef class MarginAccount(Account):
         cdef:
             object leverage = self.leverage(instrument.id)
             double margin_impact = 1.0 / leverage
-            Money raw_money
+            Money notional = instrument.notional_value(quantity, price)
         if order_side == OrderSide.BUY:
-            raw_money = -instrument.notional_value(quantity, price)
-            return Money(raw_money * margin_impact, raw_money.currency)
+            return Money(-notional.as_f64_c() * margin_impact, notional.currency)
         elif order_side == OrderSide.SELL:
-            raw_money = instrument.notional_value(quantity, price)
-            return Money(raw_money * margin_impact, raw_money.currency)
-
-        else:
+            return Money(notional.as_f64_c() * margin_impact, notional.currency)
+        else:  # pragma: no cover (design-time error)
             raise RuntimeError(f"invalid `OrderSide`, was {order_side}")  # pragma: no cover (design-time error)

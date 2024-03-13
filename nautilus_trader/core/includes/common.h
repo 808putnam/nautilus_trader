@@ -221,10 +221,6 @@ typedef struct MessageBus MessageBus;
 
 typedef struct TestClock TestClock;
 
-typedef struct PyCallableWrapper_t {
-    PyObject *ptr;
-} PyCallableWrapper_t;
-
 /**
  * Provides a C compatible Foreign Function Interface (FFI) for an underlying [`TestClock`].
  *
@@ -299,12 +295,10 @@ typedef struct TimeEventHandler_t {
      */
     struct TimeEvent_t event;
     /**
-     * The Python callable pointer.
+     * The callable raw pointer.
      */
-    PyObject *callback_ptr;
+    char *callback_ptr;
 } TimeEventHandler_t;
-
-struct PyCallableWrapper_t dummy_callable(struct PyCallableWrapper_t c);
 
 /**
  * Returns whether the core logger is enabled.
@@ -372,10 +366,10 @@ uintptr_t test_clock_timer_count(struct TestClock_API *clock);
  * - Assumes `name_ptr` is a valid C string pointer.
  * - Assumes `callback_ptr` is a valid `PyCallable` pointer.
  */
-void test_clock_set_time_alert_ns(struct TestClock_API *clock,
-                                  const char *name_ptr,
-                                  uint64_t alert_time_ns,
-                                  PyObject *callback_ptr);
+void test_clock_set_time_alert(struct TestClock_API *clock,
+                               const char *name_ptr,
+                               uint64_t alert_time_ns,
+                               PyObject *callback_ptr);
 
 /**
  * # Safety
@@ -383,12 +377,12 @@ void test_clock_set_time_alert_ns(struct TestClock_API *clock,
  * - Assumes `name_ptr` is a valid C string pointer.
  * - Assumes `callback_ptr` is a valid `PyCallable` pointer.
  */
-void test_clock_set_timer_ns(struct TestClock_API *clock,
-                             const char *name_ptr,
-                             uint64_t interval_ns,
-                             uint64_t start_time_ns,
-                             uint64_t stop_time_ns,
-                             PyObject *callback_ptr);
+void test_clock_set_timer(struct TestClock_API *clock,
+                          const char *name_ptr,
+                          uint64_t interval_ns,
+                          uint64_t start_time_ns,
+                          uint64_t stop_time_ns,
+                          PyObject *callback_ptr);
 
 /**
  * # Safety
@@ -404,7 +398,7 @@ void vec_time_event_handlers_drop(CVec v);
  *
  * - Assumes `name_ptr` is a valid C string pointer.
  */
-uint64_t test_clock_next_time_ns(struct TestClock_API *clock, const char *name_ptr);
+uint64_t test_clock_next_time(struct TestClock_API *clock, const char *name_ptr);
 
 /**
  * # Safety
@@ -419,6 +413,13 @@ struct LiveClock_API live_clock_new(void);
 
 void live_clock_drop(struct LiveClock_API clock);
 
+/**
+ * # Safety
+ *
+ * - Assumes `callback_ptr` is a valid `PyCallable` pointer.
+ */
+void live_clock_register_default_handler(struct LiveClock_API *clock, PyObject *callback_ptr);
+
 double live_clock_timestamp(struct LiveClock_API *clock);
 
 uint64_t live_clock_timestamp_ms(struct LiveClock_API *clock);
@@ -426,6 +427,50 @@ uint64_t live_clock_timestamp_ms(struct LiveClock_API *clock);
 uint64_t live_clock_timestamp_us(struct LiveClock_API *clock);
 
 uint64_t live_clock_timestamp_ns(struct LiveClock_API *clock);
+
+PyObject *live_clock_timer_names(const struct LiveClock_API *clock);
+
+uintptr_t live_clock_timer_count(struct LiveClock_API *clock);
+
+/**
+ * # Safety
+ *
+ * - Assumes `name_ptr` is a valid C string pointer.
+ * - Assumes `callback_ptr` is a valid `PyCallable` pointer.
+ */
+void live_clock_set_time_alert(struct LiveClock_API *clock,
+                               const char *name_ptr,
+                               uint64_t alert_time_ns,
+                               PyObject *callback_ptr);
+
+/**
+ * # Safety
+ *
+ * - Assumes `name_ptr` is a valid C string pointer.
+ * - Assumes `callback_ptr` is a valid `PyCallable` pointer.
+ */
+void live_clock_set_timer(struct LiveClock_API *clock,
+                          const char *name_ptr,
+                          uint64_t interval_ns,
+                          uint64_t start_time_ns,
+                          uint64_t stop_time_ns,
+                          PyObject *callback_ptr);
+
+/**
+ * # Safety
+ *
+ * - Assumes `name_ptr` is a valid C string pointer.
+ */
+uint64_t live_clock_next_time(struct LiveClock_API *clock, const char *name_ptr);
+
+/**
+ * # Safety
+ *
+ * - Assumes `name_ptr` is a valid C string pointer.
+ */
+void live_clock_cancel_timer(struct LiveClock_API *clock, const char *name_ptr);
+
+void live_clock_cancel_timers(struct LiveClock_API *clock);
 
 const char *component_state_to_cstr(enum ComponentState value);
 
@@ -470,20 +515,6 @@ const char *log_color_to_cstr(enum LogColor value);
  * - Assumes `ptr` is a valid C string pointer.
  */
 enum LogColor log_color_from_cstr(const char *ptr);
-
-/**
- * Initializes tracing.
- *
- * Tracing is meant to be used to trace/debug async Rust code. It can be
- * configured to filter modules and write up to a specific level only using
- * by passing a configuration using the `RUST_LOG` environment variable.
- *
- * # Safety
- *
- * Should only be called once during an applications run, ideally at the
- * beginning of the run.
- */
-void tracing_init(void);
 
 /**
  * Initializes logging.
@@ -675,8 +706,6 @@ const char *msgbus_endpoint_callback(const struct MessageBus_API *bus, const cha
  * - Assumes `pattern_ptr` is a valid C string pointer.
  */
 CVec msgbus_matching_callbacks(struct MessageBus_API *bus, const char *pattern_ptr);
-
-void vec_pycallable_drop(CVec v);
 
 /**
  * # Safety

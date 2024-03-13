@@ -12,22 +12,26 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
-
+import hashlib
 from functools import lru_cache
 
+import msgspec
 from betfair_parser.spec.common import Handicap
 from betfair_parser.spec.common import MarketId
+from betfair_parser.spec.common import OrderSide as BetSide
 from betfair_parser.spec.common import SelectionId
 
 from nautilus_trader.adapters.betfair.constants import BETFAIR_VENUE
 from nautilus_trader.core.correctness import PyCondition
+from nautilus_trader.core.nautilus_pyo3 import OrderSide
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.instruments.betting import make_symbol
 from nautilus_trader.model.instruments.betting import null_handicap
 
 
 def hash_market_trade(timestamp: int, price: float, volume: float) -> str:
-    return f"{str(timestamp)[:-6]}{price}{volume!s}"
+    data = (timestamp, price, volume)
+    return hashlib.shake_256(msgspec.json.encode(data)).hexdigest(18)
 
 
 @lru_cache
@@ -65,3 +69,21 @@ def chunk(list_like, n):
     """
     for i in range(0, len(list_like), n):
         yield list_like[i : i + n]
+
+
+def order_side_to_bet_side(side: OrderSide) -> BetSide:
+    if side == OrderSide.BUY:
+        return BetSide.LAY
+    elif side == OrderSide.SELL:
+        return BetSide.BACK
+    else:
+        raise RuntimeError(f"Unknown side: {side}")
+
+
+def bet_side_to_order_side(side: BetSide) -> OrderSide:
+    if side == BetSide.LAY:
+        return OrderSide.BUY
+    elif side == BetSide.BACK:
+        return OrderSide.SELL
+    else:
+        raise RuntimeError(f"Unknown side: {side}")

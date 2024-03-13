@@ -747,6 +747,7 @@ class TestDataEngine:
                     "book_type": 2,
                     "depth": 10,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -774,6 +775,7 @@ class TestDataEngine:
                     "book_type": 2,
                     "depth": 10,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -801,6 +803,7 @@ class TestDataEngine:
                     "book_type": 2,
                     "depth": 25,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -828,6 +831,7 @@ class TestDataEngine:
                     "book_type": 2,
                     "depth": 25,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -871,6 +875,7 @@ class TestDataEngine:
                     "book_type": 2,
                     "depth": 25,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -914,6 +919,7 @@ class TestDataEngine:
                     "book_type": 2,
                     "depth": 25,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -965,6 +971,7 @@ class TestDataEngine:
                     "book_type": BookType.L2_MBP,
                     "depth": 20,
                     "interval_ms": 1000,  # Streaming
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -1005,6 +1012,7 @@ class TestDataEngine:
                     "book_type": BookType.L2_MBP,
                     "depth": 25,
                     "interval_ms": 1000,  # Streaming
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -1013,7 +1021,10 @@ class TestDataEngine:
 
         self.data_engine.execute(subscribe)
 
-        snapshot = TestDataStubs.order_book_snapshot(ETHUSDT_BINANCE.id, ts_event=1)
+        snapshot = TestDataStubs.order_book_snapshot(
+            instrument=ETHUSDT_BINANCE,
+            ts_event=1,
+        )
 
         # Act
         self.data_engine.process(snapshot)
@@ -1043,6 +1054,7 @@ class TestDataEngine:
                     "instrument_id": ETHUSDT_BINANCE.id,
                     "book_type": BookType.L3_MBO,
                     "depth": 5,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -1090,6 +1102,7 @@ class TestDataEngine:
                     "book_type": BookType.L2_MBP,
                     "depth": 25,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -1106,6 +1119,7 @@ class TestDataEngine:
                     "book_type": BookType.L2_MBP,
                     "depth": 25,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -1116,7 +1130,7 @@ class TestDataEngine:
         self.data_engine.execute(subscribe2)
 
         snapshot = TestDataStubs.order_book_snapshot(
-            instrument_id=ETHUSDT_BINANCE.id,
+            instrument=ETHUSDT_BINANCE,
             ts_event=1,
         )
 
@@ -1164,6 +1178,7 @@ class TestDataEngine:
                     "book_type": BookType.L2_MBP,
                     "depth": 10,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -1180,6 +1195,7 @@ class TestDataEngine:
                     "book_type": BookType.L2_MBP,
                     "depth": 10,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),
@@ -1224,6 +1240,7 @@ class TestDataEngine:
                     "book_type": 2,
                     "depth": 25,
                     "interval_ms": 1000,
+                    "managed": True,
                 },
             ),
             command_id=UUID4(),

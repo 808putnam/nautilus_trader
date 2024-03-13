@@ -20,20 +20,22 @@ use nautilus_model::{
     data::{bar::Bar, quote::QuoteTick, trade::TradeTick},
     enums::PriceType,
 };
-use pyo3::prelude::*;
 
 use crate::indicator::{Indicator, MovingAverage};
 
 #[repr(C)]
 #[derive(Debug)]
-#[pyclass(module = "nautilus_trader.core.nautilus_pyo3.indicators")]
+#[cfg_attr(
+    feature = "python",
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.indicators")
+)]
 pub struct SimpleMovingAverage {
     pub period: usize,
     pub price_type: PriceType,
     pub value: f64,
     pub count: usize,
     pub inputs: Vec<f64>,
-    pub is_initialized: bool,
+    pub initialized: bool,
 }
 
 impl Display for SimpleMovingAverage {
@@ -51,16 +53,16 @@ impl Indicator for SimpleMovingAverage {
         !self.inputs.is_empty()
     }
 
-    fn is_initialized(&self) -> bool {
-        self.is_initialized
+    fn initialized(&self) -> bool {
+        self.initialized
     }
 
-    fn handle_quote_tick(&mut self, tick: &QuoteTick) {
-        self.update_raw(tick.extract_price(self.price_type).into());
+    fn handle_quote_tick(&mut self, quote: &QuoteTick) {
+        self.update_raw(quote.extract_price(self.price_type).into());
     }
 
-    fn handle_trade_tick(&mut self, tick: &TradeTick) {
-        self.update_raw((&tick.price).into());
+    fn handle_trade_tick(&mut self, trade: &TradeTick) {
+        self.update_raw((&trade.price).into());
     }
 
     fn handle_bar(&mut self, bar: &Bar) {
@@ -71,7 +73,7 @@ impl Indicator for SimpleMovingAverage {
         self.value = 0.0;
         self.count = 0;
         self.inputs.clear();
-        self.is_initialized = false;
+        self.initialized = false;
     }
 }
 
@@ -85,7 +87,7 @@ impl SimpleMovingAverage {
             value: 0.0,
             count: 0,
             inputs: Vec::with_capacity(period),
-            is_initialized: false,
+            initialized: false,
         })
     }
 }
@@ -108,8 +110,8 @@ impl MovingAverage for SimpleMovingAverage {
         let sum = self.inputs.iter().sum::<f64>();
         self.value = sum / self.count as f64;
 
-        if !self.is_initialized && self.count >= self.period {
-            self.is_initialized = true;
+        if !self.initialized && self.count >= self.period {
+            self.initialized = true;
         }
     }
 }
@@ -156,7 +158,7 @@ mod tests {
         sma.update_raw(10.0);
 
         assert!(sma.has_inputs());
-        assert!(sma.is_initialized());
+        assert!(sma.initialized());
         assert_eq!(sma.count, 10);
         assert_eq!(sma.value, 5.5);
     }
@@ -169,7 +171,7 @@ mod tests {
         sma.reset();
         assert_eq!(sma.count, 0);
         assert_eq!(sma.value, 0.0);
-        assert!(!sma.is_initialized);
+        assert!(!sma.initialized);
     }
 
     #[rstest]

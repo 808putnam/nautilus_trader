@@ -24,10 +24,10 @@ from nautilus_trader.backtest.engine import BacktestEngine
 from nautilus_trader.backtest.engine import BacktestEngineConfig
 from nautilus_trader.backtest.models import FillModel
 from nautilus_trader.common.actor import Actor
+from nautilus_trader.config import ImportableControllerConfig
+from nautilus_trader.config import InvalidConfiguration
 from nautilus_trader.config import LoggingConfig
 from nautilus_trader.config import StreamingConfig
-from nautilus_trader.config.common import ImportableControllerConfig
-from nautilus_trader.config.error import InvalidConfiguration
 from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.examples.strategies.ema_cross import EMACross
 from nautilus_trader.examples.strategies.ema_cross import EMACrossConfig
@@ -267,7 +267,7 @@ class TestBacktestEngine:
         engine.run()
 
         # Assert
-        msg = messages[1]
+        msg = messages[11]
         assert msg.__class__.__name__ == "SignalCounter"
         assert msg.ts_init == 1359676799700000000
         assert msg.ts_event == 1359676799700000000

@@ -21,7 +21,6 @@ use std::{
 use anyhow::{anyhow, Result};
 use evalexpr::{ContextWithMutableVariables, HashMapContext, Node, Value};
 use nautilus_core::time::UnixNanos;
-use pyo3::prelude::*;
 
 use crate::{
     identifiers::{instrument_id::InstrumentId, symbol::Symbol, venue::Venue},
@@ -33,22 +32,15 @@ use crate::{
 #[derive(Clone, Debug)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct SyntheticInstrument {
-    #[pyo3(get)]
     pub id: InstrumentId,
-    #[pyo3(get)]
     pub price_precision: u8,
-    #[pyo3(get)]
     pub price_increment: Price,
-    #[pyo3(get)]
     pub components: Vec<InstrumentId>,
-    #[pyo3(get)]
     pub formula: String,
-    #[pyo3(get)]
     pub ts_event: UnixNanos,
-    #[pyo3(get)]
     pub ts_init: UnixNanos,
     context: HashMapContext,
     variables: Vec<String>,
@@ -69,12 +61,12 @@ impl SyntheticInstrument {
         // Extract variables from the component instruments
         let variables: Vec<String> = components
             .iter()
-            .map(|component| component.to_string())
+            .map(std::string::ToString::to_string)
             .collect();
 
         let operator_tree = evalexpr::build_operator_tree(&formula)?;
 
-        Ok(SyntheticInstrument {
+        Ok(Self {
             id: InstrumentId::new(symbol, Venue::synthetic()),
             price_precision,
             price_increment,
@@ -88,6 +80,7 @@ impl SyntheticInstrument {
         })
     }
 
+    #[must_use]
     pub fn is_valid_formula(&self, formula: &str) -> bool {
         evalexpr::build_operator_tree(formula).is_ok()
     }
@@ -111,7 +104,7 @@ impl SyntheticInstrument {
                 self.context
                     .set_value(variable.clone(), Value::from(value))?;
             } else {
-                panic!("Missing price for component: {}", variable);
+                panic!("Missing price for component: {variable}");
             }
         }
 
@@ -218,7 +211,7 @@ mod tests {
             Symbol::new("BTC-LTC").unwrap(),
             2,
             vec![btc_binance, ltc_binance],
-            formula.clone(),
+            formula,
             0,
             0,
         )

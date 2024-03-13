@@ -20,20 +20,22 @@ use nautilus_model::{
     data::{bar::Bar, quote::QuoteTick, trade::TradeTick},
     enums::PriceType,
 };
-use pyo3::prelude::*;
 
 use crate::indicator::{Indicator, MovingAverage};
 
 #[repr(C)]
 #[derive(Debug)]
-#[pyclass(module = "nautilus_trader.core.nautilus_pyo3.indicators")]
+#[cfg_attr(
+    feature = "python",
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.indicators")
+)]
 pub struct ExponentialMovingAverage {
     pub period: usize,
     pub price_type: PriceType,
     pub alpha: f64,
     pub value: f64,
     pub count: usize,
-    pub is_initialized: bool,
+    pub initialized: bool,
     has_inputs: bool,
 }
 
@@ -52,16 +54,16 @@ impl Indicator for ExponentialMovingAverage {
         self.has_inputs
     }
 
-    fn is_initialized(&self) -> bool {
-        self.is_initialized
+    fn initialized(&self) -> bool {
+        self.initialized
     }
 
-    fn handle_quote_tick(&mut self, tick: &QuoteTick) {
-        self.update_raw(tick.extract_price(self.price_type).into());
+    fn handle_quote_tick(&mut self, quote: &QuoteTick) {
+        self.update_raw(quote.extract_price(self.price_type).into());
     }
 
-    fn handle_trade_tick(&mut self, tick: &TradeTick) {
-        self.update_raw((&tick.price).into());
+    fn handle_trade_tick(&mut self, trade: &TradeTick) {
+        self.update_raw((&trade.price).into());
     }
 
     fn handle_bar(&mut self, bar: &Bar) {
@@ -72,7 +74,7 @@ impl Indicator for ExponentialMovingAverage {
         self.value = 0.0;
         self.count = 0;
         self.has_inputs = false;
-        self.is_initialized = false;
+        self.initialized = false;
     }
 }
 
@@ -87,7 +89,7 @@ impl ExponentialMovingAverage {
             value: 0.0,
             count: 0,
             has_inputs: false,
-            is_initialized: false,
+            initialized: false,
         })
     }
 }
@@ -110,8 +112,8 @@ impl MovingAverage for ExponentialMovingAverage {
         self.count += 1;
 
         // Initialization logic
-        if !self.is_initialized && self.count >= self.period {
-            self.is_initialized = true;
+        if !self.initialized && self.count >= self.period {
+            self.initialized = true;
         }
     }
 }
@@ -141,7 +143,7 @@ mod tests {
         assert_eq!(ema.period, 10);
         assert_eq!(ema.price_type, PriceType::Mid);
         assert_eq!(ema.alpha, 0.181_818_181_818_181_82);
-        assert!(!ema.is_initialized);
+        assert!(!ema.initialized);
     }
 
     #[rstest]
@@ -167,7 +169,7 @@ mod tests {
         ema.update_raw(10.0);
 
         assert!(ema.has_inputs());
-        assert!(ema.is_initialized());
+        assert!(ema.initialized());
         assert_eq!(ema.count, 10);
         assert_eq!(ema.value, 6.239_368_480_121_215_5);
     }
@@ -180,7 +182,7 @@ mod tests {
         ema.reset();
         assert_eq!(ema.count, 0);
         assert_eq!(ema.value, 0.0);
-        assert!(!ema.is_initialized);
+        assert!(!ema.initialized);
     }
 
     #[rstest]
@@ -220,7 +222,7 @@ mod tests {
     ) {
         indicator_ema_10.handle_bar(&bar_ethusdt_binance_minute_bid);
         assert!(indicator_ema_10.has_inputs);
-        assert!(!indicator_ema_10.is_initialized);
+        assert!(!indicator_ema_10.initialized);
         assert_eq!(indicator_ema_10.value, 1522.0);
     }
 }

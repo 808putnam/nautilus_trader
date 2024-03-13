@@ -20,7 +20,6 @@ use std::{
 
 use anyhow::{anyhow, Result};
 use nautilus_core::correctness::check_valid_string;
-use pyo3::prelude::*;
 use serde::{Deserialize, Serialize, Serializer};
 use ustr::Ustr;
 
@@ -31,7 +30,7 @@ use crate::{currencies::CURRENCY_MAP, enums::CurrencyType};
 #[derive(Clone, Copy, Debug, Eq)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct Currency {
     pub code: Ustr,
@@ -62,7 +61,7 @@ impl Currency {
         })
     }
 
-    pub fn register(currency: Currency, overwrite: bool) -> Result<()> {
+    pub fn register(currency: Self, overwrite: bool) -> Result<()> {
         let mut map = CURRENCY_MAP.lock().map_err(|e| anyhow!(e.to_string()))?;
 
         if !overwrite && map.contains_key(currency.code.as_str()) {
@@ -76,17 +75,17 @@ impl Currency {
     }
 
     pub fn is_fiat(code: &str) -> Result<bool> {
-        let currency = Currency::from_str(code)?;
+        let currency = Self::from_str(code)?;
         Ok(currency.currency_type == CurrencyType::Fiat)
     }
 
     pub fn is_crypto(code: &str) -> Result<bool> {
-        let currency = Currency::from_str(code)?;
+        let currency = Self::from_str(code)?;
         Ok(currency.currency_type == CurrencyType::Crypto)
     }
 
     pub fn is_commodity_backed(code: &str) -> Result<bool> {
-        let currency = Currency::from_str(code)?;
+        let currency = Self::from_str(code)?;
         Ok(currency.currency_type == CurrencyType::CommodityBacked)
     }
 }
@@ -138,7 +137,7 @@ impl<'de> Deserialize<'de> for Currency {
         D: serde::Deserializer<'de>,
     {
         let currency_str: &str = Deserialize::deserialize(deserializer)?;
-        Currency::from_str(currency_str).map_err(serde::de::Error::custom)
+        Self::from_str(currency_str).map_err(serde::de::Error::custom)
     }
 }
 

@@ -14,7 +14,7 @@
 # -------------------------------------------------------------------------------------------------
 
 from nautilus_trader.accounting.factory import AccountFactory
-from nautilus_trader.config.common import NautilusConfig
+from nautilus_trader.common.config import NautilusConfig
 
 from nautilus_trader.backtest.exchange cimport SimulatedExchange
 from nautilus_trader.cache.cache cimport Cache
@@ -62,7 +62,7 @@ cdef class BacktestExecClient(ExecutionClient):
         TestClock clock not None,
         bint routing=False,
         bint frozen_account=False,
-    ):
+    ) -> None:
         super().__init__(
             client_id=ClientId(exchange.id.value),
             venue=Venue(exchange.id.value),

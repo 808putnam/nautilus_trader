@@ -78,6 +78,17 @@ from nautilus_trader.core.rust.model cimport instrument_id_from_cstr
 from nautilus_trader.core.rust.model cimport orderbook_delta_eq
 from nautilus_trader.core.rust.model cimport orderbook_delta_hash
 from nautilus_trader.core.rust.model cimport orderbook_delta_new
+from nautilus_trader.core.rust.model cimport orderbook_deltas_clone
+from nautilus_trader.core.rust.model cimport orderbook_deltas_drop
+from nautilus_trader.core.rust.model cimport orderbook_deltas_flags
+from nautilus_trader.core.rust.model cimport orderbook_deltas_instrument_id
+from nautilus_trader.core.rust.model cimport orderbook_deltas_is_snapshot
+from nautilus_trader.core.rust.model cimport orderbook_deltas_new
+from nautilus_trader.core.rust.model cimport orderbook_deltas_sequence
+from nautilus_trader.core.rust.model cimport orderbook_deltas_ts_event
+from nautilus_trader.core.rust.model cimport orderbook_deltas_ts_init
+from nautilus_trader.core.rust.model cimport orderbook_deltas_vec_deltas
+from nautilus_trader.core.rust.model cimport orderbook_deltas_vec_drop
 from nautilus_trader.core.rust.model cimport orderbook_depth10_ask_counts_array
 from nautilus_trader.core.rust.model cimport orderbook_depth10_asks_array
 from nautilus_trader.core.rust.model cimport orderbook_depth10_bid_counts_array
@@ -124,6 +135,48 @@ from nautilus_trader.model.objects cimport Price
 from nautilus_trader.model.objects cimport Quantity
 
 
+cdef inline BookOrder order_from_mem_c(BookOrder_t mem):
+    cdef BookOrder order = BookOrder.__new__(BookOrder)
+    order._mem = mem
+    return order
+
+
+cdef inline OrderBookDelta delta_from_mem_c(OrderBookDelta_t mem):
+    cdef OrderBookDelta delta = OrderBookDelta.__new__(OrderBookDelta)
+    delta._mem = mem
+    return delta
+
+
+cdef inline OrderBookDeltas deltas_from_mem_c(OrderBookDeltas_API mem):
+    cdef OrderBookDeltas deltas = OrderBookDeltas.__new__(OrderBookDeltas)
+    deltas._mem = orderbook_deltas_clone(&mem)
+    return deltas
+
+
+cdef inline OrderBookDepth10 depth10_from_mem_c(OrderBookDepth10_t mem):
+    cdef OrderBookDepth10 depth10 = OrderBookDepth10.__new__(OrderBookDepth10)
+    depth10._mem = mem
+    return depth10
+
+
+cdef inline QuoteTick quote_from_mem_c(QuoteTick_t mem):
+    cdef QuoteTick quote = QuoteTick.__new__(QuoteTick)
+    quote._mem = mem
+    return quote
+
+
+cdef inline TradeTick trade_from_mem_c(TradeTick_t mem):
+    cdef TradeTick trade = TradeTick.__new__(TradeTick)
+    trade._mem = mem
+    return trade
+
+
+cdef inline Bar bar_from_mem_c(Bar_t mem):
+    cdef Bar bar = Bar.__new__(Bar)
+    bar._mem = mem
+    return bar
+
+
 # SAFETY: Do NOT deallocate the capsule here
 cpdef list capsule_to_list(capsule):
     cdef CVec* data = <CVec*>PyCapsule_GetPointer(capsule, NULL)
@@ -133,17 +186,39 @@ cpdef list capsule_to_list(capsule):
     cdef uint64_t i
     for i in range(0, data.len):
         if ptr[i].tag == Data_t_Tag.DELTA:
-            objects.append(OrderBookDelta.from_mem_c(ptr[i].delta))
+            objects.append(delta_from_mem_c(ptr[i].delta))
+        elif ptr[i].tag == Data_t_Tag.DELTAS:
+            objects.append(deltas_from_mem_c(ptr[i].deltas))
         elif ptr[i].tag == Data_t_Tag.DEPTH10:
-            objects.append(OrderBookDepth10.from_mem_c(ptr[i].depth10))
+            objects.append(depth10_from_mem_c(ptr[i].depth10))
         elif ptr[i].tag == Data_t_Tag.QUOTE:
-            objects.append(QuoteTick.from_mem_c(ptr[i].quote))
+            objects.append(quote_from_mem_c(ptr[i].quote))
         elif ptr[i].tag == Data_t_Tag.TRADE:
-            objects.append(TradeTick.from_mem_c(ptr[i].trade))
+            objects.append(trade_from_mem_c(ptr[i].trade))
         elif ptr[i].tag == Data_t_Tag.BAR:
-            objects.append(Bar.from_mem_c(ptr[i].bar))
+            objects.append(bar_from_mem_c(ptr[i].bar))
 
     return objects
+
+
+# SAFETY: Do NOT deallocate the capsule here
+cpdef Data capsule_to_data(capsule):
+    cdef Data_t* ptr = <Data_t*>PyCapsule_GetPointer(capsule, NULL)
+
+    if ptr.tag == Data_t_Tag.DELTA:
+        return delta_from_mem_c(ptr.delta)
+    elif ptr.tag == Data_t_Tag.DELTAS:
+        return deltas_from_mem_c(ptr.deltas)
+    elif ptr.tag == Data_t_Tag.DEPTH10:
+        return depth10_from_mem_c(ptr.depth10)
+    elif ptr.tag == Data_t_Tag.QUOTE:
+        return quote_from_mem_c(ptr.quote)
+    elif ptr.tag == Data_t_Tag.TRADE:
+        return trade_from_mem_c(ptr.trade)
+    elif ptr.tag == Data_t_Tag.BAR:
+        return bar_from_mem_c(ptr.bar)
+    else:
+        raise RuntimeError("Invalid data element to convert from `PyCapsule`")
 
 
 cdef class BarSpecification:
@@ -164,6 +239,7 @@ cdef class BarSpecification:
     ------
     ValueError
         If `step` is not positive (> 0).
+
     """
 
     def __init__(
@@ -220,72 +296,6 @@ cdef class BarSpecification:
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({self})"
-
-    cdef str aggregation_string_c(self):
-        return bar_aggregation_to_str(self.aggregation)
-
-    @staticmethod
-    cdef BarSpecification from_mem_c(BarSpecification_t mem):
-        cdef BarSpecification spec = BarSpecification.__new__(BarSpecification)
-        spec._mem = mem
-        return spec
-
-    @staticmethod
-    cdef BarSpecification from_str_c(str value):
-        Condition.valid_string(value, 'value')
-
-        cdef list pieces = value.rsplit('-', maxsplit=2)
-
-        if len(pieces) != 3:
-            raise ValueError(
-                f"The `BarSpecification` string value was malformed, was {value}",
-            )
-
-        return BarSpecification(
-            int(pieces[0]),
-            bar_aggregation_from_str(pieces[1]),
-            price_type_from_str(pieces[2]),
-        )
-
-    @staticmethod
-    cdef bint check_time_aggregated_c(BarAggregation aggregation):
-        if (
-            aggregation == BarAggregation.MILLISECOND
-            or aggregation == BarAggregation.SECOND
-            or aggregation == BarAggregation.MINUTE
-            or aggregation == BarAggregation.HOUR
-            or aggregation == BarAggregation.DAY
-            or aggregation == BarAggregation.WEEK
-            or aggregation == BarAggregation.MONTH
-        ):
-            return True
-        else:
-            return False
-
-    @staticmethod
-    cdef bint check_threshold_aggregated_c(BarAggregation aggregation):
-        if (
-            aggregation == BarAggregation.TICK
-            or aggregation == BarAggregation.TICK_IMBALANCE
-            or aggregation == BarAggregation.VOLUME
-            or aggregation == BarAggregation.VOLUME_IMBALANCE
-            or aggregation == BarAggregation.VALUE
-            or aggregation == BarAggregation.VALUE_IMBALANCE
-        ):
-            return True
-        else:
-            return False
-
-    @staticmethod
-    cdef bint check_information_aggregated_c(BarAggregation aggregation):
-        if (
-            aggregation == BarAggregation.TICK_RUNS
-            or aggregation == BarAggregation.VOLUME_RUNS
-            or aggregation == BarAggregation.VALUE_RUNS
-        ):
-            return True
-        else:
-            return False
 
     @property
     def step(self) -> int:
@@ -355,6 +365,72 @@ cdef class BarSpecification:
                 f"timedelta not supported for aggregation "
                 f"{bar_aggregation_to_str(self.aggregation)}",
             )
+
+    cdef str aggregation_string_c(self):
+        return bar_aggregation_to_str(self.aggregation)
+
+    @staticmethod
+    cdef BarSpecification from_mem_c(BarSpecification_t mem):
+        cdef BarSpecification spec = BarSpecification.__new__(BarSpecification)
+        spec._mem = mem
+        return spec
+
+    @staticmethod
+    cdef BarSpecification from_str_c(str value):
+        Condition.valid_string(value, 'value')
+
+        cdef list pieces = value.rsplit('-', maxsplit=2)
+
+        if len(pieces) != 3:
+            raise ValueError(
+                f"The `BarSpecification` string value was malformed, was {value}",
+            )
+
+        return BarSpecification(
+            int(pieces[0]),
+            bar_aggregation_from_str(pieces[1]),
+            price_type_from_str(pieces[2]),
+        )
+
+    @staticmethod
+    cdef bint check_time_aggregated_c(BarAggregation aggregation):
+        if (
+            aggregation == BarAggregation.MILLISECOND
+            or aggregation == BarAggregation.SECOND
+            or aggregation == BarAggregation.MINUTE
+            or aggregation == BarAggregation.HOUR
+            or aggregation == BarAggregation.DAY
+            or aggregation == BarAggregation.WEEK
+            or aggregation == BarAggregation.MONTH
+        ):
+            return True
+        else:
+            return False
+
+    @staticmethod
+    cdef bint check_threshold_aggregated_c(BarAggregation aggregation):
+        if (
+            aggregation == BarAggregation.TICK
+            or aggregation == BarAggregation.TICK_IMBALANCE
+            or aggregation == BarAggregation.VOLUME
+            or aggregation == BarAggregation.VOLUME_IMBALANCE
+            or aggregation == BarAggregation.VALUE
+            or aggregation == BarAggregation.VALUE_IMBALANCE
+        ):
+            return True
+        else:
+            return False
+
+    @staticmethod
+    cdef bint check_information_aggregated_c(BarAggregation aggregation):
+        if (
+            aggregation == BarAggregation.TICK_RUNS
+            or aggregation == BarAggregation.VOLUME_RUNS
+            or aggregation == BarAggregation.VALUE_RUNS
+        ):
+            return True
+        else:
+            return False
 
     @staticmethod
     def from_str(str value) -> BarSpecification:
@@ -557,6 +633,7 @@ cdef class BarType:
     -----
     It is expected that all bar aggregation methods other than time will be
     internally aggregated.
+
     """
 
     def __init__(
@@ -619,24 +696,6 @@ cdef class BarType:
     def __repr__(self) -> str:
         return f"{type(self).__name__}({self})"
 
-    @staticmethod
-    cdef BarType from_mem_c(BarType_t mem):
-        cdef BarType bar_type = BarType.__new__(BarType)
-        bar_type._mem = mem
-        return bar_type
-
-    @staticmethod
-    cdef BarType from_str_c(str value):
-        Condition.valid_string(value, "value")
-
-        cdef str parse_err = cstr_to_pystr(bar_type_check_parsing(pystr_to_cstr(value)))
-        if parse_err:
-            raise ValueError(parse_err)
-
-        cdef BarType bar_type = BarType.__new__(BarType)
-        bar_type._mem = bar_type_from_cstr(pystr_to_cstr(value))
-        return bar_type
-
     @property
     def instrument_id(self) -> InstrumentId:
         """
@@ -672,6 +731,24 @@ cdef class BarType:
 
         """
         return self._mem.aggregation_source
+
+    @staticmethod
+    cdef BarType from_mem_c(BarType_t mem):
+        cdef BarType bar_type = BarType.__new__(BarType)
+        bar_type._mem = mem
+        return bar_type
+
+    @staticmethod
+    cdef BarType from_str_c(str value):
+        Condition.valid_string(value, "value")
+
+        cdef str parse_err = cstr_to_pystr(bar_type_check_parsing(pystr_to_cstr(value)))
+        if parse_err:
+            raise ValueError(parse_err)
+
+        cdef BarType bar_type = BarType.__new__(BarType)
+        bar_type._mem = bar_type_from_cstr(pystr_to_cstr(value))
+        return bar_type
 
     @staticmethod
     def from_str(str value) -> BarType:
@@ -751,6 +828,7 @@ cdef class Bar(Data):
         If `high` is not >= `close`.
     ValueError
         If `low` is not <= `close`.
+
     """
 
     def __init__(
@@ -838,41 +916,6 @@ cdef class Bar(Data):
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}({self})"
-
-    @staticmethod
-    cdef Bar from_mem_c(Bar_t mem):
-        cdef Bar bar = Bar.__new__(Bar)
-        bar._mem = mem
-        return bar
-
-    @staticmethod
-    cdef Bar from_dict_c(dict values):
-        Condition.not_none(values, "values")
-        return Bar(
-            bar_type=BarType.from_str_c(values["bar_type"]),
-            open=Price.from_str_c(values["open"]),
-            high=Price.from_str_c(values["high"]),
-            low=Price.from_str_c(values["low"]),
-            close=Price.from_str_c(values["close"]),
-            volume=Quantity.from_str_c(values["volume"]),
-            ts_event=values["ts_event"],
-            ts_init=values["ts_init"],
-        )
-
-    @staticmethod
-    cdef dict to_dict_c(Bar obj):
-        Condition.not_none(obj, "obj")
-        return {
-            "type": type(obj).__name__,
-            "bar_type": str(obj.bar_type),
-            "open": str(obj.open),
-            "high": str(obj.high),
-            "low": str(obj.low),
-            "close": str(obj.close),
-            "volume": str(obj.volume),
-            "ts_event": obj._mem.ts_event,
-            "ts_init": obj._mem.ts_init,
-        }
 
     @property
     def bar_type(self) -> BarType:
@@ -971,6 +1014,47 @@ cdef class Bar(Data):
         return self._mem.ts_init
 
     @staticmethod
+    cdef Bar from_mem_c(Bar_t mem):
+        return bar_from_mem_c(mem)
+
+    @staticmethod
+    cdef Bar from_dict_c(dict values):
+        Condition.not_none(values, "values")
+        return Bar(
+            bar_type=BarType.from_str_c(values["bar_type"]),
+            open=Price.from_str_c(values["open"]),
+            high=Price.from_str_c(values["high"]),
+            low=Price.from_str_c(values["low"]),
+            close=Price.from_str_c(values["close"]),
+            volume=Quantity.from_str_c(values["volume"]),
+            ts_event=values["ts_event"],
+            ts_init=values["ts_init"],
+        )
+
+    @staticmethod
+    cdef dict to_dict_c(Bar obj):
+        Condition.not_none(obj, "obj")
+        return {
+            "type": type(obj).__name__,
+            "bar_type": str(obj.bar_type),
+            "open": str(obj.open),
+            "high": str(obj.high),
+            "low": str(obj.low),
+            "close": str(obj.close),
+            "volume": str(obj.volume),
+            "ts_event": obj._mem.ts_event,
+            "ts_init": obj._mem.ts_init,
+        }
+
+    @staticmethod
+    cdef Bar from_pyo3_c(pyo3_bar):
+        # SAFETY: Do NOT deallocate the capsule here
+        # It is supposed to be deallocated by the creator
+        capsule = pyo3_bar.as_pycapsule()
+        cdef Data_t* ptr = <Data_t*>PyCapsule_GetPointer(capsule, NULL)
+        return bar_from_mem_c(ptr.bar)
+
+    @staticmethod
     def from_dict(dict values) -> Bar:
         """
         Return a bar parsed from the given values.
@@ -1061,31 +1145,27 @@ cdef class Bar(Data):
         """
         cdef list[Bar] output = []
 
-        cdef BarType bar_type = None
-        cdef uint8_t price_prec = 0
-        cdef uint8_t volume_prec = 0
-
-        cdef:
-            Bar bar
         for pyo3_bar in pyo3_bars:
-            if bar_type is None:
-                bar_type = BarType.from_str_c(str(pyo3_bar.bar_type))
-                price_prec = pyo3_bar.open.precision
-                volume_prec = pyo3_bar.volume.precision
-
-            bar = Bar(
-                bar_type,
-                Price.from_raw_c(pyo3_bar.open.raw, price_prec),
-                Price.from_raw_c(pyo3_bar.high.raw, price_prec),
-                Price.from_raw_c(pyo3_bar.low.raw, price_prec),
-                Price.from_raw_c(pyo3_bar.close.raw, price_prec),
-                Quantity.from_raw_c(pyo3_bar.volume.raw, volume_prec),
-                pyo3_bar.ts_event,
-                pyo3_bar.ts_init,
-            )
-            output.append(bar)
+            output.append(Bar.from_pyo3_c(pyo3_bar))
 
         return output
+
+    @staticmethod
+    def from_pyo3(pyo3_bar) -> Bar:
+        """
+        Return a legacy Cython bar converted from the given pyo3 Rust object.
+
+        Parameters
+        ----------
+        pyo3_bar : nautilus_pyo3.Bar
+            The pyo3 Rust bar to convert from.
+
+        Returns
+        -------
+        Bar
+
+        """
+        return Bar.from_pyo3_c(pyo3_bar)
 
     cpdef bint is_single_price(self):
         """
@@ -1113,7 +1193,7 @@ cdef class DataType:
     Raises
     ------
     ValueError
-        If `type` is not a subclass of `Data`.
+        If `type` is not either a subclass of `Data` or meets the `Data` contract.
     TypeError
         If `metadata` contains a key or value which is not hashable.
 
@@ -1121,11 +1201,13 @@ cdef class DataType:
     --------
     This class may be used as a key in hash maps throughout the system, thus
     the key and value contents of metadata must themselves be hashable.
+
     """
 
     def __init__(self, type type not None, dict metadata = None) -> None:  # noqa (shadows built-in type)
         if not issubclass(type, Data):
-            raise TypeError("`type` was not a subclass of `Data`")
+            if not (hasattr(type, "ts_event") and hasattr(type, "ts_init")):
+                raise TypeError("`type` was not a subclass of `Data`")
 
         self.type = type
         self.metadata = metadata or {}
@@ -1171,6 +1253,7 @@ cdef class CustomData(Data):
         The data type.
     data : Data
         The data object to wrap.
+
     """
 
     def __init__(
@@ -1232,6 +1315,7 @@ cdef class BookOrder:
         The order size.
     order_id : uint64_t
         The order ID.
+
     """
 
     def __init__(
@@ -1299,12 +1383,6 @@ cdef class BookOrder:
         )
         return order
 
-    @staticmethod
-    cdef BookOrder from_mem_c(BookOrder_t mem):
-        cdef BookOrder order = BookOrder.__new__(BookOrder)
-        order._mem = mem
-        return order
-
     @property
     def price(self) -> Price:
         """
@@ -1352,6 +1430,10 @@ cdef class BookOrder:
 
         """
         return self._mem.order_id
+
+    @staticmethod
+    cdef BookOrder from_mem_c(BookOrder_t mem):
+        return order_from_mem_c(mem)
 
     cpdef double exposure(self):
         """
@@ -1487,6 +1569,7 @@ cdef class OrderBookDelta(Data):
         A combination of packet end with matching engine status.
     sequence : uint64_t, default 0
         The unique sequence number for the update.
+
     """
 
     def __init__(
@@ -1654,10 +1737,10 @@ cdef class OrderBookDelta(Data):
         BookOrder
 
         """
-        order = self._mem.order
+        cdef BookOrder_t order = self._mem.order
         if order is None:
             return None
-        return BookOrder.from_mem_c(order)
+        return order_from_mem_c(order)
 
     @property
     def flags(self) -> uint8_t:
@@ -1744,9 +1827,15 @@ cdef class OrderBookDelta(Data):
 
     @staticmethod
     cdef OrderBookDelta from_mem_c(OrderBookDelta_t mem):
-        cdef OrderBookDelta delta = OrderBookDelta.__new__(OrderBookDelta)
-        delta._mem = mem
-        return delta
+        return delta_from_mem_c(mem)
+
+    @staticmethod
+    cdef OrderBookDelta from_pyo3_c(pyo3_delta):
+        # SAFETY: Do NOT deallocate the capsule here
+        # It is supposed to be deallocated by the creator
+        capsule = pyo3_delta.as_pycapsule()
+        cdef Data_t* ptr = <Data_t*>PyCapsule_GetPointer(capsule, NULL)
+        return delta_from_mem_c(ptr.delta)
 
     @staticmethod
     cdef OrderBookDelta from_dict_c(dict values):
@@ -1799,33 +1888,33 @@ cdef class OrderBookDelta(Data):
             sequence=sequence,
         )
 
-    # SAFETY: Do NOT deallocate the capsule here
-    # It is supposed to be deallocated by the creator
     @staticmethod
-    cdef inline list capsule_to_list_c(object capsule):
+    cdef list[OrderBookDelta] capsule_to_list_c(object capsule):
+        # SAFETY: Do NOT deallocate the capsule here
+        # It is supposed to be deallocated by the creator
         cdef CVec* data = <CVec*>PyCapsule_GetPointer(capsule, NULL)
         cdef OrderBookDelta_t* ptr = <OrderBookDelta_t*>data.ptr
-        cdef list deltas = []
+        cdef list[OrderBookDelta] deltas = []
 
         cdef uint64_t i
         for i in range(0, data.len):
-            deltas.append(OrderBookDelta.from_mem_c(ptr[i]))
+            deltas.append(delta_from_mem_c(ptr[i]))
 
         return deltas
 
     @staticmethod
-    cdef inline list_to_capsule_c(list items):
+    cdef object list_to_capsule_c(list items):
         # Create a C struct buffer
         cdef uint64_t len_ = len(items)
-        cdef OrderBookDelta_t * data = <OrderBookDelta_t *> PyMem_Malloc(len_ * sizeof(OrderBookDelta_t))
+        cdef OrderBookDelta_t *data = <OrderBookDelta_t *>PyMem_Malloc(len_ * sizeof(OrderBookDelta_t))
         cdef uint64_t i
         for i in range(len_):
-            data[i] = (<OrderBookDelta> items[i])._mem
+            data[i] = (<OrderBookDelta>items[i])._mem
         if not data:
             raise MemoryError()
 
         # Create CVec
-        cdef CVec * cvec = <CVec *> PyMem_Malloc(1 * sizeof(CVec))
+        cdef CVec *cvec = <CVec *>PyMem_Malloc(1 * sizeof(CVec))
         cvec.ptr = data
         cvec.len = len_
         cvec.cap = len_
@@ -1974,8 +2063,10 @@ cdef class OrderBookDelta(Data):
         for delta in deltas:
             if pyo3_instrument_id is None:
                 pyo3_instrument_id = nautilus_pyo3.InstrumentId.from_str(delta.instrument_id.value)
-                price_prec = delta.order.price.precision
-                size_prec = delta.order.size.precision
+            if price_prec == 0:
+                price_prec = delta._mem.order.price.precision
+            if size_prec == 0:
+                size_prec = delta._mem.order.size.precision
 
             pyo3_book_order = nautilus_pyo3.BookOrder(
                nautilus_pyo3.OrderSide(order_side_to_str(delta._mem.order.side)),
@@ -1998,6 +2089,23 @@ cdef class OrderBookDelta(Data):
         return output
 
     @staticmethod
+    def from_pyo3(pyo3_delta) -> OrderBookDelta:
+        """
+        Return a legacy Cython order book delta converted from the given pyo3 Rust object.
+
+        Parameters
+        ----------
+        pyo3_delta : nautilus_pyo3.OrderBookDelta
+            The pyo3 Rust order book delta to convert from.
+
+        Returns
+        -------
+        OrderBookDelta
+
+        """
+        return OrderBookDelta.from_pyo3_c(pyo3_delta)
+
+    @staticmethod
     def from_pyo3_list(list pyo3_deltas) -> list[OrderBookDelta]:
         """
         Return legacy Cython order book deltas converted from the given pyo3 Rust objects.
@@ -2014,34 +2122,8 @@ cdef class OrderBookDelta(Data):
         """
         cdef list[OrderBookDelta] output = []
 
-        cdef InstrumentId instrument_id = None
-        cdef uint8_t price_prec = 0
-        cdef uint8_t size_prec = 0
-
-        cdef:
-            OrderBookDelta delta
-            BookOrder book_order
         for pyo3_delta in pyo3_deltas:
-            if instrument_id is None:
-                instrument_id = InstrumentId.from_str_c(pyo3_delta.instrument_id.value)
-                price_prec = pyo3_delta.order.price.precision
-                size_prec = pyo3_delta.order.size.precision
-
-            delta = OrderBookDelta.from_raw_c(
-                instrument_id,
-                pyo3_delta.action.value,
-                pyo3_delta.order.side.value,
-                pyo3_delta.order.price.raw,
-                price_prec,
-                pyo3_delta.order.size.raw,
-                size_prec,
-                pyo3_delta.order.order_id,
-                pyo3_delta.flags,
-                pyo3_delta.sequence,
-                pyo3_delta.ts_event,
-                pyo3_delta.ts_init,
-            )
-            output.append(delta)
+            output.append(OrderBookDelta.from_pyo3_c(pyo3_delta))
 
         return output
 
@@ -2061,6 +2143,7 @@ cdef class OrderBookDeltas(Data):
     ------
     ValueError
         If `deltas` is an empty list.
+
     """
 
     def __init__(
@@ -2070,12 +2153,82 @@ cdef class OrderBookDeltas(Data):
     ) -> None:
         Condition.not_empty(deltas, "deltas")
 
-        self.instrument_id = instrument_id
-        self.deltas = deltas
-        self.is_snapshot = deltas[0].is_clear
-        self.sequence = deltas[-1].sequence
-        self.ts_event = deltas[-1].ts_event
-        self.ts_init = deltas[-1].ts_init
+        cdef uint64_t len_ = len(deltas)
+
+        # Create a C OrderBookDeltas_t buffer
+        cdef OrderBookDelta_t *data = <OrderBookDelta_t *>PyMem_Malloc(len_ * sizeof(OrderBookDelta_t))
+        if not data:
+            raise MemoryError()
+
+        cdef uint64_t i
+        cdef OrderBookDelta delta
+        for i in range(len_):
+            delta = deltas[i]
+            data[i] = <OrderBookDelta_t>delta._mem
+
+        # Create CVec
+        cdef CVec *cvec = <CVec *>PyMem_Malloc(1 * sizeof(CVec))
+        if not cvec:
+            raise MemoryError()
+
+        cvec.ptr = data
+        cvec.len = len_
+        cvec.cap = len_
+
+        # Transfer data to Rust
+        self._mem = orderbook_deltas_new(
+            instrument_id._mem,
+            cvec,
+        )
+
+        PyMem_Free(cvec.ptr) # De-allocate buffer
+        PyMem_Free(cvec) # De-allocate cvec
+
+    def __getstate__(self):
+        return (
+            self.instrument_id.value,
+            pickle.dumps(self.deltas),
+        )
+
+    def __setstate__(self, state):
+        cdef InstrumentId instrument_id = InstrumentId.from_str_c(state[0])
+
+        cdef list deltas = pickle.loads(state[1])
+
+        cdef uint64_t len_ = len(deltas)
+
+        # Create a C OrderBookDeltas_t buffer
+        cdef OrderBookDelta_t *data = <OrderBookDelta_t *>PyMem_Malloc(len_ * sizeof(OrderBookDelta_t))
+        if not data:
+            raise MemoryError()
+
+        cdef uint64_t i
+        cdef OrderBookDelta delta
+        for i in range(len_):
+            delta = deltas[i]
+            data[i] = <OrderBookDelta_t>delta._mem
+
+        # Create CVec
+        cdef CVec *cvec = <CVec *>PyMem_Malloc(1 * sizeof(CVec))
+        if not cvec:
+            raise MemoryError()
+
+        cvec.ptr = data
+        cvec.len = len_
+        cvec.cap = len_
+
+        # Transfer data to Rust
+        self._mem = orderbook_deltas_new(
+            instrument_id._mem,
+            cvec,
+        )
+
+        PyMem_Free(cvec.ptr) # De-allocate buffer
+        PyMem_Free(cvec) # De-allocate cvec
+
+    def __del__(self) -> None:
+        if self._mem._0 != NULL:
+            orderbook_deltas_drop(self._mem)
 
     def __eq__(self, OrderBookDeltas other) -> bool:
         return OrderBookDeltas.to_dict_c(self) == OrderBookDeltas.to_dict_c(other)
@@ -2094,6 +2247,102 @@ cdef class OrderBookDeltas(Data):
             f"ts_init={self.ts_init})"
         )
 
+    @property
+    def instrument_id(self) -> InstrumentId:
+        """
+        Return the deltas book instrument ID.
+
+        Returns
+        -------
+        InstrumentId
+
+        """
+        return InstrumentId.from_mem_c(orderbook_deltas_instrument_id(&self._mem))
+
+    @property
+    def deltas(self) -> list[OrderBookDelta]:
+        """
+        Return the contained deltas.
+
+        Returns
+        -------
+        list[OrderBookDeltas]
+
+        """
+        cdef CVec raw_deltas_vec = orderbook_deltas_vec_deltas(&self._mem)
+        cdef OrderBookDelta_t* raw_deltas = <OrderBookDelta_t*>raw_deltas_vec.ptr
+
+        cdef list[OrderBookDelta] deltas = []
+
+        cdef:
+            uint64_t i
+        for i in range(raw_deltas_vec.len):
+            deltas.append(delta_from_mem_c(raw_deltas[i]))
+
+        orderbook_deltas_vec_drop(raw_deltas_vec)
+
+        return deltas
+
+    @property
+    def is_snapshot(self) -> bool:
+        """
+        If the deltas is a snapshot.
+
+        Returns
+        -------
+        bool
+
+        """
+        return <bint>orderbook_deltas_is_snapshot(&self._mem)
+
+    @property
+    def flags(self) -> uint8_t:
+        """
+        Return the flags for the last delta.
+
+        Returns
+        -------
+        uint8_t
+
+        """
+        return orderbook_deltas_flags(&self._mem)
+
+    @property
+    def sequence(self) -> uint64_t:
+        """
+        Return the sequence number for the last delta.
+
+        Returns
+        -------
+        uint64_t
+
+        """
+        return orderbook_deltas_sequence(&self._mem)
+
+    @property
+    def ts_event(self) -> int:
+        """
+        The UNIX timestamp (nanoseconds) when the data event occurred.
+
+        Returns
+        -------
+        int
+
+        """
+        return orderbook_deltas_ts_event(&self._mem)
+
+    @property
+    def ts_init(self) -> int:
+        """
+        The UNIX timestamp (nanoseconds) when the object was initialized.
+
+        Returns
+        -------
+        int
+
+        """
+        return orderbook_deltas_ts_init(&self._mem)
+
     @staticmethod
     cdef OrderBookDeltas from_dict_c(dict values):
         Condition.not_none(values, "values")
@@ -2107,7 +2356,7 @@ cdef class OrderBookDeltas(Data):
         Condition.not_none(obj, "obj")
         return {
             "type": obj.__class__.__name__,
-            "instrument_id": obj.instrument_id.to_str(),
+            "instrument_id": obj.instrument_id.value,
             "deltas": [OrderBookDelta.to_dict_c(d) for d in obj.deltas],
         }
 
@@ -2139,6 +2388,18 @@ cdef class OrderBookDeltas(Data):
 
         """
         return OrderBookDeltas.to_dict_c(obj)
+
+    cpdef to_capsule(self):
+        cdef OrderBookDeltas_API *data = <OrderBookDeltas_API *>PyMem_Malloc(sizeof(OrderBookDeltas_API))
+        data[0] = self._mem
+        capsule = PyCapsule_New(data, NULL, <PyCapsule_Destructor>capsule_destructor_deltas)
+        return capsule
+
+    cpdef to_pyo3(self):
+        capsule = self.to_capsule()
+        deltas = nautilus_pyo3.OrderBookDeltas.from_pycapsule(capsule)
+        return deltas
+
 
 
 cdef class OrderBookDepth10(Data):
@@ -2180,6 +2441,7 @@ cdef class OrderBookDepth10(Data):
         If `bid_counts` length is not equal to 10.
     ValueError
         If `ask_counts` length is not equal to 10.
+
     """
 
     def __init__(
@@ -2342,8 +2604,9 @@ cdef class OrderBookDepth10(Data):
         cdef list[BookOrder] bids = [];
 
         cdef uint64_t i
+        cdef BookOrder order
         for i in range(DEPTH10_LEN):
-            order = BookOrder.from_mem_c(bids_array[i])
+            order = order_from_mem_c(bids_array[i])
             bids.append(order)
 
         return bids
@@ -2362,8 +2625,9 @@ cdef class OrderBookDepth10(Data):
         cdef list[BookOrder] asks = [];
 
         cdef uint64_t i
+        cdef BookOrder order
         for i in range(DEPTH10_LEN):
-            order = BookOrder.from_mem_c(asks_array[i])
+            order = order_from_mem_c(asks_array[i])
             asks.append(order)
 
         return asks
@@ -2456,9 +2720,15 @@ cdef class OrderBookDepth10(Data):
 
     @staticmethod
     cdef OrderBookDepth10 from_mem_c(OrderBookDepth10_t mem):
-        cdef OrderBookDepth10 depth = OrderBookDepth10.__new__(OrderBookDepth10)
-        depth._mem = mem
-        return depth
+        return depth10_from_mem_c(mem)
+
+    @staticmethod
+    cdef OrderBookDepth10 from_pyo3_c(pyo3_depth10):
+        # SAFETY: Do NOT deallocate the capsule here
+        # It is supposed to be deallocated by the creator
+        capsule = pyo3_depth10.as_pycapsule()
+        cdef Data_t* ptr = <Data_t*>PyCapsule_GetPointer(capsule, NULL)
+        return depth10_from_mem_c(ptr.depth10)
 
     @staticmethod
     cdef OrderBookDepth10 from_dict_c(dict values):
@@ -2491,25 +2761,25 @@ cdef class OrderBookDepth10(Data):
             "ts_init": obj.ts_init,
         }
 
-    # SAFETY: Do NOT deallocate the capsule here
-    # It is supposed to be deallocated by the creator
     @staticmethod
-    cdef inline list capsule_to_list_c(object capsule):
+    cdef list[OrderBookDepth10] capsule_to_list_c(object capsule):
+        # SAFETY: Do NOT deallocate the capsule here
+        # It is supposed to be deallocated by the creator
         cdef CVec* data = <CVec*>PyCapsule_GetPointer(capsule, NULL)
         cdef OrderBookDepth10_t* ptr = <OrderBookDepth10_t*>data.ptr
-        cdef list depths = []
+        cdef list[OrderBookDepth10] depths = []
 
         cdef uint64_t i
         for i in range(0, data.len):
-            depths.append(OrderBookDepth10.from_mem_c(ptr[i]))
+            depths.append(depth10_from_mem_c(ptr[i]))
 
         return depths
 
     @staticmethod
-    cdef inline list_to_capsule_c(list items):
+    cdef object list_to_capsule_c(list items):
         # Create a C struct buffer
         cdef uint64_t len_ = len(items)
-        cdef OrderBookDepth10_t * data = <OrderBookDepth10_t *> PyMem_Malloc(len_ * sizeof(OrderBookDepth10_t))
+        cdef OrderBookDepth10_t * data = <OrderBookDepth10_t *>PyMem_Malloc(len_ * sizeof(OrderBookDepth10_t))
         cdef uint64_t i
         for i in range(len_):
             data[i] = (<OrderBookDepth10>items[i])._mem
@@ -2517,7 +2787,7 @@ cdef class OrderBookDepth10(Data):
             raise MemoryError()
 
         # Create CVec
-        cdef CVec * cvec = <CVec *> PyMem_Malloc(1 * sizeof(CVec))
+        cdef CVec * cvec = <CVec *>PyMem_Malloc(1 * sizeof(CVec))
         cvec.ptr = data
         cvec.len = len_
         cvec.cap = len_
@@ -2562,6 +2832,45 @@ cdef class OrderBookDepth10(Data):
         """
         return OrderBookDepth10.to_dict_c(obj)
 
+    @staticmethod
+    def from_pyo3(pyo3_depth) -> OrderBookDepth10:
+        """
+        Return a legacy Cython order book depth converted from the given pyo3 Rust object.
+
+        Parameters
+        ----------
+        pyo3_depth : nautilus_pyo3.OrderBookDepth10
+            The pyo3 Rust order book depth to convert from.
+
+        Returns
+        -------
+        OrderBookDepth10
+
+        """
+        return OrderBookDepth10.from_pyo3_c(pyo3_depth)
+
+    @staticmethod
+    def from_pyo3_list(pyo3_depths) -> list[OrderBookDepth10]:
+        """
+        Return legacy Cython order book depths converted from the given pyo3 Rust objects.
+
+        Parameters
+        ----------
+        pyo3_depths : nautilus_pyo3.OrderBookDepth10
+            The pyo3 Rust order book depths to convert from.
+
+        Returns
+        -------
+        list[OrderBookDepth10]
+
+        """
+        cdef list[OrderBookDepth10] output = []
+
+        for pyo3_depth in pyo3_depths:
+            output.append(OrderBookDepth10.from_pyo3_c(pyo3_depth))
+
+        return output
+
 
 cdef class VenueStatus(Data):
     """
@@ -2577,6 +2886,7 @@ cdef class VenueStatus(Data):
         The UNIX timestamp (nanoseconds) when the status update event occurred.
     ts_init : uint64_t
         The UNIX timestamp (nanoseconds) when the object was initialized.
+
     """
 
     def __init__(
@@ -2787,6 +3097,7 @@ cdef class InstrumentClose(Data):
         The UNIX timestamp (nanoseconds) when the close price event occurred.
     ts_init : uint64_t
         The UNIX timestamp (nanoseconds) when the object was initialized.
+
     """
 
     def __init__(
@@ -2899,6 +3210,7 @@ cdef class QuoteTick(Data):
         If `bid.precision` != `ask.precision`.
     ValueError
         If `bid_size.precision` != `ask_size.precision`.
+
     """
 
     def __init__(
@@ -3059,6 +3371,18 @@ cdef class QuoteTick(Data):
         return self._mem.ts_init
 
     @staticmethod
+    cdef QuoteTick from_mem_c(QuoteTick_t mem):
+        return quote_from_mem_c(mem)
+
+    @staticmethod
+    cdef QuoteTick from_pyo3_c(pyo3_quote):
+        # SAFETY: Do NOT deallocate the capsule here
+        # It is supposed to be deallocated by the creator
+        capsule = pyo3_quote.as_pycapsule()
+        cdef Data_t* ptr = <Data_t*>PyCapsule_GetPointer(capsule, NULL)
+        return quote_from_mem_c(ptr.quote)
+
+    @staticmethod
     cdef QuoteTick from_dict_c(dict values):
         Condition.not_none(values, "values")
         return QuoteTick(
@@ -3099,8 +3423,8 @@ cdef class QuoteTick(Data):
         uint64_t ts_event,
         uint64_t ts_init,
     ):
-        cdef QuoteTick tick = QuoteTick.__new__(QuoteTick)
-        tick._mem = quote_tick_new(
+        cdef QuoteTick quote = QuoteTick.__new__(QuoteTick)
+        quote._mem = quote_tick_new(
             instrument_id._mem,
             bid_price_raw,
             ask_price_raw,
@@ -3113,41 +3437,35 @@ cdef class QuoteTick(Data):
             ts_event,
             ts_init,
         )
-        return tick
+        return quote
 
     @staticmethod
-    cdef QuoteTick from_mem_c(QuoteTick_t mem):
-        cdef QuoteTick quote_tick = QuoteTick.__new__(QuoteTick)
-        quote_tick._mem = mem
-        return quote_tick
-
-    # SAFETY: Do NOT deallocate the capsule here
-    # It is supposed to be deallocated by the creator
-    @staticmethod
-    cdef inline list capsule_to_list_c(object capsule):
+    cdef list[QuoteTick] capsule_to_list_c(object capsule):
+        # SAFETY: Do NOT deallocate the capsule here
+        # It is supposed to be deallocated by the creator
         cdef CVec* data = <CVec*>PyCapsule_GetPointer(capsule, NULL)
         cdef QuoteTick_t* ptr = <QuoteTick_t*>data.ptr
-        cdef list ticks = []
+        cdef list[QuoteTick] quotes = []
 
         cdef uint64_t i
         for i in range(0, data.len):
-            ticks.append(QuoteTick.from_mem_c(ptr[i]))
+            quotes.append(quote_from_mem_c(ptr[i]))
 
-        return ticks
+        return quotes
 
     @staticmethod
-    cdef inline list_to_capsule_c(list items):
+    cdef object list_to_capsule_c(list items):
         # Create a C struct buffer
         cdef uint64_t len_ = len(items)
-        cdef QuoteTick_t * data = <QuoteTick_t *> PyMem_Malloc(len_ * sizeof(QuoteTick_t))
+        cdef QuoteTick_t * data = <QuoteTick_t *>PyMem_Malloc(len_ * sizeof(QuoteTick_t))
         cdef uint64_t i
         for i in range(len_):
-            data[i] = (<QuoteTick> items[i])._mem
+            data[i] = (<QuoteTick>items[i])._mem
         if not data:
             raise MemoryError()
 
         # Create CVec
-        cdef CVec * cvec = <CVec *> PyMem_Malloc(1 * sizeof(CVec))
+        cdef CVec *cvec = <CVec *>PyMem_Malloc(1 * sizeof(CVec))
         cvec.ptr = data
         cvec.len = len_
         cvec.cap = len_
@@ -3264,13 +3582,13 @@ cdef class QuoteTick(Data):
         return QuoteTick.to_dict_c(obj)
 
     @staticmethod
-    def from_pyo3_list(list pyo3_ticks) -> list[QuoteTick]:
+    def from_pyo3_list(list pyo3_quotes) -> list[QuoteTick]:
         """
         Return legacy Cython quote ticks converted from the given pyo3 Rust objects.
 
         Parameters
         ----------
-        pyo3_ticks : list[nautilus_pyo3.QuoteTick]
+        pyo3_quotes : list[nautilus_pyo3.QuoteTick]
             The pyo3 Rust quote ticks to convert from.
 
         Returns
@@ -3280,36 +3598,8 @@ cdef class QuoteTick(Data):
         """
         cdef list[QuoteTick] output = []
 
-        cdef InstrumentId instrument_id = None
-        cdef uint8_t bid_prec = 0
-        cdef uint8_t ask_prec = 0
-        cdef uint8_t bid_size_prec = 0
-        cdef uint8_t ask_size_prec = 0
-
-        cdef:
-            QuoteTick tick
-        for pyo3_tick in pyo3_ticks:
-            if instrument_id is None:
-                instrument_id = InstrumentId.from_str_c(pyo3_tick.instrument_id.value)
-                bid_prec = pyo3_tick.bid_price.precision
-                ask_prec = pyo3_tick.ask_price.precision
-                bid_size_prec = pyo3_tick.bid_size.precision
-                ask_size_prec = pyo3_tick.ask_size.precision
-
-            tick = QuoteTick.from_raw_c(
-                instrument_id,
-                pyo3_tick.bid_price.raw,
-                pyo3_tick.ask_price.raw,
-                bid_prec,
-                ask_prec,
-                pyo3_tick.bid_size.raw,
-                pyo3_tick.ask_size.raw,
-                bid_size_prec,
-                ask_size_prec,
-                pyo3_tick.ts_event,
-                pyo3_tick.ts_init,
-            )
-            output.append(tick)
+        for pyo3_quote in pyo3_quotes:
+            output.append(QuoteTick.from_pyo3_c(pyo3_quote))
 
         return output
 
@@ -3358,6 +3648,23 @@ cdef class QuoteTick(Data):
             output.append(pyo3_quote)
 
         return output
+
+    @staticmethod
+    def from_pyo3(pyo3_quote) -> QuoteTick:
+        """
+        Return a legacy Cython quote tick converted from the given pyo3 Rust object.
+
+        Parameters
+        ----------
+        pyo3_quote : nautilus_pyo3.QuoteTick
+            The pyo3 Rust quote tick to convert from.
+
+        Returns
+        -------
+        QuoteTick
+
+        """
+        return QuoteTick.from_pyo3_c(pyo3_quote)
 
     cpdef Price extract_price(self, PriceType price_type):
         """
@@ -3434,6 +3741,7 @@ cdef class TradeTick(Data):
     ------
     ValueError
         If `trade_id` is not a valid string.
+
     """
 
     def __init__(
@@ -3585,6 +3893,18 @@ cdef class TradeTick(Data):
         return self._mem.ts_init
 
     @staticmethod
+    cdef TradeTick from_mem_c(TradeTick_t mem):
+        return trade_from_mem_c(mem)
+
+    @staticmethod
+    cdef TradeTick from_pyo3_c(pyo3_trade):
+        # SAFETY: Do NOT deallocate the capsule here
+        # It is supposed to be deallocated by the creator
+        capsule = pyo3_trade.as_pycapsule()
+        cdef Data_t* ptr = <Data_t*>PyCapsule_GetPointer(capsule, NULL)
+        return trade_from_mem_c(ptr.trade)
+
+    @staticmethod
     cdef TradeTick from_raw_c(
         InstrumentId instrument_id,
         int64_t price_raw,
@@ -3596,8 +3916,8 @@ cdef class TradeTick(Data):
         uint64_t ts_event,
         uint64_t ts_init,
     ):
-        cdef TradeTick tick = TradeTick.__new__(TradeTick)
-        tick._mem = trade_tick_new(
+        cdef TradeTick trade = TradeTick.__new__(TradeTick)
+        trade._mem = trade_tick_new(
             instrument_id._mem,
             price_raw,
             price_prec,
@@ -3608,41 +3928,35 @@ cdef class TradeTick(Data):
             ts_event,
             ts_init,
         )
-        return tick
+        return trade
 
     @staticmethod
-    cdef TradeTick from_mem_c(TradeTick_t mem):
-        cdef TradeTick trade_tick = TradeTick.__new__(TradeTick)
-        trade_tick._mem = mem
-        return trade_tick
-
-    # SAFETY: Do NOT deallocate the capsule here
-    # It is supposed to be deallocated by the creator
-    @staticmethod
-    cdef inline list capsule_to_list_c(capsule):
+    cdef list[TradeTick] capsule_to_list_c(capsule):
+        # SAFETY: Do NOT deallocate the capsule here
+        # It is supposed to be deallocated by the creator
         cdef CVec* data = <CVec *>PyCapsule_GetPointer(capsule, NULL)
         cdef TradeTick_t* ptr = <TradeTick_t *>data.ptr
-        cdef list ticks = []
+        cdef list[TradeTick] trades = []
 
         cdef uint64_t i
         for i in range(0, data.len):
-            ticks.append(TradeTick.from_mem_c(ptr[i]))
+            trades.append(trade_from_mem_c(ptr[i]))
 
-        return ticks
+        return trades
 
     @staticmethod
-    cdef inline list_to_capsule_c(list items):
+    cdef object list_to_capsule_c(list items):
         # Create a C struct buffer
         cdef uint64_t len_ = len(items)
-        cdef TradeTick_t * data = <TradeTick_t *> PyMem_Malloc(len_ * sizeof(TradeTick_t))
+        cdef TradeTick_t *data = <TradeTick_t *>PyMem_Malloc(len_ * sizeof(TradeTick_t))
         cdef uint64_t i
         for i in range(len_):
-            data[i] = (<TradeTick> items[i])._mem
+            data[i] = (<TradeTick>items[i])._mem
         if not data:
             raise MemoryError()
 
         # Create CVec
-        cdef CVec* cvec = <CVec *> PyMem_Malloc(1 * sizeof(CVec))
+        cdef CVec *cvec = <CVec *>PyMem_Malloc(1 * sizeof(CVec))
         cvec.ptr = data
         cvec.len = len_
         cvec.cap = len_
@@ -3794,7 +4108,7 @@ cdef class TradeTick(Data):
             if pyo3_instrument_id is None:
                 pyo3_instrument_id = nautilus_pyo3.InstrumentId.from_str(trade.instrument_id.value)
                 price_prec = trade.price.precision
-                size_prec = trade.price.precision
+                size_prec = trade.size.precision
 
             pyo3_trade = nautilus_pyo3.TradeTick(
                 pyo3_instrument_id,
@@ -3810,13 +4124,13 @@ cdef class TradeTick(Data):
         return output
 
     @staticmethod
-    def from_pyo3_list(list pyo3_ticks) -> list[TradeTick]:
+    def from_pyo3_list(list pyo3_trades) -> list[TradeTick]:
         """
         Return legacy Cython trade ticks converted from the given pyo3 Rust objects.
 
         Parameters
         ----------
-        pyo3_ticks : list[nautilus_pyo3.TradeTick]
+        pyo3_trades : list[nautilus_pyo3.TradeTick]
             The pyo3 Rust trade ticks to convert from.
 
         Returns
@@ -3826,29 +4140,24 @@ cdef class TradeTick(Data):
         """
         cdef list[TradeTick] output = []
 
-        cdef InstrumentId instrument_id = None
-        cdef uint8_t price_prec = 0
-        cdef uint8_t size_prec = 0
-
-        cdef:
-            TradeTick tick
-        for pyo3_tick in pyo3_ticks:
-            if instrument_id is None:
-                instrument_id = InstrumentId.from_str_c(pyo3_tick.instrument_id.value)
-                price_prec = pyo3_tick.price.precision
-                size_prec = pyo3_tick.price.precision
-
-            tick = TradeTick.from_raw_c(
-                instrument_id,
-                pyo3_tick.price.raw,
-                price_prec,
-                pyo3_tick.size.raw,
-                size_prec,
-                pyo3_tick.aggressor_side.value,
-                TradeId(pyo3_tick.trade_id.value),
-                pyo3_tick.ts_event,
-                pyo3_tick.ts_init,
-            )
-            output.append(tick)
+        for pyo3_trade in pyo3_trades:
+            output.append(TradeTick.from_pyo3_c(pyo3_trade))
 
         return output
+
+    @staticmethod
+    def from_pyo3(pyo3_trade) -> TradeTick:
+        """
+        Return a legacy Cython trade tick converted from the given pyo3 Rust object.
+
+        Parameters
+        ----------
+        pyo3_trade : nautilus_pyo3.TradeTick
+            The pyo3 Rust trade tick to convert from.
+
+        Returns
+        -------
+        TradeTick
+
+        """
+        return TradeTick.from_pyo3_c(pyo3_trade)

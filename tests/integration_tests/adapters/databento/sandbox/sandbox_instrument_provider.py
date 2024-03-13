@@ -35,7 +35,7 @@ async def test_databento_instrument_provider():
     await provider.load_async(InstrumentId.from_str("ESH4.GLBX"))
 
     instrument_ids = [
-        # InstrumentId.from_str("ESZ3.GLBX"),
+        # InstrumentId.from_str("ESZ3.XCME"),
         InstrumentId.from_str("ESH4.GLBX"),
         InstrumentId.from_str("ESM4.GLBX"),
         # InstrumentId.from_str("AAPL.XNAS"),

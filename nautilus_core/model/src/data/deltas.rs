@@ -13,20 +13,24 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-use std::fmt::{Display, Formatter};
+use std::{
+    fmt::{Display, Formatter},
+    hash::{Hash, Hasher},
+    ops::{Deref, DerefMut},
+};
 
 use nautilus_core::time::UnixNanos;
-use pyo3::prelude::*;
 
 use super::delta::OrderBookDelta;
 use crate::identifiers::instrument_id::InstrumentId;
 
 /// Represents a grouped batch of `OrderBookDelta` updates for an `OrderBook`.
-#[repr(C)]
+///
+/// This type cannot be `repr(C)` due to the `deltas` vec.
 #[derive(Clone, Debug)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct OrderBookDeltas {
     /// The instrument ID for the book.
@@ -46,14 +50,14 @@ pub struct OrderBookDeltas {
 impl OrderBookDeltas {
     #[allow(clippy::too_many_arguments)]
     #[must_use]
-    pub fn new(
-        instrument_id: InstrumentId,
-        deltas: Vec<OrderBookDelta>,
-        flags: u8,
-        sequence: u64,
-        ts_event: UnixNanos,
-        ts_init: UnixNanos,
-    ) -> Self {
+    pub fn new(instrument_id: InstrumentId, deltas: Vec<OrderBookDelta>) -> Self {
+        assert!(!deltas.is_empty(), "`deltas` cannot be empty");
+        // SAFETY: We asserted `deltas` is not empty
+        let last = deltas.last().unwrap();
+        let flags = last.flags;
+        let sequence = last.sequence;
+        let ts_event = last.ts_event;
+        let ts_init = last.ts_init;
         Self {
             instrument_id,
             deltas,
@@ -65,7 +69,22 @@ impl OrderBookDeltas {
     }
 }
 
-// TODO: Potentially implement later
+impl PartialEq<Self> for OrderBookDeltas {
+    fn eq(&self, other: &Self) -> bool {
+        self.instrument_id == other.instrument_id && self.sequence == other.sequence
+    }
+}
+
+impl Eq for OrderBookDeltas {}
+
+impl Hash for OrderBookDeltas {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.instrument_id.hash(state);
+        self.sequence.hash(state);
+    }
+}
+
+// TODO: Implement
 // impl Serializable for OrderBookDeltas {}
 
 // TODO: Exact format for Debug and Display TBD
@@ -84,6 +103,40 @@ impl Display for OrderBookDeltas {
     }
 }
 
+/// Provides a C compatible Foreign Function Interface (FFI) for an underlying [`OrderBookDeltas`].
+///
+/// This struct wraps `OrderBookDeltas` in a way that makes it compatible with C function
+/// calls, enabling interaction with `OrderBookDeltas` in a C environment.
+///
+/// It implements the `Deref` trait, allowing instances of `OrderBookDeltas_API` to be
+/// dereferenced to `OrderBookDeltas`, providing access to `OrderBookDeltas`'s methods without
+/// having to manually access the underlying `OrderBookDeltas` instance.
+#[repr(C)]
+#[derive(Debug, Clone)]
+#[allow(non_camel_case_types)]
+pub struct OrderBookDeltas_API(Box<OrderBookDeltas>);
+
+impl OrderBookDeltas_API {
+    #[must_use]
+    pub fn new(deltas: OrderBookDeltas) -> Self {
+        Self(Box::new(deltas))
+    }
+}
+
+impl Deref for OrderBookDeltas_API {
+    type Target = OrderBookDeltas;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl DerefMut for OrderBookDeltas_API {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Stubs
 ////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +144,7 @@ impl Display for OrderBookDeltas {
 pub mod stubs {
     use rstest::fixture;
 
-    use super::*;
+    use super::OrderBookDeltas;
     use crate::{
         data::{delta::OrderBookDelta, order::BookOrder},
         enums::{BookAction, OrderSide},
@@ -195,7 +248,7 @@ pub mod stubs {
 
         let deltas = vec![delta0, delta1, delta2, delta3, delta4, delta5, delta6];
 
-        OrderBookDeltas::new(instrument_id, deltas, flags, sequence, ts_event, ts_init)
+        OrderBookDeltas::new(instrument_id, deltas)
     }
 }
 
@@ -310,10 +363,6 @@ mod tests {
         let deltas = OrderBookDeltas::new(
             instrument_id,
             vec![delta0, delta1, delta2, delta3, delta4, delta5, delta6],
-            flags,
-            sequence,
-            ts_event,
-            ts_init,
         );
 
         assert_eq!(deltas.instrument_id, instrument_id);
@@ -329,7 +378,7 @@ mod tests {
     fn test_display(stub_deltas: OrderBookDeltas) {
         let deltas = stub_deltas;
         assert_eq!(
-            format!("{}", deltas),
+            format!("{deltas}"),
             "AAPL.XNAS,len=7,flags=32,sequence=0,ts_event=1,ts_init=2".to_string()
         );
     }

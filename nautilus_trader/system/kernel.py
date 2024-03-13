@@ -36,26 +36,28 @@ from nautilus_trader.common.component import Logger
 from nautilus_trader.common.component import MessageBus
 from nautilus_trader.common.component import TestClock
 from nautilus_trader.common.component import init_logging
-from nautilus_trader.common.component import init_tracing
 from nautilus_trader.common.component import is_logging_initialized
 from nautilus_trader.common.component import log_header
+from nautilus_trader.common.component import register_component_clock
+from nautilus_trader.common.component import set_logging_pyo3
+from nautilus_trader.common.config import InvalidConfiguration
 from nautilus_trader.common.enums import LogColor
 from nautilus_trader.common.enums import LogLevel
 from nautilus_trader.common.enums import log_level_from_str
 from nautilus_trader.config import ActorFactory
+from nautilus_trader.config import ControllerFactory
 from nautilus_trader.config import DataEngineConfig
+from nautilus_trader.config import ExecAlgorithmFactory
 from nautilus_trader.config import ExecEngineConfig
 from nautilus_trader.config import LiveDataEngineConfig
 from nautilus_trader.config import LiveExecEngineConfig
 from nautilus_trader.config import LiveRiskEngineConfig
+from nautilus_trader.config import LoggingConfig
+from nautilus_trader.config import NautilusKernelConfig
 from nautilus_trader.config import RiskEngineConfig
 from nautilus_trader.config import StrategyFactory
 from nautilus_trader.config import StreamingConfig
-from nautilus_trader.config.common import ControllerFactory
-from nautilus_trader.config.common import ExecAlgorithmFactory
-from nautilus_trader.config.common import LoggingConfig
-from nautilus_trader.config.common import NautilusKernelConfig
-from nautilus_trader.config.error import InvalidConfiguration
+from nautilus_trader.core import nautilus_pyo3
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.datetime import nanos_to_millis
 from nautilus_trader.core.uuid import UUID4
@@ -147,36 +149,68 @@ class NautilusKernel:
         if self._environment == Environment.BACKTEST:
             self._clock = TestClock()
         elif self.environment in (Environment.SANDBOX, Environment.LIVE):
-            self._clock = LiveClock(loop=loop)
+            self._clock = LiveClock()
         else:
             raise NotImplementedError(  # pragma: no cover (design-time error)
                 f"environment {self._environment} not recognized",  # pragma: no cover (design-time error)
             )
+
+        register_component_clock(self._instance_id, self._clock)
 
         # Setup logging
         logging: LoggingConfig = config.logging or LoggingConfig()
 
         if not is_logging_initialized():
             if not logging.bypass_logging:
-                # Initialize tracing for async Rust
-                init_tracing()
+                if logging.use_pyo3:
+                    set_logging_pyo3(True)
+                    # Initialize tracing for async Rust
+                    nautilus_pyo3.init_tracing()
 
-                # Initialize logging for sync Rust and Python
-                init_logging(
-                    trader_id=self._trader_id,
-                    machine_id=self._machine_id,
-                    instance_id=self._instance_id,
-                    level_stdout=log_level_from_str(logging.log_level),
-                    level_file=log_level_from_str(logging.log_level_file)
-                    if logging.log_level_file is not None
-                    else LogLevel.OFF,
-                    directory=logging.log_directory,
-                    file_name=logging.log_file_name,
-                    file_format=logging.log_file_format,
-                    component_levels=logging.log_component_levels,
-                    colors=logging.log_colors,
-                    bypass=logging.bypass_logging,
-                )
+                    # Initialize logging for sync Rust and Python
+                    nautilus_pyo3.init_logging(
+                        trader_id=nautilus_pyo3.TraderId(self._trader_id.value),
+                        instance_id=nautilus_pyo3.UUID4(self._instance_id.value),
+                        level_stdout=nautilus_pyo3.LogLevel(logging.log_level),
+                        directory=logging.log_directory,
+                        file_name=logging.log_file_name,
+                        file_format=logging.log_file_format,
+                        is_colored=logging.log_colors,
+                        is_bypassed=logging.bypass_logging,
+                        print_config=logging.print_config,
+                    )
+                    nautilus_pyo3.log_header(
+                        trader_id=nautilus_pyo3.TraderId(self._trader_id.value),
+                        machine_id=self._machine_id,
+                        instance_id=nautilus_pyo3.UUID4(self._instance_id.value),
+                        component=name,
+                    )
+                else:
+                    # Initialize logging for sync Rust and Python
+                    init_logging(
+                        trader_id=self._trader_id,
+                        machine_id=self._machine_id,
+                        instance_id=self._instance_id,
+                        level_stdout=log_level_from_str(logging.log_level),
+                        level_file=(
+                            log_level_from_str(logging.log_level_file)
+                            if logging.log_level_file is not None
+                            else LogLevel.OFF
+                        ),
+                        directory=logging.log_directory,
+                        file_name=logging.log_file_name,
+                        file_format=logging.log_file_format,
+                        component_levels=logging.log_component_levels,
+                        colors=logging.log_colors,
+                        bypass=logging.bypass_logging,
+                        print_config=logging.print_config,
+                    )
+                    log_header(
+                        trader_id=self._trader_id,
+                        machine_id=self._machine_id,
+                        instance_id=self._instance_id,
+                        component=name,
+                    )
             elif self._environment == Environment.LIVE:
                 raise InvalidConfiguration(
                     "`LoggingConfig.bypass_logging` was set `True` "
@@ -184,13 +218,6 @@ class NautilusKernel:
                 )
 
         self._log: Logger = Logger(name=name)
-
-        log_header(
-            trader_id=self._trader_id,
-            machine_id=self._machine_id,
-            instance_id=self._instance_id,
-            component=name,
-        )
 
         self._log.info("Building system kernel...")
 
@@ -379,6 +406,7 @@ class NautilusKernel:
         ########################################################################
         self._trader = Trader(
             trader_id=self._trader_id,
+            instance_id=self._instance_id,
             msgbus=self._msgbus,
             cache=self._cache,
             portfolio=self._portfolio,
@@ -894,8 +922,6 @@ class NautilusKernel:
 
         if self._writer:
             self._writer.close()
-
-        self._log.flush()
 
     def cancel_all_tasks(self) -> None:
         """

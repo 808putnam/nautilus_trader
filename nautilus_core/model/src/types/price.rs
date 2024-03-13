@@ -23,7 +23,6 @@ use std::{
 
 use anyhow::Result;
 use nautilus_core::{correctness::check_f64_in_range_inclusive, parsing::precision_from_str};
-use pyo3::prelude::*;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Deserializer, Serialize};
 use thousands::Separable;
@@ -44,7 +43,7 @@ pub const ERROR_PRICE: Price = Price {
 #[derive(Clone, Copy, Default, Eq)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct Price {
     pub raw: i64,
@@ -104,8 +103,8 @@ impl Price {
     #[must_use]
     pub fn as_decimal(&self) -> Decimal {
         // Scale down the raw value to match the precision
-        let rescaled_raw = self.raw / i64::pow(10, (FIXED_PRECISION - self.precision) as u32);
-        Decimal::from_i128_with_scale(rescaled_raw as i128, self.precision as u32)
+        let rescaled_raw = self.raw / i64::pow(10, u32::from(FIXED_PRECISION - self.precision));
+        Decimal::from_i128_with_scale(i128::from(rescaled_raw), u32::from(self.precision))
     }
 
     #[must_use]
@@ -147,7 +146,7 @@ impl From<&Price> for f64 {
 
 impl Hash for Price {
     fn hash<H: Hasher>(&self, state: &mut H) {
-        self.raw.hash(state)
+        self.raw.hash(state);
     }
 }
 
@@ -283,7 +282,7 @@ impl<'de> Deserialize<'de> for Price {
         D: Deserializer<'de>,
     {
         let price_str: &str = Deserialize::deserialize(_deserializer)?;
-        let price: Price = price_str.into();
+        let price: Self = price_str.into();
         Ok(price)
     }
 }
@@ -346,7 +345,12 @@ mod tests {
         assert_eq!(price.to_string(), "0.00812000");
         assert!(!price.is_zero());
         assert_eq!(price.as_decimal(), dec!(0.00812000));
-        assert!(approx_eq!(f64, price.as_f64(), 0.00812, epsilon = 0.000001));
+        assert!(approx_eq!(
+            f64,
+            price.as_f64(),
+            0.00812,
+            epsilon = 0.000_001
+        ));
     }
 
     #[rstest]
@@ -460,7 +464,7 @@ mod tests {
         let price1 = Price::new(1.000, 3).unwrap();
         let price2 = Price::new(1.011, 3).unwrap();
         let price3 = price1 + price2;
-        assert_eq!(price3.raw, 2_011_000_000)
+        assert_eq!(price3.raw, 2_011_000_000);
     }
 
     #[rstest]
@@ -475,14 +479,14 @@ mod tests {
     fn test_add_assign() {
         let mut price = Price::new(1.000, 3).unwrap();
         price += Price::new(1.011, 3).unwrap();
-        assert_eq!(price.raw, 2_011_000_000)
+        assert_eq!(price.raw, 2_011_000_000);
     }
 
     #[rstest]
     fn test_sub_assign() {
         let mut price = Price::new(1.000, 3).unwrap();
         price -= Price::new(0.011, 3).unwrap();
-        assert_eq!(price.raw, 989_000_000)
+        assert_eq!(price.raw, 989_000_000);
     }
 
     #[rstest]
@@ -490,7 +494,7 @@ mod tests {
         let price1 = Price::new(1.000, 3).unwrap();
         let price2 = Price::new(1.011, 3).unwrap();
         let result = price1 * price2.into();
-        assert!(approx_eq!(f64, result, 1.011, epsilon = 0.000001));
+        assert!(approx_eq!(f64, result, 1.011, epsilon = 0.000_001));
     }
 
     #[rstest]

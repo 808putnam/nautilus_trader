@@ -23,7 +23,6 @@ use std::{
 
 use anyhow::Result;
 use nautilus_core::correctness::check_f64_in_range_inclusive;
-use pyo3::prelude::*;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Deserializer, Serialize};
 use thousands::Separable;
@@ -41,7 +40,7 @@ pub const MONEY_MIN: f64 = -9_223_372_036.0;
 #[derive(Clone, Copy, Debug, Eq)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct Money {
     pub raw: i64,
@@ -77,8 +76,8 @@ impl Money {
     pub fn as_decimal(&self) -> Decimal {
         // Scale down the raw value to match the precision
         let precision = self.currency.precision;
-        let rescaled_raw = self.raw / i64::pow(10, (FIXED_PRECISION - precision) as u32);
-        Decimal::from_i128_with_scale(rescaled_raw as i128, precision as u32)
+        let rescaled_raw = self.raw / i64::pow(10, u32::from(FIXED_PRECISION - precision));
+        Decimal::from_i128_with_scale(i128::from(rescaled_raw), u32::from(precision))
     }
 
     #[must_use]
@@ -98,8 +97,7 @@ impl FromStr for Money {
         // Ensure we have both the amount and currency
         if parts.len() != 2 {
             return Err(format!(
-                "Invalid input format: '{}'. Expected '<amount> <currency>'",
-                input
+                "Invalid input format: '{input}'. Expected '<amount> <currency>'"
             ));
         }
 
@@ -297,7 +295,7 @@ impl<'de> Deserialize<'de> for Money {
         let currency = Currency::from_str(currency_str)
             .map_err(|_| serde::de::Error::custom("Invalid currency"))?;
 
-        Ok(Money::new(amount, currency).unwrap()) // TODO: Properly handle the error
+        Ok(Self::new(amount, currency).unwrap()) // TODO: Properly handle the error
     }
 }
 

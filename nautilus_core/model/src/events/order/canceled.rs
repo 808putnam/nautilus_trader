@@ -16,9 +16,8 @@
 use std::fmt::Display;
 
 use anyhow::Result;
-use derive_builder::{self, Builder};
+use derive_builder::Builder;
 use nautilus_core::{time::UnixNanos, uuid::UUID4};
-use pyo3::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use crate::identifiers::{
@@ -32,7 +31,7 @@ use crate::identifiers::{
 #[serde(tag = "type")]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct OrderCanceled {
     pub trader_id: TraderId,
@@ -69,7 +68,7 @@ impl OrderCanceled {
             event_id,
             ts_event,
             ts_init,
-            reconciliation: reconciliation as u8,
+            reconciliation: u8::from(reconciliation),
             venue_order_id,
             account_id,
         })
@@ -83,12 +82,8 @@ impl Display for OrderCanceled {
             "OrderCanceled(instrument_id={}, client_order_id={}, venue_order_id={}, account_id={}, ts_event={})",
             self.instrument_id,
             self.client_order_id,
-            self.venue_order_id
-                .map(|venue_order_id| format!("{}", venue_order_id))
-                .unwrap_or_else(|| "None".to_string()),
-            self.account_id
-                .map(|account_id| format!("{}", account_id))
-                .unwrap_or_else(|| "None".to_string()),
+            self.venue_order_id.map_or_else(|| "None".to_string(), |venue_order_id| format!("{venue_order_id}")),
+            self.account_id.map_or_else(|| "None".to_string(), |account_id| format!("{account_id}")),
             self.ts_event
         )
     }

@@ -41,6 +41,7 @@ class SubscriptionStatus(Enum):
     UNSUBSCRIBED = 0
     PENDING_STARTUP = 1
     RUNNING = 2
+    SUBSCRIBED = 3
 
 
 class BSPOrderBookDelta(OrderBookDelta):
@@ -196,12 +197,12 @@ class BetfairTicker(Data):
             ts_init=values["ts_init"],
             last_traded_price=values["last_traded_price"] if values["last_traded_price"] else None,
             traded_volume=values["traded_volume"] if values["traded_volume"] else None,
-            starting_price_near=values["starting_price_near"]
-            if values["starting_price_near"]
-            else None,
-            starting_price_far=values["starting_price_far"]
-            if values["starting_price_far"]
-            else None,
+            starting_price_near=(
+                values["starting_price_near"] if values["starting_price_near"] else None
+            ),
+            starting_price_far=(
+                values["starting_price_far"] if values["starting_price_far"] else None
+            ),
         )
 
     @staticmethod
@@ -299,6 +300,12 @@ class BetfairStartingPrice(Data):
 
 
 # Register serialization/parquet BetfairTicker
+register_serializable_object(
+    BetfairTicker,
+    BetfairTicker.to_dict,
+    BetfairTicker.from_dict,
+)
+
 register_arrow(
     data_cls=BetfairTicker,
     schema=BetfairTicker.schema(),
@@ -307,12 +314,19 @@ register_arrow(
 )
 
 # Register serialization/parquet BetfairStartingPrice
+register_serializable_object(
+    BetfairStartingPrice,
+    BetfairStartingPrice.to_dict,
+    BetfairStartingPrice.from_dict,
+)
+
 register_arrow(
     data_cls=BetfairStartingPrice,
     schema=BetfairStartingPrice.schema(),
     encoder=make_dict_serializer(schema=BetfairStartingPrice.schema()),
     decoder=make_dict_deserializer(BetfairStartingPrice),
 )
+
 
 # Register serialization/parquet BSPOrderBookDeltas
 register_serializable_object(

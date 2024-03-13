@@ -18,16 +18,11 @@ use std::{
     collections::HashMap,
     fmt::{Display, Formatter},
     hash::Hash,
-    str::FromStr,
 };
 
 use anyhow::Result;
 use indexmap::IndexMap;
-use nautilus_core::{
-    correctness::check_u8_equal, python::to_pyvalue_err, serialization::Serializable,
-    time::UnixNanos,
-};
-use pyo3::prelude::*;
+use nautilus_core::{correctness::check_u8_equal, serialization::Serializable, time::UnixNanos};
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -42,7 +37,7 @@ use crate::{
 #[serde(tag = "type")]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 #[cfg_attr(feature = "trivial_copy", derive(Copy))]
 pub struct QuoteTick {
@@ -96,6 +91,7 @@ impl QuoteTick {
     }
 
     /// Returns the metadata for the type, for use with serialization formats.
+    #[must_use]
     pub fn get_metadata(
         instrument_id: &InstrumentId,
         price_precision: u8,
@@ -109,6 +105,7 @@ impl QuoteTick {
     }
 
     /// Returns the field map for the type, for use with Arrow schemas.
+    #[must_use]
     pub fn get_fields() -> IndexMap<String, String> {
         let mut metadata = IndexMap::new();
         metadata.insert("bid_price".to_string(), "Int64".to_string());
@@ -118,47 +115,6 @@ impl QuoteTick {
         metadata.insert("ts_event".to_string(), "UInt64".to_string());
         metadata.insert("ts_init".to_string(), "UInt64".to_string());
         metadata
-    }
-
-    /// Create a new [`QuoteTick`] extracted from the given [`PyAny`].
-    pub fn from_pyobject(obj: &PyAny) -> PyResult<Self> {
-        let instrument_id_obj: &PyAny = obj.getattr("instrument_id")?.extract()?;
-        let instrument_id_str = instrument_id_obj.getattr("value")?.extract()?;
-        let instrument_id = InstrumentId::from_str(instrument_id_str).map_err(to_pyvalue_err)?;
-
-        let bid_price_py: &PyAny = obj.getattr("bid_price")?;
-        let bid_price_raw: i64 = bid_price_py.getattr("raw")?.extract()?;
-        let bid_price_prec: u8 = bid_price_py.getattr("precision")?.extract()?;
-        let bid_price = Price::from_raw(bid_price_raw, bid_price_prec).map_err(to_pyvalue_err)?;
-
-        let ask_price_py: &PyAny = obj.getattr("ask_price")?;
-        let ask_price_raw: i64 = ask_price_py.getattr("raw")?.extract()?;
-        let ask_price_prec: u8 = ask_price_py.getattr("precision")?.extract()?;
-        let ask_price = Price::from_raw(ask_price_raw, ask_price_prec).map_err(to_pyvalue_err)?;
-
-        let bid_size_py: &PyAny = obj.getattr("bid_size")?;
-        let bid_size_raw: u64 = bid_size_py.getattr("raw")?.extract()?;
-        let bid_size_prec: u8 = bid_size_py.getattr("precision")?.extract()?;
-        let bid_size = Quantity::from_raw(bid_size_raw, bid_size_prec).map_err(to_pyvalue_err)?;
-
-        let ask_size_py: &PyAny = obj.getattr("ask_size")?;
-        let ask_size_raw: u64 = ask_size_py.getattr("raw")?.extract()?;
-        let ask_size_prec: u8 = ask_size_py.getattr("precision")?.extract()?;
-        let ask_size = Quantity::from_raw(ask_size_raw, ask_size_prec).map_err(to_pyvalue_err)?;
-
-        let ts_event: UnixNanos = obj.getattr("ts_event")?.extract()?;
-        let ts_init: UnixNanos = obj.getattr("ts_init")?.extract()?;
-
-        Self::new(
-            instrument_id,
-            bid_price,
-            ask_price,
-            bid_size,
-            ask_size,
-            ts_event,
-            ts_init,
-        )
-        .map_err(to_pyvalue_err)
     }
 
     #[must_use]

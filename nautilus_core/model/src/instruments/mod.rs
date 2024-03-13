@@ -19,7 +19,9 @@ pub mod crypto_perpetual;
 pub mod currency_pair;
 pub mod equity;
 pub mod futures_contract;
+pub mod futures_spread;
 pub mod options_contract;
+pub mod options_spread;
 pub mod synthetic;
 
 #[cfg(feature = "stubs")]
@@ -30,26 +32,43 @@ use nautilus_core::time::UnixNanos;
 use rust_decimal::Decimal;
 use rust_decimal_macros::dec;
 
+use self::{
+    crypto_future::CryptoFuture, crypto_perpetual::CryptoPerpetual, currency_pair::CurrencyPair,
+    equity::Equity, futures_contract::FuturesContract, futures_spread::FuturesSpread,
+    options_contract::OptionsContract, options_spread::OptionsSpread,
+};
 use crate::{
     enums::{AssetClass, InstrumentClass},
     identifiers::{instrument_id::InstrumentId, symbol::Symbol, venue::Venue},
     types::{currency::Currency, money::Money, price::Price, quantity::Quantity},
 };
 
+#[derive(Debug)]
+pub enum InstrumentType {
+    CryptoFuture(CryptoFuture),
+    CryptoPerpetual(CryptoPerpetual),
+    CurrencyPair(CurrencyPair),
+    Equity(Equity),
+    FuturesContract(FuturesContract),
+    FuturesSpread(FuturesSpread),
+    OptionsContract(OptionsContract),
+    OptionsSpread(OptionsSpread),
+}
+
 pub trait Instrument: Any + 'static + Send {
-    fn id(&self) -> &InstrumentId;
-    fn symbol(&self) -> &Symbol {
-        &self.id().symbol
+    fn id(&self) -> InstrumentId;
+    fn symbol(&self) -> Symbol {
+        self.id().symbol
     }
-    fn venue(&self) -> &Venue {
-        &self.id().venue
+    fn venue(&self) -> Venue {
+        self.id().venue
     }
-    fn raw_symbol(&self) -> &Symbol;
+    fn raw_symbol(&self) -> Symbol;
     fn asset_class(&self) -> AssetClass;
     fn instrument_class(&self) -> InstrumentClass;
-    fn base_currency(&self) -> Option<&Currency>;
-    fn quote_currency(&self) -> &Currency;
-    fn settlement_currency(&self) -> &Currency;
+    fn base_currency(&self) -> Option<Currency>;
+    fn quote_currency(&self) -> Currency;
+    fn settlement_currency(&self) -> Currency;
     fn is_inverse(&self) -> bool;
     fn price_precision(&self) -> u8;
     fn size_precision(&self) -> u8;
@@ -104,19 +123,18 @@ pub trait Instrument: Any + 'static + Send {
         let use_quote_for_inverse = use_quote_for_inverse.unwrap_or(false);
         let (amount, currency) = if self.is_inverse() {
             if use_quote_for_inverse {
-                (quantity.as_f64(), self.quote_currency().to_owned())
+                (quantity.as_f64(), self.quote_currency())
             } else {
                 let amount =
                     quantity.as_f64() * self.multiplier().as_f64() * (1.0 / price.as_f64());
                 let currency = self
                     .base_currency()
-                    .expect("Error: no base currency for notional calculation")
-                    .to_owned();
+                    .expect("Error: no base currency for notional calculation");
                 (amount, currency)
             }
         } else {
             let amount = quantity.as_f64() * self.multiplier().as_f64() * price.as_f64();
-            let currency = self.quote_currency().to_owned();
+            let currency = self.quote_currency();
             (amount, currency)
         };
 

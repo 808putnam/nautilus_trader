@@ -17,15 +17,11 @@ use std::{collections::HashMap, sync::Arc, vec::IntoIter};
 
 use compare::Compare;
 use datafusion::{
-    error::Result,
-    logical_expr::{col, expr::Sort},
-    physical_plan::SendableRecordBatchStream,
-    prelude::*,
+    error::Result, logical_expr::expr::Sort, physical_plan::SendableRecordBatchStream, prelude::*,
 };
 use futures::StreamExt;
 use nautilus_core::ffi::cvec::CVec;
 use nautilus_model::data::{Data, HasTsInit};
-use pyo3::prelude::*;
 
 use super::kmerge_batch::{EagerStream, ElementBatchIter, KMerge};
 use crate::arrow::{
@@ -58,13 +54,13 @@ pub type QueryResult = KMerge<EagerStream<std::vec::IntoIter<Data>>, Data, TsIni
 /// a Vec of data by types that implement [`DecodeDataFromRecordBatch`].
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.persistence")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.persistence")
 )]
 pub struct DataBackendSession {
-    session_ctx: SessionContext,
-    batch_streams: Vec<EagerStream<IntoIter<Data>>>,
     pub chunk_size: usize,
     pub runtime: Arc<tokio::runtime::Runtime>,
+    session_ctx: SessionContext,
+    batch_streams: Vec<EagerStream<IntoIter<Data>>>,
 }
 
 impl DataBackendSession {
@@ -177,7 +173,7 @@ unsafe impl Send for DataBackendSession {}
 
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.persistence")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.persistence")
 )]
 pub struct DataQueryResult {
     pub chunk: Option<CVec>,

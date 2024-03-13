@@ -29,9 +29,10 @@ use crate::{
     average::{
         ama::AdaptiveMovingAverage, dema::DoubleExponentialMovingAverage,
         ema::ExponentialMovingAverage, hma::HullMovingAverage, rma::WilderMovingAverage,
-        sma::SimpleMovingAverage, wma::WeightedMovingAverage, MovingAverageType,
+        sma::SimpleMovingAverage, vidya::VariableIndexDynamicAverage, wma::WeightedMovingAverage,
+        MovingAverageType,
     },
-    momentum::rsi::RelativeStrengthIndex,
+    momentum::{cmo::ChandeMomentumOscillator, rsi::RelativeStrengthIndex},
     ratio::efficiency_ratio::EfficiencyRatio,
 };
 
@@ -129,6 +130,12 @@ pub fn indicator_dema_10() -> DoubleExponentialMovingAverage {
 }
 
 #[fixture]
+pub fn indicator_vidya_10() -> VariableIndexDynamicAverage {
+    VariableIndexDynamicAverage::new(10, Some(PriceType::Mid), Some(MovingAverageType::Wilder))
+        .unwrap()
+}
+
+#[fixture]
 pub fn indicator_wma_10() -> WeightedMovingAverage {
     let weights = vec![0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0];
     WeightedMovingAverage::new(10, weights, Some(PriceType::Mid)).unwrap()
@@ -148,4 +155,9 @@ pub fn efficiency_ratio_10() -> EfficiencyRatio {
 #[fixture]
 pub fn rsi_10() -> RelativeStrengthIndex {
     RelativeStrengthIndex::new(10, Some(MovingAverageType::Exponential)).unwrap()
+}
+
+#[fixture]
+pub fn cmo_10() -> ChandeMomentumOscillator {
+    ChandeMomentumOscillator::new(10, Some(MovingAverageType::Wilder)).unwrap()
 }

@@ -13,10 +13,13 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+import msgspec
 import pandas as pd
 import pytz
 
-from nautilus_trader.config import ActorConfig
+from nautilus_trader.backtest.config import FXRolloverInterestConfig
+from nautilus_trader.backtest.config import SimulationModuleConfig
+from nautilus_trader.common.config import ActorConfig
 
 from cpython.datetime cimport datetime
 from libc.stdint cimport uint64_t
@@ -34,10 +37,6 @@ from nautilus_trader.model.objects cimport Currency
 from nautilus_trader.model.objects cimport Money
 from nautilus_trader.model.objects cimport Price
 from nautilus_trader.model.position cimport Position
-
-
-class SimulationModuleConfig(ActorConfig):
-    pass
 
 
 cdef class SimulationModule(Actor):
@@ -90,19 +89,6 @@ cdef class SimulationModule(Actor):
 _TZ_US_EAST = pytz.timezone("US/Eastern")
 
 
-class FXRolloverInterestConfig(ActorConfig):
-    """
-    Provides an FX rollover interest simulation module.
-
-    Parameters
-    ----------
-    rate_data : pd.DataFrame
-        The interest rate data for the internal rollover interest calculator.
-
-    """
-    rate_data: pd.DataFrame
-
-
 cdef class FXRolloverInterestModule(SimulationModule):
     """
     Provides an FX rollover interest simulation module.
@@ -114,6 +100,10 @@ cdef class FXRolloverInterestModule(SimulationModule):
 
     def __init__(self, config: FXRolloverInterestConfig):
         super().__init__(config)
+
+        rate_data = config.rate_data
+        if not isinstance(rate_data, pd.DataFrame):
+            rate_data = pd.read_json(msgspec.json.decode(rate_data))
 
         self._calculator = RolloverInterestCalculator(data=config.rate_data)
         self._rollover_time = None  # Initialized at first rollover

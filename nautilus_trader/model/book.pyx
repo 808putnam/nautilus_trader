@@ -45,6 +45,7 @@ from nautilus_trader.core.rust.model cimport level_price
 from nautilus_trader.core.rust.model cimport level_size
 from nautilus_trader.core.rust.model cimport orderbook_add
 from nautilus_trader.core.rust.model cimport orderbook_apply_delta
+from nautilus_trader.core.rust.model cimport orderbook_apply_deltas
 from nautilus_trader.core.rust.model cimport orderbook_apply_depth
 from nautilus_trader.core.rust.model cimport orderbook_asks
 from nautilus_trader.core.rust.model cimport orderbook_best_ask_price
@@ -242,8 +243,16 @@ cdef class OrderBook(Data):
         sequence : uint64, default 0
             The unique sequence number for the update. If default 0 then will increment the `sequence`.
 
+        Raises
+        ------
+        RuntimeError
+            If the book type is L1_MBP.
+
         """
         Condition.not_none(order, "order")
+
+        if self.book_type == BookType.L1_MBP:
+            raise RuntimeError("Invalid book operation: cannot add order for L1_MBP book")
 
         orderbook_add(&self._mem, order._mem, ts_event, sequence)
 
@@ -328,9 +337,7 @@ cdef class OrderBook(Data):
         """
         Condition.not_none(deltas, "deltas")
 
-        cdef OrderBookDelta delta
-        for delta in deltas.deltas:
-            self.apply_delta(delta)
+        orderbook_apply_deltas(&self._mem, &deltas._mem)
 
     cpdef void apply_depth(self, OrderBookDepth10 depth):
         """
@@ -369,13 +376,17 @@ cdef class OrderBook(Data):
         """
         Check book integrity.
 
-        For now will panic from Rust and print the error message to stdout.
-
         For all order books:
         - The bid side price should not be greater than the ask side price.
 
+        Raises
+        ------
+        RuntimeError
+            If book integrity check fails.
+
         """
-        orderbook_check_integrity(&self._mem)
+        if not orderbook_check_integrity(&self._mem):
+            raise RuntimeError(f"Integrity error: orders in cross [{self.best_bid_price()} {self.best_ask_price()}]")
 
     cpdef list bids(self):
         """

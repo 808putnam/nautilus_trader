@@ -25,10 +25,12 @@ use indexmap::IndexMap;
 use nautilus_core::uuid::UUID4;
 use nautilus_model::identifiers::trader_id::TraderId;
 use serde::{Deserialize, Serialize};
-use serde_json;
+use serde_json::Value;
 use ustr::Ustr;
 
-use crate::{handlers::MessageHandler, redis::handle_messages_with_redis};
+use crate::handlers::MessageHandler;
+#[cfg(feature = "redis")]
+use crate::redis::handle_messages_with_redis;
 
 // Represents a subscription to a particular topic.
 //
@@ -131,21 +133,6 @@ impl fmt::Display for BusMessage {
 /// For example, `c??p` would match both of the above examples and `coop`.
 #[derive(Clone)]
 pub struct MessageBus {
-    tx: Option<Sender<BusMessage>>,
-    /// mapping from topic to the corresponding handler
-    /// a topic can be a string with wildcards
-    /// * '?' - any character
-    /// * '*' - any number of any characters
-    subscriptions: IndexMap<Subscription, Vec<Ustr>>,
-    /// maps a pattern to all the handlers registered for it
-    /// this is updated whenever a new subscription is created.
-    patterns: IndexMap<Ustr, Vec<Subscription>>,
-    /// handles a message or a request destined for a specific endpoint.
-    endpoints: IndexMap<Ustr, MessageHandler>,
-    /// Relates a request with a response
-    /// a request maps it's id to a handler so that a response
-    /// with the same id can later be handled.
-    correlation_index: IndexMap<UUID4, MessageHandler>,
     /// The trader ID associated with the message bus.
     pub trader_id: TraderId,
     /// The instance ID associated with the message bus.
@@ -162,6 +149,21 @@ pub struct MessageBus {
     pub pub_count: u64,
     /// If the message bus is backed by a database.
     pub has_backing: bool,
+    tx: Option<Sender<BusMessage>>,
+    /// mapping from topic to the corresponding handler
+    /// a topic can be a string with wildcards
+    /// * '?' - any character
+    /// * '*' - any number of any characters
+    subscriptions: IndexMap<Subscription, Vec<Ustr>>,
+    /// maps a pattern to all the handlers registered for it
+    /// this is updated whenever a new subscription is created.
+    patterns: IndexMap<Ustr, Vec<Subscription>>,
+    /// handles a message or a request destined for a specific endpoint.
+    endpoints: IndexMap<Ustr, MessageHandler>,
+    /// Relates a request with a response
+    /// a request maps it's id to a handler so that a response
+    /// with the same id can later be handled.
+    correlation_index: IndexMap<UUID4, MessageHandler>,
 }
 
 impl MessageBus {
@@ -179,9 +181,12 @@ impl MessageBus {
             .map_or(false, |v| v != &serde_json::Value::Null);
         let tx = if has_backing {
             let (tx, rx) = channel::<BusMessage>();
-            thread::spawn(move || {
-                Self::handle_messages(rx, trader_id, instance_id, config);
-            });
+            let _join_handler = thread::Builder::new()
+                .name("msgbus".to_string())
+                .spawn(move || {
+                    Self::handle_messages(rx, trader_id, instance_id, config);
+                })
+                .expect("Error spawning `msgbus` thread");
             Some(tx)
         } else {
             None
@@ -276,7 +281,7 @@ impl MessageBus {
     /// Deregisters the given `handler` for the `endpoint` address.
     pub fn deregister(&mut self, endpoint: &str) {
         // Removes entry if it exists for endpoint
-        self.endpoints.remove(&Ustr::from(endpoint));
+        self.endpoints.shift_remove(&Ustr::from(endpoint));
     }
 
     /// Subscribes the given `handler` to the `topic`.
@@ -309,7 +314,7 @@ impl MessageBus {
     /// Unsubscribes the given `handler` from the `topic`.
     pub fn unsubscribe(&mut self, topic: &str, handler: MessageHandler) {
         let sub = Subscription::new(Ustr::from(topic), handler, self.subscriptions.len(), None);
-        self.subscriptions.remove(&sub);
+        self.subscriptions.shift_remove(&sub);
     }
 
     /// Returns the handler for the given `endpoint`.
@@ -345,7 +350,7 @@ impl MessageBus {
     /// index.
     #[must_use]
     pub fn response_handler(&mut self, correlation_id: &UUID4) -> Option<MessageHandler> {
-        self.correlation_index.remove(correlation_id)
+        self.correlation_index.shift_remove(correlation_id)
     }
 
     #[must_use]
@@ -418,10 +423,32 @@ impl MessageBus {
             .expect("`MessageBusConfig` database `type` must be a valid string");
 
         match backing_type {
-            "redis" => handle_messages_with_redis(rx, trader_id, instance_id, config),
+            "redis" => handle_messages_with_redis_if_enabled(rx, trader_id, instance_id, config),
             other => panic!("Unsupported message bus backing database type '{other}'"),
         }
     }
+}
+
+/// Handles messages using Redis if the `redis` feature is enabled.
+#[cfg(feature = "redis")]
+fn handle_messages_with_redis_if_enabled(
+    rx: Receiver<BusMessage>,
+    trader_id: TraderId,
+    instance_id: UUID4,
+    config: HashMap<String, Value>,
+) {
+    handle_messages_with_redis(rx, trader_id, instance_id, config);
+}
+
+/// Handles messages using a default method if the "redis" feature is not enabled.
+#[cfg(not(feature = "redis"))]
+fn handle_messages_with_redis_if_enabled(
+    _rx: Receiver<BusMessage>,
+    _trader_id: TraderId,
+    _instance_id: UUID4,
+    _config: HashMap<String, Value>,
+) {
+    panic!("`redis` feature is not enabled");
 }
 
 /// Match a topic and a string pattern
@@ -459,6 +486,7 @@ pub fn is_matching(topic: &Ustr, pattern: &Ustr) -> bool {
 ////////////////////////////////////////////////////////////////////////////////
 // Tests
 ////////////////////////////////////////////////////////////////////////////////
+#[cfg(not(feature = "python"))]
 #[cfg(test)]
 mod tests {
     use std::sync::Arc;

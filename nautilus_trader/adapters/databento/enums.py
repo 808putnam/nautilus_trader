@@ -14,39 +14,24 @@
 # -------------------------------------------------------------------------------------------------
 
 from enum import Enum
-from enum import unique
 
 
-@unique
-class DatabentoInstrumentClass(Enum):
-    BOND = "B"
-    CALL = "C"
-    FUTURE = "F"
-    STOCK = "K"
-    MIXED_SPREAD = "M"
-    PUT = "P"
-    FUTURE_SPREAD = "S"
-    OPTION_SPREAD = "T"
-    FX_SPOT = "X"
+class DatabentoSchema(Enum):
+    """
+    Represents a Databento schema.
+    """
 
-
-@unique
-class DatabentoStatisticType(Enum):
-    OPENING_PRICE = 1
-    INDICATIVE_OPENING_PRICE = 2
-    SETTLEMENT_PRICE = 3
-    TRADING_SESSION_LOW_PRICE = 4
-    TRADING_SESSION_HIGH_PRICE = 5
-    CLEARED_VOLUME = 6
-    LOWEST_OFFER = 7
-    HIGHEST_BID = 8
-    OPEN_INTEREST = 9
-    FIXING_PRICE = 10
-    CLOSE_PRICE = 11
-    NET_CHANGE = 12
-
-
-@unique
-class DatabentoStatisticUpdateAction(Enum):
-    ADDED = 1
-    DELETED = 2
+    MBO = "mbo"
+    MBP_1 = "mbp-1"
+    MBP_10 = "mbp-10"
+    TBBO = "tbbo"
+    TRADES = "trades"
+    OHLCV_1S = "ohlcv-1s"
+    OHLCV_1M = "ohlcv-1m"
+    OHLCV_1H = "ohlcv-1h"
+    OHLCV_1D = "ohlcv-1d"
+    OHLCV_EOD = "ohlcv-eod"
+    DEFINITION = "definition"
+    STATISTICS = "statistics"
+    STATUS = "status"
+    IMBALANCE = "imbalance"

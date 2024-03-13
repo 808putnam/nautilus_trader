@@ -16,9 +16,8 @@
 use std::fmt::{Display, Formatter};
 
 use anyhow::Result;
-use derive_builder::{self, Builder};
+use derive_builder::Builder;
 use nautilus_core::{time::UnixNanos, uuid::UUID4};
-use pyo3::prelude::*;
 use serde::{Deserialize, Serialize};
 use ustr::Ustr;
 
@@ -33,7 +32,7 @@ use crate::identifiers::{
 #[serde(tag = "type")]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct OrderRejected {
     pub trader_id: TraderId,
@@ -61,8 +60,8 @@ impl OrderRejected {
         ts_event: UnixNanos,
         ts_init: UnixNanos,
         reconciliation: bool,
-    ) -> Result<OrderRejected> {
-        Ok(OrderRejected {
+    ) -> Result<Self> {
+        Ok(Self {
             trader_id,
             strategy_id,
             instrument_id,
@@ -72,7 +71,7 @@ impl OrderRejected {
             event_id,
             ts_event,
             ts_init,
-            reconciliation: reconciliation as u8,
+            reconciliation: u8::from(reconciliation),
         })
     }
 }
@@ -99,7 +98,7 @@ mod tests {
 
     #[rstest]
     fn test_order_rejected_display(order_rejected_insufficient_margin: OrderRejected) {
-        let display = format!("{}", order_rejected_insufficient_margin);
+        let display = format!("{order_rejected_insufficient_margin}");
         assert_eq!(display, "OrderRejected(instrument_id=BTCUSDT.COINBASE, client_order_id=O-20200814-102234-001-001-1, \
         reason=INSUFFICIENT_MARGIN, ts_event=0)");
     }

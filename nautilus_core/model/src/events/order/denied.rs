@@ -16,9 +16,8 @@
 use std::fmt::{Display, Formatter};
 
 use anyhow::Result;
-use derive_builder::{self, Builder};
+use derive_builder::Builder;
 use nautilus_core::{time::UnixNanos, uuid::UUID4};
-use pyo3::prelude::*;
 use serde::{Deserialize, Serialize};
 use ustr::Ustr;
 
@@ -33,7 +32,7 @@ use crate::identifiers::{
 #[serde(tag = "type")]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct OrderDenied {
     pub trader_id: TraderId,
@@ -57,8 +56,8 @@ impl OrderDenied {
         event_id: UUID4,
         ts_event: UnixNanos,
         ts_init: UnixNanos,
-    ) -> Result<OrderDenied> {
-        Ok(OrderDenied {
+    ) -> Result<Self> {
+        Ok(Self {
             trader_id,
             strategy_id,
             instrument_id,
@@ -93,7 +92,7 @@ mod tests {
 
     #[rstest]
     fn test_order_denied_display(order_denied_max_submitted_rate: OrderDenied) {
-        let display = format!("{}", order_denied_max_submitted_rate);
+        let display = format!("{order_denied_max_submitted_rate}");
         assert_eq!(display, "OrderDenied(instrument_id=BTCUSDT.COINBASE, client_order_id=O-20200814-102234-001-001-1,reason=Exceeded MAX_ORDER_SUBMIT_RATE)");
     }
 }

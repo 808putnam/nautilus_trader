@@ -32,11 +32,10 @@ use pyo3::{
     ffi,
     prelude::*,
     types::{PyList, PyString},
-    Python,
 };
 
 use crate::{
-    handlers::{MessageHandler, PyCallableWrapper},
+    handlers::MessageHandler,
     msgbus::{is_matching, MessageBus, Subscription},
 };
 
@@ -48,8 +47,8 @@ use crate::{
 /// It implements the `Deref` trait, allowing instances of `MessageBus_API` to be
 /// dereferenced to `MessageBus`, providing access to `TestClock`'s methods without
 /// having to manually access the underlying `MessageBus` instance.
-#[allow(non_camel_case_types)]
 #[repr(C)]
+#[allow(non_camel_case_types)]
 pub struct MessageBus_API(Box<MessageBus>);
 
 impl Deref for MessageBus_API {
@@ -329,15 +328,6 @@ pub unsafe extern "C" fn msgbus_matching_callbacks(
         .map(|s| s.handler.handler_id.as_ptr().cast::<c_char>())
         .collect::<Vec<*const c_char>>()
         .into()
-}
-
-#[allow(clippy::drop_non_drop)]
-#[no_mangle]
-pub extern "C" fn vec_pycallable_drop(v: CVec) {
-    let CVec { ptr, len, cap } = v;
-    let data: Vec<PyCallableWrapper> =
-        unsafe { Vec::from_raw_parts(ptr.cast::<PyCallableWrapper>(), len, cap) };
-    drop(data); // Memory freed here
 }
 
 /// # Safety

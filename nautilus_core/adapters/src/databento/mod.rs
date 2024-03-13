@@ -14,8 +14,11 @@
 // -------------------------------------------------------------------------------------------------
 
 pub mod common;
+pub mod decode;
+pub mod enums;
+pub mod live;
 pub mod loader;
-pub mod parsing;
+pub mod symbology;
 pub mod types;
 
 #[cfg(feature = "python")]

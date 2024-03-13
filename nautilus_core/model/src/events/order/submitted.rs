@@ -16,9 +16,8 @@
 use std::fmt::{Display, Formatter};
 
 use anyhow::Result;
-use derive_builder::{self, Builder};
+use derive_builder::Builder;
 use nautilus_core::{time::UnixNanos, uuid::UUID4};
-use pyo3::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use crate::identifiers::{
@@ -32,7 +31,7 @@ use crate::identifiers::{
 #[serde(tag = "type")]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct OrderSubmitted {
     pub trader_id: TraderId,
@@ -56,8 +55,8 @@ impl OrderSubmitted {
         event_id: UUID4,
         ts_event: UnixNanos,
         ts_init: UnixNanos,
-    ) -> Result<OrderSubmitted> {
-        Ok(OrderSubmitted {
+    ) -> Result<Self> {
+        Ok(Self {
             trader_id,
             strategy_id,
             instrument_id,
@@ -93,7 +92,7 @@ mod tests {
 
     #[rstest]
     fn test_order_rejected_display(order_submitted: OrderSubmitted) {
-        let display = format!("{}", order_submitted);
+        let display = format!("{order_submitted}");
         assert_eq!(
             display,
             "OrderSubmitted(instrument_id=BTCUSDT.COINBASE, client_order_id=O-20200814-102234-001-001-1, account_id=SIM-001, ts_event=0)"

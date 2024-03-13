@@ -20,7 +20,6 @@ use std::{
 
 use anyhow::Result;
 use nautilus_core::time::UnixNanos;
-use pyo3::prelude::*;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
@@ -35,55 +34,32 @@ use crate::{
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 #[cfg_attr(feature = "trivial_copy", derive(Copy))]
 pub struct CryptoPerpetual {
-    #[pyo3(get)]
     pub id: InstrumentId,
-    #[pyo3(get)]
     pub raw_symbol: Symbol,
-    #[pyo3(get)]
     pub base_currency: Currency,
-    #[pyo3(get)]
     pub quote_currency: Currency,
-    #[pyo3(get)]
     pub settlement_currency: Currency,
-    #[pyo3(get)]
     pub is_inverse: bool,
-    #[pyo3(get)]
     pub price_precision: u8,
-    #[pyo3(get)]
     pub size_precision: u8,
-    #[pyo3(get)]
     pub price_increment: Price,
-    #[pyo3(get)]
     pub size_increment: Quantity,
-    #[pyo3(get)]
     pub maker_fee: Decimal,
-    #[pyo3(get)]
     pub taker_fee: Decimal,
-    #[pyo3(get)]
     pub margin_init: Decimal,
-    #[pyo3(get)]
     pub margin_maint: Decimal,
-    #[pyo3(get)]
     pub lot_size: Option<Quantity>,
-    #[pyo3(get)]
     pub max_quantity: Option<Quantity>,
-    #[pyo3(get)]
     pub min_quantity: Option<Quantity>,
-    #[pyo3(get)]
     pub max_notional: Option<Money>,
-    #[pyo3(get)]
     pub min_notional: Option<Money>,
-    #[pyo3(get)]
     pub max_price: Option<Price>,
-    #[pyo3(get)]
     pub min_price: Option<Price>,
-    #[pyo3(get)]
     pub ts_event: UnixNanos,
-    #[pyo3(get)]
     pub ts_init: UnixNanos,
 }
 
@@ -157,12 +133,12 @@ impl Hash for CryptoPerpetual {
 }
 
 impl Instrument for CryptoPerpetual {
-    fn id(&self) -> &InstrumentId {
-        &self.id
+    fn id(&self) -> InstrumentId {
+        self.id
     }
 
-    fn raw_symbol(&self) -> &Symbol {
-        &self.raw_symbol
+    fn raw_symbol(&self) -> Symbol {
+        self.raw_symbol
     }
 
     fn asset_class(&self) -> AssetClass {
@@ -173,16 +149,16 @@ impl Instrument for CryptoPerpetual {
         InstrumentClass::Swap
     }
 
-    fn quote_currency(&self) -> &Currency {
-        &self.quote_currency
+    fn quote_currency(&self) -> Currency {
+        self.quote_currency
     }
 
-    fn base_currency(&self) -> Option<&Currency> {
-        Some(&self.base_currency)
+    fn base_currency(&self) -> Option<Currency> {
+        Some(self.base_currency)
     }
 
-    fn settlement_currency(&self) -> &Currency {
-        &self.settlement_currency
+    fn settlement_currency(&self) -> Currency {
+        self.settlement_currency
     }
 
     fn is_inverse(&self) -> bool {
@@ -240,15 +216,19 @@ impl Instrument for CryptoPerpetual {
     fn as_any(&self) -> &dyn Any {
         self
     }
+
     fn taker_fee(&self) -> Decimal {
         self.taker_fee
     }
+
     fn maker_fee(&self) -> Decimal {
         self.maker_fee
     }
+
     fn margin_init(&self) -> Decimal {
         self.margin_init
     }
+
     fn margin_maint(&self) -> Decimal {
         self.margin_maint
     }
@@ -265,7 +245,7 @@ mod tests {
 
     #[rstest]
     fn test_equality(crypto_perpetual_ethusdt: CryptoPerpetual) {
-        let cloned = crypto_perpetual_ethusdt.clone();
-        assert_eq!(crypto_perpetual_ethusdt, cloned)
+        let cloned = crypto_perpetual_ethusdt;
+        assert_eq!(crypto_perpetual_ethusdt, cloned);
     }
 }

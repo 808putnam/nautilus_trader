@@ -20,7 +20,6 @@ use nautilus_model::{
     data::{bar::Bar, quote::QuoteTick, trade::TradeTick},
     enums::PriceType,
 };
-use pyo3::prelude::*;
 
 use crate::indicator::Indicator;
 
@@ -29,15 +28,18 @@ use crate::indicator::Indicator;
 /// relation to the volatility, this could be thought of as a proxy for noise.
 #[repr(C)]
 #[derive(Debug)]
-#[pyclass(module = "nautilus_trader.core.nautilus_pyo3.indicators")]
+#[cfg_attr(
+    feature = "python",
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.indicators")
+)]
 pub struct EfficiencyRatio {
     /// The rolling window period for the indicator (>= 2).
     pub period: usize,
     pub price_type: PriceType,
     pub value: f64,
     pub inputs: Vec<f64>,
-    pub is_initialized: bool,
-    _deltas: Vec<f64>,
+    pub initialized: bool,
+    deltas: Vec<f64>,
 }
 
 impl Display for EfficiencyRatio {
@@ -54,16 +56,16 @@ impl Indicator for EfficiencyRatio {
     fn has_inputs(&self) -> bool {
         !self.inputs.is_empty()
     }
-    fn is_initialized(&self) -> bool {
-        self.is_initialized
+    fn initialized(&self) -> bool {
+        self.initialized
     }
 
-    fn handle_quote_tick(&mut self, tick: &QuoteTick) {
-        self.update_raw(tick.extract_price(self.price_type).into());
+    fn handle_quote_tick(&mut self, quote: &QuoteTick) {
+        self.update_raw(quote.extract_price(self.price_type).into());
     }
 
-    fn handle_trade_tick(&mut self, tick: &TradeTick) {
-        self.update_raw((&tick.price).into());
+    fn handle_trade_tick(&mut self, trade: &TradeTick) {
+        self.update_raw((&trade.price).into());
     }
 
     fn handle_bar(&mut self, bar: &Bar) {
@@ -73,7 +75,7 @@ impl Indicator for EfficiencyRatio {
     fn reset(&mut self) {
         self.value = 0.0;
         self.inputs.clear();
-        self.is_initialized = false;
+        self.initialized = false;
     }
 }
 
@@ -84,8 +86,8 @@ impl EfficiencyRatio {
             price_type: price_type.unwrap_or(PriceType::Last),
             value: 0.0,
             inputs: Vec::with_capacity(period),
-            _deltas: Vec::with_capacity(period),
-            is_initialized: false,
+            deltas: Vec::with_capacity(period),
+            initialized: false,
         })
     }
 
@@ -94,13 +96,13 @@ impl EfficiencyRatio {
         if self.inputs.len() < 2 {
             self.value = 0.0;
             return;
-        } else if !self.is_initialized && self.inputs.len() >= self.period {
-            self.is_initialized = true;
+        } else if !self.initialized && self.inputs.len() >= self.period {
+            self.initialized = true;
         }
         let last_diff =
             (self.inputs[self.inputs.len() - 1] - self.inputs[self.inputs.len() - 2]).abs();
-        self._deltas.push(last_diff);
-        let sum_deltas = self._deltas.iter().sum::<f64>().abs();
+        self.deltas.push(last_diff);
+        let sum_deltas = self.deltas.iter().sum::<f64>().abs();
         let net_diff = (self.inputs[self.inputs.len() - 1] - self.inputs[0]).abs();
         self.value = if sum_deltas == 0.0 {
             0.0
@@ -125,7 +127,7 @@ mod tests {
         let display_str = format!("{efficiency_ratio_10}");
         assert_eq!(display_str, "EfficiencyRatio(10)");
         assert_eq!(efficiency_ratio_10.period, 10);
-        assert!(!efficiency_ratio_10.is_initialized);
+        assert!(!efficiency_ratio_10.initialized);
     }
 
     #[rstest]
@@ -134,10 +136,10 @@ mod tests {
             efficiency_ratio_10.update_raw(f64::from(i));
         }
         assert_eq!(efficiency_ratio_10.inputs.len(), 9);
-        assert!(!efficiency_ratio_10.is_initialized);
+        assert!(!efficiency_ratio_10.initialized);
         efficiency_ratio_10.update_raw(1.0);
         assert_eq!(efficiency_ratio_10.inputs.len(), 10);
-        assert!(efficiency_ratio_10.is_initialized);
+        assert!(efficiency_ratio_10.initialized);
     }
 
     #[rstest]
@@ -203,9 +205,9 @@ mod tests {
         for i in 1..=10 {
             efficiency_ratio_10.update_raw(f64::from(i));
         }
-        assert!(efficiency_ratio_10.is_initialized);
+        assert!(efficiency_ratio_10.initialized);
         efficiency_ratio_10.reset();
-        assert!(!efficiency_ratio_10.is_initialized);
+        assert!(!efficiency_ratio_10.initialized);
         assert_eq!(efficiency_ratio_10.value, 0.0);
     }
 

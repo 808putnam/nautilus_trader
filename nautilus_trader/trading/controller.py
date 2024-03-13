@@ -14,7 +14,7 @@
 # -------------------------------------------------------------------------------------------------
 
 from nautilus_trader.common.actor import Actor
-from nautilus_trader.config.common import ActorConfig
+from nautilus_trader.common.config import ActorConfig
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.trading.strategy import Strategy
 from nautilus_trader.trading.trader import Trader
@@ -29,7 +29,7 @@ class Controller(Actor):
     trader : Trader
         The reference to the trader instance to control.
     config : ActorConfig, optional
-        The configuratuon for the controller
+        The configuration for the controller
 
     Raises
     ------

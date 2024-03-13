@@ -24,8 +24,9 @@ import numpy as np
 import pandas as pd
 import pytz
 from fsspec.implementations.local import LocalFileSystem
-from pandas.io.parsers.readers import TextFileReader
 
+from nautilus_trader.adapters.betfair.constants import BETFAIR_PRICE_PRECISION
+from nautilus_trader.adapters.betfair.constants import BETFAIR_QUANTITY_PRECISION
 from nautilus_trader.core.correctness import PyCondition
 from nautilus_trader.core.datetime import dt_to_unix_nanos
 from nautilus_trader.core.datetime import secs_to_nanos
@@ -97,6 +98,43 @@ class TestInstrumentProvider:
             min_notional=Money(0.00010000, BTC),
             max_price=Price(1000, precision=8),
             min_price=Price(1e-8, precision=8),
+            margin_init=Decimal("0"),
+            margin_maint=Decimal("0"),
+            maker_fee=Decimal("0.0010"),
+            taker_fee=Decimal("0.0010"),
+            ts_event=0,
+            ts_init=0,
+        )
+
+    @staticmethod
+    def adausdt_binance() -> CurrencyPair:
+        """
+        Return the Binance Spot ADA/USDT instrument for backtesting.
+
+        Returns
+        -------
+        CurrencyPair
+
+        """
+        return CurrencyPair(
+            instrument_id=InstrumentId(
+                symbol=Symbol("ADAUSDT"),
+                venue=Venue("BINANCE"),
+            ),
+            raw_symbol=Symbol("ADAUSDT"),
+            base_currency=ADA,
+            quote_currency=USDT,
+            price_precision=4,
+            size_precision=1,
+            price_increment=Price(0.0001, precision=4),
+            size_increment=Quantity(0.1, precision=1),
+            lot_size=Quantity(0.1, precision=1),
+            max_quantity=Quantity(900_000, precision=1),
+            min_quantity=Quantity(0.1, precision=1),
+            max_notional=None,
+            min_notional=Money(0.00010000, BTC),
+            max_price=Price(1000, precision=4),
+            min_price=Price(1e-8, precision=4),
             margin_init=Decimal("0"),
             margin_maint=Decimal("0"),
             maker_fee=Decimal("0.0010"),
@@ -499,7 +537,7 @@ class TestInstrumentProvider:
 
     @staticmethod
     def future(
-        symbol: str = "ESZ21",
+        symbol: str = "ESZ1",
         underlying: str = "ES",
         venue: str = "GLBX",
     ) -> FuturesContract:
@@ -574,6 +612,8 @@ class TestInstrumentProvider:
             selection_id=50214,
             selection_name="Kansas City Chiefs",
             currency="GBP",
+            price_precision=BETFAIR_PRICE_PRECISION,
+            size_precision=BETFAIR_QUANTITY_PRECISION,
             ts_event=0,
             ts_init=0,
         )
@@ -692,7 +732,7 @@ class TestDataProvider:
         with fsspec.open(uri) as f:
             return f.read()
 
-    def read_csv(self, path: str, **kwargs: Any) -> TextFileReader:
+    def read_csv(self, path: str, **kwargs: Any) -> pd.DataFrame:
         uri = self._make_uri(path=path)
         with fsspec.open(uri) as f:
             return pd.read_csv(f, **kwargs)

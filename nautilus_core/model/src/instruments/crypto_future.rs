@@ -20,7 +20,6 @@ use std::{
 
 use anyhow::Result;
 use nautilus_core::time::UnixNanos;
-use pyo3::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use super::Instrument;
@@ -34,49 +33,29 @@ use crate::{
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 #[cfg_attr(feature = "trivial_copy", derive(Copy))]
 pub struct CryptoFuture {
-    #[pyo3(get)]
     pub id: InstrumentId,
-    #[pyo3(get)]
     pub raw_symbol: Symbol,
-    #[pyo3(get)]
     pub underlying: Currency,
-    #[pyo3(get)]
     pub quote_currency: Currency,
-    #[pyo3(get)]
     pub settlement_currency: Currency,
-    #[pyo3(get)]
     pub activation_ns: UnixNanos,
-    #[pyo3(get)]
     pub expiration_ns: UnixNanos,
-    #[pyo3(get)]
     pub price_precision: u8,
-    #[pyo3(get)]
     pub size_precision: u8,
-    #[pyo3(get)]
     pub price_increment: Price,
-    #[pyo3(get)]
     pub size_increment: Quantity,
-    #[pyo3(get)]
     pub lot_size: Option<Quantity>,
-    #[pyo3(get)]
     pub max_quantity: Option<Quantity>,
-    #[pyo3(get)]
     pub min_quantity: Option<Quantity>,
-    #[pyo3(get)]
     pub max_notional: Option<Money>,
-    #[pyo3(get)]
     pub min_notional: Option<Money>,
-    #[pyo3(get)]
     pub max_price: Option<Price>,
-    #[pyo3(get)]
     pub min_price: Option<Price>,
-    #[pyo3(get)]
     pub ts_event: UnixNanos,
-    #[pyo3(get)]
     pub ts_init: UnixNanos,
 }
 
@@ -144,12 +123,12 @@ impl Hash for CryptoFuture {
 }
 
 impl Instrument for CryptoFuture {
-    fn id(&self) -> &InstrumentId {
-        &self.id
+    fn id(&self) -> InstrumentId {
+        self.id
     }
 
-    fn raw_symbol(&self) -> &Symbol {
-        &self.raw_symbol
+    fn raw_symbol(&self) -> Symbol {
+        self.raw_symbol
     }
 
     fn asset_class(&self) -> AssetClass {
@@ -160,16 +139,16 @@ impl Instrument for CryptoFuture {
         InstrumentClass::Future
     }
 
-    fn quote_currency(&self) -> &Currency {
-        &self.quote_currency
+    fn quote_currency(&self) -> Currency {
+        self.quote_currency
     }
 
-    fn base_currency(&self) -> Option<&Currency> {
+    fn base_currency(&self) -> Option<Currency> {
         None
     }
 
-    fn settlement_currency(&self) -> &Currency {
-        &self.settlement_currency
+    fn settlement_currency(&self) -> Currency {
+        self.settlement_currency
     }
 
     fn is_inverse(&self) -> bool {
@@ -241,7 +220,7 @@ mod tests {
 
     #[rstest]
     fn test_equality(crypto_future_btcusdt: CryptoFuture) {
-        let cloned = crypto_future_btcusdt.clone();
+        let cloned = crypto_future_btcusdt;
         assert_eq!(crypto_future_btcusdt, cloned);
     }
 }

@@ -19,7 +19,6 @@ use std::{
 };
 
 use nautilus_core::{time::UnixNanos, uuid::UUID4};
-use pyo3::prelude::*;
 use ustr::Ustr;
 
 use super::base::{Order, OrderCore, OrderError};
@@ -40,7 +39,7 @@ use crate::{
 
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct TrailingStopLimitOrder {
     core: OrderCore,
@@ -345,7 +344,7 @@ impl Order for TrailingStopLimitOrder {
         self.core.apply(event)?;
 
         if is_order_filled {
-            self.core.set_slippage(self.price)
+            self.core.set_slippage(self.price);
         };
 
         Ok(())
@@ -367,7 +366,7 @@ impl Order for TrailingStopLimitOrder {
 
 impl From<OrderInitialized> for TrailingStopLimitOrder {
     fn from(event: OrderInitialized) -> Self {
-        TrailingStopLimitOrder::new(
+        Self::new(
             event.trader_id,
             event.strategy_id,
             event.instrument_id,

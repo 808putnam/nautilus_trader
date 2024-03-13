@@ -17,7 +17,7 @@ from collections import deque
 from decimal import Decimal
 from heapq import heappush
 
-from nautilus_trader.config.error import InvalidConfiguration
+from nautilus_trader.common.config import InvalidConfiguration
 
 from libc.stdint cimport uint64_t
 
@@ -154,7 +154,7 @@ cdef class SimulatedExchange:
         bint use_position_ids = True,
         bint use_random_ids = False,
         bint use_reduce_only = True,
-    ):
+    ) -> None:
         Condition.list_type(instruments, Instrument, "instruments", "Instrument")
         Condition.not_empty(starting_balances, "starting_balances")
         Condition.list_type(starting_balances, Money, "starting_balances")
@@ -330,6 +330,7 @@ cdef class SimulatedExchange:
             fill_model=self.fill_model,
             book_type=self.book_type,
             oms_type=self.oms_type,
+            account_type=self.account_type,
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self._clock,

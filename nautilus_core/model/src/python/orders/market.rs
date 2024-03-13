@@ -16,14 +16,14 @@
 use std::collections::HashMap;
 
 use nautilus_core::{python::to_pyvalue_err, time::UnixNanos, uuid::UUID4};
-use pyo3::prelude::*;
+use pyo3::{pymethods, PyResult};
 use rust_decimal::Decimal;
 use ustr::Ustr;
 
 use crate::{
-    enums::{ContingencyType, OrderSide, PositionSide, TimeInForce},
+    enums::{ContingencyType, OrderSide, OrderType, PositionSide, TimeInForce},
     identifiers::{
-        client_order_id::ClientOrderId, exec_algorithm_id::ExecAlgorithmId,
+        account_id::AccountId, client_order_id::ClientOrderId, exec_algorithm_id::ExecAlgorithmId,
         instrument_id::InstrumentId, order_list_id::OrderListId, strategy_id::StrategyId,
         trader_id::TraderId,
     },
@@ -80,7 +80,7 @@ impl MarketOrder {
         exec_spawn_id: Option<ClientOrderId>,
         tags: Option<String>,
     ) -> PyResult<Self> {
-        MarketOrder::new(
+        Self::new(
             trader_id,
             strategy_id,
             instrument_id,
@@ -134,5 +134,38 @@ impl MarketOrder {
     #[pyo3(name = "commissions")]
     fn py_commissions(&self) -> HashMap<Currency, Money> {
         self.commissions()
+    }
+    #[getter]
+    fn account_id(&self) -> Option<AccountId> {
+        self.account_id
+    }
+    #[getter]
+    fn instrument_id(&self) -> InstrumentId {
+        self.instrument_id
+    }
+    #[getter]
+    fn trader_id(&self) -> TraderId {
+        self.trader_id
+    }
+
+    #[getter]
+    fn client_order_id(&self) -> ClientOrderId {
+        self.client_order_id
+    }
+    #[getter]
+    fn quantity(&self) -> Quantity {
+        self.quantity
+    }
+    #[getter]
+    fn side(&self) -> OrderSide {
+        self.side
+    }
+    #[getter]
+    fn order_type(&self) -> OrderType {
+        self.order_type
+    }
+    #[getter]
+    fn strategy_id(&self) -> StrategyId {
+        self.strategy_id
     }
 }

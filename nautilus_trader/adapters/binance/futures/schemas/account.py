@@ -60,8 +60,8 @@ class BinanceFuturesBalanceInfo(msgspec.Struct, frozen=True):
     def parse_to_account_balance(self) -> AccountBalance:
         currency = Currency.from_str(self.asset)
         total = Decimal(self.walletBalance)
-        locked = Decimal(self.initialMargin) + Decimal(self.maintMargin)
-        free = total - locked
+        free = Decimal(self.availableBalance) if total != 0 else total
+        locked = total - free
         return AccountBalance(
             total=Money(total, currency),
             locked=Money(locked, currency),
@@ -86,7 +86,9 @@ class BinanceFuturesAccountInfo(msgspec.Struct, kw_only=True, frozen=True):
     canDeposit: bool  # if can transfer in asset
     canWithdraw: bool  # if can transfer out asset
     updateTime: int
-    totalInitialMargin: str | None = None  # total initial margin required with current mark price (useless with isolated positions), only for USDT
+    totalInitialMargin: str | None = (
+        None  # total initial margin required with current mark price (useless with isolated positions), only for USDT
+    )
     totalMaintMargin: str | None = None  # total maintenance margin required, only for USDT asset
     totalWalletBalance: str | None = None  # total wallet balance, only for USDT asset
     totalUnrealizedProfit: str | None = None  # total unrealized profit, only for USDT asset

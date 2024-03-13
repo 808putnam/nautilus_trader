@@ -42,6 +42,13 @@ impl Symbol {
             value: Ustr::from(s),
         })
     }
+
+    #[must_use]
+    pub fn from_str_unchecked(s: &str) -> Self {
+        Self {
+            value: Ustr::from(s),
+        }
+    }
 }
 
 impl Default for Symbol {

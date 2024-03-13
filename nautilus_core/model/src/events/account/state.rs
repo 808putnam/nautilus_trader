@@ -17,7 +17,6 @@ use std::fmt::{Display, Formatter};
 
 use anyhow::Result;
 use nautilus_core::{time::UnixNanos, uuid::UUID4};
-use pyo3::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -33,12 +32,12 @@ use crate::{
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct AccountState {
     pub account_id: AccountId,
     pub account_type: AccountType,
-    pub base_currency: Currency,
+    pub base_currency: Option<Currency>,
     pub balances: Vec<AccountBalance>,
     pub margins: Vec<MarginBalance>,
     pub is_reported: bool,
@@ -52,15 +51,15 @@ impl AccountState {
     pub fn new(
         account_id: AccountId,
         account_type: AccountType,
-        base_currency: Currency,
         balances: Vec<AccountBalance>,
         margins: Vec<MarginBalance>,
         is_reported: bool,
         event_id: UUID4,
         ts_event: UnixNanos,
         ts_init: UnixNanos,
-    ) -> Result<AccountState> {
-        Ok(AccountState {
+        base_currency: Option<Currency>,
+    ) -> Result<Self> {
+        Ok(Self {
             account_id,
             account_type,
             base_currency,
@@ -81,10 +80,10 @@ impl Display for AccountState {
             "AccountState(account_id={}, account_type={}, base_currency={}, is_reported={}, balances=[{}], margins=[{}], event_id={})",
             self.account_id,
             self.account_type,
-            self.base_currency.code,
+            self.base_currency.map_or_else(|| "None".to_string(), |base_currency | format!("{}", base_currency.code)),
             self.is_reported,
-            self.balances.iter().map(|b| format!("{}", b)).collect::<Vec<String>>().join(","),
-            self.margins.iter().map(|m| format!("{}", m)).collect::<Vec<String>>().join(","),
+            self.balances.iter().map(|b| format!("{b}")).collect::<Vec<String>>().join(","),
+            self.margins.iter().map(|m| format!("{m}")).collect::<Vec<String>>().join(","),
             self.event_id
         )
     }
@@ -119,7 +118,7 @@ mod tests {
 
     #[rstest]
     fn test_display_cash_account_state(cash_account_state: AccountState) {
-        let display = format!("{}", cash_account_state);
+        let display = format!("{cash_account_state}");
         assert_eq!(
             display,
             "AccountState(account_id=SIM-001, account_type=CASH, base_currency=USD, is_reported=true, \
@@ -130,7 +129,7 @@ mod tests {
 
     #[rstest]
     fn test_display_margin_account_state(margin_account_state: AccountState) {
-        let display = format!("{}", margin_account_state);
+        let display = format!("{margin_account_state}");
         assert_eq!(
             display,
             "AccountState(account_id=SIM-001, account_type=MARGIN, base_currency=USD, is_reported=true, \

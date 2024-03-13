@@ -33,7 +33,7 @@ cdef class Instrument(Data):
     cdef readonly InstrumentId id
     """The instrument ID.\n\n:returns: `InstrumentId`"""
     cdef readonly Symbol raw_symbol
-    """The native/local/raw symbol for the instrument, assigned by the venue.\n\n:returns: `Symbol`"""
+    """The raw/local/native symbol for the instrument, assigned by the venue.\n\n:returns: `Symbol`"""
     cdef readonly AssetClass asset_class
     """The asset class of the instrument.\n\n:returns: `AssetClass`"""
     cdef readonly InstrumentClass instrument_class
@@ -97,3 +97,6 @@ cdef class Instrument(Data):
     cpdef Quantity make_qty(self, value)
     cpdef Money notional_value(self, Quantity quantity, Price price, bint use_quote_for_inverse=*)
     cpdef Quantity calculate_base_quantity(self, Quantity quantity, Price last_px)
+
+
+cpdef list[Instrument] instruments_from_pyo3(list pyo3_instruments)

@@ -13,10 +13,8 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
-from decimal import Decimal
 
 import msgspec
-import pytest
 
 from nautilus_trader.backtest.engine import BacktestEngineConfig
 from nautilus_trader.backtest.node import BacktestNode
@@ -25,7 +23,6 @@ from nautilus_trader.config import BacktestRunConfig
 from nautilus_trader.config import BacktestVenueConfig
 from nautilus_trader.config import ImportableStrategyConfig
 from nautilus_trader.config import LoggingConfig
-from nautilus_trader.model.data import BarType
 from nautilus_trader.model.data import QuoteTick
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.persistence.funcs import parse_bytes
@@ -57,11 +54,11 @@ class TestBacktestNode:
                 strategy_path="nautilus_trader.examples.strategies.ema_cross:EMACross",
                 config_path="nautilus_trader.examples.strategies.ema_cross:EMACrossConfig",
                 config={
-                    "instrument_id": InstrumentId.from_str("AUD/USD.SIM"),
-                    "bar_type": BarType.from_str("AUD/USD.SIM-100-TICK-MID-INTERNAL"),
+                    "instrument_id": "AUD/USD.SIM",
+                    "bar_type": "AUD/USD.SIM-100-TICK-MID-INTERNAL",
                     "fast_ema_period": 10,
                     "slow_ema_period": 20,
-                    "trade_size": Decimal(1_000_000),
+                    "trade_size": "1_000_000",
                     "order_id_tag": "001",
                 },
             ),
@@ -92,7 +89,6 @@ class TestBacktestNode:
         # Assert
         assert len(results) == 1
 
-    @pytest.mark.skip(reason="Aborting on macOS?")
     def test_backtest_run_batch_sync(self):
         # Arrange
         config = BacktestRunConfig(

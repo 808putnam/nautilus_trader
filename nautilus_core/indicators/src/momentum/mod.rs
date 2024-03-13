@@ -13,4 +13,6 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
+pub mod aroon;
+pub mod cmo;
 pub mod rsi;

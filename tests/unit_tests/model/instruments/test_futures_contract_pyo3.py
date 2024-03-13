@@ -14,6 +14,7 @@
 # -------------------------------------------------------------------------------------------------
 
 from nautilus_trader.core.nautilus_pyo3 import FuturesContract
+from nautilus_trader.model.instruments import FuturesContract as LegacyFuturesContract
 from nautilus_trader.test_kit.rust.instruments_pyo3 import TestInstrumentProviderPyo3
 
 
@@ -21,8 +22,8 @@ _ES_FUTURE = TestInstrumentProviderPyo3.futures_contract_es()
 
 
 def test_equality():
-    item_1 = TestInstrumentProviderPyo3.btcusdt_binance()
-    item_2 = TestInstrumentProviderPyo3.btcusdt_binance()
+    item_1 = TestInstrumentProviderPyo3.futures_contract_es()
+    item_2 = TestInstrumentProviderPyo3.futures_contract_es()
     assert item_1 == item_2
 
 
@@ -35,8 +36,8 @@ def test_to_dict():
     assert FuturesContract.from_dict(result) == _ES_FUTURE
     assert result == {
         "type": "FuturesContract",
-        "id": "ESZ21.CME",
-        "raw_symbol": "ESZ21",
+        "id": "ESZ1.GLBX",
+        "raw_symbol": "ESZ1",
         "asset_class": "INDEX",
         "underlying": "ES",
         "activation_ns": 1631836800000000000,
@@ -53,3 +54,9 @@ def test_to_dict():
         "ts_event": 0,
         "ts_init": 0,
     }
+
+
+def test_legacy_futures_contract_from_pyo3():
+    future = LegacyFuturesContract.from_pyo3(_ES_FUTURE)
+
+    assert future.id.value == "ESZ1.GLBX"

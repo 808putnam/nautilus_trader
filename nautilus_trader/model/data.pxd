@@ -32,6 +32,7 @@ from nautilus_trader.core.rust.model cimport HaltReason
 from nautilus_trader.core.rust.model cimport InstrumentCloseType
 from nautilus_trader.core.rust.model cimport MarketStatus
 from nautilus_trader.core.rust.model cimport OrderBookDelta_t
+from nautilus_trader.core.rust.model cimport OrderBookDeltas_API
 from nautilus_trader.core.rust.model cimport OrderBookDepth10_t
 from nautilus_trader.core.rust.model cimport OrderSide
 from nautilus_trader.core.rust.model cimport PriceType
@@ -48,11 +49,17 @@ from nautilus_trader.model.objects cimport Quantity
 
 
 cpdef list capsule_to_list(capsule)
+cpdef Data capsule_to_data(capsule)
 
 cdef inline void capsule_destructor(object capsule):
-    cdef CVec* cvec = <CVec*>PyCapsule_GetPointer(capsule, NULL)
+    cdef CVec *cvec = <CVec *>PyCapsule_GetPointer(capsule, NULL)
     PyMem_Free(cvec[0].ptr) # de-allocate buffer
     PyMem_Free(cvec) # de-allocate cvec
+
+
+cdef inline void capsule_destructor_deltas(object capsule):
+    cdef OrderBookDeltas_API *data = <OrderBookDeltas_API *>PyCapsule_GetPointer(capsule, NULL)
+    PyMem_Free(data)
 
 
 cdef class DataType:
@@ -150,6 +157,9 @@ cdef class Bar(Data):
     cdef Bar from_mem_c(Bar_t mem)
 
     @staticmethod
+    cdef Bar from_pyo3_c(pyo3_bar)
+
+    @staticmethod
     cdef Bar from_dict_c(dict values)
 
     @staticmethod
@@ -207,6 +217,9 @@ cdef class OrderBookDelta(Data):
     cdef OrderBookDelta from_mem_c(OrderBookDelta_t mem)
 
     @staticmethod
+    cdef OrderBookDelta from_pyo3_c(pyo3_delta)
+
+    @staticmethod
     cdef OrderBookDelta from_dict_c(dict values)
 
     @staticmethod
@@ -228,18 +241,7 @@ cdef class OrderBookDelta(Data):
 
 
 cdef class OrderBookDeltas(Data):
-    cdef readonly InstrumentId instrument_id
-    """The instrument ID for the order book.\n\n:returns: `InstrumentId`"""
-    cdef readonly list deltas
-    """The order book deltas.\n\n:returns: `list[OrderBookDelta]`"""
-    cdef readonly bint is_snapshot
-    """If the deltas represent a snapshot (an initial CLEAR then deltas).\n\n:returns: `bool`"""
-    cdef readonly uint64_t sequence
-    """If the sequence number for the last delta.\n\n:returns: `bool`"""
-    cdef readonly uint64_t ts_event
-    """The UNIX timestamp (nanoseconds) when the last delta event occurred.\n\n:returns: `uint64_t`"""
-    cdef readonly uint64_t ts_init
-    """The UNIX timestamp (nanoseconds) when the last delta event was initialized.\n\n:returns: `uint64_t`"""
+    cdef OrderBookDeltas_API _mem
 
     @staticmethod
     cdef OrderBookDeltas from_dict_c(dict values)
@@ -247,12 +249,18 @@ cdef class OrderBookDeltas(Data):
     @staticmethod
     cdef dict to_dict_c(OrderBookDeltas obj)
 
+    cpdef to_capsule(self)
+    cpdef to_pyo3(self)
+
 
 cdef class OrderBookDepth10(Data):
     cdef OrderBookDepth10_t _mem
 
     @staticmethod
     cdef OrderBookDepth10 from_mem_c(OrderBookDepth10_t mem)
+
+    @staticmethod
+    cdef OrderBookDepth10 from_pyo3_c(pyo3_depth10)
 
     @staticmethod
     cdef OrderBookDepth10 from_dict_c(dict values)
@@ -348,6 +356,9 @@ cdef class QuoteTick(Data):
     cdef QuoteTick from_mem_c(QuoteTick_t mem)
 
     @staticmethod
+    cdef QuoteTick from_pyo3_c(pyo3_quote)
+
+    @staticmethod
     cdef list capsule_to_list_c(capsule)
 
     @staticmethod
@@ -383,6 +394,9 @@ cdef class TradeTick(Data):
 
     @staticmethod
     cdef TradeTick from_mem_c(TradeTick_t mem)
+
+    @staticmethod
+    cdef TradeTick from_pyo3_c(pyo3_trade)
 
     @staticmethod
     cdef list capsule_to_list_c(capsule)

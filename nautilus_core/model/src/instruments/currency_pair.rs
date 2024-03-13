@@ -20,7 +20,6 @@ use std::{
 
 use anyhow::Result;
 use nautilus_core::time::UnixNanos;
-use pyo3::prelude::*;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 
@@ -28,54 +27,37 @@ use super::Instrument;
 use crate::{
     enums::{AssetClass, InstrumentClass},
     identifiers::{instrument_id::InstrumentId, symbol::Symbol},
-    types::{currency::Currency, price::Price, quantity::Quantity},
+    types::{currency::Currency, money::Money, price::Price, quantity::Quantity},
 };
 
 #[repr(C)]
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 #[cfg_attr(feature = "trivial_copy", derive(Copy))]
 pub struct CurrencyPair {
-    #[pyo3(get)]
     pub id: InstrumentId,
-    #[pyo3(get)]
     pub raw_symbol: Symbol,
-    #[pyo3(get)]
     pub base_currency: Currency,
-    #[pyo3(get)]
     pub quote_currency: Currency,
-    #[pyo3(get)]
     pub price_precision: u8,
-    #[pyo3(get)]
     pub size_precision: u8,
-    #[pyo3(get)]
     pub price_increment: Price,
-    #[pyo3(get)]
     pub size_increment: Quantity,
-    #[pyo3(get)]
     pub maker_fee: Decimal,
-    #[pyo3(get)]
     pub taker_fee: Decimal,
-    #[pyo3(get)]
     pub margin_init: Decimal,
-    #[pyo3(get)]
     pub margin_maint: Decimal,
-    #[pyo3(get)]
     pub lot_size: Option<Quantity>,
-    #[pyo3(get)]
     pub max_quantity: Option<Quantity>,
-    #[pyo3(get)]
     pub min_quantity: Option<Quantity>,
-    #[pyo3(get)]
+    pub max_notional: Option<Money>,
+    pub min_notional: Option<Money>,
     pub max_price: Option<Price>,
-    #[pyo3(get)]
     pub min_price: Option<Price>,
-    #[pyo3(get)]
     pub ts_event: UnixNanos,
-    #[pyo3(get)]
     pub ts_init: UnixNanos,
 }
 
@@ -97,6 +79,8 @@ impl CurrencyPair {
         lot_size: Option<Quantity>,
         max_quantity: Option<Quantity>,
         min_quantity: Option<Quantity>,
+        max_notional: Option<Money>,
+        min_notional: Option<Money>,
         max_price: Option<Price>,
         min_price: Option<Price>,
         ts_event: UnixNanos,
@@ -105,19 +89,21 @@ impl CurrencyPair {
         Ok(Self {
             id,
             raw_symbol,
-            quote_currency,
             base_currency,
+            quote_currency,
             price_precision,
             size_precision,
             price_increment,
             size_increment,
-            taker_fee,
             maker_fee,
+            taker_fee,
             margin_init,
             margin_maint,
             lot_size,
             max_quantity,
             min_quantity,
+            max_notional,
+            min_notional,
             max_price,
             min_price,
             ts_event,
@@ -141,12 +127,12 @@ impl Hash for CurrencyPair {
 }
 
 impl Instrument for CurrencyPair {
-    fn id(&self) -> &InstrumentId {
-        &self.id
+    fn id(&self) -> InstrumentId {
+        self.id
     }
 
-    fn raw_symbol(&self) -> &Symbol {
-        &self.raw_symbol
+    fn raw_symbol(&self) -> Symbol {
+        self.raw_symbol
     }
 
     fn asset_class(&self) -> AssetClass {
@@ -157,16 +143,16 @@ impl Instrument for CurrencyPair {
         InstrumentClass::Spot
     }
 
-    fn quote_currency(&self) -> &Currency {
-        &self.quote_currency
+    fn quote_currency(&self) -> Currency {
+        self.quote_currency
     }
 
-    fn base_currency(&self) -> Option<&Currency> {
-        Some(&self.base_currency)
+    fn base_currency(&self) -> Option<Currency> {
+        Some(self.base_currency)
     }
 
-    fn settlement_currency(&self) -> &Currency {
-        &self.quote_currency
+    fn settlement_currency(&self) -> Currency {
+        self.quote_currency
     }
 
     fn is_inverse(&self) -> bool {
@@ -225,15 +211,19 @@ impl Instrument for CurrencyPair {
     fn as_any(&self) -> &dyn Any {
         self
     }
+
     fn margin_init(&self) -> Decimal {
         self.margin_init
     }
+
     fn margin_maint(&self) -> Decimal {
         self.margin_maint
     }
+
     fn taker_fee(&self) -> Decimal {
         self.taker_fee
     }
+
     fn maker_fee(&self) -> Decimal {
         self.maker_fee
     }
@@ -250,7 +240,7 @@ mod tests {
 
     #[rstest]
     fn test_equality(currency_pair_btcusdt: CurrencyPair) {
-        let cloned = currency_pair_btcusdt.clone();
-        assert_eq!(currency_pair_btcusdt, cloned)
+        let cloned = currency_pair_btcusdt;
+        assert_eq!(currency_pair_btcusdt, cloned);
     }
 }

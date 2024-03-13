@@ -10,7 +10,7 @@ install:
 
 .PHONY: install-debug
 install-debug:
-	BUILD_MODE=debug poetry install --with dev,test --all-extras
+	BUILD_MODE=debug poetry install --with dev,test --all-extras --sync
 
 .PHONY: install-just-deps
 install-just-deps:
@@ -70,11 +70,15 @@ docs-python: install-just-deps-all
 
 .PHONY: docs-rust
 docs-rust:
-	(cd nautilus_core && RUSTDOCFLAGS="--enable-index-page -Zunstable-options" cargo +nightly doc --no-deps)
+	(cd nautilus_core && RUSTDOCFLAGS="--enable-index-page -Zunstable-options --deny warnings" cargo +nightly doc --no-deps)
 
 .PHONY: clippy
 clippy:
 	(cd nautilus_core && cargo clippy --fix --all-targets --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W clippy::unwrap_used -W clippy::expect_used)
+
+.PHONY: clippy-nightly
+clippy-nightly:
+	(cd nautilus_core && cargo +nightly clippy --fix --all-targets --all-features --allow-dirty --allow-staged -- -D warnings -W clippy::pedantic -W clippy::nursery -W clippy::unwrap_used -W clippy::expect_used)
 
 .PHONY: cargo-build
 cargo-build:
@@ -82,7 +86,7 @@ cargo-build:
 
 .PHONY: cargo-update
 cargo-update:
-	(cd nautilus_core && cargo update && cargo install cargo-nextest)
+	(cd nautilus_core && cargo update && cargo install cargo-nextest && cargo install cargo-llvm-cov)
 
 .PHONY: cargo-test
 cargo-test:
@@ -92,9 +96,17 @@ cargo-test:
 	fi
 	RUST_BACKTRACE=1 && (cd nautilus_core && cargo nextest run --workspace --exclude tokio-tungstenite)
 
-.PHONY: cargo-test-nightly
-cargo-test-nightly:
-	RUST_BACKTRACE=1 && (cd nautilus_core && cargo +nightly test)
+.PHONY: cargo-test-coverage
+cargo-test-coverage:
+	@if ! cargo nextest --version >/dev/null 2>&1; then \
+		echo "cargo-nextest is not installed. You can install it using 'cargo install cargo-nextest'"; \
+		exit 1; \
+	fi
+	@if ! cargo llvm-cov --version >/dev/null 2>&1; then \
+		echo "cargo-llvm-cov is not installed. You can install it using 'cargo install cargo-llvm-cov'"; \
+		exit 1; \
+	fi
+	RUST_BACKTRACE=1 && (cd nautilus_core && cargo llvm-cov nextest run --workspace --exclude tokio-tungstenite)
 
 .PHONY: cargo-bench
 cargo-bench:

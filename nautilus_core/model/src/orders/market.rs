@@ -20,7 +20,6 @@ use std::{
 
 use anyhow::{bail, Result};
 use nautilus_core::{time::UnixNanos, uuid::UUID4};
-use pyo3::prelude::*;
 use ustr::Ustr;
 
 use super::base::{Order, OrderCore};
@@ -45,7 +44,7 @@ use crate::{
 
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct MarketOrder {
     core: OrderCore,
@@ -74,12 +73,11 @@ impl MarketOrder {
         exec_spawn_id: Option<ClientOrderId>,
         tags: Option<Ustr>,
     ) -> Result<Self> {
-        // check if quantity is positive
         check_quantity_positive(quantity)?;
-        // market order cannot be GTD
         if time_in_force == TimeInForce::Gtd {
             bail!("{}", "GTD not supported for Market orders");
         }
+
         Ok(Self {
             core: OrderCore::new(
                 trader_id,
@@ -322,12 +320,12 @@ impl Order for MarketOrder {
     }
 
     fn update(&mut self, event: &OrderUpdated) {
-        if event.price.is_some() {
-            panic!("{}", OrderError::InvalidOrderEvent);
-        }
-        if event.trigger_price.is_some() {
-            panic!("{}", OrderError::InvalidOrderEvent);
-        }
+        assert!(event.price.is_none(), "{}", OrderError::InvalidOrderEvent);
+        assert!(
+            event.trigger_price.is_none(),
+            "{}",
+            OrderError::InvalidOrderEvent
+        );
 
         self.quantity = event.quantity;
         self.leaves_qty = self.quantity - self.filled_qty;
@@ -336,7 +334,7 @@ impl Order for MarketOrder {
 
 impl From<OrderInitialized> for MarketOrder {
     fn from(event: OrderInitialized) -> Self {
-        MarketOrder::new(
+        Self::new(
             event.trader_id,
             event.strategy_id,
             event.instrument_id,
@@ -368,17 +366,34 @@ impl From<OrderInitialized> for MarketOrder {
 mod tests {
     use rstest::rstest;
 
-    use crate::{enums::TimeInForce, orders::stubs::*, types::quantity::Quantity};
+    use crate::{
+        enums::{OrderSide, TimeInForce},
+        instruments::{currency_pair::CurrencyPair, stubs::*},
+        orders::stubs::*,
+        types::quantity::Quantity,
+    };
 
     #[rstest]
     #[should_panic(expected = "Condition failed: invalid `Quantity`, should be positive and was 0")]
-    fn test_positive_quantity_condition() {
-        let _ = market_order(Quantity::from(0), None);
+    fn test_positive_quantity_condition(audusd_sim: CurrencyPair) {
+        let _ = TestOrderStubs::market_order(
+            audusd_sim.id,
+            OrderSide::Buy,
+            Quantity::from(0),
+            None,
+            None,
+        );
     }
 
     #[rstest]
     #[should_panic(expected = "GTD not supported for Market orders")]
-    fn test_gtd_condition() {
-        let _ = market_order(Quantity::from(100), Some(TimeInForce::Gtd));
+    fn test_gtd_condition(audusd_sim: CurrencyPair) {
+        let _ = TestOrderStubs::market_order(
+            audusd_sim.id,
+            OrderSide::Buy,
+            Quantity::from(100),
+            None,
+            Some(TimeInForce::Gtd),
+        );
     }
 }

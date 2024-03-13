@@ -14,10 +14,7 @@
 # -------------------------------------------------------------------------------------------------
 
 import copy
-import sys
 from collections import Counter
-
-import pytest
 
 from nautilus_trader.backtest.node import BacktestNode
 from nautilus_trader.backtest.results import BacktestResult
@@ -40,7 +37,6 @@ from nautilus_trader.test_kit.stubs.persistence import TestPersistenceStubs
 from tests.integration_tests.adapters.betfair.test_kit import BetfairTestStubs
 
 
-@pytest.mark.skipif(sys.platform == "win32", reason="failing on Windows")
 class TestPersistenceStreaming:
     def setup(self) -> None:
         self.catalog: ParquetDataCatalog | None = None
@@ -53,7 +49,7 @@ class TestPersistenceStreaming:
             catalog_fs_protocol="file",
             instrument_id=instrument.id,
             flush_interval_ms=5_000,
-            bypass_logging=False,
+            bypass_logging=True,
         )
 
         node = BacktestNode(configs=[run_config])
@@ -76,17 +72,18 @@ class TestPersistenceStreaming:
         result = dict(Counter([r.__class__.__name__ for r in result]))  # type: ignore [assignment]
 
         expected = {
-            "AccountState": 398,
+            "AccountState": 400,
             "BettingInstrument": 1,
-            "ComponentStateChanged": 21,
-            "OrderAccepted": 188,
+            "ComponentStateChanged": 49,
+            "OrderAccepted": 189,
             "OrderBookDelta": 1307,
-            "OrderFilled": 210,
-            "OrderInitialized": 189,
-            "OrderSubmitted": 189,
-            "PositionChanged": 207,
-            "PositionClosed": 2,
-            "PositionOpened": 3,
+            "OrderDenied": 3,
+            "OrderFilled": 211,
+            "OrderInitialized": 193,
+            "OrderSubmitted": 190,
+            "PositionChanged": 206,
+            "PositionClosed": 4,
+            "PositionOpened": 5,
             "TradeTick": 179,
         }
 
@@ -165,7 +162,7 @@ class TestPersistenceStreaming:
                     ImportableStrategyConfig(
                         strategy_path="nautilus_trader.examples.strategies.signal_strategy:SignalStrategy",
                         config_path="nautilus_trader.examples.strategies.signal_strategy:SignalStrategyConfig",
-                        config={"instrument_id": instrument_id},
+                        config={"instrument_id": instrument_id.value},
                     ),
                 ],
             ),
@@ -223,7 +220,7 @@ class TestPersistenceStreaming:
                     ImportableStrategyConfig(
                         strategy_path="nautilus_trader.examples.strategies.signal_strategy:SignalStrategy",
                         config_path="nautilus_trader.examples.strategies.signal_strategy:SignalStrategyConfig",
-                        config={"instrument_id": instrument_id},
+                        config={"instrument_id": instrument_id.value},
                     ),
                 ],
             ),
@@ -242,7 +239,6 @@ class TestPersistenceStreaming:
         assert isinstance(raw, bytes)
         assert NautilusKernelConfig.parse(raw)
 
-    @pytest.mark.skip(reason="Reading backtests appears broken")
     def test_feather_reader_returns_cython_objects(
         self,
         catalog_betfair: ParquetDataCatalog,
@@ -259,8 +255,8 @@ class TestPersistenceStreaming:
         )
 
         # Assert
-        assert len([d for d in result if isinstance(d, TradeTick)]) == 179
-        assert len([d for d in result if isinstance(d, OrderBookDelta)]) == 1307
+        assert len([d for d in result if d.__class__.__name__ == "TradeTick"]) == 179
+        assert len([d for d in result if d.__class__.__name__ == "OrderBookDelta"]) == 1307
 
     def test_feather_reader_order_book_deltas(
         self,
@@ -300,17 +296,18 @@ class TestPersistenceStreaming:
 
         # Assert
         expected = {
-            "OrderBookDelta": 1307,
-            "AccountState": 398,
-            "OrderFilled": 210,
-            "PositionChanged": 207,
-            "OrderInitialized": 189,
-            "OrderSubmitted": 189,
-            "OrderAccepted": 188,
-            "TradeTick": 179,
-            "ComponentStateChanged": 21,
-            "PositionOpened": 3,
-            "PositionClosed": 2,
+            "AccountState": 400,
             "BettingInstrument": 1,
+            "ComponentStateChanged": 49,
+            "OrderAccepted": 189,
+            "OrderBookDelta": 1307,
+            "OrderDenied": 3,
+            "OrderFilled": 211,
+            "OrderInitialized": 193,
+            "OrderSubmitted": 190,
+            "PositionChanged": 206,
+            "PositionClosed": 4,
+            "PositionOpened": 5,
+            "TradeTick": 179,
         }
         assert counts == expected

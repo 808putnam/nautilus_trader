@@ -21,17 +21,20 @@ import pandas as pd
 from nautilus_trader.accounting.error import AccountError
 from nautilus_trader.backtest.results import BacktestResult
 from nautilus_trader.common import Environment
+from nautilus_trader.common.component import is_logging_pyo3
+from nautilus_trader.common.config import InvalidConfiguration
 from nautilus_trader.config import BacktestEngineConfig
 from nautilus_trader.config import CacheConfig
-from nautilus_trader.config import DataEngineConfig
-from nautilus_trader.config import ExecEngineConfig
-from nautilus_trader.config import RiskEngineConfig
-from nautilus_trader.config.error import InvalidConfiguration
+from nautilus_trader.core import nautilus_pyo3
+from nautilus_trader.data.config import DataEngineConfig
+from nautilus_trader.execution.config import ExecEngineConfig
 from nautilus_trader.model import NAUTILUS_PYO3_DATA_TYPES
+from nautilus_trader.risk.config import RiskEngineConfig
 from nautilus_trader.system.kernel import NautilusKernel
 from nautilus_trader.trading.trader import Trader
 
 from cpython.datetime cimport datetime
+from cpython.object cimport PyObject
 from libc.stdint cimport uint64_t
 
 from nautilus_trader.backtest.data_client cimport BacktestDataClient
@@ -48,6 +51,7 @@ from nautilus_trader.common.component cimport Logger
 from nautilus_trader.common.component cimport TestClock
 from nautilus_trader.common.component cimport TimeEvent
 from nautilus_trader.common.component cimport TimeEventHandler
+from nautilus_trader.common.component cimport get_component_clocks
 from nautilus_trader.common.component cimport log_level_from_str
 from nautilus_trader.common.component cimport log_sysinfo
 from nautilus_trader.common.component cimport set_logging_clock_realtime_mode
@@ -137,6 +141,7 @@ cdef class BacktestEngine:
 
         # Build core system kernel
         self._kernel = NautilusKernel(name=type(self).__name__, config=config)
+        self._instance_id = self._kernel.instance_id
         self._log = Logger(type(self).__name__)
 
         self._data_engine: DataEngine = self._kernel.data_engine
@@ -1009,15 +1014,9 @@ cdef class BacktestEngine:
         Condition.true(start_ns < end_ns, "start was >= end")
         Condition.not_empty(self._data, "data")
 
-        # Gather clocks
-        cdef list clocks = [self.kernel.clock]
-        cdef Actor actor
-        for actor in self._kernel.trader.actors() + self._kernel.trader.strategies() + self._kernel.trader.exec_algorithms():
-            clocks.append(actor.clock)
-
         # Set clocks
         cdef TestClock clock
-        for clock in clocks:
+        for clock in get_component_clocks(self._instance_id):
             clock.set_time(start_ns)
 
         cdef SimulatedExchange exchange
@@ -1079,7 +1078,7 @@ cdef class BacktestEngine:
                     break
                 if data.ts_init > last_ns:
                     # Advance clocks to the next data time
-                    raw_handlers = self._advance_time(data.ts_init, clocks)
+                    raw_handlers = self._advance_time(data.ts_init)
                     raw_handlers_count = raw_handlers.len
 
                 # Process data through venue
@@ -1117,7 +1116,6 @@ cdef class BacktestEngine:
                     # Finally process the time events
                     self._process_raw_time_event_handlers(
                         raw_handlers,
-                        clocks,
                         last_ns,
                         only_now=True,
                     )
@@ -1143,7 +1141,6 @@ cdef class BacktestEngine:
         if raw_handlers_count > 0:
             self._process_raw_time_event_handlers(
                 raw_handlers,
-                clocks,
                 last_ns,
                 only_now=True,
             )
@@ -1155,8 +1152,8 @@ cdef class BacktestEngine:
         if cursor < self._data_len:
             return self._data[cursor]
 
-    cdef CVec _advance_time(self, uint64_t ts_now, list clocks):
-        set_logging_clock_static_time(ts_now)
+    cdef CVec _advance_time(self, uint64_t ts_now):
+        cdef list[TestClock] clocks = get_component_clocks(self._instance_id)
 
         cdef TestClock clock
         for clock in clocks:
@@ -1172,12 +1169,12 @@ cdef class BacktestEngine:
         # Handle all events prior to the `ts_now`
         self._process_raw_time_event_handlers(
             raw_handlers,
-            clocks,
             ts_now,
             only_now=False,
         )
 
         # Set all clocks to now
+        set_logging_clock_static_time(ts_now)
         for clock in clocks:
             clock.set_time(ts_now)
 
@@ -1187,7 +1184,6 @@ cdef class BacktestEngine:
     cdef void _process_raw_time_event_handlers(
         self,
         CVec raw_handler_vec,
-        list clocks,
         uint64_t ts_now,
         bint only_now,
     ):
@@ -1199,6 +1195,7 @@ cdef class BacktestEngine:
             TimeEventHandler_t raw_handler
             TimeEvent event
             TestClock clock
+            PyObject *raw_callback
             object callback
             SimulatedExchange exchange
         for i in range(raw_handler_vec.len):
@@ -1206,12 +1203,17 @@ cdef class BacktestEngine:
             ts_event_init = raw_handler.event.ts_init
             if (only_now and ts_event_init < ts_now) or (not only_now and ts_event_init == ts_now):
                 continue
-            for clock in clocks:
+
+            # Set all clocks to event timestamp
+            set_logging_clock_static_time(ts_event_init)
+            for clock in get_component_clocks(self._instance_id):
                 clock.set_time(ts_event_init)
+
             event = TimeEvent.from_mem_c(raw_handler.event)
 
             # Cast raw `PyObject *` to a `PyObject`
-            callback = <object>raw_handler.callback_ptr
+            raw_callback = <PyObject *>raw_handler.callback_ptr
+            callback = <object>raw_callback
             callback(event)
 
             if ts_event_init != ts_last_init:
@@ -1224,12 +1226,10 @@ cdef class BacktestEngine:
         return "\033[36m" if logging_is_colored() else ""
 
     def _log_pre_run(self):
-        log_sysinfo(
-            trader_id=self._kernel.trader_id,
-            machine_id=self._kernel.machine_id,
-            instance_id=self._kernel.instance_id,
-            component=type(self).__name__,
-        )
+        if is_logging_pyo3():
+            nautilus_pyo3.log_sysinfo(component=type(self).__name__)
+        else:
+            log_sysinfo(component=type(self).__name__)
 
         cdef str color = self._get_log_color_code()
 

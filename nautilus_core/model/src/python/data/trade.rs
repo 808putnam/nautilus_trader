@@ -30,13 +30,54 @@ use pyo3::{
     types::{PyDict, PyLong, PyString, PyTuple},
 };
 
+use super::data_to_pycapsule;
 use crate::{
-    data::trade::TradeTick,
+    data::{trade::TradeTick, Data},
     enums::{AggressorSide, FromU8},
     identifiers::{instrument_id::InstrumentId, trade_id::TradeId},
-    python::PY_MODULE_MODEL,
+    python::common::PY_MODULE_MODEL,
     types::{price::Price, quantity::Quantity},
 };
+
+impl TradeTick {
+    /// Create a new [`TradeTick`] extracted from the given [`PyAny`].
+    pub fn from_pyobject(obj: &PyAny) -> PyResult<Self> {
+        let instrument_id_obj: &PyAny = obj.getattr("instrument_id")?.extract()?;
+        let instrument_id_str = instrument_id_obj.getattr("value")?.extract()?;
+        let instrument_id = InstrumentId::from_str(instrument_id_str).map_err(to_pyvalue_err)?;
+
+        let price_py: &PyAny = obj.getattr("price")?;
+        let price_raw: i64 = price_py.getattr("raw")?.extract()?;
+        let price_prec: u8 = price_py.getattr("precision")?.extract()?;
+        let price = Price::from_raw(price_raw, price_prec).map_err(to_pyvalue_err)?;
+
+        let size_py: &PyAny = obj.getattr("size")?;
+        let size_raw: u64 = size_py.getattr("raw")?.extract()?;
+        let size_prec: u8 = size_py.getattr("precision")?.extract()?;
+        let size = Quantity::from_raw(size_raw, size_prec).map_err(to_pyvalue_err)?;
+
+        let aggressor_side_obj: &PyAny = obj.getattr("aggressor_side")?.extract()?;
+        let aggressor_side_u8 = aggressor_side_obj.getattr("value")?.extract()?;
+        let aggressor_side = AggressorSide::from_u8(aggressor_side_u8).unwrap();
+
+        let trade_id_obj: &PyAny = obj.getattr("trade_id")?.extract()?;
+        let trade_id_str = trade_id_obj.getattr("value")?.extract()?;
+        let trade_id = TradeId::from_str(trade_id_str).map_err(to_pyvalue_err)?;
+
+        let ts_event: UnixNanos = obj.getattr("ts_event")?.extract()?;
+        let ts_init: UnixNanos = obj.getattr("ts_init")?.extract()?;
+
+        Ok(Self::new(
+            instrument_id,
+            price,
+            size,
+            aggressor_side,
+            trade_id,
+            ts_event,
+            ts_init,
+        ))
+    }
+}
 
 #[pymethods]
 impl TradeTick {
@@ -149,37 +190,44 @@ impl TradeTick {
     }
 
     #[getter]
-    fn instrument_id(&self) -> InstrumentId {
+    #[pyo3(name = "instrument_id")]
+    fn py_instrument_id(&self) -> InstrumentId {
         self.instrument_id
     }
 
     #[getter]
-    fn price(&self) -> Price {
+    #[pyo3(name = "price")]
+    fn py_price(&self) -> Price {
         self.price
     }
 
     #[getter]
-    fn size(&self) -> Quantity {
+    #[pyo3(name = "size")]
+    fn py_size(&self) -> Quantity {
         self.size
     }
 
     #[getter]
-    fn aggressor_side(&self) -> AggressorSide {
+    #[pyo3(name = "aggressor_side")]
+    fn py_aggressor_side(&self) -> AggressorSide {
         self.aggressor_side
     }
 
     #[getter]
-    fn trade_id(&self) -> TradeId {
+    #[pyo3(name = "trade_id")]
+    fn py_trade_id(&self) -> TradeId {
         self.trade_id
     }
 
     #[getter]
-    fn ts_event(&self) -> UnixNanos {
+    #[pyo3(name = "ts_event")]
+    fn py_ts_event(&self) -> UnixNanos {
         self.ts_event
     }
 
     #[getter]
-    fn ts_init(&self) -> UnixNanos {
+    #[pyo3(name = "ts_init")]
+    fn py_ts_init(&self) -> UnixNanos {
         self.ts_init
     }
 
@@ -187,6 +235,27 @@ impl TradeTick {
     #[pyo3(name = "fully_qualified_name")]
     fn py_fully_qualified_name() -> String {
         format!("{}:{}", PY_MODULE_MODEL, stringify!(TradeTick))
+    }
+
+    /// Creates a `PyCapsule` containing a raw pointer to a `Data::Trade` object.
+    ///
+    /// This function takes the current object (assumed to be of a type that can be represented as
+    /// `Data::Trade`), and encapsulates a raw pointer to it within a `PyCapsule`.
+    ///
+    /// # Safety
+    ///
+    /// This function is safe as long as the following conditions are met:
+    /// - The `Data::Trade` object pointed to by the capsule must remain valid for the lifetime of the capsule.
+    /// - The consumer of the capsule must ensure proper handling to avoid dereferencing a dangling pointer.
+    ///
+    /// # Panics
+    ///
+    /// The function will panic if the `PyCapsule` creation fails, which can occur if the
+    /// `Data::Trade` object cannot be converted into a raw pointer.
+    ///
+    #[pyo3(name = "as_pycapsule")]
+    fn py_as_pycapsule(&self, py: Python<'_>) -> PyObject {
+        data_to_pycapsule(py, Data::Trade(*self))
     }
 
     /// Return a dictionary representation of the object.
@@ -277,7 +346,7 @@ mod tests {
 
         Python::with_gil(|py| {
             let dict_string = tick.py_as_dict(py).unwrap().to_string();
-            let expected_string = r#"{'type': 'TradeTick', 'instrument_id': 'ETHUSDT-PERP.BINANCE', 'price': '10000.0000', 'size': '1.00000000', 'aggressor_side': 'BUYER', 'trade_id': '123456789', 'ts_event': 0, 'ts_init': 1}"#;
+            let expected_string = r"{'type': 'TradeTick', 'instrument_id': 'ETHUSDT-PERP.BINANCE', 'price': '10000.0000', 'size': '1.00000000', 'aggressor_side': 'BUYER', 'trade_id': '123456789', 'ts_event': 0, 'ts_init': 1}";
             assert_eq!(dict_string, expected_string);
         });
     }

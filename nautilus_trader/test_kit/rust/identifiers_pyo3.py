@@ -46,7 +46,7 @@ class TestIdProviderPyo3:
 
     @staticmethod
     def position_id() -> PositionId:
-        return PositionId("001")
+        return PositionId("P-123456")
 
     @staticmethod
     def btcusdt_binance_id() -> InstrumentId:
@@ -75,6 +75,10 @@ class TestIdProviderPyo3:
     @staticmethod
     def audusd_idealpro_id() -> InstrumentId:
         return InstrumentId(Symbol("AUD/USD"), Venue("IDEALPRO"))
+
+    @staticmethod
+    def aapl_xnas_id() -> InstrumentId:
+        return InstrumentId(Symbol("AAPL"), Venue("XNAS"))
 
     @staticmethod
     def betting_instrument_id():

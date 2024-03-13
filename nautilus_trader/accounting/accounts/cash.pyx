@@ -62,6 +62,41 @@ cdef class CashAccount(Account):
 
         self._balances_locked: dict[InstrumentId, Money] = {}
 
+    @staticmethod
+    cdef dict to_dict_c(CashAccount obj):
+        Condition.not_none(obj, "obj")
+        return {
+            "type": "CashAccount",
+            "calculate_account_state":obj.calculate_account_state,
+            "events": [AccountState.to_dict_c(event) for event in obj.events_c()]
+        }
+
+    @staticmethod
+    def to_dict(CashAccount obj):
+        return CashAccount.to_dict_c(obj)
+
+
+    @staticmethod
+    cdef CashAccount from_dict_c(dict values):
+        Condition.not_none(values, "values")
+        calculate_account_state = values["calculate_account_state"]
+        events = values["events"]
+        if len(events) == 0:
+            return None
+        init_event = events[0]
+        other_events = events[1:]
+        account = CashAccount(
+            event=AccountState.from_dict_c(init_event),
+            calculate_account_state=calculate_account_state
+        )
+        for event in other_events:
+            account.apply(AccountState.from_dict_c(event))
+        return account
+
+    @staticmethod
+    def from_dict(dict values):
+        return CashAccount.from_dict_c(values)
+
     cpdef void update_balance_locked(self, InstrumentId instrument_id, Money locked):
         """
         Update the balance locked for the given instrument ID.
@@ -249,7 +284,7 @@ cdef class CashAccount(Account):
                 notional = quantity.as_f64_c()
             else:
                 return None  # No balance to lock
-        else:
+        else:  # pragma: no cover (design-time error)
             raise RuntimeError(f"invalid `OrderSide`, was {side}")  # pragma: no cover (design-time error)
 
         # Add expected commission
@@ -264,7 +299,7 @@ cdef class CashAccount(Account):
             return Money(locked, quote_currency)
         elif side == OrderSide.SELL:
             return Money(locked, base_currency)
-        else:
+        else:  # pragma: no cover (design-time error)
             raise RuntimeError(f"invalid `OrderSide`, was {side}")  # pragma: no cover (design-time error)
 
     cpdef list calculate_pnls(
@@ -303,7 +338,7 @@ cdef class CashAccount(Account):
         cdef double fill_qty = fill.last_qty.as_f64_c()
         cdef double fill_px = fill.last_px.as_f64_c()
 
-        if position is not None:
+        if position is not None and position.quantity._mem.raw != 0:
             # Only book open quantity towards realized PnL
             fill_qty = fmin(fill_qty, position.quantity.as_f64_c())
 
@@ -315,7 +350,7 @@ cdef class CashAccount(Account):
             if base_currency and not self.base_currency:
                 pnls[base_currency] = Money(-fill_qty, base_currency)
             pnls[quote_currency] = Money(fill_px * fill_qty, quote_currency)
-        else:
+        else:  # pragma: no cover (design-time error)
             raise RuntimeError(f"invalid `OrderSide`, was {fill.order_side}")  # pragma: no cover (design-time error)
 
         return list(pnls.values())
@@ -327,10 +362,10 @@ cdef class CashAccount(Account):
         Price price,
         OrderSide order_side,
     ):
-        cdef object notional = instrument.notional_value(quantity, price)
+        cdef Money notional = instrument.notional_value(quantity, price)
         if order_side == OrderSide.BUY:
-            return Money(-notional, notional.currency)
+            return Money.from_raw_c(-notional._mem.raw, notional.currency)
         elif order_side == OrderSide.SELL:
-            return Money(notional, notional.currency)
-        else:
+            return Money.from_raw_c(notional._mem.raw, notional.currency)
+        else:  # pragma: no cover (design-time error)
             raise RuntimeError(f"invalid `OrderSide`, was {order_side}")  # pragma: no cover (design-time error)

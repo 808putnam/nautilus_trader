@@ -179,6 +179,7 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
         self._ws_client = BinanceWebSocketClient(
             clock=clock,
             handler=self._handle_user_ws_message,
+            handler_reconnect=None,
             base_url=base_url_ws,
             loop=self._loop,
         )
@@ -298,7 +299,6 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
             self._ping_listen_keys_task.cancel()
             self._ping_listen_keys_task = None
 
-        # if self._ws_client.is_connected:
         await self._ws_client.disconnect()
 
     # -- EXECUTION REPORTS ------------------------------------------------------------------------
@@ -338,9 +338,9 @@ class BinanceCommonExecutionClient(LiveExecutionClient):
             else:
                 binance_order = await self._http_account.query_order(
                     symbol=instrument_id.symbol.value,
-                    orig_client_order_id=client_order_id.value
-                    if client_order_id is not None
-                    else None,
+                    orig_client_order_id=(
+                        client_order_id.value if client_order_id is not None else None
+                    ),
                 )
         except BinanceError as e:
             retries += 1

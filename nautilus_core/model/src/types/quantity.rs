@@ -23,7 +23,6 @@ use std::{
 
 use anyhow::{bail, Result};
 use nautilus_core::{correctness::check_f64_in_range_inclusive, parsing::precision_from_str};
-use pyo3::prelude::*;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Deserializer, Serialize};
 use thousands::Separable;
@@ -38,7 +37,7 @@ pub const QUANTITY_MIN: f64 = 0.0;
 #[derive(Clone, Copy, Default, Eq)]
 #[cfg_attr(
     feature = "python",
-    pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
+    pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
 )]
 pub struct Quantity {
     pub raw: u64,
@@ -64,7 +63,7 @@ impl Quantity {
     #[must_use]
     pub fn zero(precision: u8) -> Self {
         check_fixed_precision(precision).unwrap();
-        Quantity::new(0.0, precision).unwrap()
+        Self::new(0.0, precision).unwrap()
     }
 
     #[must_use]
@@ -85,8 +84,8 @@ impl Quantity {
     #[must_use]
     pub fn as_decimal(&self) -> Decimal {
         // Scale down the raw value to match the precision
-        let rescaled_raw = self.raw / u64::pow(10, (FIXED_PRECISION - self.precision) as u32);
-        Decimal::from_i128_with_scale(rescaled_raw as i128, self.precision as u32)
+        let rescaled_raw = self.raw / u64::pow(10, u32::from(FIXED_PRECISION - self.precision));
+        Decimal::from_i128_with_scale(i128::from(rescaled_raw), u32::from(self.precision))
     }
 
     #[must_use]
@@ -134,7 +133,7 @@ impl From<i64> for Quantity {
 
 impl Hash for Quantity {
     fn hash<H: Hasher>(&self, state: &mut H) {
-        self.raw.hash(state)
+        self.raw.hash(state);
     }
 }
 
@@ -274,7 +273,7 @@ impl<'de> Deserialize<'de> for Quantity {
         D: Deserializer<'de>,
     {
         let qty_str: &str = Deserialize::deserialize(_deserializer)?;
-        let qty: Quantity = qty_str.into();
+        let qty: Self = qty_str.into();
         Ok(qty)
     }
 }
@@ -338,7 +337,7 @@ mod tests {
         assert!(!qty.is_zero());
         assert!(qty.is_positive());
         assert_eq!(qty.as_decimal(), dec!(0.00812000));
-        assert!(approx_eq!(f64, qty.as_f64(), 0.00812, epsilon = 0.000001));
+        assert!(approx_eq!(f64, qty.as_f64(), 0.00812, epsilon = 0.000_001));
     }
 
     #[rstest]
@@ -368,7 +367,7 @@ mod tests {
 
     #[rstest]
     fn test_with_minimum_positive_value() {
-        let qty = Quantity::new(0.000000001, 9).unwrap();
+        let qty = Quantity::new(0.000_000_001, 9).unwrap();
         assert_eq!(qty.raw, 1);
         assert_eq!(qty.as_decimal(), dec!(0.000000001));
         assert_eq!(qty.to_string(), "0.000000001");

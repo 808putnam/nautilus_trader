@@ -1,19 +1,130 @@
-# NautilusTrader 1.185.0 Beta
+# NautilusTrader 1.189.0 Beta
 
 Released on TBD (UTC).
 
 ### Enhancements
-- Add warning log when `bypass_logging` is set true for a `LIVE` context
-- Improved `register_serializable object` to also add type to internal `_EXTERNAL_PUBLIHSABLE_TYPES`
+- Implemented Binance order book snapshot rebuilds on websocket reconnect (see integration guide)
+- Added additional validations for `OrderMatchingEngine` (will now raise a `RuntimeError` when a price or size precision for `OrderFilled` does not match the instruments precisions)
+- Added `LoggingConfig.use_pyo3` option for pyo3 based logging initialization (worse performance but allows visibility into logs originating from Rust)
 
 ### Breaking Changes
-- Changed `StreamingConfig.include_types` from `tuple[str]` to `list[type]` (better alignment with other type filters)
+None
+
+### Fixes
+- Fixed `MessageBus` handling of subscriptions after a topic has been published on (was previously dropping messages for these late subscribers)
+- Fixed `MessageBus` handling of subscriptions under certain edge cases (subscriptions list could be resized on iteration causing a `RuntimeError`)
+- Fixed `Throttler` handling of sending messages after messages have been dropped, thanks @davidsblom
+- Fixed `OrderBookDelta.to_pyo3_list` using zero precision from clear delta
+- Fixed `DataTransformer.pyo3_order_book_deltas_to_record_batch_bytes` using zero precision from clear delta
+- Fixed `OrderBookMbo` and `OrderBookMbp` integrity check when crossed book
+- Fixed `OrderBookMbp` error when attempting to add to a L1\_MBP book type (now raises `RuntimeError` rather than panicking)
+- Fixed Interactive Brokers connection error logging (#1524), thanks @benjaminsingleton
+- Fixed `SimulationModuleConfig` location and missing re-export from `config` subpackage
+- Fixed logging `StdoutWriter` from also writing error logs (writers were duplicating error logs)
+- Fixed `BinanceWebSocketClient` to [new specification](https://binance-docs.github.io/apidocs/futures/en/#websocket-market-streams) which requires responding to pings with a pong containing the pings payload
+- Fixed Binance Futures `AccountBalance` calculations based on wallet and available balance
+- Fixed `ExecAlgorithm` circular import issue for installed wheels (importing from `execution.algorithm` was a circular import)
+
+---
+
+# NautilusTrader 1.188.0 Beta
+
+Released on 25th February 2024 (UTC).
+
+### Enhancements
+- Added `FuturesSpread` instrument type
+- Added `OptionsSpread` instrument type
+- Added `InstrumentClass.FUTURE_SPREAD`
+- Added `InstrumentClass.OPTION_SPREAD`
+- Added `managed` parameter to `subscribe_order_book_deltas`, default true to retain current behavior (if false then the data engine will not automatically manage a book)
+- Added `managed` parameter to `subscribe_order_book_snapshots`, default true to retain current behavior (if false then the data engine will not automatically manage a book)
+- Added additional validations for `OrderMatchingEngine` (will now reject orders with incorrect price or quantity precisions)
+- Removed `interval_ms` 20 millisecond limitation for `subscribe_order_book_snapshots` (i.e. just needs to be positive), although we recommend you consider subscribing to deltas below 100 milliseconds
+- Ported `LiveClock` and `LiveTimer` implementations to Rust
+- Implemented `OrderBookDeltas` pickling
+- Implemented `AverageTrueRange` in Rust, thanks @rsmb7z
+
+### Breaking Changes
+- Changed `TradeId` value maximum length to 36 characters (will raise a `ValueError` if value exceeds the maximum)
+
+### Fixes
+- Fixed `TradeId` memory leak due assigning unique values to the `Ustr` global string cache (which are never freed for the lifetime of the program)
+- Fixed `TradeTick` size precision for pyo3 conversion (size precision was incorrectly price precision)
+- Fixed `RiskEngine` cash value check when selling (would previously divide quantity by price which is too much), thanks for reporting@AnthonyVince
+- Fixed FOK time in force behavior (allows fills beyond the top level, will cancel if cannot fill full size)
+- Fixed IOC time in force behavior (allows fills beyond the top level, will cancel any remaining after all fills are applied)
+- Fixed `LiveClock` timer behavior for small intervals causing next time to be less than now (timer then would not run)
+- Fixed log level filtering for `log_level_file` (bug introduced in v1.187.0), thanks @twitu
+- Fixed logging `print_config` config option (was not being passed through to the logging system)
+- Fixed logging timestamps for backtesting (static clock was not being incrementally set to individual `TimeEvent` timestamps)
+- Fixed account balance updates (fills from zero quantity `NETTING` positions will generate account balance updates)
+- Fixed `MessageBus` publishable types collection type (needed to be `tuple` not `set`)
+- Fixed `Controller` registration of components to ensure all active clocks are iterated correctly during backtests
+- Fixed `Equity` short selling for `CASH` accounts (will now reject)
+- Fixed `ActorFactory.create` JSON encoding (was missing the encoding hook)
+- Fixed `ImportableConfig.create` JSON encoding (was missing the encoding hook)
+- Fixed `ImportableStrategyConfig.create` JSON encoding (was missing the encoding hook)
+- Fixed `ExecAlgorithmFactory.create` JSON encoding (was missing the encoding hook)
+- Fixed `ControllerConfig` base class and docstring
+- Fixed Interactive Brokers historical bar data bug, thanks @benjaminsingleton
+- Fixed persistence `freeze_dict` function to handle `fs_storage_options`, thanks @dimitar-petrov
+
+---
+
+# NautilusTrader 1.187.0 Beta
+
+Released on 9th February 2024 (UTC).
+
+### Enhancements
+- Refined logging system module and writers in Rust, thanks @ayush-sb and @twitu
+- Improved Interactive Brokers adapter symbology and parsing with a `strict_symbology` option, thanks @rsmb7z and @fhill2
+
+### Breaking Changes
+- Reorganized configuration objects (separated into a `config` module per subpackage, with re-exports from `nautilus_trader.config`)
+
+### Fixes
+- Fixed `BacktestEngine` and `Trader` disposal (now properly releasing resources), thanks for reporting @davidsblom
+- Fixed circular import issues from configuration objects, thanks for reporting @cuberone
+- Fixed unnecessary creation of log files when file logging off
+
+---
+
+# NautilusTrader 1.186.0 Beta
+
+Released on 2nd February 2024 (UTC).
+
+### Enhancements
+None
+
+### Breaking Changes
+None
+
+### Fixes
+- Fixed Interactive Brokers get account positions bug (#1475), thanks @benjaminsingleton
+- Fixed `TimeBarAggregator` handling of interval types on build
+- Fixed `BinanceSpotExecutionClient` non-existent method name, thanks @sunlei
+- Fixed unused `psutil` import, thanks @sunlei
+
+---
+
+# NautilusTrader 1.185.0 Beta
+
+Released on 26th January 2024 (UTC).
+
+### Enhancements
+- Add warning log when `bypass_logging` is set true for a `LIVE` context
+- Improved `register_serializable object` to also add type to internal `_EXTERNAL_PUBLIHSABLE_TYPES`
+- Improved Interactive Brokers expiration contract parsing, thanks @fhill2
+
+### Breaking Changes
+- Changed `StreamingConfig.include_types` type from `tuple[str]` to `list[type]` (better alignment with other type filters)
 - Consolidated `clock` module into `component` module (reduce binary wheel size)
 - Consolidated `logging` module into `component` module (reduce binary wheel size)
 
 ### Fixes
 - Fixed Arrow serialization of `OrderUpdated` (`trigger_price` type was incorrect), thanks @benjaminsingleton
 - Fixed `StreamingConfig.include_types` behavior (was not being honored for instrument writers), thanks for reporting @doublier1
+- Fixed `ImportableStrategyConfig` type assignment in `StrategyFactory` (#1470), thanks @rsmb7z
 
 ---
 

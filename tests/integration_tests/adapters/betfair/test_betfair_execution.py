@@ -100,14 +100,15 @@ async def _setup_order_state(
                         cache.add_instrument(instrument)
                     if not cache.order(client_order_id):
                         assert strategy is not None, "strategy can't be none if accepting order"
+                        instrument = cache.instrument(instrument_id)
                         order = TestExecStubs.limit_order(
-                            instrument_id=instrument_id,
+                            instrument=instrument,
                             price=betfair_float_to_price(order_update.p),
                             client_order_id=client_order_id,
                         )
-                        exec_client.venue_order_id_to_client_order_id[
-                            venue_order_id
-                        ] = client_order_id
+                        exec_client.venue_order_id_to_client_order_id[venue_order_id] = (
+                            client_order_id
+                        )
                         await _accept_order(order, venue_order_id, exec_client, strategy, cache)
 
                         if include_fills and order_update.sm:
@@ -219,7 +220,7 @@ def fill_order(
 @pytest.fixture()
 def test_order(instrument, strategy_id):
     return TestExecStubs.limit_order(
-        instrument_id=instrument.id,
+        instrument=instrument,
         price=betfair_float_to_price(2.0),
         quantity=Quantity.from_str("100"),
         strategy_id=strategy_id,
@@ -665,18 +666,18 @@ async def test_duplicate_trade_id(exec_client, setup_order_state, fill_events, c
     assert isinstance(cancel, OrderCanceled)
     # Second order example, partial fill followed by remainder filled
     assert isinstance(fill2, OrderFilled)
-    assert fill2.trade_id.value == "87fef5f92a397fdabc3f4112565223e6abc26ed2"
+    assert fill2.trade_id.value == "5b87a0fad91063d93a3df2fe7a369f6c9a19"
     assert isinstance(fill3, OrderFilled)
-    assert fill3.trade_id.value == "bf9b4dd216c963ca7a048cc57a680e11c8f845a7"
+    assert fill3.trade_id.value == "75076f6b172799e168869d64df86b4d2717d"
 
 
 @pytest.mark.parametrize(
     ("side", "price", "quantity", "free"),
     [
-        (OrderSide.BUY, Price.from_str("2.0"), Quantity.from_str("100"), 900),
-        (OrderSide.BUY, Price.from_str("5.0"), Quantity.from_str("50"), 950),
-        (OrderSide.SELL, Price.from_str("1.2"), Quantity.from_str("100"), 980),
-        (OrderSide.SELL, Price.from_str("5.0"), Quantity.from_str("100"), 600),
+        (OrderSide.SELL, Price.from_str("2.0"), Quantity.from_str("100"), 9900),
+        (OrderSide.SELL, Price.from_str("5.0"), Quantity.from_str("50"), 9950),
+        (OrderSide.BUY, Price.from_str("1.2"), Quantity.from_str("100"), 9980),
+        (OrderSide.BUY, Price.from_str("5.0"), Quantity.from_str("100"), 9600),
     ],
 )
 @pytest.mark.asyncio()
@@ -698,7 +699,7 @@ async def test_betfair_back_order_reduces_balance(
 ):
     # Arrange
     order = TestExecStubs.limit_order(
-        instrument_id=instrument.id,
+        instrument=instrument,
         order_side=side,
         price=price,
         quantity=quantity,
@@ -723,9 +724,9 @@ async def test_betfair_back_order_reduces_balance(
     await asyncio.sleep(0)
 
     # Assert
-    assert balance_pre_order.free == Money(1000.0, GBP)
+    assert balance_pre_order.free == Money(10000.0, GBP)
     assert balance_order.free == Money(free, GBP)
-    assert balance_cancel.free == Money(1000.0, GBP)
+    assert balance_cancel.free == Money(10000.0, GBP)
 
 
 @pytest.mark.asyncio()
@@ -938,14 +939,13 @@ async def test_fok_order_found_in_cache(exec_client, setup_order_state, strategy
         selection_handicap=0.0,
     )
     cache.add_instrument(instrument)
-    instrument_id = instrument.id
     client_order_id = ClientOrderId("O-20231004-0354-001-61288616-1")
     venue_order_id = VenueOrderId("323421338057")
     limit_order = TestExecStubs.limit_order(
-        instrument_id=instrument_id,
+        instrument=instrument,
         order_side=OrderSide.SELL,
         price=Price(9.6000000, BETFAIR_PRICE_PRECISION),
-        quantity=Quantity(2.8000, 4),
+        quantity=Quantity(2.8000, 2),
         time_in_force=TimeInForce.FOK,
         client_order_id=client_order_id,
     )
@@ -1006,6 +1006,37 @@ async def test_generate_order_status_reports_executable(exec_client):
     assert reports[1].quantity == Quantity(10.0, BETFAIR_QUANTITY_PRECISION)
     assert reports[1].order_status == OrderStatus.ACCEPTED
     assert reports[1].filled_qty == 0.0
+    assert reports[1].time_in_force == TimeInForce.DAY
+
+
+@pytest.mark.asyncio
+async def test_generate_order_status_reports_executable_limit_on_close(exec_client):
+    # Arrange
+    mock_betfair_request(
+        exec_client._client,
+        BetfairResponses.list_current_orders_on_close_execution_complete(),
+    )
+
+    # Act
+    reports = await exec_client.generate_order_status_reports()
+
+    # Assert
+    assert len(reports) == 2
+
+    # Back
+    assert reports[0].order_side == OrderSide.SELL
+    assert reports[0].price == Price(5.0, BETFAIR_PRICE_PRECISION)
+    assert reports[0].quantity == Quantity(20.0, BETFAIR_QUANTITY_PRECISION)
+    assert reports[0].order_status == OrderStatus.ACCEPTED
+    assert reports[0].filled_qty == Quantity(20.0, BETFAIR_QUANTITY_PRECISION)
+    assert reports[0].time_in_force == TimeInForce.DAY
+
+    # Lay
+    assert reports[1].order_side == OrderSide.BUY
+    assert reports[1].price == Price(1.5, BETFAIR_PRICE_PRECISION)
+    assert reports[1].quantity == Quantity(50.0, BETFAIR_QUANTITY_PRECISION)
+    assert reports[1].order_status == OrderStatus.ACCEPTED
+    assert reports[1].filled_qty == Quantity(50.0, BETFAIR_QUANTITY_PRECISION)
     assert reports[1].time_in_force == TimeInForce.DAY
 
 

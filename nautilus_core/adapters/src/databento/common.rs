@@ -13,20 +13,17 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-use nautilus_model::identifiers::{instrument_id::InstrumentId, symbol::Symbol, venue::Venue};
-use ustr::Ustr;
+use anyhow::Result;
+use databento::historical::DateTimeRange;
+use nautilus_core::time::UnixNanos;
+use time::OffsetDateTime;
 
-use super::types::DatabentoPublisher;
+pub const DATABENTO: &str = "DATABENTO";
+pub const ALL_SYMBOLS: &str = "ALL_SYMBOLS";
 
-#[must_use]
-pub fn nautilus_instrument_id_from_databento(
-    raw_symbol: Ustr,
-    publisher: &DatabentoPublisher,
-) -> InstrumentId {
-    let symbol = Symbol { value: raw_symbol };
-    let venue = Venue {
-        value: Ustr::from(publisher.venue.as_str()),
-    }; // TODO: Optimize
-
-    InstrumentId::new(symbol, venue)
+pub fn get_date_time_range(start: UnixNanos, end: UnixNanos) -> Result<DateTimeRange> {
+    Ok(DateTimeRange::from((
+        OffsetDateTime::from_unix_timestamp_nanos(i128::from(start))?,
+        OffsetDateTime::from_unix_timestamp_nanos(i128::from(end))?,
+    )))
 }
