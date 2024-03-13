@@ -12,6 +12,7 @@ from nautilus_trader.test_kit.stubs.identifiers import TestIdStubs
 
 from nautilus_trader.continuous.contract_month import ContractMonth
 from nautilus_trader.continuous.chain import ContractChain
+from nautilus_trader.continuous.cycle import MONTH_LIST
 
 class ContinuousBarWrangler:
     def __init__(
@@ -50,17 +51,19 @@ class ContinuousBarWrangler:
         
         self._end_month = end_month
 
-    def process_bars(self, bars: list[Bar]) -> dict[int, list[Bar]]:
+    def process_bars(self, bars: list[Bar], sort: bool = True) -> dict[int, list[Bar]]:
         
         # TODO assert bar_type format
         
-        bars = sorted(
-            bars,
-            key=lambda x: (
-                x.ts_init,
-                MONTH_LIST.index(x.bar_type.instrument_id.symbol.value[-1]) * -1,  # previous -> current -> forward
-            ),
-        )
+        # sort bars by previous -> current -> forward
+        if sort:
+            bars = sorted(
+                bars,
+                key=lambda x: (
+                    x.ts_init,
+                    MONTH_LIST.index(x.bar_type.instrument_id.symbol.value[-1]),
+                ),
+            )
         
         results = {}
         
