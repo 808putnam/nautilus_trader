@@ -22,6 +22,9 @@ class ContractChain(Actor):
         self,
         config: ContractChainConfig,
     ):
+        
+        
+        
         super().__init__()
         
         self.bar_type = config.bar_type
