@@ -51,7 +51,17 @@ class ContinuousBarWrangler:
         self._end_month = end_month
 
     def process_bars(self, bars: list[Bar]) -> dict[int, list[Bar]]:
-        # TODO: sort bars carry -> forward -> current
+        
+        # TODO assert bar_type format
+        
+        bars = sorted(
+            bars,
+            key=lambda x: (
+                x.ts_init,
+                MONTH_LIST.index(x.bar_type.instrument_id.symbol.value[-1]) * -1,  # previous -> current -> forward
+            ),
+        )
+        
         results = {}
         
         results[-1] = []
