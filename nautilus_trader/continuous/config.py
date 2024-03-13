@@ -25,6 +25,7 @@ class RollConfig(NautilusConfig, frozen=True):
     roll_offset : NonPositiveInt, The day, relative to the expiry date, when we usually roll
     carry_offset : Literal[1, -1], The number of contracts forward or backwards defines carry in the priced roll cycle
     approximate_expiry_offset : NonNegativeInt, The offset, relative to the first of the contract month that the expiry date approximately occurs
+    
     """
 
     instrument_id: InstrumentId
@@ -51,7 +52,8 @@ class ContractChainConfig(NautilusConfig, frozen=True):
     ignore_expiry_date : bool, default False
         If the expiry_date of the current contract should be ignored when attempting to roll
     start_month : ContractMonth, optional
-        The chain's starting month to initialize to when started up 
+        The starting month to roll to when started
+        
     """
     bar_type: BarType
     roll_config: RollConfig

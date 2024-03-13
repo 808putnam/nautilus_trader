@@ -13,20 +13,15 @@ class RollCycle:
 
         self._skip_months = skip_months or []
 
-    def current_month(self, timestamp: pd.Timestamp) -> ContractMonth:
-        month = ContractMonth.from_month_year(timestamp.year, timestamp.month)
-
-        letter_month = month.letter_month
-
-        if letter_month not in self.value:
-            month = self.next_month(month)
-
-        while month.value in self._skip_months:
-            month = self.next_month(current=month)
-
-        return month
-
     def next_month(self, current: ContractMonth) -> ContractMonth:
+        """
+        Return the next month in the cycle.
+
+        Returns
+        -------
+        ContractMonth
+
+        """
         year = current.year
         letter_month = current.letter_month
 
@@ -48,6 +43,14 @@ class RollCycle:
         return month
 
     def previous_month(self, current: ContractMonth) -> ContractMonth:
+        """
+        Return the previous month in the cycle.
+
+        Returns
+        -------
+        ContractMonth
+
+        """
         year = current.year
         letter_month = current.letter_month
 

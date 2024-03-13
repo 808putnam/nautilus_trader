@@ -70,7 +70,15 @@ class ContractChain(Actor):
                     topic=f"{self.bar_type}-1",
                     msg=previous_bar,
                 )
-        
+    
+    def roll(self) -> None:
+        """
+        Roll to the next month in the chain.
+
+        """
+        to_month = self._hold_cycle.next_month(self.current_month)
+        self._roll(to_month=to_month)
+            
     def _attempt_roll(self) -> None:
         
         current_bar = self.cache.bar(self.current_bar_type)
@@ -100,10 +108,6 @@ class ContractChain(Actor):
         
         self.roll()
         self.rolls.loc[len(self.rolls)] = (current_timestamp, self.current_month)
-
-    def roll(self):
-        to_month = self._hold_cycle.next_month(self.current_month)
-        self._roll(to_month=to_month)
 
     def _roll(self, to_month: ContractMonth) -> None:
         self._log.debug(f"Rolling to month {to_month}...")
