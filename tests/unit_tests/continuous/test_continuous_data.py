@@ -15,7 +15,7 @@ from nautilus_trader.data.engine import DataEngine
 from nautilus_trader.continuous.chain import FuturesChain
 from nautilus_trader.continuous.config import FuturesChainConfig
 from nautilus_trader.continuous.contract_month import ContractMonth
-from nautilus_trader.continuous.data import ContinuousData
+from nautilus_trader.continuous.chain import ContinuousData
 from nautilus_trader.model.data import Bar
 from nautilus_trader.model.data import BarType
 from nautilus_trader.model.data import capsule_to_list

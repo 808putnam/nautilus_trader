@@ -5,21 +5,6 @@ from nautilus_trader.core.datetime import dt_to_unix_nanos
 
 MONTH_LIST = ["F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"]
 
-"""
-F = Jan, 1
-G = Feb, 2
-H = March, 3
-J = April, 4
-K = May, 5
-M = June, 6
-N = July, 7
-Q = August, 8
-U = September, 9
-V = October, 10
-X = November, 11
-Z = December, 12
-"""
-
 class ContractMonth:
     def __init__(
         self,
@@ -37,21 +22,10 @@ class ContractMonth:
         self.timestamp_utc = pd.Timestamp(year=self.year, month=self.month, day=1, tz="UTC")
     
     @classmethod
-    def from_year_letter_month(cls, year: int, letter_month: str) -> ContractMonth:
-        assert isinstance(year, int)
-        assert isinstance(letter_month, str)
-        return cls(f"{year}{letter_month}")
-    
-    @classmethod
     def from_month_year(cls, year: int, month: int) -> ContractMonth:
         assert isinstance(month, int)
         assert month >= 1 and month <= 12
         return cls(f"{year}{int_to_letter_month(month)}")
-    
-    @classmethod
-    def now(cls):
-        now = pd.Timestamp.utcnow()
-        return cls.from_month_year(year=now.year, month=now.month)
     
     @classmethod
     def from_int(cls, value: int) -> ContractMonth:
