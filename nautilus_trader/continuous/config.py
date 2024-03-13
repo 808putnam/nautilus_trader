@@ -16,7 +16,7 @@ NonPositiveInt = Annotated[int, Meta(le=0)]
 
 class RollConfig(NautilusConfig, frozen=True):
     """
-    Configuration for the rolls
+    Configuration for rolls
 
     Parameters
     ----------
@@ -38,7 +38,7 @@ class RollConfig(NautilusConfig, frozen=True):
 
 class ContractChainConfig(NautilusConfig, frozen=True):
     """
-    Configuration for the rolling of contracts
+    Configuration for contract chain
 
     Parameters
     ----------
