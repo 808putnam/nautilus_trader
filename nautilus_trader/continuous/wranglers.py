@@ -53,22 +53,22 @@ class ContinuousBarWrangler:
     def process_bars(self, bars: list[Bar]) -> dict[int, list[Bar]]:
         # TODO: sort bars carry -> forward -> current
         results = {}
-        results[-1] = []
-        results[0] = []
-        results[1] = []
         
+        results[-1] = []
         msgbus.subscribe(
-            topic=str(self.chain.bar_type),
+            topic=f"{self.chain.bar_type}-1",
             handler=results[-1].append,
         )
         
+        results[0] = []
         msgbus.subscribe(
-            topic=str(self.chain.bar_type),
+            topic=f"{self.chain.bar_type}",
             handler=results[0].append,
         )
         
+        results[1] = []
         msgbus.subscribe(
-            topic=str(self.chain.bar_type),
+            topic=f"{self.chain.bar_type}-1",
             handler=results[1].append,
         )
         
