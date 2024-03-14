@@ -31,11 +31,6 @@ class TestMultipleData:
     def setup(self):
         
         self.clock = TestClock()
-        self.logger = Logger(
-            clock=self.clock,
-            level_stdout=LogLevel.DEBUG,
-            # bypass=True,
-        )
 
         self.msgbus = MessageBus(
             trader_id=TestIdStubs.trader_id(),
@@ -49,14 +44,12 @@ class TestMultipleData:
             self.msgbus,
             self.cache,
             self.clock,
-            self.logger,
         )
 
         self.data_engine = DataEngine(
             msgbus=self.msgbus,
             cache=self.cache,
             clock=self.clock,
-            logger=self.logger,
             config=DataEngineConfig(debug=True),
         )
 
