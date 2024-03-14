@@ -59,12 +59,6 @@ class TestContractChain:
             start_month=ContractMonth("2021H"),
         )
         
-        self.chain = ContractChain(config=self.chain_config)
-        
-        self.engine.add_actor(self.chain)
-        
-        self.msgbus = self.engine.kernel.msgbus
-        
         for letter_month in MONTH_LIST:
             self.engine.add_instrument(
                 FuturesContract(
@@ -90,8 +84,13 @@ class TestContractChain:
                 )
             )
         
+        self.msgbus = self.engine.kernel.msgbus
     
     def test_initialize_sets_expected_attributes(self):
+        
+        chain = ContractChain(config=self.chain_config)
+        
+        self.engine.add_actor(chain)
         
         data = [
             ("MES=2021H.SIM", "2021-03-09"),
@@ -102,20 +101,20 @@ class TestContractChain:
         self.engine.add_data(bars, validate=False)
         self.engine.run()
         
-        assert len(self.chain.rolls) == 0
+        assert len(chain.rolls) == 0
         
-        assert self.chain.current_month == ContractMonth("2021H")
-        assert self.chain.previous_month == ContractMonth("2020Z")
-        assert self.chain.forward_month == ContractMonth("2021M")
-        assert self.chain.carry_month == ContractMonth("2021J")
+        assert chain.current_month == ContractMonth("2021H")
+        assert chain.previous_month == ContractMonth("2020Z")
+        assert chain.forward_month == ContractMonth("2021M")
+        assert chain.carry_month == ContractMonth("2021J")
 
-        assert self.chain.expiry_date == pd.Timestamp("2021-03-15", tz="UTC")
-        assert self.chain.roll_date == pd.Timestamp("2021-03-10", tz="UTC")
+        assert chain.expiry_date == pd.Timestamp("2021-03-15", tz="UTC")
+        assert chain.roll_date == pd.Timestamp("2021-03-10", tz="UTC")
 
-        assert self.chain.current_bar_type == BarType.from_str("MES=2021H.SIM-1-DAY-MID-EXTERNAL")
-        assert self.chain.previous_bar_type == BarType.from_str("MES=2020Z.SIM-1-DAY-MID-EXTERNAL")
-        assert self.chain.forward_bar_type == BarType.from_str("MES=2021M.SIM-1-DAY-MID-EXTERNAL")
-        assert self.chain.carry_bar_type == BarType.from_str("MES=2021J.SIM-1-DAY-MID-EXTERNAL")
+        assert chain.current_bar_type == BarType.from_str("MES=2021H.SIM-1-DAY-MID-EXTERNAL")
+        assert chain.previous_bar_type == BarType.from_str("MES=2020Z.SIM-1-DAY-MID-EXTERNAL")
+        assert chain.forward_bar_type == BarType.from_str("MES=2021M.SIM-1-DAY-MID-EXTERNAL")
+        assert chain.carry_bar_type == BarType.from_str("MES=2021J.SIM-1-DAY-MID-EXTERNAL")
         
         sub_topics = [s.topic for s in self.msgbus.subscriptions() if s.topic.startswith("data.bars")]
         assert sub_topics == [
@@ -124,6 +123,10 @@ class TestContractChain:
         ]
             
     def test_roll_sets_expected_attributes(self):
+        
+        chain = ContractChain(config=self.chain_config)
+        
+        self.engine.add_actor(chain)
         
         data = [
             ("MES=2021H.SIM", "2021-03-09"),
@@ -137,22 +140,22 @@ class TestContractChain:
         self.engine.add_data(bars)
         self.engine.run()
         
-        assert len(self.chain.rolls) == 1
-        assert self.chain.rolls.timestamp.iloc[0] == pd.Timestamp("2021-03-10", tz="UTC")
-        assert self.chain.rolls.to_month.iloc[0] == ContractMonth("2021M")
+        assert len(chain.rolls) == 1
+        assert chain.rolls.timestamp.iloc[0] == pd.Timestamp("2021-03-10", tz="UTC")
+        assert chain.rolls.to_month.iloc[0] == ContractMonth("2021M")
         
-        assert self.chain.current_month == ContractMonth("2021M")
-        assert self.chain.previous_month == ContractMonth("2021H")
-        assert self.chain.forward_month == ContractMonth("2021U")
-        assert self.chain.carry_month == ContractMonth("2021N")
+        assert chain.current_month == ContractMonth("2021M")
+        assert chain.previous_month == ContractMonth("2021H")
+        assert chain.forward_month == ContractMonth("2021U")
+        assert chain.carry_month == ContractMonth("2021N")
 
-        assert self.chain.expiry_date == pd.Timestamp("2021-06-15", tz="UTC")
-        assert self.chain.roll_date == pd.Timestamp("2021-06-10", tz="UTC")
+        assert chain.expiry_date == pd.Timestamp("2021-06-15", tz="UTC")
+        assert chain.roll_date == pd.Timestamp("2021-06-10", tz="UTC")
 
-        assert self.chain.current_bar_type == BarType.from_str("MES=2021M.SIM-1-DAY-MID-EXTERNAL")
-        assert self.chain.previous_bar_type == BarType.from_str("MES=2021H.SIM-1-DAY-MID-EXTERNAL")
-        assert self.chain.forward_bar_type == BarType.from_str("MES=2021U.SIM-1-DAY-MID-EXTERNAL")
-        assert self.chain.carry_bar_type == BarType.from_str("MES=2021N.SIM-1-DAY-MID-EXTERNAL")
+        assert chain.current_bar_type == BarType.from_str("MES=2021M.SIM-1-DAY-MID-EXTERNAL")
+        assert chain.previous_bar_type == BarType.from_str("MES=2021H.SIM-1-DAY-MID-EXTERNAL")
+        assert chain.forward_bar_type == BarType.from_str("MES=2021U.SIM-1-DAY-MID-EXTERNAL")
+        assert chain.carry_bar_type == BarType.from_str("MES=2021N.SIM-1-DAY-MID-EXTERNAL")
     
         sub_topics = [s.topic for s in self.msgbus.subscriptions() if s.topic.startswith("data.bars")]
         assert sub_topics == [
@@ -162,9 +165,13 @@ class TestContractChain:
         
     def test_current_bar_publish(self):
         
+        chain = ContractChain(config=self.chain_config)
+        
+        self.engine.add_actor(chain)
+        
         results: list[Bar] = []
         self.msgbus.subscribe(
-            topic=f"{self.chain.bar_type}",
+            topic=f"{chain.bar_type}",
             handler=results.append,
         )
         
@@ -201,9 +208,13 @@ class TestContractChain:
     
     def test_forward_bar_publish(self):
         
+        chain = ContractChain(config=self.chain_config)
+        
+        self.engine.add_actor(chain)
+        
         results: list[Bar] = []
         self.msgbus.subscribe(
-            topic=f"{self.chain.bar_type}+1",
+            topic=f"{chain.bar_type}+1",
             handler=results.append,
         )
         
@@ -239,9 +250,13 @@ class TestContractChain:
         
     def test_carry_bar_publish(self):
         
+        chain = ContractChain(config=self.chain_config)
+        
+        self.engine.add_actor(chain)
+        
         results: list[Bar] = []
         self.msgbus.subscribe(
-            topic=f"{self.chain.bar_type}c",
+            topic=f"{chain.bar_type}c",
             handler=results.append,
         )
         
