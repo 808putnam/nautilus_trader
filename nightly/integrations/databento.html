@@ -1335,7 +1335,7 @@ by either the original source venue, or internally by Databento during normaliza
           <a class="reference external" href="https://www.iso20022.org/market-identifier-codes">
            ISO 10383 MIC
           </a>
-          (Market Identification Code)
+          (Market Identifier Code)
 from the Databento instrument definition message for the Nautilus
           <code class="docutils literal notranslate">
            <span class="pre">
@@ -1363,14 +1363,21 @@ as a venue identifier. You can read more about Databento dataset naming conventi
             GLBX.MDP3
            </span>
           </code>
-          dataset code), the
+          dataset code), the following
+exchanges are all grouped under the
           <code class="docutils literal notranslate">
            <span class="pre">
-            venue
+            GLBX
            </span>
           </code>
-          that
-Nautilus will use is the CME exchange code provided by instrument definition messages (which the Interactive Brokers adapter can map):
+          venue. These mappings can be determined from the
+instruments
+          <code class="docutils literal notranslate">
+           <span class="pre">
+            exchange
+           </span>
+          </code>
+          field:
          </p>
          <ul class="simple">
           <li>
@@ -2027,7 +2034,7 @@ lower level generic methods for custom data types. The following example subscri
 <span class="kn">from</span> <span class="nn">nautilus_trader.adapters.databento</span> <span class="kn">import</span> <span class="n">DatabentoStatisics</span>
 <span class="kn">from</span> <span class="nn">nautilus_trader.model.data</span> <span class="kn">import</span> <span class="n">DataType</span>
 
-<span class="n">instrument_id</span> <span class="o">=</span> <span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ES.FUT.XCME"</span><span class="p">)</span>
+<span class="n">instrument_id</span> <span class="o">=</span> <span class="n">InstrumentId</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="s2">"ES.FUT.GLBX"</span><span class="p">)</span>
 <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">"instrument_id"</span><span class="p">:</span> <span class="n">instrument_id</span><span class="p">,</span>
     <span class="s2">"start"</span><span class="p">:</span> <span class="s2">"2024-03-06"</span><span class="p">,</span>
