@@ -20,15 +20,21 @@ class RollConfig(NautilusConfig, frozen=True):
 
     Parameters
     ----------
-    hold_cycle : RollCycle, The contract cycle string we want to hold
-    priced_cycle : RollCycle, The contract cycle string of available prices
-    roll_offset : NonPositiveInt, The day, relative to the expiry date, when we usually roll
-    carry_offset : Literal[1, -1], The number of contracts forward or backwards defines carry in the priced roll cycle
-    approximate_expiry_offset : NonNegativeInt, The offset, relative to the first of the contract month that the expiry date approximately occurs
-    
+    hold_cycle : RollCycle
+        The contract cycle string we want to hold
+    priced_cycle : RollCycle
+        The contract cycle string of available prices
+    roll_offset : NonPositiveInt
+        The day, relative to the expiry date, when we usually roll
+    approximate_expiry_offset : NonNegativeInt
+        The offset, relative to the first day of the contract month that the expiry date approximately occurs.
+        After this date, the contract is assumed expired and non-tradeable.
+    carry_offset : Literal[1, -1]
+        The number of contracts forward or backwards in the priced roll cycle
+    skip_months: list[ContractMonth], optional
+        The months to skip in the cycle
     """
 
-    instrument_id: InstrumentId
     hold_cycle: RollCycle
     priced_cycle: RollCycle
     roll_offset: NonPositiveInt
@@ -50,7 +56,7 @@ class ContractChainConfig(NautilusConfig, frozen=True):
     raise_expired : bool, default True
         If an exception is raised when the contract fails to roll before the contract's expiry date
     ignore_expiry_date : bool, default False
-        If the expiry_date of the current contract should be ignored when attempting to roll
+        If the expiry_date of the current contract should be ignored when attempting to roll.
     start_month : ContractMonth, optional
         The starting month to roll to when started
         
