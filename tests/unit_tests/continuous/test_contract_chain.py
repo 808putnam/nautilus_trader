@@ -88,6 +88,7 @@ class TestContractChain:
     
     def test_initialize_sets_expected_attributes(self):
         
+        # Arrange
         chain = ContractChain(config=self.chain_config)
         
         self.engine.add_actor(chain)
@@ -99,8 +100,11 @@ class TestContractChain:
         
         bars = self._create_bars(data)
         self.engine.add_data(bars, validate=False)
+        
+        # Act
         self.engine.run()
         
+        # Assert
         assert len(chain.rolls) == 0
         
         assert chain.current_month == ContractMonth("2021H")
@@ -124,6 +128,7 @@ class TestContractChain:
             
     def test_roll_sets_expected_attributes(self):
         
+        # Arrange
         chain = ContractChain(config=self.chain_config)
         
         self.engine.add_actor(chain)
@@ -138,8 +143,11 @@ class TestContractChain:
         
         bars = self._create_bars(data)
         self.engine.add_data(bars)
+        
+        # Act
         self.engine.run()
         
+        # Assert
         assert len(chain.rolls) == 1
         assert chain.rolls.timestamp.iloc[0] == pd.Timestamp("2021-03-10", tz="UTC")
         assert chain.rolls.to_month.iloc[0] == ContractMonth("2021M")
@@ -165,6 +173,7 @@ class TestContractChain:
         
     def test_current_bar_publish(self):
         
+        # Arrange
         chain = ContractChain(config=self.chain_config)
         
         self.engine.add_actor(chain)
@@ -190,9 +199,11 @@ class TestContractChain:
         
         bars = self._create_bars(data)
         self.engine.add_data(bars)
+        
+        # Act
         self.engine.run()
         
-        
+        # Assert
         assert len(results) == 3
         assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
         assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10", tz="UTC")
@@ -208,6 +219,7 @@ class TestContractChain:
     
     def test_forward_bar_publish(self):
         
+        # Arrange
         chain = ContractChain(config=self.chain_config)
         
         self.engine.add_actor(chain)
@@ -233,8 +245,12 @@ class TestContractChain:
         
         bars = self._create_bars(data)
         self.engine.add_data(bars)
+        
+        # Act
         self.engine.run()
         
+        
+        # Assert
         assert len(results) == 3
         assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
         assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10", tz="UTC")
@@ -250,6 +266,7 @@ class TestContractChain:
         
     def test_carry_bar_publish(self):
         
+        # Arrange
         chain = ContractChain(config=self.chain_config)
         
         self.engine.add_actor(chain)
@@ -275,8 +292,11 @@ class TestContractChain:
         
         bars = self._create_bars(data)
         self.engine.add_data(bars)
+        
+        # Act
         self.engine.run()
-            
+        
+        # Assert
         assert len(results) == 3
         assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
         assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10", tz="UTC")
@@ -292,6 +312,7 @@ class TestContractChain:
     
     def test_contract_expired_raises(self):
         
+        # Arrange
         chain = ContractChain(config=self.chain_config)
         
         self.engine.add_actor(chain)
@@ -303,13 +324,16 @@ class TestContractChain:
         ]
         
         bars = self._create_bars(data)
-        
+        self.engine.add_data(bars)
+
+        # Act & Assert
         with pytest.raises(ValueError):
-            self.engine.add_data(bars)
+            
             self.engine.run()
             
     def test_ignore_expiry_date_when_rolling(self):
         
+        # Arrange
         config = ContractChainConfig(
             bar_type=BarType.from_str("MES.SIM-1-DAY-MID-EXTERNAL"),
             roll_config=RollConfig(
@@ -337,8 +361,11 @@ class TestContractChain:
         
         bars = self._create_bars(data)
         self.engine.add_data(bars)
+        
+        # Act
         self.engine.run()
         
+        # Assert
         assert len(chain.rolls) == 1
         
     def _create_bars(self, data: list[tuple]) -> list[Bar]:
