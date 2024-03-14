@@ -276,7 +276,6 @@ class TestContractChain:
         bars = self._create_bars(data)
         self.engine.add_data(bars)
         self.engine.run()
-        
             
         assert len(results) == 3
         assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
@@ -293,6 +292,10 @@ class TestContractChain:
     
     def test_contract_expired_raises(self):
         
+        chain = ContractChain(config=self.chain_config)
+        
+        self.engine.add_actor(chain)
+        
         data = [
             ("MES=2021H.SIM", "2021-03-14"),
             ("MES=2021H.SIM", "2021-03-15"),  # expired
@@ -305,6 +308,39 @@ class TestContractChain:
             self.engine.add_data(bars)
             self.engine.run()
             
+    def test_ignore_expiry_date_when_rolling(self):
+        
+        config = ContractChainConfig(
+            bar_type=BarType.from_str("MES.SIM-1-DAY-MID-EXTERNAL"),
+            roll_config=RollConfig(
+                hold_cycle=RollCycle("HMUZ"),
+                priced_cycle=RollCycle("FGHJKMNQUVXZ"),
+                roll_offset=-5,
+                approximate_expiry_offset=14,
+                carry_offset=1,
+            ),
+            start_month=ContractMonth("2021H"),
+            raise_expired=False,
+            ignore_expiry_date=True,
+        )
+        
+        chain = ContractChain(config=config)
+        
+        self.engine.add_actor(chain)
+        
+        data = [
+            ("MES=2021H.SIM", "2021-03-15"),  # contract expired
+            ("MES=2021H.SIM", "2021-03-17"),
+            ("MES=2021M.SIM", "2021-03-17"),
+            ("MES=2021M.SIM", "2021-03-18"),  # rolled
+        ]
+        
+        bars = self._create_bars(data)
+        self.engine.add_data(bars)
+        self.engine.run()
+        
+        assert len(chain.rolls) == 1
+        
     def _create_bars(self, data: list[tuple]) -> list[Bar]:
         return [
             Bar(
