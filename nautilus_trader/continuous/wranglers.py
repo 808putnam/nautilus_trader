@@ -25,7 +25,7 @@ class ContinuousBarWrangler:
         
         clock = TestClock()
 
-        msgbus = MessageBus(
+        self._msgbus = MessageBus(
             trader_id=TestIdStubs.trader_id(),
             clock=clock,
         )
@@ -33,7 +33,7 @@ class ContinuousBarWrangler:
         cache = Cache()
 
         portfolio = Portfolio(
-            msgbus,
+            self._msgbus,
             cache,
             clock,
         )
@@ -41,19 +41,22 @@ class ContinuousBarWrangler:
         
         chain.register_base(
             portfolio=portfolio,
-            msgbus=msgbus,
+            msgbus=self._msgbus,
             cache=cache,
             clock=clock,
         )
         chain.start()
 
-        self.data_engine.start()
+        self._data_engine.start()
         
         self._end_month = end_month
 
-    def process_bars(self, bars: list[Bar], sort: bool = True) -> dict[int, list[Bar]]:
+    def process(self, bars: list[Bar], sort: bool = True) -> dict[int, list[Bar]]:
         
         # TODO assert bar_type format
+        # TODO assert same bar_spec
+        
+        # Group the data by the key
         
         # sort bars by previous -> current -> forward
         if sort:
@@ -65,30 +68,38 @@ class ContinuousBarWrangler:
                 ),
             )
         
+        grouped = groupby(data, key=lambda x: x.bar_type.instrument_id.symbol.value[-1])
+        for key, bars in grouped:
+            print(key, len(bars))
+            exit()
+        
         results = {}
         
         results[-1] = []
-        msgbus.subscribe(
-            topic=f"{self.chain.bar_type}-1",
+        self._msgbus.subscribe(
+            topic=f"{self._chain.bar_type}-1",
             handler=results[-1].append,
         )
         
         results[0] = []
-        msgbus.subscribe(
-            topic=f"{self.chain.bar_type}",
+        self._msgbus.subscribe(
+            topic=f"{self._chain.bar_type}",
             handler=results[0].append,
         )
         
         results[1] = []
-        msgbus.subscribe(
-            topic=f"{self.chain.bar_type}-1",
+        self._msgbus.subscribe(
+            topic=f"{self._chain.bar_type}-1",
             handler=results[1].append,
         )
-        
+    
         for bar in bars:
-            self.data_engine.process(bar)
+            self._data_engine.process(bar)
             
             if self._chain.current_month == self._end_month:
                 break
-
+            
+            # if bar is last in the contract and current bar_type
+            
+            
         return results

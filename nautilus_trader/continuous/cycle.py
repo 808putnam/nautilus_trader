@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-
-import pandas as pd
-
-from pyfutures.continuous.contract_month import ContractMonth
+from nautilus_trader.continuous.contract_month import ContractMonth
 
 class RollCycle:
     def __init__(self, value: str, skip_months: list[ContractMonth] | None = None):

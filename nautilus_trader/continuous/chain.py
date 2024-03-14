@@ -14,8 +14,8 @@ from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import Venue
 from nautilus_trader.model.instruments.futures_contract import FuturesContract
 
-from pyfutures.continuous.config import ContractChainConfig
-from pyfutures.continuous.contract_month import ContractMonth
+from nautilus_trader.continuous.config import ContractChainConfig
+from nautilus_trader.continuous.contract_month import ContractMonth
 
 class ContractChain(Actor):
     def __init__(
