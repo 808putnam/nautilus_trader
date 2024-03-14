@@ -215,14 +215,3 @@ class ContractChain(Actor):
         return InstrumentId.from_str(
             f"{symbol}={month.year}{month.letter_month}.{venue}",
         )
-        
-        
-        
-    #     self.events_received += 1
-        
-        # is_current = bar.bar_type == self.current_bar_type
-        # is_forward = bar.bar_type == self.forward_bar_type
-        
-        # if not is_current and not is_forward:
-        #     return
-    
