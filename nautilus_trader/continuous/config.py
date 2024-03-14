@@ -59,8 +59,8 @@ class ContractChainConfig(NautilusConfig, frozen=True):
         If the expiry_date of the current contract should be ignored when attempting to roll.
     start_month : ContractMonth, optional
         The starting month to roll to when started
-        
     """
+    
     bar_type: BarType
     roll_config: RollConfig
     raise_expired: bool = True
