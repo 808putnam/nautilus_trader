@@ -9,10 +9,13 @@ from nautilus_trader.model.data import BarType
 from nautilus_trader.model.identifiers import ClientId
 from nautilus_trader.portfolio.portfolio import Portfolio
 from nautilus_trader.test_kit.stubs.identifiers import TestIdStubs
-
+from nautilus_trader.continuous.config import ContractChainConfig
+from nautilus_trader.common.component import TimeEvent
 from nautilus_trader.continuous.contract_month import ContractMonth
 from nautilus_trader.continuous.chain import ContractChain
-from nautilus_trader.continuous.cycle import MONTH_LIST
+from nautilus_trader.core.uuid import UUID4
+
+import itertools
 
 class ContinuousBarWrangler:
     def __init__(
@@ -23,11 +26,11 @@ class ContinuousBarWrangler:
         
         assert isinstance(end_month, ContractMonth)
         
-        clock = TestClock()
-
+        self._clock = TestClock()
+        
         self._msgbus = MessageBus(
             trader_id=TestIdStubs.trader_id(),
-            clock=clock,
+            clock=self._clock,
         )
 
         cache = Cache()
@@ -35,43 +38,42 @@ class ContinuousBarWrangler:
         portfolio = Portfolio(
             self._msgbus,
             cache,
-            clock,
+            self._clock,
         )
-        chain = ContractChain(config=config)
+        self._chain = ContractChain(config=config)
         
-        chain.register_base(
+        self._chain.register_base(
             portfolio=portfolio,
             msgbus=self._msgbus,
             cache=cache,
-            clock=clock,
+            clock=self._clock,
         )
-        chain.start()
-
+        
+        self._data_engine = DataEngine(
+            msgbus=self._msgbus,
+            cache=cache,
+            clock=self._clock,
+        )
+        
         self._data_engine.start()
         
         self._end_month = end_month
 
-    def process(self, bars: list[Bar], sort: bool = True) -> dict[int, list[Bar]]:
+    def process(self, bars: list[Bar]) -> dict[int, list[Bar]]:
         
         # TODO assert bar_type format
         # TODO assert same bar_spec
+        # TODO: assert sorted
+        # TODO: assert same venue
         
-        # Group the data by the key
+        bars = sorted(bars, key=lambda x: x.ts_init)
         
-        # sort bars by previous -> current -> forward
-        if sort:
-            bars = sorted(
-                bars,
-                key=lambda x: (
-                    x.ts_init,
-                    MONTH_LIST.index(x.bar_type.instrument_id.symbol.value[-1]),
-                ),
-            )
+        last = {k: list(g)[-1].ts_init for k, g in \
+            itertools.groupby(bars, key=lambda x: x.bar_type.instrument_id.symbol.value.split("=")[-1].split(".")[0])}
         
-        grouped = groupby(data, key=lambda x: x.bar_type.instrument_id.symbol.value[-1])
-        for key, bars in grouped:
-            print(key, len(bars))
-            exit()
+        self._clock.set_time(bars[0].ts_init)
+        
+        self._chain.start()
         
         results = {}
         
@@ -92,14 +94,32 @@ class ContinuousBarWrangler:
             topic=f"{self._chain.bar_type}-1",
             handler=results[1].append,
         )
-    
+        
+        previous_timestamp = None
+        
         for bar in bars:
+            
+            is_next = previous_timestamp is not None and bar.ts_init > previous_timestamp
+            if is_next:
+                self._chain.handle_time_event(
+                    TimeEvent(
+                        name=f"chain_{self._chain.bar_type}",
+                        event_id=UUID4(),
+                        ts_event=0,
+                        ts_init=0,
+                    )
+                )
+                
             self._data_engine.process(bar)
+            
+            last_timestamp = last[str(self._chain.current_month)]
+            if bar.ts_init > last_timestamp:
+                raise RuntimeError("Failed to roll: last bar received for current contract")
             
             if self._chain.current_month == self._end_month:
                 break
             
-            # if bar is last in the contract and current bar_type
+            previous_timestamp = bar.ts_init
             
             
         return results
