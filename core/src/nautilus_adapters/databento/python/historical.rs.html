@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/python/historical.rs`."><title>historical.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/python/historical.rs`."><title>historical.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (f4b771bf1 2024-03-14)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../src-files.js"></script><script defer src="../../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../nautilus_adapters/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -404,6 +404,81 @@
 <a href="#402" id="402">402</a>
 <a href="#403" id="403">403</a>
 <a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
+<a href="#417" id="417">417</a>
+<a href="#418" id="418">418</a>
+<a href="#419" id="419">419</a>
+<a href="#420" id="420">420</a>
+<a href="#421" id="421">421</a>
+<a href="#422" id="422">422</a>
+<a href="#423" id="423">423</a>
+<a href="#424" id="424">424</a>
+<a href="#425" id="425">425</a>
+<a href="#426" id="426">426</a>
+<a href="#427" id="427">427</a>
+<a href="#428" id="428">428</a>
+<a href="#429" id="429">429</a>
+<a href="#430" id="430">430</a>
+<a href="#431" id="431">431</a>
+<a href="#432" id="432">432</a>
+<a href="#433" id="433">433</a>
+<a href="#434" id="434">434</a>
+<a href="#435" id="435">435</a>
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+<a href="#441" id="441">441</a>
+<a href="#442" id="442">442</a>
+<a href="#443" id="443">443</a>
+<a href="#444" id="444">444</a>
+<a href="#445" id="445">445</a>
+<a href="#446" id="446">446</a>
+<a href="#447" id="447">447</a>
+<a href="#448" id="448">448</a>
+<a href="#449" id="449">449</a>
+<a href="#450" id="450">450</a>
+<a href="#451" id="451">451</a>
+<a href="#452" id="452">452</a>
+<a href="#453" id="453">453</a>
+<a href="#454" id="454">454</a>
+<a href="#455" id="455">455</a>
+<a href="#456" id="456">456</a>
+<a href="#457" id="457">457</a>
+<a href="#458" id="458">458</a>
+<a href="#459" id="459">459</a>
+<a href="#460" id="460">460</a>
+<a href="#461" id="461">461</a>
+<a href="#462" id="462">462</a>
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a>
+<a href="#466" id="466">466</a>
+<a href="#467" id="467">467</a>
+<a href="#468" id="468">468</a>
+<a href="#469" id="469">469</a>
+<a href="#470" id="470">470</a>
+<a href="#471" id="471">471</a>
+<a href="#472" id="472">472</a>
+<a href="#473" id="473">473</a>
+<a href="#474" id="474">474</a>
+<a href="#475" id="475">475</a>
+<a href="#476" id="476">476</a>
+<a href="#477" id="477">477</a>
+<a href="#478" id="478">478</a>
+<a href="#479" id="479">479</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -419,10 +494,9 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-</span><span class="kw">use </span>std::{collections::HashMap, fs, num::NonZeroU64, sync::Arc};
+</span><span class="kw">use </span>std::{fs, num::NonZeroU64, sync::Arc};
 
 <span class="kw">use </span>databento::historical::timeseries::GetRangeParams;
-<span class="kw">use </span>dbn::Publisher;
 <span class="kw">use </span>indexmap::IndexMap;
 <span class="kw">use </span>nautilus_core::{
     python::to_pyvalue_err,
@@ -432,6 +506,7 @@
     data::{bar::Bar, quote::QuoteTick, trade::TradeTick, Data},
     enums::BarAggregation,
     identifiers::{instrument_id::InstrumentId, symbol::Symbol, venue::Venue},
+    types::currency::Currency,
 };
 <span class="kw">use </span>pyo3::{
     exceptions::PyException,
@@ -443,14 +518,17 @@
 <span class="kw">use </span><span class="kw">super</span>::loader::convert_instrument_to_pyobject;
 <span class="kw">use </span><span class="kw">crate</span>::databento::{
     common::get_date_time_range,
-    decode::{decode_instrument_def_msg, decode_record, raw_ptr_to_ustr},
+    decode::{
+        decode_imbalance_msg, decode_instrument_def_msg, decode_record, decode_statistics_msg,
+        raw_ptr_to_ustr,
+    },
     symbology::decode_nautilus_instrument_id,
-    types::{DatabentoPublisher, PublisherId},
+    types::{DatabentoImbalance, DatabentoPublisher, DatabentoStatistics, PublisherId},
 };
 
 <span class="attr">#[cfg_attr(
     feature = <span class="string">"python"</span>,
-    pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.databento"</span>)
+    pyo3::pyclass(module = <span class="string">"nautilus_trader.core.nautilus_pyo3.databento"</span>)
 )]
 </span><span class="kw">pub struct </span>DatabentoHistoricalClient {
     <span class="attr">#[pyo3(get)]
@@ -458,22 +536,18 @@
     clock: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>AtomicTime,
     inner: Arc&lt;Mutex&lt;databento::HistoricalClient&gt;&gt;,
     publisher_venue_map: Arc&lt;IndexMap&lt;PublisherId, Venue&gt;&gt;,
-    glbx_exchange_map: Arc&lt;HashMap&lt;Symbol, Venue&gt;&gt;,
 }
 
 <span class="attr">#[pymethods]
 </span><span class="kw">impl </span>DatabentoHistoricalClient {
     <span class="attr">#[new]
-    </span><span class="kw">fn </span>py_new(key: String, publishers_path: <span class="kw-2">&amp;</span>str) -&gt; PyResult&lt;<span class="self">Self</span>&gt; {
+    </span><span class="kw">fn </span>py_new(key: String, publishers_path: <span class="kw-2">&amp;</span>str) -&gt; anyhow::Result&lt;<span class="self">Self</span>&gt; {
         <span class="kw">let </span>client = databento::HistoricalClient::builder()
-            .key(key.clone())
-            .map_err(to_pyvalue_err)<span class="question-mark">?
-            </span>.build()
-            .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+            .key(key.clone())<span class="question-mark">?
+            </span>.build()<span class="question-mark">?</span>;
 
         <span class="kw">let </span>file_content = fs::read_to_string(publishers_path)<span class="question-mark">?</span>;
-        <span class="kw">let </span>publishers_vec: Vec&lt;DatabentoPublisher&gt; =
-            serde_json::from_str(<span class="kw-2">&amp;</span>file_content).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+        <span class="kw">let </span>publishers_vec: Vec&lt;DatabentoPublisher&gt; = serde_json::from_str(<span class="kw-2">&amp;</span>file_content)<span class="question-mark">?</span>;
 
         <span class="kw">let </span>publisher_venue_map = publishers_vec
             .into_iter()
@@ -484,19 +558,8 @@
             clock: get_atomic_clock_realtime(),
             inner: Arc::new(Mutex::new(client)),
             publisher_venue_map: Arc::new(publisher_venue_map),
-            glbx_exchange_map: Arc::new(HashMap::new()),
             key,
         })
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">"load_glbx_exchange_map"</span>)]
-    </span><span class="kw">fn </span>py_load_glbx_exchange_map(<span class="kw-2">&amp;mut </span><span class="self">self</span>, map: HashMap&lt;Symbol, Venue&gt;) {
-        <span class="self">self</span>.glbx_exchange_map = Arc::new(map);
-    }
-
-    <span class="attr">#[pyo3(name = <span class="string">"get_glbx_exchange_map"</span>)]
-    </span><span class="kw">fn </span>py_get_glbx_exchange_map(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; HashMap&lt;Symbol, Venue&gt; {
-        <span class="self">self</span>.glbx_exchange_map.as_ref().clone()
     }
 
     <span class="attr">#[pyo3(name = <span class="string">"get_dataset_range"</span>)]
@@ -532,6 +595,7 @@
     ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
         <span class="kw">let </span>client = <span class="self">self</span>.inner.clone();
 
+        <span class="kw">let </span>end = end.unwrap_or(<span class="self">self</span>.clock.get_time_ns());
         <span class="kw">let </span>time_range = get_date_time_range(start, end).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
         <span class="kw">let </span>params = GetRangeParams::builder()
             .dataset(dataset)
@@ -561,18 +625,10 @@
                 <span class="kw">let </span>symbol = Symbol { value: raw_symbol };
 
                 <span class="kw">let </span>publisher = msg.hd.publisher().expect(<span class="string">"Invalid `publisher` for record"</span>);
-                <span class="kw">let </span>venue = <span class="kw">match </span>publisher {
-                    Publisher::GlbxMdp3Glbx =&gt; {
-                        <span class="comment">// SAFETY: GLBX instruments have a valid `exchange` field
-                        </span><span class="kw">let </span>exchange = msg.exchange().unwrap();
-                        Venue::from_code(exchange)
-                            .unwrap_or_else(|<span class="kw">_</span>| <span class="macro">panic!</span>(<span class="string">"`Venue` not found for exchange {exchange}"</span>))
-                    }
-                    <span class="kw">_ </span>=&gt; <span class="kw-2">*</span>publisher_venue_map
-                        .get(<span class="kw-2">&amp;</span>msg.hd.publisher_id)
-                        .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">"`Venue` not found for `publisher` {publisher}"</span>)),
-                };
-                <span class="kw">let </span>instrument_id = InstrumentId::new(symbol, venue);
+                <span class="kw">let </span>venue = publisher_venue_map
+                    .get(<span class="kw-2">&amp;</span>msg.hd.publisher_id)
+                    .unwrap_or_else(|| <span class="macro">panic!</span>(<span class="string">"`Venue` not found for `publisher` {publisher}"</span>));
+                <span class="kw">let </span>instrument_id = InstrumentId::new(symbol, <span class="kw-2">*</span>venue);
 
                 <span class="kw">let </span>result = decode_instrument_def_msg(msg, instrument_id, ts_init);
                 <span class="kw">match </span>result {
@@ -604,6 +660,7 @@
     ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
         <span class="kw">let </span>client = <span class="self">self</span>.inner.clone();
 
+        <span class="kw">let </span>end = end.unwrap_or(<span class="self">self</span>.clock.get_time_ns());
         <span class="kw">let </span>time_range = get_date_time_range(start, end).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
         <span class="kw">let </span>params = GetRangeParams::builder()
             .dataset(dataset)
@@ -613,9 +670,8 @@
             .limit(limit.and_then(NonZeroU64::new))
             .build();
 
-        <span class="kw">let </span>price_precision = <span class="number">2</span>; <span class="comment">// TODO: Hard coded for now
+        <span class="kw">let </span>price_precision = Currency::USD().precision; <span class="comment">// TODO: Hard coded for now
         </span><span class="kw">let </span>publisher_venue_map = <span class="self">self</span>.publisher_venue_map.clone();
-        <span class="kw">let </span>glbx_exchange_map = <span class="self">self</span>.glbx_exchange_map.clone();
         <span class="kw">let </span>ts_init = <span class="self">self</span>.clock.get_time_ns();
 
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
@@ -630,18 +686,13 @@
             <span class="kw">let </span><span class="kw-2">mut </span>result: Vec&lt;QuoteTick&gt; = Vec::new();
 
             <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg)) = decoder.decode_record::&lt;dbn::Mbp1Msg&gt;().<span class="kw">await </span>{
-                <span class="kw">let </span>rec_ref = dbn::RecordRef::from(msg);
-                <span class="kw">let </span>instrument_id = decode_nautilus_instrument_id(
-                    <span class="kw-2">&amp;</span>rec_ref,
-                    msg.hd.publisher_id,
-                    <span class="kw-2">&amp;</span>metadata,
-                    <span class="kw-2">&amp;</span>publisher_venue_map,
-                    <span class="kw-2">&amp;</span>glbx_exchange_map,
-                )
-                .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+                <span class="kw">let </span>record = dbn::RecordRef::from(msg);
+                <span class="kw">let </span>instrument_id =
+                    decode_nautilus_instrument_id(<span class="kw-2">&amp;</span>record, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>publisher_venue_map)
+                        .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
                 <span class="kw">let </span>(data, <span class="kw">_</span>) = decode_record(
-                    <span class="kw-2">&amp;</span>rec_ref,
+                    <span class="kw-2">&amp;</span>record,
                     instrument_id,
                     price_precision,
                     <span class="prelude-val">Some</span>(ts_init),
@@ -673,6 +724,7 @@
     ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
         <span class="kw">let </span>client = <span class="self">self</span>.inner.clone();
 
+        <span class="kw">let </span>end = end.unwrap_or(<span class="self">self</span>.clock.get_time_ns());
         <span class="kw">let </span>time_range = get_date_time_range(start, end).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
         <span class="kw">let </span>params = GetRangeParams::builder()
             .dataset(dataset)
@@ -682,9 +734,8 @@
             .limit(limit.and_then(NonZeroU64::new))
             .build();
 
-        <span class="kw">let </span>price_precision = <span class="number">2</span>; <span class="comment">// TODO: Hard coded for now
+        <span class="kw">let </span>price_precision = Currency::USD().precision; <span class="comment">// TODO: Hard coded for now
         </span><span class="kw">let </span>publisher_venue_map = <span class="self">self</span>.publisher_venue_map.clone();
-        <span class="kw">let </span>glbx_exchange_map = <span class="self">self</span>.glbx_exchange_map.clone();
         <span class="kw">let </span>ts_init = <span class="self">self</span>.clock.get_time_ns();
 
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
@@ -699,18 +750,13 @@
             <span class="kw">let </span><span class="kw-2">mut </span>result: Vec&lt;TradeTick&gt; = Vec::new();
 
             <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg)) = decoder.decode_record::&lt;dbn::TradeMsg&gt;().<span class="kw">await </span>{
-                <span class="kw">let </span>rec_ref = dbn::RecordRef::from(msg);
-                <span class="kw">let </span>instrument_id = decode_nautilus_instrument_id(
-                    <span class="kw-2">&amp;</span>rec_ref,
-                    msg.hd.publisher_id,
-                    <span class="kw-2">&amp;</span>metadata,
-                    <span class="kw-2">&amp;</span>publisher_venue_map,
-                    <span class="kw-2">&amp;</span>glbx_exchange_map,
-                )
-                .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+                <span class="kw">let </span>record = dbn::RecordRef::from(msg);
+                <span class="kw">let </span>instrument_id =
+                    decode_nautilus_instrument_id(<span class="kw-2">&amp;</span>record, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>publisher_venue_map)
+                        .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
                 <span class="kw">let </span>(data, <span class="kw">_</span>) = decode_record(
-                    <span class="kw-2">&amp;</span>rec_ref,
+                    <span class="kw-2">&amp;</span>record,
                     instrument_id,
                     price_precision,
                     <span class="prelude-val">Some</span>(ts_init),
@@ -751,6 +797,7 @@
             BarAggregation::Day =&gt; dbn::Schema::Ohlcv1D,
             <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Invalid `BarAggregation` for request, was {aggregation}"</span>),
         };
+        <span class="kw">let </span>end = end.unwrap_or(<span class="self">self</span>.clock.get_time_ns());
         <span class="kw">let </span>time_range = get_date_time_range(start, end).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
         <span class="kw">let </span>params = GetRangeParams::builder()
             .dataset(dataset)
@@ -760,9 +807,8 @@
             .limit(limit.and_then(NonZeroU64::new))
             .build();
 
-        <span class="kw">let </span>price_precision = <span class="number">2</span>; <span class="comment">// TODO: Hard coded for now
+        <span class="kw">let </span>price_precision = Currency::USD().precision; <span class="comment">// TODO: Hard coded for now
         </span><span class="kw">let </span>publisher_venue_map = <span class="self">self</span>.publisher_venue_map.clone();
-        <span class="kw">let </span>glbx_exchange_map = <span class="self">self</span>.glbx_exchange_map.clone();
         <span class="kw">let </span>ts_init = <span class="self">self</span>.clock.get_time_ns();
 
         pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
@@ -777,18 +823,13 @@
             <span class="kw">let </span><span class="kw-2">mut </span>result: Vec&lt;Bar&gt; = Vec::new();
 
             <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg)) = decoder.decode_record::&lt;dbn::OhlcvMsg&gt;().<span class="kw">await </span>{
-                <span class="kw">let </span>rec_ref = dbn::RecordRef::from(msg);
-                <span class="kw">let </span>instrument_id = decode_nautilus_instrument_id(
-                    <span class="kw-2">&amp;</span>rec_ref,
-                    msg.hd.publisher_id,
-                    <span class="kw-2">&amp;</span>metadata,
-                    <span class="kw-2">&amp;</span>publisher_venue_map,
-                    <span class="kw-2">&amp;</span>glbx_exchange_map,
-                )
-                .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+                <span class="kw">let </span>record = dbn::RecordRef::from(msg);
+                <span class="kw">let </span>instrument_id =
+                    decode_nautilus_instrument_id(<span class="kw-2">&amp;</span>record, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>publisher_venue_map)
+                        .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
 
                 <span class="kw">let </span>(data, <span class="kw">_</span>) = decode_record(
-                    <span class="kw-2">&amp;</span>rec_ref,
+                    <span class="kw-2">&amp;</span>record,
                     instrument_id,
                     price_precision,
                     <span class="prelude-val">Some</span>(ts_init),
@@ -802,6 +843,115 @@
                     }
                     <span class="kw">_ </span>=&gt; <span class="macro">panic!</span>(<span class="string">"Invalid data element not `Bar`, was {data:?}"</span>),
                 }
+            }
+
+            Python::with_gil(|py| <span class="prelude-val">Ok</span>(result.into_py(py)))
+        })
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">"get_range_imbalance"</span>)]
+    #[allow(clippy::too_many_arguments)]
+    </span><span class="kw">fn </span>py_get_range_imbalance&lt;<span class="lifetime">'py</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        py: Python&lt;<span class="lifetime">'py</span>&gt;,
+        dataset: String,
+        symbols: String,
+        start: UnixNanos,
+        end: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
+        limit: <span class="prelude-ty">Option</span>&lt;u64&gt;,
+    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
+        <span class="kw">let </span>client = <span class="self">self</span>.inner.clone();
+
+        <span class="kw">let </span>end = end.unwrap_or(<span class="self">self</span>.clock.get_time_ns());
+        <span class="kw">let </span>time_range = get_date_time_range(start, end).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+        <span class="kw">let </span>params = GetRangeParams::builder()
+            .dataset(dataset)
+            .date_time_range(time_range)
+            .symbols(symbols)
+            .schema(dbn::Schema::Imbalance)
+            .limit(limit.and_then(NonZeroU64::new))
+            .build();
+
+        <span class="kw">let </span>price_precision = Currency::USD().precision; <span class="comment">// TODO: Hard coded for now
+        </span><span class="kw">let </span>publisher_venue_map = <span class="self">self</span>.publisher_venue_map.clone();
+        <span class="kw">let </span>ts_init = <span class="self">self</span>.clock.get_time_ns();
+
+        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>client = client.lock().<span class="kw">await</span>; <span class="comment">// TODO: Use a client pool
+            </span><span class="kw">let </span><span class="kw-2">mut </span>decoder = client
+                .timeseries()
+                .get_range(<span class="kw-2">&amp;</span>params)
+                .<span class="kw">await
+                </span>.map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+
+            <span class="kw">let </span>metadata = decoder.metadata().clone();
+            <span class="kw">let </span><span class="kw-2">mut </span>result: Vec&lt;DatabentoImbalance&gt; = Vec::new();
+
+            <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg)) = decoder.decode_record::&lt;dbn::ImbalanceMsg&gt;().<span class="kw">await </span>{
+                <span class="kw">let </span>record = dbn::RecordRef::from(msg);
+                <span class="kw">let </span>instrument_id =
+                    decode_nautilus_instrument_id(<span class="kw-2">&amp;</span>record, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>publisher_venue_map)
+                        .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+
+                <span class="kw">let </span>imbalance = decode_imbalance_msg(msg, instrument_id, price_precision, ts_init)
+                    .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+
+                result.push(imbalance);
+            }
+
+            Python::with_gil(|py| <span class="prelude-val">Ok</span>(result.into_py(py)))
+        })
+    }
+
+    <span class="attr">#[pyo3(name = <span class="string">"get_range_statistics"</span>)]
+    #[allow(clippy::too_many_arguments)]
+    </span><span class="kw">fn </span>py_get_range_statistics&lt;<span class="lifetime">'py</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        py: Python&lt;<span class="lifetime">'py</span>&gt;,
+        dataset: String,
+        symbols: String,
+        start: UnixNanos,
+        end: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
+        limit: <span class="prelude-ty">Option</span>&lt;u64&gt;,
+    ) -&gt; PyResult&lt;<span class="kw-2">&amp;</span><span class="lifetime">'py </span>PyAny&gt; {
+        <span class="kw">let </span>client = <span class="self">self</span>.inner.clone();
+
+        <span class="kw">let </span>end = end.unwrap_or(<span class="self">self</span>.clock.get_time_ns());
+        <span class="kw">let </span>time_range = get_date_time_range(start, end).map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+        <span class="kw">let </span>params = GetRangeParams::builder()
+            .dataset(dataset)
+            .date_time_range(time_range)
+            .symbols(symbols)
+            .schema(dbn::Schema::Statistics)
+            .limit(limit.and_then(NonZeroU64::new))
+            .build();
+
+        <span class="kw">let </span>price_precision = Currency::USD().precision; <span class="comment">// TODO: Hard coded for now
+        </span><span class="kw">let </span>publisher_venue_map = <span class="self">self</span>.publisher_venue_map.clone();
+        <span class="kw">let </span>ts_init = <span class="self">self</span>.clock.get_time_ns();
+
+        pyo3_asyncio::tokio::future_into_py(py, <span class="kw">async move </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>client = client.lock().<span class="kw">await</span>; <span class="comment">// TODO: Use a client pool
+            </span><span class="kw">let </span><span class="kw-2">mut </span>decoder = client
+                .timeseries()
+                .get_range(<span class="kw-2">&amp;</span>params)
+                .<span class="kw">await
+                </span>.map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+
+            <span class="kw">let </span>metadata = decoder.metadata().clone();
+            <span class="kw">let </span><span class="kw-2">mut </span>result: Vec&lt;DatabentoStatistics&gt; = Vec::new();
+
+            <span class="kw">while let </span><span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(msg)) = decoder.decode_record::&lt;dbn::StatMsg&gt;().<span class="kw">await </span>{
+                <span class="kw">let </span>record = dbn::RecordRef::from(msg);
+                <span class="kw">let </span>instrument_id =
+                    decode_nautilus_instrument_id(<span class="kw-2">&amp;</span>record, <span class="kw-2">&amp;</span>metadata, <span class="kw-2">&amp;</span>publisher_venue_map)
+                        .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+
+                <span class="kw">let </span>statistics =
+                    decode_statistics_msg(msg, instrument_id, price_precision, ts_init)
+                        .map_err(to_pyvalue_err)<span class="question-mark">?</span>;
+
+                result.push(statistics);
             }
 
             Python::with_gil(|py| <span class="prelude-val">Ok</span>(result.into_py(py)))

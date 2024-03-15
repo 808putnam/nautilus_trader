@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["stubs"],"struct":["OrderBookDeltas"]};
+window.SIDEBAR_ITEMS = {"mod":["stubs"],"struct":["OrderBookDeltas","OrderBookDeltas_API"]};

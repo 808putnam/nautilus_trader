@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["dummy_callable"],"struct":["EventHandler","MessageHandler","PyCallableWrapper","SafeMessageCallback","SafeTimeEventCallback"]};
+window.SIDEBAR_ITEMS = {"struct":["EventHandler","MessageHandler","SafeMessageCallback","SafeTimeEventCallback"]};

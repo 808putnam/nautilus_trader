@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["decode_nautilus_instrument_id","get_nautilus_instrument_id_for_record"]};

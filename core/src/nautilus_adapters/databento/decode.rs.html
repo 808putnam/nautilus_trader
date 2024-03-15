@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/decode.rs`."><title>decode.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `adapters/src/databento/decode.rs`."><title>decode.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="nautilus_adapters" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (f4b771bf1 2024-03-14)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../nautilus_adapters/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -889,6 +889,80 @@
 <a href="#887" id="887">887</a>
 <a href="#888" id="888">888</a>
 <a href="#889" id="889">889</a>
+<a href="#890" id="890">890</a>
+<a href="#891" id="891">891</a>
+<a href="#892" id="892">892</a>
+<a href="#893" id="893">893</a>
+<a href="#894" id="894">894</a>
+<a href="#895" id="895">895</a>
+<a href="#896" id="896">896</a>
+<a href="#897" id="897">897</a>
+<a href="#898" id="898">898</a>
+<a href="#899" id="899">899</a>
+<a href="#900" id="900">900</a>
+<a href="#901" id="901">901</a>
+<a href="#902" id="902">902</a>
+<a href="#903" id="903">903</a>
+<a href="#904" id="904">904</a>
+<a href="#905" id="905">905</a>
+<a href="#906" id="906">906</a>
+<a href="#907" id="907">907</a>
+<a href="#908" id="908">908</a>
+<a href="#909" id="909">909</a>
+<a href="#910" id="910">910</a>
+<a href="#911" id="911">911</a>
+<a href="#912" id="912">912</a>
+<a href="#913" id="913">913</a>
+<a href="#914" id="914">914</a>
+<a href="#915" id="915">915</a>
+<a href="#916" id="916">916</a>
+<a href="#917" id="917">917</a>
+<a href="#918" id="918">918</a>
+<a href="#919" id="919">919</a>
+<a href="#920" id="920">920</a>
+<a href="#921" id="921">921</a>
+<a href="#922" id="922">922</a>
+<a href="#923" id="923">923</a>
+<a href="#924" id="924">924</a>
+<a href="#925" id="925">925</a>
+<a href="#926" id="926">926</a>
+<a href="#927" id="927">927</a>
+<a href="#928" id="928">928</a>
+<a href="#929" id="929">929</a>
+<a href="#930" id="930">930</a>
+<a href="#931" id="931">931</a>
+<a href="#932" id="932">932</a>
+<a href="#933" id="933">933</a>
+<a href="#934" id="934">934</a>
+<a href="#935" id="935">935</a>
+<a href="#936" id="936">936</a>
+<a href="#937" id="937">937</a>
+<a href="#938" id="938">938</a>
+<a href="#939" id="939">939</a>
+<a href="#940" id="940">940</a>
+<a href="#941" id="941">941</a>
+<a href="#942" id="942">942</a>
+<a href="#943" id="943">943</a>
+<a href="#944" id="944">944</a>
+<a href="#945" id="945">945</a>
+<a href="#946" id="946">946</a>
+<a href="#947" id="947">947</a>
+<a href="#948" id="948">948</a>
+<a href="#949" id="949">949</a>
+<a href="#950" id="950">950</a>
+<a href="#951" id="951">951</a>
+<a href="#952" id="952">952</a>
+<a href="#953" id="953">953</a>
+<a href="#954" id="954">954</a>
+<a href="#955" id="955">955</a>
+<a href="#956" id="956">956</a>
+<a href="#957" id="957">957</a>
+<a href="#958" id="958">958</a>
+<a href="#959" id="959">959</a>
+<a href="#960" id="960">960</a>
+<a href="#961" id="961">961</a>
+<a href="#962" id="962">962</a>
+<a href="#963" id="963">963</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -912,7 +986,6 @@
 };
 
 <span class="kw">use </span>anyhow::{anyhow, bail, <span class="prelude-ty">Result</span>};
-<span class="kw">use </span>databento::dbn::Record;
 <span class="kw">use </span>nautilus_core::{datetime::NANOSECONDS_IN_SECOND, time::UnixNanos};
 <span class="kw">use </span>nautilus_model::{
     data::{
@@ -925,17 +998,22 @@
         Data,
     },
     enums::{
-        AggregationSource, AggressorSide, AssetClass, BarAggregation, BookAction, InstrumentClass,
-        OptionKind, OrderSide, PriceType,
+        AggregationSource, AggressorSide, AssetClass, BarAggregation, BookAction, FromU8,
+        InstrumentClass, OptionKind, OrderSide, PriceType,
     },
     identifiers::{instrument_id::InstrumentId, trade_id::TradeId},
     instruments::{
         equity::Equity, futures_contract::FuturesContract, futures_spread::FuturesSpread,
-        options_contract::OptionsContract, options_spread::OptionsSpread, Instrument,
+        options_contract::OptionsContract, options_spread::OptionsSpread, InstrumentType,
     },
     types::{currency::Currency, fixed::FIXED_SCALAR, price::Price, quantity::Quantity},
 };
 <span class="kw">use </span>ustr::Ustr;
+
+<span class="kw">use super</span>::{
+    enums::{DatabentoStatisticType, DatabentoStatisticUpdateAction},
+    types::{DatabentoImbalance, DatabentoStatistics},
+};
 
 <span class="kw">const </span>BAR_SPEC_1S: BarSpecification = BarSpecification {
     step: <span class="number">1</span>,
@@ -1032,13 +1110,24 @@
     <span class="prelude-val">Ok</span>((asset_class, instrument_class))
 }
 
-<span class="kw">pub fn </span>decode_min_price_increment(value: i64, currency: Currency) -&gt; <span class="prelude-ty">Result</span>&lt;Price&gt; {
+<span class="kw">pub fn </span>decode_price(value: i64, precision: u8) -&gt; <span class="prelude-ty">Result</span>&lt;Price&gt; {
     <span class="kw">match </span>value {
-        <span class="number">0 </span>| i64::MAX =&gt; Price::new(
-            <span class="number">10f64</span>.powi(-i32::from(currency.precision)),
-            currency.precision,
-        ),
-        <span class="kw">_ </span>=&gt; Price::from_raw(value, currency.precision),
+        <span class="number">0 </span>| i64::MAX =&gt; Price::new(<span class="number">10f64</span>.powi(-i32::from(precision)), precision),
+        <span class="kw">_ </span>=&gt; Price::from_raw(value, precision),
+    }
+}
+
+<span class="kw">pub fn </span>decode_optional_price(value: i64, precision: u8) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Price&gt;&gt; {
+    <span class="kw">match </span>value {
+        i64::MAX =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Price::from_raw(value, precision)<span class="question-mark">?</span>)),
+    }
+}
+
+<span class="kw">pub fn </span>decode_optional_quantity_i32(value: i32) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="prelude-ty">Option</span>&lt;Quantity&gt;&gt; {
+    <span class="kw">match </span>value {
+        i32::MAX =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+        <span class="kw">_ </span>=&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(Quantity::new(f64::from(value), <span class="number">0</span>)<span class="question-mark">?</span>)),
     }
 }
 
@@ -1064,7 +1153,7 @@
     msg: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;Equity&gt; {
+) -&gt; anyhow::Result&lt;Equity&gt; {
     <span class="kw">let </span>currency = Currency::USD(); <span class="comment">// TODO: Temporary hard coding of US equities for now
 
     </span>Equity::new(
@@ -1073,8 +1162,12 @@
         <span class="prelude-val">None</span>, <span class="comment">// No ISIN available yet
         </span>currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
-        <span class="prelude-val">Some</span>(Quantity::new(msg.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
+        <span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">Some</span>(Quantity::new(msg.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
         <span class="prelude-val">None</span>,        <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,        <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,        <span class="comment">// TBD
@@ -1088,9 +1181,10 @@
     msg: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;FuturesContract&gt; {
+) -&gt; anyhow::Result&lt;FuturesContract&gt; {
     <span class="kw">let </span>currency = Currency::USD(); <span class="comment">// TODO: Temporary hard coding of US futures for now
     </span><span class="kw">let </span>cfi_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.cfi.as_ptr())<span class="question-mark">? </span>};
+    <span class="kw">let </span>exchange = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.exchange.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>underlying = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.asset.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>(asset_class, <span class="kw">_</span>) = parse_cfi_iso10926(<span class="kw-2">&amp;</span>cfi_str)<span class="question-mark">?</span>;
 
@@ -1098,12 +1192,13 @@
         instrument_id,
         instrument_id.symbol,
         asset_class.unwrap_or(AssetClass::Commodity),
+        <span class="prelude-val">Some</span>(exchange),
         underlying,
         msg.activation,
         msg.expiration,
         currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
         Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,                   <span class="comment">// TBD
@@ -1119,9 +1214,10 @@
     msg: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;FuturesSpread&gt; {
+) -&gt; anyhow::Result&lt;FuturesSpread&gt; {
     <span class="kw">let </span>currency = Currency::USD(); <span class="comment">// TODO: Temporary hard coding of US futures for now
     </span><span class="kw">let </span>cfi_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.cfi.as_ptr())<span class="question-mark">? </span>};
+    <span class="kw">let </span>exchange = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.exchange.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>underlying = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.asset.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>strategy_type = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.secsubtype.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>(asset_class, <span class="kw">_</span>) = parse_cfi_iso10926(<span class="kw-2">&amp;</span>cfi_str)<span class="question-mark">?</span>;
@@ -1130,13 +1226,14 @@
         instrument_id,
         instrument_id.symbol,
         asset_class.unwrap_or(AssetClass::Commodity),
+        <span class="prelude-val">Some</span>(exchange),
         underlying,
         strategy_type,
         msg.activation,
         msg.expiration,
         currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
         Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,                   <span class="comment">// TBD
@@ -1152,9 +1249,10 @@
     msg: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;OptionsContract&gt; {
+) -&gt; anyhow::Result&lt;OptionsContract&gt; {
     <span class="kw">let </span>currency_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.currency.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>cfi_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.cfi.as_ptr())<span class="question-mark">? </span>};
+    <span class="kw">let </span>exchange = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.exchange.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>asset_class_opt = <span class="kw">match </span>instrument_id.venue.value.as_str() {
         <span class="string">"OPRA" </span>=&gt; <span class="prelude-val">Some</span>(AssetClass::Equity),
         <span class="kw">_ </span>=&gt; {
@@ -1169,6 +1267,7 @@
         instrument_id,
         instrument_id.symbol,
         asset_class_opt.unwrap_or(AssetClass::Commodity),
+        <span class="prelude-val">Some</span>(exchange),
         underlying,
         parse_option_kind(msg.instrument_class)<span class="question-mark">?</span>,
         msg.activation,
@@ -1176,7 +1275,7 @@
         Price::from_raw(msg.strike_price, currency.precision)<span class="question-mark">?</span>,
         currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
         Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,                   <span class="comment">// TBD
@@ -1192,9 +1291,10 @@
     msg: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;OptionsSpread&gt; {
+) -&gt; anyhow::Result&lt;OptionsSpread&gt; {
     <span class="kw">let </span>currency_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.currency.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>cfi_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.cfi.as_ptr())<span class="question-mark">? </span>};
+    <span class="kw">let </span>exchange = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.exchange.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>asset_class_opt = <span class="kw">match </span>instrument_id.venue.value.as_str() {
         <span class="string">"OPRA" </span>=&gt; <span class="prelude-val">Some</span>(AssetClass::Equity),
         <span class="kw">_ </span>=&gt; {
@@ -1210,13 +1310,14 @@
         instrument_id,
         instrument_id.symbol,
         asset_class_opt.unwrap_or(AssetClass::Commodity),
+        <span class="prelude-val">Some</span>(exchange),
         underlying,
         strategy_type,
         msg.activation,
         msg.expiration,
         currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
         Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,                   <span class="comment">// TBD
@@ -1229,7 +1330,7 @@
 }
 
 <span class="attr">#[must_use]
-</span><span class="kw">pub fn </span>is_trade_msg(order_side: OrderSide, action: c_char) -&gt; bool {
+</span><span class="kw">fn </span>is_trade_msg(order_side: OrderSide, action: c_char) -&gt; bool {
     order_side == OrderSide::NoOrderSide || action <span class="kw">as </span>u8 <span class="kw">as </span>char == <span class="string">'T'
 </span>}
 
@@ -1239,7 +1340,7 @@
     price_precision: u8,
     ts_init: UnixNanos,
     include_trades: bool,
-) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="prelude-ty">Option</span>&lt;OrderBookDelta&gt;, <span class="prelude-ty">Option</span>&lt;TradeTick&gt;)&gt; {
+) -&gt; anyhow::Result&lt;(<span class="prelude-ty">Option</span>&lt;OrderBookDelta&gt;, <span class="prelude-ty">Option</span>&lt;TradeTick&gt;)&gt; {
     <span class="kw">let </span>side = parse_order_side(msg.side);
     <span class="kw">if </span>is_trade_msg(side, msg.action) {
         <span class="kw">if </span>include_trades {
@@ -1253,9 +1354,9 @@
                 ts_init,
             );
             <span class="kw">return </span><span class="prelude-val">Ok</span>((<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(trade)));
-        } <span class="kw">else </span>{
-            <span class="kw">return </span><span class="prelude-val">Ok</span>((<span class="prelude-val">None</span>, <span class="prelude-val">None</span>));
         }
+
+        <span class="kw">return </span><span class="prelude-val">Ok</span>((<span class="prelude-val">None</span>, <span class="prelude-val">None</span>));
     };
 
     <span class="kw">let </span>order = BookOrder::new(
@@ -1283,7 +1384,7 @@
     instrument_id: InstrumentId,
     price_precision: u8,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;TradeTick&gt; {
+) -&gt; anyhow::Result&lt;TradeTick&gt; {
     <span class="kw">let </span>trade = TradeTick::new(
         instrument_id,
         Price::from_raw(msg.price, price_precision)<span class="question-mark">?</span>,
@@ -1303,7 +1404,7 @@
     price_precision: u8,
     ts_init: UnixNanos,
     include_trades: bool,
-) -&gt; <span class="prelude-ty">Result</span>&lt;(QuoteTick, <span class="prelude-ty">Option</span>&lt;TradeTick&gt;)&gt; {
+) -&gt; anyhow::Result&lt;(QuoteTick, <span class="prelude-ty">Option</span>&lt;TradeTick&gt;)&gt; {
     <span class="kw">let </span>top_level = <span class="kw-2">&amp;</span>msg.levels[<span class="number">0</span>];
     <span class="kw">let </span>quote = QuoteTick::new(
         instrument_id,
@@ -1337,7 +1438,7 @@
     instrument_id: InstrumentId,
     price_precision: u8,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;OrderBookDepth10&gt; {
+) -&gt; anyhow::Result&lt;OrderBookDepth10&gt; {
     <span class="kw">let </span><span class="kw-2">mut </span>bids = Vec::with_capacity(DEPTH10_LEN);
     <span class="kw">let </span><span class="kw-2">mut </span>asks = Vec::with_capacity(DEPTH10_LEN);
     <span class="kw">let </span><span class="kw-2">mut </span>bid_counts = Vec::with_capacity(DEPTH10_LEN);
@@ -1384,7 +1485,10 @@
     <span class="prelude-val">Ok</span>(depth)
 }
 
-<span class="kw">pub fn </span>decode_bar_type(msg: <span class="kw-2">&amp;</span>dbn::OhlcvMsg, instrument_id: InstrumentId) -&gt; <span class="prelude-ty">Result</span>&lt;BarType&gt; {
+<span class="kw">pub fn </span>decode_bar_type(
+    msg: <span class="kw-2">&amp;</span>dbn::OhlcvMsg,
+    instrument_id: InstrumentId,
+) -&gt; anyhow::Result&lt;BarType&gt; {
     <span class="kw">let </span>bar_type = <span class="kw">match </span>msg.hd.rtype {
         <span class="number">32 </span>=&gt; {
             <span class="comment">// ohlcv-1s
@@ -1411,7 +1515,7 @@
     <span class="prelude-val">Ok</span>(bar_type)
 }
 
-<span class="kw">pub fn </span>decode_ts_event_adjustment(msg: <span class="kw-2">&amp;</span>dbn::OhlcvMsg) -&gt; <span class="prelude-ty">Result</span>&lt;UnixNanos&gt; {
+<span class="kw">pub fn </span>decode_ts_event_adjustment(msg: <span class="kw-2">&amp;</span>dbn::OhlcvMsg) -&gt; anyhow::Result&lt;UnixNanos&gt; {
     <span class="kw">let </span>adjustment = <span class="kw">match </span>msg.hd.rtype {
         <span class="number">32 </span>=&gt; {
             <span class="comment">// ohlcv-1s
@@ -1443,7 +1547,7 @@
     instrument_id: InstrumentId,
     price_precision: u8,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;Bar&gt; {
+) -&gt; anyhow::Result&lt;Bar&gt; {
     <span class="kw">let </span>bar_type = decode_bar_type(msg, instrument_id)<span class="question-mark">?</span>;
     <span class="kw">let </span>ts_event_adjustment = decode_ts_event_adjustment(msg)<span class="question-mark">?</span>;
 
@@ -1466,102 +1570,81 @@
 }
 
 <span class="kw">pub fn </span>decode_record(
-    rec_ref: <span class="kw-2">&amp;</span>dbn::RecordRef,
+    record: <span class="kw-2">&amp;</span>dbn::RecordRef,
     instrument_id: InstrumentId,
     price_precision: u8,
     ts_init: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;,
     include_trades: bool,
-) -&gt; <span class="prelude-ty">Result</span>&lt;(<span class="prelude-ty">Option</span>&lt;Data&gt;, <span class="prelude-ty">Option</span>&lt;Data&gt;)&gt; {
-    <span class="kw">let </span>rtype = rec_ref.rtype().expect(<span class="string">"Invalid `rtype`"</span>);
-    <span class="kw">let </span>result = <span class="kw">match </span>rtype {
-        dbn::RType::Mbo =&gt; {
-            <span class="kw">let </span>msg = rec_ref.get::&lt;dbn::MboMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
-                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
-                <span class="prelude-val">None </span>=&gt; msg.ts_recv,
-            };
-            <span class="kw">let </span>result =
-                decode_mbo_msg(msg, instrument_id, price_precision, ts_init, include_trades)<span class="question-mark">?</span>;
-            <span class="kw">match </span>result {
-                (<span class="prelude-val">Some</span>(delta), <span class="prelude-val">None</span>) =&gt; (<span class="prelude-val">Some</span>(Data::Delta(delta)), <span class="prelude-val">None</span>),
-                (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(trade)) =&gt; (<span class="prelude-val">Some</span>(Data::Trade(trade)), <span class="prelude-val">None</span>),
-                (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>),
-                <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Invalid `MboMsg` parsing combination"</span>),
-            }
+) -&gt; anyhow::Result&lt;(<span class="prelude-ty">Option</span>&lt;Data&gt;, <span class="prelude-ty">Option</span>&lt;Data&gt;)&gt; {
+    <span class="kw">let </span>result = <span class="kw">if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::MboMsg&gt;() {
+        <span class="kw">let </span>ts_init = determine_timestamp(ts_init, msg.ts_recv);
+        <span class="kw">let </span>result = decode_mbo_msg(msg, instrument_id, price_precision, ts_init, include_trades)<span class="question-mark">?</span>;
+        <span class="kw">match </span>result {
+            (<span class="prelude-val">Some</span>(delta), <span class="prelude-val">None</span>) =&gt; (<span class="prelude-val">Some</span>(Data::Delta(delta)), <span class="prelude-val">None</span>),
+            (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(trade)) =&gt; (<span class="prelude-val">Some</span>(Data::Trade(trade)), <span class="prelude-val">None</span>),
+            (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>),
+            <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"Invalid `MboMsg` parsing combination"</span>),
         }
-        dbn::RType::Mbp0 =&gt; {
-            <span class="kw">let </span>msg = rec_ref.get::&lt;dbn::TradeMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
-                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
-                <span class="prelude-val">None </span>=&gt; msg.ts_recv,
-            };
-            <span class="kw">let </span>trade = decode_trade_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
-            (<span class="prelude-val">Some</span>(Data::Trade(trade)), <span class="prelude-val">None</span>)
+    } <span class="kw">else if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::TradeMsg&gt;() {
+        <span class="kw">let </span>ts_init = determine_timestamp(ts_init, msg.ts_recv);
+        <span class="kw">let </span>trade = decode_trade_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
+        (<span class="prelude-val">Some</span>(Data::Trade(trade)), <span class="prelude-val">None</span>)
+    } <span class="kw">else if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::Mbp1Msg&gt;() {
+        <span class="kw">let </span>ts_init = determine_timestamp(ts_init, msg.ts_recv);
+        <span class="kw">let </span>result = decode_mbp1_msg(msg, instrument_id, price_precision, ts_init, include_trades)<span class="question-mark">?</span>;
+        <span class="kw">match </span>result {
+            (quote, <span class="prelude-val">None</span>) =&gt; (<span class="prelude-val">Some</span>(Data::Quote(quote)), <span class="prelude-val">None</span>),
+            (quote, <span class="prelude-val">Some</span>(trade)) =&gt; (<span class="prelude-val">Some</span>(Data::Quote(quote)), <span class="prelude-val">Some</span>(Data::Trade(trade))),
         }
-        dbn::RType::Mbp1 =&gt; {
-            <span class="kw">let </span>msg = rec_ref.get::&lt;dbn::Mbp1Msg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
-                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
-                <span class="prelude-val">None </span>=&gt; msg.ts_recv,
-            };
-            <span class="kw">let </span>result =
-                decode_mbp1_msg(msg, instrument_id, price_precision, ts_init, include_trades)<span class="question-mark">?</span>;
-            <span class="kw">match </span>result {
-                (quote, <span class="prelude-val">None</span>) =&gt; (<span class="prelude-val">Some</span>(Data::Quote(quote)), <span class="prelude-val">None</span>),
-                (quote, <span class="prelude-val">Some</span>(trade)) =&gt; (<span class="prelude-val">Some</span>(Data::Quote(quote)), <span class="prelude-val">Some</span>(Data::Trade(trade))),
-            }
-        }
-        dbn::RType::Mbp10 =&gt; {
-            <span class="kw">let </span>msg = rec_ref.get::&lt;dbn::Mbp10Msg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
-                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
-                <span class="prelude-val">None </span>=&gt; msg.ts_recv,
-            };
-            <span class="kw">let </span>depth = decode_mbp10_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
-            (<span class="prelude-val">Some</span>(Data::Depth10(depth)), <span class="prelude-val">None</span>)
-        }
-        dbn::RType::Ohlcv1S
-        | dbn::RType::Ohlcv1M
-        | dbn::RType::Ohlcv1H
-        | dbn::RType::Ohlcv1D
-        | dbn::RType::OhlcvEod =&gt; {
-            <span class="kw">let </span>msg = rec_ref.get::&lt;dbn::OhlcvMsg&gt;().unwrap(); <span class="comment">// SAFETY: RType known
-            </span><span class="kw">let </span>ts_init = <span class="kw">match </span>ts_init {
-                <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
-                <span class="prelude-val">None </span>=&gt; msg.hd.ts_event,
-            };
-            <span class="kw">let </span>bar = decode_ohlcv_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
-            (<span class="prelude-val">Some</span>(Data::Bar(bar)), <span class="prelude-val">None</span>)
-        }
-        <span class="kw">_ </span>=&gt; <span class="macro">bail!</span>(<span class="string">"RType {:?} is not currently supported"</span>, rtype),
+    } <span class="kw">else if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::Mbp10Msg&gt;() {
+        <span class="kw">let </span>ts_init = determine_timestamp(ts_init, msg.ts_recv);
+        <span class="kw">let </span>depth = decode_mbp10_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
+        (<span class="prelude-val">Some</span>(Data::Depth10(depth)), <span class="prelude-val">None</span>)
+    } <span class="kw">else if let </span><span class="prelude-val">Some</span>(msg) = record.get::&lt;dbn::OhlcvMsg&gt;() {
+        <span class="kw">let </span>ts_init = determine_timestamp(ts_init, msg.hd.ts_event);
+        <span class="kw">let </span>bar = decode_ohlcv_msg(msg, instrument_id, price_precision, ts_init)<span class="question-mark">?</span>;
+        (<span class="prelude-val">Some</span>(Data::Bar(bar)), <span class="prelude-val">None</span>)
+    } <span class="kw">else </span>{
+        <span class="macro">bail!</span>(<span class="string">"DBN message type is not currently supported"</span>)
     };
 
     <span class="prelude-val">Ok</span>(result)
+}
+
+<span class="kw">fn </span>determine_timestamp(ts_init: <span class="prelude-ty">Option</span>&lt;UnixNanos&gt;, msg_timestamp: UnixNanos) -&gt; UnixNanos {
+    <span class="kw">match </span>ts_init {
+        <span class="prelude-val">Some</span>(ts_init) =&gt; ts_init,
+        <span class="prelude-val">None </span>=&gt; msg_timestamp,
+    }
 }
 
 <span class="kw">pub fn </span>decode_instrument_def_msg_v1(
     msg: <span class="kw-2">&amp;</span>dbn::compat::InstrumentDefMsgV1,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;Box&lt;<span class="kw">dyn </span>Instrument&gt;&gt; {
+) -&gt; anyhow::Result&lt;InstrumentType&gt; {
     <span class="kw">match </span>msg.instrument_class <span class="kw">as </span>u8 <span class="kw">as </span>char {
-        <span class="string">'K' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_equity_v1(msg, instrument_id, ts_init)<span class="question-mark">?</span>)),
-        <span class="string">'F' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_futures_contract_v1(
+        <span class="string">'K' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::Equity(decode_equity_v1(
             msg,
             instrument_id,
             ts_init,
         )<span class="question-mark">?</span>)),
-        <span class="string">'S' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_futures_spread_v1(
+        <span class="string">'F' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::FuturesContract(decode_futures_contract_v1(
             msg,
             instrument_id,
             ts_init,
         )<span class="question-mark">?</span>)),
-        <span class="string">'C' </span>| <span class="string">'P' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_options_contract_v1(
+        <span class="string">'S' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::FuturesSpread(decode_futures_spread_v1(
             msg,
             instrument_id,
             ts_init,
         )<span class="question-mark">?</span>)),
-        <span class="string">'T' </span>| <span class="string">'M' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_options_spread_v1(
+        <span class="string">'C' </span>| <span class="string">'P' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::OptionsContract(decode_options_contract_v1(
+            msg,
+            instrument_id,
+            ts_init,
+        )<span class="question-mark">?</span>)),
+        <span class="string">'T' </span>| <span class="string">'M' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::OptionsSpread(decode_options_spread_v1(
             msg,
             instrument_id,
             ts_init,
@@ -1579,25 +1662,29 @@
     msg: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;Box&lt;<span class="kw">dyn </span>Instrument&gt;&gt; {
+) -&gt; anyhow::Result&lt;InstrumentType&gt; {
     <span class="kw">match </span>msg.instrument_class <span class="kw">as </span>u8 <span class="kw">as </span>char {
-        <span class="string">'K' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_equity(msg, instrument_id, ts_init)<span class="question-mark">?</span>)),
-        <span class="string">'F' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_futures_contract(
+        <span class="string">'K' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::Equity(decode_equity(
             msg,
             instrument_id,
             ts_init,
         )<span class="question-mark">?</span>)),
-        <span class="string">'S' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_futures_spread(
+        <span class="string">'F' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::FuturesContract(decode_futures_contract(
             msg,
             instrument_id,
             ts_init,
         )<span class="question-mark">?</span>)),
-        <span class="string">'C' </span>| <span class="string">'P' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_options_contract(
+        <span class="string">'S' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::FuturesSpread(decode_futures_spread(
             msg,
             instrument_id,
             ts_init,
         )<span class="question-mark">?</span>)),
-        <span class="string">'T' </span>| <span class="string">'M' </span>=&gt; <span class="prelude-val">Ok</span>(Box::new(decode_options_spread(
+        <span class="string">'C' </span>| <span class="string">'P' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::OptionsContract(decode_options_contract(
+            msg,
+            instrument_id,
+            ts_init,
+        )<span class="question-mark">?</span>)),
+        <span class="string">'T' </span>| <span class="string">'M' </span>=&gt; <span class="prelude-val">Ok</span>(InstrumentType::OptionsSpread(decode_options_spread(
             msg,
             instrument_id,
             ts_init,
@@ -1615,7 +1702,7 @@
     msg: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;Equity&gt; {
+) -&gt; anyhow::Result&lt;Equity&gt; {
     <span class="kw">let </span>currency = Currency::USD(); <span class="comment">// TODO: Temporary hard coding of US equities for now
 
     </span>Equity::new(
@@ -1624,8 +1711,12 @@
         <span class="prelude-val">None</span>, <span class="comment">// No ISIN available yet
         </span>currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
-        <span class="prelude-val">Some</span>(Quantity::new(msg.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
+        <span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">Some</span>(Quantity::new(msg.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
         <span class="prelude-val">None</span>,        <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,        <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,        <span class="comment">// TBD
@@ -1639,9 +1730,10 @@
     msg: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;FuturesContract&gt; {
+) -&gt; anyhow::Result&lt;FuturesContract&gt; {
     <span class="kw">let </span>currency = Currency::USD(); <span class="comment">// TODO: Temporary hard coding of US futures for now
     </span><span class="kw">let </span>cfi_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.cfi.as_ptr())<span class="question-mark">? </span>};
+    <span class="kw">let </span>exchange = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.exchange.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>underlying = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.asset.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>(asset_class, <span class="kw">_</span>) = parse_cfi_iso10926(<span class="kw-2">&amp;</span>cfi_str)<span class="question-mark">?</span>;
 
@@ -1649,12 +1741,13 @@
         instrument_id,
         instrument_id.symbol,
         asset_class.unwrap_or(AssetClass::Commodity),
+        <span class="prelude-val">Some</span>(exchange),
         underlying,
         msg.activation,
         msg.expiration,
         currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
         Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,                   <span class="comment">// TBD
@@ -1670,9 +1763,10 @@
     msg: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;FuturesSpread&gt; {
+) -&gt; anyhow::Result&lt;FuturesSpread&gt; {
     <span class="kw">let </span>currency = Currency::USD(); <span class="comment">// TODO: Temporary hard coding of US futures for now
     </span><span class="kw">let </span>cfi_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.cfi.as_ptr())<span class="question-mark">? </span>};
+    <span class="kw">let </span>exchange = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.exchange.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>underlying = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.asset.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>strategy_type = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.secsubtype.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>(asset_class, <span class="kw">_</span>) = parse_cfi_iso10926(<span class="kw-2">&amp;</span>cfi_str)<span class="question-mark">?</span>;
@@ -1681,13 +1775,14 @@
         instrument_id,
         instrument_id.symbol,
         asset_class.unwrap_or(AssetClass::Commodity),
+        <span class="prelude-val">Some</span>(exchange),
         underlying,
         strategy_type,
         msg.activation,
         msg.expiration,
         currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
         Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,                   <span class="comment">// TBD
@@ -1703,9 +1798,10 @@
     msg: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;OptionsContract&gt; {
+) -&gt; anyhow::Result&lt;OptionsContract&gt; {
     <span class="kw">let </span>currency_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.currency.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>cfi_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.cfi.as_ptr())<span class="question-mark">? </span>};
+    <span class="kw">let </span>exchange = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.exchange.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>asset_class_opt = <span class="kw">match </span>instrument_id.venue.value.as_str() {
         <span class="string">"OPRA" </span>=&gt; <span class="prelude-val">Some</span>(AssetClass::Equity),
         <span class="kw">_ </span>=&gt; {
@@ -1720,6 +1816,7 @@
         instrument_id,
         instrument_id.symbol,
         asset_class_opt.unwrap_or(AssetClass::Commodity),
+        <span class="prelude-val">Some</span>(exchange),
         underlying,
         parse_option_kind(msg.instrument_class)<span class="question-mark">?</span>,
         msg.activation,
@@ -1727,7 +1824,7 @@
         Price::from_raw(msg.strike_price, currency.precision)<span class="question-mark">?</span>,
         currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
         Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,                   <span class="comment">// TBD
@@ -1743,7 +1840,7 @@
     msg: <span class="kw-2">&amp;</span>dbn::InstrumentDefMsg,
     instrument_id: InstrumentId,
     ts_init: UnixNanos,
-) -&gt; <span class="prelude-ty">Result</span>&lt;OptionsSpread&gt; {
+) -&gt; anyhow::Result&lt;OptionsSpread&gt; {
     <span class="kw">let </span>currency_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.currency.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>cfi_str = <span class="kw">unsafe </span>{ raw_ptr_to_string(msg.cfi.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>asset_class_opt = <span class="kw">match </span>instrument_id.venue.value.as_str() {
@@ -1753,6 +1850,7 @@
             asset_class
         }
     };
+    <span class="kw">let </span>exchange = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.exchange.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>underlying = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.underlying.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>strategy_type = <span class="kw">unsafe </span>{ raw_ptr_to_ustr(msg.secsubtype.as_ptr())<span class="question-mark">? </span>};
     <span class="kw">let </span>currency = Currency::from_str(<span class="kw-2">&amp;</span>currency_str)<span class="question-mark">?</span>;
@@ -1761,13 +1859,14 @@
         instrument_id,
         instrument_id.symbol,
         asset_class_opt.unwrap_or(AssetClass::Commodity),
+        <span class="prelude-val">Some</span>(exchange),
         underlying,
         strategy_type,
         msg.activation,
         msg.expiration,
         currency,
         currency.precision,
-        decode_min_price_increment(msg.min_price_increment, currency)<span class="question-mark">?</span>,
+        decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
         Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span>Quantity::new(<span class="number">1.0</span>, <span class="number">0</span>)<span class="question-mark">?</span>, <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,                   <span class="comment">// TBD
@@ -1776,6 +1875,55 @@
         </span><span class="prelude-val">None</span>,                   <span class="comment">// TBD
         </span>msg.ts_recv,            <span class="comment">// More accurate and reliable timestamp
         </span>ts_init,
+    )
+}
+
+<span class="kw">pub fn </span>decode_imbalance_msg(
+    msg: <span class="kw-2">&amp;</span>dbn::ImbalanceMsg,
+    instrument_id: InstrumentId,
+    price_precision: u8,
+    ts_init: UnixNanos,
+) -&gt; anyhow::Result&lt;DatabentoImbalance&gt; {
+    DatabentoImbalance::new(
+        instrument_id,
+        Price::from_raw(msg.ref_price, price_precision)<span class="question-mark">?</span>,
+        Price::from_raw(msg.cont_book_clr_price, price_precision)<span class="question-mark">?</span>,
+        Price::from_raw(msg.auct_interest_clr_price, price_precision)<span class="question-mark">?</span>,
+        Quantity::new(f64::from(msg.paired_qty), <span class="number">0</span>)<span class="question-mark">?</span>,
+        Quantity::new(f64::from(msg.total_imbalance_qty), <span class="number">0</span>)<span class="question-mark">?</span>,
+        parse_order_side(msg.side),
+        msg.significant_imbalance <span class="kw">as </span>c_char,
+        msg.hd.ts_event,
+        msg.ts_recv,
+        ts_init,
+    )
+}
+
+<span class="kw">pub fn </span>decode_statistics_msg(
+    msg: <span class="kw-2">&amp;</span>dbn::StatMsg,
+    instrument_id: InstrumentId,
+    price_precision: u8,
+    ts_init: UnixNanos,
+) -&gt; anyhow::Result&lt;DatabentoStatistics&gt; {
+    <span class="kw">let </span>stat_type = DatabentoStatisticType::from_u8(msg.stat_type <span class="kw">as </span>u8)
+        .expect(<span class="string">"Invalid value for `stat_type`"</span>);
+    <span class="kw">let </span>update_action = DatabentoStatisticUpdateAction::from_u8(msg.update_action)
+        .expect(<span class="string">"Invalid value for `update_action`"</span>);
+
+    DatabentoStatistics::new(
+        instrument_id,
+        stat_type,
+        update_action,
+        decode_optional_price(msg.price, price_precision)<span class="question-mark">?</span>,
+        decode_optional_quantity_i32(msg.quantity)<span class="question-mark">?</span>,
+        msg.channel_id,
+        msg.stat_flags,
+        msg.sequence,
+        msg.ts_ref,
+        msg.ts_in_delta,
+        msg.hd.ts_event,
+        msg.ts_recv,
+        ts_init,
     )
 }
 </code></pre></div></section></main></body></html>

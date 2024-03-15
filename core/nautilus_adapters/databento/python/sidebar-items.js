@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["databento"],"mod":["decode","historical","live","loader"]};
+window.SIDEBAR_ITEMS = {"fn":["databento"],"mod":["decode","enums","historical","live","loader","types"]};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/timer.rs`."><title>timer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (381d69953 2024-02-24)" data-channel="nightly" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-c37d3936c59ababd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `common/src/timer.rs`."><title>timer.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="nautilus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0-nightly (f4b771bf1 2024-03-14)" data-channel="nightly" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
             <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
     <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../nautilus_common/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
@@ -377,6 +377,24 @@
 <a href="#375" id="375">375</a>
 <a href="#376" id="376">376</a>
 <a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -394,6 +412,7 @@
 
 </span><span class="kw">use </span>std::{
     cmp::Ordering,
+    ffi::c_char,
     fmt::{Display, Formatter},
     time::Duration,
 };
@@ -403,11 +422,12 @@
     time::{get_atomic_clock_realtime, TimedeltaNanos, UnixNanos},
     uuid::UUID4,
 };
-<span class="kw">use </span>pyo3::{ffi, types::PyCapsule, IntoPy, PyObject, Python};
+<span class="attr">#[cfg(feature = <span class="string">"python"</span>)]
+</span><span class="kw">use </span>pyo3::{types::PyCapsule, IntoPy, PyObject, Python};
 <span class="kw">use </span>tokio::sync::oneshot;
 <span class="kw">use </span>ustr::Ustr;
 
-<span class="kw">use </span><span class="kw">crate</span>::handlers::EventHandler;
+<span class="kw">use crate</span>::{handlers::EventHandler, runtime::get_runtime};
 
 <span class="attr">#[repr(C)]
 #[derive(Clone, Debug)]
@@ -462,8 +482,8 @@
 </span><span class="kw">pub struct </span>TimeEventHandler {
     <span class="doccomment">/// The event.
     </span><span class="kw">pub </span>event: TimeEvent,
-    <span class="doccomment">/// The Python callable pointer.
-    </span><span class="kw">pub </span>callback_ptr: <span class="kw-2">*mut </span>ffi::PyObject,
+    <span class="doccomment">/// The callable raw pointer.
+    </span><span class="kw">pub </span>callback_ptr: <span class="kw-2">*mut </span>c_char,
 }
 
 <span class="kw">impl </span>PartialOrd <span class="kw">for </span>TimeEventHandler {
@@ -498,7 +518,7 @@
     <span class="kw">fn </span>cancel(<span class="kw-2">&amp;mut </span><span class="self">self</span>);
 }
 
-<span class="doccomment">/// Provides a test timer for user with a [`TestClock`].
+<span class="doccomment">/// Provides a test timer for user with a `TestClock`.
 </span><span class="attr">#[derive(Clone, Copy, Debug)]
 </span><span class="kw">pub struct </span>TestTimer {
     <span class="kw">pub </span>name: Ustr,
@@ -585,7 +605,7 @@
     }
 }
 
-<span class="doccomment">/// Provides a live timer for use with a [`LiveClock`].
+<span class="doccomment">/// Provides a live timer for use with a `LiveClock`.
 ///
 /// Note: `next_time_ns` is only accurate when initially starting the timer
 /// and will not incrementally update as the timer runs.
@@ -629,17 +649,13 @@
         <span class="kw">let </span>stop_time_ns = <span class="self">self</span>.stop_time_ns;
         <span class="kw">let </span>interval_ns = <span class="self">self</span>.interval_ns;
 
-        <span class="kw">let </span>callback = <span class="self">self
-            </span>.callback
-            .py_callback
-            .clone()
-            .expect(<span class="string">"No callback for event handler"</span>);
+        <span class="kw">let </span>callback = <span class="self">self</span>.callback.clone();
 
         <span class="comment">// Setup oneshot channel for cancelling timer task
         </span><span class="kw">let </span>(cancel_tx, <span class="kw-2">mut </span>cancel_rx) = oneshot::channel();
         <span class="self">self</span>.canceler = <span class="prelude-val">Some</span>(cancel_tx);
 
-        pyo3_asyncio::tokio::get_runtime().spawn(<span class="kw">async move </span>{
+        get_runtime().spawn(<span class="kw">async move </span>{
             <span class="kw">let </span>clock = get_atomic_clock_realtime();
             <span class="kw">if </span>start_time_ns == <span class="number">0 </span>{
                 start_time_ns = clock.get_time_ns();
@@ -648,23 +664,11 @@
             <span class="kw">let </span><span class="kw-2">mut </span>next_time_ns = start_time_ns + interval_ns;
 
             <span class="kw">loop </span>{
-                <span class="macro">tokio::select! </span>{
+                <span class="macro">tokio::select!</span> {
                     <span class="kw">_ </span>= tokio::time::sleep(Duration::from_nanos(next_time_ns.saturating_sub(clock.get_time_ns()))) =&gt; {
-                        Python::with_gil(|py| {
-                            <span class="comment">// Create new time event
-                            </span><span class="kw">let </span>event = TimeEvent::new(
-                                event_name,
-                                UUID4::new(),
-                                next_time_ns,
-                                clock.get_time_ns()
-                            );
-                            <span class="kw">let </span>capsule: PyObject = PyCapsule::new(py, event, <span class="prelude-val">None</span>).expect(<span class="string">"Error creating `PyCapsule`"</span>).into_py(py);
-
-                            <span class="kw">match </span>callback.call1(py, (capsule,)) {
-                                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {},
-                                <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error on callback: {:?}"</span>, e),
-                            };
-                        });
+                        <span class="comment">// TODO: Remove this clone
+                        </span><span class="kw">let </span>callback = callback.clone();
+                        call_python_with_time_event(event_name, next_time_ns, clock.get_time_ns(), callback);
 
                         <span class="comment">// Prepare next time interval
                         </span>next_time_ns += interval_ns;
@@ -696,10 +700,42 @@
     }
 }
 
+<span class="attr">#[cfg(feature = <span class="string">"python"</span>)]
+</span><span class="kw">fn </span>call_python_with_time_event(
+    name: Ustr,
+    ts_event: UnixNanos,
+    ts_init: UnixNanos,
+    handler: EventHandler,
+) {
+    Python::with_gil(|py| {
+        <span class="comment">// Create new time event
+        </span><span class="kw">let </span>event = TimeEvent::new(name, UUID4::new(), ts_event, ts_init);
+        <span class="kw">let </span>capsule: PyObject = PyCapsule::new(py, event, <span class="prelude-val">None</span>)
+            .expect(<span class="string">"Error creating `PyCapsule`"</span>)
+            .into_py(py);
+
+        <span class="kw">match </span>handler.callback.call1(py, (capsule,)) {
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {}
+            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Error on callback: {:?}"</span>, e),
+        };
+    })
+}
+
+<span class="attr">#[cfg(not(feature = <span class="string">"python"</span>))]
+</span><span class="kw">fn </span>call_python_with_time_event(
+    _name: Ustr,
+    _ts_event: UnixNanos,
+    _ts_init: UnixNanos,
+    _handler: EventHandler,
+) {
+    <span class="macro">panic!</span>(<span class="string">"`python` feature is not enabled"</span>);
+}
+
 <span class="comment">////////////////////////////////////////////////////////////////////////////////
 // Tests
 ////////////////////////////////////////////////////////////////////////////////
-</span><span class="attr">#[cfg(test)]
+</span><span class="attr">#[cfg(not(feature = <span class="string">"python"</span>))]
+#[cfg(test)]
 </span><span class="kw">mod </span>tests {
     <span class="kw">use </span>rstest::<span class="kw-2">*</span>;
 

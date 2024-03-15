@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["accounting"],"mod":["cash","margin"]};
+window.SIDEBAR_ITEMS = {"fn":["accounting"],"mod":["cash","margin","transformer"]};
