@@ -262,6 +262,37 @@
 <a href="#260" id="260">260</a>
 <a href="#261" id="261">261</a>
 <a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -287,7 +318,7 @@
     time::UnixNanos,
 };
 <span class="kw">use </span>pyo3::{basic::CompareOp, prelude::<span class="kw-2">*</span>, types::PyDict};
-<span class="kw">use </span>rust_decimal::{prelude::ToPrimitive, Decimal};
+<span class="kw">use </span>rust_decimal::Decimal;
 
 <span class="kw">use crate</span>::{
     identifiers::{instrument_id::InstrumentId, symbol::Symbol},
@@ -458,6 +489,30 @@
     }
 
     <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">"maker_fee"</span>)]
+    </span><span class="kw">fn </span>py_maker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="self">self</span>.maker_fee
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">"taker_fee"</span>)]
+    </span><span class="kw">fn </span>py_taker_fee(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="self">self</span>.taker_fee
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">"margin_maint"</span>)]
+    </span><span class="kw">fn </span>py_margin_maint(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="self">self</span>.margin_maint
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">"margin_init"</span>)]
+    </span><span class="kw">fn </span>py_margin_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Decimal {
+        <span class="self">self</span>.margin_init
+    }
+
+    <span class="attr">#[getter]
     #[pyo3(name = <span class="string">"ts_event"</span>)]
     </span><span class="kw">fn </span>py_ts_event(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos {
         <span class="self">self</span>.ts_event
@@ -467,6 +522,12 @@
     #[pyo3(name = <span class="string">"ts_init"</span>)]
     </span><span class="kw">fn </span>py_ts_init(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; UnixNanos {
         <span class="self">self</span>.ts_init
+    }
+
+    <span class="attr">#[getter]
+    #[pyo3(name = <span class="string">"info"</span>)]
+    </span><span class="kw">fn </span>py_info(<span class="kw-2">&amp;</span><span class="self">self</span>, py: Python&lt;<span class="lifetime">'_</span>&gt;) -&gt; PyResult&lt;PyObject&gt; {
+        <span class="prelude-val">Ok</span>(PyDict::new(py).into())
     }
 
     <span class="attr">#[staticmethod]
@@ -487,10 +548,11 @@
         dict.set_item(<span class="string">"size_precision"</span>, <span class="self">self</span>.size_precision)<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"price_increment"</span>, <span class="self">self</span>.price_increment.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"size_increment"</span>, <span class="self">self</span>.size_increment.to_string())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">"maker_fee"</span>, <span class="self">self</span>.maker_fee.to_f64())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">"taker_fee"</span>, <span class="self">self</span>.taker_fee.to_f64())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">"margin_init"</span>, <span class="self">self</span>.margin_init.to_f64())<span class="question-mark">?</span>;
-        dict.set_item(<span class="string">"margin_maint"</span>, <span class="self">self</span>.margin_maint.to_f64())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"maker_fee"</span>, <span class="self">self</span>.maker_fee.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"taker_fee"</span>, <span class="self">self</span>.taker_fee.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"margin_init"</span>, <span class="self">self</span>.margin_init.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"margin_maint"</span>, <span class="self">self</span>.margin_maint.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"info"</span>, PyDict::new(py))<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"ts_event"</span>, <span class="self">self</span>.ts_event)<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"ts_init"</span>, <span class="self">self</span>.ts_init)<span class="question-mark">?</span>;
         <span class="kw">match </span><span class="self">self</span>.lot_size {

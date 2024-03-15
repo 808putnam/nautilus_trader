@@ -955,6 +955,14 @@
 <a href="#953" id="953">953</a>
 <a href="#954" id="954">954</a>
 <a href="#955" id="955">955</a>
+<a href="#956" id="956">956</a>
+<a href="#957" id="957">957</a>
+<a href="#958" id="958">958</a>
+<a href="#959" id="959">959</a>
+<a href="#960" id="960">960</a>
+<a href="#961" id="961">961</a>
+<a href="#962" id="962">962</a>
+<a href="#963" id="963">963</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -1155,7 +1163,11 @@
         </span>currency,
         currency.precision,
         decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
-        <span class="prelude-val">Some</span>(Quantity::new(msg.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
+        <span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">Some</span>(Quantity::new(msg.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
         <span class="prelude-val">None</span>,        <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,        <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,        <span class="comment">// TBD
@@ -1700,7 +1712,11 @@
         </span>currency,
         currency.precision,
         decode_price(msg.min_price_increment, currency.precision)<span class="question-mark">?</span>,
-        <span class="prelude-val">Some</span>(Quantity::new(msg.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
+        <span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">None</span>, <span class="comment">// TBD
+        </span><span class="prelude-val">Some</span>(Quantity::new(msg.min_lot_size_round_lot.into(), <span class="number">0</span>)<span class="question-mark">?</span>),
         <span class="prelude-val">None</span>,        <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,        <span class="comment">// TBD
         </span><span class="prelude-val">None</span>,        <span class="comment">// TBD

@@ -214,6 +214,19 @@
 <a href="#212" id="212">212</a>
 <a href="#213" id="213">213</a>
 <a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
 </pre></div><pre class="rust"><code><span class="comment">// -------------------------------------------------------------------------------------------------
 //  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
 //  https://nautechsystems.io
@@ -239,6 +252,7 @@
     time::UnixNanos,
 };
 <span class="kw">use </span>pyo3::{basic::CompareOp, prelude::<span class="kw-2">*</span>, types::PyDict};
+<span class="kw">use </span>rust_decimal::Decimal;
 <span class="kw">use </span>ustr::Ustr;
 
 <span class="kw">use crate</span>::{
@@ -259,6 +273,10 @@
         price_increment: Price,
         ts_event: UnixNanos,
         ts_init: UnixNanos,
+        maker_fee: <span class="prelude-ty">Option</span>&lt;Decimal&gt;,
+        taker_fee: <span class="prelude-ty">Option</span>&lt;Decimal&gt;,
+        margin_init: <span class="prelude-ty">Option</span>&lt;Decimal&gt;,
+        margin_maint: <span class="prelude-ty">Option</span>&lt;Decimal&gt;,
         isin: <span class="prelude-ty">Option</span>&lt;String&gt;,
         lot_size: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
         max_quantity: <span class="prelude-ty">Option</span>&lt;Quantity&gt;,
@@ -273,6 +291,10 @@
             currency,
             price_precision,
             price_increment,
+            maker_fee,
+            taker_fee,
+            margin_init,
+            margin_maint,
             lot_size,
             max_quantity,
             min_quantity,
@@ -401,6 +423,10 @@
         dict.set_item(<span class="string">"price_increment"</span>, <span class="self">self</span>.price_increment.to_string())<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"ts_event"</span>, <span class="self">self</span>.ts_event)<span class="question-mark">?</span>;
         dict.set_item(<span class="string">"ts_init"</span>, <span class="self">self</span>.ts_init)<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"maker_fee"</span>, <span class="self">self</span>.maker_fee.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"taker_fee"</span>, <span class="self">self</span>.taker_fee.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"margin_init"</span>, <span class="self">self</span>.margin_init.to_string())<span class="question-mark">?</span>;
+        dict.set_item(<span class="string">"margin_maint"</span>, <span class="self">self</span>.margin_maint.to_string())<span class="question-mark">?</span>;
         <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.isin {
             <span class="prelude-val">Some</span>(value) =&gt; dict.set_item(<span class="string">"isin"</span>, value.to_string())<span class="question-mark">?</span>,
             <span class="prelude-val">None </span>=&gt; dict.set_item(<span class="string">"isin"</span>, py.<span class="prelude-val">None</span>())<span class="question-mark">?</span>,
