@@ -124,30 +124,14 @@ class ContinuousBarWrangler:
             
             is_next = previous_timestamp is not None and bar.ts_init > previous_timestamp
             if is_next:
-                try:
-                    self._chain.handle_time_event(
-                        TimeEvent(
-                            name=f"chain_{self._chain.bar_type}",
-                            event_id=UUID4(),
-                            ts_event=0,
-                            ts_init=0,
-                        )
+                self._chain.handle_time_event(
+                    TimeEvent(
+                        name=f"chain_{self._chain.bar_type}",
+                        event_id=UUID4(),
+                        ts_event=0,
+                        ts_init=0,
                     )
-                except ContractExpired:
-                    print(
-                        f"""
-                        The chain failed to roll from {self._chain.current_month} to {self._chain.forward_month}.
-                        
-                        This could be caused by:
-                        
-                        The current contract and forward contract bars do not overlap and therefore a matching timestamp from each
-                        dataset is not found to satisfy the roll.
-                        The current contract or forward contract bars end before the roll date.
-                        The current contract or forward contract bars start after the expiry date.
-                        """
-                    )
-                    raise
-                
+                )
                 if self._chain.current_month == self._end_month:
                     break
                     
