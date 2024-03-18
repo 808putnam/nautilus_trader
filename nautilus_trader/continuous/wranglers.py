@@ -80,7 +80,6 @@ class ContinuousBarWrangler:
     def process(
         self,
         bars: list[Bar],
-        validate: bool = True,
     ) -> dict[int, list[Bar]]:
         
         bars = sorted(bars, key = lambda x: x.ts_init)
@@ -139,6 +138,10 @@ class ContinuousBarWrangler:
     
     def validate(self, bars: list[Bar]) -> None:
         
+        """
+        Validate the contract bars for a successful roll from the start to end month.
+        """
+    
         venues = {b.bar_type.instrument_id.venue for b in bars}
         assert len(venues) == 1
         
