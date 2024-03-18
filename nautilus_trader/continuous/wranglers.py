@@ -149,13 +149,12 @@ class ContinuousBarWrangler:
                 f"Symbol {symbol} has incorrect format. The format should is <symbol>=<month>",
             )
 
-        timestamps_by_month = {
-            k: [b.ts_init for b in g]
-            for k, g in itertools.groupby(
-                bars,
-                key=lambda x: x.bar_type.instrument_id.symbol.value.split("=")[-1],
-            )
-        }
+        timestamps_by_month = {}
+        for bar in bars:
+            month = bar.bar_type.instrument_id.symbol.value.split("=")[-1]
+            if timestamps_by_month.get(month) is None:
+                timestamps_by_month[month] = set()
+            timestamps_by_month[month].add(bar.ts_init)
 
         hold_cycle = self._chain_config.roll_config.hold_cycle
 
