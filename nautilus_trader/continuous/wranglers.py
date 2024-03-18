@@ -77,20 +77,15 @@ class ContinuousBarWrangler:
         self._expiry_offset = self._roll_config.approximate_expiry_offset
         self._roll_offset = self._roll_config.roll_offset
             
-    def process(self, bars: list[Bar]) -> dict[int, list[Bar]]:
+    def process(
+        self,
+        bars: list[Bar],
+        validate: bool = True,
+    ) -> dict[int, list[Bar]]:
         
-        # TODO assert bar_type format
-        # TODO assert same bar_spec
-        # TODO: assert sorted
-        # TODO: assert same venue
-        # TODO: check end_month has forward month, otherwise fail to roll to end_month
+        bars = sorted(bars, key = lambda x: x.ts_init)
         
-        bars = sorted(bars, key=lambda x: x.ts_init)
-        
-        bars_by_month = {k: list(g) for k, g in \
-            itertools.groupby(bars, key=lambda x: x.bar_type.instrument_id.symbol.value.split("=")[-1].split(".")[0])}
-        
-        last_timestamps = {month: bars[-1].ts_init for month, bars in bars_by_month.items()}
+        self.validate(bars)
         
         self._clock.set_time(bars[0].ts_init)
         
@@ -144,10 +139,22 @@ class ContinuousBarWrangler:
     
     def validate(self, bars: list[Bar]) -> None:
         
-        bars = sorted(bars, key=lambda x: x.ts_init)
+        venues = {b.bar_type.instrument_id.venue for b in bars}
+        assert len(venues) == 1
+        
+        specs = {b.bar_type.spec for b in bars}
+        assert len(specs) == 1
+        
+        # TODO assert bar_type format
+        try:
+            for bar in bars:
+                symbol = bar.bar_type.instrument_id.symbol.value
+                ContractMonth(symbol.split("=")[-1])
+        except AssertionError:
+            raise ValueError(f"Symbol {symbol} has incorrect format. The format should is <symbol>=<month>")
         
         timestamps_by_month = {k: [b.ts_init for b in g] for k, g in \
-            itertools.groupby(bars, key=lambda x: x.bar_type.instrument_id.symbol.value.split("=")[-1].split(".")[0])}
+            itertools.groupby(bars, key=lambda x: x.bar_type.instrument_id.symbol.value.split("=")[-1])}
         
         hold_cycle = self._chain_config.roll_config.hold_cycle
         

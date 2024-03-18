@@ -4,6 +4,7 @@ from pathlib import Path
 from nautilus_trader.model.data import capsule_to_list
 from nautilus_trader.core.nautilus_pyo3 import NautilusDataType
 from nautilus_trader.core.nautilus_pyo3 import DataBackendSession
+from nautilus_trader.test_kit.stubs.data import TestDataStubs
 from nautilus_trader import PACKAGE_ROOT
 from nautilus_trader.continuous.wranglers import ContinuousBarWrangler
 from nautilus_trader.continuous.config import ContractChainConfig
@@ -189,6 +190,74 @@ class TestContinuousWrangler:
             wrangler.validate(bars)
             assert "2021N and 2021U" in ex_info.value.args[0]
             
+    def test_validate_input_assertions(self):
+        
+        wrangler = ContinuousBarWrangler(
+            config=self.chain_config,
+            end_month=ContractMonth("2021U"),
+        )
+        
+        # assert only one bar spec
+        bars = [
+            Bar(
+                bar_type=BarType.from_str("HG=2021H.SIM-1-DAY-BID-EXTERNAL"),
+                open=Price.from_str("90.002"),
+                high=Price.from_str("90.004"),
+                low=Price.from_str("90.001"),
+                close=Price.from_str("90.003"),
+                volume=Quantity.from_int(1_000_000),
+                ts_event=0,
+                ts_init=0,
+            ),
+            Bar(
+                bar_type=BarType.from_str("HG=2021H.SIM-1-MINUTE-BID-EXTERNAL"),
+                open=Price.from_str("90.002"),
+                high=Price.from_str("90.004"),
+                low=Price.from_str("90.001"),
+                close=Price.from_str("90.003"),
+                volume=Quantity.from_int(1_000_000),
+                ts_event=0,
+                ts_init=0,
+            )
+        ]
+        with pytest.raises(AssertionError):
+            wrangler.validate(bars)
+         
+            
+        
+        # assert only one venue
+        bars = [
+            Bar(
+                bar_type=BarType.from_str("AUD/USD.SIM1-1-MINUTE-BID-EXTERNAL"),
+                open=Price.from_str("90.002"),
+                high=Price.from_str("90.004"),
+                low=Price.from_str("90.001"),
+                close=Price.from_str("90.003"),
+                volume=Quantity.from_int(1_000_000),
+                ts_event=0,
+                ts_init=0,
+            ),
+            Bar(
+                bar_type=BarType.from_str("AUD/USD.SIM2-1-MINUTE-BID-EXTERNAL"),
+                open=Price.from_str("90.002"),
+                high=Price.from_str("90.004"),
+                low=Price.from_str("90.001"),
+                close=Price.from_str("90.003"),
+                volume=Quantity.from_int(1_000_000),
+                ts_event=0,
+                ts_init=0,
+            )
+        ]
+        with pytest.raises(AssertionError):
+            wrangler.validate(bars)
+        
+        # assert symbol format
+        with pytest.raises(ValueError):
+            wrangler.validate([TestDataStubs.bar_5decimal()])
+        
+        
+            
+        
         
     def _read_bars(self) -> list[Bar]:
         
