@@ -1,15 +1,18 @@
 from __future__ import annotations
 
+from typing import Annotated
+
 import pandas as pd
-from nautilus_trader.core.datetime import dt_to_unix_nanos
-from nautilus_trader.common.config import NonNegativeInt
-from typing import Annotated, Literal
 from msgspec import Meta
+
+from nautilus_trader.common.config import NonNegativeInt
+
 
 MONTH_LIST = ["F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"]
 
 # An integer constrained to values <= 0
 NonPositiveInt = Annotated[int, Meta(le=0)]
+
 
 class ContractMonth:
     def __init__(
@@ -26,10 +29,10 @@ class ContractMonth:
         self.month = letter_month_to_int(value[4])
         self.value = value
         self.timestamp_utc = pd.Timestamp(year=self.year, month=self.month, day=1, tz="UTC")
-    
+
     def expiry_date(self, approximate_expiry_offset: NonNegativeInt) -> pd.Timestamp:
         return self.timestamp_utc + pd.Timedelta(days=approximate_expiry_offset)
-        
+
     def roll_window(
         self,
         approximate_expiry_offset: NonNegativeInt,
@@ -40,13 +43,13 @@ class ContractMonth:
             expiry_date + pd.Timedelta(days=roll_offset),
             expiry_date,
         )
-        
+
     @classmethod
     def from_month_year(cls, year: int, month: int) -> ContractMonth:
         assert isinstance(month, int)
         assert month >= 1 and month <= 12
         return cls(f"{year}{int_to_letter_month(month)}")
-    
+
     @classmethod
     def from_int(cls, value: int) -> ContractMonth:
         return cls.from_month_year(
@@ -65,22 +68,22 @@ class ContractMonth:
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.value})"
-    
+
     def __gt__(self, other) -> bool:
         return self.timestamp_utc > other.timestamp_utc
-    
+
     def __lt__(self, other) -> bool:
         return self.timestamp_utc < other.timestamp_utc
-    
+
     def __ge__(self, other) -> bool:
         return self.timestamp_utc >= other.timestamp_utc
-    
+
     def __le__(self, other) -> bool:
         return self.timestamp_utc <= other.timestamp_utc
 
     def __str__(self) -> str:
         return self.value
-    
+
     def __getstate__(self):
         return (
             self.year,
@@ -96,12 +99,12 @@ class ContractMonth:
         self.month = state[2]
         self.value = state[3]
         self.timestamp_utc = state[4]
-    
-    
-        
+
+
 def letter_month_to_int(letter_month: str) -> int:
     assert letter_month in MONTH_LIST
     return MONTH_LIST.index(letter_month) + 1
+
 
 def int_to_letter_month(value: int) -> str:
     assert value > 0 and value < 13

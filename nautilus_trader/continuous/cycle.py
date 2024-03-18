@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from nautilus_trader.continuous.contract_month import ContractMonth
 
+
 class RollCycle:
     def __init__(self, value: str, skip_months: list[ContractMonth] | None = None):
         assert isinstance(value, str)
@@ -28,11 +29,11 @@ class RollCycle:
         is_last_month = self.value[-1] == letter_month
         if is_last_month:
             year += 1
-            month = self.value[0]
+            letter_month = self.value[0]
         else:
-            month = self.value[self.value.index(letter_month) + 1]
+            letter_month = self.value[self.value.index(letter_month) + 1]
 
-        month = ContractMonth(f"{year}{month}")
+        month = ContractMonth(f"{year}{letter_month}")
 
         while month in self._skip_months:
             month = self.next_month(current=month)
@@ -57,11 +58,11 @@ class RollCycle:
         is_first_month = self.value[0] == letter_month
         if is_first_month:
             year -= 1
-            month = self.value[-1]
+            letter_month = self.value[-1]
         else:
-            month = self.value[self.value.index(letter_month) - 1]
+            letter_month = self.value[self.value.index(letter_month) - 1]
 
-        month = ContractMonth(f"{year}{month}")
+        month = ContractMonth(f"{year}{letter_month}")
 
         while month in self._skip_months:
             month = self.previous_month(current=month)

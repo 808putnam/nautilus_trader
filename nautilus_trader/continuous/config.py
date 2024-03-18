@@ -1,13 +1,12 @@
 from typing import Annotated, Literal
 
 from msgspec import Meta
+
 from nautilus_trader.common.config import NautilusConfig
 from nautilus_trader.common.config import NonNegativeInt
-from nautilus_trader.model.data import BarType
-from nautilus_trader.model.identifiers import InstrumentId
-
 from nautilus_trader.continuous.contract_month import ContractMonth
 from nautilus_trader.continuous.cycle import RollCycle
+from nautilus_trader.model.data import BarType
 
 
 # An integer constrained to values <= 0
@@ -16,7 +15,7 @@ NonPositiveInt = Annotated[int, Meta(le=0)]
 
 class RollConfig(NautilusConfig, frozen=True):
     """
-    Configuration for rolls
+    Configuration for rolls.
 
     Parameters
     ----------
@@ -33,6 +32,7 @@ class RollConfig(NautilusConfig, frozen=True):
         The number of contracts forward or backwards in the priced roll cycle
     skip_months: list[ContractMonth], optional
         The months to skip in the cycle
+
     """
 
     hold_cycle: RollCycle
@@ -45,7 +45,7 @@ class RollConfig(NautilusConfig, frozen=True):
 
 class ContractChainConfig(NautilusConfig, frozen=True):
     """
-    Configuration for contract chain
+    Configuration for contract chain.
 
     Parameters
     ----------
@@ -59,8 +59,9 @@ class ContractChainConfig(NautilusConfig, frozen=True):
         If the expiry_date of the current contract should be ignored when attempting to roll.
     start_month : ContractMonth, optional
         The starting month to roll to when started
+
     """
-    
+
     bar_type: BarType
     roll_config: RollConfig
     raise_expired: bool = True

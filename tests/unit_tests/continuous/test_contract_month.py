@@ -1,7 +1,6 @@
 import pickle
 
 import pandas as pd
-
 from pyfutures.continuous.contract_month import ContractMonth
 
 

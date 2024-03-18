@@ -1,29 +1,29 @@
-import pytest
-import pandas as pd
 from pathlib import Path
-from nautilus_trader.model.data import capsule_to_list
-from nautilus_trader.core.nautilus_pyo3 import NautilusDataType
-from nautilus_trader.core.nautilus_pyo3 import DataBackendSession
-from nautilus_trader.test_kit.stubs.data import TestDataStubs
+
+import pandas as pd
+import pytest
+
 from nautilus_trader import PACKAGE_ROOT
-from nautilus_trader.continuous.wranglers import ContinuousBarWrangler
 from nautilus_trader.continuous.config import ContractChainConfig
-from nautilus_trader.model.data import BarType
-from nautilus_trader.continuous.cycle import RollCycle
-from nautilus_trader.continuous.chain import ContractChain
-from nautilus_trader.continuous.chain import ContractExpired
 from nautilus_trader.continuous.config import RollConfig
-from nautilus_trader.model.data import Bar
 from nautilus_trader.continuous.contract_month import ContractMonth
-from nautilus_trader.core.datetime import unix_nanos_to_dt
+from nautilus_trader.continuous.cycle import RollCycle
+from nautilus_trader.continuous.wranglers import ContinuousBarWrangler
+from nautilus_trader.core.datetime import dt_to_unix_nanos
+from nautilus_trader.core.nautilus_pyo3 import DataBackendSession
+from nautilus_trader.core.nautilus_pyo3 import NautilusDataType
+from nautilus_trader.model.data import Bar
+from nautilus_trader.model.data import BarType
+from nautilus_trader.model.data import capsule_to_list
 from nautilus_trader.model.objects import Price
 from nautilus_trader.model.objects import Quantity
-from nautilus_trader.core.datetime import dt_to_unix_nanos
+from nautilus_trader.test_kit.stubs.data import TestDataStubs
+
 
 class TestContinuousWrangler:
-    
+
     def setup_method(self):
-        
+
         self.roll_config = RollConfig(
             hold_cycle=RollCycle("HNUZ"),
             priced_cycle=RollCycle("FHJMNUVZ"),
@@ -31,7 +31,7 @@ class TestContinuousWrangler:
             approximate_expiry_offset=27,
             carry_offset=1,
         )
-        
+
         self.chain_config = ContractChainConfig(
             bar_type=BarType.from_str("HG.SIM-1-DAY-MID-EXTERNAL"),
             roll_config=self.roll_config,
@@ -39,21 +39,21 @@ class TestContinuousWrangler:
             raise_expired=True,
             ignore_expiry_date=False,
         )
-        
+
     def test_wrangler_outputs_expected(self):
-        
+
         wrangler = ContinuousBarWrangler(
             config=self.chain_config,
             end_month=ContractMonth("2021U"),
         )
-        
+
         bars = self._read_bars()
-        
+
         streams = wrangler.process(bars)
         assert len(streams["0"]) == 1323
         assert len(streams["+1"]) == 1240
         assert len(streams["c"]) == 548
-        
+
         current_months = {
             ContractMonth(b.bar_type.instrument_id.symbol.value.split("=")[-1])
             for b in streams["0"]
@@ -66,24 +66,24 @@ class TestContinuousWrangler:
             ContractMonth(b.bar_type.instrument_id.symbol.value.split("=")[-1])
             for b in streams["c"]
         }
-        
+
         assert all(m in self.roll_config.hold_cycle for m in current_months)
         assert all(m in self.roll_config.hold_cycle for m in forward_months)
         assert all(m in self.roll_config.priced_cycle for m in carry_months)
-        
+
     def test_wrangler_stops_at_end_month(self):
-        
+
         wrangler = ContinuousBarWrangler(
             config=self.chain_config,
             end_month=ContractMonth("2021U"),
         )
-        
+
         bars = self._read_bars()
         streams = wrangler.process(bars)
-        
+
         assert streams["0"][-1].bar_type.instrument_id.symbol.value.endswith("2021U")
         assert streams["0"][-2].bar_type.instrument_id.symbol.value.endswith("2021N")
-    
+
     def test_validate_no_data_for_month_raises(self):
         wrangler = ContinuousBarWrangler(
             config=self.chain_config,
@@ -93,14 +93,14 @@ class TestContinuousWrangler:
         with pytest.raises(ValueError) as ex_info:
             wrangler.validate([])
             assert "['2021H', '2021N', '2021Z']" in ex_info.value.args[0]
-        
+
     def test_validate_no_timestamps_in_roll_window_raises(self):
-        
+
         wrangler = ContinuousBarWrangler(
             config=self.chain_config,
             end_month=ContractMonth("2021U"),
         )
-        
+
         # no current in 2021H > 2021N roll window 2021-02-26 to 2021-03-28
         data = [
             ("HG=2021H.SIM", "1970-01-01"),
@@ -110,11 +110,11 @@ class TestContinuousWrangler:
         bars = self._create_bars(data)
         with pytest.raises(ValueError) as ex_info:
             wrangler.validate(bars)
-            
+
         assert "2021H" in ex_info.value.args[0]
         assert "no timestamps" in ex_info.value.args[0]
         assert "2021-02-26 00:00:00+00:00 to 2021-03-28 00:00:00+00:00" in ex_info.value.args[0]
-            
+
         # no forward in 2021H > 2021N roll window 2021-02-26 to 2021-03-28
         data = [
             ("HG=2021H.SIM", "2021-02-26"),
@@ -124,7 +124,7 @@ class TestContinuousWrangler:
         bars = self._create_bars(data)
         with pytest.raises(ValueError) as ex_info:
             wrangler.validate(bars)
-            
+
         assert "2021N" in ex_info.value.args[0]
         assert "no timestamps" in ex_info.value.args[0]
         assert "2021-02-26 00:00:00+00:00 to 2021-03-28 00:00:00+00:00" in ex_info.value.args[0]
@@ -138,11 +138,11 @@ class TestContinuousWrangler:
         bars = self._create_bars(data)
         with pytest.raises(ValueError) as ex_info:
             wrangler.validate(bars)
-            
+
         assert "2021N" in ex_info.value.args[0]
         assert "no timestamps" in ex_info.value.args[0]
         assert "2021-06-28 00:00:00+00:00 to 2021-07-28 00:00:00+00:00" in ex_info.value.args[0]
-        
+
         # no forward in 2021N > 2021U roll window 2021-06-28 to 2021-07-28
         data = [
             ("HG=2021H.SIM", "2021-02-26"),
@@ -153,18 +153,18 @@ class TestContinuousWrangler:
         bars = self._create_bars(data)
         with pytest.raises(ValueError) as ex_info:
             wrangler.validate(bars)
-            
+
         assert "2021U" in ex_info.value.args[0]
         assert "no timestamps" in ex_info.value.args[0]
         assert "2021-06-28 00:00:00+00:00 to 2021-07-28 00:00:00+00:00" in ex_info.value.args[0]
-            
+
     def test_validate_no_matching_timestamps_in_roll_window_raises(self):
-        
+
         wrangler = ContinuousBarWrangler(
             config=self.chain_config,
             end_month=ContractMonth("2021U"),
         )
-        
+
         # no matching in 2021H > 2021N roll window 2021-02-26 to 2021-03-28
         data = [
             ("HG=2021H.SIM", "2021-02-26"),
@@ -172,12 +172,12 @@ class TestContinuousWrangler:
             ("HG=2021N.SIM", "2021-06-28"),
             ("HG=2021U.SIM", "2021-06-28"),
         ]
-        
+
         bars = self._create_bars(data)
         with pytest.raises(ValueError) as ex_info:
             wrangler.validate(bars)
             assert "2021H and 2021N" in ex_info.value.args[0]
-        
+
         # no matching in 2021N > 2021U roll window 2021-06-28 to 2021-07-28
         data = [
             ("HG=2021H.SIM", "2021-03-26"),
@@ -189,14 +189,14 @@ class TestContinuousWrangler:
         with pytest.raises(ValueError) as ex_info:
             wrangler.validate(bars)
             assert "2021N and 2021U" in ex_info.value.args[0]
-            
+
     def test_validate_input_assertions(self):
-        
+
         wrangler = ContinuousBarWrangler(
             config=self.chain_config,
             end_month=ContractMonth("2021U"),
         )
-        
+
         # assert only one bar spec
         bars = [
             Bar(
@@ -218,13 +218,11 @@ class TestContinuousWrangler:
                 volume=Quantity.from_int(1_000_000),
                 ts_event=0,
                 ts_init=0,
-            )
+            ),
         ]
         with pytest.raises(AssertionError):
             wrangler.validate(bars)
-         
-            
-        
+
         # assert only one venue
         bars = [
             Bar(
@@ -246,21 +244,17 @@ class TestContinuousWrangler:
                 volume=Quantity.from_int(1_000_000),
                 ts_event=0,
                 ts_init=0,
-            )
+            ),
         ]
         with pytest.raises(AssertionError):
             wrangler.validate(bars)
-        
+
         # assert symbol format
         with pytest.raises(ValueError):
             wrangler.validate([TestDataStubs.bar_5decimal()])
-        
-        
-            
-        
-        
+
     def _read_bars(self) -> list[Bar]:
-        
+
         test_data_dir = Path(PACKAGE_ROOT) / "tests/unit_tests/continuous/data"
         paths = list(test_data_dir.glob("HG=*.SIM-1-DAY-MID-EXTERNAL.parquet"))
         session = DataBackendSession()
@@ -273,7 +267,7 @@ class TestContinuousWrangler:
             chunk = capsule_to_list(chunk)
             bars.extend(chunk)
         return bars
-    
+
     def _create_bars(self, data: list[tuple]) -> list[Bar]:
         return [
             Bar(

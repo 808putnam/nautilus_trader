@@ -1,44 +1,43 @@
-from pathlib import Path
+import pandas as pd
 import pytest
 
-import pandas as pd
-from nautilus_trader.model.data import Bar
-from nautilus_trader.model.data import BarType
-from nautilus_trader.model.data import BarType
-from nautilus_trader.model.identifiers import InstrumentId
+from nautilus_trader.backtest.engine import BacktestEngine
+from nautilus_trader.backtest.engine import BacktestEngineConfig
+from nautilus_trader.config import LoggingConfig
 from nautilus_trader.continuous.chain import ContractChain
 from nautilus_trader.continuous.config import ContractChainConfig
 from nautilus_trader.continuous.config import RollConfig
+from nautilus_trader.continuous.contract_month import MONTH_LIST
 from nautilus_trader.continuous.contract_month import ContractMonth
 from nautilus_trader.continuous.cycle import RollCycle
-from nautilus_trader.continuous.contract_month import MONTH_LIST
-from nautilus_trader.core.datetime import unix_nanos_to_dt
 from nautilus_trader.core.datetime import dt_to_unix_nanos
+from nautilus_trader.core.datetime import unix_nanos_to_dt
+from nautilus_trader.model.currencies import USD
+from nautilus_trader.model.data import Bar
+from nautilus_trader.model.data import BarType
+from nautilus_trader.model.enums import AccountType
+from nautilus_trader.model.enums import AssetClass
+from nautilus_trader.model.enums import OmsType
+from nautilus_trader.model.identifiers import InstrumentId
+from nautilus_trader.model.identifiers import Symbol
+from nautilus_trader.model.identifiers import Venue
 from nautilus_trader.model.instruments.futures_contract import FuturesContract
-from nautilus_trader.backtest.engine import BacktestEngine
+from nautilus_trader.model.objects import Currency
+from nautilus_trader.model.objects import Money
 from nautilus_trader.model.objects import Price
 from nautilus_trader.model.objects import Quantity
-from nautilus_trader.model.currencies import USD
-from nautilus_trader.model.objects import Money
-from nautilus_trader.model.objects import Currency
-from nautilus_trader.model.enums import AssetClass
-from nautilus_trader.model.enums import AccountType
-from nautilus_trader.model.enums import OmsType
-from nautilus_trader.config import LoggingConfig
-from nautilus_trader.backtest.engine import BacktestEngineConfig
-from nautilus_trader.model.identifiers import Venue
-from nautilus_trader.model.identifiers import Symbol
+
 
 class TestContractChain:
     def setup(self):
-        
+
         config = BacktestEngineConfig(
             logging=LoggingConfig(bypass_logging=True),
             run_analysis=False,
         )
-        
+
         self.engine = BacktestEngine(config=config)
-        
+
         self.engine.add_venue(
             venue=Venue("SIM"),
             oms_type=OmsType.HEDGING,
@@ -46,7 +45,7 @@ class TestContractChain:
             base_currency=USD,
             starting_balances=[Money(1_000_000, USD)],
         )
-        
+
         self.chain_config = ContractChainConfig(
             bar_type=BarType.from_str("MES.SIM-1-DAY-MID-EXTERNAL"),
             roll_config=RollConfig(
@@ -58,7 +57,7 @@ class TestContractChain:
             ),
             start_month=ContractMonth("2021H"),
         )
-        
+
         for letter_month in MONTH_LIST:
             self.engine.add_instrument(
                 FuturesContract(
@@ -75,38 +74,32 @@ class TestContractChain:
                     expiration_ns=0,
                     ts_event=0,
                     ts_init=0,
-                    info=dict(
-                        contract=dict(
-                            conId=1,
-                            exchange="CME",
-                        ),
-                    ),
-                )
+                ),
             )
-        
+
         self.msgbus = self.engine.kernel.msgbus
-    
+
     def test_initialize_sets_expected_attributes(self):
-        
+
         # Arrange
         chain = ContractChain(config=self.chain_config)
-        
+
         self.engine.add_actor(chain)
-        
+
         data = [
             ("MES=2021H.SIM", "2021-03-09"),
             ("MES=2021M.SIM", "2021-03-10"),
         ]
-        
+
         bars = self._create_bars(data)
         self.engine.add_data(bars, validate=False)
-        
+
         # Act
         self.engine.run()
-        
+
         # Assert
         assert len(chain.rolls) == 0
-        
+
         assert chain.current_month == ContractMonth("2021H")
         assert chain.previous_month == ContractMonth("2020Z")
         assert chain.forward_month == ContractMonth("2021M")
@@ -119,20 +112,22 @@ class TestContractChain:
         assert chain.previous_bar_type == BarType.from_str("MES=2020Z.SIM-1-DAY-MID-EXTERNAL")
         assert chain.forward_bar_type == BarType.from_str("MES=2021M.SIM-1-DAY-MID-EXTERNAL")
         assert chain.carry_bar_type == BarType.from_str("MES=2021J.SIM-1-DAY-MID-EXTERNAL")
-        
-        sub_topics = [s.topic for s in self.msgbus.subscriptions() if s.topic.startswith("data.bars")]
+
+        sub_topics = [
+            s.topic for s in self.msgbus.subscriptions() if s.topic.startswith("data.bars")
+        ]
         assert sub_topics == [
             "data.bars.MES=2021H.SIM-1-DAY-MID-EXTERNAL",
             "data.bars.MES=2021M.SIM-1-DAY-MID-EXTERNAL",
         ]
-            
+
     def test_roll_sets_expected_attributes(self):
-        
+
         # Arrange
         chain = ContractChain(config=self.chain_config)
-        
+
         self.engine.add_actor(chain)
-        
+
         data = [
             ("MES=2021H.SIM", "2021-03-09"),
             ("MES=2021M.SIM", "2021-03-09"),
@@ -140,18 +135,18 @@ class TestContractChain:
             ("MES=2021M.SIM", "2021-03-10"),
             ("MES=2021M.SIM", "2021-03-11"),  # rolled
         ]
-        
+
         bars = self._create_bars(data)
         self.engine.add_data(bars)
-        
+
         # Act
         self.engine.run()
-        
+
         # Assert
         assert len(chain.rolls) == 1
         assert chain.rolls.timestamp.iloc[0] == pd.Timestamp("2021-03-10", tz="UTC")
         assert chain.rolls.to_month.iloc[0] == ContractMonth("2021M")
-        
+
         assert chain.current_month == ContractMonth("2021M")
         assert chain.previous_month == ContractMonth("2021H")
         assert chain.forward_month == ContractMonth("2021U")
@@ -164,26 +159,28 @@ class TestContractChain:
         assert chain.previous_bar_type == BarType.from_str("MES=2021H.SIM-1-DAY-MID-EXTERNAL")
         assert chain.forward_bar_type == BarType.from_str("MES=2021U.SIM-1-DAY-MID-EXTERNAL")
         assert chain.carry_bar_type == BarType.from_str("MES=2021N.SIM-1-DAY-MID-EXTERNAL")
-    
-        sub_topics = [s.topic for s in self.msgbus.subscriptions() if s.topic.startswith("data.bars")]
+
+        sub_topics = [
+            s.topic for s in self.msgbus.subscriptions() if s.topic.startswith("data.bars")
+        ]
         assert sub_topics == [
             "data.bars.MES=2021M.SIM-1-DAY-MID-EXTERNAL",
             "data.bars.MES=2021U.SIM-1-DAY-MID-EXTERNAL",
         ]
-        
+
     def test_current_bar_publish(self):
-        
+
         # Arrange
         chain = ContractChain(config=self.chain_config)
-        
+
         self.engine.add_actor(chain)
-        
+
         results: list[Bar] = []
         self.msgbus.subscribe(
             topic=f"{chain.bar_type}",
             handler=results.append,
         )
-        
+
         data = [
             ("MES=2021H.SIM", "2021-03-09"),
             ("MES=2021M.SIM", "2021-03-09"),
@@ -196,40 +193,37 @@ class TestContractChain:
             ("MES=2021U.SIM", "2021-03-11"),
             ("MES=2021M.SIM", "2021-03-12"),
         ]
-        
+
         bars = self._create_bars(data)
         self.engine.add_data(bars)
-        
+
         # Act
         self.engine.run()
-        
+
         # Assert
         assert len(results) == 3
         assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
         assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10", tz="UTC")
         assert unix_nanos_to_dt(results[2].ts_init) == pd.Timestamp("2021-03-11", tz="UTC")
-        
-        months = [
-            b.bar_type.instrument_id.value.split("=")[1].split(".")[0]
-            for b in results
-        ]
+
+        months = [b.bar_type.instrument_id.value.split("=")[1].split(".")[0] for b in results]
         assert months[0] == "2021H"
         assert months[1] == "2021M"
         assert months[2] == "2021M"
-    
+
     def test_forward_bar_publish(self):
-        
+
         # Arrange
         chain = ContractChain(config=self.chain_config)
-        
+
         self.engine.add_actor(chain)
-        
+
         results: list[Bar] = []
         self.msgbus.subscribe(
             topic=f"{chain.bar_type}+1",
             handler=results.append,
         )
-        
+
         data = [
             ("MES=2021H.SIM", "2021-03-09"),
             ("MES=2021M.SIM", "2021-03-09"),
@@ -242,41 +236,37 @@ class TestContractChain:
             ("MES=2021U.SIM", "2021-03-11"),
             ("MES=2021H.SIM", "2021-03-12"),
         ]
-        
+
         bars = self._create_bars(data)
         self.engine.add_data(bars)
-        
+
         # Act
         self.engine.run()
-        
-        
+
         # Assert
         assert len(results) == 3
         assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
         assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10", tz="UTC")
         assert unix_nanos_to_dt(results[2].ts_init) == pd.Timestamp("2021-03-11", tz="UTC")
-        
-        months = [
-            b.bar_type.instrument_id.value.split("=")[1].split(".")[0]
-            for b in results
-        ]
+
+        months = [b.bar_type.instrument_id.value.split("=")[1].split(".")[0] for b in results]
         assert months[0] == "2021M"
         assert months[1] == "2021U"
         assert months[2] == "2021U"
-        
+
     def test_carry_bar_publish(self):
-        
+
         # Arrange
         chain = ContractChain(config=self.chain_config)
-        
+
         self.engine.add_actor(chain)
-        
+
         results: list[Bar] = []
         self.msgbus.subscribe(
             topic=f"{chain.bar_type}c",
             handler=results.append,
         )
-        
+
         data = [
             ("MES=2021H.SIM", "2021-03-09"),
             ("MES=2021J.SIM", "2021-03-09"),
@@ -289,50 +279,47 @@ class TestContractChain:
             ("MES=2021U.SIM", "2021-03-11"),
             ("MES=2021M.SIM", "2021-03-12"),
         ]
-        
+
         bars = self._create_bars(data)
         self.engine.add_data(bars)
-        
+
         # Act
         self.engine.run()
-        
+
         # Assert
         assert len(results) == 3
         assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
         assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10", tz="UTC")
         assert unix_nanos_to_dt(results[2].ts_init) == pd.Timestamp("2021-03-11", tz="UTC")
-        
-        months = [
-            b.bar_type.instrument_id.value.split("=")[1].split(".")[0]
-            for b in results
-        ]
+
+        months = [b.bar_type.instrument_id.value.split("=")[1].split(".")[0] for b in results]
         assert months[0] == "2021J"
         assert months[1] == "2021N"
         assert months[2] == "2021N"
-    
+
     def test_contract_expired_raises(self):
-        
+
         # Arrange
         chain = ContractChain(config=self.chain_config)
-        
+
         self.engine.add_actor(chain)
-        
+
         data = [
             ("MES=2021H.SIM", "2021-03-14"),
             ("MES=2021H.SIM", "2021-03-15"),  # expired
             ("MES=2021H.SIM", "2021-03-16"),
         ]
-        
+
         bars = self._create_bars(data)
         self.engine.add_data(bars)
 
         # Act & Assert
         with pytest.raises(ValueError):
-            
+
             self.engine.run()
-            
+
     def test_ignore_expiry_date_when_rolling(self):
-        
+
         # Arrange
         config = ContractChainConfig(
             bar_type=BarType.from_str("MES.SIM-1-DAY-MID-EXTERNAL"),
@@ -347,27 +334,27 @@ class TestContractChain:
             raise_expired=False,
             ignore_expiry_date=True,
         )
-        
+
         chain = ContractChain(config=config)
-        
+
         self.engine.add_actor(chain)
-        
+
         data = [
             ("MES=2021H.SIM", "2021-03-15"),  # contract expired
             ("MES=2021H.SIM", "2021-03-17"),
             ("MES=2021M.SIM", "2021-03-17"),
             ("MES=2021M.SIM", "2021-03-18"),  # rolled
         ]
-        
+
         bars = self._create_bars(data)
         self.engine.add_data(bars)
-        
+
         # Act
         self.engine.run()
-        
+
         # Assert
         assert len(chain.rolls) == 1
-        
+
     def _create_bars(self, data: list[tuple]) -> list[Bar]:
         return [
             Bar(
