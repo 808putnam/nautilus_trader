@@ -212,30 +212,9 @@ class ContinuousBarWrangler:
             }
             if len(forward_timestamps) == 0:
                 raise ValueError(f"Data validation failed: {forward_month} has no timestamps in roll window {start} to {end}")
-        
-        for current_month in months:
             
-            start, end = current_month.roll_window(
-                approximate_expiry_offset=self._expiry_offset,
-                roll_offset=self._roll_offset
-            )
-            
-            start_ns = dt_to_unix_nanos(start)
-            end_ns = dt_to_unix_nanos(end)
-            
-            current_timestamps = {
-                t for t in timestamps_by_month[current_month.value] if t >= start_ns and t < end_ns
-            }
-            forward_month = hold_cycle.next_month(current_month)
-            forward_timestamps = {
-                t for t in timestamps_by_month[forward_month.value] if t >= start_ns and t < end_ns
-            }
             
             # check matching timestamps for current and forward contract exist in roll window
             is_matching = len(current_timestamps & forward_timestamps) > 0
             if not is_matching:
                 raise ValueError(f"Data validation failed: {current_month} and {forward_month} have no matching timestamps in roll window {start} to {end}")
-            
-            
-            
-            

@@ -130,7 +130,7 @@ class TestContinuousWrangler:
 
         # no current in 2021N > 2021U window 2021-06-28 to 2021-07-28
         data = [
-            ("HG=2021H.SIM", "2021-03-26"),
+            ("HG=2021H.SIM", "2021-02-26"),
             ("HG=2021N.SIM", "2021-02-26"),
             ("HG=2021U.SIM", "1970-01-01"),
         ]
