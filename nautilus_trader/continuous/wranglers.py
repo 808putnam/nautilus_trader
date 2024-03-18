@@ -171,7 +171,9 @@ class ContinuousBarWrangler:
             m.value for m in [*months, self._end_month] if timestamps_by_month.get(m.value) is None
         ]
         
-        symbol = self._chain_config.bar_type.instrument_id.symbol.value.split("=")[:-2]
+        symbol = "=".join(
+            self._chain_config.bar_type.instrument_id.symbol.value.split("=")[:-2],
+        )
         if len(missing) > 0:
             raise ValueError(f"Data validation failed: {symbol} has no timestamps in months {missing}")
         
