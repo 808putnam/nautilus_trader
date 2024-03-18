@@ -79,126 +79,117 @@ class TestContinuousWrangler:
         
         bars = self._read_bars()
         streams = wrangler.process(bars)
-        assert streams["0"][-1].bar_type.instrument_id.symbol.value.endswith("2021N")
-        assert streams["0"][-2].bar_type.instrument_id.symbol.value.endswith("2021H")
+        
+        assert streams["0"][-1].bar_type.instrument_id.symbol.value.endswith("2021U")
+        assert streams["0"][-2].bar_type.instrument_id.symbol.value.endswith("2021N")
     
-    def test_wrangler_roll_failure_no_overlap_raises(self):
-        
-        # expiry_date: 2021-03-28 00:00:00+00:00
-        data = [
-            ("HG=2021H.SIM", "2021-03-25"),
-            ("HG=2021H.SIM", "2021-03-26"),
-            ("HG=2021H.SIM", "2021-03-27"),
-            ("HG=2021H.SIM", "2021-03-29"),
-            ("HG=2021N.SIM", "2021-03-30"),
-        ]
-        
-        bars = self._create_bars(data)
-        
-        wrangler = ContinuousBarWrangler(
-            config=self.chain_config,
-            end_month=ContractMonth("2021N"),
-        )
-        
-        wrangler.validate(bars)
-        
-        # with pytest.raises(ContractExpired):
-        #     wrangler.process(bars)
-        
-    def test_wrangler_roll_failure_current_start_after_expiry_date_raises(self):
-        # test case of a roll failure where the first bar of the current contract is after the expiry date
-        # expiry_date: 2021-03-28 00:00:00+00:00
-        data = [
-            ("HG=2021H.SIM", "2021-03-30"),
-            ("HG=2021H.SIM", "2021-03-31"),
-        ]
-        
-        bars = self._create_bars(data)
-        
+    def test_validate_no_data_for_month_raises(self):
         wrangler = ContinuousBarWrangler(
             config=self.chain_config,
             end_month=ContractMonth("2021U"),
         )
-        with pytest.raises(ContractExpired):
-            wrangler.process(bars)
-            
-    def test_wrangler_roll_failure_forward_start_after_expiry_date_raises(self):
-        # test case of a roll failure where the first bar of the forward contract is after the expiry date
-        # expiry_date: 2021-03-28 00:00:00+00:00
-        data = [
-            ("HG=2021N.SIM", "2021-03-30"),
-            ("HG=2021N.SIM", "2021-03-31"),
-        ]
-        
-        bars = self._create_bars(data)
-        
-        wrangler = ContinuousBarWrangler(
-            config=self.chain_config,
-            end_month=ContractMonth("2021U"),
-        )
-        with pytest.raises(ContractExpired):
-            wrangler.process(bars)
-    
-    def test_wrangler_roll_failure_last_current_received(self):
-        # test case of a roll failure where the last bar of the current contract is received and the contract has failed to roll
-        # expiry_date: 2021-03-28 00:00:00+00:00
-        data = [
-            ("HG=2021H.SIM", "2021-03-23"),
-            ("HG=2021N.SIM", "2021-03-24"),
-            ("HG=2021H.SIM", "2021-03-25"),
-            ("HG=2021N.SIM", "2021-03-26"),
-            ("HG=2021N.SIM", "2021-03-27"),
-            ("HG=2021N.SIM", "2021-03-28"),
-            ("HG=2021N.SIM", "2021-03-29"),
-        ]
-        
-        bars = self._create_bars(data)
-        
-        for bar in bars:
-            print(unix_nanos_to_dt(bar.ts_init))
-        
-        wrangler = ContinuousBarWrangler(
-            config=self.chain_config,
-            end_month=ContractMonth("2021U"),
-        )
-        with pytest.raises(ContractExpired):
-            wrangler.process(bars)
-        
-    def test_wrangler_roll_failure_forward_end_before_roll_date(self):
-        
-        # test case of a roll failure where the first bar of the current contract is after the expiry date
-        # expiry_date: 2021-03-28 00:00:00+00:00
-        
-        data = [
-            ("HG=2021H.SIM", "2021-03-30"),
-            ("HG=2021H.SIM", "2021-03-31"),
-        ]
-        
-        bars = self._create_bars(data)
-        
-        wrangler = ContinuousBarWrangler(
-            config=self.chain_config,
-            end_month=ContractMonth("2021N"),
-        )
-        with pytest.raises(ContractExpired):
-            wrangler.process(bars)
-            
-    def _create_bars_no_overlap(self) -> list[Bar]:
-        
-        test_data_dir = Path(PACKAGE_ROOT) / "tests/unit_tests/continuous/data"
-        paths = list(test_data_dir.glob("HG=*.SIM-1-DAY-MID-EXTERNAL*no_overalp.parquet"))
-        
-        session = DataBackendSession()
-        for i, path in enumerate(paths):
-            assert path.exists()
-            session.add_file(NautilusDataType.Bar, f"data{i}", str(path))
 
-        bars = []
-        for chunk in session.to_query_result():
-            chunk = capsule_to_list(chunk)
-            bars.extend(chunk)
-        return bars
-    
+        with pytest.raises(ValueError) as ex_info:
+            wrangler.validate([])
+            assert "['2021H', '2021N', '2021Z']" in ex_info.value.args[0]
+        
+    def test_validate_no_timestamps_in_roll_window_raises(self):
+        
+        wrangler = ContinuousBarWrangler(
+            config=self.chain_config,
+            end_month=ContractMonth("2021U"),
+        )
+        
+        # no current in 2021H > 2021N roll window 2021-02-26 to 2021-03-28
+        data = [
+            ("HG=2021H.SIM", "1970-01-01"),
+            ("HG=2021N.SIM", "1970-01-01"),
+            ("HG=2021U.SIM", "1970-01-01"),
+        ]
+        bars = self._create_bars(data)
+        with pytest.raises(ValueError) as ex_info:
+            wrangler.validate(bars)
+            
+        assert "2021H" in ex_info.value.args[0]
+        assert "no timestamps" in ex_info.value.args[0]
+        assert "2021-02-26 00:00:00+00:00 to 2021-03-28 00:00:00+00:00" in ex_info.value.args[0]
+            
+        # no forward in 2021H > 2021N roll window 2021-02-26 to 2021-03-28
+        data = [
+            ("HG=2021H.SIM", "2021-02-26"),
+            ("HG=2021N.SIM", "1970-01-01"),
+            ("HG=2021U.SIM", "1970-01-01"),
+        ]
+        bars = self._create_bars(data)
+        with pytest.raises(ValueError) as ex_info:
+            wrangler.validate(bars)
+            
+        assert "2021N" in ex_info.value.args[0]
+        assert "no timestamps" in ex_info.value.args[0]
+        assert "2021-02-26 00:00:00+00:00 to 2021-03-28 00:00:00+00:00" in ex_info.value.args[0]
+
+        # no current in 2021N > 2021U window 2021-06-28 to 2021-07-28
+        data = [
+            ("HG=2021H.SIM", "2021-03-26"),
+            ("HG=2021N.SIM", "2021-02-26"),
+            ("HG=2021U.SIM", "1970-01-01"),
+        ]
+        bars = self._create_bars(data)
+        with pytest.raises(ValueError) as ex_info:
+            wrangler.validate(bars)
+            
+        assert "2021N" in ex_info.value.args[0]
+        assert "no timestamps" in ex_info.value.args[0]
+        assert "2021-06-28 00:00:00+00:00 to 2021-07-28 00:00:00+00:00" in ex_info.value.args[0]
+        
+        # no forward in 2021N > 2021U roll window 2021-06-28 to 2021-07-28
+        data = [
+            ("HG=2021H.SIM", "2021-02-26"),
+            ("HG=2021N.SIM", "2021-02-26"),
+            ("HG=2021N.SIM", "2021-06-28"),
+            ("HG=2021U.SIM", "1970-01-01"),
+        ]
+        bars = self._create_bars(data)
+        with pytest.raises(ValueError) as ex_info:
+            wrangler.validate(bars)
+            
+        assert "2021U" in ex_info.value.args[0]
+        assert "no timestamps" in ex_info.value.args[0]
+        assert "2021-06-28 00:00:00+00:00 to 2021-07-28 00:00:00+00:00" in ex_info.value.args[0]
+            
+    def test_validate_no_matching_timestamps_in_roll_window_raises(self):
+        
+        wrangler = ContinuousBarWrangler(
+            config=self.chain_config,
+            end_month=ContractMonth("2021U"),
+        )
+        
+        # no matching in 2021H > 2021N roll window 2021-02-26 to 2021-03-28
+        data = [
+            ("HG=2021H.SIM", "2021-02-26"),
+            ("HG=2021N.SIM", "2021-02-27"),
+            ("HG=2021N.SIM", "2021-06-28"),
+            ("HG=2021U.SIM", "2021-06-28"),
+        ]
+        
+        bars = self._create_bars(data)
+        with pytest.raises(ValueError) as ex_info:
+            wrangler.validate(bars)
+            assert "2021H and 2021N" in ex_info.value.args[0]
+        
+        # no matching in 2021N > 2021U roll window 2021-06-28 to 2021-07-28
+        data = [
+            ("HG=2021H.SIM", "2021-03-26"),
+            ("HG=2021N.SIM", "2021-03-26"),
+            ("HG=2021N.SIM", "2021-06-28"),
+            ("HG=2021U.SIM", "2021-08-29"),
+        ]
+        bars = self._create_bars(data)
+        with pytest.raises(ValueError) as ex_info:
+            wrangler.validate(bars)
+            assert "2021N and 2021U" in ex_info.value.args[0]
+            
+        
     def _read_bars(self) -> list[Bar]:
         
         test_data_dir = Path(PACKAGE_ROOT) / "tests/unit_tests/continuous/data"
@@ -228,23 +219,3 @@ class TestContinuousWrangler:
             )
             for row in data
         ]
-if __name__ == "__main__":
-    path1 = Path("/Users/g1/BU/projects/continuous/tests/unit_tests/continuous/data/HG=2021H.SIM-1-DAY-MID-EXTERNAL.parquet")
-    df1 = pd.read_parquet(path1)
-    df1["timestamp"] = df1.ts_init.apply(unix_nanos_to_dt)
-    df1 = df1[df1.timestamp < pd.Timestamp("2021-03-28 00:00:00+00:00")]
-    
-    path2 = Path("/Users/g1/BU/projects/continuous/tests/unit_tests/continuous/data/HG=2021M.SIM-1-DAY-MID-EXTERNAL.parquet")
-    df2 = pd.read_parquet(path2)
-    df2["timestamp"] = df2.ts_init.apply(unix_nanos_to_dt)
-    df2 = df2[df2.timestamp > pd.Timestamp("2021-03-28 00:00:00+00:00")]
-    
-    path1 = path1.with_stem(path1.stem + "no_overlap")
-    path2 = path1.with_stem(path2.stem + "no_overlap")
-    
-    # del df1.timestamp
-    # del df2.timestamp
-    
-    df1.to_parquet(path1, index=False)
-    df2.to_parquet(path2, index=False)
-    

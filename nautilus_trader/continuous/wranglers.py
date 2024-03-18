@@ -17,6 +17,7 @@ from nautilus_trader.continuous.chain import ContractChain
 from nautilus_trader.core.uuid import UUID4
 from nautilus_trader.continuous.chain import ContractExpired
 from nautilus_trader.core.datetime import unix_nanos_to_dt
+from nautilus_trader.core.datetime import dt_to_unix_nanos
 
 import itertools
 
@@ -174,29 +175,67 @@ class ContinuousBarWrangler:
         # last_timestamps = {month: bars[-1].ts_init for month, bars in bars_by_month.items()}
         hold_cycle = self._chain_config.roll_config.hold_cycle
         
-        months = hold_cycle.iterate(
+        months = list(hold_cycle.iterate(
             start=self._start_month,
             end=self._end_month,
             direction=1,
-        )
+        ))
+
+        missing = [
+            m.value for m in months + [self._end_month]
+            if timestamps_by_month.get(m.value) is None
+        ]
+        if len(missing) > 0:
+            raise ValueError(f"Data validation failed: months {missing} have no timestamps")
         
-        for month in months:
+        for current_month in months:
             
-            # check month has data
-            if timestamps_by_month.get(month.value) is None:
-                raise ValueError(f"Data validation failed: {month} has no bars, chain will fail to roll.")
-            
-            start, end = month.roll_window(
+            start, end = current_month.roll_window(
                 approximate_expiry_offset=self._expiry_offset,
                 roll_offset=self._roll_offset
             )
             
-            # check roll window contains data
-            timestamps = [
-                t for t in timestamps_by_month[month.value] if t >= start and t < end
-            ]
-            if len(timestamps) == 0:
-                raise ValueError(f"Data validation failed: {month} has no timestamps in range {start} to {end}")
+            start_ns = dt_to_unix_nanos(start)
+            end_ns = dt_to_unix_nanos(end)
             
-            # TODO: check roll window has matching timestamps
+            # check current contract timestamps exist in roll window
+            current_timestamps = {
+                t for t in timestamps_by_month[current_month.value] if t >= start_ns and t < end_ns
+            }
+            if len(current_timestamps) == 0:
+                raise ValueError(f"Data validation failed: {current_month} has no timestamps in roll window {start} to {end}")
+            
+            # check forward contract timestamps exist in roll window
+            forward_month = hold_cycle.next_month(current_month)
+            forward_timestamps = {
+                t for t in timestamps_by_month[forward_month.value] if t >= start_ns and t < end_ns
+            }
+            if len(forward_timestamps) == 0:
+                raise ValueError(f"Data validation failed: {forward_month} has no timestamps in roll window {start} to {end}")
+        
+        for current_month in months:
+            
+            start, end = current_month.roll_window(
+                approximate_expiry_offset=self._expiry_offset,
+                roll_offset=self._roll_offset
+            )
+            
+            start_ns = dt_to_unix_nanos(start)
+            end_ns = dt_to_unix_nanos(end)
+            
+            current_timestamps = {
+                t for t in timestamps_by_month[current_month.value] if t >= start_ns and t < end_ns
+            }
+            forward_month = hold_cycle.next_month(current_month)
+            forward_timestamps = {
+                t for t in timestamps_by_month[forward_month.value] if t >= start_ns and t < end_ns
+            }
+            
+            # check matching timestamps for current and forward contract exist in roll window
+            is_matching = len(current_timestamps & forward_timestamps) > 0
+            if not is_matching:
+                raise ValueError(f"Data validation failed: {current_month} and {forward_month} have no matching timestamps in roll window {start} to {end}")
+            
+            
+            
             
