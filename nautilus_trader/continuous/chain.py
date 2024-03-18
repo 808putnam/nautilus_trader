@@ -96,11 +96,11 @@ class ContractChain(Actor):
         timestamp = max(timestamps)
         
         is_expired = timestamp >= self.expiry_date
-        # print(timestamp, is_expired, self.expiry_date)
         if is_expired:
             raise ContractExpired(
                 f"The chain failed to roll from {self.current_month} to {self.forward_month} before expiry date {self.expiry_date}"
             )
+            
     def _attempt_roll(self) -> None:
         
         current_bar = self.cache.bar(self.current_bar_type)
