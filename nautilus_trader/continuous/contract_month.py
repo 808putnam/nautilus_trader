@@ -2,8 +2,14 @@ from __future__ import annotations
 
 import pandas as pd
 from nautilus_trader.core.datetime import dt_to_unix_nanos
+from nautilus_trader.common.config import NonNegativeInt
+from typing import Annotated, Literal
+from msgspec import Meta
 
 MONTH_LIST = ["F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"]
+
+# An integer constrained to values <= 0
+NonPositiveInt = Annotated[int, Meta(le=0)]
 
 class ContractMonth:
     def __init__(
@@ -21,6 +27,20 @@ class ContractMonth:
         self.value = value
         self.timestamp_utc = pd.Timestamp(year=self.year, month=self.month, day=1, tz="UTC")
     
+    def expiry_date(self, approximate_expiry_offset: NonNegativeInt) -> pd.Timestamp:
+        return self.timestamp_utc + pd.Timedelta(days=approximate_expiry_offset)
+        
+    def roll_window(
+        self,
+        approximate_expiry_offset: NonNegativeInt,
+        roll_offset: NonPositiveInt,
+    ) -> tuple[pd.Timestamp, pd.Timestamp]:
+        expiry_date = self.expiry_date(approximate_expiry_offset)
+        return (
+            expiry_date + pd.Timedelta(days=roll_offset),
+            expiry_date,
+        )
+        
     @classmethod
     def from_month_year(cls, year: int, month: int) -> ContractMonth:
         assert isinstance(month, int)
@@ -76,7 +96,9 @@ class ContractMonth:
         self.month = state[2]
         self.value = state[3]
         self.timestamp_utc = state[4]
-
+    
+    
+        
 def letter_month_to_int(letter_month: str) -> int:
     assert letter_month in MONTH_LIST
     return MONTH_LIST.index(letter_month) + 1

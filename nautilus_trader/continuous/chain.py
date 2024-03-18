@@ -8,6 +8,9 @@ from nautilus_trader.common.component import TimeEvent
 from nautilus_trader.continuous.config import ContractChainConfig
 from nautilus_trader.continuous.contract_month import ContractMonth
 
+class ContractExpired(Exception):
+    pass
+
 class ContractChain(Actor):
     def __init__(
         self,
@@ -66,29 +69,48 @@ class ContractChain(Actor):
     
     def handle_time_event(self, event: TimeEvent) -> None:
         self._attempt_roll()
+        if self._raise_expired:
+            self._raise_expiry()
         self.publish()
     
     def publish(self) -> None:
         self._publish_carry()
         self._publish_forward()
         self._publish_current()
+    
+    def _raise_expiry(self):
         
-                
+        current_bar = self.cache.bar(self.current_bar_type)
+        forward_bar = self.cache.bar(self.forward_bar_type)
+        
+        if current_bar is None and forward_bar is None:
+            return
+        
+        timestamps = []
+        if current_bar is not None:
+            timestamps.append(unix_nanos_to_dt(current_bar.ts_event))
+            
+        if forward_bar is not None:
+            timestamps.append(unix_nanos_to_dt(forward_bar.ts_event))
+        
+        timestamp = max(timestamps)
+        
+        is_expired = timestamp >= self.expiry_date
+        # print(timestamp, is_expired, self.expiry_date)
+        if is_expired:
+            raise ContractExpired(
+                f"The chain failed to roll from {self.current_month} to {self.forward_month} before expiry date {self.expiry_date}"
+            )
     def _attempt_roll(self) -> None:
         
         current_bar = self.cache.bar(self.current_bar_type)
-        current_timestamp = unix_nanos_to_dt(current_bar.ts_event)
-        
-        is_expired = current_timestamp >= self.expiry_date
-        if is_expired and self._raise_expired:
-            raise ValueError("ContractExpired")
-        
         forward_bar = self.cache.bar(self.forward_bar_type)
-
+        
         if current_bar is None or forward_bar is None:
             return
         
         forward_timestamp = unix_nanos_to_dt(forward_bar.ts_event)
+        current_timestamp = unix_nanos_to_dt(current_bar.ts_event)
         
         if current_timestamp != forward_timestamp:
             return
@@ -185,10 +207,10 @@ class ContractChain(Actor):
         self.forward_bar_type = self._make_bar_type(self.forward_month)
         self.carry_bar_type = self._make_bar_type(self.carry_month)
         
-        self.expiry_date: pd.Timestamp = self.current_month.timestamp_utc \
-                                        + pd.Timedelta(days=self._approximate_expiry_offset)
-                                        
-        self.roll_date: pd.Timestamp = self.expiry_date + pd.Timedelta(days=self._roll_offset)
+        self.roll_date, self.expiry_date = self.current_month.roll_window(
+            self._approximate_expiry_offset,
+            self._roll_offset
+        )
     
     def _make_bar_type(self, month: ContractMonth) -> BarType:
         return BarType(
