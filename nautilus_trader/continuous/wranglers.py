@@ -145,7 +145,6 @@ class ContinuousBarWrangler:
         specs = {b.bar_type.spec for b in bars}
         assert len(specs) == 1
         
-        # TODO assert bar_type format
         try:
             for bar in bars:
                 symbol = bar.bar_type.instrument_id.symbol.value
