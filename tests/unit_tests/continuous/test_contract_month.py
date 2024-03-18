@@ -1,7 +1,7 @@
 import pickle
 
 import pandas as pd
-from pyfutures.continuous.contract_month import ContractMonth
+from nautilus_trader.continuous.contract_month import ContractMonth
 
 
 class TestContractMonth:
