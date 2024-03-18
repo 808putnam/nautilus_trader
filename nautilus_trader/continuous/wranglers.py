@@ -170,9 +170,11 @@ class ContinuousBarWrangler:
         missing = [
             m.value for m in [*months, self._end_month] if timestamps_by_month.get(m.value) is None
         ]
+        
+        symbol = self._chain_config.bar_type.instrument_id.symbol.value.split("=")[:-2]
         if len(missing) > 0:
-            raise ValueError(f"Data validation failed: months {missing} have no timestamps")
-
+            raise ValueError(f"Data validation failed: {symbol} has no timestamps in months {missing}")
+        
         for current_month in months:
 
             start, end = current_month.roll_window(
@@ -189,7 +191,7 @@ class ContinuousBarWrangler:
             }
             if len(current_timestamps) == 0:
                 raise ValueError(
-                    f"Data validation failed: {current_month} has no timestamps in roll window {start} to {end}",
+                    f"Data validation failed: {symbol}={current_month} has no timestamps in roll window {start} to {end}",
                 )
 
             # check forward contract timestamps exist in roll window
@@ -199,12 +201,12 @@ class ContinuousBarWrangler:
             }
             if len(forward_timestamps) == 0:
                 raise ValueError(
-                    f"Data validation failed: {forward_month} has no timestamps in roll window {start} to {end}",
+                    f"Data validation failed: {symbol}={forward_month} has no timestamps in roll window {start} to {end}",
                 )
 
             # check matching timestamps for current and forward contract exist in roll window
             is_matching = len(current_timestamps & forward_timestamps) > 0
             if not is_matching:
                 raise ValueError(
-                    f"Data validation failed: {current_month} and {forward_month} have no matching timestamps in roll window {start} to {end}",
+                    f"Data validation failed: {symbol}: {current_month} and {forward_month} have no matching timestamps in roll window {start} to {end}",
                 )
