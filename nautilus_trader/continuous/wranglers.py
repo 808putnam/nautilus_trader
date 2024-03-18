@@ -172,7 +172,6 @@ class ContinuousBarWrangler:
         timestamps_by_month = {k: [b.ts_init for b in g] for k, g in \
             itertools.groupby(bars, key=lambda x: x.bar_type.instrument_id.symbol.value.split("=")[-1].split(".")[0])}
         
-        # last_timestamps = {month: bars[-1].ts_init for month, bars in bars_by_month.items()}
         hold_cycle = self._chain_config.roll_config.hold_cycle
         
         months = list(hold_cycle.iterate(
