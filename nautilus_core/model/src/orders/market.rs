@@ -18,7 +18,6 @@ use std::{
     ops::{Deref, DerefMut},
 };
 
-use anyhow::{bail, Result};
 use nautilus_core::{time::UnixNanos, uuid::UUID4};
 use ustr::Ustr;
 
@@ -42,6 +41,7 @@ use crate::{
     },
 };
 
+#[derive(Clone, Debug)]
 #[cfg_attr(
     feature = "python",
     pyo3::pyclass(module = "nautilus_trader.core.nautilus_pyo3.model")
@@ -72,10 +72,10 @@ impl MarketOrder {
         exec_algorithm_params: Option<HashMap<Ustr, Ustr>>,
         exec_spawn_id: Option<ClientOrderId>,
         tags: Option<Ustr>,
-    ) -> Result<Self> {
+    ) -> anyhow::Result<Self> {
         check_quantity_positive(quantity)?;
         if time_in_force == TimeInForce::Gtd {
-            bail!("{}", "GTD not supported for Market orders");
+            anyhow::bail!("{}", "GTD not supported for Market orders");
         }
 
         Ok(Self {
@@ -355,7 +355,7 @@ impl From<OrderInitialized> for MarketOrder {
             event.exec_spawn_id,
             event.tags,
         )
-        .unwrap()
+        .unwrap() // SAFETY: From can panic
     }
 }
 

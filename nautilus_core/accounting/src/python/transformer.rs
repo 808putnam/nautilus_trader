@@ -13,13 +13,11 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
-use crate::account::cash::CashAccount;
-use crate::account::margin::MarginAccount;
-use crate::account::Account;
 use nautilus_core::python::to_pyvalue_err;
 use nautilus_model::events::account::state::AccountState;
-use pyo3::prelude::*;
-use pyo3::types::PyDict;
+use pyo3::{prelude::*, types::PyDict};
+
+use crate::account::{cash::CashAccount, margin::MarginAccount, Account};
 
 #[pyfunction]
 pub fn cash_account_from_account_events(
@@ -36,7 +34,8 @@ pub fn cash_account_from_account_events(
         return Err(to_pyvalue_err("No account events"));
     }
     let init_event = account_events[0].clone();
-    let mut cash_account = CashAccount::new(init_event, calculate_account_state)?;
+    let mut cash_account =
+        CashAccount::new(init_event, calculate_account_state).map_err(to_pyvalue_err)?;
     for event in account_events.iter().skip(1) {
         cash_account.apply(event.clone());
     }
@@ -58,7 +57,8 @@ pub fn margin_account_from_account_events(
         return Err(to_pyvalue_err("No account events"));
     }
     let init_event = account_events[0].clone();
-    let mut margin_account = MarginAccount::new(init_event, calculate_account_state)?;
+    let mut margin_account =
+        MarginAccount::new(init_event, calculate_account_state).map_err(to_pyvalue_err)?;
     for event in account_events.iter().skip(1) {
         margin_account.apply(event.clone());
     }

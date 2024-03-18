@@ -15,7 +15,7 @@
 
 use std::{fs, str::FromStr};
 
-use databento::live::Subscription;
+use databento::{dbn, live::Subscription};
 use indexmap::IndexMap;
 use nautilus_core::{
     python::{to_pyruntime_err, to_pyvalue_err},
@@ -53,6 +53,7 @@ pub struct DatabentoLiveClient {
 }
 
 impl DatabentoLiveClient {
+    #[must_use]
     pub fn is_closed(&self) -> bool {
         self.cmd_tx.is_closed()
     }
@@ -119,9 +120,10 @@ fn call_python(py: Python, callback: &PyObject, py_obj: PyObject) -> PyResult<()
 #[pymethods]
 impl DatabentoLiveClient {
     #[new]
-    pub fn py_new(key: String, dataset: String, publishers_path: String) -> anyhow::Result<Self> {
+    pub fn py_new(key: String, dataset: String, publishers_path: String) -> PyResult<Self> {
         let publishers_json = fs::read_to_string(publishers_path)?;
-        let publishers_vec: Vec<DatabentoPublisher> = serde_json::from_str(&publishers_json)?;
+        let publishers_vec: Vec<DatabentoPublisher> =
+            serde_json::from_str(&publishers_json).map_err(to_pyvalue_err)?;
         let publisher_venue_map = publishers_vec
             .into_iter()
             .map(|p| (p.publisher_id, Venue::from(p.venue.as_str())))
