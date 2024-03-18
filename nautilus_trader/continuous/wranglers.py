@@ -153,13 +153,6 @@ class ContinuousBarWrangler:
                     
             self._data_engine.process(bar)
             
-            # last_timestamp = last_timestamps[self._chain.current_month.value]
-            # if bar.ts_init > last_timestamp:
-            #     raise RuntimeError(
-            #         f"The chain did not roll after receiving the last current contract bar for {self._chain.current_month}."
-            #     )
-            
-            
             previous_timestamp = bar.ts_init
         
         return results
