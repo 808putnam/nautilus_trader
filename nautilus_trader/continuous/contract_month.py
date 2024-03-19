@@ -5,9 +5,6 @@ from typing import Annotated
 import pandas as pd
 from msgspec import Meta
 
-from nautilus_trader.common.config import NonNegativeInt
-
-
 MONTH_LIST = ["F", "G", "H", "J", "K", "M", "N", "Q", "U", "V", "X", "Z"]
 
 # An integer constrained to values <= 0
@@ -30,12 +27,12 @@ class ContractMonth:
         self.value = value
         self.timestamp_utc = pd.Timestamp(year=self.year, month=self.month, day=1, tz="UTC")
 
-    def expiry_date(self, approximate_expiry_offset: NonNegativeInt) -> pd.Timestamp:
+    def expiry_date(self, approximate_expiry_offset: int) -> pd.Timestamp:
         return self.timestamp_utc + pd.Timedelta(days=approximate_expiry_offset)
 
     def roll_window(
         self,
-        approximate_expiry_offset: NonNegativeInt,
+        approximate_expiry_offset: int,
         roll_offset: NonPositiveInt,
     ) -> tuple[pd.Timestamp, pd.Timestamp]:
         expiry_date = self.expiry_date(approximate_expiry_offset)

@@ -3,7 +3,6 @@ from typing import Annotated, Literal
 from msgspec import Meta
 
 from nautilus_trader.common.config import NautilusConfig
-from nautilus_trader.common.config import NonNegativeInt
 from nautilus_trader.continuous.contract_month import ContractMonth
 from nautilus_trader.continuous.cycle import RollCycle
 from nautilus_trader.model.data import BarType
@@ -25,7 +24,7 @@ class RollConfig(NautilusConfig, frozen=True):
         The contract cycle string of available prices
     roll_offset : NonPositiveInt
         The day, relative to the expiry date, when we usually roll
-    approximate_expiry_offset : NonNegativeInt
+    approximate_expiry_offset : int
         The offset, relative to the first day of the contract month that the expiry date approximately occurs.
         After this date, the contract is assumed expired and non-tradeable.
     carry_offset : Literal[1, -1]
@@ -38,7 +37,7 @@ class RollConfig(NautilusConfig, frozen=True):
     hold_cycle: RollCycle
     priced_cycle: RollCycle
     roll_offset: NonPositiveInt
-    approximate_expiry_offset: NonNegativeInt
+    approximate_expiry_offset: int
     carry_offset: Literal[1, -1]
     skip_months: list[ContractMonth] | None = None
 
