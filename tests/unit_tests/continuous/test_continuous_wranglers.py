@@ -49,23 +49,12 @@ class TestContinuousWrangler:
 
         bars = self._read_bars()
 
-        streams = wrangler.process(bars)
-        assert len(streams["0"]) == 1323
-        assert len(streams["+1"]) == 1240
-        assert len(streams["c"]) == 548
+        continuous_bars = wrangler.process(bars)
+        assert len(continuous_bars) == 1323
 
-        current_months = {
-            ContractMonth(b.bar_type.instrument_id.symbol.value.split("=")[-1])
-            for b in streams["0"]
-        }
-        forward_months = {
-            ContractMonth(b.bar_type.instrument_id.symbol.value.split("=")[-1])
-            for b in streams["+1"]
-        }
-        carry_months = {
-            ContractMonth(b.bar_type.instrument_id.symbol.value.split("=")[-1])
-            for b in streams["c"]
-        }
+        current_months = {b.current_month for b in continuous_bars}
+        forward_months = {b.forward_month for b in continuous_bars if b.forward_month is not None}
+        carry_months = {b.carry_month for b in continuous_bars if b.carry_month is not None}
 
         assert all(m in self.roll_config.hold_cycle for m in current_months)
         assert all(m in self.roll_config.hold_cycle for m in forward_months)

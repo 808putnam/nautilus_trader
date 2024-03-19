@@ -13,7 +13,7 @@ from nautilus_trader.data.engine import DataEngine
 from nautilus_trader.model.data import Bar
 from nautilus_trader.portfolio.portfolio import Portfolio
 from nautilus_trader.test_kit.stubs.identifiers import TestIdStubs
-
+from nautilus_trader.continuous.bar import ContinuousBar
 
 class ContinuousBarWrangler:
     """
@@ -75,7 +75,7 @@ class ContinuousBarWrangler:
     def process(
         self,
         bars: list[Bar],
-    ) -> dict[str, list[Bar]]:
+    ) -> list[ContinuousBar]:
 
         bars = sorted(bars, key=lambda x: x.ts_init)
 
@@ -87,22 +87,10 @@ class ContinuousBarWrangler:
 
         results: dict[str, list[Bar]] = {}
 
-        results["0"] = []
+        results = []
         self._msgbus.subscribe(
             topic=f"{self._chain.bar_type}",
-            handler=results["0"].append,
-        )
-
-        results["+1"] = []
-        self._msgbus.subscribe(
-            topic=f"{self._chain.bar_type}+1",
-            handler=results["+1"].append,
-        )
-
-        results["c"] = []
-        self._msgbus.subscribe(
-            topic=f"{self._chain.bar_type}c",
-            handler=results["c"].append,
+            handler=results.append,
         )
 
         previous_timestamp = None
