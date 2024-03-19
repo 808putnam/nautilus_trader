@@ -2,9 +2,6 @@ import pickle
 
 from nautilus_trader.continuous.contract_month import ContractMonth
 from nautilus_trader.continuous.cycle import RollCycle
-from nautilus_trader.continuous.cycle_range import RangedRollCycle
-from nautilus_trader.continuous.cycle_range import RollCycleRange
-
 
 class TestRollCycle:
     def test_cycle_previous_month_returns_expected(self):
@@ -49,7 +46,7 @@ class TestRollCycle:
 
     def test_cycle_next_month_skips_specified_months(self):
         # Arrange
-        cycle = RollCycle("HMUX", skip_months=["2022M", "2022U"])
+        cycle = RollCycle("HMUX", skip_months=[ContractMonth("2022M"), ContractMonth("2022U")])
 
         # Act, Assert
         assert cycle.next_month(ContractMonth("2022H")) == ContractMonth("2022X")
@@ -57,91 +54,13 @@ class TestRollCycle:
 
     def test_cycle_previous_month_skips_specified_months(self):
         # Arrange
-        cycle = RollCycle("HMUX", skip_months=["2022M", "2022U"])
+        cycle = RollCycle("HMUX", skip_months=[ContractMonth("2022M"), ContractMonth("2022U")])
 
         # Act, Assert
         assert cycle.previous_month(ContractMonth("2022X")) == ContractMonth("2022H")
         assert cycle.previous_month(ContractMonth("2022H")) == ContractMonth("2021X")
 
-    def test_ranged_cycle_next_month_returns_expected(self):
-        # Arrange
-        ranges = [
-            RollCycleRange(
-                start_month=None,
-                end_month=ContractMonth("2014X"),
-                cycle=RollCycle("X"),
-            ),
-            RollCycleRange(
-                start_month=ContractMonth("2015Z"),
-                end_month=None,
-                cycle=RollCycle("Z"),
-            ),
-        ]
-        cycle = RangedRollCycle(ranges=ranges)
-
-        # Act, Assert
-
-        assert cycle.next_month(ContractMonth("2013X")) == ContractMonth("2014X")  # in 1st range
-        assert cycle.next_month(ContractMonth("2014X")) == ContractMonth("2015Z")  # 1st range end
-        assert cycle.next_month(ContractMonth("2014Z")) == ContractMonth("2015Z")  # in between
-        assert cycle.next_month(ContractMonth("2015F")) == ContractMonth("2015Z")  # in between
-        assert cycle.next_month(ContractMonth("2015Z")) == ContractMonth("2016Z")  # 2nd range start
-        assert cycle.next_month(ContractMonth("2016Z")) == ContractMonth("2017Z")  # in 2nd range
-
-    def test_ranged_cycle_previous_month_returns_expected(self):
-        # Arrange
-        ranges = [
-            RollCycleRange(
-                start_month=None,
-                end_month=ContractMonth("2014X"),
-                cycle=RollCycle("X"),
-            ),
-            RollCycleRange(
-                start_month=ContractMonth("2015Z"),
-                end_month=None,
-                cycle=RollCycle("Z"),
-            ),
-        ]
-        cycle = RangedRollCycle(ranges=ranges)
-
-        # Act, Assert
-
-        # in 1st range
-        assert cycle.previous_month(ContractMonth("2013X")) == ContractMonth("2014X")
-
-        # 1st range end
-        assert cycle.previous_month(ContractMonth("2014X")) == ContractMonth("2013X")
-
-        # 2nd range start
-        assert cycle.previous_month(ContractMonth("2015Z")) == ContractMonth("2014X")
-
-        # in 2nd range
-        assert cycle.previous_month(ContractMonth("2016Z")) == ContractMonth("2015Z")
-
-        # in 2nd range
-        assert cycle.previous_month(ContractMonth("2017F")) == ContractMonth("2016Z")
-
-        # in between
-        assert cycle.previous_month(ContractMonth("2015X")) == ContractMonth("2014X")
-
-    def test_ranged_roll_cycle_from_str(self):
-        value = "2014X=X,2015Z=Z"
-
-        cycle = RangedRollCycle.from_str(value)
-
-        assert cycle.ranges == [
-            RollCycleRange(
-                start_month=None,
-                end_month=ContractMonth("2014X"),
-                cycle=RollCycle("X"),
-            ),
-            RollCycleRange(
-                start_month=ContractMonth("2015Z"),
-                end_month=None,
-                cycle=RollCycle("Z"),
-            ),
-        ]
-
+    
     def test_cycle_pickle(self):
         cycle = RollCycle("HMUZ")
         pickled = pickle.dumps(cycle)
