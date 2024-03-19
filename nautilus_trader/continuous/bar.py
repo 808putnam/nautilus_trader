@@ -16,6 +16,7 @@ class ContinuousBar(Data):
         bar_type: BarType,
         current_bar: Bar,
         forward_bar: Bar | None,
+        previous_bar: Bar | None,
         carry_bar: Bar | None,
         ts_event: int,
         ts_init: int,
@@ -25,6 +26,7 @@ class ContinuousBar(Data):
         self.current_bar = current_bar
         self.forward_bar = forward_bar
         self.carry_bar = carry_bar
+        self.previous_bar = previous_bar
         self._ts_event = ts_event
         self._ts_init = ts_init
 
@@ -51,6 +53,12 @@ class ContinuousBar(Data):
         if self.carry_bar is None:
             return None
         return ContractMonth(self.carry_bar.bar_type.instrument_id.symbol.value.split("=")[-1])
+    
+    @property
+    def previous_month(self) -> ContractMonth | None:
+        if self.previous_bar is None:
+            return None
+        return ContractMonth(self.previous_bar.bar_type.instrument_id.symbol.value.split("=")[-1])
 
     @staticmethod
     def schema() -> pa.Schema:
@@ -73,6 +81,14 @@ class ContinuousBar(Data):
                 pa.field("forward_volume", pa.string(), nullable=True),
                 pa.field("forward_ts_event", pa.uint64(), nullable=True),
                 pa.field("forward_ts_init", pa.uint64(), nullable=True),
+                pa.field("previous_bar_type", pa.dictionary(pa.int16(), pa.string()), nullable=True),
+                pa.field("previous_open", pa.string(), nullable=True),
+                pa.field("previous_high", pa.string(), nullable=True),
+                pa.field("previous_low", pa.string(), nullable=True),
+                pa.field("previous_close", pa.string(), nullable=True),
+                pa.field("previous_volume", pa.string(), nullable=True),
+                pa.field("previous_ts_event", pa.uint64(), nullable=True),
+                pa.field("previous_ts_init", pa.uint64(), nullable=True),
                 pa.field("carry_bar_type", pa.dictionary(pa.int16(), pa.string()), nullable=True),
                 pa.field("carry_open", pa.string(), nullable=True),
                 pa.field("carry_high", pa.string(), nullable=True),
@@ -106,6 +122,14 @@ class ContinuousBar(Data):
             "forward_volume": str(obj.forward_bar.volume) if obj.forward_bar is not None else None,
             "forward_ts_event": obj.forward_bar.ts_event if obj.forward_bar is not None else None,
             "forward_ts_init": obj.forward_bar.ts_init if obj.forward_bar is not None else None,
+            "previous_bar_type": str(obj.previous_bar.bar_type) if obj.previous_bar is not None else None,
+            "previous_open": str(obj.previous_bar.open) if obj.previous_bar is not None else None,
+            "previous_high": str(obj.previous_bar.high) if obj.previous_bar is not None else None,
+            "previous_low": str(obj.previous_bar.low) if obj.previous_bar is not None else None,
+            "previous_close": str(obj.previous_bar.close) if obj.previous_bar is not None else None,
+            "previous_volume": str(obj.previous_bar.volume) if obj.previous_bar is not None else None,
+            "previous_ts_event": obj.previous_bar.ts_event if obj.previous_bar is not None else None,
+            "previous_ts_init": obj.previous_bar.ts_init if obj.previous_bar is not None else None,
             "carry_bar_type": str(obj.carry_bar.bar_type) if obj.carry_bar is not None else None,
             "carry_open": str(obj.carry_bar.open) if obj.carry_bar is not None else None,
             "carry_high": str(obj.carry_bar.high) if obj.carry_bar is not None else None,
@@ -145,6 +169,18 @@ class ContinuousBar(Data):
             )
             if values.get("forward_bar_type")
             else None,
+            previous_bar=Bar(
+                bar_type=BarType.from_str(values["previous_bar_type"]),
+                open=Price.from_str(values["previous_open"]),
+                high=Price.from_str(values["previous_high"]),
+                low=Price.from_str(values["previous_low"]),
+                close=Price.from_str(values["previous_close"]),
+                volume=Quantity.from_str(values["previous_volume"]),
+                ts_event=values["previous_ts_event"],
+                ts_init=values["previous_ts_init"],
+            )
+            if values.get("previous_bar_type")
+            else None,
             carry_bar=Bar(
                 bar_type=BarType.from_str(values["carry_bar_type"]),
                 open=Price.from_str(values["carry_open"]),
@@ -166,6 +202,7 @@ class ContinuousBar(Data):
             str(self.bar_type),
             self.current_bar,
             self.forward_bar,
+            self.previous_bar,
             self.carry_bar,
             self._ts_init,
             self._ts_event,
@@ -175,9 +212,10 @@ class ContinuousBar(Data):
         self.bar_type = BarType.from_str(state[0])
         self.current_bar = state[1]
         self.forward_bar = state[2]
-        self.carry_bar = state[3]
-        self._ts_event = state[4]
-        self._ts_init = state[5]
+        self.previous_bar = state[3]
+        self.carry_bar = state[4]
+        self._ts_event = state[5]
+        self._ts_init = state[6]
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, ContinuousBar):
@@ -186,6 +224,7 @@ class ContinuousBar(Data):
             self.bar_type == other.bar_type
             and self.current_bar == other.current_bar
             and self.forward_bar == other.forward_bar
+            and self.previous_bar == other.previous_bar
             and self.carry_bar == other.carry_bar
             and self._ts_event == other.ts_event
             and self._ts_init == other.ts_init
@@ -197,6 +236,7 @@ class ContinuousBar(Data):
             f"bar_type={self.bar_type}, "
             f"current_bar={self.current_bar}, "
             f"forward_bar={self.forward_bar}, "
+            f"previous_bar={self.previous_bar}, "
             f"carry_bar={self.carry_bar}, "
             f"ts_event={self.ts_event}, "
             f"ts_init={self.ts_init})"

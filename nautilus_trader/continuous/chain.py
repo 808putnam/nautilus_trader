@@ -83,6 +83,7 @@ class ContractChain(Actor):
                 bar_type=self.bar_type,
                 current_bar=self.cache.bar(self.current_bar_type),
                 forward_bar=self.cache.bar(self.forward_bar_type),
+                previous_bar=self.cache.bar(self.previous_bar_type),
                 carry_bar=self.cache.bar(self.carry_bar_type),
                 ts_init=self.clock.timestamp_ns(),
                 ts_event=self.clock.timestamp_ns(),
