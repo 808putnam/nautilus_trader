@@ -35,13 +35,23 @@ class TestContinuousBar:
                 ts_init=0,
                 ts_event=0,
             ),
-            carry_bar=Bar(
-                bar_type=BarType.from_str("MES=2021Z.SIM-1-DAY-MID-EXTERNAL"),
+            previous_bar=Bar(
+                bar_type=BarType.from_str("MES=2021V.SIM-1-DAY-MID-EXTERNAL"),
                 open=Price.from_str("3.1"),
                 high=Price.from_str("3.3"),
                 low=Price.from_str("3.0"),
                 close=Price.from_str("3.2"),
                 volume=Quantity.from_int(3),
+                ts_init=0,
+                ts_event=0,
+            ),
+            carry_bar=Bar(
+                bar_type=BarType.from_str("MES=2021Z.SIM-1-DAY-MID-EXTERNAL"),
+                open=Price.from_str("4.1"),
+                high=Price.from_str("4.3"),
+                low=Price.from_str("4.0"),
+                close=Price.from_str("4.2"),
+                volume=Quantity.from_int(4),
                 ts_init=0,
                 ts_event=0,
             ),
@@ -61,16 +71,8 @@ class TestContinuousBar:
                 ts_event=0,
                 ts_init=0,
             ),
-            forward_bar=Bar(
-                bar_type=BarType.from_str("MES=2021Z.SIM-1-DAY-MID-EXTERNAL"),
-                open=Price.from_str("2.1"),
-                high=Price.from_str("2.3"),
-                low=Price.from_str("2.0"),
-                close=Price.from_str("2.2"),
-                volume=Quantity.from_int(2),
-                ts_init=0,
-                ts_event=0,
-            ),
+            forward_bar=None,
+            previous_bar=None,
             carry_bar=None,
             ts_event=0,
             ts_init=0,
@@ -85,11 +87,11 @@ class TestContinuousBar:
         # Arrange, Act, Assert
         assert (
             str(self.price1)
-            == "ContinuousBar(bar_type=MES.SIM-1-DAY-MID-EXTERNAL, current_bar=MES=2021X.SIM-1-DAY-MID-EXTERNAL,1.1,1.3,1.0,1.2,1,0, forward_bar=MES=2021Z.SIM-1-DAY-MID-EXTERNAL,2.1,2.3,2.0,2.2,2,0, carry_bar=MES=2021Z.SIM-1-DAY-MID-EXTERNAL,3.1,3.3,3.0,3.2,3,0, ts_event=0, ts_init=0)"  # noqa
+            == "ContinuousBar(bar_type=MES.SIM-1-DAY-MID-EXTERNAL, current_bar=MES=2021X.SIM-1-DAY-MID-EXTERNAL,1.1,1.3,1.0,1.2,1,0, forward_bar=MES=2021Z.SIM-1-DAY-MID-EXTERNAL,2.1,2.3,2.0,2.2,2,0, previous_bar=MES=2021V.SIM-1-DAY-MID-EXTERNAL,3.1,3.3,3.0,3.2,3,0, carry_bar=MES=2021Z.SIM-1-DAY-MID-EXTERNAL,4.1,4.3,4.0,4.2,4,0, ts_event=0, ts_init=0)"  # noqa
         )
         assert (
             repr(self.price1)
-            == "ContinuousBar(bar_type=MES.SIM-1-DAY-MID-EXTERNAL, current_bar=MES=2021X.SIM-1-DAY-MID-EXTERNAL,1.1,1.3,1.0,1.2,1,0, forward_bar=MES=2021Z.SIM-1-DAY-MID-EXTERNAL,2.1,2.3,2.0,2.2,2,0, carry_bar=MES=2021Z.SIM-1-DAY-MID-EXTERNAL,3.1,3.3,3.0,3.2,3,0, ts_event=0, ts_init=0)"  # noqa
+            == "ContinuousBar(bar_type=MES.SIM-1-DAY-MID-EXTERNAL, current_bar=MES=2021X.SIM-1-DAY-MID-EXTERNAL,1.1,1.3,1.0,1.2,1,0, forward_bar=MES=2021Z.SIM-1-DAY-MID-EXTERNAL,2.1,2.3,2.0,2.2,2,0, previous_bar=MES=2021V.SIM-1-DAY-MID-EXTERNAL,3.1,3.3,3.0,3.2,3,0, carry_bar=MES=2021Z.SIM-1-DAY-MID-EXTERNAL,4.1,4.3,4.0,4.2,4,0, ts_event=0, ts_init=0)"  # noqa
         )
 
     def test_to_dict(self):
@@ -115,12 +117,20 @@ class TestContinuousBar:
             "forward_volume": "2",
             "forward_ts_event": 0,
             "forward_ts_init": 0,
+            "previous_bar_type": "MES=2021V.SIM-1-DAY-MID-EXTERNAL",
+            "previous_open": "3.1",
+            "previous_high": "3.3",
+            "previous_low": "3.0",
+            "previous_close": "3.2",
+            "previous_volume": "3",
+            "previous_ts_event": 0,
+            "previous_ts_init": 0,
             "carry_bar_type": "MES=2021Z.SIM-1-DAY-MID-EXTERNAL",
-            "carry_open": "3.1",
-            "carry_high": "3.3",
-            "carry_low": "3.0",
-            "carry_close": "3.2",
-            "carry_volume": "3",
+            "carry_open": "4.1",
+            "carry_high": "4.3",
+            "carry_low": "4.0",
+            "carry_close": "4.2",
+            "carry_volume": "4",
             "carry_ts_event": 0,
             "carry_ts_init": 0,
             "ts_event": 0,
