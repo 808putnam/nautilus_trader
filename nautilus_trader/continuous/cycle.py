@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Generator
 
 from nautilus_trader.continuous.contract_month import ContractMonth
 
@@ -111,15 +112,12 @@ class RollCycle:
     def __hash__(self) -> int:
         return hash(self.value)
 
-    def iterate(self, start: ContractMonth, end: ContractMonth, direction: int):
-        if direction == 1:
-            if start.letter_month not in self.value:
-                start = self._closest_next(start)
-            while start < end:
-                yield start
-                start = self.next_month(start)
-        if direction == -1:
-            raise NotImplementedError  # TODO
+    def iterate(self, start: ContractMonth, end: ContractMonth) -> Generator[None, None, ContractMonth]:
+        if start.letter_month not in self.value:
+            start = self._closest_next(start)
+        while start < end:
+            yield start
+            start = self.next_month(start)
 
     def __getstate__(self):
         return (self.value, self._skip_months)
