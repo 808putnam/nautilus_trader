@@ -26,7 +26,7 @@ from nautilus_trader.model.objects import Currency
 from nautilus_trader.model.objects import Money
 from nautilus_trader.model.objects import Price
 from nautilus_trader.model.objects import Quantity
-
+from nautilus_trader.continuous.chain import ContractExpired
 
 class TestContractChain:
     def setup(self):
@@ -228,7 +228,7 @@ class TestContractChain:
         self.engine.add_data(bars)
 
         # Act & Assert
-        with pytest.raises(ValueError):
+        with pytest.raises(ContractExpired):
             self.engine.run()
 
     def test_ignore_expiry_date_when_rolling(self):
