@@ -182,16 +182,14 @@ class TestContractChain:
         )
 
         data = [
-            ("MES=2021H.SIM", "2021-03-09"),
-            ("MES=2021M.SIM", "2021-03-09"),
-            ("MES=2021U.SIM", "2021-03-09"),
-            ("MES=2021H.SIM", "2021-03-10"),
-            ("MES=2021M.SIM", "2021-03-10"),
-            ("MES=2021U.SIM", "2021-03-10"),
-            ("MES=2021H.SIM", "2021-03-11"),  # rolled
-            ("MES=2021M.SIM", "2021-03-11"),
-            ("MES=2021U.SIM", "2021-03-11"),
-            ("MES=2021M.SIM", "2021-03-12"),
+            ("MES=2021H.SIM", "2021-03-09"), # 0
+            ("MES=2021M.SIM", "2021-03-09"), # 1
+            ("MES=2021J.SIM", "2021-03-09"), # 2
+            ("MES=2021H.SIM", "2021-03-10"), # 3
+            ("MES=2021M.SIM", "2021-03-10"), # 4
+            ("MES=2021U.SIM", "2021-03-10"), # 5
+            ("MES=2021N.SIM", "2021-03-10"), # 6
+            ("MES=2021M.SIM", "2021-03-11"), # 7: rolled
         ]
 
         bars = self._create_bars(data)
@@ -201,101 +199,17 @@ class TestContractChain:
         self.engine.run()
 
         # Assert
-        assert len(results) == 3
-        assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
-        assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10", tz="UTC")
-        assert unix_nanos_to_dt(results[2].ts_init) == pd.Timestamp("2021-03-11", tz="UTC")
-
-        months = [b.bar_type.instrument_id.value.split("=")[1].split(".")[0] for b in results]
-        assert months[0] == "2021H"
-        assert months[1] == "2021M"
-        assert months[2] == "2021M"
-
-    def test_forward_bar_publish(self):
-
-        # Arrange
-        chain = ContractChain(config=self.chain_config)
-
-        self.engine.add_actor(chain)
-
-        results: list[Bar] = []
-        self.msgbus.subscribe(
-            topic=f"{chain.bar_type}+1",
-            handler=results.append,
-        )
-
-        data = [
-            ("MES=2021H.SIM", "2021-03-09"),
-            ("MES=2021M.SIM", "2021-03-09"),
-            ("MES=2021U.SIM", "2021-03-09"),
-            ("MES=2021H.SIM", "2021-03-10"),
-            ("MES=2021M.SIM", "2021-03-10"),
-            ("MES=2021U.SIM", "2021-03-10"),
-            ("MES=2021H.SIM", "2021-03-11"),  # rolled
-            ("MES=2021M.SIM", "2021-03-11"),
-            ("MES=2021U.SIM", "2021-03-11"),
-            ("MES=2021H.SIM", "2021-03-12"),
-        ]
-
-        bars = self._create_bars(data)
-        self.engine.add_data(bars)
-
-        # Act
-        self.engine.run()
-
-        # Assert
-        assert len(results) == 3
-        assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
-        assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10", tz="UTC")
-        assert unix_nanos_to_dt(results[2].ts_init) == pd.Timestamp("2021-03-11", tz="UTC")
-
-        months = [b.bar_type.instrument_id.value.split("=")[1].split(".")[0] for b in results]
-        assert months[0] == "2021M"
-        assert months[1] == "2021U"
-        assert months[2] == "2021U"
-
-    def test_carry_bar_publish(self):
-
-        # Arrange
-        chain = ContractChain(config=self.chain_config)
-
-        self.engine.add_actor(chain)
-
-        results: list[Bar] = []
-        self.msgbus.subscribe(
-            topic=f"{chain.bar_type}c",
-            handler=results.append,
-        )
-
-        data = [
-            ("MES=2021H.SIM", "2021-03-09"),
-            ("MES=2021J.SIM", "2021-03-09"),
-            ("MES=2021M.SIM", "2021-03-09"),
-            ("MES=2021H.SIM", "2021-03-10"),
-            ("MES=2021N.SIM", "2021-03-10"),
-            ("MES=2021M.SIM", "2021-03-10"),
-            ("MES=2021M.SIM", "2021-03-11"),  # rolled
-            ("MES=2021N.SIM", "2021-03-11"),
-            ("MES=2021U.SIM", "2021-03-11"),
-            ("MES=2021M.SIM", "2021-03-12"),
-        ]
-
-        bars = self._create_bars(data)
-        self.engine.add_data(bars)
-
-        # Act
-        self.engine.run()
-
-        # Assert
-        assert len(results) == 3
-        assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09", tz="UTC")
-        assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10", tz="UTC")
-        assert unix_nanos_to_dt(results[2].ts_init) == pd.Timestamp("2021-03-11", tz="UTC")
-
-        months = [b.bar_type.instrument_id.value.split("=")[1].split(".")[0] for b in results]
-        assert months[0] == "2021J"
-        assert months[1] == "2021N"
-        assert months[2] == "2021N"
+        assert len(results) == 2
+        assert unix_nanos_to_dt(results[0].ts_init) == pd.Timestamp("2021-03-09 00:00:05+0000", tz="UTC")
+        assert unix_nanos_to_dt(results[1].ts_init) == pd.Timestamp("2021-03-10 00:00:05+0000", tz="UTC")
+        
+        assert results[0].current_bar == bars[0]
+        assert results[0].forward_bar == bars[1]
+        assert results[0].carry_bar == bars[2]
+        
+        assert results[1].current_bar == bars[4]
+        assert results[1].forward_bar == bars[5]
+        assert results[1].carry_bar == bars[6]
 
     def test_contract_expired_raises(self):
 
@@ -315,7 +229,6 @@ class TestContractChain:
 
         # Act & Assert
         with pytest.raises(ValueError):
-
             self.engine.run()
 
     def test_ignore_expiry_date_when_rolling(self):
