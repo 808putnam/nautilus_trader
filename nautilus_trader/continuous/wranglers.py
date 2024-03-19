@@ -146,13 +146,7 @@ class ContinuousBarWrangler:
 
         hold_cycle = self._chain_config.roll_config.hold_cycle
 
-        months = list(
-            hold_cycle.iterate(
-                start=self._start_month,
-                end=self._end_month,
-                direction=1,
-            ),
-        )
+        months = list(hold_cycle.iterate(self._start_month, self._end_month))
 
         missing = [
             m.value for m in [*months, self._end_month] if timestamps_by_month.get(m.value) is None
