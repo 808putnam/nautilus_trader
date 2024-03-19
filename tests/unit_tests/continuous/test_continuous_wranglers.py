@@ -78,9 +78,12 @@ class TestContinuousWrangler:
             config=self.chain_config,
             end_month=ContractMonth("2021U"),
         )
-
+        data = [
+            ("HG=1970H.SIM", "1970-01-01"),
+        ]
+        bars = self._create_bars(data)
         with pytest.raises(ValueError) as ex_info:
-            wrangler.validate([])
+            wrangler.validate(bars)
             assert "['2021H', '2021N', '2021Z']" in ex_info.value.args[0]
 
     def test_validate_no_timestamps_in_roll_window_raises(self):
