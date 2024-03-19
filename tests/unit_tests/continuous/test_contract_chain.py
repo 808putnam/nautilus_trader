@@ -185,11 +185,13 @@ class TestContractChain:
             ("MES=2021H.SIM", "2021-03-09"), # 0
             ("MES=2021M.SIM", "2021-03-09"), # 1
             ("MES=2021J.SIM", "2021-03-09"), # 2
+            # ContinuousBar
             ("MES=2021H.SIM", "2021-03-10"), # 3
             ("MES=2021M.SIM", "2021-03-10"), # 4
             ("MES=2021U.SIM", "2021-03-10"), # 5
             ("MES=2021N.SIM", "2021-03-10"), # 6
-            ("MES=2021M.SIM", "2021-03-11"), # 7: rolled
+            # ContinuousBar
+            ("MES=2021M.SIM", "2021-03-11"), # 7
         ]
 
         bars = self._create_bars(data)
