@@ -205,10 +205,12 @@ class TestContractChain:
         
         assert results[0].current_bar == bars[0]
         assert results[0].forward_bar == bars[1]
+        assert results[0].previous_bar is None
         assert results[0].carry_bar == bars[2]
         
         assert results[1].current_bar == bars[4]
         assert results[1].forward_bar == bars[5]
+        assert results[1].previous_bar == bars[3]
         assert results[1].carry_bar == bars[6]
 
     def test_contract_expired_raises(self):
