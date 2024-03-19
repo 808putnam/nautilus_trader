@@ -8,7 +8,7 @@ from nautilus_trader.core.datetime import unix_nanos_to_dt
 from nautilus_trader.model.data import Bar
 from nautilus_trader.model.data import BarType
 from nautilus_trader.model.identifiers import InstrumentId
-
+from nautilus_trader.continuous.bar import ContinuousBar
 
 class ContractExpired(Exception):
     pass
@@ -74,13 +74,22 @@ class ContractChain(Actor):
         self._attempt_roll()
         if self._raise_expired:
             self._raise_expiry()
-        self.publish()
+        self._publish()
 
-    def publish(self) -> None:
-        self._publish_carry()
-        self._publish_forward()
-        self._publish_current()
-
+    def _publish(self) -> None:
+        self.msgbus.publish(
+            topic=str(self.bar_type),
+            msg=ContinuousBar(
+                bar_type=self.bar_type,
+                current_bar=self.cache.bar(self.current_bar_type),
+                forward_bar=self.cache.bar(self.forward_bar_type),
+                carry_bar=self.cache.bar(self.carry_bar_type),
+                ts_init=self.clock.timestamp_ns(),
+                ts_event=self.clock.timestamp_ns(),
+            ),
+            
+        )
+        
     def _raise_expiry(self):
 
         current_bar = self.cache.bar(self.current_bar_type)
@@ -131,49 +140,8 @@ class ContractChain(Actor):
         self.roll()
         self.rolls.loc[len(self.rolls)] = (current_timestamp, self.current_month)
 
-    def _publish_current(self) -> None:
-        current_bar = self.cache.bar(self.current_bar_type)
-        if current_bar is None:
-            return
-
-        is_previous = self._last_current is not None and current_bar == self._last_current
-        if is_previous:
-            return
-
-        self.msgbus.publish(
-            topic=f"{self.bar_type}",
-            msg=current_bar,
-        )
-
-    def _publish_forward(self) -> None:
-
-        forward_bar = self.cache.bar(self.forward_bar_type)
-        if forward_bar is None:
-            return
-
-        is_previous = self._last_forward is not None and forward_bar == self._last_forward
-        if is_previous:
-            return
-
-        self.msgbus.publish(
-            topic=f"{self.bar_type}+1",
-            msg=forward_bar,
-        )
-
-    def _publish_carry(self) -> None:
-
-        carry_bar = self.cache.bar(self.carry_bar_type)
-        if carry_bar is None:
-            return
-
-        is_previous = self._last_carry is not None and carry_bar == self._last_carry
-        if is_previous:
-            return
-
-        self.msgbus.publish(
-            topic=f"{self.bar_type}c",
-            msg=carry_bar,
-        )
+    
+        
 
     def roll(self) -> None:
         """
