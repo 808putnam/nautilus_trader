@@ -68,10 +68,10 @@ class TestContinuousWrangler:
         )
 
         bars = self._read_bars()
-        streams = wrangler.process(bars)
+        continuous_bars = wrangler.process(bars)
 
-        assert streams["0"][-1].bar_type.instrument_id.symbol.value.endswith("2021U")
-        assert streams["0"][-2].bar_type.instrument_id.symbol.value.endswith("2021N")
+        assert continuous_bars[-1].current_month == ContractMonth("2021U")
+        assert continuous_bars[-2].current_month == ContractMonth("2021N")
 
     def test_validate_no_data_for_month_raises(self):
         wrangler = ContinuousBarWrangler(
