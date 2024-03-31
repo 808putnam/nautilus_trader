@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "1. Debug python binance_spot_orderbook_imbalance_rust",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/.venv/bin/python3",
+            "program": "${workspaceFolder}/examples/live/binance/binance_spot_orderbook_imbalance_rust.py",
+            "cwd": "${workspaceFolder}/examples/live/binance",
+            // "args" : ["--debug", "--snapshot_path", "snapshot", "-r", "http://api.testnet.solana.com", "--min_download_speed", "10"],
+            "console": "integratedTerminal"        },
+        {
+            "name": "2. nautilus_trader - Debug rust attach",
+            "type": "lldb",
+            "request": "attach",
+            "program": "${workspaceFolder}/.venv/bin/python3",
+            "pid": "${command:pickProcess}",
+            "sourceMap": {
+                ".": ".."
+            },
+            "sourceLanguages": ["rust"]
+        },
+    ]
+}
