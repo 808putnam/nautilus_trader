@@ -1,6 +1,5 @@
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
-#  https://nautechsystems.io
+#  Copyright (C) 2024 808putnam All rights reserved.
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 #  You may not use this file except in compliance with the License.
@@ -16,12 +15,9 @@
 import asyncio
 from functools import lru_cache
 
-from nautilus_trader.adapters.binance.common.enums import BinanceAccountType
-from nautilus_trader.adapters.binance.config import BinanceDataClientConfig
-from nautilus_trader.adapters.binance.config import BinanceExecClientConfig
-from nautilus_trader.adapters.binance.futures.data import BinanceFuturesDataClient
-from nautilus_trader.adapters.binance.futures.execution import BinanceFuturesExecutionClient
-from nautilus_trader.adapters.binance.futures.providers import BinanceFuturesInstrumentProvider
+from nautilus_trader.adapters.phoenix.common.enums import PhoenixAccountType
+from nautilus_trader.adapters.phoenix.config import PhoenixDataClientConfig
+from nautilus_trader.adapters.phoenix.config import PhoenixExecClientConfig
 from nautilus_trader.adapters.binance.http.client import BinanceHttpClient
 from nautilus_trader.adapters.binance.spot.data import BinanceSpotDataClient
 from nautilus_trader.adapters.binance.spot.execution import BinanceSpotExecutionClient
@@ -36,18 +32,14 @@ from nautilus_trader.live.factories import LiveDataClientFactory
 from nautilus_trader.live.factories import LiveExecClientFactory
 
 
-BINANCE_HTTP_CLIENTS: dict[str, BinanceHttpClient] = {}
+PHOENIX_HTTP_CLIENTS: dict[str, BinanceHttpClient] = {}
 
 
 @lru_cache(1)
 def get_cached_binance_http_client(
     clock: LiveClock,
-    account_type: BinanceAccountType,
-    key: str | None = None,
-    secret: str | None = None,
-    base_url: str | None = None,
+    account_type: PhoenixAccountType,
     is_testnet: bool = False,
-    is_us: bool = False,
 ) -> BinanceHttpClient:
     """
     Cache and return a Binance HTTP client with the given key and secret.

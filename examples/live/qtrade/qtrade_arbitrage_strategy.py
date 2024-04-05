@@ -16,9 +16,9 @@
 
 from decimal import Decimal
 
-from nautilus_trader.adapters.binance.common.enums import BinanceAccountType
-from nautilus_trader.adapters.binance.config import BinanceDataClientConfig
-from nautilus_trader.adapters.binance.config import BinanceExecClientConfig
+from nautilus_trader.adapters.phoenix.common.enums import PhoenixAccountType
+from nautilus_trader.adapters.phoenix.config import PhoenixDataClientConfig
+from nautilus_trader.adapters.phoenix.config import PhoenixExecClientConfig
 from nautilus_trader.adapters.binance.factories import BinanceLiveDataClientFactory
 from nautilus_trader.adapters.binance.factories import BinanceLiveExecClientFactory
 from nautilus_trader.config import CacheConfig
@@ -60,26 +60,16 @@ config_node = TradingNodeConfig(
     # snapshot_positions_interval=5.0,
     # See adapters/binance/test_factories for listing of urls
     data_clients={
-        "BINANCE": BinanceDataClientConfig(
-            api_key=None,  # 'BINANCE_API_KEY' env var
-            api_secret=None,  # 'BINANCE_API_SECRET' env var
-            account_type=BinanceAccountType.SPOT,
-            base_url_http=None, # "https://api.binance.us",  # Override with custom endpoint
-            base_url_ws=None, # "wss://stream.binance.us:9443",  # Override with custom endpoint
-            us=True,  # If client is for Binance US
-            testnet=False,  # If client uses the testnet
+        "PHOENIX": PhoenixDataClientConfig(
+            account_type=PhoenixAccountType.SPOT,
+            testnet=True,  # If client uses the Solana testnet
             instrument_provider=InstrumentProviderConfig(load_all=True),
         ),
     },
     exec_clients={
-        "BINANCE": BinanceExecClientConfig(
-            api_key=None,  # 'BINANCE_API_KEY' env var
-            api_secret=None,  # 'BINANCE_API_SECRET' env var
-            account_type=BinanceAccountType.SPOT,
-            base_url_http=None,  # Override with custom endpoint
-            base_url_ws=None,  # Override with custom endpoint
-            us=True,  # If client is for Binance US
-            testnet=False,  # If client uses the testnet
+        "PHOENIX": PhoenixExecClientConfig(
+            account_type=PhoenixAccountType.SPOT,
+            testnet=True,  # If client uses the Solana testnet
             instrument_provider=InstrumentProviderConfig(load_all=True),
         ),
     },
