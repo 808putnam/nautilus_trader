@@ -18,10 +18,13 @@ from functools import lru_cache
 from nautilus_trader.adapters.phoenix.common.enums import PhoenixAccountType
 from nautilus_trader.adapters.phoenix.config import PhoenixDataClientConfig
 from nautilus_trader.adapters.phoenix.config import PhoenixExecClientConfig
-from nautilus_trader.adapters.binance.http.client import BinanceHttpClient
-from nautilus_trader.adapters.binance.spot.data import BinanceSpotDataClient
-from nautilus_trader.adapters.binance.spot.execution import BinanceSpotExecutionClient
-from nautilus_trader.adapters.binance.spot.providers import BinanceSpotInstrumentProvider
+from nautilus_trader.adapters.phoenix.futures.data import PhoenixFuturesDataClient
+from nautilus_trader.adapters.phoenix.futures.execution import PhoenixFuturesExecutionClient
+from nautilus_trader.adapters.phoenix.futures.providers import PhoenixFuturesInstrumentProvider
+from nautilus_trader.adapters.phoenix.http.client import PhoenixHttpClient
+from nautilus_trader.adapters.phoenix.spot.data import PhoenixSpotDataClient
+from nautilus_trader.adapters.phoenix.spot.execution import PhoenixSpotExecutionClient
+from nautilus_trader.adapters.phoenix.spot.providers import PhoenixSpotInstrumentProvider
 from nautilus_trader.adapters.env import get_env_key
 from nautilus_trader.cache.cache import Cache
 from nautilus_trader.common.component import LiveClock
@@ -32,17 +35,19 @@ from nautilus_trader.live.factories import LiveDataClientFactory
 from nautilus_trader.live.factories import LiveExecClientFactory
 
 
-PHOENIX_HTTP_CLIENTS: dict[str, BinanceHttpClient] = {}
+PHOENIX_HTTP_CLIENTS: dict[str, PhoenixHttpClient] = {}
 
 
 @lru_cache(1)
-def get_cached_binance_http_client(
+def get_cached_phoenix_http_client(
     clock: LiveClock,
     account_type: PhoenixAccountType,
+    base_url: str | None = None,
     is_testnet: bool = False,
-) -> BinanceHttpClient:
+    is_us: bool = False,
+) -> PhoenixHttpClient:
     """
-    Cache and return a Binance HTTP client with the given key and secret.
+    Cache and return a Phoenix HTTP client with the given key and secret.
 
     If a cached client with matching key and secret already exists, then that
     cached client will be returned.
@@ -51,25 +56,21 @@ def get_cached_binance_http_client(
     ----------
     clock : LiveClock
         The clock for the client.
-    account_type : BinanceAccountType
+    account_type : PhoenixAccountType
         The account type for the client.
-    key : str, optional
-        The API key for the client.
-    secret : str, optional
-        The API secret for the client.
     base_url : str, optional
-        The base URL for the API endpoints.
+        The base URL for the API endpoints.        
     is_testnet : bool, default False
         If the client is connecting to the testnet API.
     is_us : bool, default False
-        If the client is connecting to Binance US.
+        If the client is connecting to Phoenix US.
 
     Returns
     -------
-    BinanceHttpClient
+    PhoenixHttpClient
 
     """
-    global BINANCE_HTTP_CLIENTS
+    global PHOENIX_HTTP_CLIENTS
 
     key = key or _get_api_key(account_type, is_testnet)
     secret = secret or _get_api_secret(account_type, is_testnet)
@@ -92,8 +93,8 @@ def get_cached_binance_http_client(
         ]
 
     client_key: str = "|".join((key, secret))
-    if client_key not in BINANCE_HTTP_CLIENTS:
-        client = BinanceHttpClient(
+    if client_key not in PHOENIX_HTTP_CLIENTS:
+        client = PhoenixHttpClient(
             clock=clock,
             key=key,
             secret=secret,
@@ -101,31 +102,31 @@ def get_cached_binance_http_client(
             ratelimiter_quotas=ratelimiter_quotas,
             ratelimiter_default_quota=ratelimiter_default_quota,
         )
-        BINANCE_HTTP_CLIENTS[client_key] = client
-    return BINANCE_HTTP_CLIENTS[client_key]
+        PHOENIX_HTTP_CLIENTS[client_key] = client
+    return PHOENIX_HTTP_CLIENTS[client_key]
 
 
 @lru_cache(1)
-def get_cached_binance_spot_instrument_provider(
-    client: BinanceHttpClient,
+def get_cached_phoenix_spot_instrument_provider(
+    client: PhoenixHttpClient,
     clock: LiveClock,
-    account_type: BinanceAccountType,
+    account_type: PhoenixAccountType,
     is_testnet: bool,
     config: InstrumentProviderConfig,
-) -> BinanceSpotInstrumentProvider:
+) -> PhoenixSpotInstrumentProvider:
     """
-    Cache and return an instrument provider for the `Binance Spot/Margin` exchange.
+    Cache and return an instrument provider for the `Phoenix Spot/Margin` exchange.
 
     If a cached provider already exists, then that provider will be returned.
 
     Parameters
     ----------
-    client : BinanceHttpClient
+    client : PhoenixHttpClient
         The client for the instrument provider.
     clock : LiveClock
         The clock for the instrument provider.
-    account_type : BinanceAccountType
-        The Binance account type for the instrument provider.
+    account_type : PhoenixAccountType
+        The Phoenix account type for the instrument provider.
     is_testnet : bool, default False
         If the provider is for the Spot testnet.
     config : InstrumentProviderConfig
@@ -133,10 +134,10 @@ def get_cached_binance_spot_instrument_provider(
 
     Returns
     -------
-    BinanceSpotInstrumentProvider
+    PhoenixSpotInstrumentProvider
 
     """
-    return BinanceSpotInstrumentProvider(
+    return PhoenixSpotInstrumentProvider(
         client=client,
         clock=clock,
         account_type=account_type,
@@ -146,34 +147,34 @@ def get_cached_binance_spot_instrument_provider(
 
 
 @lru_cache(1)
-def get_cached_binance_futures_instrument_provider(
-    client: BinanceHttpClient,
+def get_cached_phoenix_futures_instrument_provider(
+    client: PhoenixHttpClient,
     clock: LiveClock,
-    account_type: BinanceAccountType,
+    account_type: PhoenixAccountType,
     config: InstrumentProviderConfig,
-) -> BinanceFuturesInstrumentProvider:
+) -> PhoenixFuturesInstrumentProvider:
     """
-    Cache and return an instrument provider for the `Binance Futures` exchange.
+    Cache and return an instrument provider for the `Phoenix Futures` exchange.
 
     If a cached provider already exists, then that provider will be returned.
 
     Parameters
     ----------
-    client : BinanceHttpClient
+    client : PhoenixHttpClient
         The client for the instrument provider.
     clock : LiveClock
         The clock for the instrument provider.
-    account_type : BinanceAccountType
-        The Binance account type for the instrument provider.
+    account_type : PhoenixAccountType
+        The Phoenix account type for the instrument provider.
     config : InstrumentProviderConfig
         The configuration for the instrument provider.
 
     Returns
     -------
-    BinanceFuturesInstrumentProvider
+    PhoenixFuturesInstrumentProvider
 
     """
-    return BinanceFuturesInstrumentProvider(
+    return PhoenixFuturesInstrumentProvider(
         client=client,
         clock=clock,
         account_type=account_type,
@@ -181,22 +182,22 @@ def get_cached_binance_futures_instrument_provider(
     )
 
 
-class BinanceLiveDataClientFactory(LiveDataClientFactory):
+class PhoenixLiveDataClientFactory(LiveDataClientFactory):
     """
-    Provides a `Binance` live data client factory.
+    Provides a `Phoenix` live data client factory.
     """
 
     @staticmethod
     def create(  # type: ignore
         loop: asyncio.AbstractEventLoop,
         name: str,
-        config: BinanceDataClientConfig,
+        config: PhoenixDataClientConfig,
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-    ) -> BinanceSpotDataClient | BinanceFuturesDataClient:
+    ) -> PhoenixSpotDataClient | PhoenixFuturesDataClient:
         """
-        Create a new Binance data client.
+        Create a new Phoenix data client.
 
         Parameters
         ----------
@@ -204,7 +205,7 @@ class BinanceLiveDataClientFactory(LiveDataClientFactory):
             The event loop for the client.
         name : str
             The client name.
-        config : BinanceDataClientConfig
+        config : PhoenixDataClientConfig
             The client configuration.
         msgbus : MessageBus
             The message bus for the client.
@@ -215,16 +216,16 @@ class BinanceLiveDataClientFactory(LiveDataClientFactory):
 
         Returns
         -------
-        BinanceSpotDataClient or BinanceFuturesDataClient
+        PhoenixSpotDataClient or PhoenixFuturesDataClient
 
         Raises
         ------
         ValueError
-            If `config.account_type` is not a valid `BinanceAccountType`.
+            If `config.account_type` is not a valid `PhoenixAccountType`.
 
         """
         # Get HTTP client singleton
-        client: BinanceHttpClient = get_cached_binance_http_client(
+        client: PhoenixHttpClient = get_cached_phoenix_http_client(
             clock=clock,
             account_type=config.account_type,
             key=config.api_key,
@@ -240,10 +241,10 @@ class BinanceLiveDataClientFactory(LiveDataClientFactory):
             is_us=config.us,
         )
 
-        provider: BinanceSpotInstrumentProvider | BinanceFuturesInstrumentProvider
+        provider: PhoenixSpotInstrumentProvider | PhoenixFuturesInstrumentProvider
         if config.account_type.is_spot_or_margin:
             # Get instrument provider singleton
-            provider = get_cached_binance_spot_instrument_provider(
+            provider = get_cached_phoenix_spot_instrument_provider(
                 client=client,
                 clock=clock,
                 account_type=config.account_type,
@@ -251,7 +252,7 @@ class BinanceLiveDataClientFactory(LiveDataClientFactory):
                 config=config.instrument_provider,
             )
 
-            return BinanceSpotDataClient(
+            return PhoenixSpotDataClient(
                 loop=loop,
                 client=client,
                 msgbus=msgbus,
@@ -264,14 +265,14 @@ class BinanceLiveDataClientFactory(LiveDataClientFactory):
             )
         else:
             # Get instrument provider singleton
-            provider = get_cached_binance_futures_instrument_provider(
+            provider = get_cached_phoenix_futures_instrument_provider(
                 client=client,
                 clock=clock,
                 account_type=config.account_type,
                 config=config.instrument_provider,
             )
 
-            return BinanceFuturesDataClient(
+            return PhoenixFuturesDataClient(
                 loop=loop,
                 client=client,
                 msgbus=msgbus,
@@ -284,22 +285,22 @@ class BinanceLiveDataClientFactory(LiveDataClientFactory):
             )
 
 
-class BinanceLiveExecClientFactory(LiveExecClientFactory):
+class PhoenixLiveExecClientFactory(LiveExecClientFactory):
     """
-    Provides a `Binance` live execution client factory.
+    Provides a `Phoenix` live execution client factory.
     """
 
     @staticmethod
     def create(  # type: ignore
         loop: asyncio.AbstractEventLoop,
         name: str,
-        config: BinanceExecClientConfig,
+        config: PhoenixExecClientConfig,
         msgbus: MessageBus,
         cache: Cache,
         clock: LiveClock,
-    ) -> BinanceSpotExecutionClient | BinanceFuturesExecutionClient:
+    ) -> PhoenixSpotExecutionClient | PhoenixFuturesExecutionClient:
         """
-        Create a new Binance execution client.
+        Create a new Phoenix execution client.
 
         Parameters
         ----------
@@ -307,7 +308,7 @@ class BinanceLiveExecClientFactory(LiveExecClientFactory):
             The event loop for the client.
         name : str
             The client name.
-        config : BinanceExecClientConfig
+        config : PhoenixExecClientConfig
             The configuration for the client.
         msgbus : MessageBus
             The message bus for the client.
@@ -318,16 +319,16 @@ class BinanceLiveExecClientFactory(LiveExecClientFactory):
 
         Returns
         -------
-        BinanceExecutionClient
+        PhoenixExecutionClient
 
         Raises
         ------
         ValueError
-            If `config.account_type` is not a valid `BinanceAccountType`.
+            If `config.account_type` is not a valid `PhoenixAccountType`.
 
         """
         # Get HTTP client singleton
-        client: BinanceHttpClient = get_cached_binance_http_client(
+        client: PhoenixHttpClient = get_cached_phoenix_http_client(
             clock=clock,
             account_type=config.account_type,
             key=config.api_key,
@@ -343,10 +344,10 @@ class BinanceLiveExecClientFactory(LiveExecClientFactory):
             is_us=config.us,
         )
 
-        provider: BinanceSpotInstrumentProvider | BinanceFuturesInstrumentProvider
+        provider: PhoenixSpotInstrumentProvider | PhoenixFuturesInstrumentProvider
         if config.account_type.is_spot or config.account_type.is_margin:
             # Get instrument provider singleton
-            provider = get_cached_binance_spot_instrument_provider(
+            provider = get_cached_phoenix_spot_instrument_provider(
                 client=client,
                 clock=clock,
                 account_type=config.account_type,
@@ -354,7 +355,7 @@ class BinanceLiveExecClientFactory(LiveExecClientFactory):
                 config=config.instrument_provider,
             )
 
-            return BinanceSpotExecutionClient(
+            return PhoenixSpotExecutionClient(
                 loop=loop,
                 client=client,
                 msgbus=msgbus,
@@ -367,14 +368,14 @@ class BinanceLiveExecClientFactory(LiveExecClientFactory):
             )
         else:
             # Get instrument provider singleton
-            provider = get_cached_binance_futures_instrument_provider(
+            provider = get_cached_phoenix_futures_instrument_provider(
                 client=client,
                 clock=clock,
                 account_type=config.account_type,
                 config=config.instrument_provider,
             )
 
-            return BinanceFuturesExecutionClient(
+            return PhoenixFuturesExecutionClient(
                 loop=loop,
                 client=client,
                 msgbus=msgbus,
@@ -387,85 +388,85 @@ class BinanceLiveExecClientFactory(LiveExecClientFactory):
             )
 
 
-def _get_api_key(account_type: BinanceAccountType, is_testnet: bool) -> str:
+def _get_api_key(account_type: PhoenixAccountType, is_testnet: bool) -> str:
     if is_testnet:
         if account_type.is_spot_or_margin:
-            return get_env_key("BINANCE_TESTNET_API_KEY")
+            return get_env_key("PHOENIX_TESTNET_API_KEY")
         else:
-            return get_env_key("BINANCE_FUTURES_TESTNET_API_KEY")
+            return get_env_key("PHOENIX_FUTURES_TESTNET_API_KEY")
 
     if account_type.is_spot_or_margin:
-        return get_env_key("BINANCE_API_KEY")
+        return get_env_key("PHOENIX_API_KEY")
     else:
-        return get_env_key("BINANCE_FUTURES_API_KEY")
+        return get_env_key("PHOENIX_FUTURES_API_KEY")
 
 
-def _get_api_secret(account_type: BinanceAccountType, is_testnet: bool) -> str:
+def _get_api_secret(account_type: PhoenixAccountType, is_testnet: bool) -> str:
     if is_testnet:
         if account_type.is_spot_or_margin:
-            return get_env_key("BINANCE_TESTNET_API_SECRET")
+            return get_env_key("PHOENIX_TESTNET_API_SECRET")
         else:
-            return get_env_key("BINANCE_FUTURES_TESTNET_API_SECRET")
+            return get_env_key("PHOENIX_FUTURES_TESTNET_API_SECRET")
 
     if account_type.is_spot_or_margin:
-        return get_env_key("BINANCE_API_SECRET")
+        return get_env_key("PHOENIX_API_SECRET")
     else:
-        return get_env_key("BINANCE_FUTURES_API_SECRET")
+        return get_env_key("PHOENIX_FUTURES_API_SECRET")
 
 
-def _get_http_base_url(account_type: BinanceAccountType, is_testnet: bool, is_us: bool) -> str:
+def _get_http_base_url(account_type: PhoenixAccountType, is_testnet: bool, is_us: bool) -> str:
     # Testnet base URLs
     if is_testnet:
         if account_type.is_spot_or_margin:
-            return "https://testnet.binance.vision"
-        elif account_type == BinanceAccountType.USDT_FUTURE:
-            return "https://testnet.binancefuture.com"
-        elif account_type == BinanceAccountType.COIN_FUTURE:
-            return "https://testnet.binancefuture.com"
+            return "https://testnet.phoenix.vision"
+        elif account_type == PhoenixAccountType.USDT_FUTURE:
+            return "https://testnet.phoenixfuture.com"
+        elif account_type == PhoenixAccountType.COIN_FUTURE:
+            return "https://testnet.phoenixfuture.com"
         else:
             raise RuntimeError(  # pragma: no cover (design-time error)
-                f"invalid `BinanceAccountType`, was {account_type}",  # pragma: no cover
+                f"invalid `PhoenixAccountType`, was {account_type}",  # pragma: no cover
             )
 
     # Live base URLs
     top_level_domain: str = "us" if is_us else "com"
     if account_type.is_spot:
-        return f"https://api.binance.{top_level_domain}"
+        return f"https://api.phoenix.{top_level_domain}"
     elif account_type.is_margin:
-        return f"https://sapi.binance.{top_level_domain}"
-    elif account_type == BinanceAccountType.USDT_FUTURE:
-        return f"https://fapi.binance.{top_level_domain}"
-    elif account_type == BinanceAccountType.COIN_FUTURE:
-        return f"https://dapi.binance.{top_level_domain}"
+        return f"https://sapi.phoenix.{top_level_domain}"
+    elif account_type == PhoenixAccountType.USDT_FUTURE:
+        return f"https://fapi.phoenix.{top_level_domain}"
+    elif account_type == PhoenixAccountType.COIN_FUTURE:
+        return f"https://dapi.phoenix.{top_level_domain}"
     else:
         raise RuntimeError(  # pragma: no cover (design-time error)
-            f"invalid `BinanceAccountType`, was {account_type}",  # pragma: no cover
+            f"invalid `PhoenixAccountType`, was {account_type}",  # pragma: no cover
         )
 
 
-def _get_ws_base_url(account_type: BinanceAccountType, is_testnet: bool, is_us: bool) -> str:
+def _get_ws_base_url(account_type: PhoenixAccountType, is_testnet: bool, is_us: bool) -> str:
     # Testnet base URLs
     if is_testnet:
         if account_type.is_spot_or_margin:
-            return "wss://testnet.binance.vision"
-        elif account_type == BinanceAccountType.USDT_FUTURE:
-            return "wss://stream.binancefuture.com"
-        elif account_type == BinanceAccountType.COIN_FUTURE:
+            return "wss://testnet.phoenix.vision"
+        elif account_type == PhoenixAccountType.USDT_FUTURE:
+            return "wss://stream.phoenixfuture.com"
+        elif account_type == PhoenixAccountType.COIN_FUTURE:
             raise ValueError("no testnet for COIN-M futures")
         else:
             raise RuntimeError(  # pragma: no cover (design-time error)
-                f"invalid `BinanceAccountType`, was {account_type}",  # pragma: no cover
+                f"invalid `PhoenixAccountType`, was {account_type}",  # pragma: no cover
             )
 
     # Live base URLs
     top_level_domain: str = "us" if is_us else "com"
     if account_type.is_spot_or_margin:
-        return f"wss://stream.binance.{top_level_domain}:9443"
-    elif account_type == BinanceAccountType.USDT_FUTURE:
-        return f"wss://fstream.binance.{top_level_domain}"
-    elif account_type == BinanceAccountType.COIN_FUTURE:
-        return f"wss://dstream.binance.{top_level_domain}"
+        return f"wss://stream.phoenix.{top_level_domain}:9443"
+    elif account_type == PhoenixAccountType.USDT_FUTURE:
+        return f"wss://fstream.phoenix.{top_level_domain}"
+    elif account_type == PhoenixAccountType.COIN_FUTURE:
+        return f"wss://dstream.phoenix.{top_level_domain}"
     else:
         raise RuntimeError(
-            f"invalid `BinanceAccountType`, was {account_type}",
+            f"invalid `PhoenixAccountType`, was {account_type}",
         )  # pragma: no cover (design-time error)

@@ -1,0 +1,210 @@
+# -------------------------------------------------------------------------------------------------
+#  Copyright (C) 2024 808putnam All rights reserved.
+#
+#  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
+#  You may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at https://www.gnu.org/licenses/lgpl-3.0.en.html
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+# -------------------------------------------------------------------------------------------------
+
+import msgspec
+
+from nautilus_trader.adapters.phoenix.common.enums import PhoenixOrderType
+from nautilus_trader.adapters.phoenix.common.schemas.market import PhoenixExchangeFilter
+from nautilus_trader.adapters.phoenix.common.schemas.market import PhoenixOrderBookDelta
+from nautilus_trader.adapters.phoenix.common.schemas.market import PhoenixRateLimit
+from nautilus_trader.adapters.phoenix.common.schemas.market import PhoenixSymbolFilter
+from nautilus_trader.core.datetime import millis_to_nanos
+from nautilus_trader.model.data import BookOrder
+from nautilus_trader.model.data import OrderBookDelta
+from nautilus_trader.model.data import OrderBookDeltas
+from nautilus_trader.model.data import TradeTick
+from nautilus_trader.model.enums import AggressorSide
+from nautilus_trader.model.enums import BookAction
+from nautilus_trader.model.enums import CurrencyType
+from nautilus_trader.model.enums import OrderSide
+from nautilus_trader.model.identifiers import InstrumentId
+from nautilus_trader.model.identifiers import TradeId
+from nautilus_trader.model.objects import Currency
+from nautilus_trader.model.objects import Price
+from nautilus_trader.model.objects import Quantity
+
+
+################################################################################
+# HTTP responses
+################################################################################
+
+
+class PhoenixSpotSymbolInfo(msgspec.Struct, frozen=True):
+    """
+    HTTP response 'inner struct' from `Phoenix Spot/Margin` GET /api/v3/exchangeInfo.
+    """
+
+    symbol: str
+    status: str
+    baseAsset: str
+    baseAssetPrecision: int
+    quoteAsset: str
+    quotePrecision: int
+    quoteAssetPrecision: int
+    orderTypes: list[PhoenixOrderType]
+    icebergAllowed: bool
+    ocoAllowed: bool
+    quoteOrderQtyMarketAllowed: bool
+    allowTrailingStop: bool
+    isSpotTradingAllowed: bool
+    isMarginTradingAllowed: bool
+    filters: list[PhoenixSymbolFilter]
+    permissions: list[str]
+
+    def parse_to_base_asset(self):
+        return Currency(
+            code=self.baseAsset,
+            precision=self.baseAssetPrecision,
+            iso4217=0,  # Currently undetermined for crypto assets
+            name=self.baseAsset,
+            currency_type=CurrencyType.CRYPTO,
+        )
+
+    def parse_to_quote_asset(self):
+        return Currency(
+            code=self.quoteAsset,
+            precision=self.quoteAssetPrecision,
+            iso4217=0,  # Currently undetermined for crypto assets
+            name=self.quoteAsset,
+            currency_type=CurrencyType.CRYPTO,
+        )
+
+
+class PhoenixSpotExchangeInfo(msgspec.Struct, frozen=True):
+    """
+    HTTP response from `Phoenix Spot/Margin` GET /api/v3/exchangeInfo.
+    """
+
+    timezone: str
+    serverTime: int
+    rateLimits: list[PhoenixRateLimit]
+    exchangeFilters: list[PhoenixExchangeFilter]
+    symbols: list[PhoenixSpotSymbolInfo]
+
+
+class PhoenixSpotAvgPrice(msgspec.Struct, frozen=True):
+    """
+    HTTP response from `Phoenix Spot/Margin` GET /api/v3/avgPrice.
+    """
+
+    mins: int
+    price: str
+
+
+################################################################################
+# WebSocket messages
+################################################################################
+
+
+class PhoenixSpotOrderBookPartialDepthData(msgspec.Struct):
+    """
+    Websocket message 'inner struct' for 'Phoenix Spot/Margin Partial Book Depth
+    Streams.'.
+    """
+
+    lastUpdateId: int
+    bids: list[PhoenixOrderBookDelta]
+    asks: list[PhoenixOrderBookDelta]
+
+    def parse_to_order_book_snapshot(
+        self,
+        instrument_id: InstrumentId,
+        ts_init: int,
+    ) -> OrderBookDeltas:
+        bids = [
+            BookOrder(OrderSide.BUY, Price.from_str(o.price), Quantity.from_str(o.size), 0)
+            for o in self.bids
+        ]
+        asks = [
+            BookOrder(OrderSide.SELL, Price.from_str(o.price), Quantity.from_str(o.size), 0)
+            for o in self.asks
+        ]
+
+        deltas = [OrderBookDelta.clear(instrument_id, ts_init, ts_init, self.lastUpdateId)]
+        deltas += [
+            OrderBookDelta(
+                instrument_id,
+                BookAction.ADD,
+                o,
+                ts_init,
+                ts_init,
+                sequence=self.lastUpdateId,
+            )
+            for o in bids + asks
+        ]
+        return OrderBookDeltas(instrument_id=instrument_id, deltas=deltas)
+
+
+class PhoenixSpotOrderBookPartialDepthMsg(msgspec.Struct):
+    """
+    WebSocket message for 'Phoenix Spot/Margin' Partial Book Depth Streams.
+    """
+
+    stream: str
+    data: PhoenixSpotOrderBookPartialDepthData
+
+
+class PhoenixSpotTradeData(msgspec.Struct):
+    """
+    WebSocket message 'inner struct' for `Phoenix Spot/Margin` Trade Streams.
+
+    Fields
+    ------
+    - e: Event type
+    - E: Event time
+    - s: Symbol
+    - t: Trade ID
+    - p: Price
+    - q: Quantity
+    - b: Buyer order ID
+    - a: Seller order ID
+    - T: Trade time
+    - m: Is the buyer the market maker?
+
+    """
+
+    e: str  # Event type
+    E: int  # Event time
+    s: str  # Symbol
+    t: int  # Trade ID
+    p: str  # Price
+    q: str  # Quantity
+    b: int  # Buyer order ID
+    a: int  # Seller order ID
+    T: int  # Trade time
+    m: bool  # Is the buyer the market maker?
+
+    def parse_to_trade_tick(
+        self,
+        instrument_id: InstrumentId,
+        ts_init: int,
+    ) -> TradeTick:
+        return TradeTick(
+            instrument_id=instrument_id,
+            price=Price.from_str(self.p),
+            size=Quantity.from_str(self.q),
+            aggressor_side=AggressorSide.SELLER if self.m else AggressorSide.BUYER,
+            trade_id=TradeId(str(self.t)),
+            ts_event=millis_to_nanos(self.T),
+            ts_init=ts_init,
+        )
+
+
+class PhoenixSpotTradeMsg(msgspec.Struct):
+    """
+    WebSocket message from `Phoenix` Trade Streams.
+    """
+
+    stream: str
+    data: PhoenixSpotTradeData

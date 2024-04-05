@@ -43,10 +43,10 @@ class PhoenixExecClientConfig(LiveExecClientConfig, frozen=True):
 
     Parameters
     ----------
-    account_type : BinanceAccountType, default BinanceAccountType.SPOT
+    account_type : PhoenixAccountType, default PhoenixAccountType.SPOT
         The account type for the client.
     testnet : bool, default False
-        If the client is connecting to a Binance testnet.
+        If the client is connecting to a Phoenix testnet.
 
     """
 
