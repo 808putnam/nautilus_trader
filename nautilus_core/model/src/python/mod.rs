@@ -108,6 +108,7 @@ pub fn model(_: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_class::<crate::instruments::synthetic::SyntheticInstrument>()?;
     // Order book
     m.add_class::<crate::orderbook::book_mbo::OrderBookMbo>()?;
+    m.add_class::<crate::orderbook::arbitrage_book_mbp::ArbitrageOrderBookMbp>()?;
     m.add_class::<crate::orderbook::book_mbp::OrderBookMbp>()?;
     m.add_class::<crate::orderbook::level::Level>()?;
     // Events - order

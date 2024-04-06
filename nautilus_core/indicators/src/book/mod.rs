@@ -13,4 +13,5 @@
 //  limitations under the License.
 // -------------------------------------------------------------------------------------------------
 
+pub mod arbitrage_imbalance;
 pub mod imbalance;

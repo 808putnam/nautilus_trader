@@ -436,7 +436,7 @@ mod tests {
     #[rstest]
     fn test_orderbook_creation() {
         let instrument_id = InstrumentId::from("AAPL.XNAS");
-        let book = OrderBookMbp::new(instrument_id, false);
+        let book = ArbitrageOrderBookMbp::new(instrument_id, false);
 
         assert_eq!(book.instrument_id, instrument_id);
         assert!(!book.top_only);
@@ -448,7 +448,7 @@ mod tests {
     #[rstest]
     fn test_orderbook_reset() {
         let instrument_id = InstrumentId::from("AAPL.XNAS");
-        let mut book = OrderBookMbp::new(instrument_id, true);
+        let mut book = ArbitrageOrderBookMbp::new(instrument_id, true);
         book.sequence = 10;
         book.ts_last = 100;
         book.count = 3;
@@ -464,7 +464,7 @@ mod tests {
     #[rstest]
     fn test_update_quote_tick_l1() {
         let instrument_id = InstrumentId::from("ETHUSDT-PERP.BINANCE");
-        let mut book = OrderBookMbp::new(instrument_id, true);
+        let mut book = ArbitrageOrderBookMbp::new(instrument_id, true);
         let quote = QuoteTick::new(
             InstrumentId::from("ETHUSDT-PERP.BINANCE"),
             Price::from("5000.000"),
@@ -487,7 +487,7 @@ mod tests {
     #[rstest]
     fn test_update_trade_tick_l1() {
         let instrument_id = InstrumentId::from("ETHUSDT-PERP.BINANCE");
-        let mut book = OrderBookMbp::new(instrument_id, true);
+        let mut book = ArbitrageOrderBookMbp::new(instrument_id, true);
 
         let price = Price::from("15000.000");
         let size = Quantity::from("10.00000000");
@@ -512,7 +512,7 @@ mod tests {
     #[rstest]
     fn test_check_integrity_when_crossed() {
         let instrument_id = InstrumentId::from("ETHUSDT-PERP.BINANCE");
-        let mut book = OrderBookMbp::new(instrument_id, false);
+        let mut book = ArbitrageOrderBookMbp::new(instrument_id, false);
 
         let ask1 = BookOrder::new(
             OrderSide::Sell,
