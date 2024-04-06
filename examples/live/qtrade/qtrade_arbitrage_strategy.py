@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -------------------------------------------------------------------------------------------------
-#  Copyright (C) 2015-2024 Nautech Systems Pty Ltd. All rights reserved.
-#  https://nautechsystems.io
+#  Copyright (C) 2024 808putnam All rights reserved.
 #
 #  Licensed under the GNU Lesser General Public License Version 3.0 (the "License");
 #  You may not use this file except in compliance with the License.
@@ -19,15 +18,15 @@ from decimal import Decimal
 from nautilus_trader.adapters.phoenix.common.enums import PhoenixAccountType
 from nautilus_trader.adapters.phoenix.config import PhoenixDataClientConfig
 from nautilus_trader.adapters.phoenix.config import PhoenixExecClientConfig
-from nautilus_trader.adapters.binance.factories import BinanceLiveDataClientFactory
-from nautilus_trader.adapters.binance.factories import BinanceLiveExecClientFactory
+from nautilus_trader.adapters.phoenix.factories import PhoenixLiveDataClientFactory
+from nautilus_trader.adapters.phoenix.factories import PhoenixLiveExecClientFactory
 from nautilus_trader.config import CacheConfig
 from nautilus_trader.config import InstrumentProviderConfig
 from nautilus_trader.config import LiveExecEngineConfig
 from nautilus_trader.config import LoggingConfig
 from nautilus_trader.config import TradingNodeConfig
-from nautilus_trader.examples.strategies.orderbook_imbalance_rust import OrderBookImbalance
-from nautilus_trader.examples.strategies.orderbook_imbalance_rust import OrderBookImbalanceConfig
+from nautilus_trader.examples.strategies.arbitrage_orderbook_imbalance_rust import ArbitrageOrderBookImbalance
+from nautilus_trader.examples.strategies.arbitrage_orderbook_imbalance_rust import ArbitrageOrderBookImbalanceConfig
 from nautilus_trader.live.node import TradingNode
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import TraderId
@@ -58,7 +57,7 @@ config_node = TradingNodeConfig(
     # snapshot_orders=True,
     # snapshot_positions=True,
     # snapshot_positions_interval=5.0,
-    # See adapters/binance/test_factories for listing of urls
+    # See adapters/phoenix/factories.py for listing of urls
     data_clients={
         "PHOENIX": PhoenixDataClientConfig(
             account_type=PhoenixAccountType.SPOT,
@@ -84,21 +83,21 @@ config_node = TradingNodeConfig(
 node = TradingNode(config=config_node)
 
 # Configure your strategy
-strat_config = OrderBookImbalanceConfig(
+strat_config = ArbitrageOrderBookImbalanceConfig(
     instrument_id=InstrumentId.from_str("ETHUSDT.BINANCE"),
     external_order_claims=[InstrumentId.from_str("ETHUSDT.BINANCE")],
     max_trade_size=Decimal("0.010"),
 )
 
 # Instantiate your strategy
-strategy = OrderBookImbalance(config=strat_config)
+strategy = ArbitrageOrderBookImbalance(config=strat_config)
 
 # Add your strategies and modules
 node.trader.add_strategy(strategy)
 
 # Register your client factories with the node (can take user defined factories)
-node.add_data_client_factory("BINANCE", BinanceLiveDataClientFactory)
-node.add_exec_client_factory("BINANCE", BinanceLiveExecClientFactory)
+node.add_data_client_factory("PHOENIX", PhoenixLiveDataClientFactory)
+node.add_exec_client_factory("PHOENIX", PhoenixLiveExecClientFactory)
 node.build()
 
 
