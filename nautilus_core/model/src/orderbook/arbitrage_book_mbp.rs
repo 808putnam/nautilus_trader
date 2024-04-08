@@ -30,6 +30,11 @@ use crate::{
     types::{price::Price, quantity::Quantity},
 };
 
+// qtrade
+use std::fs::File;
+use std::process::{Child, Stdio};
+use anyhow::Result;
+
 /// Provides an order book which can handle MBP (market by price, a.k.a. L2)
 /// granularity data. The book can also be specified as being 'top only', meaning
 /// it will only maintain the state of the top most level of the bid and ask side.
@@ -100,6 +105,32 @@ impl ArbitrageOrderBookMbp {
         }
 
         self.increment(ts_event, sequence);
+    }
+
+    #[allow(dead_code)]
+    fn start_phoenix_client(test_log_stdout: bool) -> Result<Child> {
+        // Start a validator for testing.
+        let (test_validator_stdout, test_validator_stderr) = match test_log_stdout {
+            true => {
+                let test_validator_stdout_file = File::create("phoenix_client.log")?;
+                let test_validator_sterr_file = test_validator_stdout_file.try_clone()?;
+                (
+                    Stdio::from(test_validator_stdout_file),
+                    Stdio::from(test_validator_sterr_file),
+                )
+            }
+            false => (Stdio::inherit(), Stdio::inherit()),
+        };
+
+        let mut validator_handle = std::process::Command::new("phoenix_client")
+            .arg("--ledger")
+            .arg("--mint")
+            .stdout(test_validator_stdout)
+            .stderr(test_validator_stderr)
+            .spawn()
+            .map_err(|e| anyhow::format_err!("{}", e.to_string()))?;
+
+        Ok(validator_handle)
     }
 
     pub fn update_quote_tick(&mut self, quote: &QuoteTick) {

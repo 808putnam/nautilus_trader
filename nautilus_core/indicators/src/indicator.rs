@@ -20,8 +20,11 @@ use nautilus_model::{
         bar::Bar, delta::OrderBookDelta, deltas::OrderBookDeltas, depth::OrderBookDepth10,
         quote::QuoteTick, trade::TradeTick,
     },
-    orderbook::{book_mbo::OrderBookMbo, book_mbp::OrderBookMbp, arbitrage_book_mbp::ArbitrageOrderBookMbp},
+    orderbook::{book_mbo::OrderBookMbo, book_mbp::OrderBookMbp},
 };
+
+// qtrade
+use nautilus_model::orderbook::arbitrage_book_mbp::ArbitrageOrderBookMbp;
 
 const IMPL_ERR: &str = "is not implemented for";
 
