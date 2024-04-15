@@ -22,7 +22,7 @@ use crate::{
     },
     enums::{BookType, OrderSide},
     identifiers::instrument_id::InstrumentId,
-    orderbook::{book_mbp::ArbitrageOrderBookMbp, level::Level},
+    orderbook::{arbitrage_book_mbp::ArbitrageOrderBookMbp, level::Level},
     types::{price::Price, quantity::Quantity},
 };
 
