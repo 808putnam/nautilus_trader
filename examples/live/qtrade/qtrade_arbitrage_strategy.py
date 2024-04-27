@@ -31,9 +31,27 @@ from nautilus_trader.live.node import TradingNode
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import TraderId
 
+# qtrade: bloxroute
+# import asyncio
+# import base58
+# import bxsolana
+# from bxsolana import provider
 
 # *** THIS IS A TEST STRATEGY WITH NO ALPHA ADVANTAGE WHATSOEVER. ***
 # *** IT IS NOT INTENDED TO BE USED TO TRADE LIVE WITH REAL MONEY. ***
+
+
+# qtrade: bloxroute
+# key_array = <insert from ~/.config/solana/id.json>
+# full_key = key_array[0:64]
+# secret_key = key_array[0:32]
+# public_key = key_array[32:64]
+# key = base58.b58encode(bytes(full_key)).decode()
+# sk = base58.b58encode(bytes(secret_key)).decode()
+# pk = base58.b58encode(bytes(public_key)).decode()
+# print(key)
+# print(sk)
+# print(pk)
 
 
 # Configure the trading node
@@ -78,6 +96,21 @@ config_node = TradingNodeConfig(
     timeout_disconnection=10.0,
     timeout_post_stop=5.0,
 )
+
+# qtrade: bloxroute
+# async def prep_bxsolana():
+#     # async with provider.http() as api:
+#     #     print(await api.get_orderbook(market="ETHUSDT"))
+# 
+#     p = provider.grpc_testnet()
+#     api = await bxsolana.trader_api(p)
+# # 
+#     try:
+#         await api.get_orderbook(market="ETHUSDT")
+#     finally:
+#         p.close()
+# 
+# asyncio.run(prep_bxsolana())
 
 # Instantiate the node with a configuration
 node = TradingNode(config=config_node)
