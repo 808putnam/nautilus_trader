@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "1. nautilus_trader - Debug python launch",
+            "type": "debugpy",
+            "request": "launch",
+            "python": "${workspaceFolder}/.venv/bin/python3",
+            "program": "${workspaceFolder}/examples/live/qtrade/qtrade_arbitrage_strategy.py",
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "2. nautilus_core - Debug rust attach",
+            "type": "lldb",
+            "request": "attach",
+            "program": "${workspaceFolder}/.venv/bin/python3",
+            "pid": "${command:pickProcess}",
+            "sourceMap": {
+                ".": ".."
+            },
+            "sourceLanguages": ["rust"]
+        },
+    ]
+}
