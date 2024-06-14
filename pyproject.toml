@@ -69,6 +69,17 @@ defusedxml = {version = "^0.7.1", optional = true}
 docker = {version = "^7.1.0", optional = true}
 nautilus_ibapi = {version = "==10.19.2", optional = true}  # Pinned for stability
 
+# qtrade: Additions for adding in bxsolana-trader
+aiohttp = "^3.9.5"
+grpclib = "^0.4.7"
+aiounittest = "^1.4.2"
+base58 = "^2.1.1"
+solana = "^0.34.2"
+solders = "^0.21.0"
+bx-jsonrpc-py = "^0.2.0"
+bxsolana-trader-proto = "^0.0.67"
+bxsolana-trader = {path = "../qtrade-client/solana-trader-client-python/dist/bxsolana_trader-2.1.1.tar.gz"}
+
 [tool.poetry.extras]
 betfair = ["betfair_parser"]
 docker = ["docker"]
