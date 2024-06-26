@@ -12,6 +12,7 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+import asyncio
 import pandas as pd
 
 from nautilus_trader.execution.messages import CancelAllOrders
@@ -27,7 +28,20 @@ from nautilus_trader.live.execution_client import LiveExecutionClient
 from nautilus_trader.model.identifiers import ClientOrderId
 from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import VenueOrderId
+from nautilus_trader.model.identifiers import ClientId
+from nautilus_trader.model.enums import AccountType
+from nautilus_trader.model.enums import OmsType
 
+from nautilus_trader.common.component import LiveClock
+from nautilus_trader.common.component import MessageBus
+from nautilus_trader.cache.cache import Cache
+
+from nautilus_trader.adapters.qtrade.providers import QtradeInstrumentProvider
+from nautilus_trader.adapters.qtrade.config import QtradeExecClientConfig
+from nautilus_trader.adapters.qtrade.common.constants import QTRADE_VENUE
+
+import bxsolana
+from bxsolana import provider
 
 # The 'pragma: no cover' comment excludes a method from test coverage.
 # https://coverage.readthedocs.io/en/coverage-4.3.3/excluding.html
@@ -40,9 +54,28 @@ from nautilus_trader.model.identifiers import VenueOrderId
 # *** THESE PRAGMA: NO COVER COMMENTS MUST BE REMOVED IN ANY IMPLEMENTATION. ***
 
 
-class RaydiumLiveExecutionClient(LiveExecutionClient):
+class QtradeLiveExecutionClient(LiveExecutionClient):
     """
-    An example of a ``LiveExecutionClient`` highlighting the method requirements.
+    Provides an execution client for the `Qtrade` exchange.
+
+    Parameters
+    ----------
+    loop : asyncio.AbstractEventLoop
+        The event loop for the client.
+    client : provider.Provider
+        The Qtrade HTTP client.
+    msgbus : MessageBus
+        The message bus for the client.
+    cache : Cache
+        The cache for the client.
+    clock : LiveClock
+        The clock for the client.
+    instrument_provider : QtradeInstrumentProvider
+        The instrument provider.
+    config : QtradeExecClientConfig
+        The configuration for the client.
+    name : str, optional
+        The custom client ID.
 
     +--------------------------------------------+-------------+
     | Method                                     | Requirement |
@@ -65,10 +98,33 @@ class RaydiumLiveExecutionClient(LiveExecutionClient):
 
     """
 
+    def __init__(
+        self,
+        loop: asyncio.AbstractEventLoop,
+        client: provider.Provider,
+        msgbus: MessageBus,
+        cache: Cache,
+        clock: LiveClock,
+        instrument_provider: QtradeInstrumentProvider,
+        config: QtradeExecClientConfig,
+        name: str | None = None,
+    ):
+        super().__init__(
+            loop=loop,
+            client_id=ClientId(name or QTRADE_VENUE.value),
+            venue=QTRADE_VENUE,
+            oms_type=OmsType.NETTING,
+            instrument_provider=instrument_provider,
+            account_type=AccountType.CASH,
+            base_currency=None,
+            msgbus=msgbus,
+            cache=cache,
+            clock=clock,
+        )
+
     async def _connect(self) -> None:
-        raise NotImplementedError(
-            "method `_connect` must be implemented in the subclass",
-        )  # pragma: no cover
+        # Initialize instrument provider
+        await self._instrument_provider.initialize()
 
     async def _disconnect(self) -> None:
         raise NotImplementedError(
@@ -86,50 +142,10 @@ class RaydiumLiveExecutionClient(LiveExecutionClient):
         )  # pragma: no cover
 
     # -- EXECUTION REPORTS ------------------------------------------------------------------------
-
-    async def generate_order_status_report(
-        self,
-        instrument_id: InstrumentId,
-        client_order_id: ClientOrderId | None = None,
-        venue_order_id: VenueOrderId | None = None,
-    ) -> OrderStatusReport | None:
-        raise NotImplementedError(
-            "method `generate_order_status_report` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def generate_order_status_reports(
-        self,
-        instrument_id: InstrumentId | None = None,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
-        open_only: bool = False,
-    ) -> list[OrderStatusReport]:
-        raise NotImplementedError(
-            "method `generate_order_status_reports` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def generate_fill_reports(
-        self,
-        instrument_id: InstrumentId | None = None,
-        venue_order_id: VenueOrderId | None = None,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
-    ) -> list[FillReport]:
-        raise NotImplementedError(
-            "method `generate_fill_reports` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def generate_position_status_reports(
-        self,
-        instrument_id: InstrumentId | None = None,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
-    ) -> list[PositionStatusReport]:
-        raise NotImplementedError(
-            "method `generate_position_status_reports` must be implemented in the subclass",
-        )  # pragma: no cover
+    # TODO: See nautilus_tader.adapters.binance.common.execution.py
 
     # -- COMMAND HANDLERS -------------------------------------------------------------------------
+    # TODO: See nautilus_tader.adapters.binance.common.execution.py
 
     async def _submit_order(self, command: SubmitOrder) -> None:
         raise NotImplementedError(

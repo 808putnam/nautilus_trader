@@ -13,13 +13,10 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
-from decimal import Decimal
-
-# from nautilus_trader.adapters.phoenix.common.enums import PhoenixAccountType
-# from nautilus_trader.adapters.phoenix.config import PhoenixDataClientConfig
-# from nautilus_trader.adapters.phoenix.config import PhoenixExecClientConfig
-# from nautilus_trader.adapters.phoenix.factories import PhoenixLiveDataClientFactory
-# from nautilus_trader.adapters.phoenix.factories import PhoenixLiveExecClientFactory
+from nautilus_trader.adapters.qtrade_raydium.config import RaydiumDataClientConfig
+from nautilus_trader.adapters.qtrade.config import QtradeExecClientConfig
+from nautilus_trader.adapters.qtrade_raydium.factories import RaydiumLiveDataClientFactory
+from nautilus_trader.adapters.qtrade.factories import QtradeLiveExecClientFactory
 from nautilus_trader.config import CacheConfig
 from nautilus_trader.config import InstrumentProviderConfig
 from nautilus_trader.config import LiveExecEngineConfig
@@ -28,12 +25,11 @@ from nautilus_trader.config import TradingNodeConfig
 from nautilus_trader.examples.strategies.qtrade_arbitrage_strategy import QtradeArbitrageStrategy
 from nautilus_trader.examples.strategies.qtrade_arbitrage_strategy import QtradeArbitrageStrategyConfig
 from nautilus_trader.live.node import TradingNode
-from nautilus_trader.model.identifiers import InstrumentId
 from nautilus_trader.model.identifiers import TraderId
 
 # Configure the trading node
 config_node = TradingNodeConfig(
-    trader_id=TraderId("TESTER-001"),
+    trader_id=TraderId("QTRADE-001"),
     logging=LoggingConfig(
         log_level="INFO",
         # log_level_file="DEBUG",
@@ -54,24 +50,17 @@ config_node = TradingNodeConfig(
     # snapshot_positions_interval=5.0,
     data_clients={
         "RAYDIUM": RaydiumDataClientConfig(
-            api_key=None,  # 'BINANCE_API_KEY' env var
-            api_secret=None,  # 'BINANCE_API_SECRET' env var
-            account_type=BinanceAccountType.SPOT,
-            base_url_http=None,  # Override with custom endpoint
-            base_url_ws=None,  # Override with custom endpoint
-            testnet=False,  # If client uses the testnet
+            auth_header=None,  # 'AUTH_HEADER' env var
+            private_key=None,  # 'PRIVATE_KEY' env var
+            public_key=None,  # 'PUBLIC_KEY' env var
             instrument_provider=InstrumentProviderConfig(load_all=True),
         ),
     },
     exec_clients={
-        "RAYDIUM": RaydiumExecClientConfig(
-            api_key=None,  # 'BINANCE_API_KEY' env var
-            api_secret=None,  # 'BINANCE_API_SECRET' env var
-            account_type=BinanceAccountType.SPOT,
-            base_url_http=None,  # Override with custom endpoint
-            base_url_ws=None,  # Override with custom endpoint
-            us=False,  # If client is for Binance US
-            testnet=False,  # If client uses the testnet
+        "QTRADE": QtradeExecClientConfig(
+            auth_header=None,  # 'AUTH_HEADER' env var
+            private_key=None,  # 'PRIVATE_KEY' env var
+            public_key=None,  # 'PUBLIC_KEY' env var
             instrument_provider=InstrumentProviderConfig(load_all=True),
         ),
     },
@@ -96,7 +85,7 @@ node.trader.add_strategy(strategy)
  
 # Register your client factories with the node (can take user defined factories)
 node.add_data_client_factory("RAYDIUM", RaydiumLiveDataClientFactory)
-node.add_exec_client_factory("RAYDIUM", RaydiumLiveExecClientFactory)
+node.add_exec_client_factory("QTRADE", QtradeLiveExecClientFactory)
 node.build()
 
 # Stop and dispose of the node with SIGINT/CTRL+C

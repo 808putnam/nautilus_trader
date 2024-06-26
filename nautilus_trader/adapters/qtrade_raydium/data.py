@@ -12,16 +12,27 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
+import asyncio
+import decimal
+from decimal import Decimal
+
 import pandas as pd
 
+from nautilus_trader.adapters.qtrade_raydium.common.constants import RAYDIUM_VENUE
 from nautilus_trader.core.uuid import UUID4
-from nautilus_trader.live.data_client import LiveDataClient
 from nautilus_trader.live.data_client import LiveMarketDataClient
-from nautilus_trader.model.data import BarType
-from nautilus_trader.model.data import DataType
-from nautilus_trader.model.enums import BookType
+from nautilus_trader.cache.cache import Cache
+from nautilus_trader.common.component import LiveClock
+from nautilus_trader.common.component import MessageBus
+from nautilus_trader.common.providers import InstrumentProvider
+from nautilus_trader.adapters.qtrade_raydium.config import RaydiumDataClientConfig
+from nautilus_trader.model.identifiers import ClientId
 from nautilus_trader.model.identifiers import InstrumentId
-from nautilus_trader.model.identifiers import Venue
+from nautilus_trader.adapters.qtrade_raydium.error import RaydiumError
+from nautilus_trader.adapters.qtrade_raydium.common.enums import RaydiumEnumParser
+from nautilus_trader.adapters.qtrade_raydium.common.enums import RaydiumErrorCode
+
+
 
 import bxsolana
 from bxsolana import provider
@@ -37,72 +48,9 @@ from bxsolana import provider
 # *** THESE PRAGMA: NO COVER COMMENTS MUST BE REMOVED IN ANY IMPLEMENTATION. ***
 
 
-class RaydiumLiveDataClient(LiveDataClient):
-    """
-    An example of a ``LiveDataClient`` highlighting the overridable abstract methods.
-
-    A live data client general handles non-market or custom data feeds and requests.
-
-    +---------------------------------------+-------------+
-    | Method                                | Requirement |
-    +---------------------------------------+-------------+
-    | _connect                              | required    |
-    | _disconnect                           | required    |
-    | reset                                 | optional    |
-    | dispose                               | optional    |
-    +---------------------------------------+-------------+
-    | _subscribe                            | optional    |
-    | _unsubscribe                          | optional    |
-    +---------------------------------------+-------------+
-    | _request                              | optional    |
-    +---------------------------------------+-------------+
-
-    """
-
-    async def _connect(self) -> None:
-        raise NotImplementedError(
-            "method `_connect` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _disconnect(self) -> None:
-        raise NotImplementedError(
-            "method `_disconnect` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    def reset(self) -> None:
-        raise NotImplementedError(
-            "method `reset` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    def dispose(self) -> None:
-        raise NotImplementedError(
-            "method `dispose` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    # -- SUBSCRIPTIONS ----------------------------------------------------------------------------
-
-    async def _subscribe(self, data_type: DataType) -> None:
-        raise NotImplementedError(
-            "method `_subscribe` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe(self, data_type: DataType) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    # -- REQUESTS ---------------------------------------------------------------------------------
-
-    async def _request(self, data_type: DataType, correlation_id: UUID4) -> None:
-        raise NotImplementedError(
-            "method `_request` must be implemented in the subclass",
-        )  # pragma: no cover
-
-
 class RaydiumLiveMarketDataClient(LiveMarketDataClient):
     """
-    An example of a ``LiveMarketDataClient`` highlighting the overridable abstract
-    methods.
+    Provides a data client for the `Raydium` exchange.
 
     A live market data client general handles market data feeds and requests.
 
@@ -143,212 +91,162 @@ class RaydiumLiveMarketDataClient(LiveMarketDataClient):
     | _request_bars                          | optional    |
     +----------------------------------------+-------------+
 
+    Parameters
+    ----------
+    loop : asyncio.AbstractEventLoop
+        The event loop for the client.
+    client : provider.Provider
+        The Raydium client.
+    msgbus : MessageBus
+        The message bus for the client.
+    cache : Cache
+        The cache for the client.
+    clock : LiveClock
+        The clock for the client.
+    instrument_provider : InstrumentProvider
+        The instrument provider.
+    name : str, optional
+        The custom client ID.
+    config : RaydiumDataClientConfig
+        The configuration for the client.
+
     """
 
-    async def _connect(self) -> None:
-        
-        # self._apiProvider = provider.http()
-        # self._instrumentProvider = QtradeSpotInstrumentProvider(self._apiProvider)
-        # await self._instrumentProvider.load_all_async()
+    def __init__(
+        self,
+        loop: asyncio.AbstractEventLoop,
+        client: provider.Provider,
+        msgbus: MessageBus,
+        cache: Cache,
+        clock: LiveClock,
+        instrument_provider: InstrumentProvider,
+        name: str | None,
+        config: RaydiumDataClientConfig,
+    ) -> None:
+        super().__init__(
+            loop=loop,
+            client_id=ClientId(name or RAYDIUM_VENUE.value),
+            venue=RAYDIUM_VENUE,
+            msgbus=msgbus,
+            cache=cache,
+            clock=clock,
+            instrument_provider=instrument_provider,
+        )
 
-        raise NotImplementedError(
-            "method `_connect` must be implemented in the subclass",
-        )  # pragma: no cover
+        # Configuration
+        self._update_instrument_interval: int = 60 * 60  # Once per hour (hardcode)
+        self._update_instruments_task: asyncio.Task | None = None
+
+        # HTTP API
+        self._http_client = client
+
+        # Enum parser
+        # Currently no enum parser is required for the Raydium client.
+
+        # WebSocket API
+        self._ws_client = provider.ws()
+
+        # Hot caches
+        self._instrument_ids: dict[str, InstrumentId] = {}
+        # TODO: Add more hot caches
+        # See adapters.binance.common.data.BinanceLiveMarketDataClient
+
+        # Register common WebSocket message handlers
+        # TODO: See adapters.binance.common.data.BinanceLiveMarketDataClient
+
+        # WebSocket msgspec decoders
+        # TODO: See adapters.binance.common.data.BinanceLiveMarketDataClient
+
+        # Retry logic (hard coded for now)
+        self._max_retries: int = 3
+        self._retry_delay: float = 1.0
+        # TODO: See adapters.binance.common.data.BinanceLiveMarketDataClient
+        # self._retry_errors: set[BinanceErrorCode] = {
+        #     BinanceErrorCode.DISCONNECTED,
+        #     BinanceErrorCode.TOO_MANY_REQUESTS,  # Short retry delays may result in bans
+        #     BinanceErrorCode.TIMEOUT,
+        #     BinanceErrorCode.INVALID_TIMESTAMP,
+        #     BinanceErrorCode.ME_RECVWINDOW_REJECT,
+        # }
+
+    async def _connect(self) -> None:
+        self._log.info("Initializing instruments...")
+        
+        await self._instrument_provider.initialize()
+
+        self._send_all_instruments_to_data_engine()
+        self._update_instruments_task = self.create_task(self._update_instruments())
+
+    async def _update_instruments(self) -> None:
+        while True:
+            retries = 0
+            while True:
+                try:
+                    self._log.debug(
+                        f"Scheduled `update_instruments` to run in "
+                        f"{self._update_instrument_interval}s",
+                    )
+                    await asyncio.sleep(self._update_instrument_interval)
+                    await self._instrument_provider.load_all_async()
+                    self._send_all_instruments_to_data_engine()
+                    break
+                except RaydiumError as e:
+                    error_code = RaydiumErrorCode(e.message["code"])
+                    retries += 1
+
+                    if not self._should_retry(error_code, retries):
+                        self._log.error(f"Error updating instruments: {e}")
+                        break
+
+                    self._log.warning(
+                        f"{error_code.name}: retrying update instruments "
+                        f"{retries}/{self._max_retries} in {self._retry_delay}s",
+                    )
+                    await asyncio.sleep(self._retry_delay)
+                except asyncio.CancelledError:
+                    self._log.debug("Canceled `update_instruments` task")
+                    return
+
+    async def _reconnect(self) -> None:
+        # TODO: See adapters.binance.common.data.BinanceLiveMarketDataClient
+        # coros = []
+        # for instrument_id in self._book_depths:
+        #     coros.append(self._order_book_snapshot_then_deltas(instrument_id))
+        # 
+        # await asyncio.gather(*coros)
+        pass
 
     async def _disconnect(self) -> None:
-        raise NotImplementedError(
-            "method `_disconnect` must be implemented in the subclass",
-        )  # pragma: no cover
+        # Cancel update instruments task
+        if self._update_instruments_task:
+            self._log.debug("Canceling `update_instruments` task")
+            self._update_instruments_task.cancel()
+            self._update_instruments_task = None
 
-    def reset(self) -> None:
-        raise NotImplementedError(
-            "method `reset` must be implemented in the subclass",
-        )  # pragma: no cover
+        # TODO
+        # await self._ws_client.disconnect()
 
-    def dispose(self) -> None:
-        raise NotImplementedError(
-            "method `dispose` must be implemented in the subclass",
-        )  # pragma: no cover
+    def _should_retry(self, error_code: RaydiumErrorCode, retries: int) -> bool:
+        if (
+            error_code not in self._retry_errors
+            or not self._max_retries
+            or retries > self._max_retries
+        ):
+            return False
+        return True
+
+    def _send_all_instruments_to_data_engine(self) -> None:
+        for instrument in self._instrument_provider.get_all().values():
+            self._handle_data(instrument)
+
+        for currency in self._instrument_provider.currencies().values():
+            self._cache.add_currency(currency)
 
     # -- SUBSCRIPTIONS ----------------------------------------------------------------------------
-
-    async def _subscribe(self, data_type: DataType) -> None:
-        raise NotImplementedError(
-            "method `_subscribe` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _subscribe_instruments(self) -> None:
-        raise NotImplementedError(
-            "method `_subscribe_instruments` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _subscribe_instrument(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_subscribe_instrument` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _subscribe_order_book_deltas(
-        self,
-        instrument_id: InstrumentId,
-        book_type: BookType,
-        depth: int | None = None,
-        kwargs: dict | None = None,
-    ) -> None:
-        raise NotImplementedError(
-            "method `_subscribe_order_book_deltas` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _subscribe_order_book_snapshots(
-        self,
-        instrument_id: InstrumentId,
-        book_type: BookType,
-        depth: int | None = None,
-        kwargs: dict | None = None,
-    ) -> None:
-        raise NotImplementedError(
-            "method `_subscribe_order_book_snapshots` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _subscribe_quote_ticks(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_subscribe_quote_ticks` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _subscribe_trade_ticks(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_subscribe_trade_ticks` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _subscribe_bars(self, bar_type: BarType) -> None:
-        raise NotImplementedError(
-            "method `_subscribe_bars` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _subscribe_instrument_status(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_subscribe_instrument_status` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _subscribe_instrument_close(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_subscribe_instrument_close` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe(self, data_type: DataType) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe_instruments(self) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe_instruments` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe_instrument(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe_instrument` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe_order_book_deltas(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe_order_book_deltas` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe_order_book_snapshots(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe_order_book_snapshots` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe_quote_ticks(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe_quote_tick` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe_trade_ticks(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe_trade_ticks` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe_bars(self, bar_type: BarType) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe_bars` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe_instrument_status(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe_instrument_status` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _unsubscribe_instrument_close(self, instrument_id: InstrumentId) -> None:
-        raise NotImplementedError(
-            "method `_unsubscribe_instrument_close` must be implemented in the subclass",
-        )  # pragma: no cover
-
+    # TODO: See adapters.binance.common.data.BinanceLiveMarketDataClient
+    
     # -- REQUESTS ---------------------------------------------------------------------------------
+    # TODO: See adapters.binance.common.data.BinanceLiveMarketDataClient
 
-    async def _request(
-        self,
-        data_type: DataType,
-        correlation_id: UUID4,
-    ) -> None:
-        raise NotImplementedError(
-            "method `_request` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _request_instrument(
-        self,
-        instrument_id: InstrumentId,
-        correlation_id: UUID4,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
-    ) -> None:
-        raise NotImplementedError(
-            "method `_request_instrument` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _request_instruments(
-        self,
-        venue: Venue,
-        correlation_id: UUID4,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
-    ) -> None:
-        raise NotImplementedError(
-            "method `_request_instruments` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _request_quote_ticks(
-        self,
-        instrument_id: InstrumentId,
-        limit: int,
-        correlation_id: UUID4,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
-    ) -> None:
-        raise NotImplementedError(
-            "method `_request_quote_tick` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _request_trade_ticks(
-        self,
-        instrument_id: InstrumentId,
-        limit: int,
-        correlation_id: UUID4,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
-    ) -> None:
-        raise NotImplementedError(
-            "method `_request_trade_ticks` must be implemented in the subclass",
-        )  # pragma: no cover
-
-    async def _request_bars(
-        self,
-        bar_type: BarType,
-        limit: int,
-        correlation_id: UUID4,
-        start: pd.Timestamp | None = None,
-        end: pd.Timestamp | None = None,
-    ) -> None:
-        raise NotImplementedError(
-            "method `_request_bars` must be implemented in the subclass",
-        )  # pragma: no cover
+    # -- WEBSOCKET HANDLERS ---------------------------------------------------------------------------------
+    # TODO: See adapters.binance.common.data.BinanceLiveMarketDataClient

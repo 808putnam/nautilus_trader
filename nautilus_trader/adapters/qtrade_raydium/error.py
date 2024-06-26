@@ -12,8 +12,32 @@
 #  limitations under the License.
 # -------------------------------------------------------------------------------------------------
 
-from nautilus_trader.model.identifiers import Venue
+
+class RaydiumError(Exception):
+    """
+    The base class for all `Raydium` specific errors.
+    """
+
+    def __init__(self, status, message, headers):
+        super().__init__(message)
+        self.status = status
+        self.message = message
+        self.headers = headers
 
 
-# It's recommended to have one constant for the venue
-TEMPLATE_VENUE = Venue("QTRADE_RAYDIUM")
+class RaydiumServerError(RaydiumError):
+    """
+    Represents a `Raydium` specific 500 series HTTP error.
+    """
+
+    def __init__(self, status, message, headers):
+        super().__init__(status, message, headers)
+
+
+class RaydiumClientError(RaydiumError):
+    """
+    Represents a `Raydium` specific 400 series HTTP error.
+    """
+
+    def __init__(self, status, message, headers):
+        super().__init__(status, message, headers)

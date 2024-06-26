@@ -39,13 +39,13 @@ from bxsolana_trader_proto import api as proto
 # *** THESE PRAGMA: NO COVER COMMENTS MUST BE REMOVED IN ANY IMPLEMENTATION. ***
 
 
-class RaydiumInstrumentProvider(InstrumentProvider):
+class QtradeInstrumentProvider(InstrumentProvider):
     """
-    Provides a means of loading instruments from the Raydium exchange.
+    Provides a means of loading instruments from the Qtrade exchange.
 
     Parameters
     ----------
-    api : provider.Provider
+    api : APIClient
         The client for the provider.
     clock : LiveClock
         The clock for the provider.
